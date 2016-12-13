@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html>
+<link rel="stylesheet" href="/${res}/css/main.css"/>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="shortcut icon" href="" type="/${res}/image/x-icon" />
+<script src="${resSys}/jquery.js" type="text/javascript"></script>
+<script src="${resSys}/front.js" type="text/javascript"></script>
+<title>${site.name}-首页</title>
+<link rel="stylesheet" type="text/css" href="/${res}/css/login.css" />
+<link rel="stylesheet" type="text/css" href="/${res}/css/hyindex.css" />
+<link rel="stylesheet" type="text/css" href="/${res}/css/custom.css" />
+<script type="text/javascript">
+$(function() {
+	Cms.siteFlow("${base}", location.href, document.referrer,"${site.config.flowSwitch?string}");
+});
+function g(o){
+	return document.getElementById(o);
+}
+function HoverLi(x,y,m,n,counter){
+	for(var i=1;i<=counter;i++){
+		g(x+m+i).className='normaltab';
+		g(y+m+i).className='undis';
+	}
+	g(y+m+n).className='dis';
+	g(x+m+n).className='curr';
+}
+</script>
+[#include "../hyinclude/header.html"/]
+
+<div class="container">
+    <div class="wrap">
+        <div class="bd-padding">
+            <div class="zj-news clearfix">
+            
+             <div class="news-slide">
+             
+             	   <div class="big-img">
+                       
+                         [@cms_content_list typeId='2' recommend='2' channelId='75' orderBy='5' titLen='22' channelOption='1' dateFormat='yyyy-MM-dd']      
+         				  <ul class="big-img-ul">
+           				 [#list tag_list as a]
+           				 <li [#if a_index<1] style="display: block;" [/#if]><a href="${a.url}" target="_blank"><img src="${a.typeImg!}" width="480" height="280"><span>[@text_cut s=a.title len=titLen /]</span></a></li>
+          				  [/#list]
+         				</ul>
+        				 [/@cms_content_list]   
+                       
+                    </div>
+                   
+                       <div class="now-steps-wrap">
+                        <div class="now-steps">
+                           <a href="javascript:;" class="next"></a>
+                            <div class="small-img-wrap">
+                                <ul class="small-img-ul" data-scro="controler">
+                                	[@cms_content_list typeId='2' recommend='2' channelId='75' orderBy='4' titLen='22' channelOption='1' dateFormat='yyyy-MM-dd']
+              						 [#list tag_list as a]
+              						 <li><a href="javascript:;"><span>${a_index+1}</span><em></em></a></li>
+              						 [/#list]
+            						[/@cms_content_list]	                                    
+                                </ul>
+                            </div>
+                           <a href="javascript:;" class="prev disabled"></a> 
+                        </div>
+                    </div>
+                      <script type="text/javascript" src="/${res}/js/script.js"></script>
+                </div>
+                <div class="news-tab-dt">
+                    <div class="tab-wrap">
+                      <div class="tab-head clearfix">
+                      		 [@cms_channel_list parentId='115' orderBy='1' count='4'  channelOption='0']
+        						[#list tag_list as c]
+       						 <a  onmouseover="HoverLi('tc_','tcn_',1,${c_index+1},${tag_list?size});" [#if c_index<1]class="curr"[#else]class="normaltab"[/#if] id="tc_1${c_index+1}">${c.name}</a>
+        					 [/#list]
+       						 [/@cms_channel_list]      
+       						         						
+                      </div>     
+                      <div class="tab-right">
+                      		 <a href="${base}/dt/index.jhtml" class="hymore" title="更多" target="_blank"></a> 
+                      </div>                    	
+     				 [@cms_channel_list parentId='115' orderBy='1' count='4'  channelOption='0']
+     					[#list tag_list as c]   
+     							[#if c_index>0]  			
+      							<div class="undis" id="tcn_1${c_index+1}">
+      							[#else]
+      							<div class="dis" id="tcn_1${c_index+1}">
+      							[/#if]
+        						
+        						[@cms_content_list orderBy='4' channelId=c.id channelOption='0' count='3']
+       							 <ul>
+         						 [#list tag_list as a]
+         						 <li>
+         						 	<a href="${a.url}" target="_blank">
+         						 	<h3>[@text_cut s=a.title len='15' append='...' /]</h3>  
+         						 	</a>       						 
+         						 	 <p>
+                                      <span class="dt-p of">[@text_cut s=a.description! len='24' append='...' /]</span>
+                                      
+                                       <span class="data">${a.releaseDate?string('yyyy-MM-dd')}</span>
+                                       </p>    
+                                                             
+         						 </li>
+          						[/#list]
+       							 </ul>
+        						[/@cms_content_list]
+       							 
+     							 </div>
+       							
+      							[/#list]
+     					 [/@cms_channel_list]
+                      </div >                      
+                </div>
+            </div>
+            <!--分类资讯-->
+            <div class="type-info">
+                <div class="info-wrap clearfix">
+                    <div class="info-div">
+             <div class="info-div-head clearfix clearfix">
+                            <h3>
+                                <span>学科教研</span>
+                            </h3>
+                            <div class="info-tab-head">
+	                            [@cms_channel_list parentId='98' orderBy='4']
+							        [#list tag_list as b]
+							         [#if b_index<=3]
+							        	[#if b_index=0]
+							       		 <a href="javascript:;" class="active">${b.name }<em></em></a>
+							       		 [#else]
+								        	[#if b_index=1]
+								       		 <a href="javascript:;">${b.name }<em></em></a>
+								       		 [#else]
+									        	[#if b_index=2]
+					                                	<a href="javascript:;">${b.name }<em></em></a>
+					                                [#else]
+						                                <a href="javascript:;">${b.name }</a>
+									       		 [/#if]
+								       		 [/#if]
+							       		 [/#if]
+							       		[/#if]
+							        [/#list]
+					        	[/@cms_channel_list]
+                            </div>
+	                            [@cms_channel id='98']
+                            				<a href="${tag_bean.url}" class="more" title="更多" target="_blank"></a>
+					        	[/@cms_channel ]
+                        </div>
+                        <div class="info-div-content">
+                            <div class="info-tab-content" style="display: block;">
+                                <ul class="has-dot-list"> 
+	                               [@cms_content_list  channelId='135' count='8' titLen='14' orderBy='2' channelOption='1'][#list tag_list as a]<li><a href="${a.url}" class="of" target="_blank">[@text_cut s=a.title len=titLen append='...'/]<span class="gray9">(${a.releaseDate?string('MM-dd')})</span></a></li>[/#list][/@cms_content_list]
+                                </ul>
+                            </div>
+                            <div class="info-tab-content">
+                                <ul class="has-dot-list">
+                                   [@cms_content_list channelId='136' count='8' titLen='14' orderBy='2' channelOption='1'][#list tag_list as a]<li><a href="${a.url}" class="of" target="_blank">[@text_cut s=a.title len=titLen append='...'/]<span class="gray9">(${a.releaseDate?string('MM-dd')})</span></a></li>[/#list][/@cms_content_list]
+                                </ul>
+                            </div>
+                            <div class="info-tab-content">
+                                <ul class="has-dot-list">
+                                   [@cms_content_list channelId='137' count='8' titLen='14' orderBy='2' channelOption='1'][#list tag_list as a]<li><a href="${a.url}" class="of" target="_blank">[@text_cut s=a.title len=titLen append='...'/]<span class="gray9">(${a.releaseDate?string('MM-dd')})</span></a></li>[/#list][/@cms_content_list]
+                                </ul>
+                            </div>
+                            <div class="info-tab-content">
+                                <ul class="has-dot-list">
+                                   [@cms_content_list  channelId='138' count='8' titLen='14' orderBy='2' channelOption='1'][#list tag_list as a]<li><a href="${a.url}" class="of" target="_blank">[@text_cut s=a.title len=titLen append='...'/]<span class="gray9">(${a.releaseDate?string('MM-dd')})</span></a></li>[/#list][/@cms_content_list]
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="info-div">
+                            <div class="info-div-head clearfix">
+                            <h3><span>市县教研</span></h3>
+                            [@cms_channel id='168']<a href="${tag_bean.url}" class="more" title="更多" target="_blank"></a>[/@cms_channel ]
+                        </div>
+                        <div class="info-div-content">
+                            <ul class="has-dot-list">
+                                 [@cms_content_list  channelId='168' count='8' titLen='14' orderBy='2' channelOption='1'][#list tag_list as a]<li><a href="${a.url}" class="of" target="_blank">[@text_cut s=a.title len=titLen append='...'/]<span class="gray9">(${a.releaseDate?string('MM-dd')})</span></a></li>[/#list][/@cms_content_list]
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="info-div">                        
+                           <div class="info-div-head clearfix">
+                            <h3>
+                                <span>课程改革</span>
+                            </h3>
+                            [@cms_channel id='267']
+                            	<a href="${tag_bean.url}" class="more" title="更多" target="_blank"></a>
+					        [/@cms_channel ]
+                        </div>
+                        <div class="info-div-content">
+                            <ul class="has-dot-list">
+                            	 [@cms_content_list  channelId='267' count='8' titLen='24' orderBy='2' channelOption='1'][#list tag_list as a]<li><a href="${a.url}" class="of" target="_blank">[@text_cut s=a.title len=titLen append='...'/]<span class="gray9">(${a.releaseDate?string('MM-dd')})</span></a></li>[/#list][/@cms_content_list]
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="info-wrap clearfix">
+                    <div class="info-div">                    
+                         <div class="info-div-head clearfix">
+                            <h3>
+                                <span>教师培训</span>
+                            </h3>
+                            <div class="info-tab-head">
+                            	 [@cms_channel_list parentId='261' orderBy='4']
+							        [#list tag_list as b]
+							        	[#if b_index=0]
+							       		 <a href="javascript:;" class="active">${b.name }<em></em></a>
+							       		 [#else]
+								        	[#if b_index=1]
+								       		 <a href="javascript:;">${b.name }<em></em></a>
+								       		 [#else]
+									        	[#if b_index=2]
+						                             <a href="javascript:;">${b.name }</a>
+									       		 [/#if]
+								       		 [/#if]
+							       		 [/#if]
+							        [/#list]
+					        	[/@cms_channel_list]
+                            </div>
+                            [@cms_channel id='261']
+                            	<a href="${tag_bean.url}" class="more" title="更多" target="_blank"></a>
+					        [/@cms_channel ]
+                        </div>
+                        <div class="info-div-content">
+                            <div class="info-tab-content" style="display: block;">
+                                <ul class="has-dot-list">
+                                 [@cms_content_list  channelId='262' count='8' titLen='15' orderBy='2' channelOption='1'][#list tag_list as a]<li><a href="${a.url}" class="of" target="_blank">[@text_cut s=a.title len=titLen append='...'/]<span class="gray9">(${a.releaseDate?string('MM-dd')})</span></a></li>[/#list][/@cms_content_list]
+                                </ul>
+                            </div>
+                            <div class="info-tab-content">
+                                <ul class="has-dot-list">
+                                  [@cms_content_list  channelId='263' count='8' titLen='15' orderBy='2' channelOption='1'][#list tag_list as a]<li><a href="${a.url}" class="of" target="_blank">[@text_cut s=a.title len=titLen append='...'/]<span class="gray9">(${a.releaseDate?string('MM-dd')})</span></a></li>[/#list][/@cms_content_list]
+                                </ul>
+                            </div>
+                            <div class="info-tab-content">
+                                <ul class="has-dot-list">
+                                  [@cms_content_list  channelId='264' count='8' titLen='15' orderBy='2' channelOption='1'][#list tag_list as a]<li><a href="${a.url}" class="of" target="_blank">[@text_cut s=a.title len=titLen append='...'/]<span class="gray9">(${a.releaseDate?string('MM-dd')})</span></a></li>[/#list][/@cms_content_list]
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="info-div">
+                  		<div class="info-div-head clearfix">
+                            <h3>
+                                <span>教育政策</span>
+                            </h3>
+                            <a href="${base}/jysz/index.jhtml" class="more" title="更多" target="_blank"></a>
+                        </div>
+                        <div class="info-div-content">
+                             [@cms_content_list  channelId='177' orderBy='4' titLen='14' channelOption='1' count='8']      
+         				  <ul class="has-dot-list">
+           				 [#list tag_list as a]
+           				 <li><a href="${a.url}" target="_blank"><span>[@text_cut s=a.title len=titLen  append='...'/]</span><span class="gray9">(${a.releaseDate?string('MM-dd')})</span></a></li>
+          				  [/#list]
+         				</ul>
+        				 [/@cms_content_list]  
+                        </div>
+                    </div>
+                    <div class="info-div">
+                        <div class="info-div-head clearfix">
+                            <h3>
+                                <span>质量检测</span>
+                            </h3>
+                            [@cms_channel id='260']<a href="${tag_bean.url}" class="more" title="更多" target="_blank"></a>[/@cms_channel ]
+                        </div>
+                        <div class="info-div-content">
+                            <ul class="has-dot-list">
+                                [@cms_content_list  channelId='260' count='8' titLen='14' orderBy='2' channelOption='1'][#list tag_list as a]<li><a href="${a.url}" class="of" target="_blank">[@text_cut s=a.title len=titLen append='...'/]<span class="gray9">(${a.releaseDate?string('MM-dd')})</span></a></li>[/#list][/@cms_content_list]
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="small-banner">
+                    <a  href="${base}/topic/3.jspx" target="_blank">
+                        <img src="/${res}/images/smallbanner1.jpg" width="956" height="110" alt="">
+                    </a>
+                </div>
+                <div class="info-wrap clearfix">
+                    <div class="info-div long-info-div">
+                     	<div class="info-div-head clearfix">
+                            <h3>
+                                <span>教育科研</span>
+                            </h3>
+                            [@cms_channel id='99']
+                            				<a href="${tag_bean.url}" class="more" title="更多" target="_blank"></a>
+					        [/@cms_channel ]
+                        </div>
+                        <div class="info-div-content">
+                            <ul class="has-dot-list">
+                            	 [@cms_content_list  channelId='99' count='8' titLen='24' orderBy='2' channelOption='1'][#list tag_list as a]<li><a href="${a.url}" class="of" target="_blank">[@text_cut s=a.title len=titLen append='...'/]<span class="gray9">(${a.releaseDate?string('MM-dd')})</span></a></li>[/#list][/@cms_content_list]
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="info-div long-info-div">
+                       <div class="info-div-head clearfix">
+                            <h3>
+                                <span>党群建设</span>
+                            </h3>
+                            [@cms_channel id='260']<a href="${tag_bean.url}" class="more" title="更多" target="_blank"></a>[/@cms_channel ]
+                        </div>
+                        <div class="info-div-content">
+                            <ul class="has-dot-list">
+                                [@cms_content_list  channelId='260' count='8' titLen='14' orderBy='2' channelOption='1'][#list tag_list as a]<li><a href="${a.url}" class="of" target="_blank">[@text_cut s=a.title len=titLen append='...'/]<span class="gray9">(${a.releaseDate?string('MM-dd')})</span></a></li>[/#list][/@cms_content_list]
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="info-wrap clearfix">
+                    <div class="info-div long-info-div">
+                         <div class="info-div-head clearfix">
+                            <h3>
+                                <span>教育学会</span>
+                            </h3>
+                           [@cms_channel id='266']<a href="${tag_bean.url}" class="more" title="更多" target="_blank"></a>[/@cms_channel ]
+                        </div>
+                        <div class="info-div-content">
+                            <ul class="has-dot-list">
+                                [@cms_content_list  channelId='266' count='8' titLen='14' orderBy='2' channelOption='1'][#list tag_list as a]<li><a href="${a.url}" class="of" target="_blank">[@text_cut s=a.title len=titLen append='...'/]<span class="gray9">(${a.releaseDate?string('MM-dd')})</span></a></li>[/#list][/@cms_content_list]
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="info-div long-info-div">
+                        <div class="info-div-head clearfix">
+                            <h3>
+                                <span>博客</span>
+                            </h3>
+                            <a href="#" class="more" title="更多"></a>
+                        </div>
+                        <div class="info-div-content">
+                            <ul class="blog-content-list">
+                                <li>
+                                    <a href="#">
+                                        <span class="trend"></span>
+                                        <div class="con clearfix">
+                                            <img src="/${res}/images/blog1.png" width="70" height="70" alt="" class="blog-left-img">
+                                            <div class="con-right">
+                                                <h4 class="of">【我们向琼中思源学习什么？怎么学？】</h4>
+                                                <p class="small-con of"> 研究琼中思源经验，吸纳合理科学的东西更加的有效…</p>
+                                                <div class="time-num clearfix">
+                                                    <span class="reads">阅读 <em>5</em></span>
+                                                    <span class="comments">评论 <em>3</em></span>
+                                                    <span class="time gray9">2016-05-06</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <span class="trend"></span>
+                                        <div class="con clearfix">
+                                            <img src="/${res}/images/blog2.png" width="70" height="70" alt="" class="blog-left-img">
+                                            <div class="con-right">
+                                                <h4 class="of">【民国模范作文，能否给我们启迪？】</h4>
+                                                <p class="small-con of"> 最近读了几篇民国时期小学生的模范作文，奉献给同…</p>
+                                                <div class="time-num clearfix">
+                                                    <span class="reads">阅读 <em>10</em></span>
+                                                    <span class="comments">评论 <em>11</em></span>
+                                                    <span class="time gray9">2016-05-03</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <span class="trend"></span>
+                                        <div class="con clearfix">
+                                            <img src="/${res}/images/blog3.png" width="70" height="70" alt="" class="blog-left-img">
+                                            <div class="con-right">
+                                                <h4 class="of">【学校文化建设的几点问题】</h4>
+                                                <p class="small-con of"> 学校文化是指学校全体成员或部分成员习得且共同具…</p>
+                                                <div class="time-num clearfix">
+                                                    <span class="reads">阅读 <em>210</em></span>
+                                                    <span class="comments">评论 <em>39</em></span>
+                                                    <span class="time gray9">2016-04-22</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <!--链接-->
+            <div class="friendly-links">
+                <div class="tab-wrap tab-btm-wrap">
+                    <div class="tab-head">
+                        <a href="javascript:;" class="active">市县教研</a>
+                        <a href="javascript:;">学校教研</a>
+                        <a href="javascript:;">友情链接</a>
+                    </div>
+                    <div class="tab-content" style="display: block">
+                    	[@cms_channel_list parentId='168' orderBy='4']
+					        [#list tag_list as b]
+					       		<a href="${b.url}" rel="nofollow" target="_blank">${b.name }</a>
+					        [/#list]
+				        [/@cms_channel_list]
+                    </div>
+                    <div class="tab-content">
+                    	[@cms_channel_list parentId='172' orderBy='4']
+					        [#list tag_list as b]
+					       		<a href="${b.url}" rel="nofollow" target="_blank">${b.name }</a>
+					        [/#list]
+				        [/@cms_channel_list]
+                    </div>
+                    <div class="tab-content">
+                    <!--友情链接  ctgId='1' 为文字链接,ctgId='2' 图片链接-->
+                    	[@cms_friendlink_list ctgId='1']
+							 [#list tag_list as link]
+							   <div style="margin-left:1.5%; float:left;">
+							   	 <a href="${link.domain}" onclick="$.get('${base}/friendlink_view.jspx?id=${link.id}')" target="_blank">${link.name}</a>
+							   </div>
+							   [/#list]
+					     [/@cms_friendlink_list]
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+[#include "../include/footer.html"/]
+<script src="/${res}/js/jquery-1.9.0.min.js"></script>
+<script src="/${res}/js/main.js"></script>
+</body>
+</html>

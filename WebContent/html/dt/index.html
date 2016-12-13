@@ -1,0 +1,178 @@
+<!DOCTYPE HTML>
+<html>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="keywords" content=""/>
+<meta http-equiv="description" content="动态新闻"/>
+<title>动态 - cerhy - Powered by JEECMS</title>
+<script src="/cerhy/r/cms/jquery.js" type="text/javascript"></script>
+<script src="/cerhy/r/cms/front.js" type="text/javascript"></script>
+<script type="text/javascript" src="/cerhy/r/cms/www/default/js/jquery.SuperSlide.js"></script>
+<link type="text/css" rel="stylesheet" href="/cerhy/r/cms/www/default/css/hyindex.css" />
+
+<link rel="stylesheet" type="text/css" href="/cerhy/r/cms/www/default/css/login.css" />
+<script>
+function qkeypress(){
+	var q=$("input[name=q]");
+	if(q.val().trim()!=""){
+		$("input[name=q]").autocomplete("enable");
+	}else{
+		$("input[name=q]").autocomplete("disable");
+	}
+}
+</script>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <link rel="shortcut icon" href="" type="image/x-icon" />
+    <title>好研</title>
+    <link rel="stylesheet" href="/cerhy/r/cms/www/default/css/main.css"/>
+    <style type="text/css">
+	.page-large{margin:40px 0 20px; text-align:center;}
+	.page-large a{width:34px; height:34px; display:inline-block; border:1px solid #d5d5d5; box-sizing:border-box; -moz-box-sizing:border-box; -o-box-sizing:border-box; -webkit-box-sizing:border-box; line-height:34px; text-align:center; float:left; text-indent:0; color:#666666; font-size:12px; font-family:Arial, Helvetica, sans-serif; margin:0 3px;}
+	.page-large a.on{border:1px solid #ef3838; background:#ef3838; color:#fff;}
+	.page-large a.none{border:none;}
+	.page-large .Num:hover{border:1px solid #ef3838; color:#ef3838;}
+	.page-large .on:hover{border:1px solid #ef3838; color:#fff;}
+	.page-large .prev-page{background:url(/cerhy/r/cms/www/default/images/small-prev-page.png) center center no-repeat;}
+	.page-large .next-page{background:url(/cerhy/r/cms/www/default/images/small-next-page.png) center center no-repeat;}
+	.page-large .prev-page:hover{border:1px solid #ef3838; background:url(/cerhy/r/cms/www/default/images/small-prev-page-on.png) center center no-repeat #ef3838;}
+	.page-large .next-page:hover{border:1px solid #ef3838; background:url(/cerhy/r/cms/www/default/images/small-next-page-on.png) center center no-repeat #ef3838;}
+	.login-user{float:left; line-height:30px; margin-left:20px; padding-right:14px; color:#979797; font-size:12px; position:relative; cursor:pointer;}
+    .login-user a{z-index:4; position:relative; display:inline-block;}
+    .login-user img{width:30px; height:30px; float:left; margin-right:5px; border-radius:100%; -moz-border-radius:100%; -o-border-radius:100%; -webkit-border-radius:100%;}
+    .login-user:before{z-index:4; content:''; position:absolute; display:inline-block; width:6px; height:5px; right:0; top:14px; background:url(../images/login-user.png) no-repeat;}
+    .user-child{display:none; top:15px; width:100%; background-color:rgba(255,255,255,0.9); position:absolute; padding:16px 0 8px; z-index:3; box-shadow:0 2px 5px rgba(34,25,25,.4); -moz-box-shadow:0 2px 5px rgba(34,25,25,.4); -webkit-box-shadow:0 2px 5px rgba(34,25,25,.4);}
+    .login-user:hover .user-child{display:block;}
+    .user-child a{width:100%; display:block; line-height:24px; text-align:center; font-size:14px;}
+	</style>
+</head>
+<body class="bodybg">
+<div class="header">
+    <div class="header-top">
+        <div class="wrap clearfix">
+            <div class="header-right">
+                <div class="search-bar">
+                    <form action="/cerhy/search.jspx" target="_blank" id="searchForm">
+        				<input type="text" name="q" value="" maxlength="50" autocomplete="off" class="searchCon">
+        				<input type="submit" value="" class="search-btn" style="height=24px;">
+       			    </form>
+                </div>
+                <ul class="header-right-list">
+                    <li><a href="#">素质测评</a><em></em></li>
+                    <li><a href="#">官方客服</a><em></em></li>
+                    <li><a href="#">官方微信</a><em></em></li>
+         			
+      				<li><a href="/cerhy/login.jspx">登录</a><em></em></li>
+      				<li><a href="/cerhy/register.jspx">注册</a></li>
+                </ul>
+			</div>
+            </div>
+        </div>
+    </div>
+    <div class="banner">
+        <div class="wrap">
+            <img src="/cerhy/r/cms/www/default/images/head.png" width="1000" height="192" alt="">
+        </div>
+    </div>
+
+</div>
+<div class="nav">
+    <div class="wrap">
+        <div class="nav-list">
+            <ul class="clearfix">
+<nav class="nav_header">
+           <ul class="menu">
+       <li><a href="http://localhost:8080/cerhy/" target="_self" ><span>首 页</span></a></li>
+        <li><a href="http://localhost:8080/cerhy/xkjy/index.jhtml">学科教研</a></li>
+        <li><a href="http://localhost:8080/cerhy/jyky/index.jhtml">教育科研</a></li>
+        <li><a href="http://localhost:8080/cerhy/bk/index.jhtml">博客</a></li>
+        <li><a href="http://localhost:8080/cerhy/wlyx/index.jhtml">网络研修</a></li>
+        <li><a href="http://localhost:8080/cerhy/jyzy/index.jhtml">教育资源</a></li>
+        <li><a href="http://localhost:8080/cerhy/zljc/index.jhtml">质量监测</a></li>
+        <li><a href="http://localhost:8080/cerhy/zzjg/index.jhtml">组织机构</a></li>
+      </ul>
+</nav>            </ul>
+        </div>
+    </div>
+</div>
+<div class="local">
+    <div class="wrap">
+        <span class="local-icon icon-font"></span>
+        <span class="position">新闻动态</span>
+    </div>
+</div>
+<div class="container">
+    <div class="wrap">
+         <div class="xueke clearfix bd-padding">
+            	<div class="article-list-wrap">
+      <ul class="report-list1 sm mb20">
+      		<li>
+      			 <a class="hasImg clearfix" href="http://localhost:8080/cerhy/gndt/250.jhtml">                          
+                                <div class="report-text">
+                                 
+                                    <h3>海南教育开出“七朵金花” 海口龙华区等七县（市、区）获教育工作督导评估优秀等次</h3>
+                                     <div class="des">海南教育开出“七朵金花” 海口龙华区等七县（市、区）获教育工作督导评估优秀等次海南教育开出“七朵金花” 海口龙华区等七县（市、区）获教育工作督导评估优秀等次</div>
+            						 <div class="fl"><span class="ch">国内动态<em>2016-12-06 15-22</em></span></div>
+                                </div>
+                                <em class="arrowBtn"></em>
+                 </a>
+      		</li>
+      </ul>
+      <ul class="report-list1 sm mb20">
+      		<li>
+      			 <a class="hasImg clearfix" href="http://localhost:8080/cerhy/gndt/247.jhtml">                          
+                                <div class="report-text">
+                                 
+                                    <h3>省教育厅开展2016年海南省特级教师专题研修活动</h3>
+                                     <div class="des">为进一步提升我省特级教师的教育教学思想和教科研能力，拓展教育理论视野，充分发挥其在推进基础教育课程改革、实施素质教育以及教师专业发展中的示范、辐射与引领作用，2016年9月12日下午至9月13日上午，省教育厅组织开展了2016年海南省特级教师专题研修活动。</div>
+            						 <div class="fl"><span class="ch">国内动态<em>2016-12-06 15-19</em></span></div>
+                                </div>
+                                <em class="arrowBtn"></em>
+                 </a>
+      		</li>
+      </ul>
+      <ul class="report-list1 sm mb20">
+      		<li>
+      			 <a class="hasImg clearfix" href="http://localhost:8080/cerhy/xxdt/245.jhtml">                          
+                                <div class="report-text">
+                                 
+                                    <h3>2016年白沙县小学第二片区第19届普通话推广周 美文诵读比赛活动简讯</h3>
+                                     <div class="des">2016年白沙县小学第二片区第19届普通话推广周
+美文诵读比赛活动简讯2016年白沙县小学第二片区第19届普通话推广周
+美文诵读比赛活动简讯</div>
+            						 <div class="fl"><span class="ch">学校动态<em>2016-12-06 15-17</em></span></div>
+                                </div>
+                                <em class="arrowBtn"></em>
+                 </a>
+      		</li>
+      </ul>
+      <ul class="report-list1 sm mb20">
+      		<li>
+      			 <a class="hasImg clearfix" href="http://localhost:8080/cerhy/sxdt/244.jhtml">                          
+                                <div class="report-text">
+                                 
+                                    <h3>白沙县2016年小学教师暑期培训 学习活动简讯</h3>
+                                     <div class="des">白沙县2016年小学教师暑期培训
+学习活动简讯白沙县2016年小学教师暑期培训
+学习活动简讯</div>
+            						 <div class="fl"><span class="ch">市县动态<em>2016-12-06 15-16</em></span></div>
+                                </div>
+                                <em class="arrowBtn"></em>
+                 </a>
+      		</li>
+      </ul>
+<div class="page-large">
+          <div style="display:inline-block;">
+   	 			<a class="Num on" href="#" onclick="location.href=encodeURI('index.html');">1</a>
+			<a class="Num" href="#" onclick="location.href=encodeURI('index_2.html');">2</a>
+      <a class="next-page" href="#" onclick="location.href=encodeURI('index_2.html');"></a>
+      </div>
+</div>    
+    </div>
+	</div>
+	</div>
+	</div>
+</body>
+</html>

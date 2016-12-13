@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html>
+[#include "../hyinclude/header.html"/]
+<div class="local">
+    <div class="wrap">
+        <span class="local-icon icon-font"></span>
+        <a href="">${channel.title}</a>
+    </div>
+</div>
+<div class="container">
+    <div class="wrap">
+        <div class="xueke clearfix bd-padding">
+            <div class="wrap-left">
+                <ul class="fst-lv-ul">
+                	 [@cms_channel_list parentId=channel.id orderBy='4']
+				        [#list tag_list as b]
+				        <li  [#if b_index<1]class="active"[/#if]>
+				        <a href="javascript:;">${b.name}<em class="arrow-down"></em></a>
+				        <div class="sub-div">
+                            <ul class="clearfix">
+		                	 [@cms_channel_list parentId=b.id orderBy='4']
+						        [#list tag_list as c]
+		                                <li><a href="${c.url}">${c.name}</a></li>
+						        [/#list]
+						      [/@cms_channel_list]
+                            </ul>
+                        </div>
+				        </li>
+				        [/#list]
+				      [/@cms_channel_list]
+                </ul>
+           </div>
+           <div class="wrap-right">
+           		<div class="article-list-wrap">
+					[@cms_channel_list parentId=channel.id orderBy='4']
+					  [#list tag_list as b]
+					  [#if b_index=0]
+						      [@cms_channel_list parentId=b.id orderBy='4']
+						      [#list tag_list as c]
+						      [#if c_index=0]
+										  <ul class="report-list sm mb20">
+									        [@cms_content_page orderBy='4'  recommend='2' channelId=c.id channelOption='1' count='1']
+										          [#list tag_pagination.list as a]
+										          <li>
+					                           		 <a class="hasImg clearfix" href="${a.url}" target="_blank">
+													      <div class="item clearfix" [#if a_index<1]style="border-top:none;"[/#if]>
+													          [#if a.typeImg??]
+													          <img width="108" height="108" src="${a.typeImg!}" alt="">
+													          [/#if]
+													          <div class="report-text">
+													            <h3>${a.title}</h3>
+													            <p>[#if a.typeImg??][@text_cut s=a.description len=116 append='...'/][#else][@text_cut s=a.description len=176 append='...'/][/#if]</p>
+													          </div>
+													          <em class="arrowBtn"></em>
+													      </div>
+					                           			 </a>
+				                        			</li>
+										          [/#list]
+										          [#include "../include/page.html"/]
+									        [/@cms_content_page]
+									        </ul>
+										 </ul>
+						     [/#if]
+						      [/#list]
+						  [/@cms_channel_list]
+						   [/#if]
+				      [/#list]
+				  [/@cms_channel_list]
+                </div>
+           <div class="right-news-comments news-comments">
+                    <h3>我有话要说</h3>
+                    <textarea class="normal-textarea">评论仅显示昵称</textarea>
+                    <div class="clearfix btns-and-num">
+                        <a href="javascript:;" class="submit-btn">发布</a>
+                        <div class="comment-count-num">
+                            <p>还可以输入<b>140</b>个字！</p>
+                        </div>
+
+                    </div>
+                    <div class="news-comments-list">
+                        <ul>
+                            <li class="clearfix">
+                                <div class="user-pic">
+                                    <img src="temp/comments-gt_01.png" width="60" height="60" alt="用户头像">
+                                </div>
+                                <div class="comments-info">
+                                    <p class="comments-top">
+                                        <span class="user-name">姜菲</span>
+                                        <a class="fr reply" href="javascript:;">回复</a>
+                                        <span class="fr time">2016-08-01 18:24:44</span>
+                                    </p>
+                                    <p>这篇文章很不错哦，赞一下！蛮成熟的文章！赞赞！这篇文章很不错哦，赞一下！蛮成熟的文章哦！赞赞！蛮成熟的文章！这篇文章很不错哦，赞一下！蛮成熟的文章！赞赞！这篇文章很不错哦，赞一下！</p>
+                                </div>
+                            </li>
+                            <li class="clearfix">
+                                <div class="user-pic">
+                                    <img src="temp/comments-gt_02.png" width="60" height="60" alt="用户头像">
+                                </div>
+                                <div class="comments-info">
+                                    <p class="comments-top">
+                                        <span class="user-name">姜菲</span>
+                                        <a class="fr reply" href="javascript:;">回复</a>
+                                        <span class="fr time">2016-08-01 18:24:44</span>
+                                    </p>
+                                    <p>这篇文章很不错哦，赞一下！蛮成熟的文章！赞赞！这篇文章很不错哦，赞一下！蛮成熟的文章哦！赞赞！蛮成熟的文章！这篇文章很不错哦，赞一下！蛮成熟的文章！赞赞！这篇文章很不错哦，赞一下！</p>
+                                </div>
+                            </li>
+                            <li class="clearfix">
+                                <div class="user-pic">
+                                    <img src="temp/comments-gt_03.png" width="60" height="60" alt="用户头像">
+                                </div>
+                                <div class="comments-info">
+                                    <p class="comments-top">
+                                        <span class="user-name">姜菲</span>
+                                        <a class="fr reply" href="javascript:;">回复</a>
+                                        <span class="fr time">2016-08-01 18:24:44</span>
+                                    </p>
+                                    <p>这篇文章很不错哦，赞一下！蛮成熟的文章！赞赞！这篇文章很不错哦，赞一下！蛮成熟的文章哦！赞赞！蛮成熟的文章！这篇文章很不错哦，赞一下！蛮成熟的文章！赞赞！这篇文章很不错哦，赞一下！</p>
+                                </div>
+                            </li>
+                            <li class="clearfix">
+                                <div class="user-pic">
+                                    <img src="images/def-pic.jpg" width="60" height="60" alt="用户头像">
+                                </div>
+                                <div class="comments-info">
+                                    <p class="comments-top">
+                                        <span class="user-name">姜菲</span>
+                                        <a class="fr reply" href="javascript:;">回复</a>
+                                        <span class="fr time">2016-08-01 18:24:44</span>
+                                    </p>
+                                    <p>这篇文章很不错哦，赞一下！蛮成熟的文章！赞赞！这篇文章很不错哦，赞一下！蛮成熟的文章哦！赞赞！蛮成熟的文章！这篇文章很不错哦，赞一下！蛮成熟的文章！赞赞！这篇文章很不错哦，赞一下！</p>
+                                </div>
+                            </li>
+                            <li class="clearfix">
+                                <div class="user-pic">
+                                    <img src="images/def-pic.jpg" width="60" height="60" alt="用户头像">
+                                </div>
+                                <div class="comments-info">
+                                    <p class="comments-top">
+                                        <span class="user-name">姜菲</span>
+                                        <a class="fr reply" href="javascript:;">回复</a>
+                                        <span class="fr time">2016-08-01 18:24:44</span>
+                                    </p>
+                                    <p>这篇文章很不错哦，赞一下！蛮成熟的文章！赞赞！这篇文章很不错哦，赞一下！蛮成熟的文章哦！赞赞！蛮成熟的文章！这篇文章很不错哦，赞一下！蛮成熟的文章！赞赞！这篇文章很不错哦，赞一下！</p>
+                                    <div class="reply-info">
+                                        <em class="top-arrow"></em>
+                                        <p class="user-name">姜菲</p>
+                                        <p class="reply-content">这篇文章很不错哦，赞一下！蛮成熟的文章！赞赞！这篇文章很不错哦，赞一下！蛮成熟的文章哦！赞赞！蛮成熟的文章！这篇文章很不错哦，赞一下！蛮成熟的文章！赞赞！这篇文章很不错哦，赞一下！</p>
+                                    </div>
+                                </div>
+                            </li>
+
+                        </ul>
+                        <!--分页-->
+                        <div class="snPages mb20">
+                            <span class="prev"><b></b> 上一页 </span>
+                            <a class="current" href="#">1</a>
+                            <a href="#" class="current-next">2</a>
+                            <a href="#">3</a>
+                            <span class="page-split">...</span>
+                            <a href="#">6</a>
+                            <a class="next" href="#"><b></b>下一页</a>
+                            <div>向第<input type="text">页<input type="button" class="pagesubmit" value="跳转"></div>
+                        </div>
+                    </div>
+                </div>
+                <!--链接-->
+                 <div class="links-wrap">
+                    <h3>链接</h3>
+                    <div class="link-content">
+                        <a href="#" rel="nofollow" class="school">安定小教</a>
+                        <a href="#" rel="nofollow" class="school">海口教研</a>
+                        <a href="#" rel="nofollow" class="school">定安小教</a>
+                        <a href="#" rel="nofollow" class="school">定安中教</a>
+                        <a href="#" rel="nofollow" class="school">文昌小教</a>
+                        <a href="#" rel="nofollow" class="school">文昌中教</a>
+                        <a href="#" rel="nofollow" class="school">万宁小教</a>
+                        <a href="#" rel="nofollow" class="school">万宁中教</a>
+                        <a href="#" rel="nofollow" class="school">屯昌研训</a>
+                        <a href="#" rel="nofollow" class="school">琼海小教</a>
+                        <a href="#" rel="nofollow" class="school">琼海中教</a>
+                        <a href="#" rel="nofollow" class="school">儋州教研中</a>
+                        <a href="#" rel="nofollow" class="school">临高教研</a>
+                        <a href="#" rel="nofollow" class="school">澄迈教研</a>
+                        <a href="#" rel="nofollow" class="school">三亚教研</a>
+                        <a href="#" rel="nofollow" class="school">五指山教研</a>
+                        <a href="#" rel="nofollow" class="school">保亭教研</a>
+                        <a href="#" rel="nofollow" class="school">陵水教研</a>
+                        <a href="#" rel="nofollow" class="school">乐东教研</a>
+                        <a href="#" rel="nofollow" class="school">东方教研</a>
+                        <a href="#" rel="nofollow" class="school">昌江教研</a>
+                        <a href="#" rel="nofollow" class="school">白沙教研</a>
+                        <a href="#" rel="nofollow" class="school">琼中教研</a>
+                        <a href="#" rel="nofollow" class="school">三沙</a>
+                        <a href="#" rel="nofollow" class="school">洋浦教研</a>
+                        <a href="#" rel="nofollow" class="school">海南中学</a>
+                        <a href="#" rel="nofollow" class="school">海南实验中学</a>
+                        <a href="#" rel="nofollow" class="school">国兴中学</a>
+                        <a href="#" rel="nofollow" class="school">海师附中</a>
+                        <a href="#" rel="nofollow" class="school">热海大附</a>
+                    </div>
+                </div>
+                <div class="links-wrap">
+                    <h3>好友</h3>
+                    <div class="link-content">
+                        <div class="users-a-link-wrap clearfix">
+                            <a href="#" class="users-a-link">
+                                <img src="temp/user-pic.png" alt="" width="47" height="47">
+                                <span>xxxxx</span>
+                            </a>
+                            <a href="#" class="users-a-link">
+                                <img src="temp/user-pic.png" alt="" width="47" height="47">
+                                <span>xxxxx</span>
+                            </a>
+                            <a href="#" class="users-a-link">
+                                <img src="temp/user-pic.png" alt="" width="47" height="47">
+                                <span>xxxxx</span>
+                            </a>
+                            <a href="#" class="users-a-link">
+                                <img src="temp/user-pic.png" alt="" width="47" height="47">
+                                <span>xxxxx</span>
+                            </a>
+                            <a href="#" class="users-a-link">
+                                <img src="temp/user-pic.png" alt="" width="47" height="47">
+                                <span>xxxxx</span>
+                            </a>
+                            <a href="#" class="users-a-link">
+                                <img src="temp/user-pic.png" alt="" width="47" height="47">
+                                <span>xxxxx</span>
+                            </a>
+                            <a href="#" class="users-a-link">
+                                <img src="temp/user-pic.png" alt="" width="47" height="47">
+                                <span>xxxxx</span>
+                            </a>
+                            <a href="#" class="users-a-link">
+                                <img src="temp/user-pic.png" alt="" width="47" height="47">
+                                <span>xxxxx</span>
+                            </a>
+                        </div>
+                    </div>
+                  </div>
+            </div>
+        </div>
+    </div>
+</div>
+[#include "../hyinclude/end.html"/]
+</body>
+</html>
