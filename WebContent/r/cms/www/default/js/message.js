@@ -150,7 +150,7 @@ function find_user(){
 				$("#usernameMsg").html("没有此用户");
 				$("#username").val("");
 			}else{
-				$("#usernameMsg").html("");
+				$("#usernameMsg").html("ok");
 			}
 		}else{
 				alert("请先登录");
