@@ -3,6 +3,7 @@ package com.jeecms.cms.manager.main.impl;
 import static com.jeecms.cms.entity.main.ContentCheck.DRAFT;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -20,8 +21,11 @@ import org.springframework.util.Assert;
 import com.jeecms.cms.dao.main.ContentDao;
 import com.jeecms.cms.entity.assist.CmsFile;
 import com.jeecms.cms.entity.main.Channel;
+import com.jeecms.cms.entity.main.Channel.AfterCheckEnum;
 import com.jeecms.cms.entity.main.CmsTopic;
 import com.jeecms.cms.entity.main.Content;
+import com.jeecms.cms.entity.main.Content.ContentStatus;
+import com.jeecms.cms.entity.main.ContentCharge;
 import com.jeecms.cms.entity.main.ContentCheck;
 import com.jeecms.cms.entity.main.ContentCount;
 import com.jeecms.cms.entity.main.ContentDoc;
@@ -30,9 +34,7 @@ import com.jeecms.cms.entity.main.ContentRecord.ContentOperateType;
 import com.jeecms.cms.entity.main.ContentShareCheck;
 import com.jeecms.cms.entity.main.ContentTag;
 import com.jeecms.cms.entity.main.ContentTxt;
-import com.jeecms.cms.entity.main.Channel.AfterCheckEnum;
-import com.jeecms.cms.entity.main.Content.ContentStatus;
-import com.jeecms.cms.entity.main.ContentCharge;
+import com.jeecms.cms.entity.main.base.BaseChannel;
 import com.jeecms.cms.manager.assist.CmsCommentMng;
 import com.jeecms.cms.manager.assist.CmsFileMng;
 import com.jeecms.cms.manager.main.ChannelCountMng;
@@ -332,8 +334,35 @@ public class ContentMngImpl implements ContentMng, ChannelDeleteChecker {
 		}
 		CmsWorkflow workflow = null;
 		// 流程处理
+		Integer parentId=null;
+		String parentIds=null;
 		if(contribute!=null&&contribute){
-			bean.setStatus(ContentCheck.CONTRIBUTE);
+			//获取上一级栏目id
+			Channel ids = channelMng.findById(channelId);
+			if(null!=ids.getParentId()){
+				parentId=ids.getParentId();
+				//获取上一级栏目id
+				Channel idss = channelMng.findById(parentId);
+				if(null!=idss.getParentId()){
+					parentIds=String.valueOf(idss.getParentId().toString());
+				}
+			}
+			if(null!=parentId){
+				//存在2级栏目
+				if(null!=parentIds){
+					//存在3级栏目
+					if(parentIds.equals("98")){
+						//如果栏目为学科教研(id=98) 则设置为已审核状态-2
+						bean.setStatus(Byte.valueOf("2"));
+					}else{
+						bean.setStatus(ContentCheck.CONTRIBUTE);
+					}
+				}else{
+					bean.setStatus(ContentCheck.CONTRIBUTE);
+				}
+			}else{
+				bean.setStatus(ContentCheck.CONTRIBUTE);
+			}
 		}else if (draft != null && draft) {
 			// 草稿
 			bean.setStatus(ContentCheck.DRAFT);
@@ -366,6 +395,12 @@ public class ContentMngImpl implements ContentMng, ChannelDeleteChecker {
 				check.setCheckStep((byte)step);
 			} else {
 				bean.setStatus(ContentCheck.CHECKED);
+			}
+		}
+		if(null!=parentIds){
+			if(parentIds.equals("98")){
+				check.setCheckStep((byte)-1);
+				check.setCheckDate(new Date());
 			}
 		}
 		contentCheckMng.save(check, bean);
