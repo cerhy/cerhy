@@ -398,6 +398,11 @@ public class StrUtils {
 		if (s == null || s.equals("")) {
 			return s;
 		}
+		try {
+			s = URLDecoder.decode(s, UTF8);
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
 		//< > ' " \ / # & 
 		s = s.replaceAll("<", "&lt;").replaceAll(">", "&gt;");  
 		s = s.replaceAll("\\(", "&#40;").replaceAll("\\)", "&#41;");  
@@ -407,11 +412,6 @@ public class StrUtils {
 		s = s.replaceAll("script", "");
 		s = s.replaceAll("#", "＃");
 		s = s.replaceAll("%", "％");
-		try {
-			s = URLDecoder.decode(s, UTF8);
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}
 		return s;
 	}
 

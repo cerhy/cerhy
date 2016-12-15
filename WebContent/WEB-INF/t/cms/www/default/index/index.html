@@ -36,7 +36,7 @@ function HoverLi(x,y,m,n,counter){
              
              	   <div class="big-img">
                        
-                         [@cms_content_list typeId='2' recommend='2' channelId='75' orderBy='5' titLen='22' channelOption='1' dateFormat='yyyy-MM-dd']      
+                         [@cms_content_list typeId='2' recommend='2' channelId='75' orderBy='4' titLen='22' channelOption='1' dateFormat='yyyy-MM-dd']      
          				  <ul class="big-img-ul">
            				 [#list tag_list as a]
            				 <li [#if a_index<1] style="display: block;" [/#if]><a href="${a.url}" target="_blank"><img src="${a.typeImg!}" width="480" height="280"><span>[@text_cut s=a.title len=titLen /]</span></a></li>
@@ -259,11 +259,11 @@ function HoverLi(x,y,m,n,counter){
                             <h3>
                                 <span>质量检测</span>
                             </h3>
-                            [@cms_channel id='260']<a href="${tag_bean.url}" class="more" title="更多" target="_blank"></a>[/@cms_channel ]
+                            [@cms_channel id='81']<a href="${tag_bean.url}" class="more" title="更多" target="_blank"></a>[/@cms_channel ]
                         </div>
                         <div class="info-div-content">
                             <ul class="has-dot-list">
-                                [@cms_content_list  channelId='260' count='8' titLen='14' orderBy='2' channelOption='1'][#list tag_list as a]<li><a href="${a.url}" class="of" target="_blank">[@text_cut s=a.title len=titLen append='...'/]<span class="gray9">(${a.releaseDate?string('MM-dd')})</span></a></li>[/#list][/@cms_content_list]
+                                [@cms_content_list  channelId='81' count='8' titLen='14' orderBy='4' channelOption='1'][#list tag_list as a]<li><a href="${a.url}" class="of" target="_blank">[@text_cut s=a.title len=titLen append='...'/]<span class="gray9">(${a.releaseDate?string('MM-dd')})</span></a></li>[/#list][/@cms_content_list]
                             </ul>
                         </div>
                     </div>
