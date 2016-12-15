@@ -13,6 +13,11 @@
 <link type="text/css" rel="stylesheet" href="/${res}/css/custom.css" />
 <link href="${resSys}/jqueryUI/jquery.ui.css" rel="stylesheet" type="text/css" />
 
+<script language="Javascript"> 
+document.oncontextmenu=new Function("event.returnValue=false"); 
+document.onselectstart=new Function("event.returnValue=false"); 
+</script>
+
 <script type="text/javascript">
 	$(function() {
 		Cms.checkPerm("${base}", "${content.id}");
@@ -60,7 +65,7 @@
     </div>
 </div>
 	<div class="container_article">
-		<div class="wrap">
+		<div class="wrap" style="width: 865px">
 			<div class="bd-padding ">
 				<div class="mar">
 					[#if preview??] [@text_cut s=txt! len=100 append="..."/]<br />
