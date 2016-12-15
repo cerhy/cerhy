@@ -8,7 +8,10 @@
 <script src="${resSys}/jquery.js" type="text/javascript"></script>
 <script src="${resSys}/jqueryUI/jquery-ui.js" type="text/javascript"></script>
 <script src="${resSys}/front.js" type="text/javascript"></script>
-
+<script language="Javascript"> 
+	document.oncontextmenu=new Function("event.returnValue=false"); 
+	document.onselectstart=new Function("event.returnValue=false"); 
+</script>
 <link type="text/css" rel="stylesheet" href="/${res}/css/main.css" />
 <link type="text/css" rel="stylesheet" href="/${res}/css/custom.css" />
 <link href="${resSys}/jqueryUI/jquery.ui.css" rel="stylesheet" type="text/css" />
@@ -60,7 +63,7 @@
     </div>
 </div>
 	<div class="container_article">
-		<div class="wrap">
+		<div class="wrap" style="width: 865px;">
 			<div class="bd-padding ">
 				<div class="mar">
 					[#if preview??] [@text_cut s=txt! len=100 append="..."/]<br />
@@ -70,9 +73,33 @@
 				<!-- 分页 -->
 				<div class="pagebar">[#include "../style_page/content.html"/]</div>
 				<div class="prev-next-wz clearfix">
-					   <span class="prev-pian">[@cms_content id=content.id next='1' channelId=channel.id][#if tag_bean??]<a href="${tag_bean.url}">&lt;上一篇&nbsp;<em>[@text_cut s=tag_bean.title len=20 append='...'/]</em></a>[#else]没有了[/#if][/@cms_content]</span>
-					   <span class="next-pian">[@cms_content id=content.id next='0' channelId=channel.id][#if tag_bean??]<a href="${tag_bean.url}"><em>[@text_cut s=tag_bean.title len=20 append='...'/]</em>&nbsp;下一篇 &gt;</a>[#else]没有了[/#if][/@cms_content]</span>
-   					</div>
+                    [@cms_content id=content.id next='1' channelId=channel.id]
+                    	[#if tag_bean??]
+                    		<a href="${tag_bean.url}" class="prev-pian">
+                            <span>&lt;上一篇</span>
+                            <em>[@text_cut s=tag_bean.title len=20 append='...'/]</em>
+                        	</a>
+                    	[#else]
+                    		<a href="" class="prev-pian">
+                            <span>&lt;上一篇</span>
+                            <em>没有了</em>
+                        	</a>
+                    	[/#if]
+                    [/@cms_content]
+                    [@cms_content id=content.id next='0' channelId=channel.id]
+	                    [#if tag_bean??]
+	                     <a href="${tag_bean.url}" class="next-pian">
+                            <em>[@text_cut s=tag_bean.title len=20 append='...'/]</em>
+                            <span>下一篇&gt;</span>
+                        </a>
+	                    [#else]
+		                     <a href="" class="next-pian">
+	                            <em>没有了</em>
+	                            <span>下一篇&gt;</span>
+	                        </a>
+	                    [/#if]
+                    [/@cms_content]
+                    </div>
 				<div class="news-comments">
 				    [#if channel.commentControl!=2]
                     [#include "inc_comment_input.html"/]
