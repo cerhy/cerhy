@@ -1,31 +1,25 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>${title} - ${site.name} - Powered by JEECMS</title>
 <meta content="${content.tagStr!}" http-equiv="keywords" />
 <meta content="${content.description!}" http-equiv="description" />
 <script src="${resSys}/jquery.js" type="text/javascript"></script>
+<script src="${resSys}/jqueryUI/jquery-ui.js" type="text/javascript"></script>
 <script src="${resSys}/front.js" type="text/javascript"></script>
 
 <link type="text/css" rel="stylesheet" href="/${res}/css/index.css" />
+<link href="${resSys}/jqueryUI/jquery.ui.css" rel="stylesheet" type="text/css"/>
+[#include "../hyinclude/header.html"/]
 
-<!--[if lt IE 9]> 
-<script src="/${res}/js/html5shiv.min.js"></script>
-<script src="/${res}/js/respond.min.js"></script>
-<![endif]-->
+<script type="text/javascript"> 
 
-<script type="text/javascript">
-$(function() {alert(1);
+$(function() {alert('success');
 Cms.checkPerm("${base}","${content.id}");
 Cms.collectCsi("${base}","collectCsiDiv","collect_csi","${content.id}");
 Cms.attachment("${base}","${content.id}","${content.attachments?size}","attach");
 Cms.viewCount("${base}","${content.id}");
 Cms.siteFlow("${base}", location.href, document.referrer,"${site.config.flowSwitch?string}");
 });
-</script>
 
-<script type="text/javascript"> 
 jQuery(document).ready(function($){ 
 $('.content-comment').click(function(){
 	$('html,body').animate({scrollTop:$('#comments-text').offset().top}, 1000)
@@ -55,28 +49,35 @@ $(function(){
 });
 </script>
 
-<head>
-<body>
-[#include "../include/top.html"/]
-[#include "../include/header.html"/]
-<div class="main container clearfix">
-  <section class="content_w850">
-    <h1>${content.title}<a class="position">${channel.name}</a></h1>
-    <div class="content-inf">发布时间：${content.releaseDate}&nbsp;&nbsp;作者：${content.author!'本站编辑'}&nbsp;&nbsp;来源：${content.origin!'本站原创'}&nbsp;&nbsp;浏览次数：<span id="views"></span>
-    <div class="content-action"><a class="content-comment">我有话说</a> | <span class="content-share">分享
-    <ul class="content-share-list"><li><a class="content_qq">QQ好友</a></li><li><a class="content_qqzone">QQ空间</a></li><li><a class="content_weixin">微信好友</a></li><li><a class="content_sina">新浪微博</a></li></ul>
-    </span> | <a class="content-collect">收藏</a></div>
+
+<div class="local">
+    <div class="wrap">
+        <span class="local-icon icon-font"></span>
+        <a href="#">首页</a>
+        <em> &gt; </em>
+        <a href="#">${channel.name}</a>
+        <em> &gt; </em>
+        <span class="cur-page"><a href="#">${content.title}</a></span>
+    </div>
+</div>
+
+<div class="container">
+	  <div class="xueke-acticle">
+	 <h2>${content.title}</h2>
+      <p class="gray9 h2dt pt5"><span class="pr15">发布时间：${content.releaseDate}</span><span class="pr15">海南省中学语文教研网</span><span class="pr15 yuedu">浏览次数：</span><span id="views"></span> <span class="pr15 pinglun">评论 </span><a class="count" href="${base}/comment.jspx?contentId=${content.id}">${content.commentsCheckedNum!}</a></p>
     </div>
     <div class="content-txt">
-      ${txt!}
+      <p>${txt!}<p> 
     </div>
-    <div><a href="${base}/content/reward.jspx?contentId=${content.id}">打赏</a></div>
     <div class="content-link clearfix">
       <span class="prev-content"><i></i>上一篇：[@cms_content id=content.id next='1' channelId=channel.id][#if tag_bean??]<a href="${tag_bean.url}">[@text_cut s=tag_bean.title len=21 append='...'/]</a>[#else]没有了[/#if][/@cms_content]</span>
       <span class="next-content">下一篇：[@cms_content id=content.id next='0' channelId=channel.id][#if tag_bean??]<a href="${tag_bean.url}">[@text_cut s=tag_bean.title len=21 append='...'/]</a>[#else]没有了[/#if][/@cms_content]<i></i></span>
     </div>
 
-     <div><a  href="${base}/content/buy.jspx?contentId=${content.id}">打赏</a></div>
+	 <div class="news-comments">
+	<div >
+		 <h3>我有话要说</h3>	
+	</div>
     <section class="comments">
       <h1>评论<span>已有<a class="count">2037</a>条</span></h1>
       <textarea placeholder="发表你此时的观点和想法 ……" class="comments-text" id="comments-text"></textarea>
@@ -130,10 +131,16 @@ $(function(){
 			  })
 		  })
     </script>
-  </section>
-  [#include "../include/right310.html"/]
 </div>
-[#include "../include/footer.html"/]
-[#include "../include/right-fixed.html"/]
+<div class="footer">
+    <div class="wrap">
+        <div class="footer-content">
+            <p>海南省教育研究培训院  地址：海口市琼山区兴丹路26号  邮编：571100</p>
+            <p>&copy; HERSP. 琼ICP备08100406</p>
+        </div>
+    </div>
+</div>
+<script src="/${res}/js/jquery-1.9.0.min.js"></script>
+<script src="/${res}/js/main.js"></script>
 </body>
 </html>

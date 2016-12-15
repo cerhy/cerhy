@@ -299,3 +299,79 @@ h1 .position:before{width:12px; height:13px; display:inline-block; content:""; p
 .searchList .item .search-txt span{color:#ef3838;}
 .searchList .item .search-date{color:#333333; font-size:12px;}
 .searchList .item .search-date em{color:#bababa; margin:0 30px 0 15px;}
+
+/*文库样式开始*/
+.wenku_w910{width: 815px;
+    float: left;
+    margin-top: -41px;
+    margin-left: 97px;}
+.doc_js{padding:6px 24px; border:1px solid #e7e7e7; background-color:#fff; position:relative; margin-bottom:20px;}
+.doc_js_list{margin:18px 0;}
+.doc_js_list span{font-weight:bold; color:#777777; font-size:14px; margin-right:10px;}
+.doc_js_list label{color:#1a1a1a; font-size:14px; margin-right:20px;}
+.doc_js_btn{position:absolute; width:50px; height:26px; color:#fff; background-color:#3489d0; border-radius:3px; -moz-border-radius:3px; -o-border-radius:3px; -webkit-border-radius:3px; font-size:13px; bottom:22px; right:24px; cursor:pointer;}
+.doc_js_btn:hover{background-color:#3894e2;}
+
+.wenku_item{padding:20px 24px; border:1px solid #e7e7e7; background-color:#fff; margin-bottom:12px; cursor:pointer;}
+.wenku_item:hover{border:1px solid #a4c8e7; transition-duration:400ms; -moz-transition-duration:400ms; -webkit-transition-duration:400ms; -o-transition-duration:400ms;}
+.wenku_item .wenku_item_img{float:left; margin-right:18px;}
+.wenku_item .wenku_item_img img{width:136px; height:106px;}
+.wenku_item .wt{color:#1a1a1a; font-size:14px; margin-top:6px; font-weight:600;}
+.wenku_item .wt img{margin-left:8px;}
+.wenku_item .wc{color:#333333; font-size:12px; margin-top:14px;}
+.wenku_item .wc span{color:#ef3838;}
+.wenku_item .wc em{float:right;}
+.wenku_item .wd{color:#9d9d9d; font-size:12px; line-height:20px; margin-top:24px; position:relative;}
+.wenku_item .wd:before{width:708px; height:1px; content:""; background-color:#f0f0f0; position:absolute; right:0; top:-10px;}
+
+.wenku_hot{border:1px solid #e7e7e7; box-sizing:border-box; width:270px; float:right;}
+.wenku_hot h1{height:50px; background-color:#ffffff; border-bottom:1px solid #e7e7e7; box-sizing:border-box; padding:0 20px; line-height:50px; color:#1a1a1a; font-size:20px; font-weight:normal;}
+.wenku_hot_list{padding:20px 17px; background-color:#ffffff;}
+.wenku_hot_list li{padding-left:12px; line-height:20px; position:relative; margin-bottom:18px;}
+.wenku_hot_list li:before{content:""; position:absolute; left:0; top:7px; width:4px; height:4px; background-color:#3489d0; border-radius:100%; -moz-border-radius:100%; -o-border-radius:100%; -webkit-border-radius:100%;}
+.wenku_hot_list li a{color:#1a1a1a; font-size:14px;}
+.wenku_hot_list li a:hover{color:#3489d0;}
+
+.wenku_title{color:#1a1a1a; font-size:24px; font-weight:normal;}
+.wenku_title img{margin:4px 8px 0 0; float:left;}
+.wenku_inf{color:#666666; font-size:12px; margin:12px 0 16px;}
+.wenku_inf i{color:#d7d7d7; font-size:12px; margin:0 14px;}
+.wenku_des{padding:12px 22px; border:1px solid #e0e0e0; border-bottom:0px none; background-color:#f5f5f5; color:#999999; font-size:12px; line-height:20px;}
+.wenku_con{padding:18px 22px; border:1px solid #e0e0e0; background-color:#fff;}
+.wenku_con img{width:100%;}
+.wenku_bottom{margin-top:28px; text-align:center;}
+.wenku_bottom p{color:#333; font-size:16px;}
+.wenku_bottom p span{color:#ed7000; margin-left:4px;}
+.wenku_btn{display:inline-block; margin-top:16px;}
+.wenku_bottom a, .wenku_collect span{width:100px; height:38px; font-size:18px; text-align:center; line-height:38px; display:inline-block; cursor:pointer; box-sizing:border-box; -moz-box-sizing:border-box; -o-box-sizing:border-box; -webkit-box-sizing:border-box; border-radius:3px; -moz-border-radius:3px; -o-border-radius:3px; -webkit-border-radius:3px; float:left;}
+.wenku_bottom .wenku_collect{margin-right:20px;}
+.wenku_bottom .wenku_collect span{border:1px solid #3489d0; color:#3489d0;}
+.wenku_bottom .wenku_collect #cancelSpan{border:1px solid #3489d0; color:#fff; background-color:#3489d0;}
+.wenku_bottom .wenku_download{color:#fff; background-color:#ef3838;}
+.wenku_bottom .wenku_download:hover{background-color:#f45454;}
+/*文库样式结束*/
+
+.comments{margin-top:80px;}
+.comments h1{color:#1f1f1f; font-size:24px; font-weight:normal; position:relative;}
+.comments h1 span{color:#1f1f1f; font-size:14px; display:inline-block; position:absolute; right:0; bottom:0;}
+.comments h1 span .count{color:#ef3838;}
+.comments .comments-text{margin-top:20px; border:1px solid #cbcbcb; width:100%; height:130px; box-sizing:border-box; padding:10px;}
+.down{height:32px; line-height:32px; float:right;}
+.down .userImg{width:30px; height:30px; border-radius:100%; -moz-border-radius:100%; -o-border-radius:100%; -webkit-border-radius:100%; margin-right:17px; float:left;}
+.down span{color:#666666; font-size:15px;}
+.down span a{color:#00a2ff;}
+.down .submit-on{float:right; width:80px; height:32px; background-color:#ffb3b3; color:#fff; font-size:14px; border-radius:3px; -moz-border-radius:3px; -o-border-radius:3px; -webkit-border-radius:3px; cursor:text;}
+.down .submit-out{background-color:#ef3838; float:right; width:80px; height:32px; color:#fff; font-size:14px; border-radius:3px; -moz-border-radius:3px; -o-border-radius:3px; -webkit-border-radius:3px; cursor:pointer;}
+
+/*tag*/
+.w310{width:310px; float:right;}
+.tag .tag-nav{width:100%; border-bottom:2px solid #e7e7e7; padding-bottom:10px; position:relative;}
+.tag .tag-nav h1{color:#1a1a1a; font-weight:normal; position:relative; display:inline-block;}
+.tag .tag-nav h1:after{content:""; height:2px; width:100%; position:absolute; left:0; bottom:-12px; background-color:#ef3838;}
+.tag .tag-nav .change{right:0; bottom:7px; position:absolute; color:#999999; font-size:12px; line-height:14px;}
+.tag .tag-nav .change:hover i{-webkit-transform: rotateZ(180deg); -moz-transform: rotateZ(180deg); -o-transform: rotateZ(180deg);
+-ms-transform: rotateZ(180deg); transform: rotateZ(180deg);}
+.tag .tag-nav .change i{width:14px; height:14px; display:block; background:url(../images/change.png) no-repeat;-webkit-transition: -webkit-transform .5s ease-out; -moz-transition: -moz-transform .5s ease-out; -o-transition: -o-transform .5s ease-out; -ms-transition: -ms-transform .5s ease-out; float:left; margin-right:5px;}
+.tag .tagList{margin-top:15px;}
+.tag .tagList a{color:#1a1a1a; font-size:16px; padding:12px 19px; display:inline-block; float:left; margin:0 1px 1px 0; background:#e7e7e7; transition-duration:400ms; -moz-transition-duration:400ms; -webkit-transition-duration:400ms; -o-transition-duration:400ms;}
+.tag .tagList a:hover{background:#f7f7f7; transition-duration:400ms; -moz-transition-duration:400ms; -webkit-transition-duration:400ms; -o-transition-duration:400ms;}
