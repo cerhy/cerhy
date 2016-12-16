@@ -68,7 +68,7 @@ function HoverLi(x,y,m,n,counter){
                       <div class="tab-head clearfix">
                       		 [@cms_channel_list parentId='115' orderBy='1' count='4'  channelOption='0']
         						[#list tag_list as c]
-       						 <a  onmouseover="HoverLi('tc_','tcn_',1,${c_index+1},${tag_list?size});" [#if c_index<1]class="curr"[#else]class="normaltab"[/#if] id="tc_1${c_index+1}">${c.name}</a>
+       						 <a href="${c.url}" target="_blank" onmouseover="HoverLi('tc_','tcn_',1,${c_index+1},${tag_list?size});" [#if c_index<1]class="curr"[#else]class="normaltab"[/#if] id="tc_1${c_index+1}">${c.name}</a>
         					 [/#list]
        						 [/@cms_channel_list]      
        						         						
