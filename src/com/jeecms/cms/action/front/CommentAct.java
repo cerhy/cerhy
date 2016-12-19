@@ -122,7 +122,7 @@ public class CommentAct {
 		model.addAttribute("channel", channel);
 		FrontUtils.frontData(request, model, site);
 		return FrontUtils.getTplPath(request, site.getSolutionPath(),
-				COMMENT_CHANNEL_INPUT, COMMENT_INPUT);
+				TPLDIR_SPECIAL, COMMENT_INPUT);
 	}
 	
 	@RequestMapping(value = "/comment_list.jspx")
