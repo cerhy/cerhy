@@ -54,7 +54,7 @@
         });
     });
     </script>
-    [#elseif content.channel.commentControl==1 && !user??]
+    [#elseif content.channel.commentControl!=2 && !user??]
     [#--登录评论，且未登录--]
     <div class="down clearfix">
     <img src="/${res}/images/userImg.png" class="userImg"><span>

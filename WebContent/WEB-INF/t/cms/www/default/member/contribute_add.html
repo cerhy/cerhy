@@ -191,7 +191,7 @@ function changeModel(){
               <tr>
                 <td class="tggl-top">栏目</td>
                 <td>
-                <select name="channelId" class="member-change">
+                <select name="channelId" class="member-change" id="channelId">
                 <option value="" class="sel-disabled">--请选择--</option>
                 [#if channelList?size gt 0]
                 [#assign origDeep=channelList[0].deep+1/]
@@ -200,6 +200,12 @@ function changeModel(){
                 [/#list]
                 [/#if]
                 </select>
+                </td>
+              </tr>
+              <tr style="display: none;">
+                <td class="tggl-top">模板</td>
+                <td>
+                <input type="text" maxlength="150" class="member-change" style="width:300px;"  id="modelId" name="modelId" value="" />
                 </td>
               </tr>
               <tr>
@@ -360,3 +366,19 @@ function changeModel(){
 [#include "../include/footer.html"/]
 </body>
 </html>
+<script type="text/javascript">
+	$('#channelId').change(function() {
+		var channelId=$("#channelId option:selected").val()
+		$.ajax({
+	        url: "${base}/member/channelId.jspx?channelId="+channelId,
+	        type: "POST",
+	        dataType:"json",
+	        data: "",
+	        success: function (data) {
+	        	$("#modelId").val(data.status);
+	        }
+	    });
+		
+		
+	});
+</script>
