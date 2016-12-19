@@ -16,7 +16,8 @@
 		<property name="score"  column="score" type="integer" not-null="false" length="11"/>
 		<property name="replyCount"  column="reply_count" type="integer" not-null="false" length="11"/>
 		<one-to-one name="commentExt" class="CmsCommentExt" cascade="delete"/>
-		<many-to-one name="content" column="content_id" class="com.jeecms.cms.entity.main.Content" not-null="true"></many-to-one>
+		<many-to-one name="channel" column="channel_id" class="com.jeecms.cms.entity.main.Channel" not-null="false"></many-to-one>
+		<many-to-one name="content" column="content_id" class="com.jeecms.cms.entity.main.Content" not-null="false"></many-to-one>
 		<many-to-one name="replayUser" column="reply_user_id" class="com.jeecms.core.entity.CmsUser" not-null="false"></many-to-one>
 		<many-to-one name="commentUser" column="comment_user_id" class="com.jeecms.core.entity.CmsUser" not-null="false"></many-to-one>
 		<many-to-one name="site" column="site_id" class="com.jeecms.core.entity.CmsSite" not-null="true"></many-to-one>

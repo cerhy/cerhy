@@ -66,11 +66,13 @@ function optCheckCancel() {
 	<@p.column code="cmsComment.text" align="center">
 		<#if !cmsComment.checked><span style="color:red">[<@s.m "cmsComment.uncheck"/>]</span><br/></#if>
 		<#if cmsComment.recommend>[<span style="color:red"><@s.m "cmsComment.recommend"/></span>]</#if>
-		<a href="v_list.do?contentId=${cmsComment.content.id}">${cmsComment.text?html}</a>
+		<#if cmsComment.content??><a href="v_list.do?contentId=${cmsComment.content.id}">${cmsComment.text?html}</a></#if>
+		<#if cmsComment.channel??>${cmsComment.text?html}</#if>
 		<#if cmsComment.reply??><br/><span style="color:red">${cmsComment.reply?html}</span></#if>
 	</@p.column><#t/>
 	<@p.column code="cmsComment.doc" align="center">
-		<a href="${cmsComment.content.urlDynamic}" target="_blank" title="${cmsComment.content.title}">${cmsComment.content.title}</a>
+		<#if cmsComment.content??><a href="${cmsComment.content.urlDynamic}" target="_blank" title="${cmsComment.content.title}">${cmsComment.content.title}</a></#if>
+		<#if cmsComment.channel??><a href="${cmsComment.channel.urlDynamic!}" target="_blank" title="${cmsComment.channel.name}">${cmsComment.channel.name}</a></#if>
 	</@p.column><#t/>
 	<@p.column code="cmsComment.commentUser" align="center">
 		<#if (cmsComment.commentUser.username)??>${cmsComment.commentUser.username}<#else><@s.m "cmsComment.anonymity"/></#if><br/>

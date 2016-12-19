@@ -15,6 +15,10 @@ public interface CmsCommentDao{
 			Integer parentId,Integer greaterThen, Boolean checked, Boolean recommend,
 			boolean desc, int count, boolean cacheable);
 
+	public List<CmsComment> getList(Integer siteId,Integer channelId, Integer contentId,
+			Integer parentId,Integer greaterThen, Boolean checked, Boolean recommend,
+			boolean desc, int count, boolean cacheable);
+	
 	public CmsComment findById(Integer id);
 
 	public int deleteByContentId(Integer contentId);

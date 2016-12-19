@@ -39,7 +39,8 @@
               </tr>
               [#list pagination.list as c]
               <tr>
-                <td title="${c.content.title!}"><a href="${c.content.url!}" target="_blank">[@text_cut s=c.content.title len='15' append='...'/]</a></td>
+                [#if c.content??]<td title="${c.content.title!}"><a href="${c.content.url!}" target="_blank">[@text_cut s=c.content.title len='15' append='...'/]</a></td>[/#if]
+                [#if c.channel??]<td title="${c.channel.name!}"><a href="${c.channel.url!}" target="_blank">[@text_cut s=c.channel.name len='15' append='...'/]</a></td>[/#if]
                 <td>${c.createTime}</td>
                 <td title="${c.textHtml!}">[@text_cut s=c.textHtml len='25' append='...'/]</td>
                 <td>[#if c.replayTime??]<a href="comment_replay.jspx?id=${c.id}">查看回复</a>[/#if]</td>

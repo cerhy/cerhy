@@ -2,7 +2,11 @@ package com.jeecms.cms.action.member;
 import static com.jeecms.cms.Constants.TPLDIR_MEMBER;
 import static com.jeecms.cms.Constants.TPLDIR_BLOG;
 import java.io.IOException;
+
 import java.util.List;
+
+import java.io.UnsupportedEncodingException;
+
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
@@ -10,6 +14,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang.StringUtils;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -18,9 +24,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+
 import com.jeecms.cms.dao.main.impl.BlogDao;
 import com.jeecms.cms.entity.main.Columns;
+
+import com.jeecms.cms.entity.main.Channel;
+import com.jeecms.cms.entity.main.ContentCheck;
+
 import com.jeecms.cms.manager.assist.CmsFileMng;
+import com.jeecms.common.web.ResponseUtils;
 import com.jeecms.core.entity.CmsSite;
 import com.jeecms.core.entity.CmsUser;
 import com.jeecms.core.entity.Ftp;
@@ -345,6 +357,23 @@ public class ContributeAct extends AbstractContentMemberAct {
 			errors.addErrorCode("upload.error.dailylimit", laveSize);
 		}
 		return errors;
+	}
+	
+
+	//获取最上一级模板id
+	@RequestMapping(value = "/member/channelId.jspx")
+	public void aliPayOrderQuery(String channelId,HttpServletRequest request,
+			HttpServletResponse response, ModelMap model)
+					throws UnsupportedEncodingException, JSONException {
+		JSONObject json = new JSONObject();
+		CmsSite site=CmsUtils.getSite(request);
+		FrontUtils.frontData(request, model, site);
+		//获取上级栏目ID
+		Channel ids = channelMng.findById(Integer.valueOf(channelId));
+		if(null!=ids.getModel()){
+			json.put("status", ids.getModel().getId());
+		}
+		ResponseUtils.renderJson(response, json.toString());
 	}
 	
 	@Autowired

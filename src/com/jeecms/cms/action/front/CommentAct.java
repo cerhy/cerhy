@@ -2,6 +2,7 @@ package com.jeecms.cms.action.front;
 
 import static com.jeecms.cms.Constants.TPLDIR_CSI;
 import static com.jeecms.cms.Constants.TPLDIR_SPECIAL;
+import static com.jeecms.cms.Constants.TPLDIR_CHANNEL;
 
 import java.io.IOException;
 import java.util.List;
@@ -21,10 +22,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.jeecms.cms.entity.assist.CmsComment;
+import com.jeecms.cms.entity.main.Channel;
 import com.jeecms.cms.entity.main.ChannelExt;
 import com.jeecms.cms.entity.main.Content;
 import com.jeecms.cms.entity.main.ContentDoc;
 import com.jeecms.cms.manager.assist.CmsCommentMng;
+import com.jeecms.cms.manager.main.ChannelMng;
 import com.jeecms.cms.manager.main.ContentDocMng;
 import com.jeecms.cms.manager.main.ContentMng;
 import com.jeecms.common.web.RequestUtils;
@@ -44,6 +47,7 @@ public class CommentAct {
 	public static final String COMMENT_PAGE = "tpl.commentPage";
 	public static final String COMMENT_LIST = "tpl.commentList";
 	public static final String COMMENT_INPUT = "tpl.commentInput";
+	public static final String COMMENT_CHANNEL_INPUT = "tpl.commentChannelInput";
 
 	@RequestMapping(value = "/comment*.jspx", method = RequestMethod.GET)
 	public String page(Integer contentId, Integer pageNo,
@@ -96,8 +100,33 @@ public class CommentAct {
 				TPLDIR_SPECIAL, COMMENT_INPUT);
 	}
 
+	@RequestMapping(value = "/comment_input_channel.jspx")
+	public String channelCustom(String tpl,Integer channelId, HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		log.debug("visit csi custom template: {}", tpl);
+		CmsSite site = CmsUtils.getSite(request);
+		if(channelId==null){
+			return FrontUtils.showMessage(request, model,
+			"comment.channelNotFound");
+		}
+		Channel channel = channelMng.findById(channelId);
+		if (channel == null) {
+			return FrontUtils.showMessage(request, model,
+					"comment.channelNotFound");
+		}
+		if (channel.getCommentControl() == ChannelExt.COMMENT_OFF) {
+			return FrontUtils.showMessage(request, model, "comment.closed");
+		}
+		// 将request中所有参数保存至model中。
+		model.putAll(RequestUtils.getQueryParams(request));
+		model.addAttribute("channel", channel);
+		FrontUtils.frontData(request, model, site);
+		return FrontUtils.getTplPath(request, site.getSolutionPath(),
+				TPLDIR_SPECIAL, COMMENT_INPUT);
+	}
+	
 	@RequestMapping(value = "/comment_list.jspx")
-	public String list(Integer siteId, Integer contentId, Integer parentId,
+	public String list(Integer siteId,Integer contentId, Integer parentId,
 			Integer greatTo,Integer recommend, Integer checked, 
 			Integer orderBy, Integer count,
 			HttpServletRequest request, HttpServletResponse response,
@@ -123,7 +152,7 @@ public class CommentAct {
 		} else {
 			chk = null;
 		}
-		List<CmsComment> list = cmsCommentMng.getListForTag(siteId, contentId,
+		List<CmsComment> list = cmsCommentMng.getListForTag(siteId,contentId,
 				parentId,greatTo, chk, rec, desc, count);
 		// 将request中所有参数
 		model.putAll(RequestUtils.getQueryParams(request));
@@ -131,10 +160,66 @@ public class CommentAct {
 		model.addAttribute("contentId", contentId);
 		CmsSite site = CmsUtils.getSite(request);
 		FrontUtils.frontData(request, model, site);
+		
 		return FrontUtils.getTplPath(request, site.getSolutionPath(),
 				TPLDIR_CSI, COMMENT_LIST);
 	}
 
+	/**
+	 * 获取栏目评论列表
+	 * @param siteId
+	 * @param channelId
+	 * @param contentId
+	 * @param parentId
+	 * @param greatTo
+	 * @param recommend
+	 * @param checked
+	 * @param orderBy
+	 * @param count
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "/comment_channel_list.jspx")
+	public String listChannel(Integer siteId, Integer channelId,Integer parentId,
+			Integer greatTo,Integer recommend, Integer checked, 
+			Integer orderBy, Integer count,
+			HttpServletRequest request, HttpServletResponse response,
+			ModelMap model) {
+		if (count == null || count <= 0 || count > 200) {
+			count = 200;
+		}
+		boolean desc;
+		if (orderBy == null || orderBy == 0) {
+			desc = true;
+		} else {
+			desc = false;
+		}
+		Boolean rec;
+		if (recommend != null) {
+			rec = recommend != 0;
+		} else {
+			rec = null;
+		}
+		Boolean chk;
+		if (checked != null) {
+			chk = checked != 0;
+		} else {
+			chk = null;
+		}
+		List<CmsComment> list = cmsCommentMng.getListForTag(siteId, channelId,null,
+				parentId,greatTo, chk, rec, desc, count);
+		// 将request中所有参数
+		model.putAll(RequestUtils.getQueryParams(request));
+		model.addAttribute("list", list);
+		model.addAttribute("channelId", channelId);
+		CmsSite site = CmsUtils.getSite(request);
+		FrontUtils.frontData(request, model, site);
+		return FrontUtils.getTplPath(request, site.getSolutionPath(),
+				TPLDIR_CHANNEL, COMMENT_LIST);
+	}
+	
 	@RequestMapping(value = "/comment.jspx", method = RequestMethod.POST)
 	public void submit(Integer contentId, Integer parentId,Integer score,
 			String text, String captcha,String sessionId,
@@ -213,6 +298,98 @@ public class CommentAct {
 		ResponseUtils.renderJson(response, json.toString());
 	}
 
+	/**
+	 * 栏目评论
+	 * @param contentId
+	 * @param parentId
+	 * @param score
+	 * @param text
+	 * @param captcha
+	 * @param sessionId
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @throws JSONException
+	 * @throws IOException
+	 */
+	@RequestMapping(value = "/comment_channel.jspx", method = RequestMethod.POST)
+	public void submitChannel(Integer channelId, Integer parentId,Integer score,
+			String text, String captcha,String sessionId,
+			HttpServletRequest request, HttpServletResponse response,
+			ModelMap model) throws JSONException, IOException {
+		CmsSite site = CmsUtils.getSite(request);
+		CmsUser user = CmsUtils.getUser(request);
+		JSONObject json = new JSONObject();
+		if (channelId == null) {
+			json.put("success", false);
+			json.put("status", 100);
+			ResponseUtils.renderJson(response, json.toString());
+			return;
+		}
+		if (StringUtils.isBlank(text)) {
+			json.put("success", false);
+			json.put("status", 101);
+			ResponseUtils.renderJson(response, json.toString());
+			return;
+		}
+		if (user == null || user.getGroup().getNeedCaptcha()) {
+			// 验证码错误
+			try {
+				if (!imageCaptchaService.validateResponseForID(session
+						.getSessionId(request, response), captcha)) {
+					json.put("success", false);
+					json.put("status", 1);
+					ResponseUtils.renderJson(response, json.toString());
+					return;
+				}
+			} catch (CaptchaServiceException e) {
+				json.put("success", false);
+				json.put("status", 1);
+				log.warn("", e);
+				ResponseUtils.renderJson(response, json.toString());
+				return;
+			}
+		}
+		Channel channel = channelMng.findById(channelId);
+		if (channel == null) {
+			// 栏目不存在
+			json.put("success", false);
+			json.put("status", 2);
+		} else if (channel.getCommentControl() == ChannelExt.COMMENT_OFF) {
+			// 评论关闭
+			json.put("success", false);
+			json.put("status", 3);
+		} else if ((channel.getCommentControl() == ChannelExt.COMMENT_LOGIN|channel.getCommentControl() == ChannelExt.COMMENT_LOGIN_MANY)
+				&& user == null) {
+			// 需要登录才能评论
+			json.put("success", false);
+			json.put("status", 4);
+		}else if(channel.getCommentControl() == ChannelExt.COMMENT_LOGIN&&user!=null){
+			if (hasCommented(user, channel)) {
+				// 已经评论过，不能重复评论
+				json.put("success", false);
+				json.put("status", 5);
+			}
+		}else {
+			boolean checked = false;
+			Integer userId = null;
+			if (user != null) {
+				checked = !user.getGroup().getNeedCheck();
+				userId = user.getId();
+			}
+//			ContentDoc doc=content.getContentDoc();
+//			if(doc!=null){
+//				doc.setAvgScore(getNewAvgScore(content, score));
+//				contentDocMng.update(doc,content);
+//			}
+			cmsCommentMng.commentChannel(score,text, RequestUtils.getIpAddr(request),
+					channelId, site.getId(), userId, true, true, parentId);
+			json.put("success", true);
+			json.put("status", 0);
+		}
+		ResponseUtils.renderJson(response, json.toString());
+	}
+	
 	@RequestMapping(value = "/comment_up.jspx")
 	public void up(Integer commentId, HttpServletRequest request,
 			HttpServletResponse response) {
@@ -249,6 +426,20 @@ public class CommentAct {
 			return false;
 		}
 	}
+	
+	/**
+	 * 检查栏目是否已经评论过
+	 * @param user
+	 * @param content
+	 * @return
+	 */
+	private boolean hasCommented(CmsUser user, Channel channel) {
+		if (channel.hasCommentUser(user)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 
 	private boolean exist(Integer id) {
 		if (id == null) {
@@ -268,4 +459,6 @@ public class CommentAct {
 	private SessionProvider session;
 	@Autowired
 	private ImageCaptchaService imageCaptchaService;
+	@Autowired
+	private ChannelMng channelMng;
 }

@@ -29,7 +29,7 @@
   				 
 		      	 <a class="comments-hf" id="commentreply_${c.id}" onclick="Cms.commentInputLoad('${base}','commentInputDiv_','commentInputDiv_${c.id}','${contentId!}','${c.id}')">回复</a>
 				  [#if c.replyCount>0]
-				  <span id="commentviewreply_${c.id}" onclick="Cms.commentListMore('${base}','commentDialog',{parentId:${c.id},contentId:${contentId!},orderBy:0,count:5,checked:1})">查看回复(${c.replyCount!})</span>
+				  <span style="cursor: pointer" id="commentviewreply_${c.id}" onclick="Cms.commentListMore('${base}','commentDialog',{parentId:${c.id},contentId:${contentId!},orderBy:0,count:5,checked:1})">查看回复(${c.replyCount!})</span>
 				  [/#if]
 				  <div id="commentInputDiv_${c.id}"></div>
 	      </div>
