@@ -99,6 +99,31 @@ public class CommentAct {
 				TPLDIR_SPECIAL, COMMENT_INPUT);
 	}
 
+	@RequestMapping(value = "/comment_input_channel.jspx")
+	public String channelCustom(String tpl,Integer channelId, HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		log.debug("visit csi custom template: {}", tpl);
+		CmsSite site = CmsUtils.getSite(request);
+		if(channelId==null){
+			return FrontUtils.showMessage(request, model,
+			"comment.contentNotFound");
+		}
+		Channel channel = channelMng.findById(channelId);
+		if (channel == null) {
+			return FrontUtils.showMessage(request, model,
+					"comment.contentNotFound");
+		}
+		if (channel.getCommentControl() == ChannelExt.COMMENT_OFF) {
+			return FrontUtils.showMessage(request, model, "comment.closed");
+		}
+		// 将request中所有参数保存至model中。
+		model.putAll(RequestUtils.getQueryParams(request));
+		model.addAttribute("channel", channel);
+		FrontUtils.frontData(request, model, site);
+		return FrontUtils.getTplPath(request, site.getSolutionPath(),
+				TPLDIR_SPECIAL, COMMENT_INPUT);
+	}
+	
 	@RequestMapping(value = "/comment_list.jspx")
 	public String list(Integer siteId,Integer contentId, Integer parentId,
 			Integer greatTo,Integer recommend, Integer checked, 
@@ -134,8 +159,9 @@ public class CommentAct {
 		model.addAttribute("contentId", contentId);
 		CmsSite site = CmsUtils.getSite(request);
 		FrontUtils.frontData(request, model, site);
+		
 		return FrontUtils.getTplPath(request, site.getSolutionPath(),
-				TPLDIR_CHANNEL, COMMENT_LIST);
+				TPLDIR_CSI, COMMENT_LIST);
 	}
 
 	/**
@@ -190,7 +216,7 @@ public class CommentAct {
 		CmsSite site = CmsUtils.getSite(request);
 		FrontUtils.frontData(request, model, site);
 		return FrontUtils.getTplPath(request, site.getSolutionPath(),
-				TPLDIR_CSI, COMMENT_LIST);
+				TPLDIR_CHANNEL, COMMENT_LIST);
 	}
 	
 	@RequestMapping(value = "/comment.jspx", method = RequestMethod.POST)
