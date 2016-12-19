@@ -103,7 +103,7 @@ public abstract class BaseChannel  implements Serializable {
 	private java.util.List<com.jeecms.cms.entity.main.ChannelModel> channelModels;
 	private java.util.Map<java.lang.String, java.lang.String> attr;
 	private java.util.Set<com.jeecms.cms.entity.main.ContentShareCheck> contentShareCheckSet;
-
+	private java.util.Set<com.jeecms.cms.entity.assist.CmsComment> comments;
 
 
 	/**
@@ -453,7 +453,17 @@ public abstract class BaseChannel  implements Serializable {
 		return this.hashCode;
 	}
 
-
+	/**
+	 * 检查栏目有没有评论过
+	 * @return
+	 */
+	public java.util.Set<com.jeecms.cms.entity.assist.CmsComment> getComments() {
+		return comments;
+	}
+	public void setComments(
+			java.util.Set<com.jeecms.cms.entity.assist.CmsComment> comments) {
+		this.comments = comments;
+	}
 	public String toString () {
 		return super.toString();
 	}
