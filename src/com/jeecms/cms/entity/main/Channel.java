@@ -6,6 +6,7 @@ import static com.jeecms.common.web.Constants.SPT;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
@@ -13,6 +14,7 @@ import java.util.TreeSet;
 
 import org.apache.commons.lang.StringUtils;
 
+import com.jeecms.cms.entity.assist.CmsComment;
 import com.jeecms.cms.entity.main.base.BaseChannel;
 import com.jeecms.cms.staticpage.StaticPageUtils;
 import com.jeecms.common.hibernate4.HibernateTree;
@@ -1189,6 +1191,26 @@ public class Channel extends BaseChannel implements HibernateTree<Integer>,
 			ids[i++] = c.getId();
 		}
 		return ids;
+	}
+	
+	/**
+	 * 检查栏目是否已经评论过
+	 * @param user
+	 * @return
+	 */
+	public boolean hasCommentUser(CmsUser user){
+		Set<CmsComment>comments=getComments();
+		if(comments==null){
+			return false;
+		}
+		Iterator<CmsComment>it=comments.iterator();
+		while(it.hasNext()){
+			CmsComment comment=it.next();
+			if(comment.getCommentUser()!=null&&comment.getCommentUser().equals(user)){
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	public  void removeViewGroup(CmsGroup group) {

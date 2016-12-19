@@ -86,6 +86,32 @@ public class CmsComment extends BaseCmsComment {
 			checked);
 	}
 
+	
+	/**
+	 * Constructor for required fields
+	 */
+	public CmsComment (
+		java.lang.Integer id,
+		com.jeecms.cms.entity.main.Channel channel,
+		com.jeecms.cms.entity.main.Content content,
+		com.jeecms.core.entity.CmsSite site,
+		java.util.Date createTime,
+		java.lang.Short ups,
+		java.lang.Short downs,
+		java.lang.Boolean recommend,
+		java.lang.Boolean checked) {
+
+		super (
+			id,
+			channel,
+			content,
+			site,
+			createTime,
+			ups,
+			downs,
+			recommend,
+			checked);
+	}
 	/* [CONSTRUCTOR MARKER END] */
 
 }

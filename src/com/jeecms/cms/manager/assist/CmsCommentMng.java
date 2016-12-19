@@ -47,9 +47,28 @@ public interface CmsCommentMng {
 			Integer parentId,Integer greaterThen, Boolean checked, Boolean recommend,
 			boolean desc, int count);
 
+	public List<CmsComment> getListForTag(Integer siteId,Integer channelId, Integer contentId,
+			Integer parentId,Integer greaterThen, Boolean checked, Boolean recommend,
+			boolean desc, int count);
+	
 	public CmsComment findById(Integer id);
 
 	public CmsComment comment(Integer score,String text, String ip, Integer contentId,
+			Integer siteId, Integer userId, boolean checked, boolean recommend,Integer parentId);
+	/**
+	 * 栏目评论
+	 * @param score
+	 * @param text
+	 * @param ip
+	 * @param contentId
+	 * @param siteId
+	 * @param userId
+	 * @param checked
+	 * @param recommend
+	 * @param parentId
+	 * @return
+	 */
+	public CmsComment commentChannel(Integer score,String text, String ip, Integer contentId,
 			Integer siteId, Integer userId, boolean checked, boolean recommend,Integer parentId);
 
 	public CmsComment update(CmsComment bean, CmsCommentExt ext);

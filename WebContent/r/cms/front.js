@@ -172,6 +172,15 @@ Cms.commentList = function(base, c, options) {
 	c = c || "commentListDiv";
 	$("#" + c).load(base + "/comment_list.jspx", options);
 }
+
+/**
+ * 获取栏目评论
+ */
+Cms.commentChannelList = function(base, c, options) {
+	c = c || "commentListDiv";
+	$("#" + c).load(base + "/comment_channel_list.jspx", options);
+}
+
 Cms.commentListMore = function(base, c, options) {
 	c = c || "commentListDiv";
 	$("#" + c).load(base + "/comment_list.jspx", options);
