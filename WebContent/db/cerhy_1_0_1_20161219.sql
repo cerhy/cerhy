@@ -1,4 +1,4 @@
-drop table `jc_comment_ext`
+drop table `jc_comment_ext`;
 drop table `jc_comment`;
 
 CREATE TABLE `jc_comment` (
