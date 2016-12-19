@@ -22,7 +22,8 @@ $(function() {
 </div>
 <div class="body-box">
 <@p.form id="jvForm" action="o_update.do" labelWidth="12" class="formDefStyle">
-<@p.td colspan="2" label="cmsComment.doc">${cmsComment.content.title}</@p.td><@p.tr/>
+<#if cmsComment.content??><@p.td colspan="2" label="cmsComment.doc">${cmsComment.content.title}</@p.td></#if><@p.tr/>
+<#if cmsComment.channel??><@p.td colspan="2" label="栏目">${cmsComment.channel.name}</@p.td></#if><@p.tr/>
 <@p.td width="50" colspan="1" label="cmsComment.commentUser"><#if (cmsComment.commentUser.username)??>${cmsComment.commentUser.username}<#else><@s.m "cmsComment.anonymity"/></#if></@p.td>
 <@p.td width="50" colspan="1" label="cmsComment.createTime">${cmsComment.createTime}<br/>${cmsComment.ip}</@p.td><@p.tr/>
 <@p.radio width="50" colspan="1" label="cmsComment.checked" name="checked" value=cmsComment.checked list={"true":"global.true","false":"global.false"}/>

@@ -51,9 +51,16 @@ function qkeypress(){
                     <li><a href="#">素质测评</a><em></em></li>
                     <li><a href="#">官方客服</a><em></em></li>
                     <li><a href="#">官方微信</a><em></em></li>
-         			[#if user??]<div class="login-user"><a>[#if user.userImg??]<img src="${user.userImg}">[#else]<img src="/${res}/images/userImg.png">[/#if]${user.username}</a><div class="user-child"><a href="${base}/member/index.jspx">会员中心</a><a href="${base}/logout.jspx">退出账号</a></div></div>[#else]
-      				<li><a href="${base}/login.jspx">登录</a><em></em></li>
-      				<li><a href="${base}/register.jspx">注册</a></li>
+         			[#if user??]
+	         			<div class="login-user">
+		         			<a>[#if user.userImg??]<img src="${user.userImg}">[#else][/#if]${user.username}</a>
+		         			<div class="user-child">
+			         			<a href="${base}/member/index.jspx">会员中心</a>
+			         			<a href="${base}/logout.jspx">退出账号</a>
+		         			</div>
+	         			</div>
+         			[#else]
+      					<li><a href="${base}/login.jspx">登录</a></li>
      				[/#if]                   
                 </ul>
 			</div>

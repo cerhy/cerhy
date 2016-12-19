@@ -21,7 +21,7 @@ CKEDITOR.editorConfig = function( config ) {
 	        ['Link','Unlink','Anchor'],  
 	        ['Maximize','autoformat','-'], 
 		    ['Image','Flash','Table','HorizontalRule','Smiley','SpecialChar'],  
-		    [ 'Page' ]
+		    [ 'Page','-','Templates' ]
 	    ];  
       	config.toolbar_Full = [
       		{ name: 'document', items : [ 'Source','-','Save','NewPage','DocProps','Preview','Print','-','Templates' ] },

@@ -66,6 +66,32 @@ public abstract class BaseCmsComment  implements Serializable {
 		initialize();
 	}
 
+	
+	/**
+	 * Constructor for required fields + 栏目
+	 */
+	public BaseCmsComment (
+		java.lang.Integer id,
+		com.jeecms.cms.entity.main.Channel channel,
+		com.jeecms.cms.entity.main.Content content,
+		com.jeecms.core.entity.CmsSite site,
+		java.util.Date createTime,
+		java.lang.Short ups,
+		java.lang.Short downs,
+		java.lang.Boolean recommend,
+		java.lang.Boolean checked) {
+
+		this.setId(id);
+		this.setContent(content);
+		this.setSite(site);
+		this.setCreateTime(createTime);
+		this.setUps(ups);
+		this.setDowns(downs);
+		this.setRecommend(recommend);
+		this.setChecked(checked);
+		initialize();
+	}
+	
 	protected void initialize () {}
 
 
@@ -92,6 +118,17 @@ public abstract class BaseCmsComment  implements Serializable {
 
 	// many to one
 	private com.jeecms.core.entity.CmsUser replayUser;
+	private com.jeecms.cms.entity.main.Channel channel;
+	public com.jeecms.cms.entity.main.Channel getChannel() {
+		return channel;
+	}
+
+	public void setChannel(com.jeecms.cms.entity.main.Channel channel) {
+		this.channel = channel;
+	}
+
+
+
 	private com.jeecms.cms.entity.main.Content content;
 	private com.jeecms.core.entity.CmsUser commentUser;
 	private com.jeecms.core.entity.CmsSite site;
@@ -345,6 +382,4 @@ public abstract class BaseCmsComment  implements Serializable {
 	public String toString () {
 		return super.toString();
 	}
-
-
 }

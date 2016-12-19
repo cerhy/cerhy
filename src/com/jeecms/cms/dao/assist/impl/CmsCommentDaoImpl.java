@@ -30,6 +30,19 @@ public class CmsCommentDaoImpl extends HibernateBaseDao<CmsComment, Integer>
 		f.setMaxResults(count);
 		return find(f);
 	}
+	/**
+	 * 栏目评论列表
+	 */
+	@SuppressWarnings("unchecked")
+	public List<CmsComment> getList(Integer siteId,Integer channelId, Integer contentId,
+			Integer parentId,Integer greaterThen, Boolean checked, Boolean recommend,
+			boolean desc, int count, boolean cacheable) {
+		Finder f = getFinder(siteId,channelId, contentId,parentId,null,null,greaterThen, checked,
+				recommend, desc, cacheable);
+		f.setMaxResults(count);
+		return find(f);
+	}
+	
 	public Pagination getPageForMember(Integer siteId, Integer contentId,Integer toUserId,Integer fromUserId,
 			Integer greaterThen, Boolean checked, Boolean recommend,
 			boolean desc, int pageNo, int pageSize,boolean cacheable){
@@ -101,6 +114,58 @@ public class CmsCommentDaoImpl extends HibernateBaseDao<CmsComment, Integer>
 		return f;
 	}
 
+	/**
+	 * 栏目评论
+	 */
+	private Finder getFinder(Integer siteId, Integer channelId,Integer contentId,
+			Integer parentId,Integer toUserId,Integer fromUserId,
+			Integer greaterThen, Boolean checked, Boolean recommend,
+			boolean desc, boolean cacheable) {
+		Finder f = Finder.create("from CmsComment bean where 1=1");
+		if(parentId!=null){
+			f.append(" and bean.parent.id=:parentId");
+			f.setParam("parentId", parentId);
+		}else if (contentId != null) {
+			//按照内容ID来查询对内容的直接评论
+			f.append(" and (bean.content.id=:contentId and bean.parent is null )");
+			f.setParam("contentId", contentId);
+		} else if (siteId != null) {
+			f.append(" and bean.site.id=:siteId");
+			f.setParam("siteId", siteId);
+		}
+		else if (channelId != null) {
+			//按照栏目ID来查询对内容的直接评论
+			f.append(" and (bean.channel.id=:channelId and bean.parent is null )");
+			f.setParam("channelId", channelId);
+		}
+		if(toUserId!=null){
+			f.append(" and bean.commentUser.id=:commentUserId");
+			f.setParam("commentUserId", toUserId);
+		}else if(fromUserId!=null){
+			f.append(" and bean.content.user.id=:fromUserId");
+			f.setParam("fromUserId", fromUserId);
+		}
+		if (greaterThen != null) {
+			f.append(" and bean.ups>=:greatTo");
+			f.setParam("greatTo", greaterThen);
+		}
+		if (checked != null) {
+			f.append(" and bean.checked=:checked");
+			f.setParam("checked", checked);
+		}
+		if(recommend!=null){
+			f.append(" and bean.recommend=:recommend");
+			f.setParam("recommend", recommend);
+		}
+		if (desc) {
+			f.append(" order by bean.id desc");
+		} else {
+			f.append(" order by bean.id asc");
+		}
+		f.setCacheable(cacheable);
+		return f;
+	}
+	
 	public CmsComment findById(Integer id) {
 		CmsComment entity = get(id);
 		return entity;

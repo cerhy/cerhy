@@ -12,6 +12,7 @@ import com.jeecms.cms.entity.assist.CmsCommentExt;
 import com.jeecms.cms.manager.assist.CmsCommentExtMng;
 import com.jeecms.cms.manager.assist.CmsCommentMng;
 import com.jeecms.cms.manager.assist.CmsSensitivityMng;
+import com.jeecms.cms.manager.main.ChannelMng;
 import com.jeecms.cms.manager.main.ContentCountMng;
 import com.jeecms.cms.manager.main.ContentMng;
 import com.jeecms.common.hibernate4.Updater;
@@ -62,6 +63,14 @@ public class CmsCommentMngImpl implements CmsCommentMng {
 	}
 
 	@Transactional(readOnly = true)
+	public List<CmsComment> getListForTag(Integer siteId,Integer channelId, Integer contentId,
+			Integer parentId,Integer greaterThen, Boolean checked, Boolean recommend,
+			boolean desc, int count) {
+		return dao.getList(siteId,channelId, contentId,parentId,greaterThen, checked, recommend,
+				desc, count, true);
+	}
+	
+	@Transactional(readOnly = true)
 	public CmsComment findById(Integer id) {
 		CmsComment entity = dao.findById(id);
 		return entity;
@@ -92,6 +101,34 @@ public class CmsCommentMngImpl implements CmsCommentMng {
 		return comment;
 	}
 
+	/**
+	 * 栏目评论保存
+	 */
+	public CmsComment commentChannel(Integer score,String text, String ip, Integer channelId,
+			Integer siteId, Integer userId, boolean checked, boolean recommend,Integer parentId) {
+		CmsComment comment = new CmsComment();
+		comment.setChannel(channelMng.findById(channelId));
+		comment.setSite(cmsSiteMng.findById(siteId));
+		if (userId != null) {
+			comment.setCommentUser(cmsUserMng.findById(userId));
+		}
+		comment.setChecked(checked);
+		comment.setRecommend(recommend);
+		comment.setScore(score);
+		comment.init();
+		if(parentId!=null){
+			CmsComment parent=findById(parentId);
+			comment.setParent(parent);
+			parent.setReplyCount(parent.getReplyCount()+1);
+			update(parent, parent.getCommentExt());
+		}
+		dao.save(comment);
+		text = cmsSensitivityMng.replaceSensitivity(text);
+		cmsCommentExtMng.save(ip, text, comment);
+	//	contentCountMng.commentCount(contentId);
+		return comment;
+	}
+	
 	public CmsComment update(CmsComment bean, CmsCommentExt ext) {
 		Updater<CmsComment> updater = new Updater<CmsComment>(bean);
 		bean = dao.updateByUpdater(updater);
@@ -148,10 +185,18 @@ public class CmsCommentMngImpl implements CmsCommentMng {
 	private CmsUserMng cmsUserMng;
 	private CmsSiteMng cmsSiteMng;
 	private ContentMng contentMng;
+	
+
 	private ContentCountMng contentCountMng;
 	private CmsCommentExtMng cmsCommentExtMng;
 	private CmsCommentDao dao;
+	private ChannelMng channelMng;
 
+	@Autowired
+	public void setChannelMng(ChannelMng channelMng) {
+		this.channelMng = channelMng;
+	}
+	
 	@Autowired
 	public void setCmsSensitivityMng(CmsSensitivityMng cmsSensitivityMng) {
 		this.cmsSensitivityMng = cmsSensitivityMng;
