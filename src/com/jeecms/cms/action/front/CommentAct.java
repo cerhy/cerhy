@@ -47,6 +47,7 @@ public class CommentAct {
 	public static final String COMMENT_PAGE = "tpl.commentPage";
 	public static final String COMMENT_LIST = "tpl.commentList";
 	public static final String COMMENT_INPUT = "tpl.commentInput";
+	public static final String COMMENT_CHANNEL_INPUT = "tpl.commentChannelInput";
 
 	@RequestMapping(value = "/comment*.jspx", method = RequestMethod.GET)
 	public String page(Integer contentId, Integer pageNo,
@@ -106,12 +107,12 @@ public class CommentAct {
 		CmsSite site = CmsUtils.getSite(request);
 		if(channelId==null){
 			return FrontUtils.showMessage(request, model,
-			"comment.contentNotFound");
+			"comment.channelNotFound");
 		}
 		Channel channel = channelMng.findById(channelId);
 		if (channel == null) {
 			return FrontUtils.showMessage(request, model,
-					"comment.contentNotFound");
+					"comment.channelNotFound");
 		}
 		if (channel.getCommentControl() == ChannelExt.COMMENT_OFF) {
 			return FrontUtils.showMessage(request, model, "comment.closed");
@@ -121,7 +122,7 @@ public class CommentAct {
 		model.addAttribute("channel", channel);
 		FrontUtils.frontData(request, model, site);
 		return FrontUtils.getTplPath(request, site.getSolutionPath(),
-				TPLDIR_SPECIAL, COMMENT_INPUT);
+				COMMENT_CHANNEL_INPUT, COMMENT_INPUT);
 	}
 	
 	@RequestMapping(value = "/comment_list.jspx")

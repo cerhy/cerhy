@@ -186,6 +186,12 @@ Cms.commentListMore = function(base, c, options) {
 	$("#" + c).load(base + "/comment_list.jspx", options);
 	$('#commentDialog').dialog('open');
 }
+
+Cms.commentListChannelMore = function(base, c, options) {
+	c = c || "commentListDiv";
+	$("#" + c).load(base + "/comment_channel_list.jspx", options);
+	$('#commentDialog').dialog('open');
+}
 /**
  * 评论顶
  */
@@ -231,6 +237,19 @@ Cms.commentInputLoad= function(base,commentInputCsiPrefix,commentInputCsiDiv,con
 	$("div[id^='"+commentInputCsiPrefix+"']").html("");
 	Cms.commentInputCsi(base,commentInputCsiDiv,contentId,commemtId);
 }
+
+/**
+ * 栏目评论输入框
+ */
+Cms.commentChannelInputCsi = function(base,commentInputCsiDiv, channelId,commemtId) {
+	commentInputCsiDiv = commentInputCsiDiv || "commentInputCsiDiv";
+	$("#"+commentInputCsiDiv).load(base+"/comment_input_channel.jspx?channelId="+channelId+"&commemtId="+commemtId);
+}
+Cms.commentChannelInputLoad= function(base,commentInputCsiPrefix,commentInputCsiDiv,channelId,commemtId) {
+	$("div[id^='"+commentInputCsiPrefix+"']").html("");
+	Cms.commentChannelInputCsi(base,commentInputCsiDiv,channelId,commemtId);
+}
+
 /**
  * 是否是微信打开
  */
