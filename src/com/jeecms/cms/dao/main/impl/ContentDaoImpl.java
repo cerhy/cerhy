@@ -88,6 +88,50 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 		return find(f, pageNo, pageSize);
 	}
 	
+	public Pagination getPage_blog(String title, Integer typeId,Integer currUserId,
+			Integer inputUserId, boolean topLevel, boolean recommend,
+			ContentStatus status, Byte checkStep, Integer siteId,Integer modelId,
+			Integer channelId,int orderBy, int pageNo, int pageSize) {
+		
+		Finder f = Finder.create("select  bean from Content bean left join bean.contentShareCheckSet shareCheck left join shareCheck.channel tarChannel ");
+		if (rejected == status) {
+			f.append("  join bean.contentCheckSet check ");
+		}
+		if (prepared == status|| passed == status) {
+			f.append("  join bean.eventSet event  ");
+		}
+		if (channelId != null) {
+			f.append(" join bean.channel channel,Channel parent");
+			f.append(" where ((channel.lft between parent.lft and parent.rgt");
+			f.append(" and channel.site.id=parent.site.id");
+			f.append(" and parent.id=:parentId)   or (shareCheck.checkStatus<>0 and shareCheck.shareValid=true and  tarChannel.lft between parent.lft and parent.rgt and tarChannel.site.id=parent.site.id and parent.id=:parentId))");
+			f.setParam("parentId", channelId);
+		} else if (siteId != null) {
+			f.append(" where (bean.site.id=:siteId  or (shareCheck.checkStatus<>0 and shareCheck.shareValid=true and tarChannel.site.id=:siteId))");
+			f.setParam("siteId", siteId);
+		} else {
+			f.append(" where 1=1");
+		}
+		//跳级审核人不应该看到？
+		if (passed == status) {
+			//操作人不在待审人列表中且非终审 或非发起人
+			f.append("  and ((:operateId not in(select eventUser.user.id from CmsWorkflowEventUser eventUser where eventUser.event.id=event.id) and event.initiator.id!=:operateId) or event.initiator.id=:operateId) and event.nextStep!=-1").setParam("operateId", currUserId);
+		}
+		/*if (prepared == status) {
+			//操作人在待审人列表中
+			f.append("  and :operateId in(select eventUser.user.id from CmsWorkflowEventUser eventUser where eventUser.event.id=event.id)").setParam("operateId", currUserId);
+		}*/
+		if (rejected == status) {
+			f.append(" and check.rejected=true");
+		}
+		if(modelId!=null){
+			f.append(" and bean.model.id=:modelId").setParam("modelId", modelId);
+		}
+		
+		appendQuery_blog(f, title, typeId, inputUserId, status, topLevel, recommend);
+		appendOrder(f, orderBy);
+		return find(f, pageNo, pageSize);
+	}
 
 	//只能管理自己的数据不能审核他人信息，工作流相关表无需查询
 	public Pagination getPageBySelf(String title, Integer typeId,
@@ -229,6 +273,57 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 		return find(f);
 	}
 
+	private void appendQuery_blog(Finder f, String title, Integer typeId,
+			Integer inputUserId, ContentStatus status, boolean topLevel,
+			boolean recommend) {
+		if (!StringUtils.isBlank(title)) {
+			f.append(" and bean.contentExt.title like :title");
+			f.setParam("title", "%" + title + "%");
+		}
+		if (typeId != null) {
+			f.append(" and bean.type.id=:typeId");
+			f.setParam("typeId", typeId);
+		}
+		
+		if (topLevel) {
+			f.append(" and bean.topLevel>0");
+		}
+		if (recommend) {
+			f.append(" and bean.recommend=true");
+		}
+		if (draft == status) {
+			f.append(" and bean.status=:status");
+			f.setParam("status", ContentCheck.DRAFT);
+		}if (contribute == status) {
+			f.append(" and bean.status=:status");
+			f.setParam("status", ContentCheck.CONTRIBUTE);
+		} else if (checked == status) {
+			f.append(" and bean.status=:status");
+			f.setParam("status", ContentCheck.CHECKED);
+		} else if (prepared == status ) {
+			f.append(" and bean.status=:status");
+			f.setParam("status", ContentCheck.CHECKING);
+		} else if (rejected == status ) {
+			f.append(" and bean.status=:status");
+			f.setParam("status", ContentCheck.REJECT);
+		}else if (passed == status) {
+			f.append(" and (bean.status=:checking or bean.status=:checked)");
+			f.setParam("checking", ContentCheck.CHECKING);
+			f.setParam("checked", ContentCheck.CHECKED);
+		} else if (all == status) {
+			f.append(" and bean.status<>:status");
+			f.setParam("status", ContentCheck.RECYCLE);
+		} else if (recycle == status) {
+			f.append(" and bean.status=:status");
+			f.setParam("status", ContentCheck.RECYCLE);
+		} else if (pigeonhole == status) {
+			f.append(" and bean.status=:status");
+			f.setParam("status", ContentCheck.PIGEONHOLE);
+		} else {
+			// never
+		}
+	}
+	
 	private void appendQuery(Finder f, String title, Integer typeId,
 			Integer inputUserId, ContentStatus status, boolean topLevel,
 			boolean recommend) {
@@ -287,7 +382,6 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 			// never
 		}
 	}
-	
 
 	public Content getSide(Integer id, Integer siteId, Integer channelId,
 			boolean next, boolean cacheable) {

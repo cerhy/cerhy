@@ -119,6 +119,10 @@ public class ContentMngImpl implements ContentMng, ChannelDeleteChecker {
 		return dao.getPage(title, null,memberId,memberId, false, false,ContentStatus.all, null, siteId,modelId,  channelId, 0, pageNo,pageSize);
 	}
 	
+	public Pagination getPageForMember_blog(String title, Integer channelId,Integer siteId,Integer modelId, Integer memberId, int pageNo, int pageSize) {
+		return dao.getPage_blog(title, null,memberId,memberId, false, false,ContentStatus.all, null, siteId,modelId,  channelId, 0, pageNo,pageSize);
+	}
+	
 	@Transactional(readOnly = true)
 	public  List<Content> getExpiredTopLevelContents(byte topLevel,Date expiredDay){
 		return dao.getExpiredTopLevelContents(topLevel,expiredDay);
@@ -246,6 +250,70 @@ public class ContentMngImpl implements ContentMng, ChannelDeleteChecker {
 	}
 
 	public Content save(Content bean, ContentExt ext, ContentTxt txt,ContentDoc doc,
+			Integer[] channelIds, Integer[] topicIds, Integer[] viewGroupIds,
+			String[] tagArr, String[] attachmentPaths,
+			String[] attachmentNames, String[] attachmentFilenames,
+			String[] picPaths, String[] picDescs, Integer channelId,
+			Integer typeId, Boolean draft,Boolean contribute, 
+			Short charge,Double chargeAmount,CmsUser user, boolean forMember) {
+		saveContent(bean, ext, txt,doc, channelId, typeId, draft,contribute,user, forMember);
+		// 保存副栏目
+		if (channelIds != null && channelIds.length > 0) {
+			for (Integer cid : channelIds) {
+				bean.addToChannels(channelMng.findById(cid));
+			}
+		}
+		// 主栏目也作为副栏目一并保存，方便查询，提高效率。
+		Channel channel=channelMng.findById(channelId);
+		bean.addToChannels(channel);
+		// 保存专题
+		if (topicIds != null && topicIds.length > 0) {
+			for (Integer tid : topicIds) {
+				if(tid!=null&&tid!=0){
+					bean.addToTopics(cmsTopicMng.findById(tid));
+				}
+			}
+		}
+		// 保存浏览会员组
+		if (viewGroupIds != null && viewGroupIds.length > 0) {
+			for (Integer gid : viewGroupIds) {
+				bean.addToGroups(cmsGroupMng.findById(gid));
+			}
+		}
+		// 保存标签
+		List<ContentTag> tags = contentTagMng.saveTags(tagArr);
+		bean.setTags(tags);
+		// 保存附件
+		if (attachmentPaths != null && attachmentPaths.length > 0) {
+			for (int i = 0, len = attachmentPaths.length; i < len; i++) {
+				if (!StringUtils.isBlank(attachmentPaths[i])) {
+					bean.addToAttachmemts(attachmentPaths[i],
+							attachmentNames[i], attachmentFilenames[i]);
+				}
+			}
+		}
+		// 保存图片集
+		if (picPaths != null && picPaths.length > 0) {
+			for (int i = 0, len = picPaths.length; i < len; i++) {
+				if (!StringUtils.isBlank(picPaths[i])) {
+					bean.addToPictures(picPaths[i], picDescs[i]);
+				}
+			}
+		}
+		//文章操作记录
+		contentRecordMng.record(bean, user, ContentOperateType.add);
+		//栏目内容发布数（未审核通过的也算）
+		channelCountMng.afterSaveContent(channel);
+		//非免费
+		if(charge!=null&&!charge.equals(ContentCharge.MODEL_FREE)){
+			contentChargeMng.save(chargeAmount,charge,bean);
+		}
+		// 执行监听器
+		afterSave(bean);
+		return bean;
+	}
+	
+	public Content blog_save(Content bean, ContentExt ext, ContentTxt txt,ContentDoc doc,
 			Integer[] channelIds, Integer[] topicIds, Integer[] viewGroupIds,
 			String[] tagArr, String[] attachmentPaths,
 			String[] attachmentNames, String[] attachmentFilenames,

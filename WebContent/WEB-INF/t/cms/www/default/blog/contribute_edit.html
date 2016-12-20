@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>${site.name}</title>
+<title>${site.name} - 好研网</title>
 <link href="${resSys}/front.css" rel="stylesheet" type="text/css"/>
 <link href="${resSys}/jqueryUI/jquery.ui.css" rel="stylesheet" type="text/css"/>
 <script src="${resSys}/jquery.js" type="text/javascript"></script>
@@ -11,32 +11,17 @@
 <script src="${resSys}/jqueryUI/jquery-ui.js" type="text/javascript"></script>
 <script src="${base}/thirdparty/ckeditor/ckeditor.js" type="text/javascript"></script>
 <script src="${base}/thirdparty/swfupload/swfupload.js" type="text/javascript"></script>
-<script src="${base}/thirdparty/swfupload/swfupload.queue.js" 
-
-type="text/javascript"></script>
+<script src="${base}/thirdparty/swfupload/swfupload.queue.js" type="text/javascript"></script>
 <script src="${base}/thirdparty/swfupload/fileprogress.js" type="text/javascript"></script>
 <script src="${base}/thirdparty/swfupload/handlers.js" type="text/javascript"></script>
 <link href="${base}/thirdparty/swfupload/process.css" rel="stylesheet" type="text/css"/>
-<link rel="stylesheet" type="text/css" href="/${res}/css/hyindex.css" />
+<link rel="stylesheet" type="text/css" href="/${res}/css/index.css" />
 <script type="text/javascript">
 $.validator.methods.leafChannel = function(value, element, param) {
 	var i = element.selectedIndex;
 	return $(element.options[i]).attr("class")!="sel-disabled";
 }
 $(function() {
-	$("#jvForm").validate({
-		rules: {
-			channelId: {
-				required: true,
-				leafChannel: true
-			}
-		},
-		messages:{
-			channelId: {
-				leafChannel: "请选择末级栏目"
-			}
-		}
-	});
 	var uploadPicsUrl = "o_swfPicsUpload.jspx";
 	var uploadAttachsUrl = "o_swfAttachsUpload.jspx";
 	//在firefox、chrome下，上传不能保留登录信息，所以必须加上jsessionid。
@@ -150,28 +135,26 @@ function changeModel(){
 </script>
 <style type="text/css">
 .sel-disabled{background-color:#ccc}
-</style>
+.blog-con{width:1000px; margin:0 auto; padding-top:18px;}
+.blogLeft{float:left; border:1px solid #dedede; padding:34px 50px; border-radius:5px; -moz-border-radius:5px; -o-border-radius:5px; -webkit-border-radius:5px; border-top-right-radius:0; min-height:520px; position:relative;}
 
+</style>
+</head>
+<body>
 [#include "../hyinclude/header.html"/]
-<div class="member-con">
-  <div class="m-pos"><a href="${base}/">首页</a> > <span>会员中心</span></div>
+<div class="blog-con">
+  <div class="m-pos"><a href="${base}/">首页</a> > <span>博客中心</span></div>
   <div class="member clearfix">
-    <div class="memberLeft clearfix"> 
+    <div class="blogLeft clearfix"> 
       <div class="member-nav">
         <ul>
-        <li><a href="${base}/member/index.jspx">个人资料</a></li>
-        <li><a href="${base}/member/contribute_list.jspx" class="on">投稿管理</a></li>
-        <li><a href="${base}/member/doc_list.jspx?modelId=9">文档管理</a></li>
-        <li><a href="${base}/member/resume.jspx">应聘管理</a></li>
-        <li><a href="${base}/member/mycomments.jspx">我的评论</a></li>
-        <li><a href="${base}/member/myguestbook.jspx">我的留言</a></li>
-        <li><a href="${base}/member/collection_list.jspx">我的收藏</a></li>
-        <li><a href="${base}/member/message_mng.jspx">站内信息</a></li>
-        <li><a href="${base}/member/account.jspx">服务中心</a></li>
+        <li><a href="${base}/blog/contribute_add.jspx">发表博客</a></li>
+	         <li><a href="${base}/blog/columns_list.jspx">博客栏目</a></li>
+	        <li><a href="${base}/blog/contribute_list.jspx">博文列表</a></li>
+	        <li><a href="${base}/blog/help.jspx">服务中心</a></li>
         </ul>
       </div>
       <div class="member-main">
-        <div class="member-child"><a href="${base}/member/contribute_list.jspx" class="on">稿件列表</a>|<a href="${base}/member/contribute_add.jspx">发布稿件</a></div>
         <div class="member-text tggl fbgj">
           [#if channelList?size gt 0]
           [#include "media_upload.html"/]
@@ -184,9 +167,6 @@ function changeModel(){
                 <td class="tggl-top">标题</td><td><input type="text" name="title" value="${content.title!?html}" maxlength="150" class="member-change" style="width:300px;" /><span style="color:#f00; margin-left:10px;">*</span></td>
               </tr>
               <tr>
-                <td class="tggl-top">TAGS</td><td><input type="text" name="tagStr" value="${content.tagStr!?html}" maxlength="255" class="member-change" style="width:300px;" /><span style=" margin-left:10px;">用 , 分割</span></td>
-              </tr>
-              <tr>
                 <td class="tggl-top">作者</td><td><input type="text" name="author" value="${content.author!?html}" maxlength="100" class="member-change" /></td>
               </tr>
               <tr>
@@ -194,24 +174,12 @@ function changeModel(){
                 <td>
                 <select name="channelId" class="member-change">
                 <option value="" class="sel-disabled">--请选择--</option>
-                [#if channelList?size gt 0]
-                    [#assign origDeep=channelList[0].deep+1/]
-                    [#list channelList as c]
-                    <option value="${c.id}"[#if c.child?size gt 0] class="sel-disabled"[/#if][#if content.channel.id==c.id]selected="selected"[/#if]>[#if c.deep gte origDeep][#list origDeep..c.deep as i]&nbsp;&nbsp;[/#list]>[/#if]${c.name}</option>
+                [#if columnsList?size gt 0]
+                    [#list columnsList as c]
+                     <option value="${c.column_id}">${c.column_name}</option>
                 [/#list]
                 [/#if]
                 </select>
-                </td>
-              </tr>
-              <tr>
-                <td class="tggl-top">摘要</td><td><textarea name="description" rows="3" cols="70" maxlength="255">${content.description!?html}</textarea></td>
-              </tr>
-              <tr>
-                <td class="tggl-top">收费设置</td>
-                <td>
-                	免费:<input name="charge" value="0" [#if content.chargeModel==0]checked="checked"[/#if] onclick="changeModel()" type="radio"/>
-                	收费:<input name="charge" value="1" [#if content.chargeModel==1]checked="checked"[/#if] onclick="changeModel()" type="radio"/>
-					&nbsp;<span id="chargeAmountSpan">金额:<input type="text" name="chargeAmount" value="${content.chargeAmount!}" required="true" class="required number" maxlength="10" style="width:100px"/></span>
                 </td>
               </tr>
               <tr>
@@ -315,9 +283,7 @@ function changeModel(){
 						<div id="fsUploadProgress" style="display: none;"></div>
 						</div>
                                                  [#list content.pictures as p]
-						<table id="picTable${p_index+3}" border="0" 
-
-style="float:left;">
+						<table id="picTable${p_index+3}" border="0" style="float:left;">
 						<tr>
 							<td>
 								<div><input type="text" id="uploadImgPath${p_index+3}" name="picPaths" value="${p.imgPath}" style="width:170px"/> <a href="javascript:void(0);" onclick="$('#picTable${p_index+3}').remove();" class="pn-opt">删除</a></div>
@@ -366,15 +332,7 @@ style="float:left;">
 						</script>
                 </td>
               </tr>
-              [#if contentChargeModel??&&contentChargeModel==2]
-               <tr>
-                    <td class="tggl-top">收费金额：</td>
-                    <td>
-                    	<input name="charge" value="true" type="hidden"/>
-                   		<input type="text" name="chargeAmount" value=${content.chargeAmount!} maxlength="20" class="member-change"/> 
-                    </td>
-               </tr>
-               [/#if]
+             
               <tr>
                 <td colspan="2" style="text-align:center; padding:20px 0;">
                 <input type="hidden" name="nextUrl" value="contribute_list.jspx"/>
@@ -392,8 +350,6 @@ style="float:left;">
         </div>
       </div>
     </div>
-    [#include "../include/member-right.html" /]
-    <div class="m-sj"></div>
   </div>
 </div>
 [#include "../include/footer.html"/]
