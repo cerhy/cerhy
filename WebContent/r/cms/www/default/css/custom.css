@@ -163,3 +163,6 @@ padding-top: 32px;
 .comments-child{border-top:1px dotted #c7c7c7; border-bottom:none;}
 
 .pagebar{text-align: center;margin: 15px auto 0px;font-size: 15px;}
+
+.blog-con{width:1000px; margin:0 auto; padding-top:18px;}
+.blogLeft{float:left; border:1px solid #dedede; padding:34px 50px; border-radius:5px; -moz-border-radius:5px; -o-border-radius:5px; -webkit-border-radius:5px; border-top-right-radius:0; min-height:520px; position:relative;}

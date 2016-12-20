@@ -1,11 +1,15 @@
 package com.jeecms.cms.action.member;
 
+
+import static com.jeecms.cms.Constants.TPLDIR_BLOG;
 import static com.jeecms.cms.Constants.TPLDIR_MEMBER;
 import static com.jeecms.common.page.SimplePage.cpn;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Set;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -13,8 +17,10 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
 
+import com.jeecms.cms.dao.main.impl.BlogDao;
 import com.jeecms.cms.entity.main.Channel;
 import com.jeecms.cms.entity.main.CmsModel;
+import com.jeecms.cms.entity.main.Columns;
 import com.jeecms.cms.entity.main.Content;
 import com.jeecms.cms.entity.main.ContentDoc;
 import com.jeecms.cms.entity.main.ContentExt;
@@ -388,6 +394,8 @@ public class AbstractContentMemberAct {
 		}
 		return false;
 	}
+	
+	
 
 	@Autowired
 	protected ContentMng contentMng;
@@ -407,4 +415,302 @@ public class AbstractContentMemberAct {
 	protected ImageCaptchaService imageCaptchaService;
 	@Autowired
 	private CmsConfigContentChargeMng configContentChargeMng;
+	
+	protected String center(String q, Integer modelId,Integer queryChannelId,
+			String nextUrl,Integer pageNo,
+			HttpServletRequest request, ModelMap model) {
+		CmsSite site = CmsUtils.getSite(request);
+		CmsUser user = CmsUtils.getUser(request);
+		FrontUtils.frontData(request, model, site);
+		if (user == null) {
+			return FrontUtils.showLogin(request, model, site);
+		}
+		Pagination p = contentMng.getPageForMember_blog(q, queryChannelId,site.getId(), modelId,user.getId(), cpn(pageNo), 20);
+		model.addAttribute("pagination", p);
+		if (!StringUtils.isBlank(q)) {
+			model.addAttribute("q", q);
+		}
+		if (modelId != null) {
+			model.addAttribute("modelId", modelId);
+		}
+		return FrontUtils.getTplPath(request, site.getSolutionPath(), TPLDIR_BLOG, nextUrl);
+	}
+	
+	protected String blog_list(String q, Integer modelId,Integer queryChannelId,
+			String nextUrl,Integer pageNo,
+			HttpServletRequest request, ModelMap model) {
+		CmsSite site = CmsUtils.getSite(request);
+		CmsUser user = CmsUtils.getUser(request);
+		FrontUtils.frontData(request, model, site);
+		if (user == null) {
+			return FrontUtils.showLogin(request, model, site);
+		}
+		Pagination p = contentMng.getPageForMember(q, queryChannelId,site.getId(), modelId,user.getId(), cpn(pageNo), 20);
+		model.addAttribute("pagination", p);
+		if (!StringUtils.isBlank(q)) {
+			model.addAttribute("q", q);
+		}
+		if (modelId != null) {
+			model.addAttribute("modelId", modelId);
+		}
+		return FrontUtils.getTplPath(request, site.getSolutionPath(), TPLDIR_BLOG, nextUrl);
+	}
+	
+	public String blog_add(boolean hasPermission,String nextUrl,HttpServletRequest request,HttpServletResponse response, ModelMap model) {
+		CmsSite site = CmsUtils.getSite(request);
+		CmsUser user = CmsUtils.getUser(request);
+		int user_id = user.getId();
+		String path = request.getSession().getServletContext().getRealPath("/");
+		List<Columns> columnsList = (new BlogDao()).findByUserId(user_id, path);
+		model.addAttribute("columnsList", columnsList);
+		if(hasPermission){
+			FrontUtils.frontData(request, model, site);
+			// 获得本站栏目列表
+			Set<Channel> rights = user.getGroup().getContriChannels();
+			List<Channel> topList=channelMng.getTopList(site.getId(), true);
+			List<Channel> channelList = Channel.getListForSelect(topList, rights,true);
+			model.addAttribute("site", site);
+			model.addAttribute("channelList", channelList);
+			model.addAttribute("sessionId",request.getSession().getId());
+			return FrontUtils.getTplPath(request, site.getSolutionPath(),TPLDIR_BLOG, nextUrl);
+		}else{
+			WebErrors errors = WebErrors.create(request);
+			errors.addErrorCode("error.uploadMoreNumber", user.getGroup().getAllowFileTotal());
+			return FrontUtils.showError(request, response, model, errors);
+		}
+	}
+	
+		protected String blog_columns_list(String q, Integer modelId,Integer queryChannelId,
+				String nextUrl,Integer pageNo,
+				HttpServletRequest request, ModelMap model) {
+			CmsSite site = CmsUtils.getSite(request);
+			CmsUser user = CmsUtils.getUser(request);
+			int user_id = user.getId();
+			String path = request.getSession().getServletContext().getRealPath("/");
+			List<Columns> columnsList = (new BlogDao()).findByUserId(user_id, path);
+			model.addAttribute("columnsList", columnsList);
+			FrontUtils.frontData(request, model, site);
+			Pagination p = contentMng.getPageForMember(q, queryChannelId,site.getId(), modelId,user.getId(), cpn(pageNo), 20);
+			model.addAttribute("pagination", p);
+			if (!StringUtils.isBlank(q)) {
+				model.addAttribute("q", q);
+			}
+			if (modelId != null) {
+				model.addAttribute("modelId", modelId);
+			}
+			return FrontUtils.getTplPath(request, site.getSolutionPath(),TPLDIR_BLOG, nextUrl);
+		}
+		
+		public void columns_add(HttpServletRequest request,HttpServletResponse response, ModelMap model) {
+			String name = request.getParameter("columnInput");
+			CmsUser user = CmsUtils.getUser(request);
+			int user_id = user.getId();
+			String path = request.getSession().getServletContext().getRealPath("/");
+			if(null != name && null != user){
+				(new BlogDao()).addColumn(user_id,name, path);
+			}
+			try {
+				request.getRequestDispatcher("/blog/columns_list.jspx").forward(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		public void columns_detele(HttpServletRequest request,HttpServletResponse response, ModelMap model) {
+			String id = request.getParameter("id");
+			String path = request.getSession().getServletContext().getRealPath("/");
+			if(null != id){
+				(new BlogDao()).deleteColumn(Integer.parseInt(id), path);
+			}
+			try {
+				request.getRequestDispatcher("/blog/columns_list.jspx").forward(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	
+		public void columns_update(HttpServletRequest request,HttpServletResponse response, ModelMap model) {
+			String id = request.getParameter("id");
+			String name = request.getParameter("update");
+			String path = request.getSession().getServletContext().getRealPath("/");
+			if(null != id && null!=name){
+				(new BlogDao()).updateColumn(Integer.parseInt(id),name, path);
+			}
+			try {
+				request.getRequestDispatcher("/blog/columns_list.jspx").forward(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		public String update_tz(HttpServletRequest request,HttpServletResponse response, ModelMap model) {
+			CmsSite site = CmsUtils.getSite(request);
+			CmsUser user = CmsUtils.getUser(request);
+			String id=request.getParameter("id");
+			String name = request.getParameter("name");
+			model.addAttribute("columnid", id);
+			model.addAttribute("columnname", name);
+			FrontUtils.frontData(request, model, site);
+			return FrontUtils.getTplPath(request, site.getSolutionPath(),TPLDIR_BLOG,"tpl.columnsUpdate");
+		}
+		
+	public String blog_save(String title, String author, String description,
+			String txt, String tagStr, Integer columnId, Integer modelId,ContentDoc doc,
+			String captcha,String mediaPath,String mediaType,
+			String[] attachmentPaths, String[] attachmentNames,
+			String[] attachmentFilenames, String[] picPaths, String[] picDescs,
+			Short charge,Double chargeAmount,
+			String nextUrl, HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+				CmsSite site = CmsUtils.getSite(request);
+				CmsUser user = CmsUtils.getUser(request);
+				FrontUtils.frontData(request, model, site);
+			
+			if (user == null) {
+				return FrontUtils.showLogin(request, model, site);
+			}
+			/*WebErrors errors = validateSave(title, author, description, txt,doc,
+					tagStr, channelId, site, user, captcha, request, response);
+			if (errors.hasErrors()) {
+				return FrontUtils.showError(request, response, model, errors);
+			}*/
+
+		Content c = new Content();
+		c.setSite(site);
+		CmsModel defaultModel=cmsModelMng.getDefModel();
+		if(modelId!=null){
+			CmsModel m=cmsModelMng.findById(modelId);
+			if(m!=null){
+				c.setModel(m);
+			}else{
+				c.setModel(defaultModel);
+			}
+		}else{
+			c.setModel(defaultModel);
+		}
+		ContentExt ext = new ContentExt();
+		ext.setTitle(title);
+		ext.setAuthor(author);
+		ext.setDescription(description);
+		ext.setMediaPath(mediaPath);
+		ext.setMediaType(mediaType);
+		ContentTxt t = new ContentTxt();
+		t.setTxt(txt);
+		ContentType type = contentTypeMng.getDef();
+		if (type == null) {
+			throw new RuntimeException("Default ContentType not found.");
+		}
+		Integer typeId = type.getId();
+		String[] tagArr = StrUtils.splitAndTrim(tagStr, ",", null);
+		if(c.getRecommendLevel()==null){
+			c.setRecommendLevel((byte) 0);
+		}
+		c = contentMng.blog_save(c, ext, t,null, null, null, null, tagArr,
+				attachmentPaths,attachmentNames, attachmentFilenames
+				,picPaths,picDescs,columnId, typeId, null,true,
+				charge,chargeAmount, user, true);
+		if(doc!=null){
+			contentDocMng.save(doc, c);
+		}
+		return FrontUtils.showSuccess(request, model, nextUrl);
+	}
+	
+	public String blog_edit(Integer id, String nextUrl,HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		CmsSite site = CmsUtils.getSite(request);
+		CmsUser user = CmsUtils.getUser(request);
+		FrontUtils.frontData(request, model, site);
+		
+		if (user == null) {
+			return FrontUtils.showLogin(request, model, site);
+		}
+		int user_id = user.getId();
+		String path = request.getSession().getServletContext().getRealPath("/");
+		List<Columns> columnsList = (new BlogDao()).findByUserId(user_id, path);
+		model.addAttribute("columnsList", columnsList);
+	/*	WebErrors errors = validateEdit(id, site, user, request);
+		if (errors.hasErrors()) {
+			return FrontUtils.showError(request, response, model, errors);
+		}*/
+		Content content = contentMng.findById(id);
+		// 获得本站栏目列表
+		Set<Channel> rights = user.getGroup().getContriChannels();
+		List<Channel> topList = channelMng.getTopList(site.getId(), true);
+		List<Channel> channelList = Channel.getListForSelect(topList, rights,
+				true);
+		model.addAttribute("content", content);
+		model.addAttribute("site", site);
+		model.addAttribute("channelList", channelList);
+		model.addAttribute("sessionId",request.getSession().getId());
+		return FrontUtils.getTplPath(request, site.getSolutionPath(),
+				TPLDIR_BLOG, nextUrl);
+	}
+	
+	public String blog_delete(Integer[] ids, HttpServletRequest request,
+			String nextUrl, HttpServletResponse response, ModelMap model) {
+		CmsSite site = CmsUtils.getSite(request);
+		CmsUser user = CmsUtils.getUser(request);
+		FrontUtils.frontData(request, model, site);
+		MemberConfig mcfg = site.getConfig().getMemberConfig();
+		// 没有开启会员功能
+		if (!mcfg.isMemberOn()) {
+			return FrontUtils.showMessage(request, model, "member.memberClose");
+		}
+		if (user == null) {
+			return FrontUtils.showLogin(request, model, site);
+		}
+		WebErrors errors = validateDelete(ids, site, user, request);
+		if (errors.hasErrors()) {
+			return FrontUtils.showError(request, response, model, errors);
+		}
+		contentMng.deleteByIds(ids);
+		return FrontUtils.showSuccess(request, model, nextUrl);
+	}
+	
+	public String blog_update(Integer id, String title, String author,
+			String description, String txt, String tagStr, Integer channelId,
+			String mediaPath,String mediaType,
+			String[] attachmentPaths, String[] attachmentNames,
+			String[] attachmentFilenames, String[] picPaths, String[] picDescs,
+			ContentDoc doc,Short charge,Double chargeAmount,
+			String nextUrl, HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		CmsSite site = CmsUtils.getSite(request);
+		CmsUser user = CmsUtils.getUser(request);
+		FrontUtils.frontData(request, model, site);
+		MemberConfig mcfg = site.getConfig().getMemberConfig();
+		// 没有开启会员功能
+		if (!mcfg.isMemberOn()) {
+			return FrontUtils.showMessage(request, model, "member.memberClose");
+		}
+		if (user == null) {
+			return FrontUtils.showLogin(request, model, site);
+		}
+		WebErrors errors = validateUpdate(id, channelId, site, user, request);
+		if (errors.hasErrors()) {
+			return FrontUtils.showError(request, response, model, errors);
+		}
+		Content c = new Content();
+		c.setId(id);
+		c.setSite(site);
+		ContentExt ext = new ContentExt();
+		ext.setId(id);
+		ext.setTitle(title);
+		ext.setAuthor(author);
+		ext.setDescription(description);
+		ext.setMediaPath(mediaPath);
+		ext.setMediaType(mediaType);
+		ContentTxt t = new ContentTxt();
+		t.setId(id);
+		t.setTxt(txt);
+		String[] tagArr = StrUtils.splitAndTrim(tagStr, ",", null);
+		contentMng.update(c, ext, t,null, tagArr, null, null, null, 
+				attachmentPaths,attachmentNames, attachmentFilenames
+				,picPaths,picDescs, null, channelId, null, null, 
+				charge,chargeAmount,user, true);
+		if(doc!=null){
+			contentDocMng.update(doc, c);
+		}
+		return FrontUtils.showSuccess(request, model, nextUrl);
+	}
 }
