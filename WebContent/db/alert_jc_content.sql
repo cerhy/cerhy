@@ -1,0 +1,1 @@
+alter table `jc_content` add column column_id int(11);

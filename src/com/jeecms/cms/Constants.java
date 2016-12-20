@@ -29,6 +29,10 @@ public class Constants {
 	 */
 	public static final String TPLDIR_MEMBER = "member";
 	/**
+	 * 博客中心模板
+	 */
+	public static final String TPLDIR_BLOG = "blog";
+	/**
 	 * 专用模板
 	 */
 	public static final String TPLDIR_SPECIAL = "special";
