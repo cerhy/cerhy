@@ -22,6 +22,16 @@ public class CmsFriendlinkMngImpl implements CmsFriendlinkMng {
 		return list;
 	}
 
+	/**
+	 * 获得友情链接
+	 */
+	@Transactional(readOnly = true)
+	public List<CmsFriendlink> getList1(Integer siteId, Integer ctgId,Integer channelId,
+			Boolean enabled) {
+		List<CmsFriendlink> list = dao.getList1(siteId, ctgId,channelId, enabled);
+		return list;
+	}
+	
 	@Transactional(readOnly = true)
 	public int countByCtgId(Integer ctgId) {
 		return dao.countByCtgId(ctgId);

@@ -10,6 +10,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.jeecms.cms.entity.assist.CmsFriendlink;
+import com.jeecms.cms.entity.main.Channel;
 import com.jeecms.cms.manager.assist.CmsFriendlinkMng;
 import com.jeecms.common.web.freemarker.DefaultObjectWrapperBuilderFactory;
 import com.jeecms.common.web.freemarker.DirectiveUtils;
@@ -37,7 +38,10 @@ public class CmsFriendlinkListDirective implements TemplateDirectiveModel {
 	 * 输入参数，是否显示。
 	 */
 	public static final String PARAM_ENABLED = "enabled";
-
+	/**
+	 * 输入参数，栏目id
+	 */
+	public static final String PARAM_CHANNEL_ID = "channelId";
 	@SuppressWarnings("unchecked")
 	public void execute(Environment env, Map params, TemplateModel[] loopVars,
 			TemplateDirectiveBody body) throws TemplateException, IOException {
@@ -50,6 +54,7 @@ public class CmsFriendlinkListDirective implements TemplateDirectiveModel {
 		if (enabled == null) {
 			enabled = true;
 		}
+		Integer channelId = getChannelId(params);
 		List<CmsFriendlink> list = cmsFriendlinkMng.getList(siteId, ctgId,
 				enabled);
 
@@ -72,6 +77,11 @@ public class CmsFriendlinkListDirective implements TemplateDirectiveModel {
 		return DirectiveUtils.getInt(PARAM_CTG_ID, params);
 	}
 
+	private Integer getChannelId(Map<String, TemplateModel> params)
+			throws TemplateException {
+		return DirectiveUtils.getInt(PARAM_CHANNEL_ID, params);
+	}
+	
 	private Boolean getEnabled(Map<String, TemplateModel> params)
 			throws TemplateException {
 		return DirectiveUtils.getBool(PARAM_ENABLED, params);

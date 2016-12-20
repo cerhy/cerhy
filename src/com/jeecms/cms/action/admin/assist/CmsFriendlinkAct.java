@@ -1,5 +1,6 @@
 package com.jeecms.cms.action.admin.assist;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,10 +15,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.jeecms.cms.entity.assist.CmsFriendlink;
 import com.jeecms.cms.entity.assist.CmsFriendlinkCtg;
+import com.jeecms.cms.entity.main.Channel;
 import com.jeecms.cms.manager.assist.CmsFileMng;
 import com.jeecms.cms.manager.assist.CmsFriendlinkCtgMng;
 import com.jeecms.cms.manager.assist.CmsFriendlinkMng;
+import com.jeecms.cms.manager.main.ChannelMng;
 import com.jeecms.core.entity.CmsSite;
+import com.jeecms.core.entity.CmsUser;
 import com.jeecms.core.manager.CmsLogMng;
 import com.jeecms.core.web.WebErrors;
 import com.jeecms.core.web.util.CmsUtils;
@@ -48,12 +52,18 @@ public class CmsFriendlinkAct {
 	@RequestMapping("/friendlink/v_add.do")
 	public String add(ModelMap model, HttpServletRequest request) {
 		CmsSite site = CmsUtils.getSite(request);
+		Integer siteId = site.getId();
+		CmsUser user = CmsUtils.getUser(request);
+		Integer userId = user.getId();
 		WebErrors errors = validateAdd(request);
 		if (errors.hasErrors()) {
 			return errors.showErrorPage(model);
 		}
 		List<CmsFriendlinkCtg> ctgList = cmsFriendlinkCtgMng.getList(site
-				.getId());
+				.getId());	
+		List<Channel> topList = channelMng.getTopListForDepartId(null,userId,siteId,true);
+		List<Channel> channelList = Channel.getListForSelect(topList, null, true);		
+		model.addAttribute("channelList",channelList);
 		model.addAttribute("ctgList", ctgList);
 		return "friendlink/add";
 	}
@@ -63,6 +73,9 @@ public class CmsFriendlinkAct {
 	public String edit(Integer id, Integer queryCtgId,
 			HttpServletRequest request, ModelMap model) {
 		CmsSite site = CmsUtils.getSite(request);
+		Integer siteId = site.getId();
+		CmsUser user = CmsUtils.getUser(request);
+		Integer userId = user.getId();
 		WebErrors errors = validateEdit(id, request);
 		if (errors.hasErrors()) {
 			return errors.showErrorPage(model);
@@ -73,7 +86,10 @@ public class CmsFriendlinkAct {
 		model.addAttribute("ctgList", ctgList);
 		if (queryCtgId != null) {
 			model.addAttribute("queryCtgId", queryCtgId);
-		}
+		}	
+		List<Channel> topList = channelMng.getTopListForDepartId(null,userId,siteId,true);
+		List<Channel> channelList = Channel.getListForSelect(topList, null, true);	
+		model.addAttribute("channelList",channelList);
 		return "friendlink/edit";
 	}
 
@@ -85,6 +101,8 @@ public class CmsFriendlinkAct {
 		if (errors.hasErrors()) {
 			return errors.showErrorPage(model);
 		}
+		Channel channel =  channelMng.findById(bean.getChannelId());
+		bean.setChannel(channel);
 		bean = manager.save(bean, ctgId);
 		fileMng.updateFileByPath(bean.getLogo(), true, null);
 		log.info("save CmsFriendlink id={}", bean.getId());
@@ -102,6 +120,8 @@ public class CmsFriendlinkAct {
 		if (errors.hasErrors()) {
 			return errors.showErrorPage(model);
 		}
+		Channel channel =  channelMng.findById(bean.getChannelId());
+		bean.setChannel(channel);
 		bean = manager.update(bean, ctgId);
 		fileMng.updateFileByPath(oldLog, false, null);
 		fileMng.updateFileByPath(bean.getLogo(), true, null);
@@ -219,4 +239,6 @@ public class CmsFriendlinkAct {
 	private CmsFriendlinkMng manager;
 	@Autowired
 	private CmsFileMng fileMng;
+	@Autowired
+	private ChannelMng channelMng;
 }
