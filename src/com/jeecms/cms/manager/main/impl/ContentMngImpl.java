@@ -120,7 +120,7 @@ public class ContentMngImpl implements ContentMng, ChannelDeleteChecker {
 	}
 	
 	public Pagination getPageForMember_blog(String title, Integer channelId,Integer siteId,Integer modelId, Integer memberId, int pageNo, int pageSize) {
-		return dao.getPage(title, null,memberId,memberId, false, false,ContentStatus.all, null, siteId,modelId,  channelId, 0, pageNo,pageSize);
+		return dao.getPage_blog(title, null,memberId,memberId, false, false,ContentStatus.all, null, siteId,modelId,  channelId, 0, pageNo,pageSize);
 	}
 	
 	@Transactional(readOnly = true)
