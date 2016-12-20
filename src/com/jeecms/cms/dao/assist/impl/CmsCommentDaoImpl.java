@@ -1,11 +1,16 @@
 package com.jeecms.cms.dao.assist.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.Query;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.jeecms.cms.dao.assist.CmsCommentDao;
 import com.jeecms.cms.entity.assist.CmsComment;
+import com.jeecms.cms.entity.main.Channel;
+import com.jeecms.cms.manager.main.ChannelMng;
 import com.jeecms.common.hibernate4.Finder;
 import com.jeecms.common.hibernate4.HibernateBaseDao;
 import com.jeecms.common.page.Pagination;
@@ -17,6 +22,13 @@ public class CmsCommentDaoImpl extends HibernateBaseDao<CmsComment, Integer>
 			Integer greaterThen, Boolean checked, Boolean recommend,
 			boolean desc, int pageNo, int pageSize, boolean cacheable) {
 		Finder f = getFinder(siteId, contentId,null,null,null,greaterThen, checked,
+				recommend, desc, cacheable);
+		return find(f, pageNo, pageSize);
+	}
+	public Pagination getPage(Integer siteId,Integer channelId, Integer contentId,
+			Integer greaterThen, Boolean checked, Boolean recommend,
+			boolean desc, int pageNo, int pageSize, boolean cacheable) {
+		Finder f = getFinder(siteId, channelId,contentId,null,null,null,greaterThen, checked,
 				recommend, desc, cacheable);
 		return find(f, pageNo, pageSize);
 	}
@@ -134,7 +146,15 @@ public class CmsCommentDaoImpl extends HibernateBaseDao<CmsComment, Integer>
 			f.setParam("siteId", siteId);
 		}
 		else if (channelId != null) {
-			//按照栏目ID来查询对内容的直接评论
+			//按照栏目ID来查询对栏目的直接评论
+			if(channelId==98||channelId==99||channelId==100||channelId==101
+					||channelId==102||channelId==103||channelId==104){
+				Channel cc = channelMng.findById(channelId);
+				List<Channel> topList = new ArrayList<Channel>();
+				topList.add(cc);
+				List<Channel> channelList = Channel.getListForSelect(topList, null, true);
+				channelId=channelList.get(2).getId();
+			}
 			f.append(" and (bean.channel.id=:channelId and bean.parent is null )");
 			f.setParam("channelId", channelId);
 		}
@@ -194,4 +214,6 @@ public class CmsCommentDaoImpl extends HibernateBaseDao<CmsComment, Integer>
 	protected Class<CmsComment> getEntityClass() {
 		return CmsComment.class;
 	}
+	@Autowired
+	private ChannelMng channelMng;
 }

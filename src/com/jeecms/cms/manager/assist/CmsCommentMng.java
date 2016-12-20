@@ -12,7 +12,7 @@ public interface CmsCommentMng {
 			Integer greaterThen, Boolean checked, Boolean recommend,
 			boolean desc, int pageNo, int pageSize);
 
-	public Pagination getPageForTag(Integer siteId, Integer contentId,
+	public Pagination getPageForTag(Integer siteId,Integer channelId, Integer contentId,
 			Integer greaterThen, Boolean checked, Boolean recommend,
 			boolean desc, int pageNo, int pageSize);
 	
