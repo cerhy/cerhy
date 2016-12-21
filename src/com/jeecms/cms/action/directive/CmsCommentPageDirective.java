@@ -2,6 +2,7 @@ package com.jeecms.cms.action.directive;
 
 import static com.jeecms.cms.Constants.TPL_STYLE_LIST;
 import static com.jeecms.cms.Constants.TPL_SUFFIX;
+
 import static com.jeecms.common.web.Constants.UTF8;
 import static com.jeecms.common.web.freemarker.DirectiveUtils.OUT_LIST;
 import static com.jeecms.common.web.freemarker.DirectiveUtils.OUT_PAGINATION;
@@ -40,7 +41,7 @@ public class CmsCommentPageDirective extends AbstractCmsCommentDirective {
 	public void execute(Environment env, Map params, TemplateModel[] loopVars,
 			TemplateDirectiveBody body) throws TemplateException, IOException {
 		CmsSite site = FrontUtils.getSite(env);
-		Pagination page = cmsCommentMng.getPageForTag(null,
+		Pagination page = cmsCommentMng.getPageForTag(null,getChannelId(params),
 				getContentId(params), getGreaterThen(params),
 				getChecked(params), getRecommend(params), getDesc(params),
 				FrontUtils.getPageNo(env), FrontUtils.getCount(params));

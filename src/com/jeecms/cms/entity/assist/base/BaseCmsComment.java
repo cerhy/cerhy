@@ -26,6 +26,7 @@ public abstract class BaseCmsComment  implements Serializable {
 	public static String PROP_CHECKED = "checked";
 	public static String PROP_COMMENT_EXT = "commentExt";
 	public static String PROP_CONTENT = "content";
+	public static String PROP_CHANNEL = "channel";
 	public static String PROP_ID = "id";
 
 
@@ -82,6 +83,7 @@ public abstract class BaseCmsComment  implements Serializable {
 		java.lang.Boolean checked) {
 
 		this.setId(id);
+		this.setChannel(channel);
 		this.setContent(content);
 		this.setSite(site);
 		this.setCreateTime(createTime);
@@ -119,13 +121,7 @@ public abstract class BaseCmsComment  implements Serializable {
 	// many to one
 	private com.jeecms.core.entity.CmsUser replayUser;
 	private com.jeecms.cms.entity.main.Channel channel;
-	public com.jeecms.cms.entity.main.Channel getChannel() {
-		return channel;
-	}
-
-	public void setChannel(com.jeecms.cms.entity.main.Channel channel) {
-		this.channel = channel;
-	}
+	
 
 
 
@@ -323,6 +319,21 @@ public abstract class BaseCmsComment  implements Serializable {
 		this.content = content;
 	}
 
+	/**
+	 * Return the value associated with the column: channel_id
+	 */
+	public com.jeecms.cms.entity.main.Channel getChannel() {
+		return channel;
+	}
+
+	/**
+	 * Set the value related to the column: channel_id
+	 * @param content the channel_id value
+	 */
+	public void setChannel(com.jeecms.cms.entity.main.Channel channel) {
+		this.channel = channel;
+	}
+	
 
 	/**
 	 * Return the value associated with the column: comment_user_id

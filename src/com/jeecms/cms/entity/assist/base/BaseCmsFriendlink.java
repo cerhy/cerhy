@@ -26,7 +26,7 @@ public abstract class BaseCmsFriendlink  implements Serializable {
 	public static String PROP_PRIORITY = "priority";
 	public static String PROP_NAME = "name";
 	public static String PROP_ID = "id";
-
+	public static String PROP_CHANNEL = "channel";
 
 	// constructors
 	public BaseCmsFriendlink () {
@@ -65,6 +65,32 @@ public abstract class BaseCmsFriendlink  implements Serializable {
 		initialize();
 	}
 
+	/**
+	 * Constructor for required fields
+	 */
+	public BaseCmsFriendlink (
+		java.lang.Integer id,
+		com.jeecms.cms.entity.assist.CmsFriendlinkCtg category,
+		com.jeecms.core.entity.CmsSite site,
+		com.jeecms.cms.entity.main.Channel channel,
+		java.lang.String name,
+		java.lang.String domain,
+		java.lang.Integer views,
+		java.lang.Integer priority,
+		java.lang.Boolean enabled) {
+
+		this.setId(id);
+		this.setCategory(category);
+		this.setSite(site);
+		this.setChannel(channel);
+		this.setName(name);
+		this.setDomain(domain);
+		this.setViews(views);
+		this.setPriority(priority);
+		this.setEnabled(enabled);
+		initialize();
+	}
+	
 	protected void initialize () {}
 
 
@@ -87,8 +113,17 @@ public abstract class BaseCmsFriendlink  implements Serializable {
 	// many to one
 	private com.jeecms.cms.entity.assist.CmsFriendlinkCtg category;
 	private com.jeecms.core.entity.CmsSite site;
+	private  com.jeecms.cms.entity.main.Channel channel;
 
 
+
+	public com.jeecms.cms.entity.main.Channel getChannel() {
+		return channel;
+	}
+
+	public void setChannel(com.jeecms.cms.entity.main.Channel channel) {
+		this.channel = channel;
+	}
 
 	/**
 	 * Return the unique identifier of this class

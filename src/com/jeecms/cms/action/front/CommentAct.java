@@ -5,6 +5,7 @@ import static com.jeecms.cms.Constants.TPLDIR_SPECIAL;
 import static com.jeecms.cms.Constants.TPLDIR_CHANNEL;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -122,7 +123,7 @@ public class CommentAct {
 		model.addAttribute("channel", channel);
 		FrontUtils.frontData(request, model, site);
 		return FrontUtils.getTplPath(request, site.getSolutionPath(),
-				TPLDIR_SPECIAL, COMMENT_INPUT);
+				TPLDIR_SPECIAL, COMMENT_CHANNEL_INPUT);
 	}
 	
 	@RequestMapping(value = "/comment_list.jspx")
@@ -317,6 +318,14 @@ public class CommentAct {
 			String text, String captcha,String sessionId,
 			HttpServletRequest request, HttpServletResponse response,
 			ModelMap model) throws JSONException, IOException {
+		if(channelId==98||channelId==99||channelId==100||channelId==101
+				||channelId==102||channelId==103||channelId==104){
+			Channel cc = channelMng.findById(channelId);
+			List<Channel> topList = new ArrayList<Channel>();
+			topList.add(cc);
+			List<Channel> channelList = Channel.getListForSelect(topList, null, true);
+			channelId=channelList.get(2).getId();
+		}
 		CmsSite site = CmsUtils.getSite(request);
 		CmsUser user = CmsUtils.getUser(request);
 		JSONObject json = new JSONObject();
