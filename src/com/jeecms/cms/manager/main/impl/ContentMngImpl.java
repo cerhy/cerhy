@@ -19,10 +19,12 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import com.jeecms.cms.dao.main.ContentDao;
+import com.jeecms.cms.dao.main.impl.BlogDao;
 import com.jeecms.cms.entity.assist.CmsFile;
 import com.jeecms.cms.entity.main.Channel;
 import com.jeecms.cms.entity.main.Channel.AfterCheckEnum;
 import com.jeecms.cms.entity.main.CmsTopic;
+import com.jeecms.cms.entity.main.Columns;
 import com.jeecms.cms.entity.main.Content;
 import com.jeecms.cms.entity.main.Content.ContentStatus;
 import com.jeecms.cms.entity.main.ContentCharge;
@@ -119,8 +121,8 @@ public class ContentMngImpl implements ContentMng, ChannelDeleteChecker {
 		return dao.getPage(title, null,memberId,memberId, false, false,ContentStatus.all, null, siteId,modelId,  channelId, 0, pageNo,pageSize);
 	}
 	
-	public Pagination getPageForMember_blog(String title, Integer channelId,Integer siteId,Integer modelId, Integer memberId, int pageNo, int pageSize) {
-		return dao.getPage_blog(title, null,memberId,memberId, false, false,ContentStatus.all, null, siteId,modelId,  channelId, 0, pageNo,pageSize);
+	public Pagination getPageForMember_blog(String title, Integer channelId,Integer siteId,Integer modelId, Integer memberId, int pageNo, int pageSize,String column_name) {
+		return dao.getPage_blog(title, null,memberId,memberId, false, false,ContentStatus.all, null, siteId,modelId,  channelId, 0, pageNo,pageSize,column_name);
 	}
 	
 	@Transactional(readOnly = true)
@@ -317,36 +319,36 @@ public class ContentMngImpl implements ContentMng, ChannelDeleteChecker {
 			Integer[] channelIds, Integer[] topicIds, Integer[] viewGroupIds,
 			String[] tagArr, String[] attachmentPaths,
 			String[] attachmentNames, String[] attachmentFilenames,
-			String[] picPaths, String[] picDescs, Integer channelId,
+			String[] picPaths, String[] picDescs, Columns column,
 			Integer typeId, Boolean draft,Boolean contribute, 
 			Short charge,Double chargeAmount,CmsUser user, boolean forMember) {
-		saveContent(bean, ext, txt,doc, channelId, typeId, draft,contribute,user, forMember);
-		// 保存副栏目
+		saveContent_blog(bean, ext, txt,doc, column, typeId, draft,contribute,user, forMember);
+		/*// 保存副栏目
 		if (channelIds != null && channelIds.length > 0) {
 			for (Integer cid : channelIds) {
 				bean.addToChannels(channelMng.findById(cid));
 			}
-		}
-		// 主栏目也作为副栏目一并保存，方便查询，提高效率。
+		}*/
+		/*// 主栏目也作为副栏目一并保存，方便查询，提高效率。
 		Channel channel=channelMng.findById(channelId);
-		bean.addToChannels(channel);
+		bean.addToChannels(channel);*/
 		// 保存专题
-		if (topicIds != null && topicIds.length > 0) {
+	/*	if (topicIds != null && topicIds.length > 0) {
 			for (Integer tid : topicIds) {
 				if(tid!=null&&tid!=0){
 					bean.addToTopics(cmsTopicMng.findById(tid));
 				}
 			}
-		}
+		}*/
 		// 保存浏览会员组
-		if (viewGroupIds != null && viewGroupIds.length > 0) {
+	/*	if (viewGroupIds != null && viewGroupIds.length > 0) {
 			for (Integer gid : viewGroupIds) {
 				bean.addToGroups(cmsGroupMng.findById(gid));
 			}
-		}
-		// 保存标签
-		List<ContentTag> tags = contentTagMng.saveTags(tagArr);
-		bean.setTags(tags);
+		}*/
+	/*	// 保存标签
+		List<ContentTag> tags = contentTagMng.saveTags(tagArr);*/
+	/*	bean.setTags(tags);*/
 		// 保存附件
 		if (attachmentPaths != null && attachmentPaths.length > 0) {
 			for (int i = 0, len = attachmentPaths.length; i < len; i++) {
@@ -367,11 +369,11 @@ public class ContentMngImpl implements ContentMng, ChannelDeleteChecker {
 		//文章操作记录
 		contentRecordMng.record(bean, user, ContentOperateType.add);
 		//栏目内容发布数（未审核通过的也算）
-		channelCountMng.afterSaveContent(channel);
+//		channelCountMng.afterSaveContent(channel);
 		//非免费
-		if(charge!=null&&!charge.equals(ContentCharge.MODEL_FREE)){
-			contentChargeMng.save(chargeAmount,charge,bean);
-		}
+//		if(charge!=null&&!charge.equals(ContentCharge.MODEL_FREE)){
+//			contentChargeMng.save(chargeAmount,charge,bean);
+//		}
 		// 执行监听器
 		afterSave(bean);
 		return bean;
@@ -476,6 +478,32 @@ public class ContentMngImpl implements ContentMng, ChannelDeleteChecker {
 		return bean;
 	}
 
+	private Content saveContent_blog(Content bean, ContentExt ext, ContentTxt txt,ContentDoc doc,
+			Columns column,Integer typeId, Boolean draft,Boolean contribute,CmsUser user, boolean forMember){
+		Channel channel = channelMng.findById(75);
+		bean.setColumnName(column.getColumn_name());
+		bean.setChannel(channel);
+		bean.setType(contentTypeMng.findById(typeId));
+		bean.setUser(user);
+     	bean.setStatus(ContentCheck.CHECKED);
+		// 是否有标题图
+		bean.setHasTitleImg(!StringUtils.isBlank(ext.getTitleImg()));
+		bean.init();
+		// 执行监听器
+		preSave(bean);
+		dao.save(bean);
+		contentExtMng.save(ext, bean);
+		contentTxtMng.save(txt, bean);
+		if(doc!=null){
+			contentDocMng.save(doc, bean);
+		}
+		ContentCheck check = new ContentCheck();
+		check.setCheckStep((byte) 2);
+		bean.setStatus(ContentCheck.CHECKED);
+		contentCountMng.save(new ContentCount(), bean);
+		return bean;
+	}
+	
 	public Content update(Content bean, ContentExt ext, ContentTxt txt,ContentDoc doc,
 			String[] tagArr, Integer[] channelIds, Integer[] topicIds,
 			Integer[] viewGroupIds, String[] attachmentPaths,

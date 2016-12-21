@@ -166,3 +166,14 @@ padding-top: 32px;
 
 .blog-con{width:1000px; margin:0 auto; padding-top:18px;}
 .blogLeft{float:left; border:1px solid #dedede; padding:34px 50px; border-radius:5px; -moz-border-radius:5px; -o-border-radius:5px; -webkit-border-radius:5px; border-top-right-radius:0; min-height:520px; position:relative;}
+
+.blogHead{
+	width:1000px;
+	font-family: "Microsoft YaHei",Arial;
+	line-height: 200%;
+}
+.memberRight{width:268px; height:268px; border:1px solid #dedede; border-left:none; border-radius:5px; -moz-border-radius:5px; -o-border-radius:5px; -webkit-border-radius:5px; border-top-left-radius:0; border-bottom-left-radius:0; right:0px; top:0; position:absolute; background:#fff; z-index:3; text-align:center;background-color: rgb(108, 142, 103);}
+.memberImg{padding-top:25px;}
+.memberImg img{width:145px; height:145px;}
+.memberName{color:#999999; font-size:12px; margin-top:15px;}
+.memberName span{color:#191919; font-size:15px;}

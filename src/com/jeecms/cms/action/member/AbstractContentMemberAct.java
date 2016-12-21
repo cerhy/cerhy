@@ -5,11 +5,10 @@ import static com.jeecms.cms.Constants.TPLDIR_BLOG;
 import static com.jeecms.cms.Constants.TPLDIR_MEMBER;
 import static com.jeecms.common.page.SimplePage.cpn;
 
-import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.Set;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -26,7 +25,6 @@ import com.jeecms.cms.entity.main.ContentDoc;
 import com.jeecms.cms.entity.main.ContentExt;
 import com.jeecms.cms.entity.main.ContentTxt;
 import com.jeecms.cms.entity.main.ContentType;
-import com.jeecms.cms.manager.assist.CmsConfigContentChargeMng;
 import com.jeecms.cms.manager.main.ChannelMng;
 import com.jeecms.cms.manager.main.CmsModelMng;
 import com.jeecms.cms.manager.main.ContentDocMng;
@@ -413,19 +411,16 @@ public class AbstractContentMemberAct {
 	protected FileRepository fileRepository;
 	@Autowired
 	protected ImageCaptchaService imageCaptchaService;
-	@Autowired
-	private CmsConfigContentChargeMng configContentChargeMng;
 	
-	protected String center(String q, Integer modelId,Integer queryChannelId,
-			String nextUrl,Integer pageNo,
-			HttpServletRequest request, ModelMap model) {
+	protected String center(String q, Integer modelId,Integer queryChannelId,String nextUrl,Integer pageNo,HttpServletRequest request, ModelMap model) {
 		CmsSite site = CmsUtils.getSite(request);
 		CmsUser user = CmsUtils.getUser(request);
+		int user_id = user.getId();
+		String path = request.getSession().getServletContext().getRealPath("/");
+		List<Columns> columnsList = (new BlogDao()).findByUserId(user_id, path);
+		model.addAttribute("columnsList", columnsList);
 		FrontUtils.frontData(request, model, site);
-		if (user == null) {
-			return FrontUtils.showLogin(request, model, site);
-		}
-		Pagination p = contentMng.getPageForMember_blog(q, queryChannelId,site.getId(), modelId,user.getId(), cpn(pageNo), 20);
+		Pagination p = contentMng.getPageForMember_blog(q, queryChannelId,site.getId(), modelId,user.getId(), cpn(pageNo), 20,null);
 		model.addAttribute("pagination", p);
 		if (!StringUtils.isBlank(q)) {
 			model.addAttribute("q", q);
@@ -436,16 +431,22 @@ public class AbstractContentMemberAct {
 		return FrontUtils.getTplPath(request, site.getSolutionPath(), TPLDIR_BLOG, nextUrl);
 	}
 	
-	protected String blog_list(String q, Integer modelId,Integer queryChannelId,
-			String nextUrl,Integer pageNo,
-			HttpServletRequest request, ModelMap model) {
+	protected String blog_list(String q, Integer modelId,Integer queryChannelId,String nextUrl,Integer pageNo,HttpServletRequest request, ModelMap model) {
 		CmsSite site = CmsUtils.getSite(request);
 		CmsUser user = CmsUtils.getUser(request);
-		FrontUtils.frontData(request, model, site);
-		if (user == null) {
-			return FrontUtils.showLogin(request, model, site);
+		String name =null ;
+		try {
+			request.setCharacterEncoding("UTF-8");
+		    name = new String(request.getParameter("id").getBytes("ISO-8859-1"), "utf-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
 		}
-		Pagination p = contentMng.getPageForMember(q, queryChannelId,site.getId(), modelId,user.getId(), cpn(pageNo), 20);
+		int user_id = user.getId();
+	    String path = request.getSession().getServletContext().getRealPath("/");
+		List<Columns> columnsList = (new BlogDao()).findByUserId(user_id, path);
+		model.addAttribute("columnsList", columnsList);
+		FrontUtils.frontData(request, model, site);
+		Pagination p = contentMng.getPageForMember_blog(q, queryChannelId,site.getId(), modelId,user.getId(), cpn(pageNo), 20,name);
 		model.addAttribute("pagination", p);
 		if (!StringUtils.isBlank(q)) {
 			model.addAttribute("q", q);
@@ -503,11 +504,12 @@ public class AbstractContentMemberAct {
 		
 		public void columns_add(HttpServletRequest request,HttpServletResponse response, ModelMap model) {
 			String name = request.getParameter("columnInput");
+			String order = request.getParameter("columnOrder");
 			CmsUser user = CmsUtils.getUser(request);
 			int user_id = user.getId();
 			String path = request.getSession().getServletContext().getRealPath("/");
 			if(null != name && null != user){
-				(new BlogDao()).addColumn(user_id,name, path);
+				(new BlogDao()).addColumn(user_id,name,order, path);
 			}
 			try {
 				request.getRequestDispatcher("/blog/columns_list.jspx").forward(request, response);
@@ -531,10 +533,21 @@ public class AbstractContentMemberAct {
 	
 		public void columns_update(HttpServletRequest request,HttpServletResponse response, ModelMap model) {
 			String id = request.getParameter("id");
-			String name = request.getParameter("update");
+			String name = request.getParameter("updateName");
+			String orderId = request.getParameter("updateOrderId");
 			String path = request.getSession().getServletContext().getRealPath("/");
-			if(null != id && null!=name){
-				(new BlogDao()).updateColumn(Integer.parseInt(id),name, path);
+			if (null != id) {
+				if (null != name && ""!=name) {
+					if (null != orderId && ""!=orderId) {
+						(new BlogDao()).updateColumn(Integer.parseInt(id), name, Integer.parseInt(orderId), path);
+					} else {
+						(new BlogDao()).updateColumn(Integer.parseInt(id), name, path);
+					}
+				} else {
+					if (null != orderId) {
+						(new BlogDao()).updateColumn(Integer.parseInt(id), Integer.parseInt(orderId), path);
+					}
+				}
 			}
 			try {
 				request.getRequestDispatcher("/blog/columns_list.jspx").forward(request, response);
@@ -546,16 +559,27 @@ public class AbstractContentMemberAct {
 		public String update_tz(HttpServletRequest request,HttpServletResponse response, ModelMap model) {
 			CmsSite site = CmsUtils.getSite(request);
 			CmsUser user = CmsUtils.getUser(request);
+			String name =null ;
+			  try {
+				request.setCharacterEncoding("UTF-8");
+			    name = new String(request.getParameter("id").getBytes("ISO-8859-1"), "utf-8");
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			}
+			int user_id = user.getId();
+			String path = request.getSession().getServletContext().getRealPath("/");
+			List<Columns> columnsList = (new BlogDao()).findByUserId(user_id, path);
+			model.addAttribute("columnsList", columnsList);
 			String id=request.getParameter("id");
-			String name = request.getParameter("name");
-			model.addAttribute("columnid", id);
-			model.addAttribute("columnname", name);
+			String orderId = request.getParameter("order");
+			Columns column = new Columns(Integer.parseInt(id),user.getId(),name,Integer.parseInt(orderId));
+			model.addAttribute("column", column);
 			FrontUtils.frontData(request, model, site);
 			return FrontUtils.getTplPath(request, site.getSolutionPath(),TPLDIR_BLOG,"tpl.columnsUpdate");
 		}
 		
 	public String blog_save(String title, String author, String description,
-			String txt, String tagStr, Integer columnId, Integer modelId,ContentDoc doc,
+			String txt, String tagStr, Columns column, Integer modelId,ContentDoc doc,
 			String captcha,String mediaPath,String mediaType,
 			String[] attachmentPaths, String[] attachmentNames,
 			String[] attachmentFilenames, String[] picPaths, String[] picDescs,
@@ -607,7 +631,7 @@ public class AbstractContentMemberAct {
 		}
 		c = contentMng.blog_save(c, ext, t,null, null, null, null, tagArr,
 				attachmentPaths,attachmentNames, attachmentFilenames
-				,picPaths,picDescs,columnId, typeId, null,true,
+				,picPaths,picDescs,column, typeId, null,true,
 				charge,chargeAmount, user, true);
 		if(doc!=null){
 			contentDocMng.save(doc, c);

@@ -7,15 +7,16 @@
 <link rel="stylesheet" type="text/css" href="/${res}/css/custom.css" />
 [#include "../hyinclude/header.html"/]
 <div class="blog-con">
-  <div class="m-pos"><a href="${base}/">首页</a> > <span>服务中心</span></div>
   <div class="member clearfix">
     <div class="blogLeft clearfix"> 
       <div class="member-nav">
         <ul>
 	        <li><a href="${base}/blog/contribute_add.jspx">发表博客</a></li>
 	         <li><a href="${base}/blog/columns_list.jspx">博客栏目</a></li>
-	        <li><a href="${base}/blog/contribute_list.jspx">博文列表</a></li>
-	        <li><a href="${base}/blog/help.jspx">服务中心</a></li>
+	          [#list columnsList as c]
+              <li><a href="${base}/blog/contribute_list.jspx?id=${c.column_name}" >${c.column_name}</a></li>
+              [/#list]
+	        <li><a href="${base}/blog/help.jspx" class="on">设置</a></li>
         </ul>
       </div>
       <div class="member-main">

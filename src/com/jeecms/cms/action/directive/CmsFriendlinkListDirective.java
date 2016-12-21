@@ -55,7 +55,7 @@ public class CmsFriendlinkListDirective implements TemplateDirectiveModel {
 			enabled = true;
 		}
 		Integer channelId = getChannelId(params);
-		List<CmsFriendlink> list = cmsFriendlinkMng.getList(siteId, ctgId,
+		List<CmsFriendlink> list = cmsFriendlinkMng.getList1(siteId, ctgId,channelId,
 				enabled);
 
 		Map<String, TemplateModel> paramWrap = new HashMap<String, TemplateModel>(

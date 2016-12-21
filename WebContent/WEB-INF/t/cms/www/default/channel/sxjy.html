@@ -57,11 +57,11 @@
 			    <div class="rig">
 			      <div class="rig-top"><a class="username">[#if c.commentUser??]${(c.commentUser.username)!"匿名网友"}[#else]匿名网友[/#if]</a><em> ${c.createTime} </em></div>
 			      <div class="rig-txt">${c.textHtml!}</div>
-			      <div class="rig-bottom">
+			     <div class="rig-bottom">
 				     <a class="comments-zan" onclick="Cms.commentUp('${base}',${c.id},${c.ups},'commentups_${c.id}')">赞<span id="commentups_${c.id}">${c.ups!}</span></a>
-			      	 <a class="comments-hf" id="commentreply_${c.id}" onclick="Cms.commentInputLoad('${base}','commentInputDiv_','commentInputDiv_${c.id}','${contentId!}','${c.id}')">回复</a>
+			      	 <a class="comments-hf" id="commentreply_${c.id}" onclick="Cms.commentChannelInputLoad('${base}','commentInputDiv_','commentInputDiv_${c.id}','${channelId!}','${c.id}')">回复</a>
 				   </div>	
-				   <div id="commentInputDiv_${c.id}"></div>
+				   <div class="reply" id="commentInputDiv_${c.id}"></div>
 			      [#if c.replyCount>0]
 			      <div class="comments-item comments-child">
 				    <div class="tx"><img src="[#if c.replayUser??]${(c.replayUser.userImg)!'${site.defImg!}'}[#else]'${site.defImg!}'[/#if]"></div>
@@ -72,9 +72,9 @@
 				      <div class="rig-bottom">
 				      		 <a class="comments-zan" onclick="Cms.commentUp('${base}',${c.id},${c.ups},'commentups_${c.id}')">赞<span id="commentups_${c.id}">${c.ups!}</span></a>
 			  				 <span id="commentdowns_${c.id}">${c.downs!}</span>
-					      	 <span id="commentreply_${c.id}" onclick="Cms.commentInputLoad('${base}','commentInputDiv_','commentInputDiv_${c.id}','${contentId!}','${c.id}')">回复</span>
+					      	 <span id="commentreply_${c.id}" onclick="Cms.commentChannelInputLoad('${base}','commentInputDiv_','commentInputDiv_${c.id}','${contentId!}','${c.id}')">回复</span>
 							  [#if c.replyCount>0]
-							  <span id="commentviewreply_${c.id}" onclick="Cms.commentListMore('${base}','commentDialog',{parentId:${c.id},contentId:${contentId!},orderBy:0,count:5,checked:1})">查看回复(${c.replyCount!})</span>
+							  <span id="commentviewreply_${c.id}" onclick="Cms.commentListChannelMore('${base}','commentDialog',{parentId:${c.id},contentId:${contentId!},orderBy:0,count:5,checked:1})">查看回复(${c.replyCount!})</span>
 							  [/#if]
 							  <div id="commentInputDiv_${c.id}"></div>
 				      </div>
@@ -94,82 +94,47 @@
                 <!--链接-->
                 <div class="links-wrap">
                     <h3>链接</h3>
-                    <div class="link-content">
-                        <a href="#" rel="nofollow" class="school">安定小教</a>
-                        <a href="#" rel="nofollow" class="school">海口教研</a>
-                        <a href="#" rel="nofollow" class="school">定安小教</a>
-                        <a href="#" rel="nofollow" class="school">定安中教</a>
-                        <a href="#" rel="nofollow" class="school">文昌小教</a>
-                        <a href="#" rel="nofollow" class="school">文昌中教</a>
-                        <a href="#" rel="nofollow" class="school">万宁小教</a>
-                        <a href="#" rel="nofollow" class="school">万宁中教</a>
-                        <a href="#" rel="nofollow" class="school">屯昌研训</a>
-                        <a href="#" rel="nofollow" class="school">琼海小教</a>
-                        <a href="#" rel="nofollow" class="school">琼海中教</a>
-                        <a href="#" rel="nofollow" class="school">儋州教研中</a>
-                        <a href="#" rel="nofollow" class="school">临高教研</a>
-                        <a href="#" rel="nofollow" class="school">澄迈教研</a>
-                        <a href="#" rel="nofollow" class="school">三亚教研</a>
-                        <a href="#" rel="nofollow" class="school">五指山教研</a>
-                        <a href="#" rel="nofollow" class="school">保亭教研</a>
-                        <a href="#" rel="nofollow" class="school">陵水教研</a>
-                        <a href="#" rel="nofollow" class="school">乐东教研</a>
-                        <a href="#" rel="nofollow" class="school">东方教研</a>
-                        <a href="#" rel="nofollow" class="school">昌江教研</a>
-                        <a href="#" rel="nofollow" class="school">白沙教研</a>
-                        <a href="#" rel="nofollow" class="school">琼中教研</a>
-                        <a href="#" rel="nofollow" class="school">三沙</a>
-                        <a href="#" rel="nofollow" class="school">洋浦教研</a>
-                        <a href="#" rel="nofollow" class="school">海南中学</a>
-                        <a href="#" rel="nofollow" class="school">海南实验中学</a>
-                        <a href="#" rel="nofollow" class="school">国兴中学</a>
-                        <a href="#" rel="nofollow" class="school">海师附中</a>
-                        <a href="#" rel="nofollow" class="school">热海大附</a>
-                    </div>
+                    
+                       	[@cms_friendlink_list ctgId='1' channelId=channel.id]
+							 [#list tag_list as link]
+							 <div class="link-content">
+							   	 <a href="${link.domain}" onclick="$.get('${base}/friendlink_view.jspx?id=${link.id}')" target="_blank">${link.name}</a>
+							   </div>
+							   [/#list]
+					     [/@cms_friendlink_list]
+                   
                 </div>
-                <div class="links-wrap">
-                    <h3>好友</h3>
-                    <div class="link-content">
-                        <div class="users-a-link-wrap clearfix">
-                            <a href="#" class="users-a-link">
-                                <img src="/${res}/temp/user-pic.png" alt="" width="47" height="47">
-                                <span>xxxxx</span>
-                            </a>
-                            <a href="#" class="users-a-link">
-                                <img src="/${res}/temp/user-pic.png" alt="" width="47" height="47">
-                                <span>xxxxx</span>
-                            </a>
-                            <a href="#" class="users-a-link">
-                                <img src="/${res}/temp/user-pic.png" alt="" width="47" height="47">
-                                <span>xxxxx</span>
-                            </a>
-                            <a href="#" class="users-a-link">
-                                <img src="/${res}/temp/user-pic.png" alt="" width="47" height="47">
-                                <span>xxxxx</span>
-                            </a>
-                            <a href="#" class="users-a-link">
-                                <img src="/${res}/temp/user-pic.png" alt="" width="47" height="47">
-                                <span>xxxxx</span>
-                            </a>
-                            <a href="#" class="users-a-link">
-                                <img src="/${res}/temp/user-pic.png" alt="" width="47" height="47">
-                                <span>xxxxx</span>
-                            </a>
-                            <a href="#" class="users-a-link">
-                                <img src="/${res}/temp/user-pic.png" alt="" width="47" height="47">
-                                <span>xxxxx</span>
-                            </a>
-                            <a href="#" class="users-a-link">
-                                <img src="/${res}/temp/user-pic.png" alt="" width="47" height="47">
-                                <span>xxxxx</span>
-                            </a>
-                        </div>
-                    </div>
-            </div>
-        </div>
-    </div>
-</div>
-[#include "../include/footer.html"/]
-<script src="/${res}/js/main.js"></script>
+	</div>
+	</div>
+	<script type="text/javascript">
+	$(function() {
+		$("#commentDialog").dialog({
+			autoOpen: false,
+			modal: true,
+			width: 500,
+			height: 600,
+			position: ["center",20],
+			buttons: {
+				"关闭": function() {
+					$(this).dialog("close");
+				}
+			},
+			close: function(event, ui) {
+			}
+		});
+	    [#if !parentId??]
+	     $(".comments-hf").bind("click", function(){
+	                  $(this).toggleClass("reply-on");
+			  $(this).parent().siblings(".reply").animate({height:'toggle'},10);
+	      });
+	    [#else]
+	      $(".comments-hf").unbind();
+	      $(".comments-hf").bind("click", function(){
+	                  $(this).toggleClass("reply-on");
+			  $(this).parent().siblings(".reply").animate({height:'toggle'},10);
+	      });
+	    [/#if]
+	});
+</script>
 </body>
 </html>

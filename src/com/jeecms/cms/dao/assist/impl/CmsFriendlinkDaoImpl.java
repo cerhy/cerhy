@@ -50,7 +50,7 @@ public class CmsFriendlinkDaoImpl extends
 			f.setParam("ctgId", ctgId);
 		}
 		if (channelId != null) {
-			f.append(" and bean.channel.id=:ctgId");
+			f.append(" and bean.channel.id=:channelId");
 			f.setParam("channelId", channelId);
 		}
 		f.append(" order by bean.priority asc");

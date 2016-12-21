@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import com.jeecms.cms.entity.main.Columns;
 import com.jeecms.cms.entity.main.Content;
 import com.jeecms.cms.entity.main.ContentDoc;
 import com.jeecms.cms.entity.main.ContentExt;
@@ -50,7 +51,7 @@ public interface ContentMng {
 			Integer siteId, Integer modelId,Integer memberId, int pageNo, int pageSize);
 	
 	public Pagination getPageForMember_blog(String title, Integer channelId,
-			Integer siteId, Integer modelId,Integer memberId, int pageNo, int pageSize);
+			Integer siteId, Integer modelId,Integer memberId, int pageNo, int pageSize,String column_name);
 	/**
 	 * 根据内容ID数组获取文章列表
 	 * 
@@ -139,7 +140,7 @@ public interface ContentMng {
 			Integer[] channelIds, Integer[] topicIds, Integer[] viewGroupIds,
 			String[] tagArr, String[] attachmentPaths,
 			String[] attachmentNames, String[] attachmentFilenames,
-			String[] picPaths, String[] picDescs, Integer channelId,
+			String[] picPaths, String[] picDescs, Columns column,
 			Integer typeId, Boolean draft,Boolean contribute,
 			Short charge,Double chargeAmount,
 			CmsUser user, boolean forMember);

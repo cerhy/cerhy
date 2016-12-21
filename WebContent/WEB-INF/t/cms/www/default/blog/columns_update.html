@@ -25,19 +25,25 @@ width:50px;height: 25px;background: #00a8eb;color: #FFF;text-align: center;font-
       <div class="member-nav">
         <ul>
 	       <li><a href="${base}/blog/contribute_add.jspx">发表博客</a></li>
-	        <li><a href="${base}/blog/columns_list.jspx">博客栏目</a></li>
-	        <li><a href="${base}/blog/contribute_list.jspx">博文列表</a></li>
-	        <li><a href="${base}/blog/help.jspx">服务中心</a></li>
+	        <li><a href="${base}/blog/columns_list.jspx" class="on">博客栏目</a></li>
+	         [#list columnsList as c]
+              <li><a href="${base}/blog/contribute_list.jspx?id=${c.column_name}" >${c.column_name}</a></li>
+              [/#list]
+	        <li><a href="${base}/blog/help.jspx">设置</a></li>
         </ul>
       </div>
       <div class="member-main">
         <div class="tggl">
-        <form action="${base}/blog/updateColumn.jspx?id=${columnid}" id="newColumn" method="post">
+        <form action="${base}/blog/updateColumn.jspx?id=${column.column_id}" id="newColumn" method="post">
          <div style="font-size:15px">原栏目名:</div>
-         <div style="font-size:16px;margin:5px 0 10px 70px;color:red;">${columnname}</div>
+         <div style="font-size:16px;margin:5px 0 10px 70px;color:red;">${column.column_name}</div>
+         <div style="font-size:15px">原栏目排序号:</div>
+         <div style="font-size:16px;margin:5px 0 10px 70px;color:red;">${column.order_id}</div>
          <div style="font-size:15px">新栏目名:</div>
-         <input type="text" name="update" style="margin:10px 10px 20px 0;"/>
-         <input type="submit" value="更新" class="sub2"/>
+         <input type="text" name="updateName" style="margin:10px 10px 20px 0;"/>
+         <div style="font-size:15px">新栏目排序号:</div>
+         <input type="text" name="updateOrderId" style="margin:10px 10px 20px 0;"/>
+         <div style="margin-bottom:20px"><input type="submit" value="更新" class="sub2" /></div>
         </form>
       </div>
     </div>
