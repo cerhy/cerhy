@@ -40,7 +40,11 @@
     </div>
   </div>
   [/#list]
-  <div class="open-more"><a href="${base}/comment.jspx?contentId=${contentId!}">更多评论</a></div>
+  [#list list as c]
+  	[#if c??]
+  		<div class="open-more"><a href="${base}/comment.jspx?contentId=${contentId!}">更多评论</a></div>
+  	[/#if]
+  [/#list]
 </section>
 <div id="commentDialog" style="display:none;"></div>
 <script type="text/javascript">

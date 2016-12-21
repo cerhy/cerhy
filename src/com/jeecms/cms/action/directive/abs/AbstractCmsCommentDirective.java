@@ -23,6 +23,10 @@ public abstract class AbstractCmsCommentDirective implements
 	 */
 	public static final String PARAM_CONTENT_ID = "contentId";
 	/**
+	 * 输入参数，栏目ID。
+	 */
+	public static final String PARAM_CHANNEL_ID = "channelId";
+	/**
 	 * 输入参数，父ID。
 	 */
 	public static final String PARAM_PARENT_ID = "parentId";
@@ -79,6 +83,10 @@ public abstract class AbstractCmsCommentDirective implements
 		}
 	}
 
+	protected Integer getChannelId(Map<String, TemplateModel> params)throws TemplateException {
+		return DirectiveUtils.getInt(PARAM_CHANNEL_ID, params);
+	}
+	
 	@Autowired
 	protected CmsCommentMng cmsCommentMng;
 

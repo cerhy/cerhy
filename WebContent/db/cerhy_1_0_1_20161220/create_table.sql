@@ -1,6 +1,3 @@
-drop table `jc_comment_ext`;
-drop table `jc_comment`;
-
 CREATE TABLE `jc_comment` (
   `comment_id` int(11) NOT NULL AUTO_INCREMENT,
   `comment_user_id` int(11) DEFAULT NULL COMMENT '评论用户ID',
@@ -38,3 +35,25 @@ CREATE TABLE `jc_comment_ext` (
   KEY `fk_jc_ext_comment` (`comment_id`),
   CONSTRAINT `fk_jc_ext_comment` FOREIGN KEY (`comment_id`) REFERENCES `jc_comment` (`comment_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='CMS评论扩展表';
+
+CREATE TABLE `jc_friendlink` (
+  `friendlink_id` int(11) NOT NULL AUTO_INCREMENT,
+  `site_id` int(11) NOT NULL,
+  `channel_id` int(11) DEFAULT NULL COMMENT '栏目id',
+  `friendlinkctg_id` int(11) NOT NULL,
+  `site_name` varchar(150) NOT NULL COMMENT '网站名称',
+  `domain` varchar(255) NOT NULL COMMENT '网站地址',
+  `logo` varchar(150) DEFAULT NULL COMMENT '图标',
+  `email` varchar(100) DEFAULT NULL COMMENT '站长邮箱',
+  `description` varchar(255) DEFAULT NULL COMMENT '描述',
+  `views` int(11) NOT NULL DEFAULT '0' COMMENT '点击次数',
+  `is_enabled` char(1) NOT NULL DEFAULT '1' COMMENT '是否显示',
+  `priority` int(11) NOT NULL DEFAULT '10' COMMENT '排列顺序',
+  PRIMARY KEY (`friendlink_id`),
+  KEY `fk_jc_ctg_friendlink` (`friendlinkctg_id`),
+  KEY `fk_jc_friendlink_channel` (`channel_id`),
+  KEY `fk_jc_friendlink_site` (`site_id`),
+  CONSTRAINT `fk_jc_ctg_friendlink` FOREIGN KEY (`friendlinkctg_id`) REFERENCES `jc_friendlink_ctg` (`friendlinkctg_id`),
+  CONSTRAINT `fk_jc_friendlink_site` FOREIGN KEY (`site_id`) REFERENCES `jc_site` (`site_id`),
+  CONSTRAINT `fk_jc_friendlink_channel` FOREIGN KEY (`channel_id`) REFERENCES `jc_channel` (`channel_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COMMENT='CMS友情链接';

@@ -33,6 +33,31 @@ public class CmsFriendlinkDaoImpl extends
 		return find(f);
 	}
 
+	
+	@SuppressWarnings("unchecked")
+	public List<CmsFriendlink> getList1(Integer siteId, Integer ctgId, Integer channelId, Boolean enabled) {
+		Finder f = Finder.create("from CmsFriendlink bean where 1=1");
+		if (enabled != null) {
+			f.append(" and bean.enabled=:enabled");
+			f.setParam("enabled", enabled);
+		}
+		if (siteId != null) {
+			f.append(" and bean.site.id=:siteId");
+			f.setParam("siteId", siteId);
+		}
+		if (ctgId != null) {
+			f.append(" and bean.category.id=:ctgId");
+			f.setParam("ctgId", ctgId);
+		}
+		if (channelId != null) {
+			f.append(" and bean.channel.id=:channelId");
+			f.setParam("channelId", channelId);
+		}
+		f.append(" order by bean.priority asc");
+		f.setCacheable(true);
+		return find(f);
+	}
+	
 	public int countByCtgId(Integer ctgId) {
 		String hql = "select count(*) from CmsFriendlink bean where bean.category.id=:ctgId";
 		return ((Number) getSession().createQuery(hql).setParameter("ctgId",
@@ -61,4 +86,6 @@ public class CmsFriendlinkDaoImpl extends
 	protected Class<CmsFriendlink> getEntityClass() {
 		return CmsFriendlink.class;
 	}
+
+	
 }

@@ -9,6 +9,17 @@ public interface CmsFriendlinkDao {
 	public List<CmsFriendlink> getList(Integer siteId, Integer ctgId,
 			Boolean enabled);
 
+	/**
+	 * 友情链接
+	 * @param siteId
+	 * @param ctgId
+	 * @param channelId
+	 * @param enabled
+	 * @return
+	 */
+	public List<CmsFriendlink> getList1(Integer siteId, Integer ctgId,Integer channelId,
+			Boolean enabled);
+	
 	public int countByCtgId(Integer ctgId);
 
 	public CmsFriendlink findById(Integer id);

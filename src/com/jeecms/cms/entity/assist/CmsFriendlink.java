@@ -6,6 +6,24 @@ import com.jeecms.cms.entity.assist.base.BaseCmsFriendlink;
 
 public class CmsFriendlink extends BaseCmsFriendlink {
 	private static final long serialVersionUID = 1L;
+	private Integer channelId;
+	private String channelName;  
+
+	public String getChannelName() {
+		return channelName;
+	}
+
+	public void setChannelName(String channelName) {
+		this.channelName = channelName;
+	}
+
+	public Integer getChannelId() {
+		return channelId;
+	}
+
+	public void setChannelId(Integer channelId) {
+		this.channelId = channelId;
+	}
 
 	public void init() {
 		if (getPriority() == null) {
@@ -50,6 +68,19 @@ public class CmsFriendlink extends BaseCmsFriendlink {
 		super(id, category, site, name, domain, views, priority, enabled);
 	}
 
+	
+	/**
+	 * Constructor for required fields
+	 */
+	public CmsFriendlink(java.lang.Integer id,
+			com.jeecms.cms.entity.assist.CmsFriendlinkCtg category,
+			com.jeecms.core.entity.CmsSite site, com.jeecms.cms.entity.main.Channel channel,
+			java.lang.String name,
+			java.lang.String domain, java.lang.Integer views,
+			java.lang.Integer priority, java.lang.Boolean enabled) {
+
+		super(id, category, site,channel, name, domain, views, priority, enabled);
+	}
 	/* [CONSTRUCTOR MARKER END] */
 
 }

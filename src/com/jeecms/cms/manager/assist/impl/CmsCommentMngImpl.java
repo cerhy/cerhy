@@ -34,10 +34,10 @@ public class CmsCommentMngImpl implements CmsCommentMng {
 	}
 
 	@Transactional(readOnly = true)
-	public Pagination getPageForTag(Integer siteId, Integer contentId,
+	public Pagination getPageForTag(Integer siteId, Integer channelId, Integer contentId,
 			Integer greaterThen, Boolean checked, Boolean recommend,
 			boolean desc, int pageNo, int pageSize) {
-		Pagination page = dao.getPage(siteId, contentId, greaterThen, checked,
+		Pagination page = dao.getPage(siteId, channelId,contentId, greaterThen, checked,
 				recommend, desc, pageNo, pageSize, true);
 		return page;
 	}
