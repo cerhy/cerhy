@@ -390,6 +390,11 @@ public class ContributeAct extends AbstractContentMemberAct {
 		return FrontUtils.getTplPath(request, site.getSolutionPath(),TPLDIR_BLOG, "tpl.blogHelp");
 	}
 	
+	@RequestMapping(value = "/blog/tzsetting.jspx")
+	public String tzsetting(HttpServletRequest request, HttpServletResponse response,ModelMap model) {
+		return super.tzsetting(request, response, model);
+	}
+	
 	@RequestMapping(value = "/blog/index.jspx")
 	public String center(String queryTitle, Integer modelId,
 			Integer queryChannelId, Integer pageNo, HttpServletRequest request,
@@ -443,59 +448,25 @@ public class ContributeAct extends AbstractContentMemberAct {
 
 	@RequestMapping(value = "/blog/contribute_save.jspx")
 	public String blog_save(String title, String author, String description,
-			String txt, String tagStr, Columns column,Integer modelId, 
+			String txt, String tagStr, String columnName,Integer modelId, 
 			String captcha,String mediaPath,String mediaType,
 			String[] attachmentPaths, String[] attachmentNames,
 			String[] attachmentFilenames, String[] picPaths, String[] picDescs,
 			Short charge,Double chargeAmount,
 			String nextUrl, HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
-		return super.blog_save(title, author, description, txt, tagStr, column,modelId,
+		return super.blog_save(title, author, description, txt, tagStr, columnName,modelId,
 				null, captcha,mediaPath,mediaType,attachmentPaths,attachmentNames, attachmentFilenames
 				,picPaths,picDescs,charge,chargeAmount,
 				nextUrl, request, response, model);
 	}
 
-	/**
-	 * 博客修改
-	 * 
-	 * @param id
-	 *            文章ID
-	 * @param request
-	 * @param response
-	 * @param model
-	 * @return
-	 */
 	@RequestMapping(value = "/blog/contribute_edit.jspx")
 	public String blog_edit(Integer id, HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		return super.blog_edit(id, CONTRIBUTE_EDIT, request, response, model);
 	}
 
-	/**
-	 * 博客更新
-	 * 
-	 * @param id
-	 *            文章ID
-	 * @param title
-	 *            标题
-	 * @param author
-	 *            作者
-	 * @param description
-	 *            描述
-	 * @param txt
-	 *            内容
-	 * @param tagStr
-	 *            TAG字符串
-	 * @param channelId
-	 *            栏目ID
-	 * @param nextUrl
-	 *            下一个页面地址
-	 * @param request
-	 * @param response
-	 * @param model
-	 * @return
-	 */
 	@RequestMapping(value = "/blog/contribute_update.jspx")
 	public String blog_update(Integer id, String title, String author,
 			String description, String txt, String tagStr, Integer channelId,
