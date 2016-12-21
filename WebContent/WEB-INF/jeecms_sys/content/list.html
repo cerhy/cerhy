@@ -422,6 +422,7 @@ function optUnPigeonhole() {
 	        <li class="first"><a href="#"><@s.m "content.opt.add"/></a>
 	        <ul>
 	            <#list models as m>
+	             <#if m.name!='新闻'&& m.name!='下载'&& m.name!='图库'&& m.name!='招聘'&& m.name!='文库'&&m.name!='视频'>
 			 	<li value="1">
 	            <a href="v_add.do?modelId=${m.id}&cid=${cid!}"">
 	            <#if m.id gt 0&&m.id lt 10><img src="${base}/res/common/img/theme/model-${m.id}.gif" / style="vertical-align:middle;">
@@ -429,6 +430,7 @@ function optUnPigeonhole() {
 				</#if>
 	            	${m.name}</a>
 	            </li>
+	            </#if>
 				 </#list>
 	        </ul>
 	    </li>
