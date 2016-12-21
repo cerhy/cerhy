@@ -9,19 +9,20 @@
 <script src="${resSys}/front.js" type="text/javascript"></script>
 <script type="text/javascript" src="/${res}/js/jquery.SuperSlide.js"></script>
 <link type="text/css" rel="stylesheet" href="/${res}/css/hyindex.css" />
+<link type="text/css" rel="stylesheet" href="/${res}/css/custom.css" />
 
 [#include "../hyinclude/header.html"/]
 <div class="local">
     <div class="wrap">
         <span class="local-icon icon-font"></span>
-        <span class="position">教育时政</span>
+        <span class="position">教育政策</span>
     </div>
 </div>
 <div class="container">
     <div class="wrap">
          <div class="xueke clearfix bd-padding">
             	<div class="article-list-wrap">
-     [@cms_content_page count='4' recommend='2'  orderBy='4' channelId='175' channelOption='1' dateFormat='yyyy-MM-dd HH-mm']
+     [@cms_content_page count='4' recommend='2'  orderBy='4' channelId=channel.id channelOption='1' dateFormat='yyyy-MM-dd HH-mm']
       [#list tag_pagination.list as a]
       <ul class="report-list1 sm mb20">
       		<li>
