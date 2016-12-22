@@ -16,7 +16,11 @@
 	          [#list columnsList as c]
               <li><a href="${base}/blog/contribute_list.jspx?id=${c.column_name}" >${c.column_name}</a></li>
               [/#list]
-	        <li><a href="${base}/blog/help.jspx" class="on">设置</a></li>
+	        <li><a href="${base}/blog/help.jspx" class="on">设置1</a></li>
+	        <li>换肤<select id="skin" name="skin" id="skin" onchange="skinChange(this.selectedIndex)">
+	        	<option value="01">01</option>
+	        	<option value="02">02</option>
+	        </select></li>
         </ul>
       </div>
       <div class="member-main">
@@ -26,5 +30,10 @@
   </div>
 </div>
 [#include "../include/footer.html"/]
+<script type="text/javascript">
+	function channelChange(n){
+		alert(n);
+	}
+</script>
 </body>
 </html>

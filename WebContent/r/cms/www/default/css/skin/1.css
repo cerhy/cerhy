@@ -1,0 +1,15 @@
+/* cartoon */
+
+#header		{ color: #0080c0; background: #1A96E4; border-bottom: 4px solid #e400ff; }
+.popDlg, .pad	{ border-color: #1A96E4; }
+
+#sbr, .vbr b, .vbr .a	{ background-color: #D5F3FD; }
+.box .cap,
+.commentView .btn:hover, .vbr b:hover, .vbr b.active, .vbr .a:hover, .vbr .a.active	{ background-color: #1A96E4; color: #fff; }
+
+.menu a.active, .menu span.active, .cascade h3.active	{ background-color: #68DAFF; }
+.menu a:hover, .menu span:hover		{ background-color: #B8EBFC; }
+
+#owner-title	{ color: #e400ff; }
+
+.blog-con { background: url(Cartoon.gif) #529db6 fixed repeat-x 0px -163px;}
