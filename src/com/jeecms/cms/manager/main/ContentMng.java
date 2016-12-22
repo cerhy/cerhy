@@ -140,7 +140,7 @@ public interface ContentMng {
 			Integer[] channelIds, Integer[] topicIds, Integer[] viewGroupIds,
 			String[] tagArr, String[] attachmentPaths,
 			String[] attachmentNames, String[] attachmentFilenames,
-			String[] picPaths, String[] picDescs, Columns column,
+			String[] picPaths, String[] picDescs, String columnName,
 			Integer typeId, Boolean draft,Boolean contribute,
 			Short charge,Double chargeAmount,
 			CmsUser user, boolean forMember);

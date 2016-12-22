@@ -412,6 +412,28 @@ public class AbstractContentMemberAct {
 	@Autowired
 	protected ImageCaptchaService imageCaptchaService;
 	
+	public String tzsetting(HttpServletRequest request,HttpServletResponse response, ModelMap model) {
+		CmsSite site = CmsUtils.getSite(request);
+		CmsUser user = CmsUtils.getUser(request);
+		String name =null ;
+		  try {
+			request.setCharacterEncoding("UTF-8");
+		    name = new String(request.getParameter("id").getBytes("ISO-8859-1"), "utf-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		int user_id = user.getId();
+		String path = request.getSession().getServletContext().getRealPath("/");
+		List<Columns> columnsList = (new BlogDao()).findByUserId(user_id, path);
+		model.addAttribute("columnsList", columnsList);
+		String id=request.getParameter("id");
+		String orderId = request.getParameter("order");
+		Columns column = new Columns(Integer.parseInt(id),user.getId(),name,Integer.parseInt(orderId));
+		model.addAttribute("column", column);
+		FrontUtils.frontData(request, model, site);
+		return FrontUtils.getTplPath(request, site.getSolutionPath(),TPLDIR_BLOG,"tpl.columnsUpdate");
+	}
+	
 	protected String center(String q, Integer modelId,Integer queryChannelId,String nextUrl,Integer pageNo,HttpServletRequest request, ModelMap model) {
 		CmsSite site = CmsUtils.getSite(request);
 		CmsUser user = CmsUtils.getUser(request);
@@ -437,7 +459,9 @@ public class AbstractContentMemberAct {
 		String name =null ;
 		try {
 			request.setCharacterEncoding("UTF-8");
-		    name = new String(request.getParameter("id").getBytes("ISO-8859-1"), "utf-8");
+			if(null != request.getParameter("id")){
+			    name = new String(request.getParameter("id").getBytes("ISO-8859-1"), "utf-8");
+			}
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
@@ -579,7 +603,7 @@ public class AbstractContentMemberAct {
 		}
 		
 	public String blog_save(String title, String author, String description,
-			String txt, String tagStr, Columns column, Integer modelId,ContentDoc doc,
+			String txt, String tagStr, String columnName, Integer modelId,ContentDoc doc,
 			String captcha,String mediaPath,String mediaType,
 			String[] attachmentPaths, String[] attachmentNames,
 			String[] attachmentFilenames, String[] picPaths, String[] picDescs,
@@ -593,11 +617,6 @@ public class AbstractContentMemberAct {
 			if (user == null) {
 				return FrontUtils.showLogin(request, model, site);
 			}
-			/*WebErrors errors = validateSave(title, author, description, txt,doc,
-					tagStr, channelId, site, user, captcha, request, response);
-			if (errors.hasErrors()) {
-				return FrontUtils.showError(request, response, model, errors);
-			}*/
 
 		Content c = new Content();
 		c.setSite(site);
@@ -631,7 +650,7 @@ public class AbstractContentMemberAct {
 		}
 		c = contentMng.blog_save(c, ext, t,null, null, null, null, tagArr,
 				attachmentPaths,attachmentNames, attachmentFilenames
-				,picPaths,picDescs,column, typeId, null,true,
+				,picPaths,picDescs,columnName, typeId, null,true,
 				charge,chargeAmount, user, true);
 		if(doc!=null){
 			contentDocMng.save(doc, c);

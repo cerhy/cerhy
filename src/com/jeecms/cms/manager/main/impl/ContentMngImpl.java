@@ -319,36 +319,11 @@ public class ContentMngImpl implements ContentMng, ChannelDeleteChecker {
 			Integer[] channelIds, Integer[] topicIds, Integer[] viewGroupIds,
 			String[] tagArr, String[] attachmentPaths,
 			String[] attachmentNames, String[] attachmentFilenames,
-			String[] picPaths, String[] picDescs, Columns column,
+			String[] picPaths, String[] picDescs, String columnName,
 			Integer typeId, Boolean draft,Boolean contribute, 
 			Short charge,Double chargeAmount,CmsUser user, boolean forMember) {
-		saveContent_blog(bean, ext, txt,doc, column, typeId, draft,contribute,user, forMember);
-		/*// 保存副栏目
-		if (channelIds != null && channelIds.length > 0) {
-			for (Integer cid : channelIds) {
-				bean.addToChannels(channelMng.findById(cid));
-			}
-		}*/
-		/*// 主栏目也作为副栏目一并保存，方便查询，提高效率。
-		Channel channel=channelMng.findById(channelId);
-		bean.addToChannels(channel);*/
-		// 保存专题
-	/*	if (topicIds != null && topicIds.length > 0) {
-			for (Integer tid : topicIds) {
-				if(tid!=null&&tid!=0){
-					bean.addToTopics(cmsTopicMng.findById(tid));
-				}
-			}
-		}*/
-		// 保存浏览会员组
-	/*	if (viewGroupIds != null && viewGroupIds.length > 0) {
-			for (Integer gid : viewGroupIds) {
-				bean.addToGroups(cmsGroupMng.findById(gid));
-			}
-		}*/
-	/*	// 保存标签
-		List<ContentTag> tags = contentTagMng.saveTags(tagArr);*/
-	/*	bean.setTags(tags);*/
+		saveContent_blog(bean, ext, txt,doc, columnName, typeId, draft,contribute,user, forMember);
+		
 		// 保存附件
 		if (attachmentPaths != null && attachmentPaths.length > 0) {
 			for (int i = 0, len = attachmentPaths.length; i < len; i++) {
@@ -368,12 +343,7 @@ public class ContentMngImpl implements ContentMng, ChannelDeleteChecker {
 		}
 		//文章操作记录
 		contentRecordMng.record(bean, user, ContentOperateType.add);
-		//栏目内容发布数（未审核通过的也算）
-//		channelCountMng.afterSaveContent(channel);
-		//非免费
-//		if(charge!=null&&!charge.equals(ContentCharge.MODEL_FREE)){
-//			contentChargeMng.save(chargeAmount,charge,bean);
-//		}
+		
 		// 执行监听器
 		afterSave(bean);
 		return bean;
@@ -479,9 +449,9 @@ public class ContentMngImpl implements ContentMng, ChannelDeleteChecker {
 	}
 
 	private Content saveContent_blog(Content bean, ContentExt ext, ContentTxt txt,ContentDoc doc,
-			Columns column,Integer typeId, Boolean draft,Boolean contribute,CmsUser user, boolean forMember){
+			String columnName,Integer typeId, Boolean draft,Boolean contribute,CmsUser user, boolean forMember){
 		Channel channel = channelMng.findById(75);
-		bean.setColumnName(column.getColumn_name());
+		bean.setColumnName(columnName);
 		bean.setChannel(channel);
 		bean.setType(contentTypeMng.findById(typeId));
 		bean.setUser(user);
