@@ -1,13 +1,14 @@
 package com.jeecms.cms.action.member;
-import static com.jeecms.cms.Constants.TPLDIR_MEMBER;
 import static com.jeecms.cms.Constants.TPLDIR_BLOG;
+import static com.jeecms.cms.Constants.TPLDIR_MEMBER;
+
 import java.io.IOException;
-
-import java.util.List;
-
 import java.io.UnsupportedEncodingException;
-
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,18 +21,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-
 import com.jeecms.cms.dao.main.impl.BlogDao;
-import com.jeecms.cms.entity.main.Columns;
-
 import com.jeecms.cms.entity.main.Channel;
-import com.jeecms.cms.entity.main.ContentCheck;
-
+import com.jeecms.cms.entity.main.Columns;
 import com.jeecms.cms.manager.assist.CmsFileMng;
+import com.jeecms.cms.manager.main.ChannelMng;
 import com.jeecms.common.web.ResponseUtils;
 import com.jeecms.core.entity.CmsSite;
 import com.jeecms.core.entity.CmsUser;
@@ -653,4 +650,67 @@ public class ContributeAct extends AbstractContentMemberAct {
 		}
 		return errors;
 	}
+	
+	
+	@Autowired
+	protected ChannelMng channelMng;
+	
+	/**
+	 *跳转链接页面方法 
+	  */
+	@RequestMapping(value = "/blog/link_list.jspx")
+	public String linkList(HttpServletRequest request,HttpServletResponse response, ModelMap model) {
+		CmsSite site = CmsUtils.getSite(request);
+		CmsUser user = CmsUtils.getUser(request);
+		int user_id = user.getId();
+		String path = request.getSession().getServletContext().getRealPath("/");
+		List<Columns> columnsList = (new BlogDao()).findByUserId(user_id, path);
+		String linkUrl=user.getLinkUrl();
+		String[] strs=linkUrl.split(" ");
+		List list=new ArrayList();
+		String newUrl="";
+		for(int i=0;i<strs.length;i++){
+			if(i!=strs.length-1){
+				if(!strs[i].contains("http")&&strs[i+1].contains("http")){
+					newUrl+="~"+strs[i]+" ";
+				}else{
+					newUrl+=strs[i]+" ";
+				}
+			}else{
+				if(!strs[i].contains("http")){
+					newUrl+="~"+strs[i]+" ";
+				}else{
+					newUrl+=strs[i]+" ";
+				}
+			}
+		}
+		String[] str=newUrl.split("~");
+		for(int j=0;j<str.length;j++){
+			Map<String,Object> map=new HashMap<String,Object>();
+			String[] st=str[j].toString().split(" ");
+			List lists=new ArrayList();
+			String newName="";
+			for(int k=0;k<st.length;k++){
+				if(st[0].contains("http")){
+					newName="";
+				}else{
+					newName=st[0];
+				}
+				lists.add(st[k]);
+			}
+			map.put(newName, lists);
+			list.add(map);
+		}
+		model.addAttribute("urlList", list);
+		model.addAttribute("columnsList", columnsList);
+		model.addAttribute("linkUrls", linkUrl.replaceAll(" ", "\r\n"));
+		FrontUtils.frontData(request, model, site);
+		return FrontUtils.getTplPath(request, site.getSolutionPath(),TPLDIR_BLOG, "tpl.linkList");
+	}
+	
+	@RequestMapping(value = "/blog/add_link.jspx")
+	public String custom(String linkUrl,String nextUrl,HttpServletRequest request,HttpServletResponse response, ModelMap model) {
+		return super.link_save(linkUrl.replaceAll("\r\n", " "),nextUrl,request, response, model);
+	}
+	
 }
