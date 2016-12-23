@@ -481,21 +481,13 @@ public class AbstractContentMemberAct {
 	protected String blog_list(String q, Integer modelId,Integer queryChannelId,String nextUrl,Integer pageNo,HttpServletRequest request, ModelMap model) {
 		CmsSite site = CmsUtils.getSite(request);
 		CmsUser user = CmsUtils.getUser(request);
-		String name =null ;
-		try {
-			request.setCharacterEncoding("UTF-8");
-			if(null != request.getParameter("id")){
-			    name = new String(request.getParameter("id").getBytes("ISO-8859-1"), "utf-8");
-			}
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}
+		String column_id = request.getParameter("id");
 		int user_id = user.getId();
 	    String path = request.getSession().getServletContext().getRealPath("/");
 		List<Columns> columnsList = (new BlogDao()).findByUserId(user_id, path);
 		model.addAttribute("columnsList", columnsList);
 		FrontUtils.frontData(request, model, site);
-		Pagination p = contentMng.getPageForMember_blog(q, queryChannelId,site.getId(), modelId,user.getId(), cpn(pageNo), 20,name);
+		Pagination p = contentMng.getPageForMember_blog(q, queryChannelId,site.getId(), modelId,user.getId(), cpn(pageNo), 20,column_id);
 		model.addAttribute("pagination", p);
 		if (!StringUtils.isBlank(q)) {
 			model.addAttribute("q", q);
@@ -628,7 +620,7 @@ public class AbstractContentMemberAct {
 		}
 		
 	public String blog_save(String title, String author, String description,
-			String txt, String tagStr, String columnName, Integer modelId,ContentDoc doc,
+			String txt, String tagStr, String column_id, Integer modelId,ContentDoc doc,
 			String captcha,String mediaPath,String mediaType,
 			String[] attachmentPaths, String[] attachmentNames,
 			String[] attachmentFilenames, String[] picPaths, String[] picDescs,
@@ -676,7 +668,7 @@ public class AbstractContentMemberAct {
 		}
 		c = contentMng.blog_save(c, ext, t,null, null, null, null, tagArr,
 				attachmentPaths,attachmentNames, attachmentFilenames
-				,picPaths,picDescs,columnName, typeId, null,true,
+				,picPaths,picDescs,column_id, typeId, null,true,
 				charge,chargeAmount, user, true);
 		if(doc!=null){
 			contentDocMng.save(doc, c);
