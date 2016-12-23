@@ -10,6 +10,7 @@ import com.jeecms.cms.entity.main.Channel;
 import com.jeecms.common.hibernate4.Finder;
 import com.jeecms.common.hibernate4.HibernateBaseDao;
 import com.jeecms.common.page.Pagination;
+import com.jeecms.core.entity.CmsUser;
 
 @Repository
 public class ChannelDaoImpl extends HibernateBaseDao<Channel, Integer>
@@ -226,4 +227,12 @@ public class ChannelDaoImpl extends HibernateBaseDao<Channel, Integer>
 	protected Class<Channel> getEntityClass() {
 		return Channel.class;
 	}
+
+	
+	public void saveLink(String linkUrl,CmsUser user) {
+		String hql = "update CmsUser bean set bean.linkUrl=:linkUrl  where bean.id=:userId";
+		Query query = getSession().createQuery(hql).setParameter("linkUrl", linkUrl).setParameter("userId", user.getId());
+		query.executeUpdate();
+	}
+	
 }

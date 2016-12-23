@@ -756,4 +756,17 @@ public class AbstractContentMemberAct {
 		}
 		return FrontUtils.showSuccess(request, model, nextUrl);
 	}
+
+	public String link_save(String linkUrl,String nextUrl,
+			HttpServletRequest request, HttpServletResponse response,
+			ModelMap model) {
+		CmsSite site = CmsUtils.getSite(request);
+		CmsUser user = CmsUtils.getUser(request);
+		FrontUtils.frontData(request, model, site);
+		if (user == null) {
+			return FrontUtils.showLogin(request, model, site);
+		}
+		channelMng.updateLinkUrl(linkUrl,user);
+		return FrontUtils.showSuccess(request, model, nextUrl);
+	}
 }
