@@ -19,6 +19,35 @@ import com.jeecms.core.entity.base.BaseCmsUser;
 
 public class CmsUser extends BaseCmsUser implements PriorityInterface {
 	private static final long serialVersionUID = 1L;
+	
+	private String blogNotice;
+	private String blogTitle;
+	private String blogTitle2;
+	
+	public String getBlogTitle2() {
+		return blogTitle2;
+	}
+
+	public void setBlogTitle2(String blogTitle2) {
+		this.blogTitle2 = blogTitle2;
+	}
+
+	public String getBlogNotice() {
+		return blogNotice;
+	}
+
+	public void setBlogNotice(String blogNotice) {
+		this.blogNotice = blogNotice;
+	}
+
+	public String getBlogTitle() {
+		return blogTitle;
+	}
+
+	public void setBlogTitle(String blogTitle) {
+		this.blogTitle = blogTitle;
+	}
+
 	public Byte getCheckStep(Integer siteId) {
 		CmsUserSite us = getUserSite(siteId);
 		if (us != null) {

@@ -34,9 +34,12 @@ import com.jeecms.common.page.Pagination;
 import com.jeecms.common.upload.FileRepository;
 import com.jeecms.common.util.StrUtils;
 import com.jeecms.common.web.session.SessionProvider;
+import com.jeecms.core.dao.impl.CmsUserDaoImpl;
 import com.jeecms.core.entity.CmsSite;
 import com.jeecms.core.entity.CmsUser;
 import com.jeecms.core.entity.MemberConfig;
+import com.jeecms.core.manager.CmsUserMng;
+import com.jeecms.core.manager.impl.CmsUserMngImpl;
 import com.jeecms.core.web.WebErrors;
 import com.jeecms.core.web.util.CmsUtils;
 import com.jeecms.core.web.util.FrontUtils;
@@ -411,27 +414,49 @@ public class AbstractContentMemberAct {
 	protected FileRepository fileRepository;
 	@Autowired
 	protected ImageCaptchaService imageCaptchaService;
+	@Autowired
+	protected CmsUserMng cmsUserMng;
+	
+	public void updateSetting(HttpServletRequest request,HttpServletResponse response, ModelMap model) {
+		CmsUser user = CmsUtils.getUser(request);
+		CmsSite site = CmsUtils.getSite(request);
+		if (null != user) {
+			String blogTitle = request.getParameter("blogTitle");
+			String blogTitle2 = request.getParameter("blogTitle2");
+			String blogNotice = request.getParameter("blogNotice");
+			if (null != blogTitle && "" != blogTitle) {
+				user.setBlogTitle(blogTitle);
+			}
+			if (null != blogTitle2 && "" != blogTitle2) {
+				user.setBlogTitle2(blogTitle2);
+			}
+			if (null != blogNotice && "" != blogNotice) {
+				user.setBlogNotice(blogNotice);
+			}
+			CmsUser u = cmsUserMng.updateBlog(user);
+			model.addAttribute("user", u);
+			FrontUtils.frontData(request, model, site);
+		}
+		
+		try {
+			request.getRequestDispatcher("/blog/index.jspx").forward(request, response);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 	
 	public String tzsetting(HttpServletRequest request,HttpServletResponse response, ModelMap model) {
 		CmsSite site = CmsUtils.getSite(request);
 		CmsUser user = CmsUtils.getUser(request);
-		String name =null ;
-		  try {
-			request.setCharacterEncoding("UTF-8");
-		    name = new String(request.getParameter("id").getBytes("ISO-8859-1"), "utf-8");
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}
+
 		int user_id = user.getId();
 		String path = request.getSession().getServletContext().getRealPath("/");
 		List<Columns> columnsList = (new BlogDao()).findByUserId(user_id, path);
 		model.addAttribute("columnsList", columnsList);
-		String id=request.getParameter("id");
-		String orderId = request.getParameter("order");
-		Columns column = new Columns(Integer.parseInt(id),user.getId(),name,Integer.parseInt(orderId));
-		model.addAttribute("column", column);
+
+		model.addAttribute("user", user);
 		FrontUtils.frontData(request, model, site);
-		return FrontUtils.getTplPath(request, site.getSolutionPath(),TPLDIR_BLOG,"tpl.columnsUpdate");
+		return FrontUtils.getTplPath(request, site.getSolutionPath(),TPLDIR_BLOG,"tpl.blogSetting");
 	}
 	
 	protected String center(String q, Integer modelId,Integer queryChannelId,String nextUrl,Integer pageNo,HttpServletRequest request, ModelMap model) {
@@ -621,6 +646,7 @@ public class AbstractContentMemberAct {
 		Content c = new Content();
 		c.setSite(site);
 		CmsModel defaultModel=cmsModelMng.getDefModel();
+		modelId = 9;
 		if(modelId!=null){
 			CmsModel m=cmsModelMng.findById(modelId);
 			if(m!=null){

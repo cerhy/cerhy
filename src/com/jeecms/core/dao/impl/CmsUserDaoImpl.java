@@ -13,8 +13,13 @@ import com.jeecms.core.dao.CmsUserDao;
 import com.jeecms.core.entity.CmsUser;
 
 @Repository
-public class CmsUserDaoImpl extends HibernateBaseDao<CmsUser, Integer>
-		implements CmsUserDao {
+public class CmsUserDaoImpl extends HibernateBaseDao<CmsUser, Integer>implements CmsUserDao {
+	
+	public CmsUser updateBlog(CmsUser u){
+		getSession().update(u);
+		return u;
+	}
+	
 	public Pagination getPage(String username, String email, Integer siteId,
 			Integer groupId, Boolean disabled, Boolean admin, Integer rank,
 			String realName,Integer departId,Integer roleId,
