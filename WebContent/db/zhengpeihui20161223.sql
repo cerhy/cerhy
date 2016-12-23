@@ -1,0 +1,1 @@
+alter table `jc_user` add column link_url varchar(2000);
