@@ -39,6 +39,8 @@ public interface CmsUserDao{
 	public CmsUser save(CmsUser bean);
 
 	public CmsUser updateByUpdater(Updater<CmsUser> updater);
+	
+	public CmsUser updateBlog(CmsUser u);
 
 	public CmsUser deleteById(Integer id);
 }

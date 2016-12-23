@@ -172,8 +172,15 @@ padding-top: 32px;
 	font-family: "Microsoft YaHei",Arial;
 	line-height: 200%;
 }
+.blog-main{width:600px; float:left;font-size:16px;}
 .memberRight{width:268px; height:268px; border:1px solid #dedede; border-left:none; border-radius:5px; -moz-border-radius:5px; -o-border-radius:5px; -webkit-border-radius:5px; border-top-left-radius:0; border-bottom-left-radius:0; right:0px; top:0; position:absolute; background:#fff; z-index:3; text-align:center;background-color: rgb(108, 142, 103);}
 .memberImg{padding-top:25px;}
 .memberImg img{width:145px; height:145px;}
 .memberName{color:#999999; font-size:12px; margin-top:15px;}
 .memberName span{color:#191919; font-size:15px;}
+.on1{color:#ef3838;}
+.on1:before{content:""; position:absolute; right:-9px; top:10px; width:4px; height:8px; display:inline-block; background:url(../images/member-nav.png) no-repeat;}
+
+
+.column{color:#ef3838; font-size:16px; display:inline-block; position:relative;}
+.column:hover{color:#1e1e1e;}

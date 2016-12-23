@@ -41,6 +41,11 @@ import com.jeecms.core.manager.UnifiedUserMng;
 @Service
 @Transactional
 public class CmsUserMngImpl implements CmsUserMng {
+	
+	public CmsUser updateBlog(CmsUser user){
+		return dao.updateBlog(user);
+	}
+	
 	@Transactional(readOnly = true)
 	public Pagination getPage(String username, String email, Integer siteId,
 			Integer groupId, Boolean disabled, Boolean admin, Integer rank,

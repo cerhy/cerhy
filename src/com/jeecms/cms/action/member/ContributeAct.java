@@ -383,6 +383,11 @@ public class ContributeAct extends AbstractContentMemberAct {
 	@RequestMapping(value = "/blog/help.jspx")
 	public String blogHelp(HttpServletRequest request,HttpServletResponse response, ModelMap model) {
 		CmsSite site = CmsUtils.getSite(request);
+		CmsUser user = CmsUtils.getUser(request);
+		int user_id = user.getId();
+		String path = request.getSession().getServletContext().getRealPath("/");
+		List<Columns> columnsList = (new BlogDao()).findByUserId(user_id, path);
+		model.addAttribute("columnsList", columnsList);
 		FrontUtils.frontData(request, model, site);
 		return FrontUtils.getTplPath(request, site.getSolutionPath(),TPLDIR_BLOG, "tpl.blogHelp");
 	}
@@ -390,6 +395,11 @@ public class ContributeAct extends AbstractContentMemberAct {
 	@RequestMapping(value = "/blog/tzsetting.jspx")
 	public String tzsetting(HttpServletRequest request, HttpServletResponse response,ModelMap model) {
 		return super.tzsetting(request, response, model);
+	}
+
+	@RequestMapping(value = "/blog/updateSetting.jspx")
+	public void updateSetting(HttpServletRequest request, HttpServletResponse response,ModelMap model) {
+		 super.updateSetting(request, response, model);
 	}
 	
 	@RequestMapping(value = "/blog/index.jspx")
