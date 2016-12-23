@@ -17,13 +17,10 @@ import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang.StringUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -35,9 +32,7 @@ import com.jeecms.cms.manager.main.ChannelMng;
 import com.jeecms.common.web.ResponseUtils;
 import com.jeecms.core.entity.CmsSite;
 import com.jeecms.core.entity.CmsUser;
-import com.jeecms.core.entity.CmsUserExt;
 import com.jeecms.core.entity.Ftp;
-import com.jeecms.core.entity.MemberConfig;
 import com.jeecms.core.manager.CmsUserMng;
 import com.jeecms.core.manager.DbFileMng;
 import com.jeecms.core.web.WebErrors;
@@ -50,8 +45,7 @@ import com.jeecms.core.web.util.FrontUtils;
  */
 @Controller
 public class ContributeAct extends AbstractContentMemberAct {
-	private static final Logger log = LoggerFactory.getLogger(ContributeAct.class);
-	
+
 	public static final String CONTRIBUTE_LIST = "tpl.contributeList";
 	public static final String CONTRIBUTE_ADD = "tpl.contributeAdd";
 	public static final String CONTRIBUTE_EDIT = "tpl.contributeEdit";
@@ -496,22 +490,9 @@ public class ContributeAct extends AbstractContentMemberAct {
 				nextUrl, request, response, model);
 	}
 
-	/**
-	 * 博客删除
-	 * 
-	 * @param ids
-	 *            待删除的文章ID数组
-	 * @param nextUrl
-	 *            下一个页面地址
-	 * @param request
-	 * @param response
-	 * @param model
-	 * @return
-	 */
 	@RequestMapping(value = "/blog/contribute_delete.jspx")
-	public String blog_delete(Integer[] ids, HttpServletRequest request,
-			String nextUrl, HttpServletResponse response, ModelMap model) {
-		return super.blog_delete(ids, request, nextUrl, response, model);
+	public void blog_delete(Integer ids,Integer column_id, HttpServletRequest request, HttpServletResponse response, ModelMap model) {
+		 super.blog_delete(ids,column_id, request,  response, model);
 	}
 	
 	@RequestMapping("/blog/o_upload_media.jspx")
@@ -717,29 +698,6 @@ public class ContributeAct extends AbstractContentMemberAct {
 	@RequestMapping(value = "/blog/add_link.jspx")
 	public String custom(String linkUrl,String nextUrl,HttpServletRequest request,HttpServletResponse response, ModelMap model) {
 		return super.link_save(linkUrl.replaceAll("\r\n", " "),nextUrl,request, response, model);
-	}
-	
-	@RequestMapping(value = "/blog/changeTheme.jspx", method = RequestMethod.POST)
-	public String updateTheme(String theme, String nextUrl,
-			HttpServletRequest request, HttpServletResponse response,
-			ModelMap model){
-		CmsSite site = CmsUtils.getSite(request);
-		CmsUser user = CmsUtils.getUser(request);
-		FrontUtils.frontData(request, model, site);
-		MemberConfig mcfg = site.getConfig().getMemberConfig();
-		// 没有开启会员功能
-		if (!mcfg.isMemberOn()) {
-			return FrontUtils.showMessage(request, model, "member.memberClose");
-		}
-		if (user == null) {
-			return FrontUtils.showLogin(request, model, site);
-		}
-		if(StringUtils.isNotBlank(theme)){
-			user.setTheme(theme);
-			cmsUserMng.updateUser(user);
-			log.info("update CmsUser success. id={}", user.getId());
-		}	
-		return FrontUtils.showSuccess(request, model, nextUrl);
 	}
 	
 }

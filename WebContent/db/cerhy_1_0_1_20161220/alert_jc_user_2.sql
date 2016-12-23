@@ -1,1 +1,0 @@
-alter table `jc_user` add column theme varchar(100) DEFAULT NULL COMMENT '模板皮肤';

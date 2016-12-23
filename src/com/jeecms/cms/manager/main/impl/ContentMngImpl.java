@@ -803,13 +803,21 @@ public class ContentMngImpl implements ContentMng, ChannelDeleteChecker {
 		return beans;
 	}
 
+	public void deleteByIdBlog(Integer id) {
+		cmsCommentMng.deleteByContentId(id);
+		fileMng.deleteByContentId(id);
+		dao.deleteById(id);
+	}
+	
 	public Content deleteById(Integer id) {
 		Content bean = findById(id);
 		// 执行监听器
 		preDelete(bean);
 		// 移除tag
-		contentTagMng.removeTags(bean.getTags());
-		bean.getTags().clear();
+		if(null != bean.getTags()){
+			contentTagMng.removeTags(bean.getTags());
+			bean.getTags().clear();
+		}
 		// 删除评论
 		cmsCommentMng.deleteByContentId(id);
 		//删除附件记录

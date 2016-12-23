@@ -481,11 +481,12 @@ public class AbstractContentMemberAct {
 	protected String blog_list(String q, Integer modelId,Integer queryChannelId,String nextUrl,Integer pageNo,HttpServletRequest request, ModelMap model) {
 		CmsSite site = CmsUtils.getSite(request);
 		CmsUser user = CmsUtils.getUser(request);
-		String column_id = request.getParameter("id");
+		String column_id = request.getParameter("column_id");
 		int user_id = user.getId();
 	    String path = request.getSession().getServletContext().getRealPath("/");
 		List<Columns> columnsList = (new BlogDao()).findByUserId(user_id, path);
 		model.addAttribute("columnsList", columnsList);
+		model.addAttribute("column_id", column_id);
 		FrontUtils.frontData(request, model, site);
 		Pagination p = contentMng.getPageForMember_blog(q, queryChannelId,site.getId(), modelId,user.getId(), cpn(pageNo), 20,column_id);
 		model.addAttribute("pagination", p);
@@ -639,13 +640,9 @@ public class AbstractContentMemberAct {
 		c.setSite(site);
 		CmsModel defaultModel=cmsModelMng.getDefModel();
 		modelId = 9;
-		if(modelId!=null){
-			CmsModel m=cmsModelMng.findById(modelId);
-			if(m!=null){
-				c.setModel(m);
-			}else{
-				c.setModel(defaultModel);
-			}
+		CmsModel m=cmsModelMng.findById(modelId);
+		if(m!=null){
+			c.setModel(m);
 		}else{
 			c.setModel(defaultModel);
 		}
@@ -707,25 +704,14 @@ public class AbstractContentMemberAct {
 				TPLDIR_BLOG, nextUrl);
 	}
 	
-	public String blog_delete(Integer[] ids, HttpServletRequest request,
-			String nextUrl, HttpServletResponse response, ModelMap model) {
-		CmsSite site = CmsUtils.getSite(request);
-		CmsUser user = CmsUtils.getUser(request);
-		FrontUtils.frontData(request, model, site);
-		MemberConfig mcfg = site.getConfig().getMemberConfig();
-		// 没有开启会员功能
-		if (!mcfg.isMemberOn()) {
-			return FrontUtils.showMessage(request, model, "member.memberClose");
+	public void blog_delete(Integer id,Integer column_id, HttpServletRequest request,
+			  HttpServletResponse response, ModelMap model) {
+			contentMng.deleteByIdBlog(id);
+		try {
+			request.getRequestDispatcher("/blog/contribute_list.jspx?column_id="+column_id).forward(request, response);
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		if (user == null) {
-			return FrontUtils.showLogin(request, model, site);
-		}
-		WebErrors errors = validateDelete(ids, site, user, request);
-		if (errors.hasErrors()) {
-			return FrontUtils.showError(request, response, model, errors);
-		}
-		contentMng.deleteByIds(ids);
-		return FrontUtils.showSuccess(request, model, nextUrl);
 	}
 	
 	public String blog_update(Integer id, String title, String author,

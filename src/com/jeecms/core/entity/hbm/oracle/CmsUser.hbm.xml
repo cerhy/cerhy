@@ -9,9 +9,6 @@
 		</id>
 		<property name="username" column="username" type="string" not-null="true" length="100"/>
 		<property name="email" column="email" type="string" not-null="false" length="100"/>
-		<property name="blogTitle" column="blog_title" type="string" not-null="false" length="100"/>
-		<property name="blogSecondTitle" column="blog_second_title" type="string" not-null="false" length="100"/>
-		<property name="theme" column="theme" type="string" not-null="false" length="100"/>
 		<property name="registerTime" column="register_time" type="timestamp" not-null="true" length="19"/>
 		<property name="registerIp" column="register_ip" type="string" not-null="true" length="50"/>
 		<property name="lastLoginTime" column="last_login_time" type="timestamp" not-null="false" length="19"/>
