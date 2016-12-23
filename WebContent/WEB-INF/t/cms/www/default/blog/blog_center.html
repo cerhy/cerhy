@@ -8,6 +8,8 @@
 <link  type="text/css" rel="stylesheet" href="/${res}/css/hyindex.css" />
 
 [#include "../hyinclude/header.html"/]
+[#include "../hyinclude/head.html"/]
+
 
 <div class="blog-con">
   <div class="blogHead">
@@ -95,5 +97,11 @@
 </div>
 
 [#include "../include/footer.html"/]
+ <script type="text/javascript">
+	skinChange(${user.theme});
+	function skinChange(n){
+		document.all.MrJin.href="/${res}/css/skin/"+n+".css"; 
+	}
+</script>
 </body>
 </html>
