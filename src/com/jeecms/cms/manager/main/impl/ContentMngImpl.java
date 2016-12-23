@@ -121,8 +121,8 @@ public class ContentMngImpl implements ContentMng, ChannelDeleteChecker {
 		return dao.getPage(title, null,memberId,memberId, false, false,ContentStatus.all, null, siteId,modelId,  channelId, 0, pageNo,pageSize);
 	}
 	
-	public Pagination getPageForMember_blog(String title, Integer channelId,Integer siteId,Integer modelId, Integer memberId, int pageNo, int pageSize,String column_name) {
-		return dao.getPage_blog(title, null,memberId,memberId, false, false,ContentStatus.all, null, siteId,modelId,  channelId, 0, pageNo,pageSize,column_name);
+	public Pagination getPageForMember_blog(String title, Integer channelId,Integer siteId,Integer modelId, Integer memberId, int pageNo, int pageSize,String column_id) {
+		return dao.getPage_blog(title, null,memberId,memberId, false, false,ContentStatus.all, null, siteId,modelId,  channelId, 0, pageNo,pageSize,column_id);
 	}
 	
 	@Transactional(readOnly = true)
@@ -319,10 +319,10 @@ public class ContentMngImpl implements ContentMng, ChannelDeleteChecker {
 			Integer[] channelIds, Integer[] topicIds, Integer[] viewGroupIds,
 			String[] tagArr, String[] attachmentPaths,
 			String[] attachmentNames, String[] attachmentFilenames,
-			String[] picPaths, String[] picDescs, String columnName,
+			String[] picPaths, String[] picDescs, String column_id,
 			Integer typeId, Boolean draft,Boolean contribute, 
 			Short charge,Double chargeAmount,CmsUser user, boolean forMember) {
-		saveContent_blog(bean, ext, txt,doc, columnName, typeId, draft,contribute,user, forMember);
+		saveContent_blog(bean, ext, txt,doc, column_id, typeId, draft,contribute,user, forMember);
 		
 		// 保存附件
 		if (attachmentPaths != null && attachmentPaths.length > 0) {
@@ -449,9 +449,9 @@ public class ContentMngImpl implements ContentMng, ChannelDeleteChecker {
 	}
 
 	private Content saveContent_blog(Content bean, ContentExt ext, ContentTxt txt,ContentDoc doc,
-			String columnName,Integer typeId, Boolean draft,Boolean contribute,CmsUser user, boolean forMember){
-		Channel channel = channelMng.findById(75);
-		bean.setColumnName(columnName);
+			String column_id,Integer typeId, Boolean draft,Boolean contribute,CmsUser user, boolean forMember){
+		Channel channel = channelMng.findById(81);
+		bean.setColumn_id(Integer.parseInt(column_id));
 		bean.setChannel(channel);
 		bean.setType(contentTypeMng.findById(typeId));
 		bean.setUser(user);

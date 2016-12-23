@@ -455,14 +455,14 @@ public class ContributeAct extends AbstractContentMemberAct {
 
 	@RequestMapping(value = "/blog/contribute_save.jspx")
 	public String blog_save(String title, String author, String description,
-			String txt, String tagStr, String columnName,Integer modelId, 
+			String txt, String tagStr, String column_id,Integer modelId, 
 			String captcha,String mediaPath,String mediaType,
 			String[] attachmentPaths, String[] attachmentNames,
 			String[] attachmentFilenames, String[] picPaths, String[] picDescs,
 			Short charge,Double chargeAmount,
 			String nextUrl, HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
-		return super.blog_save(title, author, description, txt, tagStr, columnName,modelId,
+		return super.blog_save(title, author, description, txt, tagStr, column_id,modelId,
 				null, captcha,mediaPath,mediaType,attachmentPaths,attachmentNames, attachmentFilenames
 				,picPaths,picDescs,charge,chargeAmount,
 				nextUrl, request, response, model);

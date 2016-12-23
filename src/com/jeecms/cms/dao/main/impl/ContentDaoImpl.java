@@ -91,7 +91,7 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 	public Pagination getPage_blog(String title, Integer typeId,Integer currUserId,
 			Integer inputUserId, boolean topLevel, boolean recommend,
 			ContentStatus status, Byte checkStep, Integer siteId,Integer modelId,
-			Integer channelId,int orderBy, int pageNo, int pageSize,String column_name) {
+			Integer channelId,int orderBy, int pageNo, int pageSize,String column_id) {
 		
 		Finder f = Finder.create("select  bean from Content bean left join bean.contentShareCheckSet shareCheck left join shareCheck.channel tarChannel ");
 		if (rejected == status) {
@@ -128,7 +128,7 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 			f.append(" and bean.model.id=:modelId").setParam("modelId", modelId);
 		}
 		
-		appendQuery_blog(f, title, typeId, inputUserId, status, topLevel, recommend,column_name);
+		appendQuery_blog(f, title, typeId, inputUserId, status, topLevel, recommend,column_id);
 		appendOrder(f, orderBy);
 		return find(f, pageNo, pageSize);
 	}
@@ -275,7 +275,7 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 
 	private void appendQuery_blog(Finder f, String title, Integer typeId,
 			Integer inputUserId, ContentStatus status, boolean topLevel,
-			boolean recommend ,String columnName) {
+			boolean recommend ,String id) {
 		
 		if (!StringUtils.isBlank(title)) {
 			f.append(" and bean.contentExt.title like :title");
@@ -292,9 +292,9 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 		if (recommend) {
 			f.append(" and bean.recommend=true");
 		}
-		if(null != columnName && ""!=columnName){
-			f.append(" and bean.columnName=:columnName");
-			f.setParam("columnName", columnName);
+		if(null != id && ""!=id){
+			f.append(" and bean.column_id=:column_id");
+			f.setParam("column_id", Integer.parseInt(id));
 		}
 		if (draft == status) {
 			f.append(" and bean.status=:status");
