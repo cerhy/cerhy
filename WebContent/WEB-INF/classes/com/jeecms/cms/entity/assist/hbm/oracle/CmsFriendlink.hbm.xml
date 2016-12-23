@@ -17,5 +17,6 @@
 		<property name="enabled" column="is_enabled" type="java.lang.Boolean" not-null="true" length="1"/>
 		<many-to-one name="category" column="friendlinkctg_id" class="CmsFriendlinkCtg" not-null="true"></many-to-one>
 		<many-to-one name="site" column="site_id" class="com.jeecms.core.entity.CmsSite" not-null="true"></many-to-one>
+		<many-to-one name="channel" column="channel_id" class="com.jeecms.cms.entity.main.Channel" not-null="true"></many-to-one>
 	</class>
 </hibernate-mapping>
