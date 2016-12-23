@@ -185,7 +185,9 @@ public interface ContentMng {
 	public Content[] recycle(Integer[] ids);
 
 	public Content deleteById(Integer id);
-
+	
+	public void deleteByIdBlog(Integer id);
+	
 	public Content[] deleteByIds(Integer[] ids);
 	
 	public Content deleteByIdWithShare(Integer id,Integer siteId);

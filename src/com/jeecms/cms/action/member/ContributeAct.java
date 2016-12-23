@@ -490,22 +490,9 @@ public class ContributeAct extends AbstractContentMemberAct {
 				nextUrl, request, response, model);
 	}
 
-	/**
-	 * 博客删除
-	 * 
-	 * @param ids
-	 *            待删除的文章ID数组
-	 * @param nextUrl
-	 *            下一个页面地址
-	 * @param request
-	 * @param response
-	 * @param model
-	 * @return
-	 */
 	@RequestMapping(value = "/blog/contribute_delete.jspx")
-	public String blog_delete(Integer[] ids, HttpServletRequest request,
-			String nextUrl, HttpServletResponse response, ModelMap model) {
-		return super.blog_delete(ids, request, nextUrl, response, model);
+	public void blog_delete(Integer ids,Integer column_id, HttpServletRequest request, HttpServletResponse response, ModelMap model) {
+		 super.blog_delete(ids,column_id, request,  response, model);
 	}
 	
 	@RequestMapping("/blog/o_upload_media.jspx")

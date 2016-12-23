@@ -7,7 +7,8 @@
 <link id="hello" type="text/css" rel="stylesheet" href="/${res}/css/custom.css" />
 <link  type="text/css" rel="stylesheet" href="/${res}/css/hyindex.css" />
 
-
+[#include "../hyinclude/header.html"/]
+[#include "../hyinclude/head.html"/]
 
 
 <div class="blog-con">
@@ -28,7 +29,7 @@
 	        <li><a href="${base}/blog/contribute_add.jspx">发表博客</a></li>
 	         <li><a href="${base}/blog/columns_list.jspx">博客栏目</a></li>
 	         [#list columnsList as c]
-              <li><a href="${base}/blog/contribute_list.jspx?id=${c.column_id}" ><span class="column">${c.column_name}</span></a></li>
+              <li><a href="${base}/blog/contribute_list.jspx?column_id=${c.column_id}" ><span class="column">${c.column_name}</span></a></li>
               [/#list]
 	        <li><a href="${base}/blog/help.jspx">设置</a></li>
 	
@@ -96,5 +97,13 @@
 </div>
 
 [#include "../include/footer.html"/]
+ <script type="text/javascript">
+ if(${user.theme} !=null){
+		skinChange(${user.theme!0});
+	}
+	function skinChange(n){
+		document.all.MrJin.href="/${res}/css/skin/"+n+".css"; 
+	}
+</script>
 </body>
 </html>
