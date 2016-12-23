@@ -53,7 +53,7 @@ public interface CmsCommentMng {
 	
 	public CmsComment findById(Integer id);
 
-	public CmsComment comment(Integer score,String text, String ip, Integer contentId,
+	public CmsComment comment(CmsUser user,Integer score,String text, String ip, Integer contentId,
 			Integer siteId, Integer userId, boolean checked, boolean recommend,Integer parentId);
 	/**
 	 * 栏目评论
@@ -68,7 +68,7 @@ public interface CmsCommentMng {
 	 * @param parentId
 	 * @return
 	 */
-	public CmsComment commentChannel(Integer score,String text, String ip, Integer contentId,
+	public CmsComment commentChannel(CmsUser user,Integer score,String text, String ip, Integer contentId,
 			Integer siteId, Integer userId, boolean checked, boolean recommend,Integer parentId);
 
 	public CmsComment update(CmsComment bean, CmsCommentExt ext);

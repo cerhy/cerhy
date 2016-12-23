@@ -291,7 +291,7 @@ public class CommentAct {
 				doc.setAvgScore(getNewAvgScore(content, score));
 				contentDocMng.update(doc,content);
 			}
-			cmsCommentMng.comment(score,text, RequestUtils.getIpAddr(request),
+			cmsCommentMng.comment(user,score,text, RequestUtils.getIpAddr(request),
 					contentId, site.getId(), userId, checked, false,parentId);
 			json.put("success", true);
 			json.put("status", 0);
@@ -391,7 +391,7 @@ public class CommentAct {
 //				doc.setAvgScore(getNewAvgScore(content, score));
 //				contentDocMng.update(doc,content);
 //			}
-			cmsCommentMng.commentChannel(score,text, RequestUtils.getIpAddr(request),
+			cmsCommentMng.commentChannel(user,score,text, RequestUtils.getIpAddr(request),
 					channelId, site.getId(), userId, true, true, parentId);
 			json.put("success", true);
 			json.put("status", 0);

@@ -20,6 +20,7 @@ import com.jeecms.common.page.Pagination;
 import com.jeecms.core.entity.CmsUser;
 import com.jeecms.core.manager.CmsSiteMng;
 import com.jeecms.core.manager.CmsUserMng;
+import com.jeecms.core.web.util.CmsUtils;
 
 @Service
 @Transactional
@@ -76,7 +77,7 @@ public class CmsCommentMngImpl implements CmsCommentMng {
 		return entity;
 	}
 
-	public CmsComment comment(Integer score,String text, String ip, Integer contentId,
+	public CmsComment comment(CmsUser user,Integer score,String text, String ip, Integer contentId,
 			Integer siteId, Integer userId, boolean checked, boolean recommend,Integer parentId) {
 		CmsComment comment = new CmsComment();
 		comment.setContent(contentMng.findById(contentId));
@@ -91,7 +92,9 @@ public class CmsCommentMngImpl implements CmsCommentMng {
 		if(parentId!=null){
 			CmsComment parent=findById(parentId);
 			comment.setParent(parent);
+			parent.setReplayUser(user);
 			parent.setReplyCount(parent.getReplyCount()+1);
+			parent.getCommentExt().setReply(text);
 			update(parent, parent.getCommentExt());
 		}
 		dao.save(comment);
@@ -104,7 +107,7 @@ public class CmsCommentMngImpl implements CmsCommentMng {
 	/**
 	 * 栏目评论保存
 	 */
-	public CmsComment commentChannel(Integer score,String text, String ip, Integer channelId,
+	public CmsComment commentChannel(CmsUser user,Integer score,String text, String ip, Integer channelId,
 			Integer siteId, Integer userId, boolean checked, boolean recommend,Integer parentId) {
 		CmsComment comment = new CmsComment();
 		comment.setChannel(channelMng.findById(channelId));
@@ -119,6 +122,8 @@ public class CmsCommentMngImpl implements CmsCommentMng {
 		if(parentId!=null){
 			CmsComment parent=findById(parentId);
 			comment.setParent(parent);
+			parent.setReplayUser(user);
+			parent.getCommentExt().setReply(text);
 			parent.setReplyCount(parent.getReplyCount()+1);
 			update(parent, parent.getCommentExt());
 		}
