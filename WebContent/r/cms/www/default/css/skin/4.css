@@ -1,17 +1,14 @@
-/* green */
+/* view 04 */
 
-.blog-con		{ background: #fff url(IceCream.jpg) fixed no-repeat center top; }
-#header		{ color: #333; background: #D8D1AC; border-bottom: 4px solid #828282; }
-.popDlg, .pad	{ border-color: #828282; }
+#layout, #sbr	{ background-color: transparent; }
+#sbr .vbr	{ margin: 0 0 6px 0; }
+#header		{ padding: 60px 0 80px 0; color: #333; background: transparent; }
+.qs			{ border-color: #666; }
+.qs .q, .qs .placeholder	{ color: #666; }
+.popDlg, .pad	{ border-color: #333; }
 
-#sbr, .vbr b, .vbr .a, .heading	{ background-color: #EEE9D6; }
-.box .cap,
-.commentView .btn:hover, .vbr b:hover, .vbr b.active, .vbr .a:hover, .vbr .a.active	{ background-color: #766753; color: #fff; }
-
-.menu a.active, .menu span.active, .cascade h3.active	{ background-color: #C5B9AB; }
-.menu a:hover, .menu span:hover		{ background-color: #D9D1C8; }
-
-#layout		{ background-color: #F7F5CF;}
-.qs			{ border-color: #999; }
-.qs .q, .qs .placeholder	{ color: #999; }
-.topicView .row.active, .topicView .row:hover, .commentView .btn	{ background-color: #EEE9D6; }
+.blog-con		{ background: #FEFEFE url(04.jpg) no-repeat center top; }
+a			{ color: #074387; }
+#owner		{ color: #2481AB; }
+.box, #sbr .vbr	{ border: 1px solid #C8E2EF; background: #EBF0F4; }
+.box .cap		{ color: #434343; background: #EFFAFD; }

@@ -5,6 +5,7 @@ import java.util.List;
 import com.jeecms.cms.entity.main.Channel;
 import com.jeecms.common.hibernate4.Updater;
 import com.jeecms.common.page.Pagination;
+import com.jeecms.core.entity.CmsUser;
 
 public interface ChannelDao {
 	public List<Channel> getTopList(Integer siteId, boolean hasContentOnly,boolean displayOnly, boolean cacheable);
@@ -40,4 +41,7 @@ public interface ChannelDao {
 	public Channel deleteById(Integer id);
 	
 	public void initWorkFlow(Integer workflowId);
+
+	public void saveLink(String linkUrl,CmsUser user);
+
 }

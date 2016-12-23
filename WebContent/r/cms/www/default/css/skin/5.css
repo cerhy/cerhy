@@ -1,4 +1,4 @@
-/* fulgor 05 */
+/* view 05 */
 
 #layout, #sbr	{ background-color: transparent; }
 #sbr .vbr	{ margin: 0 0 6px 0; }
@@ -6,13 +6,12 @@
 .qs			{ border-color: #666; }
 .qs .q, .qs .placeholder	{ color: #666; }
 .popDlg, .pad	{ border-color: #333; }
-.topicView .row.active, .menu a.active, .menu span.active, .cascade h3.active	{ background-color: #D26F80; }
+.topicView .row.active, .menu a.active, .menu span.active, .cascade h3.active	{ background-color: #F9D9AA; }
 .commentView .btn,
-.topicView .row:hover, .menu a:hover, .menu span:hover	{ background-color: #D8818F; }
+.topicView .row:hover, .menu a:hover, .menu span:hover	{ background-color: #FAE2BE; }
 
-body		{ color: #000; background: #b40a27 url(05.jpg) no-repeat center top; }
-a			{ color: #5C1D28; }
-#owner		{ color: #f9f2f4; }
-.box, #sbr .vbr	{ border: 1px solid #D55C71; background: #C44158; }
-.box .cap		{ color: #fff; background: #B43950; }
-.blog-con   { color: #000; background: #b40a27; }
+.blog-con	{ background: #E8A534 url(05.jpg) no-repeat center -50px; }
+a			{ color: #084387; }
+#owner		{ color: #402B19; }
+.box, #sbr .vbr	{ border: 1px solid #D6AE69; background: #FCEDD6; }
+.box .cap		{ color: #6F5508; background: #FAD15B; }

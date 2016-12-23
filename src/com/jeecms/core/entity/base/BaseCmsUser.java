@@ -34,7 +34,8 @@ public abstract class BaseCmsUser  implements Serializable {
 	public static String PROP_ID = "id";
 	public static String PROP_REGISTER_IP = "registerIp";
 	public static String PROP_USERNAME = "username";
-
+	public static String PROP_LINK_URL = "linkUrl";
+	public static String PROP_THEME = "theme";
 
 	// constructors
 	public BaseCmsUser () {
@@ -82,6 +83,40 @@ public abstract class BaseCmsUser  implements Serializable {
 		this.setDisabled(disabled);
 		initialize();
 	}
+	/**
+	 * Constructor for required fields
+	 */
+	public BaseCmsUser (
+			java.lang.Integer id,
+			com.jeecms.core.entity.CmsGroup group,
+			java.lang.String username,
+			java.util.Date registerTime,
+			java.lang.String registerIp,
+			java.lang.Integer loginCount,
+			java.lang.Integer rank,
+			java.lang.Long uploadTotal,
+			java.lang.Integer uploadSize,
+			java.lang.Boolean admin,
+			java.lang.Boolean viewonlyAdmin,
+			java.lang.Boolean selfAdmin,
+			java.lang.Boolean disabled,java.lang.String linkUrl) {
+		
+		this.setId(id);
+		this.setGroup(group);
+		this.setUsername(username);
+		this.setRegisterTime(registerTime);
+		this.setRegisterIp(registerIp);
+		this.setLoginCount(loginCount);
+		this.setRank(rank);
+		this.setUploadTotal(uploadTotal);
+		this.setUploadSize(uploadSize);
+		this.setAdmin(admin);
+		this.setViewonlyAdmin(viewonlyAdmin);
+		this.setSelfAdmin(selfAdmin);
+		this.setDisabled(disabled);
+		this.setLinkUrl(linkUrl);
+		initialize();
+	}
 
 	protected void initialize () {}
 
@@ -111,6 +146,30 @@ public abstract class BaseCmsUser  implements Serializable {
 	private java.lang.Integer fileTotal;
 	private java.lang.Integer grain;
 	private java.lang.String sessionId;
+	
+	private java.lang.String linkUrl;
+	private java.lang.String theme;
+	
+	
+	public java.lang.String getTheme() {
+		return theme;
+	}
+
+	public void setTheme(java.lang.String theme) {
+		this.theme = theme;
+	}
+
+	/**
+	 * Return the value associated with the column: link_url
+	 */
+	public java.lang.String getLinkUrl() {
+		return linkUrl;
+	}
+
+	public void setLinkUrl(java.lang.String linkUrl) {
+		this.linkUrl = linkUrl;
+	}
+	
 
 	// many to one
 	private com.jeecms.core.entity.CmsGroup group;
@@ -668,6 +727,8 @@ public abstract class BaseCmsUser  implements Serializable {
 	public String toString () {
 		return super.toString();
 	}
+
+	
 
 
 }

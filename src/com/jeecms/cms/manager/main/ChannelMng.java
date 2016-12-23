@@ -7,6 +7,7 @@ import com.jeecms.cms.entity.main.Channel;
 import com.jeecms.cms.entity.main.ChannelExt;
 import com.jeecms.cms.entity.main.ChannelTxt;
 import com.jeecms.common.page.Pagination;
+import com.jeecms.core.entity.CmsUser;
 
 /**
  * 栏目管理接口
@@ -104,4 +105,7 @@ public interface ChannelMng {
 	public void initWorkFlow(Integer workflowId);
 
 	public String checkDelete(Integer id);
+
+	public void updateLinkUrl(String linkUrl,CmsUser user);
+
 }

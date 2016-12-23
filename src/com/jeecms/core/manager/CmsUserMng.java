@@ -15,6 +15,8 @@ import com.jeecms.core.entity.CmsUser;
 import com.jeecms.core.entity.CmsUserExt;
 
 public interface CmsUserMng {
+	public CmsUser updateBlog(CmsUser user);
+	
 	public Pagination getPage(String username, String email, Integer siteId,
 			Integer groupId, Boolean disabled, Boolean admin, Integer rank,
 			String realName,Integer departId,Integer roleId,

@@ -7,17 +7,21 @@
 <link id="hello" type="text/css" rel="stylesheet" href="/${res}/css/custom.css" />
 <link  type="text/css" rel="stylesheet" href="/${res}/css/hyindex.css" />
 
-<script src="${resSys}/jqueryUI/jquery-ui.js" type="text/javascript"></script>
-<link href="${resSys}/jqueryUI/jquery.ui.css" rel="stylesheet" type="text/css" />
-<script type="text/javascript" src="/${res}/js/jquery.SuperSlide.js"></script>
-
 [#include "../hyinclude/header.html"/]
 [#include "../hyinclude/head.html"/]
+
+
 <div class="blog-con">
   <div class="blogHead">
-	  <div style="font-size:30px;margin:10px auto 0">海南省义教信息技术课程网</div>
-	  <div style="font-size:16px;margin:15px auto 10px;">海南省教育研究培训院</div>
+	  <div style="font-size:30px;margin:10px auto 0">[#if user.blogTitle??]${user.blogTitle}[#else]标题[/#if]</div>
+	  <div style="font-size:15px;margin:15px auto 10px;">[#if user.blogTitle2??]${user.blogTitle2}[#else]副标题[/#if]</div>
   </div>
+  <div style="margin-left:150px;font-size:22px;color:red;font-family: "Microsoft YaHei",Arial;"> 
+	  <marquee style="width: 600px; scrollamount="2"; direction="left"; >
+		<p>[#if user.blogNotice??]${user.blogNotice}[#else]公告:[/#if]</p>
+	  </marquee >
+  </div>
+  
   <div class="member clearfix">
     <div class="blogLeft clearfix"> 
       <div class="member-nav">
@@ -25,56 +29,29 @@
 	        <li><a href="${base}/blog/contribute_add.jspx">发表博客</a></li>
 	         <li><a href="${base}/blog/columns_list.jspx">博客栏目</a></li>
 	         [#list columnsList as c]
-              <li><a href="${base}/blog/contribute_list.jspx?id=${c.column_name}" >${c.column_name}</a></li>
+              <li><a href="${base}/blog/contribute_list.jspx?id=${c.column_id}" ><span class="column">${c.column_name}</span></a></li>
               [/#list]
+	        <li><a href="${base}/blog/help.jspx">设置</a></li>
 	
-	        <li><a onclick="set();">设置</a></li>
-	        <li><a href="${base}/blog/tzsetting.jspx">参数</a></li>
         </ul>
       </div>
-      <div id="setDialog" style="display:none;">	
-      		<form id="setFrom">
-      			<table width="100%" class="pn-ftable" cellpadding="2" cellspacing="1" border="0">
-      				<tbody>
-      					<tr>
-      					<td><span class="pn-frequired">*</span>博客标题</td>
-      					<td colspan="1" width="35%" class="pn-fcontent"><input type="text" name="title" value="海南省义教信息技术课程网" class="required"></td>
-      					</tr>
-      					<tr>
-      					<td><span class="pn-frequired">*</span>博客副标题</td>
-      					<td colspan="1" width="35%" class="pn-fcontent"><input type="text" name="title2" value="海南省教育研究培训院" class="required"></td>
-      					</tr>
-      					<tr>
-      					<td><span class="pn-frequired">*</span>页面模板</td>
-      					<td colspan="1" width="35%" class="pn-fcontent">
-      					<select id="skin" name="skin" id="skin" onchange="skinChange(this.selectedIndex)">
-	        				<option value="01">01</option>
-	        				<option value="02">02</option>
-	        				<option value="03">03</option>
-	        				<option value="04">04</option>
-	        				<option value="05">05</option>
-	        			</select>
-      					</td>
-      					</tr>
-      				</tbody>
-      			</table>      		
-	        	<input type="button" value="关闭" onclick="close();"/>
-      		</form>
-      </div>
+
       <div class="member-main">
+        </ul>
+      </div>
+      <div class="blog-main">
         <div class="tggl">
-          <form id="tableForm" action="contribute_list.jspx" method="post">
+          <form id="tableForm" action="${base}/blog/index.jspx" method="post">
           [#if pagination.list?size gt 0]
           <table cellpadding="0" cellspacing="0">
             <tbody>
               <tr>
-                <td class="tggl-top">ID</td><td class="tggl-top">标题</td><td class="tggl-top">栏目</td><td class="tggl-top">点击</td><td class="tggl-top">发布时间</td>
+                <td class="tggl-top">ID</td><td class="tggl-top">标题</td><td class="tggl-top">浏览次数</td><td class="tggl-top">发布时间</td>
               </tr>
               [#list pagination.list as c]
               <tr>
                 <td>${c.id}</td>
                 <td style="text-align:left; text-indent:5px;"><a href="${c.url!}">[@text_cut s=c.title?html len='24' append='...'/]</a></td>
-                <td>${c.channel.name}</td>
                 <td>${c.views}</td>
                 <td>${c.releaseDate?string('yyyy-MM-dd')}</td>
               </tr>
@@ -99,7 +76,7 @@
                 try{
                     var tableForm = document.getElementById("tableForm");
                     $("input[name=pageNo]").val(pageNo);
-                    tableForm.action="contribute_list.jspx";
+                    tableForm.action="${base}/blog/index.jspx";
                     tableForm.onsubmit=null;
                     tableForm.submit();
                 } catch(e) {
@@ -107,9 +84,6 @@
                 }
             }
             
-        	function skinChange(n){
-        		document.all.MrJin.href="/${res}/css/skin/"+(n+1)+".css"; 
-        	}
             </script>
             [#else]
                 <div>暂无博文</div>
@@ -121,30 +95,13 @@
     <div class="m-sj"></div>
   </div>
 </div>
-	<script type="text/javascript">
-	$(function() {
-		$("#setDialog").dialog({
-			autoOpen: false,
-			modal: false,
-			resizable :false,
-			stack : false,
-			draggable : true,
-			closeOnEscape : false,
-			width: 500,
-			height: 400,
-			position: ["center",20],
-		});	   
-	});
-	
-	function close(){
-		$("#setDialog").dialog("close");
-	}
-	
-	function set(){
-		$("#setDialog").dialog("open");
-	}
-</script>
 
 [#include "../include/footer.html"/]
+ <script type="text/javascript">
+	skinChange(${user.theme});
+	function skinChange(n){
+		document.all.MrJin.href="/${res}/css/skin/"+n+".css"; 
+	}
+</script>
 </body>
 </html>

@@ -381,4 +381,10 @@ public class ChannelMngImpl implements ChannelMng {
 		this.dao = dao;
 	}
 
+	
+	public void updateLinkUrl(String linkUrl,CmsUser user) {
+		dao.saveLink(linkUrl,user);
+	}
+
+
 }

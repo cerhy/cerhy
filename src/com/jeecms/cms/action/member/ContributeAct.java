@@ -1,13 +1,14 @@
 package com.jeecms.cms.action.member;
-import static com.jeecms.cms.Constants.TPLDIR_MEMBER;
 import static com.jeecms.cms.Constants.TPLDIR_BLOG;
+import static com.jeecms.cms.Constants.TPLDIR_MEMBER;
+
 import java.io.IOException;
-
-import java.util.List;
-
 import java.io.UnsupportedEncodingException;
-
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,6 +17,8 @@ import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang.StringUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -24,18 +27,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-
 import com.jeecms.cms.dao.main.impl.BlogDao;
-import com.jeecms.cms.entity.main.Columns;
-
 import com.jeecms.cms.entity.main.Channel;
-import com.jeecms.cms.entity.main.ContentCheck;
-
+import com.jeecms.cms.entity.main.Columns;
 import com.jeecms.cms.manager.assist.CmsFileMng;
+import com.jeecms.cms.manager.main.ChannelMng;
 import com.jeecms.common.web.ResponseUtils;
 import com.jeecms.core.entity.CmsSite;
 import com.jeecms.core.entity.CmsUser;
+import com.jeecms.core.entity.CmsUserExt;
 import com.jeecms.core.entity.Ftp;
+import com.jeecms.core.entity.MemberConfig;
 import com.jeecms.core.manager.CmsUserMng;
 import com.jeecms.core.manager.DbFileMng;
 import com.jeecms.core.web.WebErrors;
@@ -48,7 +50,8 @@ import com.jeecms.core.web.util.FrontUtils;
  */
 @Controller
 public class ContributeAct extends AbstractContentMemberAct {
-
+	private static final Logger log = LoggerFactory.getLogger(ContributeAct.class);
+	
 	public static final String CONTRIBUTE_LIST = "tpl.contributeList";
 	public static final String CONTRIBUTE_ADD = "tpl.contributeAdd";
 	public static final String CONTRIBUTE_EDIT = "tpl.contributeEdit";
@@ -386,6 +389,11 @@ public class ContributeAct extends AbstractContentMemberAct {
 	@RequestMapping(value = "/blog/help.jspx")
 	public String blogHelp(HttpServletRequest request,HttpServletResponse response, ModelMap model) {
 		CmsSite site = CmsUtils.getSite(request);
+		CmsUser user = CmsUtils.getUser(request);
+		int user_id = user.getId();
+		String path = request.getSession().getServletContext().getRealPath("/");
+		List<Columns> columnsList = (new BlogDao()).findByUserId(user_id, path);
+		model.addAttribute("columnsList", columnsList);
 		FrontUtils.frontData(request, model, site);
 		return FrontUtils.getTplPath(request, site.getSolutionPath(),TPLDIR_BLOG, "tpl.blogHelp");
 	}
@@ -393,6 +401,11 @@ public class ContributeAct extends AbstractContentMemberAct {
 	@RequestMapping(value = "/blog/tzsetting.jspx")
 	public String tzsetting(HttpServletRequest request, HttpServletResponse response,ModelMap model) {
 		return super.tzsetting(request, response, model);
+	}
+
+	@RequestMapping(value = "/blog/updateSetting.jspx")
+	public void updateSetting(HttpServletRequest request, HttpServletResponse response,ModelMap model) {
+		 super.updateSetting(request, response, model);
 	}
 	
 	@RequestMapping(value = "/blog/index.jspx")
@@ -448,14 +461,14 @@ public class ContributeAct extends AbstractContentMemberAct {
 
 	@RequestMapping(value = "/blog/contribute_save.jspx")
 	public String blog_save(String title, String author, String description,
-			String txt, String tagStr, String columnName,Integer modelId, 
+			String txt, String tagStr, String column_id,Integer modelId, 
 			String captcha,String mediaPath,String mediaType,
 			String[] attachmentPaths, String[] attachmentNames,
 			String[] attachmentFilenames, String[] picPaths, String[] picDescs,
 			Short charge,Double chargeAmount,
 			String nextUrl, HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
-		return super.blog_save(title, author, description, txt, tagStr, columnName,modelId,
+		return super.blog_save(title, author, description, txt, tagStr, column_id,modelId,
 				null, captcha,mediaPath,mediaType,attachmentPaths,attachmentNames, attachmentFilenames
 				,picPaths,picDescs,charge,chargeAmount,
 				nextUrl, request, response, model);
@@ -643,4 +656,90 @@ public class ContributeAct extends AbstractContentMemberAct {
 		}
 		return errors;
 	}
+	
+	
+	@Autowired
+	protected ChannelMng channelMng;
+	
+	/**
+	 *跳转链接页面方法 
+	  */
+	@RequestMapping(value = "/blog/link_list.jspx")
+	public String linkList(HttpServletRequest request,HttpServletResponse response, ModelMap model) {
+		CmsSite site = CmsUtils.getSite(request);
+		CmsUser user = CmsUtils.getUser(request);
+		int user_id = user.getId();
+		String path = request.getSession().getServletContext().getRealPath("/");
+		List<Columns> columnsList = (new BlogDao()).findByUserId(user_id, path);
+		String linkUrl=user.getLinkUrl();
+		String[] strs=linkUrl.split(" ");
+		List list=new ArrayList();
+		String newUrl="";
+		for(int i=0;i<strs.length;i++){
+			if(i!=strs.length-1){
+				if(!strs[i].contains("http")&&strs[i+1].contains("http")){
+					newUrl+="~"+strs[i]+" ";
+				}else{
+					newUrl+=strs[i]+" ";
+				}
+			}else{
+				if(!strs[i].contains("http")){
+					newUrl+="~"+strs[i]+" ";
+				}else{
+					newUrl+=strs[i]+" ";
+				}
+			}
+		}
+		String[] str=newUrl.split("~");
+		for(int j=0;j<str.length;j++){
+			Map<String,Object> map=new HashMap<String,Object>();
+			String[] st=str[j].toString().split(" ");
+			List lists=new ArrayList();
+			String newName="";
+			for(int k=0;k<st.length;k++){
+				if(st[0].contains("http")){
+					newName="";
+				}else{
+					newName=st[0];
+				}
+				lists.add(st[k]);
+			}
+			map.put(newName, lists);
+			list.add(map);
+		}
+		model.addAttribute("urlList", list);
+		model.addAttribute("columnsList", columnsList);
+		model.addAttribute("linkUrls", linkUrl.replaceAll(" ", "\r\n"));
+		FrontUtils.frontData(request, model, site);
+		return FrontUtils.getTplPath(request, site.getSolutionPath(),TPLDIR_BLOG, "tpl.linkList");
+	}
+	
+	@RequestMapping(value = "/blog/add_link.jspx")
+	public String custom(String linkUrl,String nextUrl,HttpServletRequest request,HttpServletResponse response, ModelMap model) {
+		return super.link_save(linkUrl.replaceAll("\r\n", " "),nextUrl,request, response, model);
+	}
+	
+	@RequestMapping(value = "/blog/changeTheme.jspx", method = RequestMethod.POST)
+	public String updateTheme(String theme, String nextUrl,
+			HttpServletRequest request, HttpServletResponse response,
+			ModelMap model){
+		CmsSite site = CmsUtils.getSite(request);
+		CmsUser user = CmsUtils.getUser(request);
+		FrontUtils.frontData(request, model, site);
+		MemberConfig mcfg = site.getConfig().getMemberConfig();
+		// 没有开启会员功能
+		if (!mcfg.isMemberOn()) {
+			return FrontUtils.showMessage(request, model, "member.memberClose");
+		}
+		if (user == null) {
+			return FrontUtils.showLogin(request, model, site);
+		}
+		if(StringUtils.isNotBlank(theme)){
+			user.setTheme(theme);
+			cmsUserMng.updateUser(user);
+			log.info("update CmsUser success. id={}", user.getId());
+		}	
+		return FrontUtils.showSuccess(request, model, nextUrl);
+	}
+	
 }

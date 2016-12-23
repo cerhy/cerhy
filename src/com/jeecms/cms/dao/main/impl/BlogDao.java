@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 import com.jeecms.cms.entity.main.Columns;
+import com.jeecms.core.entity.CmsUser;
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
 

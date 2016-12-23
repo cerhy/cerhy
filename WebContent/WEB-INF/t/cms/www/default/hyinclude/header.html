@@ -52,9 +52,9 @@ function qkeypress(){
                     <li><a href="http://edu.cerhy.com/" target="_blank">素质测评</a><em></em></li> 
                     <li><a href="#">官方客服</a><em></em></li>
                     <li><a href="#">官方微信</a><em></em></li>
-         			[#if user??]
+         			[#if user?? && !status??]
 	         			<div class="login-user">
-		         			<a>[#if user.userImg??]<img src="${user.userImg}">[#else][/#if]${user.username}</a>
+		         			<a>[#if user.userImg??]<img src="${user.userImg}">[#else]<img src="/${res}/images/userImg.png">[/#if]${user.username}</a>
 		         			<div class="user-child">
 			         			<a href="${base}/member/index.jspx">会员中心</a>
 			         			<a href="${base}/blog/index.jspx">我的博客</a>

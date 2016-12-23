@@ -143,7 +143,10 @@ function changeModel(){
 <body>
 [#include "../hyinclude/header.html"/]
 <div class="blog-con">
-  <div class="m-pos"><a href="${base}/">首页</a> > <span>博客中心</span></div>
+<div class="blogHead">
+	  <div style="font-size:30px;margin:10px auto 0">[#if user.blogTitle??]${user.blogTitle}[#else]标题[/#if]</div>
+	  <div style="font-size:15px;margin:15px auto 10px;">[#if user.blogTitle2??]${user.blogTitle2}[#else]副标题[/#if]</div>
+  </div>
   <div class="member clearfix">
     <div class="blogLeft clearfix"> 
       <div class="member-nav">
