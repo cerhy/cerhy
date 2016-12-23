@@ -1,0 +1,14 @@
+/* view 04 */
+
+#layout, #sbr	{ background-color: transparent; }
+#sbr .vbr	{ margin: 0 0 6px 0; }
+#header		{ padding: 60px 0 80px 0; color: #333; background: transparent; }
+.qs			{ border-color: #666; }
+.qs .q, .qs .placeholder	{ color: #666; }
+.popDlg, .pad	{ border-color: #333; }
+
+.blog-con		{ background: #FEFEFE url(04.jpg) no-repeat center top; }
+a			{ color: #074387; }
+#owner		{ color: #2481AB; }
+.box, #sbr .vbr	{ border: 1px solid #C8E2EF; background: #EBF0F4; }
+.box .cap		{ color: #434343; background: #EFFAFD; }

@@ -29,13 +29,13 @@
             <div style="font-size:16px;"><a onclick="set();">页面模板</a></div>                     
       </div>
             <div id="setDialog" style="display:none;">	
-      		<form id="setFrom">
+      		<form id="setFrom" class="setfrom">
       			<table width="100%" class="pn-ftable" cellpadding="2" cellspacing="1" border="0">
       				<tbody>
       					<tr>
       					<td><span class="pn-frequired">*</span>页面模板</td>
       					<td colspan="1" width="35%" class="pn-fcontent">
-      					<select id="theme" name="theme" id="skin" onchange="skinChange(this.selectedIndex)">
+      					<select id="theme" name="theme" id="skin" onchange="skinChange(this.selectedIndex)" class="themeSelect">
 	        				<option value="01">01</option>
 	        				<option value="02">02</option>
 	        				<option value="03">03</option>
@@ -45,9 +45,11 @@
       					</td>
       					</tr>
       				</tbody>
-      			</table>      		
-      			<input   type="submit" value="提交" class="submit"/>
-	        	<input type="button" value="取消" onclick="close();"/>
+      			</table>      	
+      			<div class="themeButton">	
+      			<input type="submit" value="确定" class="submit"/>
+	        	<button type="button" onclick="closeDialog();">取消</button>
+	        	</div>
       		</form>
       </div>
     </div>
@@ -67,12 +69,12 @@ $(function() {
 		draggable : true,
 		closeOnEscape : false,
 		width: 300,
-		height: 150,
+		height: 200,
 		position: ["center",80],
 	});	   
 });
 
-function close(){
+function closeDialog(){
 	$("#setDialog").dialog("close");
 }
 

@@ -375,3 +375,14 @@ h1 .position:before{width:12px; height:13px; display:inline-block; content:""; p
 .tag .tagList{margin-top:15px;}
 .tag .tagList a{color:#1a1a1a; font-size:16px; padding:12px 19px; display:inline-block; float:left; margin:0 1px 1px 0; background:#e7e7e7; transition-duration:400ms; -moz-transition-duration:400ms; -webkit-transition-duration:400ms; -o-transition-duration:400ms;}
 .tag .tagList a:hover{background:#f7f7f7; transition-duration:400ms; -moz-transition-duration:400ms; -webkit-transition-duration:400ms; -o-transition-duration:400ms;}
+
+.themeSelect{
+	    border: 1px solid #d5d5d5;
+    padding: 5px 4px;
+    height: 27px;
+    width: 204px;
+    cursor: pointer;
+}
+.themeButton{
+margin: 27px 37px;
+}
