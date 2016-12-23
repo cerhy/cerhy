@@ -174,11 +174,11 @@ function changeModel(){
               <tr>
                 <td class="tggl-top">栏目</td>
                 <td>
-                <select name="columnName" class="member-change">
+                <select name="column_id" class="member-change">
                 <option value="" class="sel-disabled">--请选择--</option>
                 [#if columnsList?size gt 0]
                 [#list columnsList as c]
-                    <option value="${c.column_name}">${c.column_name}</option>
+                    <option value="${c.column_id}">${c.column_name}</option>
                 [/#list]
                 [/#if]
                 </select>
