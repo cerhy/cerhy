@@ -97,5 +97,11 @@
 </div>
 
 [#include "../include/footer.html"/]
+ <script type="text/javascript">
+	skinChange(${user.theme});
+	function skinChange(n){
+		document.all.MrJin.href="/${res}/css/skin/"+n+".css"; 
+	}
+</script>
 </body>
 </html>

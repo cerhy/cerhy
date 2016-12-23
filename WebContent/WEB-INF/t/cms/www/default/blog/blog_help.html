@@ -5,6 +5,7 @@
 <script src="${resSys}/front.js" type="text/javascript"></script>
 <link type="text/css" rel="stylesheet" href="/${res}/css/hyindex.css" />
 <link rel="stylesheet" type="text/css" href="/${res}/css/custom.css" />
+<script src="${base}/thirdparty/My97DatePicker/WdatePicker.js" type="text/javascript"></script>
 [#include "../hyinclude/header.html"/]
 [#include "../hyinclude/head.html"/]
 <div class="blog-con">
@@ -29,24 +30,26 @@
             <div style="font-size:16px;"><a onclick="set();">页面模板</a></div>                     
       </div>
             <div id="setDialog" style="display:none;">	
-      		<form id="setFrom" class="setfrom">
+      		<form id="setFrom" class="setfrom" action="${base}/blog/changeTheme.jspx" method="post">
       			<table width="100%" class="pn-ftable" cellpadding="2" cellspacing="1" border="0">
       				<tbody>
       					<tr>
       					<td><span class="pn-frequired">*</span>页面模板</td>
       					<td colspan="1" width="35%" class="pn-fcontent">
-      					<select id="theme" name="theme" id="skin" onchange="skinChange(this.selectedIndex)" class="themeSelect">
-	        				<option value="01">01</option>
-	        				<option value="02">02</option>
-	        				<option value="03">03</option>
-	        				<option value="04">04</option>
-	        				<option value="05">05</option>
+      					<select id="theme" name="theme" onchange="skinChange(this.selectedIndex)" class="themeSelect">
+	        				<option value="">默认</option>
+	        				<option value="1">自然风景01</option>
+	        				<option value="2">自然风景02</option>
+	        				<option value="3">自然风景03</option>
+	        				<option value="4">自然风景04</option>
+	        				<option value="5">自然风景05</option>
 	        			</select>
       					</td>
       					</tr>
       				</tbody>
       			</table>      	
       			<div class="themeButton">	
+      			<input type="hidden" name="nextUrl" value="help.jspx"/>
       			<input type="submit" value="确定" class="submit"/>
 	        	<button type="button" onclick="closeDialog();">取消</button>
 	        	</div>
@@ -57,8 +60,13 @@
 </div>
 [#include "../include/footer.html"/]
 <script type="text/javascript">
+
+
+
+skinChange(${user.theme});
+
 function skinChange(n){
-	document.all.MrJin.href="/${res}/css/skin/"+(n+1)+".css"; 
+	document.all.MrJin.href="/${res}/css/skin/"+n+".css"; 
 }
 $(function() {
 	$("#setDialog").dialog({
@@ -71,15 +79,22 @@ $(function() {
 		width: 300,
 		height: 200,
 		position: ["center",80],
+		
+		close: function(event, ui) {
+			skinChange(${user.theme});
+		}
 	});	   
 });
 
 function closeDialog(){
 	$("#setDialog").dialog("close");
+	skinChange(${user.theme});
 }
 
 function set(){
 	$("#setDialog").dialog("open");
+	var theme = document.getElementById("theme");
+	theme.value="${user.theme}";
 }
 </script>
 </body>
