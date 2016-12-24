@@ -56,9 +56,7 @@ import com.jeecms.core.web.util.FrontUtils;
  * 
  */
 @Controller
-public class ContributeAct extends AbstractContentMemberAct {
-	private static final Logger log = LoggerFactory.getLogger(ContributeAct.class);
-	
+public class ContributeAct extends AbstractContentMemberAct {	
 	private static final Logger log = LoggerFactory.getLogger(ContributeAct.class);
 	public static final String CONTRIBUTE_LIST = "tpl.contributeList";
 	public static final String CONTRIBUTE_ADD = "tpl.contributeAdd";
