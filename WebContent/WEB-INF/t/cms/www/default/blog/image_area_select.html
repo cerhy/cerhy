@@ -16,7 +16,7 @@
 		<div id="imgDiv" style="overflow:hidden;width:${minWidth}px;height:${minHeight}px;border:1px solid #333;">
 			<img id="minImg" src="${imgSrc}"/>
 		</div>
-		<form id="submitForm" action="o_image_cut.jspx" target="hiddenIframe" method="post" id="cutImgForm" style="margin:7px 0px 0px 0px;padding:0px">
+		<form id="submitForm" action="${base}/member/o_image_cut.jspx" target="hiddenIframe" method="post" id="cutImgForm" style="margin:7px 0px 0px 0px;padding:0px">
 			<input type="hidden" id="imgSrcPath"  name="imgSrcPath" value="${imgSrcPath}"/>
 			<input type="hidden" id="cutImageW"  name="imgWidth"/>
 			<input type="hidden" id="cutImageH"  name="imgHeight"/>

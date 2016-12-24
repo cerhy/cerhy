@@ -20,7 +20,7 @@ function uploadAttachment(n) {
 	$('#attachmentForm').submit();
 }
 </script>
-<form id="attachmentForm" action="o_upload_attachment.jspx" method="post" enctype="multipart/form-data" target="attachment_iframe" style="display:none;width:0px;height:0px;">
+<form id="attachmentForm" action="${base}/member/o_upload_attachment.jspx" method="post" enctype="multipart/form-data" target="attachment_iframe" style="display:none;width:0px;height:0px;">
 <span id="attachmentContent"></span>
 <input type="hidden" id="attachmentNum" name="attachmentNum"/>
 </form>
