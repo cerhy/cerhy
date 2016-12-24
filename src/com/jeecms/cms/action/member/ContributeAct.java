@@ -1,7 +1,13 @@
 package com.jeecms.cms.action.member;
 import static com.jeecms.cms.Constants.TPLDIR_BLOG;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import static com.jeecms.cms.Constants.TPLDIR_MEMBER;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
@@ -21,6 +27,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -33,6 +40,8 @@ import com.jeecms.common.web.ResponseUtils;
 import com.jeecms.core.entity.CmsSite;
 import com.jeecms.core.entity.CmsUser;
 import com.jeecms.core.entity.Ftp;
+import com.jeecms.core.entity.MemberConfig;
+import com.jeecms.core.entity.Theme;
 import com.jeecms.core.manager.CmsUserMng;
 import com.jeecms.core.manager.DbFileMng;
 import com.jeecms.core.web.WebErrors;
@@ -46,11 +55,14 @@ import com.jeecms.core.web.util.FrontUtils;
 @Controller
 public class ContributeAct extends AbstractContentMemberAct {
 
+	private static final Logger log = LoggerFactory.getLogger(ContributeAct.class);
 	public static final String CONTRIBUTE_LIST = "tpl.contributeList";
 	public static final String CONTRIBUTE_ADD = "tpl.contributeAdd";
 	public static final String CONTRIBUTE_EDIT = "tpl.contributeEdit";
 	public static final String CONTRIBUTE_UPLOADMIDIA = "tpl.uploadMedia";
 	public static final String CONTRIBUTE_UPLOADATTACHMENT = "tpl.uploadAttachment";
+	
+	private static List<String> filelist = new ArrayList<String>();
 
 	/**
 	 * 会员投稿列表
@@ -387,6 +399,8 @@ public class ContributeAct extends AbstractContentMemberAct {
 		int user_id = user.getId();
 		String path = request.getSession().getServletContext().getRealPath("/");
 		List<Columns> columnsList = (new BlogDao()).findByUserId(user_id, path);
+		List<Theme>  themeList= getFile(path+"theme.txt");
+		model.addAttribute("themeList", themeList);
 		model.addAttribute("columnsList", columnsList);
 		FrontUtils.frontData(request, model, site);
 		return FrontUtils.getTplPath(request, site.getSolutionPath(),TPLDIR_BLOG, "tpl.blogHelp");
@@ -699,5 +713,101 @@ public class ContributeAct extends AbstractContentMemberAct {
 	public String custom(String linkUrl,String nextUrl,HttpServletRequest request,HttpServletResponse response, ModelMap model) {
 		return super.link_save(linkUrl.replaceAll("\r\n", " "),nextUrl,request, response, model);
 	}
+
+	@RequestMapping(value = "/blog/changeTheme.jspx", method = RequestMethod.POST)
+	public String updateTheme(String theme, String nextUrl,
+			HttpServletRequest request, HttpServletResponse response,
+			ModelMap model){
+		CmsSite site = CmsUtils.getSite(request);
+		CmsUser user = CmsUtils.getUser(request);
+		FrontUtils.frontData(request, model, site);
+		MemberConfig mcfg = site.getConfig().getMemberConfig();
+		// 没有开启会员功能
+		if (!mcfg.isMemberOn()) {
+			return FrontUtils.showMessage(request, model, "member.memberClose");
+		}
+		if (user == null) {
+			return FrontUtils.showLogin(request, model, site);
+		}
+		if(StringUtils.isNotBlank(theme)){
+			user.setTheme(theme);
+			cmsUserMng.updateUser(user);
+			log.info("update CmsUser success. id={}", user.getId());
+		}	
+		return FrontUtils.showSuccess(request, model, nextUrl);
+	}
+
 	
+	/**
+	 * 获得文件名
+	 * @param filePath
+	 * @throws IOException
+	 */
+	public void getFiles( String filePath )
+    {
+        File root = new File( filePath );
+        File[] files = root.listFiles();
+        for ( File file : files )
+        {
+            if ( file.isDirectory() )
+            {
+                /*
+                 * 递归调用
+                 */
+                getFiles( file.getAbsolutePath() );
+              //  filelist.add( file.get );
+                //String b = file.getAbsolutePath().replaceAll(pp, "");
+             //   System.out.println( "显示" + filePath + "下所有子目录及其文件" + file.getName() );
+            }else{           
+                String destFileName = file.getAbsolutePath().substring(file.getAbsolutePath().indexOf("skin"),file.getAbsolutePath().length());
+                if(destFileName.indexOf("css") != -1){
+                	 filelist.add(destFileName);
+                }              
+            }
+        }
+    }
+	
+	/**
+	 * 获取文件里的内容
+	 * @param filePath
+	 * @return
+	 */
+	public List<Theme> getFile(String filePath){
+		List<Theme> listTheme = new ArrayList<>();
+		File file = new File(filePath);
+	    BufferedReader reader = null;
+	    String tempString = null;
+	    int line =1;
+	    
+	    try {	     
+	        reader = new BufferedReader(new FileReader(file));
+	        while ((tempString = reader.readLine()) != null) {
+	            System.out.println("Line"+ line + ":" +tempString);
+	            String values[] = tempString.split(",");
+	            Theme t = new Theme();
+	            t.setId(values[0]);
+	            t.setName(values[1]);
+	            listTheme.add(t);
+	            line ++ ;
+	        }
+	        reader.close();
+	    } catch (FileNotFoundException e) {
+	        // TODO Auto-generated catch block
+	        e.printStackTrace();
+	    } catch (IOException e) {
+	        // TODO Auto-generated catch block
+	        e.printStackTrace();
+	    }finally{
+	        if(reader != null){
+	            try {
+	                reader.close();
+	            } catch (IOException e) {
+	                // TODO Auto-generated catch block
+	                e.printStackTrace();
+	            }
+	        }
+	    }
+	    		
+		return listTheme;
+	}
 }

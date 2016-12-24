@@ -1,0 +1,15 @@
+/* compus 01 */
+
+#layout, #sbr	{ background-color: transparent; }
+#sbr .vbr	{ margin: 0 0 6px 0; }
+#header		{ padding: 60px 0 80px 0; color: #333; background: transparent; }
+.qs			{ border-color: #666; }
+.qs .q, .qs .placeholder	{ color: #555152; }
+.popDlg, .pad	{ border-color: #333; }
+.topicView .row.active, .menu a.active, .menu span.active, .cascade h3.active	{ background-color: #f1f1f1; }
+
+.blog-con		{ background: #f6f6f6 url(01.jpg) no-repeat center -20px; }
+a			{ color: #495e6b; }
+#owner		{ color: #555152; }
+.box, #sbr .vbr	{ border: 1px solid #d8d8d8; background: #fff; }
+.box .cap		{ color: #333; background: #F0F1F1; }

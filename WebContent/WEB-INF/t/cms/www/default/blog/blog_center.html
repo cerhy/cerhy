@@ -97,10 +97,10 @@
 </div>
 
 [#include "../include/footer.html"/]
- <script type="text/javascript">
- if(${user.theme} !=null){
-		skinChange(${user.theme!0});
-	}
+<script type="text/javascript">
+
+		skinChange("${user.theme!0}");
+	
 	function skinChange(n){
 		document.all.MrJin.href="/${res}/css/skin/"+n+".css"; 
 	}

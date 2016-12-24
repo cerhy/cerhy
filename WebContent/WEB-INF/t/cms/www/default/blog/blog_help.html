@@ -36,13 +36,11 @@
       					<tr>
       					<td><span class="pn-frequired">*</span>页面模板</td>
       					<td colspan="1" width="35%" class="pn-fcontent">
-      					<select id="theme" name="theme" onchange="skinChange(this.selectedIndex)" class="themeSelect">
-	        				<option value="">默认</option>
-	        				<option value="1">自然风景01</option>
-	        				<option value="2">自然风景02</option>
-	        				<option value="3">自然风景03</option>
-	        				<option value="4">自然风景04</option>
-	        				<option value="5">自然风景05</option>
+      					<select id="theme" name="theme" onchange="skinChange(this.value)" class="themeSelect">      						
+	        				<option value="0">默认</option>
+	        				[#list themeList as t]
+	        				<option value="${t.id}">${t.name}</option>
+	        				[/#list]
 	        			</select>
       					</td>
       					</tr>
@@ -61,7 +59,7 @@
 [#include "../include/footer.html"/]
 <script type="text/javascript">
 
-skinChange(${user.theme!0});
+skinChange("${user.theme!0}");
 
 function skinChange(n){
 	document.all.MrJin.href="/${res}/css/skin/"+n+".css"; 
@@ -86,16 +84,13 @@ $(function() {
 
 function closeDialog(){
 	$("#setDialog").dialog("close");
-	skinChange(${user.theme});
+	skinChange(${user.theme!0});
 }
 
 function set(){
 	$("#setDialog").dialog("open");
 	var theme = document.getElementById("theme");
-	theme.value="${user.theme!0}";
-		
-	
-	
+	theme.value="${user.theme!0}";	
 }
 </script>
 </body>
