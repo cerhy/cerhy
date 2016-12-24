@@ -38,14 +38,10 @@ width:50px;height: 25px;background: #00a8eb;color: #FFF;text-align: center;font-
       <div class="member-main">
         <div class="tggl">
         <form action="${base}/blog/updateColumn.jspx?id=${column.column_id}" id="newColumn" method="post">
-         <div style="font-size:15px">原栏目名:</div>
-         <div style="font-size:16px;margin:5px 0 10px 70px;color:red;">${column.column_name}</div>
-         <div style="font-size:15px">原栏目序号:</div>
-         <div style="font-size:16px;margin:5px 0 10px 70px;color:red;">${column.order_id}</div>
-         <div style="font-size:15px">新栏目名:</div>
-         <input type="text" name="updateName" style="margin:10px 10px 20px 0;"/>
-         <div style="font-size:15px">新栏目序号:</div>
-         <input type="text" name="updateOrderId" style="margin:10px 10px 20px 0;"/>
+         <div style="font-size:15px">栏目名:</div>
+         <input type="text" name="updateName" value="${column.column_name}" style="margin:10px 10px 20px 0;"/>
+         <div style="font-size:15px">栏目序号:</div>
+         <input type="text" name="updateOrderId" value="${column.order_id}" style="margin:10px 10px 20px 0;"/>
          <div style="margin-bottom:20px"><input type="submit" value="更新" class="sub2" /></div>
         </form>
       </div>
