@@ -96,7 +96,7 @@
 				   <div class="rig-bottom">
 	      		 		<a class="comments-zan" onclick="Cms.commentUp('${base}',${c.id},${c.ups},'commentups_${c.id}')">赞<span id="commentups_${c.id}">${c.ups!}</span></a>
   				 
-		      	 		<a class="comments-hf" id="commentreply_${c.id}" onclick="Cms.commentChannelInputLoad('${base}','commentInputDiv_','commentInputDiv_${c.id}','${channelId!}','${c.id}')">回复</a>
+		      	 		<!-- <a class="comments-hf" id="commentreply_${c.id}" onclick="Cms.commentChannelInputLoad('${base}','commentInputDiv_','commentInputDiv_${c.id}','${channelId!}','${c.id}')">回复</a> -->
 				  		[#if c.replyCount>0]
 				 		 <span style="cursor: pointer;" id="commentviewreply_${c.id}" onclick="Cms.commentListChannelMore('${base}','commentDialog',{parentId:${c.id},channelId:${channelId!},orderBy:0,count:5,checked:1})">查看回复(${c.replyCount!})</span>
 				  		[/#if]

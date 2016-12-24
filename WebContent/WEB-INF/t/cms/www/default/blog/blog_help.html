@@ -41,6 +41,8 @@
 	        				[#list themeList as t]
 	        				<option value="${t.id}">${t.name}</option>
 	        				[/#list]
+
+
 	        			</select>
       					</td>
       					</tr>
@@ -58,6 +60,7 @@
 </div>
 [#include "../include/footer.html"/]
 <script type="text/javascript">
+
 
 skinChange("${user.theme!0}");
 
@@ -90,7 +93,7 @@ function closeDialog(){
 function set(){
 	$("#setDialog").dialog("open");
 	var theme = document.getElementById("theme");
-	theme.value="${user.theme!0}";	
+
 }
 </script>
 </body>

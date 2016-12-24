@@ -8,14 +8,15 @@
 <script src="${resSys}/jquery.js" type="text/javascript"></script>
 <script src="${resSys}/jqueryUI/jquery-ui.js" type="text/javascript"></script>
 <script src="${resSys}/front.js" type="text/javascript"></script>
-<script language="Javascript"> 
-	document.oncontextmenu=new Function("event.returnValue=false"); 
-	document.onselectstart=new Function("event.returnValue=false"); 
-</script>
 <link type="text/css" rel="stylesheet" href="/${res}/css/main.css" />
 <link type="text/css" rel="stylesheet" href="/${res}/css/custom.css" />
 <link href="${resSys}/jqueryUI/jquery.ui.css" rel="stylesheet" type="text/css" />
+<style>
 
+body { 
+-moz-user-select:none; 
+} 
+</style> 
 <script type="text/javascript">
 	$(function() {
 		Cms.checkPerm("${base}", "${content.id}");
@@ -52,7 +53,8 @@
 	});
 </script>
 
-<body class="bodybg">
+<body class="bodybg"  oncontextmenu="return false" onselectstart="return false" 
+ondragstart="return false" onbeforecopy="return false" oncopy=document.selection.empty() onselect=document.selection.empty()>
 [#include "../hyinclude/header.html"/]
 <div class="local">
     <div class="wrap">
@@ -112,3 +114,59 @@
 	[#include "../include/footer.html"/]
 </body>
 </html>
+<!-- 防止复制的js -->
+<SCRIPT language=JavaScript1.2>
+function disableselect(e){
+return false}
+function reEnable(){return true
+}
+file://if IE4+
+document.onselectstart=new Function ("return false")
+file://if NS6
+if (window.sidebar){
+document.onmousedown=disableselect
+document.onclick=reEnable
+}
+</SCRIPT>
+<SCRIPT language=JavaScript type=text/JavaScript>
+
+function MM_reloadPage(init) {    //reloads the window if Nav4 resized
+    if (init==true) with (navigator) {if ((appName=="Netscape")&&(parseInt(appVersion)==4)) {
+      document.MM_pgW=innerWidth; document.MM_pgH=innerHeight; onresize=MM_reloadPage; }}
+    else if (innerWidth!=document.MM_pgW || innerHeight!=document.MM_pgH) location.reload();
+}
+MM_reloadPage(true);
+
+</SCRIPT>
+<!--下面是防止右键的js:  -->
+<script language="JavaScript">
+
+
+if (window.Event) 
+document.captureEvents(Event.MOUSEUP); 
+function nocontextmenu() {
+event.cancelBubble = true
+event.returnValue = false;
+return false;
+}
+function norightclick(e) {
+if (window.Event){
+   if (e.which == 2 || e.which == 3)
+   return false;
+}else{
+   if (event.button == 2 || event.button == 3){
+       event.cancelBubble = true
+    event.returnValue = false;
+       return false;
+    }
+}
+}
+
+document.oncontextmenu = nocontextmenu; // for IE5+
+document.onmousedown = norightclick; // for all others
+
+</script>
+<script type="text/javascript"> 
+
+document.oncontextmenu=function(e){return false;} 
+</script> 

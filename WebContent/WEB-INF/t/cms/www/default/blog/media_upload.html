@@ -20,7 +20,7 @@ function uploadMedia() {
 	$("#mediaForm").submit();
 }
 </script>
-<form id="mediaForm" action="o_upload_media.jspx" method="post" enctype="multipart/form-data" target="media_iframe" style="display:none;width:0px;height:0px;">
+<form id="mediaForm" action="${base}/member/o_upload_media.jspx" method="post" enctype="multipart/form-data" target="media_iframe" style="display:none;width:0px;height:0px;">
 <span id="mediaContent"></span>
 <input type="hidden" id="mediaFilename" name="filename"/>
 </form>

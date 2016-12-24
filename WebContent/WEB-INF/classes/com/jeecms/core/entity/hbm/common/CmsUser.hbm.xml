@@ -5,12 +5,16 @@
 		<meta attribute="sync-DAO">false</meta>
 		<cache usage="read-write"/>
 		<id name="id" type="java.lang.Integer" column="user_id"><generator class="assigned"/></id>
-		<property name="username" column="username" type="string" not-null="true" length="100"/>
 		<property name="blogTitle" column="blogTitle" type="string" not-null="false" length="100"/>
 		<property name="blogTitle2" column="blogTitle2" type="string" not-null="false" length="100"/>
 		<property name="blogNotice" column="blogNotice" type="string" not-null="false" length="100"/>
+<<<<<<< HEAD
 		<property name="theme" column="theme" type="string" not-null="false" length="100"/>
+=======
+		<property name="username" column="username" type="string" not-null="true" length="100"/>
+>>>>>>> branch 'gh-pages' of git@github.com:cerhy/cerhy.git
 		<property name="email" column="email" type="string" not-null="false" length="100"/>
+		<property name="theme" column="theme" type="string" not-null="false" length="100"/>
 		<property name="registerTime" column="register_time" type="timestamp" not-null="true" length="19"/>
 		<property name="registerIp" column="register_ip" type="string" not-null="true" length="50"/>
 		<property name="lastLoginTime" column="last_login_time" type="timestamp" not-null="false" length="19"/>
@@ -112,4 +116,6 @@
 		</set>
 
 	</class>
+
 </hibernate-mapping>
+
