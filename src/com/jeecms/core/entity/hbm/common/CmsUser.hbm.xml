@@ -111,4 +111,5 @@
 		</set>
 
 	</class>
+	
 </hibernate-mapping>
