@@ -49,10 +49,7 @@ public class CommentAct {
 	public static final String COMMENT_LIST = "tpl.commentList";
 	public static final String COMMENT_INPUT = "tpl.commentInput";
 	public static final String COMMENT_CHANNEL_INPUT = "tpl.commentChannelInput";
-	public static final String COMMENT_CHANNEL_PAGE = "tpl.commentChannelPage";
-	/**
-	 * 该方法为内容评论回复中查看回复中点击更多评论所执行方法!
-	 */
+
 	@RequestMapping(value = "/comment*.jspx", method = RequestMethod.GET)
 	public String page(Integer contentId, Integer pageNo,
 			HttpServletRequest request, HttpServletResponse response,
@@ -77,42 +74,6 @@ public class CommentAct {
 		model.addAttribute("content", content);
 		return FrontUtils.getTplPath(request, site.getSolutionPath(),
 				TPLDIR_SPECIAL, COMMENT_PAGE);
-	}
-	/**
-	 * 该方法为栏目评论回复中查看回复中点击更多评论所执行方法!
-	 */
-	@RequestMapping(value = "/comment_channel*.jspx", method = RequestMethod.GET)
-	public String channelPage(Integer channelId, Integer pageNo,
-			HttpServletRequest request, HttpServletResponse response,
-			ModelMap model) {
-		CmsSite site = CmsUtils.getSite(request);
-		if(channelId==98||channelId==99||channelId==100||channelId==101
-				||channelId==102||channelId==103||channelId==104){
-			Channel cc = channelMng.findById(channelId);
-			List<Channel> topList = new ArrayList<Channel>();
-			topList.add(cc);
-			List<Channel> channelList = Channel.getListForSelect(topList, null, true);
-			channelId=channelList.get(2).getId();
-		}
-		if(channelId==null){
-			return FrontUtils.showMessage(request, model,
-					"comment.contentNotFound");
-		}
-		Channel channel = channelMng.findById(channelId);
-		if (channel == null) {
-			return FrontUtils.showMessage(request, model,
-					"comment.contentNotFound");
-		}
-		if (channel.getCommentControl() == ChannelExt.COMMENT_OFF) {
-			return FrontUtils.showMessage(request, model, "comment.closed");
-		}
-		// 将request中所有参数保存至model中。
-		model.putAll(RequestUtils.getQueryParams(request));
-		FrontUtils.frontData(request, model, site);
-		FrontUtils.frontPageData(request, model);
-		model.addAttribute("channel", channel);
-		return FrontUtils.getTplPath(request, site.getSolutionPath(),
-				TPLDIR_SPECIAL, COMMENT_CHANNEL_PAGE);
 	}
 	
 	@RequestMapping(value = "/comment_input_csi.jspx")

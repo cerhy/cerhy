@@ -37,7 +37,7 @@
       					<td><span class="pn-frequired">*</span>页面模板</td>
       					<td colspan="1" width="35%" class="pn-fcontent">
       					<select id="theme" name="theme" onchange="skinChange(this.selectedIndex)" class="themeSelect">
-	        				<option value="">默认</option>
+	        				<option value="0">默认</option>
 	        				<option value="1">自然风景01</option>
 	        				<option value="2">自然风景02</option>
 	        				<option value="3">自然风景03</option>
@@ -86,7 +86,7 @@ $(function() {
 
 function closeDialog(){
 	$("#setDialog").dialog("close");
-	skinChange(${user.theme});
+	skinChange(${user.theme!0});
 }
 
 function set(){

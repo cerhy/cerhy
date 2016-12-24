@@ -6,7 +6,7 @@
 		<cache usage="read-write"/>
 		<id name="id" type="java.lang.Integer" column="content_id"><generator class="identity"/></id>
 		<property name="sortDate" column="sort_date" type="timestamp" not-null="true" length="19"/>
-		<property name="columnName" column="column_name" type="java.lang.String" not-null="false"/>
+		<property name="column_id" column="column_id" type="java.lang.Integer" not-null="false"/>
 		<property name="topLevel" column="top_level" type="java.lang.Byte" not-null="true" length="10"/>
 		<property name="hasTitleImg" column="has_title_img" type="java.lang.Boolean" not-null="true"/>
 		<property name="recommend" column="is_recommend" type="java.lang.Boolean" not-null="true"/>

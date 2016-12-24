@@ -31,7 +31,7 @@ function imgCut(n) {
 		alert('没有选择图片!');
 		return;
 	}
-	var url = "v_image_area_select.jspx?uploadNum="+n+"&imgSrcPath="
+	var url = "/member/v_image_area_select.jspx?uploadNum="+n+"&imgSrcPath="
 		+$("#uploadImgPath"+n).val()+"&zoomWidth="+$("#zoomWidth"+n).val()+"&zoomHeight="+$("#zoomHeight"+n).val();
 	window.open(url,"imgcut","height=550, width=1000, top=0, left=0, toolbar=no, menubar=no, scrollbars=auto, resizable=yes,location=no, status=no");
 }
@@ -53,7 +53,7 @@ function previewImg(n) {
 	}
 }
 </script>
-<form id="uploadForm"  action="o_upload_image.jspx" method="post"  enctype="multipart/form-data" target="hiddenIframe" style="display:none;width:0px;height:0px;">
+<form id="uploadForm"  action="/member/o_upload_image.jspx" method="post"  enctype="multipart/form-data" target="hiddenIframe" style="display:none;width:0px;height:0px;">
 <span id="fileContent"></span>
 <input id="ufWidth" type="hidden" name="zoomWidth"/>
 <input id="ufHeight" type="hidden" name="zoomHeight"/>

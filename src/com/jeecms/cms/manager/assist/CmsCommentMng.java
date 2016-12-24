@@ -60,7 +60,7 @@ public interface CmsCommentMng {
 	 * @param score
 	 * @param text
 	 * @param ip
-	 * @param channelId
+	 * @param contentId
 	 * @param siteId
 	 * @param userId
 	 * @param checked
@@ -68,7 +68,7 @@ public interface CmsCommentMng {
 	 * @param parentId
 	 * @return
 	 */
-	public CmsComment commentChannel(CmsUser user,Integer score,String text, String ip, Integer channelId,
+	public CmsComment commentChannel(CmsUser user,Integer score,String text, String ip, Integer contentId,
 			Integer siteId, Integer userId, boolean checked, boolean recommend,Integer parentId);
 
 	public CmsComment update(CmsComment bean, CmsCommentExt ext);

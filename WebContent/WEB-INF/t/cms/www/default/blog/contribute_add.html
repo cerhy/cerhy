@@ -16,13 +16,16 @@
 <script src="${base}/thirdparty/swfupload/handlers.js" type="text/javascript"></script>
 <link href="${base}/thirdparty/swfupload/process.css" rel="stylesheet" type="text/css"/>
 <link rel="stylesheet" type="text/css" href="/${res}/css/hyindex.css" />
+<link rel="stylesheet" type="text/css" href="/${res}/css/custom.css" />
 <script type="text/javascript">
 $.validator.methods.leafChannel = function(value, element, param) {
 	var i = element.selectedIndex;
 	return $(element.options[i]).attr("class")!="sel-disabled";
 }
 $(function() {
+	$("#jvForm").validate({
 
+	});
 	var uploadPicsUrl = "o_swfPicsUpload.jspx";
 	var uploadAttachsUrl = "o_swfAttachsUpload.jspx";
 	//在firefox、chrome下，上传不能保留登录信息，所以必须加上jsessionid。
@@ -134,7 +137,6 @@ function changeModel(){
 	}
 }
 </script>
-<link rel="stylesheet" type="text/css" href="/${res}/css/custom.css" />
 <style type="text/css">
 .sel-disabled{background-color:#ccc}
 </style>
@@ -160,7 +162,7 @@ function changeModel(){
       </div>
       <div class="member-main">
         <div class="member-text tggl fbgj">
-          [#if channelList?size gt 0]
+          [#if columnsList?size gt 0]
           [#include "media_upload.html"/]
           [#include "image_upload.html"/]
           [#include "attachment_upload.html"/]
@@ -312,11 +314,12 @@ function changeModel(){
           </table>
           </form>
             [#else]
-            <div>系统不允许投稿，请联系管理员！</div>
+            <div>请先新建博客栏目！</div>
             [/#if]
         </div>
       </div>
     </div>
+    <div class="m-sj"></div>
   </div>
 </div>
 [#include "../include/footer.html"/]

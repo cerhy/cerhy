@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.jeecms.cms.dao.assist.CmsCommentDao;
 import com.jeecms.cms.entity.assist.CmsComment;
 import com.jeecms.cms.entity.assist.CmsCommentExt;
+import com.jeecms.cms.entity.main.Content;
 import com.jeecms.cms.manager.assist.CmsCommentExtMng;
 import com.jeecms.cms.manager.assist.CmsCommentMng;
 import com.jeecms.cms.manager.assist.CmsSensitivityMng;
@@ -80,7 +81,11 @@ public class CmsCommentMngImpl implements CmsCommentMng {
 	public CmsComment comment(CmsUser user,Integer score,String text, String ip, Integer contentId,
 			Integer siteId, Integer userId, boolean checked, boolean recommend,Integer parentId) {
 		CmsComment comment = new CmsComment();
-		comment.setContent(contentMng.findById(contentId));
+		Content c = contentMng.findById(contentId);
+		comment.setContent(c);
+		if(81 == c.getChannel().getId()){
+			checked = true;
+		}
 		comment.setSite(cmsSiteMng.findById(siteId));
 		if (userId != null) {
 			comment.setCommentUser(cmsUserMng.findById(userId));

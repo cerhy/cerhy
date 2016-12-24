@@ -35,7 +35,7 @@ public abstract class BaseCmsUser  implements Serializable {
 	public static String PROP_REGISTER_IP = "registerIp";
 	public static String PROP_USERNAME = "username";
 	public static String PROP_LINK_URL = "linkUrl";
-
+	public static String PROP_THEME = "theme";
 
 	// constructors
 	public BaseCmsUser () {
@@ -148,8 +148,17 @@ public abstract class BaseCmsUser  implements Serializable {
 	private java.lang.String sessionId;
 	
 	private java.lang.String linkUrl;
+	private java.lang.String theme;
 	
 	
+	public java.lang.String getTheme() {
+		return theme;
+	}
+
+	public void setTheme(java.lang.String theme) {
+		this.theme = theme;
+	}
+
 	/**
 	 * Return the value associated with the column: link_url
 	 */

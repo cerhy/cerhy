@@ -17,9 +17,10 @@
 	  <div style="font-size:15px;margin:15px auto 10px;">[#if user.blogTitle2??]${user.blogTitle2}[#else]副标题[/#if]</div>
   </div>
   <div style="margin-left:150px;font-size:22px;color:red;font-family: "Microsoft YaHei",Arial;"> 
-	  <marquee style="width: 600px; scrollamount="2"; direction="left"; >
+    [#if user.blogNotice??]${user.blogNotice}[#else]公告:[/#if]	
+ <!-- <marquee style="width: 600px; scrollamount="2"; direction="left"; >
 		<p>[#if user.blogNotice??]${user.blogNotice}[#else]公告:[/#if]</p>
-	  </marquee >
+	  </marquee > -->
   </div>
   
   <div class="member clearfix">
@@ -98,9 +99,9 @@
 
 [#include "../include/footer.html"/]
  <script type="text/javascript">
- if(${user.theme} !=null){
+
 		skinChange(${user.theme!0});
-	}
+
 	function skinChange(n){
 		document.all.MrJin.href="/${res}/css/skin/"+n+".css"; 
 	}
