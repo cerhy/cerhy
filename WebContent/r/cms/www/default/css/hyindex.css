@@ -90,7 +90,7 @@ padding-right:10px;
 
 .m-sj{width:4px; height:4px; background:url(../images/m-sj.png) no-repeat; position:absolute; right:265px; top:269px; z-index:4;}
 
-.member-text .member-change{width:190px; height:32px; border:1px solid #c7c7c7; box-sizing:border-box; -moz-box-sizing:border-box; -o-box-sizing:border-box; -webkit-box-sizing:border-box; font-size:13px; color:#1a1a1a; text-indent:6px;}
+.member-change{width:240px; height:32px; border:1px solid #c7c7c7; box-sizing:border-box; -moz-box-sizing:border-box; -o-box-sizing:border-box; -webkit-box-sizing:border-box; font-size:13px; color:#1a1a1a; text-indent:6px;}
 .member-text label{float:left; margin-right:10px;}
 .member-text label .member-radio{margin-right:4px; cursor:pointer;}
 .member-text textarea{width:529px; height:100px; border:1px solid #c7c7c7; box-sizing:border-box; -moz-box-sizing:border-box; -o-box-sizing:border-box; -webkit-box-sizing:border-box; margin-top:8px;}
@@ -98,7 +98,7 @@ padding-right:10px;
 .member-submit:hover{background:#ef5050;}
 .member-reset{padding:6px 30px; background:#a58787; color:#fff; font-size:15px; display:inline-block; border-radius:3px; -moz-border-radius:3px; -o-border-radius:3px; -webkit-border-radius:3px; cursor:pointer; outline:none; margin-left:20px;}
 .member-text .date{ background:url(../images/datePicker.gif) right center no-repeat;}
-.member-text .change-Btn{color:#333; font-size:13px; padding:0 12px; display:inline-block; border:1px solid #dedede; background:#fff; margin-right:5px; cursor:pointer; outline:none; height:28px; line-height:28px;}
+.change-Btn{color:#333; font-size:13px; padding:0 12px; display:inline-block; border:1px solid #dedede; background:#fff; margin-right:5px; cursor:pointer; outline:none; height:28px; line-height:28px;}
 .c-p table td{padding:6px 0;}
 .c-p table .s-p{text-align:right; padding-right:10px;}
 
@@ -375,3 +375,9 @@ h1 .position:before{width:12px; height:13px; display:inline-block; content:""; p
 .tag .tagList{margin-top:15px;}
 .tag .tagList a{color:#1a1a1a; font-size:16px; padding:12px 19px; display:inline-block; float:left; margin:0 1px 1px 0; background:#e7e7e7; transition-duration:400ms; -moz-transition-duration:400ms; -webkit-transition-duration:400ms; -o-transition-duration:400ms;}
 .tag .tagList a:hover{background:#f7f7f7; transition-duration:400ms; -moz-transition-duration:400ms; -webkit-transition-duration:400ms; -o-transition-duration:400ms;}
+
+.hy-tab-content{
+	padding: 35px;
+}
+
+.ghtx{wdith:145px; height:145px;margin: -32px 0px 0px 0px;}
