@@ -6,7 +6,10 @@ import static com.jeecms.cms.Constants.TPLDIR_MEMBER;
 import static com.jeecms.common.page.SimplePage.cpn;
 
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -772,5 +775,107 @@ public class AbstractContentMemberAct {
 		}
 		channelMng.updateLinkUrl(linkUrl,user);
 		return FrontUtils.showSuccess(request, model, nextUrl);
+	}
+
+	public String friends_save(String friends, String nextUrl,
+			HttpServletRequest request, HttpServletResponse response,
+			ModelMap model) {
+		CmsSite site = CmsUtils.getSite(request);
+		CmsUser user = CmsUtils.getUser(request);
+		FrontUtils.frontData(request, model, site);
+		if (user == null) {
+			return FrontUtils.showLogin(request, model, site);
+		}
+		channelMng.updateFriends(friends,user);
+		return FrontUtils.showSuccess(request, model, nextUrl);
+	}
+
+	public String friendCenter(String userIds,String q, Integer modelId,Integer queryChannelId,String nextUrl,Integer pageNo,HttpServletRequest request, ModelMap model) {
+		CmsSite site = CmsUtils.getSite(request);
+		//CmsUser user = CmsUtils.getUser(request);
+		CmsUser userT=cmsUserMng.findById(Integer.valueOf(userIds.toString()));
+		int user_id = Integer.valueOf(userIds);
+		String path = request.getSession().getServletContext().getRealPath("/");
+		List<Columns> columnsList = (new BlogDao()).findByUserId(user_id, path);
+		model.addAttribute("columnsList", columnsList);
+		FrontUtils.frontData(request, model, site);
+		Pagination p = contentMng.getPageForMember_firendsBlog(Integer.valueOf(userIds),q, queryChannelId,site.getId(), modelId,user_id, cpn(pageNo), 20,null);
+		
+		//展示好友的链接
+		String linkUrl=userT.getLinkUrl();
+		List listU=new ArrayList();
+		if(linkUrl!=null){
+			String[] strs=linkUrl.split(" ");
+			String newUrl="";
+			for(int i=0;i<strs.length;i++){
+				if(i!=strs.length-1){
+					if(!strs[i].contains("http")&&strs[i+1].contains("http")){
+						newUrl+="~"+strs[i]+" ";
+					}else{
+						newUrl+=strs[i]+" ";
+					}
+				}else{
+					if(!strs[i].contains("http")){
+						newUrl+="~"+strs[i]+" ";
+					}else{
+						newUrl+=strs[i]+" ";
+					}
+				}
+			}
+			String[] str=newUrl.split("~");
+			for(int j=0;j<str.length;j++){
+				Map<String,Object> map=new HashMap<String,Object>();
+				String[] st=str[j].toString().split(" ");
+				List lists=new ArrayList();
+				String newName="";
+				for(int k=0;k<st.length;k++){
+					if(st[0].contains("http")){
+						newName="";
+					}else{
+						newName=st[0];
+					}
+					lists.add(st[k]);
+				}
+				map.put(newName, lists);
+				listU.add(map);
+			}
+			model.addAttribute("urlList", listU);
+			model.addAttribute("linkUrls", linkUrl.replaceAll(" ", "\r\n"));
+		}else{
+			model.addAttribute("urlList",listU);
+			model.addAttribute("linkUrls","");
+			
+		}
+		//展示好友的好友
+		String friends=userT.getFriends();
+		List listF = new ArrayList<>();
+		if(friends!=null){
+			
+			String[] strs=friends.split(" ");
+			for(int i=0;i<strs.length;i++){
+				String[] str=strs[i].split("=");
+				Map<String,Object> map=new HashMap<String,Object>();
+				CmsUser u=channelMng.findUserImage(str[1].toString());
+				String newName=str[0]+"~"+u.getId()+"~"+u.getUserExt().getUserImg();
+				map.put(newName, u.getUserExt().getUserImg());
+				listF.add(map);
+			}
+			model.addAttribute("friendsList", listF);
+			model.addAttribute("friends", friends.replaceAll(" ", "\r\n"));
+		}else{
+			model.addAttribute("friendsList", listF);
+			model.addAttribute("friends","");
+		}
+		
+		
+		model.addAttribute("pagination", p);
+		model.addAttribute("userT", userT);
+		if (!StringUtils.isBlank(q)) {
+			model.addAttribute("q", q);
+		}
+		if (modelId != null) {
+			model.addAttribute("modelId", modelId);
+		}
+		return FrontUtils.getTplPath(request, site.getSolutionPath(), TPLDIR_BLOG, nextUrl);
 	}
 }

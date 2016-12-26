@@ -238,4 +238,9 @@ public interface ContentDao {
 
 	public Content deleteById(Integer id);
 
+	public Pagination getPage_friendsBlog(int ids,String title, Integer typeId,Integer currUserId,
+			Integer inputUserId, boolean topLevel, boolean recommend,
+			ContentStatus status, Byte checkStep, Integer siteId,Integer modelId,
+			Integer channelId,int orderBy, int pageNo, int pageSize,String columnId);
+
 }

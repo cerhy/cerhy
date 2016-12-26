@@ -1,0 +1,1 @@
+alter table `jc_user` add column Friends varchar(2000);

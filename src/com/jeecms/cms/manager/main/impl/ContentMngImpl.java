@@ -468,8 +468,9 @@ public class ContentMngImpl implements ContentMng, ChannelDeleteChecker {
 			contentDocMng.save(doc, bean);
 		}
 		ContentCheck check = new ContentCheck();
-		check.setCheckStep((byte) 2);
+		check.setCheckStep((byte) -1);
 		bean.setStatus(ContentCheck.CHECKED);
+		contentCheckMng.save(check, bean);
 		contentCountMng.save(new ContentCount(), bean);
 		return bean;
 	}
@@ -1153,5 +1154,11 @@ public class ContentMngImpl implements ContentMng, ChannelDeleteChecker {
 	@Autowired
 	public void setStaticPageSvc(StaticPageSvc staticPageSvc) {
 		this.staticPageSvc = staticPageSvc;
+	}
+
+	@Override
+	public Pagination getPageForMember_firendsBlog(int ids,String title, Integer channelId,
+			Integer siteId, Integer modelId,Integer memberId, int pageNo, int pageSize,String column_id) {
+		return dao.getPage_friendsBlog(ids,title, null,memberId,memberId, false, false,ContentStatus.all, null, siteId,modelId,  channelId, 0, pageNo,pageSize,column_id);
 	}
 }

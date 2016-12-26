@@ -108,4 +108,8 @@ public interface ChannelMng {
 
 	public void updateLinkUrl(String linkUrl,CmsUser user);
 
+	public void updateFriends(String friends, CmsUser user);
+
+	public CmsUser findUserImage(String name);
+
 }

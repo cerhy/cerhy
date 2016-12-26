@@ -28,66 +28,36 @@
 	        [#list columnsList as c]
               <li><a href="${base}/blog/contribute_list.jspx?column_id=${c.column_id}"><span class="column">${c.column_name}</span></a></li>
               [/#list]
-               <li><a href="${base}/blog/collection_list.jspx">转载</a></li>
 	        <li><a href="${base}/blog/help.jspx">设置</a></li>
         </ul>
       </div>
       <div class="member-main">
-        <form id="jvForm" action="add_link.jspx" method="post">
-         	<textarea id="linkUrl" name="linkUrl" rows="18" cols="100">${linkUrls }</textarea>
+        <form id="jvForm" action="add_friends.jspx" method="post">
+         	<textarea id="friends" name="friends" rows="18" cols="90">${friends }</textarea>
          	<br />
           	<span class="fl">
-				<p>每行可以输入一个链接，标题和网址之间用“=”分隔开，最多可设置300个。
-				链接可以分组，不包含“=”号的行就是分组标题。</p>
-				<p>例如：</p>
+				<p>每行可以输入一个好友，姓名和账号之间用“=”分隔开，最多可设置300个。</p>
+				<p>例如：ZXGHL=8001</p>
 			</span>
+          	<input style="display: none;" name="nextUrl" value="friends.jspx" />
           	<br />
-          	<input style="display: none;" name="nextUrl" value="link_list.jspx" />
           	 <input type="submit" value="提交" class="submit-on">
           	 <br />
-         	<div class="container">
-         	<div class="wrap">
-            <div class="wrap-left">
-         	<ul class="fst-lv-ul">
-         	[#if urlList??]
-	         [#list urlList as map]
-	          	[#list map?keys as k]
-	          		 [#if k=='']
-			           <span style="color: red;">${k}</span>
-			            [#list map[k] as v]
-			            	[#if v?index_of("=")!=-1]
-			         			<a target="_blank" href="${v?split("=")[1]}">${v?split("=")[0]}</a><br />
-			         		[/#if]
-			         		[#if v?index_of("|")!=-1]
-			         			<a target="_blank" href="${v?split("|")[1]}">${v?split("|")[0]}</a><br />
-			         		[/#if]
-			            [/#list]
-			         [#else]
-			         <li> 
-			         <a href="javascript:;">${k}<em class="arrow-down"></em></a>
-			         <div class="sub-div">
-			          	<ul class="clearfix">
-			            [#list map[k] as v]
-			            	[#if v?index_of("http:")!=-1]
-				            	[#if v?index_of("=")!=-1]
-				         			<a target="_blank" href="${v?split("=")[1]}">${v?split("=")[0]}</a>
-				         			<br>
-				         		[/#if]
-				         		[#if v?index_of("|")!=-1]
-				         			<a target="_blank" href="${v?split("|")[1]}">${v?split("|")[0]}</a>
-				         			<br>
-				         		[/#if]
-			            	[/#if]
-			            [/#list]
-			            </ul>
-			            </div>
-			            </li>	
-			          [/#if]
-	          	[/#list]
-	         [/#list]
-	         [/#if]
-            </ul>
-            </div>
+          	 [#if friendsList??]
+         		[#list friendsList as map]
+	         		[#list map?keys as k]
+	         			[#if k?split("~")[2]=='null'] 
+	         				<br />
+		         			<img src="/${res}/images/userImg.png" alt="" style="width: 50px;height: 50px;"/><br />
+		         			<a target="_blank" href="${base}/blog/find_all_url_friend.jspx?userIds=${k?split("~")[1]}">${k?split("~")[0]}</a>
+		         		[#else]
+		         			<br />
+		         			<img src="${k?split("~")[2]}" alt="" style="width: 50px;height: 50px;" /><br />
+		         			<a target="_blank" href="${base}/blog/find_all_url_friend.jspx?userIds=${k?split("~")[1]}">${k?split("~")[0]}</a>
+	         			[/#if]
+	         		[/#list]
+         		[/#list]
+         	[/#if]
             </div>
             </div>
           </form>   
