@@ -468,8 +468,9 @@ public class ContentMngImpl implements ContentMng, ChannelDeleteChecker {
 			contentDocMng.save(doc, bean);
 		}
 		ContentCheck check = new ContentCheck();
-		check.setCheckStep((byte) 2);
+		check.setCheckStep((byte) -1);
 		bean.setStatus(ContentCheck.CHECKED);
+		contentCheckMng.save(check, bean);
 		contentCountMng.save(new ContentCount(), bean);
 		return bean;
 	}
