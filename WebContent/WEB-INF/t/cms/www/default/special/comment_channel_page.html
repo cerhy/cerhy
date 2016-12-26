@@ -11,22 +11,34 @@
 <link type="text/css" rel="stylesheet" href="/${res}/css/custom.css" />
 <link href="${resSys}/jqueryUI/jquery.ui.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript">
-			$(function() {
-				$("#commentDialog").dialog({
-					autoOpen: false,
-					modal: true,
-					width: 500,
-					height: 600,
-					position: ["center",20],
-					buttons: {
-						"关闭": function() {
-							$(this).dialog("close");
-						}
-					},
-					close: function(event, ui) {
-					}
-				});
-			});
+	$(function() {
+		$("#commentDialog").dialog({
+			autoOpen: false,
+			modal: true,
+			width: 500,
+			height: 600,
+			position: ["center",20],
+			buttons: {
+				"关闭": function() {
+					$(this).dialog("close");
+				}
+			},
+			close: function(event, ui) {
+			}
+		});
+	    [#if !parentId??]
+	     $(".comments-hf").bind("click", function(){
+	                  $(this).toggleClass("reply-on");
+			  $(this).parent().siblings(".reply").animate({height:'toggle'},10);
+	      });
+	    [#else]
+	      $(".comments-hf").unbind();
+	      $(".comments-hf").bind("click", function(){
+	                  $(this).toggleClass("reply-on");
+			  $(this).parent().siblings(".reply").animate({height:'toggle'},10);
+	      });
+	    [/#if]
+	});
 </script>
 </head>
 <body>
@@ -35,6 +47,8 @@
     <div class="wrap">
         <span class="local-icon icon-font"></span>
         <span class="position">评论</span>
+        <em> &gt; </em>
+        <a href="${channel.url}">返回到文章列表</a>
     </div>
 </div>
 <div class="container_article">
