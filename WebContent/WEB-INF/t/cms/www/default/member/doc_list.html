@@ -43,6 +43,7 @@ $(function() {
                 <td class="tggl-top">标题</td><td class="tggl-top">上传时间</td><td class="tggl-top">是否开放</td><td class="tggl-top">财富值</td><td class="tggl-top">收益</td><td class="tggl-top">浏览量</td><td class="tggl-top">下载量</td><td class="tggl-top">操作</td>
               </tr>
               [#list pagination.list as doc]
+              [#if doc.hasOpen??]
               <tr>
                 <td style="text-align:left; text-indent:5px;"><a href="${doc.url!}">${doc.title?html}</a></td>
                 <td>${doc.releaseDate?string("yyyy-MM-dd")}</td>
@@ -53,6 +54,7 @@ $(function() {
                 <td>${doc.downs!}</td>
                 <td><a href="doc_edit.jspx?id=${doc.id}&nextUrl=contribute_list.jspx">修改<a> | <a href="doc_delete.jspx?ids=${doc.id}&nextUrl=doc_list.jspx">删除<a></td>
               </tr>
+              [/#if]
               [/#list]
               <tr>
                 <td colspan="8" style="padding:20px 0;">
