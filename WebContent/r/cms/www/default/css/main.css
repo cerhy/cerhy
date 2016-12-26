@@ -1389,7 +1389,7 @@ a:hover{
     margin-left: 35px;
 }
 .personCenter-userInfo .tab-content{
-    padding: 35px;
+    padding: 35px 35px;
 }
 .personCenter-userInfo .user-info-dtTable{width: 100%;table-layout: fixed;}
 .personCenter-userInfo .user-info-dtTable td,.personCenter-userInfo .user-info-dtTable th{
