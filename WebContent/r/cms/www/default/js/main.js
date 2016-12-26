@@ -212,6 +212,43 @@ $(function(){
         var index = $(this).index();
         $(this).addClass('active').siblings('a').removeClass('active');
         $(this).parent().siblings('.tab-content').hide().eq(index).show();
+    });
+
+    if( $('.login-div input').length ){
+        $('.login-div input').placeholder();
+    }
+
+    $('.next-autologin').on('click',function(){
+        $(this).toggleClass('cancel');
+    });
+    // 个人中心
+    $('.user-loginTopInfo').hover(function(){
+        $(this).addClass('hover');
+    },function(){
+        $(this).removeClass('hover');
+    });
+
+    $('.user-center-left .user-menu-links li').click(function(){
+        $(this).toggleClass('on');
+    });
+
+    $('.personCenter-userInfo .tab-head a').mouseenter(function(){
+        var index = $(this).index();
+        $(this).addClass('active').siblings('a').removeClass('active');
+        $(this).parent().siblings('.tab-content').hide().eq(index).show();
+    });
+    //高度相等
+    function pageEqual(){
+        if($('.personCenter-userInfo').length<=0){
+            return;
+        }
+        var r_d = $('.personCenter-userInfo'),
+            l_d = $('.user-center-left');
+        r_d.outerHeight() > l_d.outerHeight() ? l_d.outerHeight(r_d.outerHeight()): r_d.outerHeight(l_d.outerHeight());
+    }
+    pageEqual();
+    $('.user-center-left .user-menu-links a').click(function(){
+        setTimeout(function(){ pageEqual(); },0);
     })
 });
 
