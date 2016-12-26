@@ -228,14 +228,14 @@ $(function(){
         $(this).removeClass('hover');
     });
 
-    $('.user-center-left .user-menu-links li').click(function(){
+    $('.user-center-left .user-menu-links li').click(function(){ 
         $(this).toggleClass('on');
     });
 
     $('.personCenter-userInfo .tab-head a').mouseenter(function(){
         var index = $(this).index();
-        $(this).addClass('active').siblings('a').removeClass('active');
-        $(this).parent().siblings('.tab-content').hide().eq(index).show();
+//        $(this).addClass('active').siblings('a').removeClass('active');
+//        $(this).parent().siblings('.tab-content').hide().eq(index).show();
     });
     //高度相等
     function pageEqual(){
