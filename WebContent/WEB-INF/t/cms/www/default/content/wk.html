@@ -29,6 +29,7 @@
 <script type="text/javascript">
 	jQuery(document).ready(function($) {
 		$('.content-comment').click(function() {
+			alert(123);
 			$('html,body').animate({
 				scrollTop : $('#comments-text').offset().top
 			}, 1000)
@@ -48,13 +49,24 @@
 		;
 	});
 </script>
-
+<script type="text/javascript">
+$(function() {
+	
+       Cms.collectexist("${base}","${content.id!}","cancelSpan","comfirmSpan");
+       $("#comfirmSpan").click(function(){
+    	   Cms.collect_blog("${base}","${content.id}",1,"cancelSpan","comfirmSpan");
+       });
+       $("#cancelSpan").click(function(){
+    	   Cms.collect_blog("${base}","${content.id!}",0,"cancelSpan","comfirmSpan");
+       });
+});
+</script>
 <body class="bodybg">
 [#include "../hyinclude/header.html"/]
 <div class="local">
     <div class="wrap">
         <span class="local-icon icon-font"></span>
-        <span class="position">博客</span>
+        <span class="position"> <a href="${base}/blog/index.jspx">博客中心</a></span>
         <em> &gt; </em>
         <span class="cur-page">${content.title}</span>
     </div>
@@ -70,6 +82,8 @@
 						 <span class="pr15">来源：${content.origin!'本站原创'}</span> 
 						 <span class="pr15 yuedu">浏览次数：<span id="views"></span></span> 
 						 <span class="pr15 pinglun">评论：${content.commentsCheckedNum!} </span>
+						 <span id="comfirmSpan" style="display:none;cursor: pointer;">转载</span>
+					     <span id="cancelSpan" style="display:none; cursor: pointer;">取消转载</span>
 					</p>
 					<div class="xueke-content-detail">
 						[#if preview??] [@text_cut s=txt! len=100 append="..."/]<br />

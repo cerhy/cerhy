@@ -356,6 +356,32 @@ Cms.collect = function(base, cId, operate,showSpanId,hideSpanId) {
 		}
 	}, "json");
 }
+
+/**
+ * 博客转载
+ */
+Cms.collect_blog = function(base, cId, operate,showSpanId,hideSpanId) {
+	$.post(base + "/member/collect.jspx", {
+		"cId" : cId,
+		"operate" : operate
+	}, function(data) {
+		if(data.result){
+			if(operate==1){
+				alert("转载成功！");
+				$("#"+showSpanId).show();
+				$("#"+hideSpanId).hide();
+			}else{
+				alert("取消转载成功！");
+				$("#"+showSpanId).hide();
+				$("#"+hideSpanId).show();
+			}
+		}else{
+			alert("请先登录");
+		}
+	}, "json");
+}
+
+
 /**
  * 列表取消收藏信息
  */

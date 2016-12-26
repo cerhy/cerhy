@@ -1,7 +1,10 @@
 package com.jeecms.cms.action.member;
 
 import static com.jeecms.cms.Constants.TPLDIR_MEMBER;
+import static com.jeecms.cms.Constants.TPLDIR_BLOG;
 import static com.jeecms.common.page.SimplePage.cpn;
+
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,6 +17,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.jeecms.cms.dao.main.impl.BlogDao;
+import com.jeecms.cms.entity.main.Columns;
 import com.jeecms.cms.manager.main.ContentMng;
 import com.jeecms.common.page.Pagination;
 import com.jeecms.common.web.CookieUtils;
@@ -73,7 +78,7 @@ public class CollectionMemberAct {
 		return FrontUtils.getTplPath(request, site.getSolutionPath(),
 				TPLDIR_MEMBER, COLLECTION_LIST);
 	}
-
+	
 	@RequestMapping(value = "/member/collect.jspx")
 	public void collect(Integer cId, Integer operate,
 			HttpServletRequest request, HttpServletResponse response,
@@ -84,7 +89,8 @@ public class CollectionMemberAct {
 			object.put("result", false);
 		} else {
 			object.put("result", true);
-			userMng.updateUserConllection(user,cId,operate);
+			
+			userMng.updateUserConllection(user,cId,1);
 		}
 		ResponseUtils.renderJson(response, object.toString());
 	}
@@ -134,4 +140,44 @@ public class CollectionMemberAct {
 	@Autowired
 	private CmsUserMng userMng;
 
+	@RequestMapping(value = "/blog/collection_list.jspx")
+	public String collection_list_blog(String queryTitle, Integer queryChannelId,
+			Integer pageNo, HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		CmsSite site = CmsUtils.getSite(request);
+		CmsUser user = CmsUtils.getUser(request);
+		int user_id = user.getId();
+		String path = request.getSession().getServletContext().getRealPath("/");
+		List<Columns> columnsList = (new BlogDao()).findByUserId(user_id, path);
+		model.addAttribute("columnsList", columnsList);
+		FrontUtils.frontData(request, model, site);
+		Pagination p = contentMng.getPageForCollection(site.getId(), user
+				.getId(), cpn(pageNo), CookieUtils.getPageSize(request));
+		model.addAttribute("pagination", p);
+		if (!StringUtils.isBlank(queryTitle)) {
+			model.addAttribute("queryTitle", queryTitle);
+		}
+		if (queryChannelId != null) {
+			model.addAttribute("queryChannelId", queryChannelId);
+		}
+		return FrontUtils.getTplPath(request, site.getSolutionPath(),
+				TPLDIR_BLOG, COLLECTION_LIST);
+	}
+	
+	@RequestMapping(value = "/blog/collect_cancel.jspx")
+	public String  collect_cancel_blog(Integer[] cIds,Integer pageNo,HttpServletRequest request, HttpServletResponse response,
+			ModelMap model) throws JSONException {
+		CmsUser user = CmsUtils.getUser(request);
+		CmsSite site = CmsUtils.getSite(request);
+		FrontUtils.frontData(request, model, site);
+		 
+		if (user == null) {
+			return FrontUtils.showLogin(request, model, site);
+		}
+		for(Integer  id:cIds){
+			userMng.updateUserConllection(user,id,0);
+		}
+		return collection_list_blog(null, null, pageNo, request, response, model);
+	}
+	
 }
