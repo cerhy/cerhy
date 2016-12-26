@@ -515,44 +515,50 @@ public class ContributeAct extends AbstractContentMemberAct {
 		String path = request.getSession().getServletContext().getRealPath("/");
 		List<Columns> columnsList = (new BlogDao()).findByUserId(user_id, path);
 		String linkUrl=user.getLinkUrl();
-		String[] strs=linkUrl.split(" ");
-		List list=new ArrayList();
-		String newUrl="";
-		for(int i=0;i<strs.length;i++){
-			if(i!=strs.length-1){
-				if(!strs[i].contains("http")&&strs[i+1].contains("http")){
-					newUrl+="~"+strs[i]+" ";
+		List listU=new ArrayList();
+		if(linkUrl!=null){
+			String[] strs=linkUrl.split(" ");
+			String newUrl="";
+			for(int i=0;i<strs.length;i++){
+				if(i!=strs.length-1){
+					if(!strs[i].contains("http")&&strs[i+1].contains("http")){
+						newUrl+="~"+strs[i]+" ";
+					}else{
+						newUrl+=strs[i]+" ";
+					}
 				}else{
-					newUrl+=strs[i]+" ";
-				}
-			}else{
-				if(!strs[i].contains("http")){
-					newUrl+="~"+strs[i]+" ";
-				}else{
-					newUrl+=strs[i]+" ";
+					if(!strs[i].contains("http")){
+						newUrl+="~"+strs[i]+" ";
+					}else{
+						newUrl+=strs[i]+" ";
+					}
 				}
 			}
-		}
-		String[] str=newUrl.split("~");
-		for(int j=0;j<str.length;j++){
-			Map<String,Object> map=new HashMap<String,Object>();
-			String[] st=str[j].toString().split(" ");
-			List lists=new ArrayList();
-			String newName="";
-			for(int k=0;k<st.length;k++){
-				if(st[0].contains("http")){
-					newName="";
-				}else{
-					newName=st[0];
+			String[] str=newUrl.split("~");
+			for(int j=0;j<str.length;j++){
+				Map<String,Object> map=new HashMap<String,Object>();
+				String[] st=str[j].toString().split(" ");
+				List lists=new ArrayList();
+				String newName="";
+				for(int k=0;k<st.length;k++){
+					if(st[0].contains("http")){
+						newName="";
+					}else{
+						newName=st[0];
+					}
+					lists.add(st[k]);
 				}
-				lists.add(st[k]);
+				map.put(newName, lists);
+				listU.add(map);
 			}
-			map.put(newName, lists);
-			list.add(map);
+			model.addAttribute("urlList", listU);
+			model.addAttribute("linkUrls", linkUrl.replaceAll(" ", "\r\n"));
+		}else{
+			model.addAttribute("urlList",listU);
+			model.addAttribute("linkUrls","");
+			
 		}
-		model.addAttribute("urlList", list);
 		model.addAttribute("columnsList", columnsList);
-		model.addAttribute("linkUrls", linkUrl.replaceAll(" ", "\r\n"));
 		FrontUtils.frontData(request, model, site);
 		return FrontUtils.getTplPath(request, site.getSolutionPath(),TPLDIR_BLOG, "tpl.linkList");
 	}
@@ -561,6 +567,60 @@ public class ContributeAct extends AbstractContentMemberAct {
 	public String custom(String linkUrl,String nextUrl,HttpServletRequest request,HttpServletResponse response, ModelMap model) {
 		return super.link_save(linkUrl.replaceAll("\r\n", " "),nextUrl,request, response, model);
 	}
+	
+	/**
+	 *跳转好友页面方法 
+	 */
+	@RequestMapping(value = "/blog/friends.jspx")
+	public String friends(HttpServletRequest request,HttpServletResponse response, ModelMap model) {
+		CmsSite site = CmsUtils.getSite(request);
+		CmsUser user = CmsUtils.getUser(request);
+		int user_id = user.getId();
+		String path = request.getSession().getServletContext().getRealPath("/");
+		List<Columns> columnsList = (new BlogDao()).findByUserId(user_id, path);
+		String friends=user.getFriends();
+		List listF = new ArrayList<>();
+		if(friends!=null){
+			
+			String[] strs=friends.split(" ");
+			for(int i=0;i<strs.length;i++){
+				String[] str=strs[i].split("=");
+				Map<String,Object> map=new HashMap<String,Object>();
+				CmsUser u=channelMng.findUserImage(str[1].toString());
+				String newName=str[0]+"~"+u.getId()+"~"+u.getUserExt().getUserImg();
+				map.put(newName, u.getUserExt().getUserImg());
+				listF.add(map);
+			}
+			model.addAttribute("friendsList", listF);
+			model.addAttribute("friends", friends.replaceAll(" ", "\r\n"));
+		}else{
+			model.addAttribute("friendsList", listF);
+			model.addAttribute("friends","");
+		}
+		model.addAttribute("columnsList", columnsList);
+		FrontUtils.frontData(request, model, site);
+		return FrontUtils.getTplPath(request, site.getSolutionPath(),TPLDIR_BLOG, "tpl.friends");
+	}
+
+
+	@RequestMapping(value = "/blog/add_friends.jspx")
+	public String friends(String friends,String nextUrl,HttpServletRequest request,HttpServletResponse response, ModelMap model) {
+		return super.friends_save(friends.replaceAll("\r\n", " "),nextUrl,request, response, model);
+	}
+	
+	
+	
+	/**
+	 *跳转好友博客页面方法 
+	  */
+	@RequestMapping(value = "/blog/find_all_url_friend.jspx")
+	public String findAllInfo(String userIds,String queryTitle, Integer modelId,
+			Integer queryChannelId, Integer pageNo, HttpServletRequest request,
+			ModelMap model) {
+		return super.friendCenter(userIds,queryTitle, modelId, queryChannelId, "tpl.testPage",
+				pageNo, request, model);
+	}
+	
 	
 	@RequestMapping(value = "/blog/changeTheme.jspx", method = RequestMethod.POST)
 	public String updateTheme(String theme, String nextUrl,

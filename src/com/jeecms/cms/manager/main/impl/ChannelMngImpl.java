@@ -386,5 +386,14 @@ public class ChannelMngImpl implements ChannelMng {
 		dao.saveLink(linkUrl,user);
 	}
 
+	@Override
+	public void updateFriends(String friends, CmsUser user) {
+		dao.saveFriends(friends,user);
+	}
+
+	public CmsUser findUserImage(String name) {
+		return dao.findUserImage(name);
+	}
+
 
 }

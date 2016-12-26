@@ -36,6 +36,7 @@ public abstract class BaseCmsUser  implements Serializable {
 	public static String PROP_USERNAME = "username";
 	public static String PROP_LINK_URL = "linkUrl";
 	public static String PROP_THEME = "theme";
+	public static String PROP_FRIENDS = "Friends";
 
 	// constructors
 	public BaseCmsUser () {
@@ -99,7 +100,7 @@ public abstract class BaseCmsUser  implements Serializable {
 			java.lang.Boolean admin,
 			java.lang.Boolean viewonlyAdmin,
 			java.lang.Boolean selfAdmin,
-			java.lang.Boolean disabled,java.lang.String linkUrl) {
+			java.lang.Boolean disabled,java.lang.String linkUrl,java.lang.String Friends) {
 		
 		this.setId(id);
 		this.setGroup(group);
@@ -115,6 +116,7 @@ public abstract class BaseCmsUser  implements Serializable {
 		this.setSelfAdmin(selfAdmin);
 		this.setDisabled(disabled);
 		this.setLinkUrl(linkUrl);
+		this.setFriends(Friends);
 		initialize();
 	}
 
@@ -149,6 +151,7 @@ public abstract class BaseCmsUser  implements Serializable {
 	
 	private java.lang.String linkUrl;
 	private java.lang.String theme;
+	private java.lang.String Friends;
 	
 	
 	public java.lang.String getTheme() {
@@ -170,6 +173,20 @@ public abstract class BaseCmsUser  implements Serializable {
 		this.linkUrl = linkUrl;
 	}
 	
+
+	
+	/**
+	 * Return the value associated with the column: Friends
+	 */
+	public java.lang.String getFriends() {
+		return Friends;
+	}
+
+	public void setFriends(java.lang.String friends) {
+		Friends = friends;
+	}
+
+
 
 	// many to one
 	private com.jeecms.core.entity.CmsGroup group;

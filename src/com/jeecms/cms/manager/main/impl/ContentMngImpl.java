@@ -1154,4 +1154,10 @@ public class ContentMngImpl implements ContentMng, ChannelDeleteChecker {
 	public void setStaticPageSvc(StaticPageSvc staticPageSvc) {
 		this.staticPageSvc = staticPageSvc;
 	}
+
+	@Override
+	public Pagination getPageForMember_firendsBlog(int ids,String title, Integer channelId,
+			Integer siteId, Integer modelId,Integer memberId, int pageNo, int pageSize,String column_id) {
+		return dao.getPage_friendsBlog(ids,title, null,memberId,memberId, false, false,ContentStatus.all, null, siteId,modelId,  channelId, 0, pageNo,pageSize,column_id);
+	}
 }

@@ -206,6 +206,10 @@ public interface ContentMng {
 	public Pagination getPageForCollection(Integer siteId, Integer memberId, int pageNo, int pageSize);
 	
 	public void updateFileByContent(Content bean,Boolean valid);
+
+
+	public Pagination getPageForMember_firendsBlog(int ids,String title, Integer channelId,
+			Integer siteId, Integer modelId,Integer memberId, int pageNo, int pageSize,String column_name);
 	
 	
 }

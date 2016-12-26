@@ -234,5 +234,19 @@ public class ChannelDaoImpl extends HibernateBaseDao<Channel, Integer>
 		Query query = getSession().createQuery(hql).setParameter("linkUrl", linkUrl).setParameter("userId", user.getId());
 		query.executeUpdate();
 	}
+
+	@Override
+	public void saveFriends(String friends, CmsUser user) {
+		String hql = "update CmsUser bean set bean.Friends=:friends  where bean.id=:userId";
+		Query query = getSession().createQuery(hql).setParameter("friends", friends).setParameter("userId", user.getId());
+		query.executeUpdate();
+	}
+
+	@Override
+	public CmsUser findUserImage(String name) {
+		String hql = "from CmsUser bean where bean.username=:name";
+		Query query = getSession().createQuery(hql).setParameter("name", name);
+		return (CmsUser) query.uniqueResult();
+	}
 	
 }

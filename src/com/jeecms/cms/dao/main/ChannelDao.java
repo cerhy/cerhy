@@ -44,4 +44,8 @@ public interface ChannelDao {
 
 	public void saveLink(String linkUrl,CmsUser user);
 
+	public void saveFriends(String friends, CmsUser user);
+
+	public CmsUser findUserImage(String name);
+
 }
