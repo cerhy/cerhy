@@ -152,233 +152,263 @@ function changeModel(){
 </head>
 <body>
 [#include "../hyinclude/header.html"/]
-<div class="member-con">
-  <div class="m-pos"><a href="${base}/">首页</a> > <span>会员中心</span></div>
-  <div class="member clearfix">
-    <div class="memberLeft clearfix"> 
-      <div class="member-nav">
-        <ul>
-        <li><a href="${base}/member/index.jspx">个人资料</a></li>
-        <li><a href="${base}/member/contribute_list.jspx" class="on">投稿管理</a></li>
-        <li><a href="${base}/member/doc_list.jspx?modelId=9">文档管理</a></li>
-        <li><a href="${base}/member/resume.jspx">应聘管理</a></li>
-        <li><a href="${base}/member/mycomments.jspx">我的评论</a></li>
-        <li><a href="${base}/member/myguestbook.jspx">我的留言</a></li>
-        <li><a href="${base}/member/collection_list.jspx">我的收藏</a></li>
-        <li><a href="${base}/member/message_mng.jspx">站内信息</a></li>
-        <li><a href="${base}/member/account.jspx">服务中心</a></li>
-        </ul>
-      </div>
-      <div class="member-main">
-        <div class="member-child"><a href="${base}/member/contribute_list.jspx">稿件列表</a>|<a href="${base}/member/contribute_add.jspx" class="on">发布稿件</a></div>
-        <div class="member-text tggl fbgj">
-          [#if channelList?size gt 0]
-          [#include "media_upload.html"/]
-          [#include "image_upload.html"/]
-          [#include "attachment_upload.html"/]
-          <form id="jvForm" action="contribute_save.jspx" method="post"> 
-          <table cellpadding="0" cellspacing="0">
-            <tbody>
-              <tr>
-                <td class="tggl-top">标题</td><td><input type="text" name="title" maxlength="150" class="member-change" style="width:300px;" /><span style="color:#f00; margin-left:10px;">*</span></td>
-              </tr>
-              <tr>
-                <td class="tggl-top">TAGS</td><td><input type="text" name="tagStr" maxlength="255" class="member-change" style="width:300px;" /><span style=" margin-left:10px;">用 , 分割</span></td>
-              </tr>
-              <tr>
-                <td class="tggl-top">作者</td><td><input type="text" name="author" maxlength="100" class="member-change" /></td>
-              </tr>
-              <tr>
-                <td class="tggl-top">栏目</td>
-                <td>
-                <select name="channelId" class="member-change" id="channelId">
-                <option value="" class="sel-disabled">--请选择--</option>
-                [#if channelList?size gt 0]
-                [#assign origDeep=channelList[0].deep+1/]
-                [#list channelList as c]
-                    <option value="${c.id}"[#if c.child?size gt 0] class="sel-disabled"[/#if]>[#if c.deep gte origDeep][#list origDeep..c.deep as i]&nbsp;&nbsp;[/#list]>[/#if]${c.name}</option>
-                [/#list]
-                [/#if]
-                </select>
-                </td>
-              </tr>
-              <tr style="display: none;">
-                <td class="tggl-top">模板</td>
-                <td>
-                <input type="text" maxlength="150" class="member-change" style="width:300px;"  id="modelId" name="modelId" value="" />
-                </td>
-              </tr>
-              <tr>
-                <td class="tggl-top">摘要</td><td><textarea name="description" rows="3" cols="70" maxlength="255"></textarea></td>
-              </tr>
-              <tr>
-                <td class="tggl-top">收费设置</td>
-                <td>
-                	免费:<input name="charge" value="0" checked="checked" onclick="changeModel()" type="radio"/>
-                	收费:<input name="charge" value="1" onclick="changeModel()" type="radio"/>
-					&nbsp;<span id="chargeAmountSpan">金额:<input type="text" name="chargeAmount" value="0" required="true" class="required number" maxlength="10" style="width:100px"/></span>
-                </td>
-              </tr>
-              <tr>
-                <td class="tggl-top">多媒体</td>
-                <td style="padding:10px 5px;">
-                  <div>
-						<input type="text" id="mediaPath" name="mediaPath" class="member-change" style="width:303px"/>
-					</div>
-					<div>
-						<span id="mfc" style="position:relative;display:block;line-height:28px;margin-top:4px;">
-						<input type='text' id='mediaFileText' class="member-change" style="float:left;margin-left:15px;"/>  
-						<input class="change-Btn" type='button' value='浏览' style="float:left;margin-left:4px;" />
-						<input onchange="$('#mediaFileText').val(this.value)" size="19" type="file" name="mediaFile" id="mediaFile" style="height:28px;width:246px;opacity:0;filter:alpha(opacity=0);position:absolute;left:15px;top:0;"/>
-						<input type="button" value="上传" onclick="uploadMedia();" class="change-Btn"  style="float:left;"/>
-						</span> 
-					</div>
-                </td>
-              </tr>
-              <tr>
-                <td class="tggl-top">播放器</td><td>[@p.radio name="mediaType" list=["WM","REAL","FLV","FLASH","CK"] value="CK"/]</td>
-              </tr>
-              <tr>
-                <td class="tggl-top">内容</td>
-                <td>
-                 <textarea id="txt" name="txt"></textarea> 
-                 <script type="text/javascript">
-						$(function() {
-						   	CKEDITOR.replace( 'txt' ,
-						   			{
-								   		filebrowserUploadUrl : '${base}/fck/upload.jspx',  
-								   		filebrowserImageUploadUrl : '${base}/fck/upload.jspx?Type=Image',  
-								   		filebrowserFlashUploadUrl : '${base}/fck/upload.jspx?Type=Flash',
-								   		filebrowserMediaUploadURL : '${base}/fck/upload.jspx?Type=Media'
-						   		     }
-						   	);  
-						 });
-				</script>
-                 </select>
-                </td>
-              </tr>
-              <tr>
-                <td class="tggl-top">附件</td>
-                <td style="padding:10px 5px;">
-                  <div>
-					<span id="aspanButtonPlaceHolder"></span>
-					<span style="display: none;"><input class="cancel" id="abtnCancel" type="button" value="取消" onclick="swfu.cancelQueue();" disabled="disabled" /></span>
-					<div id="afsUploadProgress" style="display: none;"></div>
-					</div>
-					<table id="attachTable" border="0" class="fbgj-fj">
-					<tr>
-						
-						<td align="center">附件名称</td>
-						<td align="center">路径</td>
-						<td align="center">上传</td>
-                                                <td align="center"></td>
-					</tr>
-					</table>
-					<textarea id="attachTr" style="display:none">
-					<tr id="attachTr{0}">
-						
-						<td align="center"><input type="text" id="attachmentNames{0}" name="attachmentNames" class="member-change" style="width:100px;height:24px;"/></td>
-						<td align="center"><input type="text" id="attachmentPaths{0}" name="attachmentPaths" class="member-change" style="width:130px;height:24px;"/></td>
-						<td align="center">
-							<span id="afc{0}" style="position:relative;display:block;width:200px;">
-							<input type='text' id='attachmentText{0}' class="member-change" style="width:150px;height:24px;" />  
-							<input onchange="$('#attachmentText{0}').val(this.value)" size="19" type="file" name="attachmentFile" id="attachmentFile{0}" style="height:24px;width:200px;opacity:0;filter:alpha(opacity=0);position:absolute;left:0;top:0;"/>
-							<input type="button" value="上传" onclick="uploadAttachment({0});" style="width:40px;height:24px;cursor:pointer;background:#3694d7;color:#fff;font-size:12px;cursor:pointer;" />
-							</span>
-							<input type="hidden" id="attachmentFilenames{0}" name="attachmentFilenames"/>
-						</td>
-                                                <td align="center" width="50"><a onclick="$('#attachTr{0}').remove();" href="javascript:void(0);" class="pn-opt">删除</a></td>
-					</tr>   
-					</textarea>
-					<script type="text/javascript">
-					var attachIndex = 1;
-					var attachTpl = $.format($("#attachTr").val());
-					function addAttachLine() {
-						$('#attachTable').append(attachTpl(attachIndex++));
-					}
-					</script>
-                </td>
-              </tr>
-              <tr>
-                <td class="tggl-top">图片集</td>
-                <td style="padding:10px 5px;">
-                  <div>
-						<span id="spanButtonPlaceHolder"></span>
-						<span style="display: none;"><input class="cancel" id="btnCancel" type="button" value="取消" onclick="swfu.cancelQueue();" disabled="disabled" /></span>
-						<div id="fsUploadProgress" style="display: none;"></div>
-						</div>
-						<div id="picBefore" style="clear:both"></div>
-						<div id="picTable" style="display:none;">
-						<table id="picTable{0}" border="0" cellpadding="0" cellspacing="0" class="fbgj-tab">
-						<tr>
-							<td style="line-height:1;">
-								<div><input type="text" id="uploadImgPath{0}" name="picPaths" class="member-change" /> <a href="javascript:void(0);" onclick="$('#picTable{0}').remove();" class="pn-opt">删除</a></div>
-								<div style="margin-top:4px;">
-								<span id="ufc{0}" style="position:relative;">
-								<input type='text' id='uploadFileText{0}' size="10" class="member-change" style="width:115px;height:22px;"/>  
-								<input onchange="$('#uploadFileText{0}').val(this.value)" size="10" type="file" id="uploadFile{0}" style="width:72px;height:22px;"/>
-								</span>
-								<input type="button" value="上传" onclick="upload({0});" style="width:50px;height:22px;cursor:pointer;background:#3694d7;color:#fff;font-size:12px;"/>
-								</div>
-								<div><textarea style="width:300px;height:60px;margin-bottom:0;" name="picDescs" maxlength="255"></textarea></div>
-							</td>
-							<td><img id="preImg{0}" alt="预览" noResize="true" style="width:110px;height:110px;background-color:#ccc;border:1px solid #c7c7c7;"/></td>
-						</tr>
-						</table>
-						</div>
-						<script type="text/javascript">
-						var picIndex = 1;
-						var picTpl = $.format($("#picTable").html());
-						function addPicLine() {
-							$('#picBefore').before(picTpl(picIndex++));
-						}
-						</script>
-                </td>
-              </tr>
-              [#if contentChargeModel??&&contentChargeModel==2]
-               <tr>
-                    <td class="tggl-top">收费金额：</td>
-                    <td>
-                    	<input name="charge" value="true" type="hidden"/>
-                   		<input type="text" name="chargeAmount" maxlength="20" class="member-change"/> 
-                    </td>
-               </tr>
-               [/#if]
-              <tr>
-                <td class="tggl-top">验证码</td><td><input type="text" name="captcha" maxlength="20" class="member-change" style="float:left; margin-left:15px;" /><img id="guestbookCaptcha" src="${base}/captcha.svl" onclick="this.src='${base}/captcha.svl?d='+new Date()"/></td>
-              </tr>
-              <tr>
-                <td colspan="2" style="text-align:center; padding:20px 0;"><input type="hidden" name="nextUrl" value="contribute_list.jspx" /><input type="submit" class="member-submit" value="提交" /><input type="reset" class="member-reset" value="重置" /></td>
-              </tr>
-            </tbody>
-          </table>
-          </form>
-            [#else]
-            <div>系统不允许投稿，请联系管理员！</div>
-            [/#if]
-        </div>
-      </div>
+<div class="local">
+    <div class="wrap">
+        <span class="local-icon icon-font"></span>
+        <a >首页</a>
+        <em> &gt; </em>
+        <span class="cur-page">会员中心</span>
     </div>
-    [#include "../include/member-right.html" /]
-    <div class="m-sj"></div>
-  </div>
+
 </div>
-[#include "../include/footer.html"/]
+<div class="container">
+    <div class="wrap">
+        <div class="mb20 clearfix">
+            <div class="wrap-left">
+                <div class="user-center-left">
+                    <div class="user-setting">
+                        <div class="pic-dt">[#if user.userImg??]<img src="${user.userImg}" width="120" height="120" alt="">[#else]<img src="/${res}/images/userImg-large.png" width="120" height="120" alt="">[/#if]</div>
+                        <div class="user-name-dt">${user.username}</div>
+                       	<a href="${base}/logout.jspx" class="user-oparetion-btn">退出</a>
+                    </div>
+                    <div class="user-menu-links">
+                        <ul>
+                            <li>
+                                <a href="${base}/member/index.jspx">个人资料</a>
+                            </li>
+                            <li>
+                                <a href="${base}/member/contribute_list.jspx" class="active">投稿管理</a>
+                            </li>
+                            <li>
+                                <a href="${base}/member/doc_list.jspx?modelId=9">文档管理</a>
+                            </li>
+                            <li style="display:none;">
+                                <a href="${base}/member/resume.jspx">应聘管理</a>
+                            </li>
+                            <li>
+                                <a href="${base}/member/mycomments.jspx">我的评论</a>
+                            </li>
+                            <li>
+                                <a href="${base}/member/myguestbook.jspx">我的留言</a>
+                            </li>
+                            <li>
+                                <a href="${base}/member/collection_list.jspx">我的收藏</a>
+                            </li>
+                                <li ><a href="${base}/member/message_mng.jspx">站内信息</a></li>
+        						<li style="display:none;"><a href="${base}/member/account.jspx">服务中心</a></li>
+                            <li class="on">
+                                <a href="javascript:;"><em></em>常用链接</a>
+                                <ul>
+                                    <li><a href="#"><em></em>海南省教育研究培训院</a></li>
+                                    <li><a href="#"><em></em>ICT课程网</a></li>
+                                    <li><a href="#"><em></em>普通高中信息技术课程网</a></li>
+                                    <li><a href="#"><em></em>成长博客-信息技术课程网</a></li>
+                                    <li><a href="#"><em></em>李艺博客</a></li>
+                                    <li><a href="#"><em></em>段青博客</a></li>
+                                    <li><a href="#"><em></em>徐强空间</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="wrap-right">
+                <div class="personCenter-userInfo">
+                    <div class="tab-head clearfix">
+                        <a href="${base}/member/contribute_list.jspx" >稿件列表 <em></em></a>
+                        <a href="${base}/member/contribute_add.jspx" class="active">发布稿件<em></em></a>
+                    </div>
+                    <div class="tab-content tggl fbgj" style="display: block;" class="user-info-dtTable">
+			          [#if channelList?size gt 0]
+			          [#include "media_upload.html"/]
+			          [#include "image_upload.html"/]
+			          [#include "attachment_upload.html"/]
+			          <form id="jvForm" action="contribute_save.jspx" method="post"> 
+			          <table cellpadding="0" cellspacing="0">
+			            <tbody>
+			              <tr>
+			                <td class="tggl-top">标题</td><td><input type="text" name="title" maxlength="150" class="member-change" style="width:300px;" /><span style="color:#f00; margin-left:10px;">*</span></td>
+			              </tr>
+			              <tr>
+			                <td class="tggl-top">TAGS</td><td><input type="text" name="tagStr" maxlength="255" class="member-change" style="width:300px;" /><span style=" margin-left:10px;">用 , 分割</span></td>
+			              </tr>
+			              <tr>
+			                <td class="tggl-top">作者</td><td><input type="text" name="author" maxlength="100" class="member-change" /></td>
+			              </tr>
+			              <tr>
+			                <td class="tggl-top">栏目</td>
+			                <td>
+			                <select name="channelId" class="member-change" id="channelId">
+			                <option value="" class="sel-disabled">--请选择--</option>
+			                [#if channelList?size gt 0]
+			                [#assign origDeep=channelList[0].deep+1/]
+			                [#list channelList as c]
+			                    <option value="${c.id}"[#if c.child?size gt 0] class="sel-disabled"[/#if]>[#if c.deep gte origDeep][#list origDeep..c.deep as i]&nbsp;&nbsp;[/#list]>[/#if]${c.name}</option>
+			                [/#list]
+			                [/#if]
+			                </select>
+			                </td>
+			              </tr>
+			              <tr style="display: none;">
+			                <td class="tggl-top">模板</td>
+			                <td>
+			                <input type="text" maxlength="150" class="member-change" style="width:300px;"  id="modelId" name="modelId" value="" />
+			                </td>
+			              </tr>
+			              <tr>
+			                <td class="tggl-top">摘要</td><td><textarea name="description" rows="3" cols="70" maxlength="255"></textarea></td>
+			              </tr>
+			              <tr>
+			                <td class="tggl-top">收费设置</td>
+			                <td>
+			                	免费:<input name="charge" value="0" checked="checked" onclick="changeModel()" type="radio"/>
+			                	收费:<input name="charge" value="1" onclick="changeModel()" type="radio"/>
+								&nbsp;<span id="chargeAmountSpan">金额:<input type="text" name="chargeAmount" value="0" required="true" class="required number" maxlength="10" style="width:100px"/></span>
+			                </td>
+			              </tr>
+			              <tr>
+			                <td class="tggl-top">多媒体</td>
+			                <td style="padding:10px 5px;">
+			                  <div>
+									<input type="text" id="mediaPath" name="mediaPath" class="member-change" style="width:303px"/>
+								</div>
+								<div>
+									<span id="mfc" style="position:relative;display:block;line-height:28px;margin-top:4px;">
+									<input type='text' id='mediaFileText' class="member-change" style="float:left;margin-left:15px;"/>  
+									<input class="change-Btn" type='button' value='浏览' style="float:left;margin-left:4px;" />
+									<input onchange="$('#mediaFileText').val(this.value)" size="19" type="file" name="mediaFile" id="mediaFile" style="height:28px;width:246px;opacity:0;filter:alpha(opacity=0);position:absolute;left:15px;top:0;"/>
+									<input type="button" value="上传" onclick="uploadMedia();" class="change-Btn"  style="float:left;"/>
+									</span> 
+								</div>
+			                </td>
+			              </tr>
+			              <tr>
+			                <td class="tggl-top">播放器</td><td>[@p.radio name="mediaType" list=["WM","REAL","FLV","FLASH","CK"] value="CK"/]</td>
+			              </tr>
+			              <tr>
+			                <td class="tggl-top">内容</td>
+			                <td>
+			                 <textarea id="txt" name="txt"></textarea> 
+			                 <script type="text/javascript">
+									$(function() {
+									   	CKEDITOR.replace( 'txt' ,
+									   			{
+											   		filebrowserUploadUrl : '${base}/fck/upload.jspx',  
+											   		filebrowserImageUploadUrl : '${base}/fck/upload.jspx?Type=Image',  
+											   		filebrowserFlashUploadUrl : '${base}/fck/upload.jspx?Type=Flash',
+											   		filebrowserMediaUploadURL : '${base}/fck/upload.jspx?Type=Media'
+									   		     }
+									   	);  
+									 });
+							</script>
+			                 </select>
+			                </td>
+			              </tr>
+			              <tr>
+			                <td class="tggl-top">附件</td>
+			                <td style="padding:10px 5px;">
+			                  <div>
+								<span id="aspanButtonPlaceHolder"></span>
+								<span style="display: none;"><input class="cancel" id="abtnCancel" type="button" value="取消" onclick="swfu.cancelQueue();" disabled="disabled" /></span>
+								<div id="afsUploadProgress" style="display: none;"></div>
+								</div>
+								<table id="attachTable" border="0" class="fbgj-fj">
+								<tr>
+									
+									<td align="center">附件名称</td>
+									<td align="center">路径</td>
+									<td align="center">上传</td>
+			                                                <td align="center"></td>
+								</tr>
+								</table>
+								<textarea id="attachTr" style="display:none">
+								<tr id="attachTr{0}">
+									
+									<td align="center"><input type="text" id="attachmentNames{0}" name="attachmentNames" class="member-change" style="width:100px;height:24px;"/></td>
+									<td align="center"><input type="text" id="attachmentPaths{0}" name="attachmentPaths" class="member-change" style="width:130px;height:24px;"/></td>
+									<td align="center">
+										<span id="afc{0}" style="position:relative;display:block;width:200px;">
+										<input type='text' id='attachmentText{0}' class="member-change" style="width:150px;height:24px;" />  
+										<input onchange="$('#attachmentText{0}').val(this.value)" size="19" type="file" name="attachmentFile" id="attachmentFile{0}" style="height:24px;width:200px;opacity:0;filter:alpha(opacity=0);position:absolute;left:0;top:0;"/>
+										<input type="button" value="上传" onclick="uploadAttachment({0});" style="width:40px;height:24px;cursor:pointer;background:#3694d7;color:#fff;font-size:12px;cursor:pointer;" />
+										</span>
+										<input type="hidden" id="attachmentFilenames{0}" name="attachmentFilenames"/>
+									</td>
+			                                                <td align="center" width="50"><a onclick="$('#attachTr{0}').remove();" href="javascript:void(0);" class="pn-opt">删除</a></td>
+								</tr>   
+								</textarea>
+								<script type="text/javascript">
+								var attachIndex = 1;
+								var attachTpl = $.format($("#attachTr").val());
+								function addAttachLine() {
+									$('#attachTable').append(attachTpl(attachIndex++));
+								}
+								</script>
+			                </td>
+			              </tr>
+			              <tr>
+			                <td class="tggl-top">图片集</td>
+			                <td style="padding:10px 5px;">
+			                  <div>
+									<span id="spanButtonPlaceHolder"></span>
+									<span style="display: none;"><input class="cancel" id="btnCancel" type="button" value="取消" onclick="swfu.cancelQueue();" disabled="disabled" /></span>
+									<div id="fsUploadProgress" style="display: none;"></div>
+									</div>
+									<div id="picBefore" style="clear:both"></div>
+									<div id="picTable" style="display:none;">
+									<table id="picTable{0}" border="0" cellpadding="0" cellspacing="0" class="fbgj-tab">
+									<tr>
+										<td style="line-height:1;">
+											<div><input type="text" id="uploadImgPath{0}" name="picPaths" class="member-change" /> <a href="javascript:void(0);" onclick="$('#picTable{0}').remove();" class="pn-opt">删除</a></div>
+											<div style="margin-top:4px;">
+											<span id="ufc{0}" style="position:relative;">
+											<input type='text' id='uploadFileText{0}' size="10" class="member-change" style="width:115px;height:22px;"/>  
+											<input onchange="$('#uploadFileText{0}').val(this.value)" size="10" type="file" id="uploadFile{0}" style="width:72px;height:22px;"/>
+											</span>
+											<input type="button" value="上传" onclick="upload({0});" style="width:50px;height:22px;cursor:pointer;background:#3694d7;color:#fff;font-size:12px;"/>
+											</div>
+											<div><textarea style="width:300px;height:60px;margin-bottom:0;" name="picDescs" maxlength="255"></textarea></div>
+										</td>
+										<td><img id="preImg{0}" alt="预览" noResize="true" style="width:110px;height:110px;background-color:#ccc;border:1px solid #c7c7c7;"/></td>
+									</tr>
+									</table>
+									</div>
+									<script type="text/javascript">
+									var picIndex = 1;
+									var picTpl = $.format($("#picTable").html());
+									function addPicLine() {
+										$('#picBefore').before(picTpl(picIndex++));
+									}
+									</script>
+			                </td>
+			              </tr>
+			              [#if contentChargeModel??&&contentChargeModel==2]
+			               <tr>
+			                    <td class="tggl-top">收费金额：</td>
+			                    <td>
+			                    	<input name="charge" value="true" type="hidden"/>
+			                   		<input type="text" name="chargeAmount" maxlength="20" class="member-change"/> 
+			                    </td>
+			               </tr>
+			               [/#if]
+			              <tr>
+			                <td class="tggl-top">验证码</td><td><input type="text" name="captcha" maxlength="20" class="member-change" style="float:left; margin-left:15px;" /><img id="guestbookCaptcha" src="${base}/captcha.svl" onclick="this.src='${base}/captcha.svl?d='+new Date()"/></td>
+			              </tr>
+			              <tr>
+			                <td colspan="2" style="text-align:center; padding:20px 0;"><input type="hidden" name="nextUrl" value="contribute_list.jspx" /><input type="submit" class="member-submit" value="提交" /><input type="reset" class="member-reset" value="重置" /></td>
+			              </tr>
+			            </tbody>
+			          </table>
+			          </form>
+			            [#else]
+			            <div>系统不允许投稿，请联系管理员！</div>
+			            [/#if]
+                    </div>                   
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+[#include "../hyinclude/end.html"/]
 </body>
 </html>
-<script type="text/javascript">
-	$('#channelId').change(function() {
-		var channelId=$("#channelId option:selected").val()
-		$.ajax({
-	        url: "${base}/member/channelId.jspx?channelId="+channelId,
-	        type: "POST",
-	        dataType:"json",
-	        data: "",
-	        success: function (data) {
-	        	$("#modelId").val(data.status);
-	        }
-	    });
-		
-		
-	});
-</script>

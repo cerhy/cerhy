@@ -18,81 +18,126 @@
 
 
 [#include "../hyinclude/header.html"/]
-<div class="member-con">
-  <div class="m-pos"><a href="${base}/">首页</a> > <span>会员中心</span></div>
-  <div class="member clearfix">
-    <div class="memberLeft clearfix"> 
-      <div class="member-nav">
-        <ul>
-        <li><a href="${base}/member/index.jspx">个人资料</a></li>
-        <li><a href="${base}/member/contribute_list.jspx">投稿管理</a></li>
-        <li><a href="${base}/member/doc_list.jspx?modelId=9">文档管理</a></li>
-        <li><a href="${base}/member/resume.jspx">应聘管理</a></li>
-        <li><a href="${base}/member/mycomments.jspx">我的评论</a></li>
-        <li><a href="${base}/member/myguestbook.jspx" class="on">我的留言</a></li>
-        <li><a href="${base}/member/collection_list.jspx">我的收藏</a></li>
-        <li><a href="${base}/member/message_mng.jspx">站内信息</a></li>
-        <li><a href="${base}/member/account.jspx">服务中心</a></li>
-        </ul>
-      </div>
-      <div class="member-main">
-        <div class="member-child"><a href="${base}/member/myguestbook.jspx" class="on">我的留言</a></div>
-        <div class="member-text tggl">
-          <form id="tableForm" action="myguestbook.jspx" method="post">
-            [#if pagination.list?size gt 0]
-          <table cellpadding="0" cellspacing="0">
-            <tbody>
-              <tr>
-                <td class="tggl-top">留言标题</td><td class="tggl-top">留言内容</td><td class="tggl-top">留言时间</td><td class="tggl-top">回复</td><td class="tggl-top">审核</td><td class="tggl-top">推荐</td><td class="tggl-top">操作</td>
-              </tr>
-              [#list pagination.list as c]
-              <tr>
-                <td title="${c.titleHtml!}"><a href="guestbook_detail.jspx?id=${c.id}">[@text_cut s=c.titleHtml len='10' append='...'/]</a></td>
-                <td title="${c.contentHtml!}">[@text_cut s=c.contentHtml len='10' append='...'/]</td>
-                <td>${c.createTime}</td>
-                <td>[#if c.replayTime??]<span style="color: red;">是</span>[#else]否[/#if]</td>
-                <td>[#if c.checked]<span style="color: red;">审核</span>[#else]未审核[/#if]</td>
-                <td>[#if c.recommend]<span style="color: red;">推荐</span>[#else]未推荐[/#if]</td>
-                <td><a href="guestbook_detail.jspx?id=${c.id}">详细</a> [#if c.replayTime??]<a href="guestbook_replay.jspx?id=${c.id}">查看回复</a>[/#if]</td>
-              </tr>
-              [/#list]
-              <tr>
-                <td colspan="8" style="padding:20px 0;">
-                  <div class="page-small">
-                  <div style="display:inline-block;">
-                    <a class="prev-page"></a>
-                    <a class="Num on">1</a><a class="Num">2</a><a class="Num">3</a><a class="Num">4</a><a class="Num">5</a><a class="none">...</a><a class="Num">17</a>
-                    <a class="next-page"></a>
-                  </div>
-                  </div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-           <script type="text/javascript">
-            function _gotoPage(pageNo) {
-                try{
-                    var tableForm = document.getElementById("tableForm");
-                    $("input[name=pageNo]").val(pageNo);
-                    tableForm.action="myguestbook.jspx";
-                    tableForm.onsubmit=null;
-                    tableForm.submit();
-                } catch(e) {
-                    alert('_gotoPage(pageNo)方法出错');
-                }
-            }
-            </script>
-            [#else]
-                <div>暂无留言</div>
-            [/#if]
-            </form>
-        </div>
-      </div>
+<div class="local">
+    <div class="wrap">
+        <span class="local-icon icon-font"></span>
+        <a >首页</a>
+        <em> &gt; </em>
+        <span class="cur-page">会员中心</span>
     </div>
-    [#include "../include/member-right.html" /]
-    <div class="m-sj"></div>
-  </div>
+
 </div>
-[#include "../include/footer.html"/]
+<div class="container">
+    <div class="wrap">
+        <div class="mb20 clearfix">
+            <div class="wrap-left">
+                <div class="user-center-left">
+                    <div class="user-setting">
+                        <div class="pic-dt">[#if user.userImg??]<img src="${user.userImg}" width="120" height="120" alt="">[#else]<img src="/${res}/images/userImg-large.png" width="120" height="120" alt="">[/#if]</div>
+                        <div class="user-name-dt">${user.username}</div>
+                       	<a href="${base}/logout.jspx" class="user-oparetion-btn">退出</a>
+                    </div>
+                    <div class="user-menu-links">
+                        <ul>
+                            <li>
+                                <a href="${base}/member/index.jspx">个人资料</a>
+                            </li>
+                            <li>
+                                <a href="${base}/member/contribute_list.jspx">投稿管理</a>
+                            </li>
+                            <li>
+                                <a href="${base}/member/doc_list.jspx?modelId=9">文档管理</a>
+                            </li>
+                            <li style="display:none;">
+                                <a href="${base}/member/resume.jspx">应聘管理</a>
+                            </li>
+                            <li>
+                                <a href="${base}/member/mycomments.jspx" >我的评论</a>
+                            </li>
+                            <li>
+                                <a href="${base}/member/myguestbook.jspx" class="active">我的留言</a>
+                            </li>
+                            <li>
+                                <a href="${base}/member/collection_list.jspx">我的收藏</a>
+                            </li>
+                                <li><a href="${base}/member/message_mng.jspx">站内信息</a></li>
+        						<li style="display:none;"><a href="${base}/member/account.jspx">服务中心</a></li>
+                            <li class="on">
+                                <a href="javascript:;"><em></em>常用链接</a>
+                                <ul>
+                                    <li><a href="#"><em></em>海南省教育研究培训院</a></li>
+                                    <li><a href="#"><em></em>ICT课程网</a></li>
+                                    <li><a href="#"><em></em>普通高中信息技术课程网</a></li>
+                                    <li><a href="#"><em></em>成长博客-信息技术课程网</a></li>
+                                    <li><a href="#"><em></em>李艺博客</a></li>
+                                    <li><a href="#"><em></em>段青博客</a></li>
+                                    <li><a href="#"><em></em>徐强空间</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="wrap-right">
+                <div class="personCenter-userInfo">
+                    <div class="tab-head clearfix">
+                        <a href="${base}/member/myguestbook.jspx" class="active">我的留言 <em></em></a>
+                    </div>
+                    <div class="tab-content tggl" style="display: block;" class="user-info-dtTable">
+							  <form id="tableForm" action="myguestbook.jspx" method="post">
+				            [#if pagination.list?size gt 0]
+				          <table cellpadding="0" cellspacing="0">
+				            <tbody>
+				              <tr>
+				                <td class="tggl-top">留言标题</td><td class="tggl-top">留言内容</td><td class="tggl-top">留言时间</td><td class="tggl-top">回复</td><td class="tggl-top">审核</td><td class="tggl-top">推荐</td><td class="tggl-top">操作</td>
+				              </tr>
+				              [#list pagination.list as c]
+				              <tr>
+				                <td title="${c.titleHtml!}"><a href="guestbook_detail.jspx?id=${c.id}">[@text_cut s=c.titleHtml len='10' append='...'/]</a></td>
+				                <td title="${c.contentHtml!}">[@text_cut s=c.contentHtml len='10' append='...'/]</td>
+				                <td>${c.createTime}</td>
+				                <td>[#if c.replayTime??]<span style="color: red;">是</span>[#else]否[/#if]</td>
+				                <td>[#if c.checked]<span style="color: red;">审核</span>[#else]未审核[/#if]</td>
+				                <td>[#if c.recommend]<span style="color: red;">推荐</span>[#else]未推荐[/#if]</td>
+				                <td><a href="guestbook_detail.jspx?id=${c.id}">详细</a> [#if c.replayTime??]<a href="guestbook_replay.jspx?id=${c.id}">查看回复</a>[/#if]</td>
+				              </tr>
+				              [/#list]
+				              <tr>
+				                <td colspan="8" style="padding:20px 0;">
+				                  <div class="page-small">
+				                  <div style="display:inline-block;">
+				                    <a class="prev-page"></a>
+				                    <a class="Num on">1</a><a class="Num">2</a><a class="Num">3</a><a class="Num">4</a><a class="Num">5</a><a class="none">...</a><a class="Num">17</a>
+				                    <a class="next-page"></a>
+				                  </div>
+				                  </div>
+				                </td>
+				              </tr>
+				            </tbody>
+				          </table>
+				           <script type="text/javascript">
+				            function _gotoPage(pageNo) {
+				                try{
+				                    var tableForm = document.getElementById("tableForm");
+				                    $("input[name=pageNo]").val(pageNo);
+				                    tableForm.action="myguestbook.jspx";
+				                    tableForm.onsubmit=null;
+				                    tableForm.submit();
+				                } catch(e) {
+				                    alert('_gotoPage(pageNo)方法出错');
+				                }
+				            }
+				            </script>
+				            [#else]
+				                <div>暂无留言</div>
+				            [/#if]
+				            </form>
+                    </div>                   
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+[#include "../hyinclude/end.html"/]
 </body>
 </html>

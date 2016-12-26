@@ -16,61 +16,107 @@ $(function() {
 </script>
 
 [#include "../hyinclude/header.html"/]
-<div class="member-con">
-  <div class="m-pos"><a href="${base}/">首页</a> > <span>会员中心</span></div>
-  <div class="member clearfix">
-    <div class="memberLeft clearfix"> 
-      <div class="member-nav">
-        <ul>
-        <li><a href="${base}/member/index.jspx">个人资料</a></li>
-        <li><a href="${base}/member/contribute_list.jspx">投稿管理</a></li>
-        <li><a href="${base}/member/doc_list.jspx?modelId=9">文档管理</a></li>
-        <li><a href="${base}/member/resume.jspx">应聘管理</a></li>
-        <li><a href="${base}/member/mycomments.jspx">我的评论</a></li>
-        <li><a href="${base}/member/myguestbook.jspx">我的留言</a></li>
-        <li><a href="${base}/member/collection_list.jspx">我的收藏</a></li>
-        <li><a href="${base}/member/message_mng.jspx" class="on">站内信息</a></li>
-        <li><a href="${base}/member/account.jspx">服务中心</a></li>
-        </ul>
-      </div>
-      <div class="member-main">
-        <div class="member-child"><a href="${base}/member/message_add.jspx" class="on">发送站内信</a><a href="${base}/member/message_mng.jspx" style="float:right; margin-right:0; color:#333333;">< 返回列表</a></div>
-        <div class="member-text tggl fbgj">
-          <form id="jvForm" action="message_send.jspx" method="post">
-          <table cellpadding="0" cellspacing="0">
-            <tbody>
-              <tr>
-                <td class="tggl-top">收件人</td><td><input type="text" id="username" name="username" maxlength="150" onchange="find_user()" class="member-change" style="width:300px;" /><span style="color:#f00; margin-left:10px;">*</span></td>
-              </tr>
-              <tr>
-                <td class="tggl-top">主题</td><td><input type="text" name="msgTitle" maxlength="150" [#if message??]value="${message.msgTitle!}"[/#if] class="member-change" style="width:300px;" /><span style="color:#f00; margin-left:10px;">*</span></td>
-              </tr>
-              <tr>
-                <td class="tggl-top">内容</td>
-                <td><textarea name="msgContent" style="width:550px;height:350px"></textarea></td>
-              </tr>
-              <tr>
-                <td class="tggl-top">验证码</td><td><input type="text" name="captcha" maxlength="20" class="member-change" style="float:left; margin-left:15px;" /><img id="messageCaptcha" src="${base}/captcha.svl" onclick="this.src='${base}/captcha.svl?d='+new Date()"/></td>
-              </tr>
-              <tr>
-                <td colspan="2" style="text-align:center; padding:20px 0;">
-                <input type="hidden" name="nextUrl" value="message_mng.jspx?box=1" id="nextUrl"/>
-                <input type="hidden" name="box" value="1" id="box"/>
-                <input type="submit" class="member-submit" value="发送" />
-                <input type="button" value="存为草稿" onclick="toDraft()" class="member-submit" style="margin-left:20px;"/>
-                <input type="reset" class="member-reset" value="重置" />
-                </td>
-              </tr>
-            </tbody>
-          </table>
-          </form>
-        </div>
-      </div>
+<div class="local">
+    <div class="wrap">
+        <span class="local-icon icon-font"></span>
+        <a >首页</a>
+        <em> &gt; </em>
+        <span class="cur-page">会员中心</span>
     </div>
-    [#include "../include/member-right.html" /]
-    <div class="m-sj"></div>
-  </div>
+
 </div>
-[#include "../include/footer.html"/]
+<div class="container">
+    <div class="wrap">
+        <div class="mb20 clearfix">
+            <div class="wrap-left">
+                <div class="user-center-left">
+                    <div class="user-setting">
+                        <div class="pic-dt">[#if user.userImg??]<img src="${user.userImg}" width="120" height="120" alt="">[#else]<img src="/${res}/images/userImg-large.png" width="120" height="120" alt="">[/#if]</div>
+                        <div class="user-name-dt">${user.username}</div>
+                       	<a href="${base}/logout.jspx" class="user-oparetion-btn">退出</a>
+                    </div>
+                    <div class="user-menu-links">
+                        <ul>
+                            <li>
+                                <a href="${base}/member/index.jspx">个人资料</a>
+                            </li>
+                            <li>
+                                <a href="${base}/member/contribute_list.jspx">投稿管理</a>
+                            </li>
+                            <li>
+                                <a href="${base}/member/doc_list.jspx?modelId=9">文档管理</a>
+                            </li>
+                            <li style="display:none;">
+                                <a href="${base}/member/resume.jspx">应聘管理</a>
+                            </li>
+                            <li>
+                                <a href="${base}/member/mycomments.jspx">我的评论</a>
+                            </li>
+                            <li>
+                                <a href="${base}/member/myguestbook.jspx">我的留言</a>
+                            </li>
+                            <li>
+                                <a href="${base}/member/collection_list.jspx">我的收藏</a>
+                            </li>
+                                <li><a href="${base}/member/message_mng.jspx"  class="active">站内信息</a></li>
+        						<li style="display:none;"><a href="${base}/member/account.jspx">服务中心</a></li>
+                            <li class="on">
+                                <a href="javascript:;"><em></em>常用链接</a>
+                                <ul>
+                                    <li><a href="#"><em></em>海南省教育研究培训院</a></li>
+                                    <li><a href="#"><em></em>ICT课程网</a></li>
+                                    <li><a href="#"><em></em>普通高中信息技术课程网</a></li>
+                                    <li><a href="#"><em></em>成长博客-信息技术课程网</a></li>
+                                    <li><a href="#"><em></em>李艺博客</a></li>
+                                    <li><a href="#"><em></em>段青博客</a></li>
+                                    <li><a href="#"><em></em>徐强空间</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="wrap-right">
+                <div class="personCenter-userInfo">
+                    <div class="tab-head clearfix">
+                        <a  href="${base}/member/message_add.jspx" class="active">发送站内信 <em></em></a>
+                        <a href="${base}/member/message_mng.jspx" style="float:right; margin-right:40px; color:#333333;">返回列表</a>                     
+                    </div> 
+                    <div class="tab-content tggl fbgj" style="display: block;">
+                                   <form id="jvForm" action="message_send.jspx" method="post">
+					          <table cellpadding="0" cellspacing="0">
+					            <tbody>
+					              <tr>
+					                <td class="tggl-top">收件人</td><td><input type="text" id="username" name="username" maxlength="150" onchange="find_user()" class="member-change" style="width:300px;" /><span style="color:#f00; margin-left:10px;">*</span></td>
+					              </tr>
+					              <tr>
+					                <td class="tggl-top">主题</td><td><input type="text" name="msgTitle" maxlength="150" [#if message??]value="${message.msgTitle!}"[/#if] class="member-change" style="width:300px;" /><span style="color:#f00; margin-left:10px;">*</span></td>
+					              </tr>
+					              <tr>
+					                <td class="tggl-top">内容</td>
+					                <td><textarea name="msgContent" style="width:550px;height:350px"></textarea></td>
+					              </tr>
+					              <tr>
+					                <td class="tggl-top">验证码</td><td><input type="text" name="captcha" maxlength="20" class="member-change" style="float:left; margin-left:15px;" /><img id="messageCaptcha" src="${base}/captcha.svl" onclick="this.src='${base}/captcha.svl?d='+new Date()"/></td>
+					              </tr>
+					              <tr>
+					                <td colspan="2" style="text-align:center; padding:20px 0;">
+					                <input type="hidden" name="nextUrl" value="message_mng.jspx?box=1" id="nextUrl"/>
+					                <input type="hidden" name="box" value="1" id="box"/>
+					                <input type="submit" class="member-submit" value="发送" />
+					                <input type="button" value="存为草稿" onclick="toDraft()" class="member-submit" style="margin-left:20px;"/>
+					                <input type="reset" class="member-reset" value="重置" />
+					                </td>
+					              </tr>
+					            </tbody>
+					          </table>
+					          </form>
+                    </div>                   
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+[#include "../hyinclude/end.html"/]
 </body>
 </html>
