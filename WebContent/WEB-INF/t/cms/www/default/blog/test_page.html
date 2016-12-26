@@ -1,0 +1,166 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="${resSys}/front.css" rel="stylesheet" type="text/css"/>
+<link href="${resSys}/jqueryUI/jquery.ui.css" rel="stylesheet" type="text/css"/>
+<script src="${resSys}/jquery.js" type="text/javascript"></script>
+<script src="${base}/res/common/js/jquery.ext.js" type="text/javascript"></script>
+<script src="${resSys}/jqueryUI/jquery-ui.js" type="text/javascript"></script>
+<script src="${resSys}/front.js" type="text/javascript"></script>
+<link rel="stylesheet" type="text/css" href="/${res}/css/hyindex.css" />
+<link rel="stylesheet" type="text/css" href="/${res}/css/custom.css" />
+<style type="text/css">
+.sel-disabled{background-color:#ccc}
+</style>
+</head>
+<body>
+[#include "../hyinclude/header.html"/]
+[#include "../hyinclude/head.html"/]
+<div class="blog-con">
+<div class="blogHead">
+	  <div style="font-size:30px;margin:10px auto 0">[#if userT.blogTitle??]${userT.blogTitle}[#else]标题[/#if]</div>
+	  <div style="font-size:15px;margin:15px auto 10px;">[#if userT.blogTitle2??]${userT.blogTitle2}[#else]副标题[/#if]</div>
+  </div>
+  <div style="margin-left:150px;font-size:22px;color:red;font-family: "Microsoft YaHei",Arial;"> 
+    [#if userT.blogNotice??]${userT.blogNotice}[#else]公告:[/#if]	
+  </div>
+  <div class="blog-main">
+        <div class="tggl">
+          <form id="tableForm" action="${base}/blog/index.jspx" method="post">
+          [#if pagination.list?size gt 0]
+          <table cellpadding="0" cellspacing="0">
+            <tbody>
+              <tr>
+                <td class="tggl-top">ID</td><td class="tggl-top">标题</td><td class="tggl-top">浏览次数</td><td class="tggl-top">发布时间</td>
+              </tr>
+              [#list pagination.list as c]
+              <tr>
+                <td>${c.id}</td>
+                <td style="text-align:left; text-indent:5px;"><a href="${c.url!}">[@text_cut s=c.title?html len='24' append='...'/]</a></td>
+                <td>${c.views}</td>
+                <td>${c.releaseDate?string('yyyy-MM-dd')}</td>
+              </tr>
+              [/#list]
+            </tbody>
+          </table>
+          <input type="hidden" name="pageNo"/>
+          <table width="100%" border="0" cellpadding="0" cellspacing="0"><tr><td align="center" class="pn-sp">
+                共 ${pagination.totalCount} 条&nbsp;
+                每页 ${pagination.pageSize} 条&nbsp;
+                <input type="button" value="首 页" onclick="_gotoPage('1');"[#if pagination.firstPage] disabled="disabled"[/#if]/>
+                <input type="button" value="上一页" onclick="_gotoPage('${pagination.prePage}');"[#if pagination.firstPage] disabled="disabled"[/#if]/>
+                <input type="button" value="下一页" onclick="_gotoPage('${pagination.nextPage}');"[#if pagination.lastPage] disabled="disabled"[/#if]/>
+                <input type="button" value="尾 页" onclick="_gotoPage('${pagination.totalPage}');"[#if pagination.lastPage] disabled="disabled"[/#if]/>&nbsp;
+                当前 ${pagination.pageNo}/${pagination.totalPage} 页 &nbsp;转到第<input type="text" id="_goPs" onfocus="this.select();" onkeypress="if(event.keyCode==13){$('#_goPage').click();return false;}" style="width:50px; border:1px solid #e7e7e7;"/>页
+                <input id="_goPage" type="button" value="转" onclick="_gotoPage($('#_goPs').val());"[#if pagination.totalPage==1] disabled="disabled"[/#if] />
+            </td>
+            </tr>
+            </table>
+          <script type="text/javascript">
+            function _gotoPage(pageNo) {
+                try{
+                    var tableForm = document.getElementById("tableForm");
+                    $("input[name=pageNo]").val(pageNo);
+                    tableForm.action="${base}/blog/index.jspx";
+                    tableForm.onsubmit=null;
+                    tableForm.submit();
+                } catch(e) {
+                    alert('_gotoPage(pageNo)方法出错');
+                }
+            }
+            
+            </script>
+            [#else]
+                <div>暂无博文</div>
+            [/#if]
+          </form>
+        </div>
+      </div>
+  <div class="member clearfix">
+    <div class="blogLeft clearfix"> 
+      <div class="member-nav">
+       <ul>
+	        [#list columnsList as c]
+              <li><a href="${base}/blog/contribute_list.jspx?column_id=${c.column_id}"><span class="column">${c.column_name}</span></a></li>
+              [/#list]
+        </ul>
+      </div>
+      <div class="member-main">
+         	<div class="container">
+         	<div class="wrap">
+            <div class="wrap-left">
+         	<ul class="fst-lv-ul">
+         	[#if urlList??]
+	         [#list urlList as map]
+	          	[#list map?keys as k]
+	          		 [#if k=='']
+			           <span style="color: red;">${k}</span>
+			            [#list map[k] as v]
+			            	[#if v?index_of("=")!=-1]
+			         			<a target="_blank" href="${v?split("=")[1]}">${v?split("=")[0]}</a><br />
+			         		[/#if]
+			         		[#if v?index_of("|")!=-1]
+			         			<a target="_blank" href="${v?split("|")[1]}">${v?split("|")[0]}</a><br />
+			         		[/#if]
+			            [/#list]
+			         [#else]
+			         <li> 
+			         <a href="javascript:;">${k}<em class="arrow-down"></em></a>
+			         <div class="sub-div">
+			          	<ul class="clearfix">
+			            [#list map[k] as v]
+			            	[#if v?index_of("http:")!=-1]
+				            	[#if v?index_of("=")!=-1]
+				         			<a target="_blank" href="${v?split("=")[1]}">${v?split("=")[0]}</a>
+				         			<br>
+				         		[/#if]
+				         		[#if v?index_of("|")!=-1]
+				         			<a target="_blank" href="${v?split("|")[1]}">${v?split("|")[0]}</a>
+				         			<br>
+				         		[/#if]
+			            	[/#if]
+			            [/#list]
+			            </ul>
+			            </div>
+			            </li>	
+			          [/#if]
+	          	[/#list]
+	         [/#list]
+	         [/#if]
+            </ul>
+            </div>
+            </div>
+            </div>
+            [#if friendsList??]
+         		[#list friendsList as map]
+	         		[#list map?keys as k]
+	         			[#if k?split("~")[2]=='null'] 
+	         				<br />
+		         			<img src="/${res}/images/userImg.png" alt="" style="width: 50px;height: 50px;"/><br />
+		         			<a target="_blank" href="${base}/blog/find_all_url_friend.jspx?userIds=${k?split("~")[1]}">${k?split("~")[0]}</a>
+		         		[#else]
+		         			<br />
+		         			<img src="${k?split("~")[2]}" alt="" style="width: 50px;height: 50px;" /><br />
+		         			<a target="_blank" href="${base}/blog/find_all_url_friend.jspx?userIds=${k?split("~")[1]}">${k?split("~")[0]}</a>
+	         			[/#if]
+	         		[/#list]
+         		[/#list]
+         	[/#if]
+      </div>
+    </div>
+    <div class="m-sj"></div>
+  </div>
+</div>
+[#include "../include/footer.html"/]
+ <script type="text/javascript">
+
+		skinChange(${user.theme!0});
+
+	function skinChange(n){
+		document.all.MrJin.href="/${res}/css/skin/"+n+".css"; 
+	}
+</script>
+</body>
+</html>
