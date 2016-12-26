@@ -9,46 +9,57 @@
 <script src="${resSys}/front.js" type="text/javascript"></script>
 <link rel="stylesheet" type="text/css" href="/${res}/css/hyindex.css" />
 <link rel="stylesheet" type="text/css" href="/${res}/css/custom.css" />
-<script type="text/javascript">
-$(function() {
-	$("#jvForm").validate();
-});
-</script>
-<style type="text/css">
-.sub1{
-width:50px;height: 25px;background: #00a8eb;color: #FFF;text-align: center;font-size: 14px;border-radius: 3px;
-}
- .sub1:hover {
-    background: #14bdff;
-}
-</style>
+
 [#include "../hyinclude/header.html"/]
+
 <div class="blog-con">
-<div class="blogHead">
-	  <div style="font-size:30px;margin:10px auto 0">[#if user.blogTitle??]${user.blogTitle}[#else]标题[/#if]</div>
-	  <div style="font-size:15px;margin:15px auto 10px;">[#if user.blogTitle2??]${user.blogTitle2}[#else]副标题[/#if]</div>
+  <div class="blogHead">
+	  <div style="font-size:30px;margin:30px auto 20px;"><a href="${base}/blog/index.jspx">[#if user.blogTitle??]${user.blogTitle}[#else]标题[/#if]</a></div>
+	  <div style="font-size:15px;margin:5px auto 15px;">[#if user.blogTitle2??]${user.blogTitle2}[#else]副标题[/#if]</div>
   </div>
-  <div class="member clearfix">
-    <div class="blogLeft clearfix"> 
-      <div class="member-nav">
-        <ul>
-	       <li><a href="${base}/blog/contribute_add.jspx">发表博客</a></li>
-	         <li><a href="${base}/blog/columns_list.jspx" class="on1">博客栏目</a></li>
-	          [#list columnsList as c]
-              <li><a href="${base}/blog/contribute_list.jspx?column_id=${c.column_id}"><span class="column">${c.column_name}</span></a></li>
-              [/#list]
-               <li><a href="${base}/blog/collection_list.jspx">转载</a></li>
-	        <li><a href="${base}/blog/help.jspx">设置</a></li>
-        </ul>
-      </div>
-      <div class="member-main">
-        <div class="tggl">
-        <form action="${base}/blog/newColumn.jspx" id="newColumn" method="post">
-         <div style="font-size:15px;">栏目名称:</div>
-         <input type="text" name="columnInput" style="margin:10px 10px 20px 0;"/>
-         <div style="font-size:15px;">栏目序号:</div>
-         <input type="text" name="columnOrder" style="margin:10px 10px 20px 0;"/>
-         <div style="margin-bottom:20px"><input type="submit" value="新建" class="sub1" /></div>
+  
+      <div class="mb20 clearfix">
+            <div class="wrap-left">
+                <div class="user-center-left">
+                    <div class="user-setting">
+                        <div class="pic-dt">
+                        [#if user.userImg??]<img src="${user.userImg}" width="120" height="120" alt="">
+                        [#else]
+                        <img src="/${res}/images/userImg-large.png" width="120" height="120" alt="">[/#if]
+                        </div>
+                        <div class="user-name-dt"><a href="${base}/blog/index.jspx">${user.username}</a></div>
+                        <a href="${base}/logout.jspx" class="user-oparetion-btn">退出</a>
+                    </div>
+                    <div class="user-menu-links">
+                    <ul>
+				        <li><a href="${base}/blog/contribute_add.jspx">发表博客</a></li>
+				         <li><a href="${base}/blog/columns_list.jspx">博客栏目</a></li>
+				         [#list columnsList as c]
+			              <li><a href="${base}/blog/contribute_list.jspx?column_id=${c.column_id}" ><span class="column">${c.column_name}</span></a></li>
+			              [/#list]
+			              <li><a href="${base}/blog/collection_list.jspx">转载</a></li>
+				        <li><a href="${base}/blog/help.jspx">设置</a></li>
+       				</ul>
+                    </div>
+                </div>
+            </div>
+
+			<div class="wrap-right " >
+				<div class="personCenter-userInfo blog_right" >
+				
+        <div class="tggl" >
+        <form id="newColumn" action="${base}/blog/newColumn.jspx"  method="post">
+        <div>
+	        <span style="font-size:15px;">栏目名称:</span>
+	        <input type="text" name="columnInput" style="margin:10px "/>
+        </div>
+        <div>
+         <span style="font-size:15px;">栏目序号:</span>
+         <input type="text" name="columnOrder" style="margin:10px "/>
+         </div>
+         <div style="margin:10px 0 50px 175px">
+             <input type="submit" value="新建" class="sub1" />
+         </div>
         </form>
         
 		<form id="tableForm" action="contribute_list.jspx" method="post">
@@ -64,35 +75,20 @@ width:50px;height: 25px;background: #00a8eb;color: #FFF;text-align: center;font-
               <tr>
               <td>${c.order_id}</td>
                 <td>${c.column_name}</td>
-                <td><a href="${base}/blog/update_tz.jspx?id=${c.column_id}&name=${c.column_name}&order=${c.order_id}">修改<a> | <a href="${base}/blog/deteleColumn.jspx?id=${c.column_id}">删除<a></td>
+                <td><a href="${base}/blog/update_tz.jspx?id=${c.column_id}&name=${c.column_name}&orderId=${c.order_id}">修改<a> | <a href="${base}/blog/deteleColumn.jspx?id=${c.column_id}">删除<a></td>
               </tr>
               [/#list]
             </tbody>
           </table>
-          <input type="hidden" name="pageNo"/>
          
-          <script type="text/javascript">
-            function _gotoPage(pageNo) {
-                try{
-                    var tableForm = document.getElementById("tableForm");
-                    $("input[name=pageNo]").val(pageNo);
-                    tableForm.action="contribute_list.jspx";
-                    tableForm.onsubmit=null;
-                    tableForm.submit();
-                } catch(e) {
-                    alert('_gotoPage(pageNo)方法出错');
-                }
-            }
-            </script>
             [#else]
                 <div>暂无栏目</div>
             [/#if]
           </form>
         </div>
       </div>
-    </div>
-    <div class="m-sj"></div>
-  </div>
+			</div>
+		</div>
 </div>
 [#include "../include/footer.html"/]
 </body>

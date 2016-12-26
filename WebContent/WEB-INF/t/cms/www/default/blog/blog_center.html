@@ -14,11 +14,10 @@
 
 <div class="blog-con">
   <div class="blogHead">
-	  <div style="font-size:30px;margin:10px auto 0;"><a href="${base}/blog/index.jspx">[#if user.blogTitle??]${user.blogTitle}[#else]标题[/#if]</a></div>
-	  <div style="font-size:15px;margin:15px auto 10px;">[#if user.blogTitle2??]${user.blogTitle2}[#else]副标题[/#if]</div>
+	  <div style="font-size:30px;margin:30px auto 20px;"><a href="${base}/blog/index.jspx">[#if user.blogTitle??]${user.blogTitle}[#else]标题[/#if]</a></div>
+	  <div style="font-size:15px;margin:5px auto 15px;">[#if user.blogTitle2??]${user.blogTitle2}[#else]副标题[/#if]</div>
   </div>
-  
-      <div>
+      
         <div class="mb20 clearfix">
             <div class="wrap-left">
                 <div class="user-center-left">
@@ -45,14 +44,14 @@
                 </div>
             </div>
             <div class="wrap-right">
-                <div class="personCenter-userInfo">
+                <div class="personCenter-userInfo" style="min-height: 600px;">
                     
                     <div class="tab-content" style="display: block;">
                       
-			        <div class="tggl">
+			        <div class="tggl" style="text-align: -webkit-center;">
 			          <form id="tableForm" action="${base}/blog/index.jspx" method="post">
 			          [#if pagination.list?size gt 0]
-			          <table cellpadding="0" cellspacing="0">
+			          <table cellpadding="0" cellspacing="0" >
 			            <tbody>
 			              <tr>
 			                <td class="tggl-top">ID</td>
@@ -63,7 +62,7 @@
 			              [#list pagination.list as c]
 			              <tr>
 			                <td>${c.id}</td>
-			                <td style="text-align:center;"><a href="${c.url!}">[@text_cut s=c.title?html len='24' append='...'/]</a></td>
+			                <td style="text-align:center;" ><a href="${c.url!}">[@text_cut s=c.title?html len='24' append='...'/]</a></td>
 			                <td>${c.views}</td>
 			                <td>${c.releaseDate?string('yyyy-MM-dd')}</td>
 			              </tr>
@@ -71,7 +70,7 @@
 			            </tbody>
 			          </table>
 			          <input type="hidden" name="pageNo"/>
-			           <table width="100%" border="0" cellpadding="0" cellspacing="0"><tr><td align="center" class="pn-sp">
+			           <table style="border:0px;"><tr><td align="center" class="pn-sp">
                 共 ${pagination.totalCount} 条&nbsp;
                 每页 ${pagination.pageSize} 条&nbsp;
                 <input type="button" value="首 页" onclick="_gotoPage('1');"[#if pagination.firstPage] disabled="disabled"[/#if]/>
@@ -111,10 +110,10 @@
              [#if user.blogNotice??]${user.blogNotice}[/#if]
              </div>
         </div>
-</div>
+
   </div>
   </div>
-[#include "../hyinclude/end.html"/]
+[#include "../include/footer.html"/]
  <script type="text/javascript">
 		skinChange(${user.theme!0});
 	function skinChange(n){

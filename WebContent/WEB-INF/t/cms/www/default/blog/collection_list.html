@@ -8,31 +8,44 @@
 <script src="${resSys}/jquery.js" type="text/javascript"></script>
 <script src="${resSys}/front.js" type="text/javascript"></script>
 <link rel="stylesheet" type="text/css" href="/${res}/css/hyindex.css" />
-
-<!--[if lt IE 9]> 
-<script src="/${res}/js/html5shiv.min.js"></script>
-<script src="/${res}/js/respond.min.js"></script>
-<![endif]-->
-
+<link rel="stylesheet" type="text/css" href="/${res}/css/custom.css" />
 
 [#include "../hyinclude/header.html"/]
-<div class="member-con">
-  <div class="m-pos"><a href="${base}/">首页</a> > <span>会员中心</span></div>
-  <div class="member clearfix">
-    <div class="memberLeft clearfix"> 
-      <div class="member-nav">
-         <ul>
-	        <li><a href="${base}/blog/contribute_add.jspx">发表博客</a></li>
-	         <li><a href="${base}/blog/columns_list.jspx">博客栏目</a></li>
-	         [#list columnsList as c]
-              <li><a href="${base}/blog/contribute_list.jspx?column_id=${c.column_id}" ><span class="column">${c.column_name}</span></a></li>
-              [/#list]
-              <li><a href="${base}/blog/collection_list.jspx" class="on">转载</a></li>
-	        <li><a href="${base}/blog/help.jspx">设置</a></li>
-        </ul>
-      </div>
-      <div class="member-main">
-        <div class="member-text tggl">
+<div class="blog-con">
+ <div class="blogHead">
+	  <div style="font-size:30px;margin:30px auto 20px;"><a href="${base}/blog/index.jspx">[#if user.blogTitle??]${user.blogTitle}[#else]标题[/#if]</a></div>
+	  <div style="font-size:15px;margin:5px auto 15px;">[#if user.blogTitle2??]${user.blogTitle2}[#else]副标题[/#if]</div>
+  </div>
+
+      <div class="mb20 clearfix">
+            <div class="wrap-left">
+                <div class="user-center-left">
+                    <div class="user-setting">
+                        <div class="pic-dt">
+                        [#if user.userImg??]<img src="${user.userImg}" width="120" height="120" alt="">
+                        [#else]
+                        <img src="/${res}/images/userImg-large.png" width="120" height="120" alt="">[/#if]
+                        </div>
+                        <div class="user-name-dt"><a href="${base}/blog/index.jspx">${user.username}</a></div>
+                        <a href="${base}/logout.jspx" class="user-oparetion-btn">退出</a>
+                    </div>
+                    <div class="user-menu-links">
+                    <ul>
+				        <li><a href="${base}/blog/contribute_add.jspx">发表博客</a></li>
+				         <li><a href="${base}/blog/columns_list.jspx">博客栏目</a></li>
+				         [#list columnsList as c]
+			              <li><a href="${base}/blog/contribute_list.jspx?column_id=${c.column_id}" ><span class="column">${c.column_name}</span></a></li>
+			              [/#list]
+			              <li><a href="${base}/blog/collection_list.jspx">转载</a></li>
+				        <li><a href="${base}/blog/help.jspx">设置</a></li>
+       				</ul>
+                    </div>
+                </div>
+            </div>
+
+			<div class="wrap-right ">
+				<div class="personCenter-userInfo blog_right">
+				  <div class=" tggl" style="text-align: -webkit-center;">
           <form id="tableForm" action="${base}/blog/columns_list.jspx" method="post">
             [#if pagination.list?size gt 0]
           <table cellpadding="0" cellspacing="0">
@@ -40,7 +53,6 @@
               <tr>
                 <td class="tggl-top">ID</td>
                 <td class="tggl-top">标题</td>
-                <td class="tggl-top">栏目</td>
 				<td class="tggl-top">点击</td>
 				<td class="tggl-top">发布时间</td>
 				<td class="tggl-top">操作</td>
@@ -49,23 +61,23 @@
               <tr id="tr_${c.id}">
                 <td>${c.id}</td>
                 <td><a href="${c.url!}">${c.title?html}</a></td>
-                <td>${c.channel.name}</td>
                 <td>${c.views}</td>
                 <td>${c.releaseDate?string('yyyy-MM-dd')}</td>
                 <td><a href="${base}/blog/collect_cancel.jspx?cIds=${c.id}&pageNo=${pagination.pageNo}">取消转载</a></td>
               </tr>
               [/#list]
-              <tr>
-                <td colspan="8" style="padding:20px 0;">
+                </tbody>
+          </table>
+               
                   <input type="hidden" name="pageNo"/>
-		          <table width="100%" border="0" cellpadding="0" cellspacing="0"><tr><td align="center" class="pn-sp">
+		          <table ><tr><td align="center" class="pn-sp">
 		                共 ${pagination.totalCount} 条&nbsp;
 		                每页 ${pagination.pageSize} 条&nbsp;
 		                <input type="button" value="首 页" onclick="_gotoPage('1');"[#if pagination.firstPage] disabled="disabled"[/#if]/>
 		                <input type="button" value="上一页" onclick="_gotoPage('${pagination.prePage}');"[#if pagination.firstPage] disabled="disabled"[/#if]/>
 		                <input type="button" value="下一页" onclick="_gotoPage('${pagination.nextPage}');"[#if pagination.lastPage] disabled="disabled"[/#if]/>
 		                <input type="button" value="尾 页" onclick="_gotoPage('${pagination.totalPage}');"[#if pagination.lastPage] disabled="disabled"[/#if]/>&nbsp;
-		                当前 ${pagination.pageNo}/${pagination.totalPage} 页 &nbsp;转到第<input type="text" id="_goPs" onfocus="this.select();" onkeypress="if(event.keyCode==13){$('#_goPage').click();return false;}" style="width:50px; border:1px solid #e7e7e7;"/>页
+		                当前 ${pagination.pageNo}/${pagination.totalPage} 页 &nbsp;转到第<input type="text" id="_goPs" onfocus="this.select();" onkeypress="if(event.keyCode==13){$('#_goPage').click();return false;}" />页
 		                <input id="_goPage" type="button" value="转" onclick="_gotoPage($('#_goPs').val());"[#if pagination.totalPage==1] disabled="disabled"[/#if] />
 		            </td>
 		            </tr>
@@ -88,16 +100,17 @@
             }
             </script>
             [#else]
-                <div>暂无收藏</div>
+                <div>暂无转载</div>
             [/#if]
             </form>
         </div>
-      </div>
-    </div>
-    [#include "../include/member-right.html" /]
-    <div class="m-sj"></div>
-  </div>
-</div>
+				
+				</div>
+				</div>
+				</div>
+			</div>
+
+			
 [#include "../include/footer.html"/]
 </body>
 </html>

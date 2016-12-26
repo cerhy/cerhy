@@ -164,7 +164,11 @@ padding-top: 32px;
 
 .pagebar{text-align: center;margin: 15px auto 0px;font-size: 15px;}
 
-.blog-con{width:1000px; margin:0 auto;}
+.blog-con {
+	width: 1000px;
+	margin: 0 auto;
+}
+
 .blogLeft{float:left; border:1px solid #dedede; padding:34px 50px; border-radius:5px; -moz-border-radius:5px; -o-border-radius:5px; -webkit-border-radius:5px; border-top-right-radius:0; min-height:520px; position:relative;}
 
 .blogHead{
@@ -197,4 +201,27 @@ padding-top: 32px;
     font-size:16px;
     font-family: "Microsoft YaHei",Arial;
     padding:5px;
+}
+
+.blog_right{
+	padding:35px;
+	background:#ffffff;
+	min-height: 600px;
+}
+
+.sub1 {
+	position: absolute;
+	top: 444px;
+	left: 680px;
+	width: 50px;
+	height: 25px;
+	background: #00a8eb;
+	color: #FFF;
+	text-align: center;
+	font-size: 14px;
+	border-radius: 3px;
+}
+
+.sub1:hover {
+    background: #14bdff;
 }

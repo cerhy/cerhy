@@ -1,6 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-<title>cerhy-好研网</title>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -25,17 +24,14 @@ $.validator.methods.leafChannel = function(value, element, param) {
 }
 $(function() {
 	$("#jvForm").validate({
-
 		rules: {
 			column_id: "required",
 			title:"required",
-		
 		},
 		messages:{
 			column_id: "请选择栏目",
 			title: "请输入标题",
 		}
-		
 	});
 	var uploadPicsUrl = "o_swfPicsUpload.jspx";
 	var uploadAttachsUrl = "o_swfAttachsUpload.jspx";
@@ -154,7 +150,6 @@ function changeModel(){
 </head>
 <body>
 [#include "../hyinclude/header.html"/]
-[#include "../hyinclude/head.html"/]
 <div class="blog-con">
   <div class="blogHead">
 	  <div style="font-size:30px;margin:10px auto 0">[#if user.blogTitle??]${user.blogTitle}[#else]标题[/#if]</div>
@@ -162,29 +157,17 @@ function changeModel(){
   </div>
   <div class="member clearfix">
     <div class="blogLeft clearfix"> 
-       <div class="user-center-left">
-            <div class="user-setting">
-                <div class="pic-dt">
-                [#if user.userImg??]<img src="${user.userImg}" width="120" height="120" alt="">
-                [#else]
-                <img src="/${res}/images/userImg-large.png" width="120" height="120" alt="">[/#if]
-                </div>
-                <div class="user-name-dt"><a href="${base}/blog/index.jspx">${user.username}</a></div>
-                <a href="${base}/logout.jspx" class="user-oparetion-btn">退出</a>
-            </div>
-            <div class="user-menu-links">
-            <ul>
-			    <li><a href="${base}/blog/contribute_add.jspx">发表博客</a></li>
-			     <li><a href="${base}/blog/columns_list.jspx">博客栏目</a></li>
-			     [#list columnsList as c]
-			     <li><a href="${base}/blog/contribute_list.jspx?column_id=${c.column_id}" ><span class="column">${c.column_name}</span></a></li>
-			     [/#list]
-			     <li><a href="${base}/blog/collection_list.jspx">转载</a></li>
-			    <li><a href="${base}/blog/help.jspx">设置</a></li>
-			</ul>
-            </div>
-        </div>
-      
+      <div class="member-nav">
+         <ul>
+	       <li><a href="${base}/blog/contribute_add.jspx" class="on1">发表博客</a></li>
+	        <li><a href="${base}/blog/columns_list.jspx" >博客栏目</a></li>
+	         [#list columnsList as c]
+              <li><a href="${base}/blog/contribute_list.jspx?column_id=${c.column_id}"><span class="column">${c.column_name}</span></a></li>
+              [/#list]
+               <li><a href="${base}/blog/collection_list.jspx">转载</a></li>
+	        <li><a href="${base}/blog/help.jspx">设置</a></li>
+        </ul>
+      </div>
       <div class="member-main">
         <div class="member-text tggl fbgj">
           [#if columnsList?size gt 0]
