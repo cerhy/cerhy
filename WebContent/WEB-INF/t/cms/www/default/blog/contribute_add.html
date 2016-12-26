@@ -25,6 +25,16 @@ $.validator.methods.leafChannel = function(value, element, param) {
 $(function() {
 	$("#jvForm").validate({
 
+		rules: {
+			column_id: "required",
+			title:"required",
+		
+		},
+		messages:{
+			column_id: "请选择栏目",
+			title: "请输入标题",
+		}
+		
 	});
 	var uploadPicsUrl = "o_swfPicsUpload.jspx";
 	var uploadAttachsUrl = "o_swfAttachsUpload.jspx";
@@ -170,13 +180,13 @@ function changeModel(){
           <form id="jvForm" action="contribute_save.jspx" method="post"> 
           <table cellpadding="0" cellspacing="0">
             <tbody>
-              <tr>
-                <td class="tggl-top">标题</td><td><input type="text" name="title" maxlength="150" class="member-change" style="width:300px;" /><span style="color:#f00; margin-left:10px;">*</span></td>
+              <tr class="blog_column">
+                <td class="tggl-top">标题</td><td><input type="text" name="title" maxlength="150" class="member-change" style="width:300px;" /></td>
               </tr>
               <tr>
                 <td class="tggl-top">作者</td><td><input type="text" name="author" maxlength="100" class="member-change" /></td>
               </tr>
-              <tr>
+              <tr class="blog_column">
                 <td class="tggl-top">栏目</td>
                 <td>
                 <select name="column_id" class="member-change">

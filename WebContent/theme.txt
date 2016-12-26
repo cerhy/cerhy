@@ -1,0 +1,6 @@
+Msp/1/Cartoon,01 炫色：蓝天
+Msp/1/Glam, 02 炫色： 江湖
+Sina/Campus/01, 03 帅帅小伙
+Sina/Campus/02, 04 纯的一批
+Sina/Fulgor/01, 05 天地无极
+Sina/Fulgor/02, 06 玄清正气

@@ -181,6 +181,9 @@ padding-top: 32px;
 .on1{color:#ef3838;}
 .on1:before{content:""; position:absolute; right:-9px; top:10px; width:4px; height:8px; display:inline-block; background:url(../images/member-nav.png) no-repeat;}
 
-
 .column{color:#ef3838; font-size:16px; display:inline-block; position:relative;}
 .column:hover{color:#1e1e1e;}
+
+.blog_column{}
+.blog_column label{float: inherit; margin-left:10px;}
+
