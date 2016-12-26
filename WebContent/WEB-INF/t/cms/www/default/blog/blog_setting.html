@@ -35,11 +35,11 @@ width:50px;height: 25px;background: #00a8eb;color: #FFF;text-align: center;font-
         <div class="tggl">
 	        <form action="${base}/blog/updateSetting.jspx" method="post">
 	         <div style="font-size:15px">标题名:</div>
-	         <input type="text" name="blogTitle" style="margin:10px 10px 20px 0;" value="[#if user.blogTitle??]${user.blogTitle}[#else]未设置[/#if]"/>
+	         <input type="text" name="blogTitle" style="margin:10px 10px 20px 0;color: #858585;" value="[#if user.blogTitle??]${user.blogTitle}[#else]未设置[/#if]"/>
 	         <div style="font-size:15px">副标题名:</div>
-	         <input type="text" name="blogTitle2" style="margin:10px 10px 20px 0;" value="[#if user.blogTitle2??]${user.blogTitle2}[#else]未设置[/#if]"/>
+	         <input type="text" name="blogTitle2" style="margin:10px 10px 20px 0;color: #858585;" value="[#if user.blogTitle2??]${user.blogTitle2}[#else]未设置[/#if]"/>
 	         <div style="font-size:15px">公告:</div>
-	         <input type="text" name="blogNotice" style="margin:10px 10px 20px 0;" value="[#if user.blogNotice??]${user.blogNotice}[#else]未设置[/#if]"/>
+	         <textarea  name="blogNotice" rows="10" cols="100" style="margin:10px 10px 20px 0;color: #858585;">[#if user.blogNotice??]${user.blogNotice}[#else]未设置[/#if]</textarea>
 	         <div style="margin-bottom:20px"><input type="submit" value="更新" class="sub2" /></div>
 	        </form>
       </div>
