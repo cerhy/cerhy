@@ -32,6 +32,7 @@ width:50px;height: 25px;background: #00a8eb;color: #FFF;text-align: center;font-
 	         [#list columnsList as c]
               <li><a href="${base}/blog/contribute_list.jspx?column_id=${c.column_id}"><span class="column">${c.column_name}</span></a></li>
               [/#list]
+               <li><a href="${base}/blog/collection_list.jspx">转载</a></li>
 	        <li><a href="${base}/blog/help.jspx">设置</a></li>
         </ul>
       </div>
@@ -39,9 +40,9 @@ width:50px;height: 25px;background: #00a8eb;color: #FFF;text-align: center;font-
         <div class="tggl">
         <form action="${base}/blog/updateColumn.jspx?id=${column.column_id}" id="newColumn" method="post">
          <div style="font-size:15px">栏目名:</div>
-         <input type="text" name="updateName" value="${column.column_name}" style="margin:10px 10px 20px 0;"/>
+         <input type="text" name="updateName" value="${column.column_name}" style="margin:10px 10px 20px 0;color: #858585;"/>
          <div style="font-size:15px">栏目序号:</div>
-         <input type="text" name="updateOrderId" value="${column.order_id}" style="margin:10px 10px 20px 0;"/>
+         <input type="text" name="updateOrderId" value="${column.order_id}" style="margin:10px 10px 20px 0;color: #858585;"/>
          <div style="margin-bottom:20px"><input type="submit" value="更新" class="sub2" /></div>
         </form>
       </div>

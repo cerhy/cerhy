@@ -22,6 +22,7 @@
 	          [#list columnsList as c]
               <li><a href="${base}/blog/contribute_list.jspx?column_id=${c.column_id}" ><span class="column">${c.column_name}</span></a></li>
               [/#list]
+               <li><a href="${base}/blog/collection_list.jspx">转载</a></li>
 	        <li><a href="${base}/blog/help.jspx" class="on1">设置</a></li>
         </ul>
       </div>
@@ -36,13 +37,13 @@
       					<tr>
       					<td><span class="pn-frequired">*</span>页面模板</td>
       					<td colspan="1" width="35%" class="pn-fcontent">
-      					<select id="theme" name="theme" onchange="skinChange(this.value)" class="themeSelect">      						
+      					<select id="theme" name="theme" onchange="skinChange(this.selectedIndex)" class="themeSelect">
 	        				<option value="0">默认</option>
-	        				[#list themeList as t]
-	        				<option value="${t.id}">${t.name}</option>
-	        				[/#list]
-
-
+	        				<option value="1">自然风景01</option>
+	        				<option value="2">自然风景02</option>
+	        				<option value="3">自然风景03</option>
+	        				<option value="4">自然风景04</option>
+	        				<option value="5">自然风景05</option>
 	        			</select>
       					</td>
       					</tr>
@@ -61,8 +62,7 @@
 [#include "../include/footer.html"/]
 <script type="text/javascript">
 
-
-skinChange("${user.theme!0}");
+skinChange(${user.theme!0});
 
 function skinChange(n){
 	document.all.MrJin.href="/${res}/css/skin/"+n+".css"; 
@@ -80,7 +80,7 @@ $(function() {
 		position: ["center",80],
 		
 		close: function(event, ui) {
-			skinChange("${user.theme!0}");
+			skinChange(${user.theme!0});
 		}
 	});	   
 });
@@ -93,7 +93,10 @@ function closeDialog(){
 function set(){
 	$("#setDialog").dialog("open");
 	var theme = document.getElementById("theme");
-	theme.value="${user.theme!0}";	
+	theme.value="${user.theme!0}";
+		
+	
+	
 }
 </script>
 </body>

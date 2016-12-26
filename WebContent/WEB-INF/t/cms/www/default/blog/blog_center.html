@@ -23,6 +23,9 @@
 	  </marquee > -->
   </div>
   
+  
+  
+  
   <div class="member clearfix">
     <div class="blogLeft clearfix"> 
       <div class="member-nav">
@@ -32,6 +35,7 @@
 	         [#list columnsList as c]
               <li><a href="${base}/blog/contribute_list.jspx?column_id=${c.column_id}" ><span class="column">${c.column_name}</span></a></li>
               [/#list]
+              <li><a href="${base}/blog/collection_list.jspx">转载</a></li>
 	        <li><a href="${base}/blog/help.jspx">设置</a></li>
 	
         </ul>
@@ -42,12 +46,16 @@
       </div>
       <div class="blog-main">
         <div class="tggl">
+          
           <form id="tableForm" action="${base}/blog/index.jspx" method="post">
           [#if pagination.list?size gt 0]
           <table cellpadding="0" cellspacing="0">
             <tbody>
               <tr>
-                <td class="tggl-top">ID</td><td class="tggl-top">标题</td><td class="tggl-top">浏览次数</td><td class="tggl-top">发布时间</td>
+                <td class="tggl-top">ID</td>
+                <td class="tggl-top">标题</td>
+                <td class="tggl-top">浏览次数</td>
+                <td class="tggl-top">发布时间</td>
               </tr>
               [#list pagination.list as c]
               <tr>
@@ -72,6 +80,7 @@
             </td>
             </tr>
             </table>
+           
           <script type="text/javascript">
             function _gotoPage(pageNo) {
                 try{
@@ -98,8 +107,10 @@
 </div>
 
 [#include "../include/footer.html"/]
-<script type="text/javascript">
- skinChange("${user.theme!0}");	
+ <script type="text/javascript">
+
+		skinChange(${user.theme!0});
+
 	function skinChange(n){
 		document.all.MrJin.href="/${res}/css/skin/"+n+".css"; 
 	}

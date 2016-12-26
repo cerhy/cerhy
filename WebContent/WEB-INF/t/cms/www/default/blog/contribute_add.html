@@ -152,11 +152,12 @@ function changeModel(){
     <div class="blogLeft clearfix"> 
       <div class="member-nav">
          <ul>
-	       <li><a href="${base}/blog/contribute_add.jspx">发表博客</a></li>
-	        <li><a href="${base}/blog/columns_list.jspx" class="on1">博客栏目</a></li>
+	       <li><a href="${base}/blog/contribute_add.jspx" class="on1">发表博客</a></li>
+	        <li><a href="${base}/blog/columns_list.jspx" >博客栏目</a></li>
 	         [#list columnsList as c]
               <li><a href="${base}/blog/contribute_list.jspx?column_id=${c.column_id}"><span class="column">${c.column_name}</span></a></li>
               [/#list]
+               <li><a href="${base}/blog/collection_list.jspx">转载</a></li>
 	        <li><a href="${base}/blog/help.jspx">设置</a></li>
         </ul>
       </div>

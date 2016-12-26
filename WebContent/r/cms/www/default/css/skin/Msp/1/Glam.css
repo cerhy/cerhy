@@ -1,8 +1,0 @@
-/* glam */
-
-.blog-con		{ color: #000; background: url(Glam.gif) #fff fixed repeat-y 50% 0px; }
-#header		{ color: #fff; background: #6A615B; border-bottom: 4px solid #B9AFA6; }
-.popDlg, .pad	{ border-color: #6A615B; }
-
-.box .cap,
-.commentView .btn:hover, .vbr b:hover, .vbr b.active, .vbr .a:hover, .vbr .a.active	{ background-color: #6A615B; color: #fff; }
