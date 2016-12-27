@@ -3,13 +3,12 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-	<link href="${resSys}/front.css" rel="stylesheet" type="text/css" />
-	<script src="${resSys}/jquery.js" type="text/javascript"></script>
-	<script src="${resSys}/front.js" type="text/javascript"></script>
-	<link rel="stylesheet" type="text/css" href="/${res}/css/hyindex.css" />
-	<link rel="stylesheet" type="text/css" href="/${res}/css/custom.css" />
-	<style type="text/css">
+<link href="${resSys}/front.css" rel="stylesheet" type="text/css" />
+<script src="${resSys}/jquery.js" type="text/javascript"></script>
+<script src="${resSys}/front.js" type="text/javascript"></script>
+<link rel="stylesheet" type="text/css" href="/${res}/css/hyindex.css" />
+<link rel="stylesheet" type="text/css" href="/${res}/css/custom.css" />
+<style type="text/css">
 .sub2 {
 	width: 50px;
 	height: 25px;
@@ -23,7 +22,15 @@
 .sub2:hover {
 	background: #14bdff;
 }
+
 </style>
+<script type="text/javascript">
+$(function(){
+$('.user-menu-links li').click(function(){
+    $(this).toggleClass('on');
+});
+});
+</script>
 	[#include "../hyinclude/header.html"/]
 	<div class="blog-con">
 		<div class="blogHead">
@@ -52,15 +59,25 @@
 					</div>
 					<div class="user-menu-links">
 						<ul>
-							<li><a href="${base}/blog/contribute_add.jspx">发表博客</a></li>
-							<li><a href="${base}/blog/columns_list.jspx">博客栏目</a></li> [#list
-							columnsList as c]
-							<li><a
-								href="${base}/blog/contribute_list.jspx?column_id=${c.column_id}"><span
-									class="column">${c.column_name}</span></a></li> [/#list]
-							<li><a href="${base}/blog/collection_list.jspx">转载</a></li>
-							<li><a href="${base}/blog/help.jspx">设置</a></li>
-						</ul>
+				        <li><a href="${base}/blog/contribute_add.jspx">发表博客</a></li>
+				          <li ><a><em></em>博客栏目</a>
+                             <ul>
+                              [#list columnsList as c]
+		                       <li><a href="${base}/blog/contribute_list.jspx?column_id=${c.column_id}" ><em></em>${c.column_name}</a></li>
+		                      [/#list]
+                             </ul>
+                          </li>
+			              <li><a href="${base}/blog/collection_list.jspx">转载</a></li>
+				          <li ><a><em></em>设置</a>
+                              <ul>
+                              <li><a  href="${base}/blog/columns_list.jspx" ><em></em>新建栏目</a></li>
+                              <li><a  href="${base}/blog/tzsetting.jspx" ><em></em>博客信息</a></li>
+                              <li><a  onclick="set();" ><em></em>页面模板</a></li>
+                              <li><a  href="${base}/blog/link_list.jspx" ><em></em>链接管理</a></li>
+                              <li><a  href="${base}/blog/friends.jspx" ><em></em>好友管理</a></li>
+                              </ul>
+                         </li>
+       				</ul>
 					</div>
 				</div>
 			</div>
@@ -72,9 +89,9 @@
 							action="${base}/blog/updateColumn.jspx?id=${column.column_id}"
 							id="newColumn" method="post">
 							<div style="font-size: 15px">栏目名:</div>
-							<input type="text" name="updateName" value="${column.column_name}" style="margin: 10px 10px 20px 0; color: #858585;" />
+							<input type="text" name="updateName" value="${column.column_name}" style="margin:10px 10px 20px 0;color: #858585;padding:10px;"/>
 							<div style="font-size: 15px">栏目序号:</div>
-							<input type="text" name="updateOrderId" value="${column.order_id}" style="margin: 10px 10px 20px 0; color: #858585;" />
+							<input type="text" name="updateOrderId" value="${column.order_id}" style="margin:10px 10px 20px 0;color: #858585;padding:10px;"/>
 							<div style="margin-bottom: 20px"> <input type="submit" value="更新" class="sub2" /> </div>
 						</form>
 					</div>
@@ -86,7 +103,7 @@
 		</div>
 	</div>
 
-
-	[#include "../include/footer.html"/]
+[#include "model.html"/]
+[#include "../include/footer.html"/]
 </body>
 </html>

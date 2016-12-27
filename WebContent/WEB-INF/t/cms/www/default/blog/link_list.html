@@ -44,52 +44,6 @@
           	<br />
           	<input style="display: none;" name="nextUrl" value="link_list.jspx" />
           	 <input type="submit" value="提交" class="submit-on">
-          	 <br />
-         	<div class="container">
-         	<div class="wrap">
-            <div class="wrap-left">
-         	<ul class="fst-lv-ul">
-         	[#if urlList??]
-	         [#list urlList as map]
-	          	[#list map?keys as k]
-	          		 [#if k=='']
-			           <span style="color: red;">${k}</span>
-			            [#list map[k] as v]
-			            	[#if v?index_of("=")!=-1]
-			         			<a target="_blank" href="${v?split("=")[1]}">${v?split("=")[0]}</a><br />
-			         		[/#if]
-			         		[#if v?index_of("|")!=-1]
-			         			<a target="_blank" href="${v?split("|")[1]}">${v?split("|")[0]}</a><br />
-			         		[/#if]
-			            [/#list]
-			         [#else]
-			         <li> 
-			         <a href="javascript:;">${k}<em class="arrow-down"></em></a>
-			         <div class="sub-div">
-			          	<ul class="clearfix">
-			            [#list map[k] as v]
-			            	[#if v?index_of("http:")!=-1]
-				            	[#if v?index_of("=")!=-1]
-				         			<a target="_blank" href="${v?split("=")[1]}">${v?split("=")[0]}</a>
-				         			<br>
-				         		[/#if]
-				         		[#if v?index_of("|")!=-1]
-				         			<a target="_blank" href="${v?split("|")[1]}">${v?split("|")[0]}</a>
-				         			<br>
-				         		[/#if]
-			            	[/#if]
-			            [/#list]
-			            </ul>
-			            </div>
-			            </li>	
-			          [/#if]
-	          	[/#list]
-	         [/#list]
-	         [/#if]
-            </ul>
-            </div>
-            </div>
-            </div>
           </form>   
       </div>
     </div>
