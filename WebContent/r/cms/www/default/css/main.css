@@ -1195,11 +1195,11 @@ a:hover{
 .login-input-td em{
     position: absolute;
     left: 10px;
-    top: 1px;
+    top: 13px;
     width: 18px;
     height: 44px;
 }
-.login-input-td .user-em{background: url("images/user.png") no-repeat;}
+.login-input-td .user-em{background: url("images/username.png") no-repeat;}
 .login-input-td .password-em{background: url("images/password.png") no-repeat;}
 .login-params{padding-bottom: 10px;}
 .login-params .next-autologin{
