@@ -33,8 +33,8 @@ $(function() {
 			title: "请输入标题",
 		}
 	});
-	var uploadPicsUrl = "o_swfPicsUpload.jspx";
-	var uploadAttachsUrl = "o_swfAttachsUpload.jspx";
+	var uploadPicsUrl = "${base}/member/o_swfPicsUpload.jspx";
+	var uploadAttachsUrl = "${base}/member/o_swfAttachsUpload.jspx";
 	//在firefox、chrome下，上传不能保留登录信息，所以必须加上jsessionid。
 	var jsessionid ="${sessionId!}";
 	if(jsessionid) {
@@ -326,7 +326,7 @@ $(function(){
               <tr>
                 <td class="tggl-top">内容</td>
                 <td>
-                 <textarea id="txt" name="txt"></textarea> 
+                 <textarea id="txt" name="txt" htmlEscape="false"></textarea> 
                  <script type="text/javascript">
 						$(function() {
 						   	CKEDITOR.replace( 'txt' ,
