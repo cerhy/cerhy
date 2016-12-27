@@ -5,6 +5,7 @@
 <link rel="shortcut icon" href="" type="/${res}/image/x-icon" />
 <script src="${resSys}/jquery.js" type="text/javascript"></script>
 <script src="${resSys}/front.js" type="text/javascript"></script>
+<script src="${resSys}/jqueryUI/jquery-ui.js" type="text/javascript"></script>
 <title>${site.name}-首页</title>
 <link rel="stylesheet" type="text/css" href="/${res}/css/login.css" />
 <link rel="stylesheet" type="text/css" href="/${res}/css/hyindex.css" />
@@ -327,61 +328,30 @@ function HoverLi(x,y,m,n,counter){
                             <h3>
                                 <span>博客</span>
                             </h3>
-                            <a href="#" class="more" title="更多"></a>
+                            [@cms_channel id='81']<a href="${tag_bean.url}" class="more" title="更多"></a>[/@cms_channel ]
                         </div>
                         <div class="info-div-content">
                             <ul class="blog-content-list">
+                            	 [@cms_content_list channelId='81' count='3' type='5' titLen='14' orderBy='2' channelOption='1']
+                            	[#list tag_list as a]
                                 <li>
-                                    <a href="#">
+                                    <a href="${a.url}">
                                         <span class="trend"></span>
                                         <div class="con clearfix">
-                                            <img src="/${res}/images/blog1.png" width="70" height="70" alt="" class="blog-left-img">
+                                        	[#if a.typeImg??]<img src="${a.typeImg!}" width="70" height="70" alt="" class="blog-left-img">[#else]<img src="/${res}/images/blog1.png" width="70" height="70" alt="" class="blog-left-img">[/#if]                                                                    
                                             <div class="con-right">
-                                                <h4 class="of">【我们向琼中思源学习什么？怎么学？】</h4>
-                                                <p class="small-con of"> 研究琼中思源经验，吸纳合理科学的东西更加的有效…</p>
+                                                <h4 class="of">【[@text_cut s=a.title len=titLen append='...'/]】</h4>
+                                                <p class="small-con of"> [@text_cut s=a.description! len=titLen append='...' /]</p>
                                                 <div class="time-num clearfix">
-                                                    <span class="reads">阅读 <em>5</em></span>
-                                                    <span class="comments">评论 <em>3</em></span>
-                                                    <span class="time gray9">2016-05-06</span>
+                                                    <span class="comments pinglun">评论 <em>${a.commentsCheckedNum!0}</em></span>
+                                                    <span class="time gray9">${a.releaseDate?string('yyyy-MM-dd')}</span>
                                                 </div>
                                             </div>
                                         </div>
                                     </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <span class="trend"></span>
-                                        <div class="con clearfix">
-                                            <img src="/${res}/images/blog2.png" width="70" height="70" alt="" class="blog-left-img">
-                                            <div class="con-right">
-                                                <h4 class="of">【民国模范作文，能否给我们启迪？】</h4>
-                                                <p class="small-con of"> 最近读了几篇民国时期小学生的模范作文，奉献给同…</p>
-                                                <div class="time-num clearfix">
-                                                    <span class="reads">阅读 <em>10</em></span>
-                                                    <span class="comments">评论 <em>11</em></span>
-                                                    <span class="time gray9">2016-05-03</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <span class="trend"></span>
-                                        <div class="con clearfix">
-                                            <img src="/${res}/images/blog3.png" width="70" height="70" alt="" class="blog-left-img">
-                                            <div class="con-right">
-                                                <h4 class="of">【学校文化建设的几点问题】</h4>
-                                                <p class="small-con of"> 学校文化是指学校全体成员或部分成员习得且共同具…</p>
-                                                <div class="time-num clearfix">
-                                                    <span class="reads">阅读 <em>210</em></span>
-                                                    <span class="comments">评论 <em>39</em></span>
-                                                    <span class="time gray9">2016-04-22</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </li>
+                                </li>   
+                                [/#list]
+                                [/@cms_content_list]                                                           
                             </ul>
                         </div>
                     </div>

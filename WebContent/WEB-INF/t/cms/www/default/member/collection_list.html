@@ -16,87 +16,132 @@
 
 
 [#include "../hyinclude/header.html"/]
-<div class="member-con">
-  <div class="m-pos"><a href="${base}/">首页</a> > <span>会员中心</span></div>
-  <div class="member clearfix">
-    <div class="memberLeft clearfix"> 
-      <div class="member-nav">
-        <ul>
-        <li><a href="${base}/member/index.jspx">个人资料</a></li>
-        <li><a href="${base}/member/contribute_list.jspx">投稿管理</a></li>
-        <li><a href="${base}/member/doc_list.jspx?modelId=9">文档管理</a></li>
-        <li><a href="${base}/member/resume.jspx">应聘管理</a></li>
-        <li><a href="${base}/member/mycomments.jspx">我的评论</a></li>
-        <li><a href="${base}/member/myguestbook.jspx">我的留言</a></li>
-        <li><a href="${base}/member/collection_list.jspx" class="on">我的收藏</a></li>
-        <li><a href="${base}/member/message_mng.jspx">站内信息</a></li>
-        <li><a href="${base}/member/account.jspx">服务中心</a></li>
-        </ul>
-      </div>
-      <div class="member-main">
-        <div class="member-child"><a href="${base}/member/collection_list.jspx" class="on">我的收藏</a></div>
-        <div class="member-text tggl">
-          <form id="tableForm" action="collection_list.jspx" method="post">
-            [#if pagination.list?size gt 0]
-          <table cellpadding="0" cellspacing="0">
-            <tbody>
-              <tr>
-                <td class="tggl-top">ID</td><td class="tggl-top">标题</td><td class="tggl-top">栏目</td><td class="tggl-top">状态</td><td class="tggl-top">点击</td><td class="tggl-top">发布时间</td><td class="tggl-top">操作</td>
-              </tr>
-              [#list pagination.list as c]
-              <tr id="tr_${c.id}">
-                <td>${c.id}</td>
-                <td><a href="${c.url!}">${c.title?html}</a></td>
-                <td>${c.channel.name}</td>
-                <td>[#if c.checked]审核通过[#elseif c.checkStep==0]未审核[#else]审核中[/#if]</td>
-                <td>${c.views}</td>
-                <td>${c.releaseDate?string('yyyy-MM-dd')}</td>
-                <td><a href="${base}/member/collect_cancel.jspx?cIds=${c.id}&pageNo=${pagination.pageNo}">取消收藏</a></td>
-              </tr>
-              [/#list]
-              <tr>
-                <td colspan="8" style="padding:20px 0;">
-                  <input type="hidden" name="pageNo"/>
-		          <table width="100%" border="0" cellpadding="0" cellspacing="0"><tr><td align="center" class="pn-sp">
-		                共 ${pagination.totalCount} 条&nbsp;
-		                每页 ${pagination.pageSize} 条&nbsp;
-		                <input type="button" value="首 页" onclick="_gotoPage('1');"[#if pagination.firstPage] disabled="disabled"[/#if]/>
-		                <input type="button" value="上一页" onclick="_gotoPage('${pagination.prePage}');"[#if pagination.firstPage] disabled="disabled"[/#if]/>
-		                <input type="button" value="下一页" onclick="_gotoPage('${pagination.nextPage}');"[#if pagination.lastPage] disabled="disabled"[/#if]/>
-		                <input type="button" value="尾 页" onclick="_gotoPage('${pagination.totalPage}');"[#if pagination.lastPage] disabled="disabled"[/#if]/>&nbsp;
-		                当前 ${pagination.pageNo}/${pagination.totalPage} 页 &nbsp;转到第<input type="text" id="_goPs" onfocus="this.select();" onkeypress="if(event.keyCode==13){$('#_goPage').click();return false;}" style="width:50px; border:1px solid #e7e7e7;"/>页
-		                <input id="_goPage" type="button" value="转" onclick="_gotoPage($('#_goPs').val());"[#if pagination.totalPage==1] disabled="disabled"[/#if] />
-		            </td>
-		            </tr>
-		            </table>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-          <script type="text/javascript">
-            function _gotoPage(pageNo) {
-                try{
-                    var tableForm = document.getElementById("tableForm");
-                    $("input[name=pageNo]").val(pageNo);
-                    tableForm.action="collection_list.jspx";
-                    tableForm.onsubmit=null;
-                    tableForm.submit();
-                } catch(e) {
-                    alert('_gotoPage(pageNo)方法出错');
-                }
-            }
-            </script>
-            [#else]
-                <div>暂无收藏</div>
-            [/#if]
-            </form>
-        </div>
-      </div>
+<div class="local">
+    <div class="wrap">
+        <span class="local-icon icon-font"></span>
+        <a >首页</a>
+        <em> &gt; </em>
+        <span class="cur-page">会员中心</span>
     </div>
-    [#include "../include/member-right.html" /]
-    <div class="m-sj"></div>
-  </div>
+
 </div>
-[#include "../include/footer.html"/]
+<div class="container">
+    <div class="wrap">
+        <div class="mb20 clearfix">
+            <div class="wrap-left">
+                <div class="user-center-left">
+                    <div class="user-setting">
+                        <div class="pic-dt">[#if user.userImg??]<img src="${user.userImg}" width="120" height="120" alt="">[#else]<img src="/${res}/images/userImg-large.png" width="120" height="120" alt="">[/#if]</div>
+                        <div class="user-name-dt">${user.username}</div>
+                       	<a href="${base}/logout.jspx" class="user-oparetion-btn">退出</a>
+                    </div>
+                    <div class="user-menu-links">
+                        <ul>
+                            <li>
+                                <a href="${base}/member/index.jspx">个人资料</a>
+                            </li>
+                            <li>
+                                <a href="${base}/member/contribute_list.jspx">投稿管理</a>
+                            </li>
+                            <li>
+                                <a href="${base}/member/doc_list.jspx?modelId=9">文档管理</a>
+                            </li>
+                            <li style="display:none;">
+                                <a href="${base}/member/resume.jspx">应聘管理</a>
+                            </li>
+                            <li>
+                                <a href="${base}/member/mycomments.jspx">我的评论</a>
+                            </li>
+                            <li>
+                                <a href="${base}/member/myguestbook.jspx">我的留言</a>
+                            </li>
+                            <li>
+                                <a href="${base}/member/collection_list.jspx" class="active">我的收藏</a>
+                            </li>
+                                <li><a href="${base}/member/message_mng.jspx">站内信息</a></li>
+        						<li style="display:none;"><a href="${base}/member/account.jspx">服务中心</a></li>
+                            <li class="on" style="display:none;">
+                                <a href="javascript:;"><em></em>常用链接</a>
+                                <ul>
+                                    <li><a href="#"><em></em>海南省教育研究培训院</a></li>
+                                    <li><a href="#"><em></em>ICT课程网</a></li>
+                                    <li><a href="#"><em></em>普通高中信息技术课程网</a></li>
+                                    <li><a href="#"><em></em>成长博客-信息技术课程网</a></li>
+                                    <li><a href="#"><em></em>李艺博客</a></li>
+                                    <li><a href="#"><em></em>段青博客</a></li>
+                                    <li><a href="#"><em></em>徐强空间</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="wrap-right">
+                <div class="personCenter-userInfo">
+                    <div class="tab-head clearfix">
+                        <a href="${base}/member/collection_list.jspx" class="active">我的收藏 <em></em></a>
+                    </div>
+                    <div class="tab-content tggl" style="display: block;" class="user-info-dtTable">
+				          <form id="tableForm" action="collection_list.jspx" method="post">
+					            [#if pagination.list?size gt 0]
+					          <table cellpadding="0" cellspacing="0">
+					            <tbody>
+					              <tr>
+					                <td class="tggl-top" style="width: 70px;">ID</td><td class="tggl-top">标题</td><td class="tggl-top">栏目</td><td class="tggl-top" style="width: 70px;">状态</td><td class="tggl-top" style="width: 70px;">点击</td><td class="tggl-top">发布时间</td><td class="tggl-top" style="width: 70px;">操作</td>
+					              </tr>
+					              [#list pagination.list as c]
+					              <tr id="tr_${c.id}">
+					                <td>${c.id}</td>
+					                <td><a href="${c.url!}">${c.title?html}</a></td>
+					                <td>${c.channel.name}</td>
+					                <td>[#if c.checked]审核通过[#elseif c.checkStep==0]未审核[#else]审核中[/#if]</td>
+					                <td>${c.views}</td>
+					                <td>${c.releaseDate?string('yyyy-MM-dd')}</td>
+					                <td><a href="${base}/member/collect_cancel.jspx?cIds=${c.id}&pageNo=${pagination.pageNo}">取消收藏</a></td>
+					              </tr>
+					              [/#list]
+					              <tr>
+					                <td colspan="8" style="padding:20px 0;">
+					                  <input type="hidden" name="pageNo"/>
+							          <table width="100%" border="0" cellpadding="0" cellspacing="0"><tr><td align="center" class="pn-sp">
+							                共 ${pagination.totalCount} 条&nbsp;
+							                每页 ${pagination.pageSize} 条&nbsp;
+							                <input type="button" value="首 页" onclick="_gotoPage('1');"[#if pagination.firstPage] disabled="disabled"[/#if]/>
+							                <input type="button" value="上一页" onclick="_gotoPage('${pagination.prePage}');"[#if pagination.firstPage] disabled="disabled"[/#if]/>
+							                <input type="button" value="下一页" onclick="_gotoPage('${pagination.nextPage}');"[#if pagination.lastPage] disabled="disabled"[/#if]/>
+							                <input type="button" value="尾 页" onclick="_gotoPage('${pagination.totalPage}');"[#if pagination.lastPage] disabled="disabled"[/#if]/>&nbsp;
+							                当前 ${pagination.pageNo}/${pagination.totalPage} 页 &nbsp;转到第<input type="text" id="_goPs" onfocus="this.select();" onkeypress="if(event.keyCode==13){$('#_goPage').click();return false;}" style="width:50px; border:1px solid #e7e7e7;"/>页
+							                <input id="_goPage" type="button" value="转" onclick="_gotoPage($('#_goPs').val());"[#if pagination.totalPage==1] disabled="disabled"[/#if] />
+							            </td>
+							            </tr>
+							            </table>
+					                </td>
+					              </tr>
+					            </tbody>
+					          </table>
+					          <script type="text/javascript">
+					            function _gotoPage(pageNo) {
+					                try{
+					                    var tableForm = document.getElementById("tableForm");
+					                    $("input[name=pageNo]").val(pageNo);
+					                    tableForm.action="collection_list.jspx";
+					                    tableForm.onsubmit=null;
+					                    tableForm.submit();
+					                } catch(e) {
+					                    alert('_gotoPage(pageNo)方法出错');
+					                }
+					            }
+					            </script>
+					            [#else]
+					                <div>暂无收藏</div>
+					            [/#if]
+					            </form>
+                    </div>                   
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+[#include "../hyinclude/end.html"/]
 </body>
 </html>

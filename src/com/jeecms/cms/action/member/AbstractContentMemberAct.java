@@ -666,13 +666,13 @@ public class AbstractContentMemberAct {
 			}
 		}
 		
-		public String update_tz(HttpServletRequest request,HttpServletResponse response, ModelMap model) {
+		public String update_tz(String id,String orderId,HttpServletRequest request,HttpServletResponse response, ModelMap model) {
 			CmsSite site = CmsUtils.getSite(request);
 			CmsUser user = CmsUtils.getUser(request);
 			String name =null ;
 			  try {
 				request.setCharacterEncoding("UTF-8");
-			    name = new String(request.getParameter("id").getBytes("ISO-8859-1"), "utf-8");
+			    name = new String(request.getParameter("name").getBytes("ISO-8859-1"), "utf-8");
 			} catch (UnsupportedEncodingException e) {
 				e.printStackTrace();
 			}
@@ -680,8 +680,6 @@ public class AbstractContentMemberAct {
 			String path = request.getSession().getServletContext().getRealPath("/");
 			List<Columns> columnsList = (new BlogDao()).findByUserId(user_id, path);
 			model.addAttribute("columnsList", columnsList);
-			String id=request.getParameter("id");
-			String orderId = request.getParameter("order");
 			Columns column = new Columns(Integer.parseInt(id),user.getId(),name,Integer.parseInt(orderId));
 			model.addAttribute("column", column);
 			FrontUtils.frontData(request, model, site);

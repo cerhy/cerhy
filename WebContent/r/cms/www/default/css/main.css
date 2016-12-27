@@ -312,11 +312,28 @@ a:hover{
     padding-left: 19px;
 }
 .news-tab-dt .tab-head{
-    width: 457px;
+    width: 400px;
     background: #ceeaff;
     height:40px;
     margin-bottom: 18px;
 }
+.news-tab-dt .tab-right{
+    width: 57px;
+    background: #ceeaff;
+    height:40px;
+    margin-bottom: -20px;
+    margin-left: 400px;
+    margin-top: -58px;
+}
+.news-tab-dt .tab-right .hymore{
+    float: right;
+    margin-top: 13px;
+    margin-right: 17px;
+    width: 19px;
+    height:14px;
+    background: url(images/more.png) no-repeat;
+}
+
 .news-tab-dt .tab-head a{
     float: left;
     height:40px;
@@ -1321,6 +1338,7 @@ a:hover{
     border-bottom: 0 none;
 }
 .user-center-left .user-menu-links li li a{
+	margin:0 25px;
     position: relative;
     font-size: 12px;
     height:20px;
@@ -1360,7 +1378,6 @@ a:hover{
 }
 .personCenter-userInfo{
     background: #FFF;
-    height:100%;
     font-family: "MicroSoft Yahei";
 }
 .personCenter-userInfo .tab-head{

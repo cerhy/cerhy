@@ -1,5 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
+<title>cerhy-好研网</title>
 <link href="${resSys}/front.css" rel="stylesheet" type="text/css"/>
 <script src="${resSys}/jquery.js" type="text/javascript"></script>
 <script src="${resSys}/front.js" type="text/javascript"></script>
@@ -21,17 +22,21 @@ $(function(){
 				alert($(a).attr("ref"));
 		}
 	});
+<script type="text/javascript">
+$(function(){
+$('.user-menu-links li').click(function(){
+    $(this).toggleClass('on');
+});
 });
 </script>
 [#include "../hyinclude/header.html"/]
 [#include "../hyinclude/head.html"/]
 <div class="blog-con">
   <div class="blogHead">
-	  <div style="font-size:30px;margin:10px auto 0;"><a href="${base}/blog/index.jspx">[#if user.blogTitle??]${user.blogTitle}[#else]标题[/#if]</a></div>
-	  <div style="font-size:15px;margin:15px auto 10px;">[#if user.blogTitle2??]${user.blogTitle2}[#else]副标题[/#if]</div>
+	  <div style="font-size:30px;margin:30px auto 20px;"><a href="${base}/blog/index.jspx">[#if user.blogTitle??]${user.blogTitle}[#else]标题[/#if]</a></div>
+	  <div style="font-size:15px;margin:5px auto 15px;">[#if user.blogTitle2??]${user.blogTitle2}[#else]副标题[/#if]</div>
   </div>
-  
-      <div>
+      
         <div class="mb20 clearfix">
             <div class="wrap-left">
                 <div class="user-center-left">
@@ -47,10 +52,13 @@ $(function(){
                     <div class="user-menu-links">
                     <ul>
 				        <li><a href="${base}/blog/contribute_add.jspx">发表博客</a></li>
-				         <li><a href="${base}/blog/columns_list.jspx">博客栏目</a></li>
-				         [#list columnsList as c]
-			              <li><a href="${base}/blog/contribute_list.jspx?column_id=${c.column_id}" ><span class="column">${c.column_name}</span></a></li>
-			              [/#list]
+				          <li ><a><em></em>博客栏目</a>
+                             <ul>
+                              [#list columnsList as c]
+		                       <li><a href="${base}/blog/contribute_list.jspx?column_id=${c.column_id}" ><em></em>${c.column_name}</a></li>
+		                      [/#list]
+                             </ul>
+                          </li>
 			              <li><a href="${base}/blog/collection_list.jspx">转载</a></li>
 				        <li><a href="${base}/blog/help.jspx">设置</a></li>
 				         <li class="on">
@@ -107,19 +115,28 @@ $(function(){
 						         [/#if]
 						         </ul>
 						         </ul>
+				          <li ><a><em></em>设置</a>
+                              <ul>
+                              <li><a  href="${base}/blog/columns_list.jspx" ><em></em>新建栏目</a></li>
+                              <li><a  href="${base}/blog/tzsetting.jspx" ><em></em>博客信息</a></li>
+                              <li><a  onclick="set();" ><em></em>页面模板</a></li>
+                              <li><a  href="${base}/blog/link_list.jspx" ><em></em>链接管理</a></li>
+                              <li><a  href="${base}/blog/friends.jspx" ><em></em>好友管理</a></li>
+                              </ul>
+                         </li>
        				</ul>
                   </div>
                 </div>
             </div>
             <div class="wrap-right">
-                <div class="personCenter-userInfo">
+                <div class="personCenter-userInfo" style="min-height: 600px;">
                     
                     <div class="tab-content" style="display: block;">
                       
-			        <div class="tggl">
+			        <div class="tggl" style="text-align: -webkit-center;">
 			          <form id="tableForm" action="${base}/blog/index.jspx" method="post">
 			          [#if pagination.list?size gt 0]
-			          <table cellpadding="0" cellspacing="0">
+			          <table cellpadding="0" cellspacing="0" >
 			            <tbody>
 			              <tr>
 			                <td class="tggl-top">ID</td>
@@ -131,6 +148,7 @@ $(function(){
 			              <tr>
 			                <td>${c.id}</td>
 			                <td style="text-align:center;"  width="600px;"><a href="${c.url!}">[@text_cut s=c.title?html len='24' append='...'/]</a></td>
+			                <td style="text-align:center;" ><a href="${c.url!}"></input>[@text_cut s=c.title?html len='24' append='...'/]</a></td>
 			                <td>${c.views}</td>
 			                <td>${c.releaseDate?string('yyyy-MM-dd')}</td>
 			              </tr>
@@ -138,7 +156,7 @@ $(function(){
 			            </tbody>
 			          </table>
 			          <input type="hidden" name="pageNo"/>
-			           <table width="100%" border="0" cellpadding="0" cellspacing="0"><tr><td align="center" class="pn-sp">
+			           <table style="border:0px;"><tr><td align="center" class="pn-sp">
                 共 ${pagination.totalCount} 条&nbsp;
                 每页 ${pagination.pageSize} 条&nbsp;
                 <input type="button" value="首 页" onclick="_gotoPage('1');"[#if pagination.firstPage] disabled="disabled"[/#if]/>
@@ -177,15 +195,10 @@ $(function(){
              [#if user.blogNotice??]${user.blogNotice}[/#if]
              </div>
         </div>
-</div>
+
   </div>
   </div>
-[#include "../hyinclude/end.html"/]
- <script type="text/javascript">
-		skinChange(${user.theme!0});
-	function skinChange(n){
-		document.all.MrJin.href="/${res}/css/skin/"+n+".css"; 
-	}
-</script>
+[#include "model.html"/]
+[#include "../include/footer.html"/]
 </body>
 </html>
