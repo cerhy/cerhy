@@ -1338,7 +1338,7 @@ public class AbstractContentMemberAct {
 			model.addAttribute("friends","");
 		}
 		model.addAttribute("pagination", p);
-		model.addAttribute("user", userT);
+		model.addAttribute("usert", userT);
 		model.addAttribute("userIds", userIds);
 		if (!StringUtils.isBlank(q)) {
 			model.addAttribute("q", q);
@@ -1423,7 +1423,7 @@ public class AbstractContentMemberAct {
 	    	model.addAttribute("friendsList", listF);
 	    	model.addAttribute("friends","");
 	    }
-		model.addAttribute("user", user);
+		model.addAttribute("usert", user);
 		model.addAttribute("userIds", user.getId());
 	    
 		List<Columns> columnsList = (new BlogDao()).findByUserId(user_id, path);
