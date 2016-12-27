@@ -451,8 +451,8 @@ public class ContributeAct extends AbstractContentMemberAct {
 	}
 	
 	@RequestMapping(value = "/blog/update_tz.jspx")
-	public String update_tz(HttpServletRequest request, HttpServletResponse response,ModelMap model) {
-		return super.update_tz(request, response, model);
+	public String update_tz(String id, String orderId, HttpServletRequest request, HttpServletResponse response,ModelMap model) {
+		return super.update_tz(id,orderId,request, response, model);
 	}
 	
 	@RequestMapping(value = "/blog/updateColumn.jspx")

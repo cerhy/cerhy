@@ -8,31 +8,91 @@
 <script src="${base}/thirdparty/My97DatePicker/WdatePicker.js" type="text/javascript"></script>
 [#include "../hyinclude/header.html"/]
 [#include "../hyinclude/head.html"/]
+<style type="text/css">
+.aaa{
+    position: relative;
+    display: block;
+    padding: 20px 0;
+    border-bottom: 1px solid #e6ebf0;
+    font-family: "MicroSoft YaHei";
+    transition: padding 300ms;
+}
+.report-text {
+    float: left;
+    width: 520px;
+    padding-top: 5px;
+    padding-left: 30px;
+}
+</style>
 <div class="blog-con">
  <div class="blogHead">
-	  <div style="font-size:30px;margin:10px auto 0">[#if user.blogTitle??]${user.blogTitle}[#else]标题[/#if]</div>
-	  <div style="font-size:15px;margin:15px auto 10px;">[#if user.blogTitle2??]${user.blogTitle2}[#else]副标题[/#if]</div>
+	  <div style="font-size:30px;margin:30px auto 20px;"><a href="${base}/blog/index.jspx">[#if user.blogTitle??]${user.blogTitle}[#else]标题[/#if]</a></div>
+	  <div style="font-size:15px;margin:5px auto 15px;">[#if user.blogTitle2??]${user.blogTitle2}[#else]副标题[/#if]</div>
   </div>
-  <div class="member clearfix">
-    <div class="blogLeft clearfix"> 
-      <div class="member-nav">
-        <ul>
-	        <li><a href="${base}/blog/contribute_add.jspx">发表博客</a></li>
-	         <li><a href="${base}/blog/columns_list.jspx">博客栏目</a></li>
-	          [#list columnsList as c]
-              <li><a href="${base}/blog/contribute_list.jspx?column_id=${c.column_id}" ><span class="column">${c.column_name}</span></a></li>
-              [/#list]
-               <li><a href="${base}/blog/collection_list.jspx">转载</a></li>
-	        <li><a href="${base}/blog/help.jspx" class="on1">设置</a></li>
-        </ul>
-      </div>
-      <div class="member-main">
-            <div style="font-size:16px;"><a href="${base}/blog/tzsetting.jspx" class="column">博客信息</a></div>
-            <div style="font-size:16px;"><a onclick="set();">页面模板</a></div>    
-             <div style="font-size:16px;"><a href="${base}/blog/link_list.jspx">链接</a></div>                 
-             <div style="font-size:16px;"><a href="${base}/blog/friends.jspx">好友</a></div>                 
-      </div>
-            <div id="setDialog" style="display:none;">	
+  
+   <div class="mb20 clearfix">
+            <div class="wrap-left">
+                <div class="user-center-left">
+                    <div class="user-setting">
+                        <div class="pic-dt">
+                        [#if user.userImg??]<img src="${user.userImg}" width="120" height="120" alt="">
+                        [#else]
+                        <img src="/${res}/images/userImg-large.png" width="120" height="120" alt="">[/#if]
+                        </div>
+                        <div class="user-name-dt"><a href="${base}/blog/index.jspx">${user.username}</a></div>
+                        <a href="${base}/logout.jspx" class="user-oparetion-btn">退出</a>
+                    </div>
+                    <div class="user-menu-links">
+                    <ul>
+				        <li><a href="${base}/blog/contribute_add.jspx">发表博客</a></li>
+				         <li><a href="${base}/blog/columns_list.jspx">博客栏目</a></li>
+				         [#list columnsList as c]
+			              <li><a href="${base}/blog/contribute_list.jspx?column_id=${c.column_id}" ><span class="column">${c.column_name}</span></a></li>
+			              [/#list]
+			              <li><a href="${base}/blog/collection_list.jspx">转载</a></li>
+				        <li><a href="${base}/blog/help.jspx">设置</a></li>
+       				</ul>
+                    </div>
+                </div>
+            </div>
+
+		<div class="mb20 clearfix">
+			<div class="wrap-right">
+				<div class=" blog_right">
+					
+					<div class="article-list-wrap">
+                      <ul class="report-list sm mb20">
+                     			<li> <a class="hasImg clearfix" href="${base}/blog/tzsetting.jspx" >
+						          <div class="item clearfix" style="border-top:none;">
+						          <div class="report-text"><h3>博客信息</h3></div>
+						          <em class="arrowBtn"></em>
+						          </div></a> </li>
+						          
+						          <li> <a class="hasImg clearfix" onclick="set();">
+						          <div class="item clearfix" style="border-top:none;">
+						          <div class="report-text"><h3>页面模板</h3></div>
+						          <em class="arrowBtn"></em>
+						          </div></a> </li>
+						          
+						          <li> <a class="hasImg clearfix" href="${base}/blog/link_list.jspx" >
+						          <div class="item clearfix" style="border-top:none;">
+						          <div class="report-text"><h3>链接</h3></div>
+						          <em class="arrowBtn"></em>
+						          </div></a> </li>
+						          
+						          <li> <a class="hasImg clearfix" href="${base}/blog/friends.jspx" >
+						          <div class="item clearfix" style="border-top:none;">
+						          <div class="report-text"><h3>好友</h3></div>
+						          <em class="arrowBtn"></em>
+						          </div></a> </li>
+                    </ul>
+                </div>
+					
+				</div>
+			</div>
+		</div>
+
+		<div id="setDialog" style="display:none;">	
       		<form id="setFrom" class="setfrom" action="${base}/blog/changeTheme.jspx" method="post">
       			<table width="100%" class="pn-ftable" cellpadding="2" cellspacing="1" border="0">
       				<tbody>
@@ -58,9 +118,11 @@
 	        	</div>
       		</form>
       </div>
-    </div>
+            
   </div>
+  
 </div>
+  
 [#include "../include/footer.html"/]
 <script type="text/javascript">
 
