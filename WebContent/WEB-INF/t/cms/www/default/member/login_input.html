@@ -13,8 +13,8 @@ $(function() {
 
 [#include "../hyinclude/header.html"/] 
 
-<div class="login-div">
-	[#if loginSource??]
+<div class="register-box login-box">   
+   [#if loginSource??]
         <div class="login-source">
    	[#if loginSource=="needPerm"]
    	 该文章需要会员登录后才能浏览！
@@ -23,85 +23,56 @@ $(function() {
    	[/#if]
          </div>
    [/#if] 
-    <div class="login-center login-section">
-        <div class="login-center-section clearfix">
-            <h3>会员登录</h3>           
-            <form id="jvForm" action="${base}/login.jspx" method="post">
-            	<div class="inf-message">
-			      [#if message??]
-			            
-							[#if message=="true"]
-							您必须登录后才能继续刚才的操作
-							[#else]
-							${message}
-							[/#if]
-							<input type="hidden" name="message" value="${message}"/>
-			                   
-							[/#if]	
-			                  		
-							[#if processUrl??]<input type="hidden" name="processUrl" value="${processUrl}"/>[/#if]
-							[#if returnUrl??]<input type="hidden" name="returnUrl" value="${returnUrl}"/>[#else]<input type="hidden" name="returnUrl" value="/"/>[/#if]
-							[#if error??]
-							<div class="error-message">
-									[#if error=="org.apache.shiro.authc.IncorrectCredentialsException"]
-									[@s.m "error.invalidPassword"/]
-									[#elseif error=="org.apache.shiro.authc.UnknownAccountException"]
-									[@s.m "error.usernameNotExist"/]
-									[#elseif error=="com.jeecms.common.security.CaptchaErrorException"]
-									[@s.m "error.invalidCaptcha"/]
-									[#elseif error=="com.jeecms.common.security.DisabledException"]
-									[@s.m "error.userDisabled"/]
-									[#elseif error=="com.jeecms.common.security.InactiveException"]
-									[@s.m "error.userInActive"/]
-			 						[/#if]
-							</div>	
-							[/#if]
-							[#if success??]
-							[#if success]
-								注册成功！
-							[/#if]
-			    
-			      [/#if]
-			  </div>
-                <table>
-                    <tbody>
-                    <tr class="input-dt">
-                        <td class="has-placeholder login-input-td">
-                        	<em class="user-em"></em>
-                            <input id="username" name="username" class="required user-name"  type="text" placeholder="请输入用户名"/>
-
-                        </td>
-                    </tr>
-                    <tr class="input-dt">
-                        <td class="has-placeholder login-input-td">
-                        	 <em class="password-em"></em>
-                            <input id="password" name="password" class="required user-password"  type="password" placeholder="请输入密码"/>
-
-                        </td>
-                    </tr>
-                    <tr class="input-dt">
-                        <td>
-                            <div class="login-params">                           	
-                               <div class="next-day" ><input type="checkbox" style="margin-top: 6px;" class="login-checkbox"  value="true" name="rememberMe">下次自动登录</div>
-                                <a href="${base}/member/forgot_password.jspx" class="forgot-password">忘记密码</a>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2">
-                            <div class="submit">
-                                <input type="submit" value="登 录" class="submit-btn big-blue-btn"/>
-                            </div>
-
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-
-            </form>
-        </div>
+  <div class="register-nav"><span>会员登录</span></div> 
+  <form id="jvForm" action="${base}/login.jspx" method="post">
+      <div class="inf-message">
+      [#if message??]
+            
+				[#if message=="true"]
+				您必须登录后才能继续刚才的操作
+				[#else]
+				${message}
+				[/#if]
+				<input type="hidden" name="message" value="${message}"/>
+                   
+				[/#if]	
+                  		
+				[#if processUrl??]<input type="hidden" name="processUrl" value="${processUrl}"/>[/#if]
+				[#if returnUrl??]<input type="hidden" name="returnUrl" value="${returnUrl}"/>[#else]<input type="hidden" name="returnUrl" value="/"/>[/#if]
+				[#if error??]
+				<div class="error-message">
+						[#if error=="org.apache.shiro.authc.IncorrectCredentialsException"]
+						[@s.m "error.invalidPassword"/]
+						[#elseif error=="org.apache.shiro.authc.UnknownAccountException"]
+						[@s.m "error.usernameNotExist"/]
+						[#elseif error=="com.jeecms.common.security.CaptchaErrorException"]
+						[@s.m "error.invalidCaptcha"/]
+						[#elseif error=="com.jeecms.common.security.DisabledException"]
+						[@s.m "error.userDisabled"/]
+						[#elseif error=="com.jeecms.common.security.InactiveException"]
+						[@s.m "error.userInActive"/]
+ 						[/#if]
+				</div>	
+				[/#if]
+				[#if success??]
+				[#if success]
+					注册成功！
+				[/#if]
+    
+      [/#if]
+  </div>
+      <div class="username-con"><i></i><input id="username" name="username" class="required login-input" type="text" placeholder="用户名"></div>
+      <div class="password-con"><i></i><input id="password" name="password" class="required password-input" type="password" placeholder="密码"></div>
+      [#if (errorTimes??&&errorTimes<=0)||(errorRemaining?? && errorRemaining<=0)]
+      <div class="captcha-con clearfix"><i></i><input type="text" id="captcha" name="captcha" class=""required captcha-input" placeholder="验证码"/><img src="${base}/captcha.svl" onclick="this.src='${base}/captcha.svl?d='+new Date()*1" /></div>
+      [/#if]
+    <div class="login-rem clearfix">
+      <div class="next-day"><input type="checkbox" class="login-checkbox"  value="true" name="rememberMe">下次自动登录</div>
+      <a href="${base}/member/forgot_password.jspx">忘记密码</a>
     </div>
-</div>
-[#include "../hyinclude/end.html"/]
+    <input type="submit" class="login-btn" value="登 录">
+  </form>
+  </div>
+[#include "../include/footer.html"/]
 </body>
 </html>

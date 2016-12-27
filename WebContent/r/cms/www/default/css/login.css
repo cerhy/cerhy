@@ -1,5 +1,5 @@
 /*登录框*/
-.login-box{width:350px; height:auto; min-height:360px; position:relative;}
+.login-box{width:370px; height:auto; min-height:360px; position:relative;}
 .login-source{width:100%; line-height:24px; text-align:center; margin-bottom:20px; font-size:14px; position:absolute; top:-34px; left:0; color:#ef3838;}
 .username-con{margin-top:40px;}
 .username-con, .password-con, .captcha-con{position:relative;}
@@ -16,7 +16,7 @@
 .next-day{color:#333; font-size:14px; float:left;}
 .login-checkbox{vertical-align:top; margin-right:5px;}
 .login-rem a{color:#2075b7; font-size:14px; float:right;}
-.login-box .login-btn{width:100%; background-color:#ef3838; font-size:14px; color:#fff; line-height:40px; border-radius:5px; -moz-border-radius:5px; -o-border-radius:5px; -webkit-border-radius:5px; margin-top:20px; cursor:pointer;}
+.login-box .login-btn{width:100%; background-color: #0B91DF; font-size:14px; color:#fff; line-height:40px; border-radius:5px; -moz-border-radius:5px; -o-border-radius:5px; -webkit-border-radius:5px; margin-top:20px; cursor:pointer;}
 .login-box .login-btn:hover{background-color:#f94d4d;}
 .quick{color:#777777; font-size:14px; margin-top:30px;}
 .quick .quick-list{margin-top:15px; width:100%;}
