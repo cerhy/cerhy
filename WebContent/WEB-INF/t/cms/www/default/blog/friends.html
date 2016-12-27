@@ -32,35 +32,19 @@
         </ul>
       </div>
       <div class="member-main">
-        <form id="jvForm" action="add_friends.jspx" method="post">
-         	<textarea id="friends" name="friends" rows="18" cols="90">${friends }</textarea>
-         	<br />
-          	<span class="fl">
-				<p>每行可以输入一个好友，姓名和账号之间用“=”分隔开，最多可设置300个。</p>
-				<p>例如：ZXGHL=8001</p>
-			</span>
-          	<input style="display: none;" name="nextUrl" value="friends.jspx" />
-          	<br />
-          	 <input type="submit" value="提交" class="submit-on">
-          	 <br />
-          	 [#if friendsList??]
-         		[#list friendsList as map]
-	         		[#list map?keys as k]
-	         			[#if k?split("~")[2]=='null'] 
-	         				<br />
-		         			<img src="/${res}/images/userImg.png" alt="" style="width: 50px;height: 50px;"/><br />
-		         			<a target="_blank" href="${base}/blog/find_all_url_friend.jspx?userIds=${k?split("~")[1]}">${k?split("~")[0]}</a>
-		         		[#else]
-		         			<br />
-		         			<img src="${k?split("~")[2]}" alt="" style="width: 50px;height: 50px;" /><br />
-		         			<a target="_blank" href="${base}/blog/find_all_url_friend.jspx?userIds=${k?split("~")[1]}">${k?split("~")[0]}</a>
-	         			[/#if]
-	         		[/#list]
-         		[/#list]
-         	[/#if]
-            </div>
-            </div>
-          </form>   
+        	<form id="jvForm" action="add_friends.jspx" method="post">
+	         	<textarea id="friends" name="friends" rows="18" cols="90">${friends }</textarea>
+	         	<br />
+	          	<span class="fl">
+					<p>每行可以输入一个好友，姓名和账号之间用“=”分隔开，最多可设置300个。</p>
+					<p>例如：ZXGHL=8001</p>
+				</span>
+	          	<input style="display: none;" name="nextUrl" value="friends.jspx" />
+	          	<br />
+	          	 <input type="submit" value="提交" class="submit-on">
+         	 </form>   
+           </div>
+		</div>
       </div>
     </div>
   </div>

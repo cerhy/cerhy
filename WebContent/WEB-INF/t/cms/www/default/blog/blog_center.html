@@ -3,14 +3,28 @@
 <link href="${resSys}/front.css" rel="stylesheet" type="text/css"/>
 <script src="${resSys}/jquery.js" type="text/javascript"></script>
 <script src="${resSys}/front.js" type="text/javascript"></script>
-
+<script src="/${res}/js/SimpleTree.js"></script>
 <link id="hello" type="text/css" rel="stylesheet" href="/${res}/css/custom.css" />
 <link  type="text/css" rel="stylesheet" href="/${res}/css/hyindex.css" />
-
+<link  type="text/css" rel="stylesheet" href="/${res}/css/SimpleTree.css" />
+<style>
+.st_tree ul .change a:hover{color:red;}
+.st_tree ul .change :hover{background-color:#e7e7e7 }
+::-webkit-scrollbar{width:0px}
+.clear{clear:both}
+</style>
+<script type="text/javascript">
+$(function(){
+	$(".st_tree").SimpleTree({
+		click:function(a){
+			if(!$(a).attr("hasChild"))
+				alert($(a).attr("ref"));
+		}
+	});
+});
+</script>
 [#include "../hyinclude/header.html"/]
 [#include "../hyinclude/head.html"/]
-
-
 <div class="blog-con">
   <div class="blogHead">
 	  <div style="font-size:30px;margin:10px auto 0;"><a href="${base}/blog/index.jspx">[#if user.blogTitle??]${user.blogTitle}[#else]标题[/#if]</a></div>
@@ -39,8 +53,62 @@
 			              [/#list]
 			              <li><a href="${base}/blog/collection_list.jspx">转载</a></li>
 				        <li><a href="${base}/blog/help.jspx">设置</a></li>
+				         <li class="on">
+                                <a href="javascript:;"><em></em>好友</a>
+	                                <ul>
+	                                [#if friendsList??]
+					         		[#list friendsList as map]
+						         		[#list map?keys as k]
+						         			[#if k?split("~")[2]=='null'] 
+					         			<li  style="padding-left:45px;"><img  src="/${res}/images/userImg.png" alt="" style="width: 50px;height: 50px;cursor: pointer;"/><br />
+					         			<a  style="padding-left: 10px;" target="_blank" href="${base}/blog/find_all_url_friend.jspx?userIds=${k?split("~")[1]}">${k?split("~")[0]}</a></li>
+			         			    [#else]
+								         <li  style="padding-left: 45px;"><img src="${k?split("~")[2]}" alt="" style="width: 50px;height: 50px;cursor: pointer;" /><br />
+								         <a style="padding-left: 10px; target="_blank" href="${base}/blog/find_all_url_friend.jspx?userIds=${k?split("~")[1]}">${k?split("~")[0]}</a></li>
+							         		[/#if]
+							         	[/#list]
+						         	[/#list]
+						         	[/#if]
+	                              </ul>
+                         </li>
+				         <div class="st_tree">
+				        	 <ul  show="true">
+				        	 <li><a href="javascript:;"><em></em>链接</a></li>
+				        	 <ul>
+				         		[#if urlList??]
+						         [#list urlList as map]
+						          	[#list map?keys as k]
+						          		 [#if k=='']
+								            [#list map[k] as v]
+								            	[#if v?index_of("=")!=-1]
+								         			<li  class="change"><a style="font-size: 13px;" target="_blank" href="${v?split("=")[1]}">${v?split("=")[0]}</a></li>
+								         		[/#if]
+								         		[#if v?index_of("|")!=-1]
+								         			<li  class="change"><a style="font-size: 13px;" target="_blank" href="${v?split("|")[1]}">${v?split("|")[0]}</a></li>
+								         		[/#if]
+								            [/#list]
+								         [#else]
+								          <li><a href="javascript:;"><em></em>${k}</a></li>
+								          <ul>
+								            [#list map[k] as v]
+								            	[#if v?index_of("http:")!=-1]
+									            	[#if v?index_of("=")!=-1]
+									         			<li class="change"><a style="font-size: 13px;" target="_blank" href="${v?split("=")[1]}">${v?split("=")[0]}</a></li>
+									         		[/#if]
+									         		[#if v?index_of("|")!=-1]
+									         			<li class="change"><a style="font-size: 13px;" target="_blank" href="${v?split("|")[1]}">${v?split("|")[0]}</a></li>
+									         		[/#if]
+								            	[/#if]
+								            [/#list]
+								           </ul>	
+								          [/#if]
+						          	[/#list]
+						         [/#list]
+						         [/#if]
+						         </ul>
+						         </ul>
        				</ul>
-                    </div>
+                  </div>
                 </div>
             </div>
             <div class="wrap-right">
@@ -55,14 +123,14 @@
 			            <tbody>
 			              <tr>
 			                <td class="tggl-top">ID</td>
-			                <td class="tggl-top">标题</td>
+			                <td class="tggl-top" width="600px;">标题</td>
 			                <td class="tggl-top">浏览次数</td>
 			                <td class="tggl-top">发布时间</td>
 			              </tr>
 			              [#list pagination.list as c]
 			              <tr>
 			                <td>${c.id}</td>
-			                <td style="text-align:center;"><a href="${c.url!}">[@text_cut s=c.title?html len='24' append='...'/]</a></td>
+			                <td style="text-align:center;"  width="600px;"><a href="${c.url!}">[@text_cut s=c.title?html len='24' append='...'/]</a></td>
 			                <td>${c.views}</td>
 			                <td>${c.releaseDate?string('yyyy-MM-dd')}</td>
 			              </tr>
@@ -102,7 +170,6 @@
 			            [/#if]
 			          </form>
 			        </div>
-			        
                 </div>
             </div>
             <div class="gonggao">
