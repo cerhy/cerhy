@@ -1,12 +1,13 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
+<title>cerhy-好研网</title>
 <link href="${resSys}/front.css" rel="stylesheet" type="text/css"/>
 <script src="${resSys}/jquery.js" type="text/javascript"></script>
 <script src="${resSys}/front.js" type="text/javascript"></script>
-<script src="/${res}/js/SimpleTree.js"></script>
 <link id="hello" type="text/css" rel="stylesheet" href="/${res}/css/custom.css" />
 <link  type="text/css" rel="stylesheet" href="/${res}/css/hyindex.css" />
 <link  type="text/css" rel="stylesheet" href="/${res}/css/SimpleTree.css" />
+<script src="/${res}/js/SimpleTree.js"></script>
 <style>
 .st_tree ul .change a:hover{color:red;}
 .st_tree ul .change :hover{background-color:#e7e7e7 }
@@ -23,12 +24,18 @@ $(function(){
 	});
 });
 </script>
+<script type="text/javascript">
+$(function(){
+$('.user-menu-links li').click(function(){
+    $(this).toggleClass('on');
+});
+});
+</script>
 [#include "../hyinclude/header.html"/]
-[#include "../hyinclude/head.html"/]
 <div class="blog-con">
   <div class="blogHead">
-	  <div style="font-size:30px;margin:10px auto 0;"><a href="${base}/blog/index.jspx">[#if user.blogTitle??]${user.blogTitle}[#else]标题[/#if]</a></div>
-	  <div style="font-size:15px;margin:15px auto 10px;">[#if user.blogTitle2??]${user.blogTitle2}[#else]副标题[/#if]</div>
+	  <div style="font-size:30px;margin:10px auto 0;"><a href="${base}/blog/index.jspx">[#if usert.blogTitle??]${usert.blogTitle}[#else]标题[/#if]</a></div>
+	  <div style="font-size:15px;margin:15px auto 10px;">[#if usert.blogTitle2??]${usert.blogTitle2}[#else]副标题[/#if]</div>
   </div>
   
       <div>
@@ -46,9 +53,13 @@ $(function(){
                     </div> -->
                     <div class="user-menu-links">
                     <ul>
-				         [#list columnsList as c]
-			              <li><a href="${base}/blog/contribute_list.jspx?column_id=${c.column_id}" ><span class="column">${c.column_name}</span></a></li>
-			              [/#list]
+				         <li ><a><em></em>博客栏目</a>
+                             <ul>
+                              [#list columnsList as c]
+		                       <li><a href="${base}/blog/contribute_list_friend.jspx?column_id=${c.column_id}&user_ids=${userIds}" ><em></em>${c.column_name}</a></li>
+		                      [/#list]
+                             </ul>
+                          </li>
 			              <li>
                                 <a href="javascript:;"><em></em>好友</a>
 	                                <ul>
@@ -139,12 +150,12 @@ $(function(){
 			           <table width="100%" border="0" cellpadding="0" cellspacing="0"><tr><td align="center" class="pn-sp">
                 共 ${pagination.totalCount} 条&nbsp;
                 每页 ${pagination.pageSize} 条&nbsp;
-                <input type="button" value="首 页" onclick="_gotoPage('1');"[#if pagination.firstPage] disabled="disabled"[/#if]/>
-                <input type="button" value="上一页" onclick="_gotoPage('${pagination.prePage}');"[#if pagination.firstPage] disabled="disabled"[/#if]/>
-                <input type="button" value="下一页" onclick="_gotoPage('${pagination.nextPage}');"[#if pagination.lastPage] disabled="disabled"[/#if]/>
-                <input type="button" value="尾 页" onclick="_gotoPage('${pagination.totalPage}');"[#if pagination.lastPage] disabled="disabled"[/#if]/>&nbsp;
+                <input style="cursor: pointer;"  type="button" value="首 页" onclick="_gotoPage('1');"[#if pagination.firstPage] disabled="disabled"[/#if]/>
+                <input style="cursor: pointer;" type="button" value="上一页" onclick="_gotoPage('${pagination.prePage}');"[#if pagination.firstPage] disabled="disabled"[/#if]/>
+                <input style="cursor: pointer;" type="button" value="下一页" onclick="_gotoPage('${pagination.nextPage}');"[#if pagination.lastPage] disabled="disabled"[/#if]/>
+                <input style="cursor: pointer;" type="button" value="尾 页" onclick="_gotoPage('${pagination.totalPage}');"[#if pagination.lastPage] disabled="disabled"[/#if]/>&nbsp;
                 当前 ${pagination.pageNo}/${pagination.totalPage} 页 &nbsp;转到第<input type="text" id="_goPs" onfocus="this.select();" onkeypress="if(event.keyCode==13){$('#_goPage').click();return false;}" style="width:50px; border:1px solid #e7e7e7;"/>页
-                <input id="_goPage" type="button" value="转" onclick="_gotoPage($('#_goPs').val());"[#if pagination.totalPage==1] disabled="disabled"[/#if] />
+                <input style="cursor: pointer;" id="_goPage" type="button" value="转" onclick="_gotoPage($('#_goPs').val());"[#if pagination.totalPage==1] disabled="disabled"[/#if] />
             </td>
             </tr>
             </table>
@@ -172,7 +183,7 @@ $(function(){
             </div>
             <div class="gonggao">
             <p style="color:red;font-size:16px;text-align:center;">公告</p>
-             [#if user.blogNotice??]${user.blogNotice}[/#if]
+             [#if usert.blogNotice??]${usert.blogNotice}[/#if]
              </div>
         </div>
 </div>

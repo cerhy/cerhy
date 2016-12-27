@@ -444,6 +444,15 @@ public class ContributeAct extends AbstractContentMemberAct {
 		return super.blog_list(queryTitle, modelId, queryChannelId, CONTRIBUTE_LIST,
 				pageNo, request, model);
 	}
+	
+	//好友博客栏目
+	@RequestMapping(value = "/blog/contribute_list_friend.jspx")
+	public String blog_list_friend(String queryTitle, Integer modelId,
+			Integer queryChannelId, Integer pageNo, HttpServletRequest request,
+			ModelMap model) {
+		return super.blog_list_friend(queryTitle, modelId, queryChannelId, "tpl.testPage",
+				pageNo, request, model);
+	}
 
 	@RequestMapping(value = "/blog/contribute_add.jspx")
 	public String blog_add(HttpServletRequest request, HttpServletResponse response,

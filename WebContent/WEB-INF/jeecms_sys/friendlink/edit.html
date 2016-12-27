@@ -28,6 +28,7 @@ $(function() {
 <@p.form id="jvForm" action="o_update.do" labelWidth="15" class="formDefStyle">
 <@p.text colspan="1" width="50" label="cmsFriendlink.name" name="name" value=cmsFriendlink.name required="true" class="required" maxlength="150"/>
 <@p.text colspan="1" width="50" label="cmsFriendlink.domain" name="domain" value=cmsFriendlink.domain required="true" class="required" maxlength="255" style="width:200px"/><@p.tr/>
+<@p.select colspan="1" width="50" label="栏目" name="channelId" list=channelList listKey="id" listValue="name" value=cmsFriendlink.channel.id listDeep="deep" required="true"/><@p.tr/>
 <@p.select colspan="1" width="50" label="cmsFriendlink.category" name="ctgId" value=cmsFriendlink.category.id list=ctgList listKey="id" listValue="name" required="true"/>
 <@p.text colspan="1" width="50" label="cmsFriendlink.email" name="email" value=cmsFriendlink.email maxlength="100"/><@p.tr/>
 <@p.td id="linkLogo" label="cmsFriendlink.logo" colspan="1" width="50" noHeight="true">
