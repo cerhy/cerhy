@@ -209,7 +209,7 @@ $('.user-menu-links li').click(function(){
           [#include "media_upload.html"/]
           [#include "image_upload.html"/]
           [#include "attachment_upload.html"/]
-          <form id="jvForm" action="contribute_save.jspx" method="post"> 
+          <form id="jvForm" action="${base}/member/contribute_save.jspx?blog='1'" method="post"> 
           <table cellpadding="0" cellspacing="0">
             <tbody>
               <tr class="blog_column">
@@ -253,7 +253,7 @@ $('.user-menu-links li').click(function(){
               <tr>
                 <td class="tggl-top">内容</td>
                 <td>
-                 <textarea id="txt" name="txt" htmlEscape="false"></textarea> 
+                 <textarea id="txt" name="txt" ></textarea> 
                  <script type="text/javascript">
 						$(function() {
 						   	CKEDITOR.replace( 'txt' ,

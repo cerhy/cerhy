@@ -426,13 +426,13 @@ public class AbstractContentMemberAct {
 			String blogTitle = request.getParameter("blogTitle");
 			String blogTitle2 = request.getParameter("blogTitle2");
 			String blogNotice = request.getParameter("blogNotice");
-			if (null != blogTitle && "" != blogTitle) {
+			if (null != blogTitle || "" != blogTitle) {
 				user.setBlogTitle(blogTitle);
 			}
-			if (null != blogTitle2 && "" != blogTitle2) {
+			if (null != blogTitle2 || "" != blogTitle2) {
 				user.setBlogTitle2(blogTitle2);
 			}
-			if (null != blogNotice && "" != blogNotice) {
+			if (null != blogNotice || "" != blogNotice) {
 				user.setBlogNotice(blogNotice);
 			}
 			CmsUser u = cmsUserMng.updateBlog(user);
@@ -647,14 +647,14 @@ public class AbstractContentMemberAct {
 			String orderId = request.getParameter("updateOrderId");
 			String path = request.getSession().getServletContext().getRealPath("/");
 			if (null != id) {
-				if (null != name && ""!=name) {
-					if (null != orderId && ""!=orderId) {
+				if (null != name ) {
+					if (null != orderId) {
 						(new BlogDao()).updateColumn(Integer.parseInt(id), name, Integer.parseInt(orderId), path);
 					} else {
 						(new BlogDao()).updateColumn(Integer.parseInt(id), name, path);
 					}
 				} else {
-					if (null != orderId) {
+					if (null != orderId ) {
 						(new BlogDao()).updateColumn(Integer.parseInt(id), Integer.parseInt(orderId), path);
 					}
 				}
@@ -687,7 +687,7 @@ public class AbstractContentMemberAct {
 		}
 		
 	public String blog_save(String title, String author, String description,
-			String txt, String tagStr, String column_id, Integer modelId,ContentDoc doc,
+			String txt, String tagStr, Integer id, Integer modelId,ContentDoc doc,
 			String captcha,String mediaPath,String mediaType,
 			String[] attachmentPaths, String[] attachmentNames,
 			String[] attachmentFilenames, String[] picPaths, String[] picDescs,
@@ -697,7 +697,7 @@ public class AbstractContentMemberAct {
 				CmsSite site = CmsUtils.getSite(request);
 				CmsUser user = CmsUtils.getUser(request);
 				FrontUtils.frontData(request, model, site);
-			
+			String column_id = request.getParameter("column_id");
 			if (user == null) {
 				return FrontUtils.showLogin(request, model, site);
 			}
@@ -736,7 +736,12 @@ public class AbstractContentMemberAct {
 		if(doc!=null){
 			contentDocMng.save(doc, c);
 		}
-		return FrontUtils.showSuccess(request, model, nextUrl);
+		try {
+			request.getRequestDispatcher("/blog/index.jspx?").forward(request, response);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 	
 	public String blog_edit(Integer id, String nextUrl,HttpServletRequest request,
@@ -791,7 +796,9 @@ public class AbstractContentMemberAct {
 		CmsSite site = CmsUtils.getSite(request);
 		CmsUser user = CmsUtils.getUser(request);
 		FrontUtils.frontData(request, model, site);
-		MemberConfig mcfg = site.getConfig().getMemberConfig();
+		channelId = 81;
+		String column_id = request.getParameter("column_id");
+		/*MemberConfig mcfg = site.getConfig().getMemberConfig();
 		// 没有开启会员功能
 		if (!mcfg.isMemberOn()) {
 			return FrontUtils.showMessage(request, model, "member.memberClose");
@@ -802,7 +809,7 @@ public class AbstractContentMemberAct {
 		WebErrors errors = validateUpdate(id, channelId, site, user, request);
 		if (errors.hasErrors()) {
 			return FrontUtils.showError(request, response, model, errors);
-		}
+		}*/
 		Content c = new Content();
 		c.setId(id);
 		c.setSite(site);
@@ -817,14 +824,19 @@ public class AbstractContentMemberAct {
 		t.setId(id);
 		t.setTxt(txt);
 		String[] tagArr = StrUtils.splitAndTrim(tagStr, ",", null);
-		contentMng.update(c, ext, t,null, tagArr, null, null, null, 
+		contentMng.blog_update(c, ext, t,null, tagArr, null, null, null, 
 				attachmentPaths,attachmentNames, attachmentFilenames
-				,picPaths,picDescs, null, channelId, null, null, 
+				,picPaths,picDescs, null, Integer.parseInt(column_id), null, null, 
 				charge,chargeAmount,user, true);
 		if(doc!=null){
 			contentDocMng.update(doc, c);
 		}
-		return FrontUtils.showSuccess(request, model, nextUrl);
+		try {
+			request.getRequestDispatcher("/blog/index.jspx?").forward(request, response);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	public String link_save(String linkUrl,String nextUrl,
