@@ -6,9 +6,12 @@
 <script src="/${res}/js/SimpleTree.js"></script>
 <link id="hello" type="text/css" rel="stylesheet" href="/${res}/css/custom.css" />
 <link  type="text/css" rel="stylesheet" href="/${res}/css/hyindex.css" />
+<link  type="text/css" rel="stylesheet" href="/${res}/css/SimpleTree.css" />
 <style>
 .st_tree ul .change a:hover{color:red;}
 .st_tree ul .change :hover{background-color:#e7e7e7 }
+::-webkit-scrollbar{width:0px}
+.clear{clear:both}
 </style>
 <script type="text/javascript">
 $(function(){
@@ -32,7 +35,7 @@ $(function(){
         <div class="mb20 clearfix">
             <div class="wrap-left">
                 <div class="user-center-left">
-                    <div class="user-setting">
+                    <!-- <div class="user-setting">
                         <div class="pic-dt">
                         [#if user.userImg??]<img src="${user.userImg}" width="120" height="120" alt="">
                         [#else]
@@ -40,52 +43,13 @@ $(function(){
                         </div>
                         <div class="user-name-dt"><a href="${base}/blog/index.jspx">${user.username}</a></div>
                         <a href="${base}/logout.jspx" class="user-oparetion-btn">退出</a>
-                    </div>
+                    </div> -->
                     <div class="user-menu-links">
                     <ul>
 				         [#list columnsList as c]
 			              <li><a href="${base}/blog/contribute_list.jspx?column_id=${c.column_id}" ><span class="column">${c.column_name}</span></a></li>
 			              [/#list]
-				         <li class="on">
-                                <a href="javascript:;"><em></em>常用链接</a>
-                                <ul>
-						            [#if urlList??]
-							         [#list urlList as map]
-							          	[#list map?keys as k]
-							          		 [#if k=='']
-									            [#list map[k] as v]
-									            	[#if v?index_of("=")!=-1]
-									         			<li><a target="_blank" href="${v?split("=")[1]}">${v?split("=")[0]}</a></li>
-									         		[/#if]
-									         		[#if v?index_of("|")!=-1]
-									         			<li><a target="_blank" href="${v?split("|")[1]}">${v?split("|")[0]}</a></li>
-									         		[/#if]
-									            [/#list]
-									         [#else]
-									     <ul>    
-								         <li class="onL">
-									         <a href="javascript:;"><em></em>${k}</a>
-									          	<ul>
-									            [#list map[k] as v]
-									            	[#if v?index_of("http:")!=-1]
-										            	[#if v?index_of("=")!=-1]
-										         			 <li><a target="_blank" href="${v?split("=")[1]}">${v?split("=")[0]}</a></li>
-										         		[/#if]
-										         		[#if v?index_of("|")!=-1]
-										         			 <li><a target="_blank" href="${v?split("|")[1]}">${v?split("|")[0]}</a></li>
-										         		[/#if]
-									            	[/#if]
-									            [/#list]
-									            </ul>
-									            </li>
-									            </ul>
-									          [/#if]
-							          	[/#list]
-							         [/#list]
-							         [/#if]
-                                </ul>
-                            </li>
-				         <li class="on">
+			              <li>
                                 <a href="javascript:;"><em></em>好友</a>
 	                                <ul>
 	                                [#if friendsList??]
@@ -96,13 +60,51 @@ $(function(){
 					         			<a  style="padding-left: 10px;" target="_blank" href="${base}/blog/find_all_url_friend.jspx?userIds=${k?split("~")[1]}">${k?split("~")[0]}</a></li>
 			         			    [#else]
 								         <li  style="padding-left: 45px;"><img src="${k?split("~")[2]}" alt="" style="width: 50px;height: 50px;cursor: pointer;" /><br />
-								         <a style="padding-left: 10px;" target="_blank" href="${base}/blog/find_all_url_friend.jspx?userIds=${k?split("~")[1]}">${k?split("~")[0]}</a></li>
+								         <a style="padding-left: 10px; target="_blank" href="${base}/blog/find_all_url_friend.jspx?userIds=${k?split("~")[1]}">${k?split("~")[0]}</a></li>
 							         		[/#if]
 							         	[/#list]
 						         	[/#list]
 						         	[/#if]
 	                              </ul>
                          </li>
+				         <div class="st_tree">
+				        	 <ul  show="true">
+				        	 <li><a href="javascript:;" style="text-decoration:none;"><em></em>链接</a></li>
+				        	 <ul>
+				         		[#if urlList??]
+						         [#list urlList as map]
+						          	[#list map?keys as k]
+						          		 [#if k=='']
+								            [#list map[k] as v]
+								            	[#if v?index_of("=")!=-1]
+								         			<li  class="change"><a style="font-size: 13px;" target="_blank" href="${v?split("=")[1]}">${v?split("=")[0]}</a></li>
+								         		[/#if]
+								         		[#if v?index_of("|")!=-1]
+								         			<li  class="change"><a style="font-size: 13px;" target="_blank" href="${v?split("|")[1]}">${v?split("|")[0]}</a></li>
+								         		[/#if]
+								            [/#list]
+								         [#else]
+								          <li><a href="javascript:;" style="text-decoration:none;"><em></em>${k}</a></li>
+								          <ul>
+								            [#list map[k] as v]
+								            	[#if v?index_of("http:")!=-1]
+									            	[#if v?index_of("=")!=-1]
+									         			<li class="change"><a style="font-size: 13px;" target="_blank" href="${v?split("=")[1]}">${v?split("=")[0]}</a></li>
+									         		[/#if]
+									         		[#if v?index_of("|")!=-1]
+									         			<li class="change"><a style="font-size: 13px;" target="_blank" href="${v?split("|")[1]}">${v?split("|")[0]}</a></li>
+									         		[/#if]
+								            	[/#if]
+								            [/#list]
+								           </ul>	
+								          [/#if]
+						          	[/#list]
+						         [/#list]
+						         [/#if]
+						         </ul>
+						         </ul>
+						         </div>
+				        
        				</ul>
                   </div>
                 </div>
