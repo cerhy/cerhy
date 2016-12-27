@@ -72,7 +72,7 @@ $('.user-menu-links li').click(function(){
                               </ul>
                          </li>
                          
-                         <li class="on">
+                         <li>
                                 <a href="javascript:;"><em></em>好友</a>
 	                                <ul>
 	                                [#if friendsList??]
@@ -80,10 +80,10 @@ $('.user-menu-links li').click(function(){
 						         		[#list map?keys as k]
 						         			[#if k?split("~")[2]=='null'] 
 					         			<li  style="padding-left:45px;"><img  src="/${res}/images/userImg.png" alt="" style="width: 50px;height: 50px;cursor: pointer;"/><br />
-					         			<a  style="padding-left: 10px;" target="_blank" href="${base}/blog/find_all_url_friend.jspx?userIds=${k?split("~")[1]}">${k?split("~")[0]}</a></li>
+					         			<a  style="padding-left: 0px;" target="_blank" href="${base}/blog/find_all_url_friend.jspx?userIds=${k?split("~")[1]}">${k?split("~")[0]}</a></li>
 			         			    [#else]
 								         <li  style="padding-left: 45px;"><img src="${k?split("~")[2]}" alt="" style="width: 50px;height: 50px;cursor: pointer;" /><br />
-								         <a style="padding-left: 10px; target="_blank" href="${base}/blog/find_all_url_friend.jspx?userIds=${k?split("~")[1]}">${k?split("~")[0]}</a></li>
+								         <a style="padding-left: 0px; target="_blank" href="${base}/blog/find_all_url_friend.jspx?userIds=${k?split("~")[1]}">${k?split("~")[0]}</a></li>
 							         		[/#if]
 							         	[/#list]
 						         	[/#list]
@@ -92,7 +92,7 @@ $('.user-menu-links li').click(function(){
                          </li>
 				         <div class="st_tree">
 				        	 <ul  show="true">
-				        	 <li><a href="javascript:;"><em></em>链接</a></li>
+				        	 <li><a href="javascript:;" style="text-decoration:none;"><em></em>链接</a></li>
 				        	 <ul>
 				         		[#if urlList??]
 						         [#list urlList as map]
@@ -100,22 +100,22 @@ $('.user-menu-links li').click(function(){
 						          		 [#if k=='']
 								            [#list map[k] as v]
 								            	[#if v?index_of("=")!=-1]
-								         			<li  class="change"><a style="font-size: 13px;" target="_blank" href="${v?split("=")[1]}">${v?split("=")[0]}</a></li>
+								         			<li  class="change"><a style="font-size: 12px;" target="_blank" href="${v?split("=")[1]}">${v?split("=")[0]}</a></li>
 								         		[/#if]
 								         		[#if v?index_of("|")!=-1]
-								         			<li  class="change"><a style="font-size: 13px;" target="_blank" href="${v?split("|")[1]}">${v?split("|")[0]}</a></li>
+								         			<li  class="change"><a style="font-size: 12px;" target="_blank" href="${v?split("|")[1]}">${v?split("|")[0]}</a></li>
 								         		[/#if]
 								            [/#list]
 								         [#else]
-								          <li><a href="javascript:;"><em></em>${k}</a></li>
+								          <li><a href="javascript:;" style="text-decoration:none;"><em></em>${k}</a></li>
 								          <ul>
 								            [#list map[k] as v]
 								            	[#if v?index_of("http:")!=-1]
 									            	[#if v?index_of("=")!=-1]
-									         			<li class="change"><a style="font-size: 13px;" target="_blank" href="${v?split("=")[1]}">${v?split("=")[0]}</a></li>
+									         			<li class="change"><a style="font-size: 12px;" target="_blank" href="${v?split("=")[1]}">${v?split("=")[0]}</a></li>
 									         		[/#if]
 									         		[#if v?index_of("|")!=-1]
-									         			<li class="change"><a style="font-size: 13px;" target="_blank" href="${v?split("|")[1]}">${v?split("|")[0]}</a></li>
+									         			<li class="change"><a style="font-size: 12px;" target="_blank" href="${v?split("|")[1]}">${v?split("|")[0]}</a></li>
 									         		[/#if]
 								            	[/#if]
 								            [/#list]
@@ -126,6 +126,7 @@ $('.user-menu-links li').click(function(){
 						         [/#if]
 						         </ul>
 						         </ul>
+						         </div>
        				</ul>
                     </div>
                 </div>

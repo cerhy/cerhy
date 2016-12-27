@@ -836,6 +836,9 @@ public class AbstractContentMemberAct {
 		if (user == null) {
 			return FrontUtils.showLogin(request, model, site);
 		}
+		if(linkUrl.trim()==""){
+			linkUrl=null;
+		}
 		channelMng.updateLinkUrl(linkUrl,user);
 		return FrontUtils.showSuccess(request, model, nextUrl);
 	}
@@ -848,6 +851,9 @@ public class AbstractContentMemberAct {
 		FrontUtils.frontData(request, model, site);
 		if (user == null) {
 			return FrontUtils.showLogin(request, model, site);
+		}
+		if(friends.trim()==""){
+			friends=null;
 		}
 		channelMng.updateFriends(friends,user);
 		return FrontUtils.showSuccess(request, model, nextUrl);
