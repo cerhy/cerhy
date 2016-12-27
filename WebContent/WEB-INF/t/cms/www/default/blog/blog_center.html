@@ -15,8 +15,6 @@ $('.user-menu-links li').click(function(){
 });
 </script>
 [#include "../hyinclude/header.html"/]
-[#include "../hyinclude/head.html"/]
-
 
 <div class="blog-con">
   <div class="blogHead">
@@ -79,7 +77,7 @@ $('.user-menu-links li').click(function(){
 			              [#list pagination.list as c]
 			              <tr>
 			                <td>${c.id}</td>
-			                <td style="text-align:center;" ><a href="${c.url!}">[@text_cut s=c.title?html len='24' append='...'/]</a></td>
+			                <td style="text-align:center;" ><a href="${c.url!}"></input>[@text_cut s=c.title?html len='24' append='...'/]</a></td>
 			                <td>${c.views}</td>
 			                <td>${c.releaseDate?string('yyyy-MM-dd')}</td>
 			              </tr>
@@ -131,79 +129,7 @@ $('.user-menu-links li').click(function(){
   </div>
   </div>
   
-  <div id="setDialog" style="display:none;">	
-      		<form id="setFrom" class="setfrom" action="${base}/blog/changeTheme.jspx" method="post">
-      			<table width="100%" class="pn-ftable" cellpadding="2" cellspacing="1" border="0">
-      				<tbody>
-      					<tr>
-      					<td><span class="pn-frequired">*</span>页面模板</td>
-      					<td colspan="1" width="35%" class="pn-fcontent">
-      					<select id="theme" name="theme" onchange="skinChange(this.selectedIndex)" class="themeSelect">
-	        				<option value="0">默认</option>
-	        				<option value="1">自然风景01</option>
-	        				<option value="2">自然风景02</option>
-	        				<option value="3">自然风景03</option>
-	        				<option value="4">自然风景04</option>
-	        				<option value="5">自然风景05</option>
-	        			</select>
-      					</td>
-      					</tr>
-      				</tbody>
-      			</table>      	
-      			<div class="themeButton">	
-      			<input type="hidden" name="nextUrl" value="help.jspx"/>
-      			<input type="submit" value="确定" class="submit"/>
-	        	<button type="button" onclick="closeDialog();">取消</button>
-	        	</div>
-      		</form>
-      </div>
-  
-  
+[#include "model.html"/]
 [#include "../include/footer.html"/]
-<script type="text/javascript">
-
-skinChange(${user.theme!0});
-
-function skinChange(n){
-	document.all.MrJin.href="/${res}/css/skin/"+n+".css"; 
-}
-$(function() {
-	$("#setDialog").dialog({
-		autoOpen: false,
-		modal: false,
-		resizable :false,
-		stack : false,
-		draggable : true,
-		closeOnEscape : false,
-		width: 300,
-		height: 200,
-		position: ["center",80],
-		
-		close: function(event, ui) {
-			skinChange(${user.theme!0});
-		}
-	});	   
-});
-
-function closeDialog(){
-	$("#setDialog").dialog("close");
-	skinChange(${user.theme!0});
-}
-
-function set(){
-	$("#setDialog").dialog("open");
-	var theme = document.getElementById("theme");
-	theme.value="${user.theme!0}";
-		
-	
-	
-}
-</script>
- <script type="text/javascript">
-		skinChange(${user.theme!0});
-	function skinChange(n){
-		document.all.MrJin.href="/${res}/css/skin/"+n+".css"; 
-	}
-</script>
 </body>
 </html>
