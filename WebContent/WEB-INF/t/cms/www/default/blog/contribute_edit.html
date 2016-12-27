@@ -134,6 +134,13 @@ function changeModel(){
 	}
 }
 </script>
+<script type="text/javascript">
+$(function(){
+$('.user-menu-links li').click(function(){
+    $(this).toggleClass('on');
+});
+});
+</script>
 <style type="text/css">
 .sel-disabled{background-color:#ccc}
 .blog-con{width:1000px; margin:0 auto; padding-top:18px;}
@@ -164,12 +171,23 @@ function changeModel(){
                     <div class="user-menu-links">
                     <ul>
 				        <li><a href="${base}/blog/contribute_add.jspx">发表博客</a></li>
-				         <li><a href="${base}/blog/columns_list.jspx">博客栏目</a></li>
-				         [#list columnsList as c]
-			              <li><a href="${base}/blog/contribute_list.jspx?column_id=${c.column_id}" ><span class="column">${c.column_name}</span></a></li>
-			              [/#list]
+				          <li ><a><em></em>博客栏目</a>
+                             <ul>
+                              [#list columnsList as c]
+		                       <li><a href="${base}/blog/contribute_list.jspx?column_id=${c.column_id}" ><em></em>${c.column_name}</a></li>
+		                      [/#list]
+                             </ul>
+                          </li>
 			              <li><a href="${base}/blog/collection_list.jspx">转载</a></li>
-				        <li><a href="${base}/blog/help.jspx">设置</a></li>
+				          <li ><a><em></em>设置</a>
+                              <ul>
+                              <li><a  href="${base}/blog/columns_list.jspx" ><em></em>新建栏目</a></li>
+                              <li><a  href="${base}/blog/tzsetting.jspx" ><em></em>博客信息</a></li>
+                              <li><a  onclick="set();" ><em></em>页面模板</a></li>
+                              <li><a  href="${base}/blog/link_list.jspx" ><em></em>链接管理</a></li>
+                              <li><a  href="${base}/blog/friends.jspx" ><em></em>好友管理</a></li>
+                              </ul>
+                         </li>
        				</ul>
                     </div>
                 </div>
