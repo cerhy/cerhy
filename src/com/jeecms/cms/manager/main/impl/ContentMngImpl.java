@@ -610,6 +610,146 @@ public class ContentMngImpl implements ContentMng, ChannelDeleteChecker {
 		return bean;
 	}
 	
+	public Content blog_update(Content bean, ContentExt ext, ContentTxt txt,ContentDoc doc,
+			String[] tagArr, Integer[] channelIds, Integer[] topicIds,
+			Integer[] viewGroupIds, String[] attachmentPaths,
+			String[] attachmentNames, String[] attachmentFilenames,
+			String[] picPaths, String[] picDescs, Map<String, String> attr,
+			Integer column_id, Integer typeId, Boolean draft,
+			Short charge,Double chargeAmount,CmsUser user,boolean forMember) {
+		Content entity = findById(bean.getId());
+		//更新column_id
+		if(bean.getColumn_id() != column_id){
+			bean.setColumn_id(column_id);
+		}
+		// 执行监听器
+		List<Map<String, Object>> mapList = preChange(entity);
+		// 更新主表
+		Updater<Content> updater = new Updater<Content>(bean);
+		bean = dao.updateByUpdater(updater);
+		// 审核更新处理，如果站点设置为审核退回，且当前文章审核级别大于管理员审核级别，则将文章审核级别修改成管理员的审核级别。
+		/*Byte userStep;
+		if (forMember) {
+			// 会员的审核级别按0处理
+			userStep = 0;
+		} else {
+			CmsSite site = bean.getSite();
+			userStep = user.getCheckStep(site.getId());
+		}
+		AfterCheckEnum after = bean.getChannel().getAfterCheckEnum();*/
+		/*
+		if (after == AfterCheckEnum.BACK_UPDATE
+				&& bean.getCheckStep() > userStep) {
+			bean.getContentCheck().setCheckStep(userStep);
+			if (bean.getCheckStep() >= bean.getChannel().getFinalStepExtends()) {
+				bean.setStatus(ContentCheck.CHECKED);
+			} else {
+				bean.setStatus(ContentCheck.CHECKING);
+			}
+		}
+		*/
+		//修改后退回
+		/*if (after == AfterCheckEnum.BACK_UPDATE) {
+			reject(bean.getId(), user, "");
+		}*/
+		/*// 草稿
+		if (draft != null) {
+			if (draft) {
+				bean.setStatus(DRAFT);
+			} else {
+				if (bean.getStatus() == DRAFT) {
+					if (bean.getCheckStep() >= bean.getChannel()
+							.getFinalStepExtends()) {
+						bean.setStatus(ContentCheck.CHECKED);
+					} else {
+						bean.setStatus(ContentCheck.CHECKING);
+					}
+				}
+			}
+		}*/
+		/*//共享状态处理
+		processContentShareCheck(bean);
+		// 是否有标题图
+		bean.setHasTitleImg(!StringUtils.isBlank(ext.getTitleImg()));
+		// 更新栏目
+		if (channelId != null) {
+			bean.setChannel(channelMng.findById(channelId));
+		}*/
+	/*	// 更新类型
+		if (typeId != null) {
+			bean.setType(contentTypeMng.findById(typeId));
+		}*/
+		// 更新扩展表
+		contentExtMng.update(ext);
+		// 更新文本表
+		contentTxtMng.update(txt, bean);
+		// 更新文库表
+		if(doc!=null){
+			contentDocMng.update(doc, bean);
+		}
+		/*//收费变更
+		contentChargeMng.afterContentUpdate(bean, charge, chargeAmount);*/
+		/*// 更新属性表
+		if (attr != null) {
+			Map<String, String> attrOrig = bean.getAttr();
+			attrOrig.clear();
+			attrOrig.putAll(attr);
+		}*/
+		// 更新副栏目表
+		/*Set<Channel> channels = bean.getChannels();
+		channels.clear();
+		if (channelIds != null && channelIds.length > 0) {
+			for (Integer cid : channelIds) {
+				channels.add(channelMng.findById(cid));
+			}
+		}
+		channels.add(bean.getChannel());*/
+	/*	// 更新专题表
+		Set<CmsTopic> topics = bean.getTopics();
+		topics.clear();
+		if (topicIds != null && topicIds.length > 0) {
+			for (Integer tid : topicIds) {
+				if(tid!=null&&tid!=0){
+					topics.add(cmsTopicMng.findById(tid));
+				}
+			}
+		}
+		// 更新浏览会员组
+		Set<CmsGroup> groups = bean.getViewGroups();
+		groups.clear();
+		if (viewGroupIds != null && viewGroupIds.length > 0) {
+			for (Integer gid : viewGroupIds) {
+				groups.add(cmsGroupMng.findById(gid));
+			}
+		}
+		// 更新标签
+		contentTagMng.updateTags(bean.getTags(), tagArr);*/
+		// 更新附件
+		bean.getAttachments().clear();
+		if (attachmentPaths != null && attachmentPaths.length > 0) {
+			for (int i = 0, len = attachmentPaths.length; i < len; i++) {
+				if (!StringUtils.isBlank(attachmentPaths[i])) {
+					bean.addToAttachmemts(attachmentPaths[i],
+							attachmentNames[i], attachmentFilenames[i]);
+				}
+			}
+		}
+		// 更新图片集
+		bean.getPictures().clear();
+		if (picPaths != null && picPaths.length > 0) {
+			for (int i = 0, len = picPaths.length; i < len; i++) {
+				if (!StringUtils.isBlank(picPaths[i])) {
+					bean.addToPictures(picPaths[i], picDescs[i]);
+				}
+			}
+		}
+		contentRecordMng.record(bean, user, ContentOperateType.edit);
+		// 执行监听器
+		afterChange(bean, mapList);
+		return bean;
+	}
+	
+	
 	public Content update(Content bean){
 		Updater<Content> updater = new Updater<Content>(bean);
 		bean = dao.updateByUpdater(updater);

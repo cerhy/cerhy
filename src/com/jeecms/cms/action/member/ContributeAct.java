@@ -125,10 +125,19 @@ public class ContributeAct extends AbstractContentMemberAct {
 			Short charge,Double chargeAmount,
 			String nextUrl, HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
-		return super.save(title, author, description, txt, tagStr, channelId,modelId,
-				null, captcha,mediaPath,mediaType,attachmentPaths,attachmentNames, attachmentFilenames
-				,picPaths,picDescs,charge,chargeAmount,
-				nextUrl, request, response, model);
+		   String blog = request.getParameter("blog");
+		   if(null != blog ){
+			  return super.blog_save(title, author, description, txt, tagStr, channelId,modelId,
+						null, captcha,mediaPath,mediaType,attachmentPaths,attachmentNames, attachmentFilenames
+						,picPaths,picDescs,charge,chargeAmount,
+						nextUrl, request, response, model);
+					   }else{
+			   return super.save(title, author, description, txt, tagStr, channelId,modelId,
+						null, captcha,mediaPath,mediaType,attachmentPaths,attachmentNames, attachmentFilenames
+						,picPaths,picDescs,charge,chargeAmount,
+						nextUrl, request, response, model);
+		   }
+		
 	}
 
 	/**
@@ -180,11 +189,21 @@ public class ContributeAct extends AbstractContentMemberAct {
 			Short charge,Double chargeAmount,
 			String nextUrl, HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
-		return super.update(id, title, author, description, txt, tagStr,
-				channelId, mediaPath,mediaType,attachmentPaths,
-				attachmentNames, attachmentFilenames
-				,picPaths,picDescs,null,charge, chargeAmount,
-				nextUrl, request, response, model);
+		String blog = request.getParameter("blog");
+		   if(null != blog ){
+			   return super.blog_update(id, title, author, description, txt, tagStr,
+						channelId, mediaPath,mediaType,attachmentPaths,
+						attachmentNames, attachmentFilenames
+						,picPaths,picDescs,null,charge, chargeAmount,
+						nextUrl, request, response, model);
+		   }else{
+			   return super.update(id, title, author, description, txt, tagStr,
+						channelId, mediaPath,mediaType,attachmentPaths,
+						attachmentNames, attachmentFilenames
+						,picPaths,picDescs,null,charge, chargeAmount,
+						nextUrl, request, response, model);
+		   }
+		
 	}
 
 	/**
@@ -470,7 +489,7 @@ public class ContributeAct extends AbstractContentMemberAct {
 	}
 	
 
-	@RequestMapping(value = "/blog/contribute_save.jspx")
+/*	@RequestMapping(value = "/blog/contribute_save.jspx")
 	public String blog_save(String title, String author, String description,
 			String txt, String tagStr, String column_id,Integer modelId, 
 			String captcha,String mediaPath,String mediaType,
@@ -483,7 +502,7 @@ public class ContributeAct extends AbstractContentMemberAct {
 				null, captcha,mediaPath,mediaType,attachmentPaths,attachmentNames, attachmentFilenames
 				,picPaths,picDescs,charge,chargeAmount,
 				nextUrl, request, response, model);
-	}
+	}*/
 
 	@RequestMapping(value = "/blog/contribute_edit.jspx")
 	public String blog_edit(Integer id, HttpServletRequest request,
@@ -491,7 +510,7 @@ public class ContributeAct extends AbstractContentMemberAct {
 		return super.blog_edit(id, CONTRIBUTE_EDIT, request, response, model);
 	}
 
-	@RequestMapping(value = "/blog/contribute_update.jspx")
+/*	@RequestMapping(value = "/blog/contribute_update.jspx")
 	public String blog_update(Integer id, String title, String author,
 			String description, String txt, String tagStr, Integer channelId,
 			String mediaPath,String mediaType,
@@ -505,7 +524,7 @@ public class ContributeAct extends AbstractContentMemberAct {
 				attachmentNames, attachmentFilenames
 				,picPaths,picDescs,null,charge, chargeAmount,
 				nextUrl, request, response, model);
-	}
+	}*/
 
 	@RequestMapping(value = "/blog/contribute_delete.jspx")
 	public void blog_delete(Integer ids,Integer column_id, HttpServletRequest request, HttpServletResponse response, ModelMap model) {

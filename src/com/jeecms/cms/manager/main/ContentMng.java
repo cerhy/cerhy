@@ -156,6 +156,15 @@ public interface ContentMng {
 			Integer channelId, Integer typeId, Boolean draft,
 			Short charge,Double chargeAmount,CmsUser user,boolean forMember);
 	
+	public Content blog_update(Content bean, ContentExt ext, ContentTxt txt,ContentDoc doc,
+			String[] tagArr, Integer[] channelIds, Integer[] topicIds,
+			Integer[] viewGroupIds, String[] attachmentPaths,
+			String[] attachmentNames, String[] attachmentFilenames,
+			String[] picPaths, String[] picDescs, Map<String, String> attr,
+			Integer channelId, Integer typeId, Boolean draft,
+			Short charge,Double chargeAmount,CmsUser user,boolean forMember);
+	
+	
 	public Content update(Content bean);
 	
 	public Content update(CmsUser user,Content bean,ContentOperateType operate);
