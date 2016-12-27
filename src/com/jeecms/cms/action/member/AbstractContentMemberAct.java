@@ -455,7 +455,74 @@ public class AbstractContentMemberAct {
 		String path = request.getSession().getServletContext().getRealPath("/");
 		List<Columns> columnsList = (new BlogDao()).findByUserId(user_id, path);
 		model.addAttribute("columnsList", columnsList);
-
+		
+		//获取链接列表
+		String linkUrl=user.getLinkUrl();
+		List listU=new ArrayList();
+		if(linkUrl!=null){
+			String[] strs=linkUrl.split(" ");
+			String newUrl="";
+			for(int i=0;i<strs.length;i++){
+				if(i!=strs.length-1){
+					if(!strs[i].contains("http")&&strs[i+1].contains("http")){
+						newUrl+="~"+strs[i]+" ";
+					}else{
+						newUrl+=strs[i]+" ";
+					}
+				}else{
+					if(!strs[i].contains("http")){
+						newUrl+="~"+strs[i]+" ";
+					}else{
+						newUrl+=strs[i]+" ";
+					}
+				}
+			}
+			String[] str=newUrl.split("~");
+			for(int j=0;j<str.length;j++){
+				Map<String,Object> map=new HashMap<String,Object>();
+				String[] st=str[j].toString().split(" ");
+				List lists=new ArrayList();
+				String newName="";
+				for(int k=0;k<st.length;k++){
+					if(st[0].contains("http")){
+						newName="";
+					}else{
+						newName=st[0];
+					}
+					lists.add(st[k]);
+				}
+				map.put(newName, lists);
+				listU.add(map);
+			}
+			model.addAttribute("urlList", listU);
+			model.addAttribute("linkUrls", linkUrl.replaceAll(" ", "\r\n"));
+		}else{
+			model.addAttribute("urlList",listU);
+			model.addAttribute("linkUrls","");
+			
+		}
+		//获取好友列表
+		String friends=user.getFriends();
+		List listF = new ArrayList<>();
+		if(friends!=null){
+			
+			String[] strs=friends.split(" ");
+			for(int i=0;i<strs.length;i++){
+				String[] str=strs[i].split("=");
+				Map<String,Object> map=new HashMap<String,Object>();
+				CmsUser u=channelMng.findUserImage(str[1].toString());
+				String newName=str[0]+"~"+u.getId()+"~"+u.getUserExt().getUserImg();
+				map.put(newName, u.getUserExt().getUserImg());
+				listF.add(map);
+			}
+			model.addAttribute("friendsList", listF);
+			model.addAttribute("friends", friends.replaceAll(" ", "\r\n"));
+		}else{
+			model.addAttribute("friendsList", listF);
+			model.addAttribute("friends","");
+		}
+		
+		
 		model.addAttribute("user", user);
 		FrontUtils.frontData(request, model, site);
 		return FrontUtils.getTplPath(request, site.getSolutionPath(),TPLDIR_BLOG,"tpl.blogSetting");
@@ -552,6 +619,74 @@ public class AbstractContentMemberAct {
 		String column_id = request.getParameter("column_id");
 		int user_id = user.getId();
 	    String path = request.getSession().getServletContext().getRealPath("/");
+	    
+	    //获取链接列表
+	    String linkUrl=user.getLinkUrl();
+	    List listU=new ArrayList();
+	    if(linkUrl!=null){
+	    	String[] strs=linkUrl.split(" ");
+	    	String newUrl="";
+	    	for(int i=0;i<strs.length;i++){
+	    		if(i!=strs.length-1){
+	    			if(!strs[i].contains("http")&&strs[i+1].contains("http")){
+	    				newUrl+="~"+strs[i]+" ";
+	    			}else{
+	    				newUrl+=strs[i]+" ";
+	    			}
+	    		}else{
+	    			if(!strs[i].contains("http")){
+	    				newUrl+="~"+strs[i]+" ";
+	    			}else{
+	    				newUrl+=strs[i]+" ";
+	    			}
+	    		}
+	    	}
+	    	String[] str=newUrl.split("~");
+	    	for(int j=0;j<str.length;j++){
+	    		Map<String,Object> map=new HashMap<String,Object>();
+	    		String[] st=str[j].toString().split(" ");
+	    		List lists=new ArrayList();
+	    		String newName="";
+	    		for(int k=0;k<st.length;k++){
+	    			if(st[0].contains("http")){
+	    				newName="";
+	    			}else{
+	    				newName=st[0];
+	    			}
+	    			lists.add(st[k]);
+	    		}
+	    		map.put(newName, lists);
+	    		listU.add(map);
+	    	}
+	    	model.addAttribute("urlList", listU);
+	    	model.addAttribute("linkUrls", linkUrl.replaceAll(" ", "\r\n"));
+	    }else{
+	    	model.addAttribute("urlList",listU);
+	    	model.addAttribute("linkUrls","");
+	    	
+	    }
+	    //获取好友列表
+	    String friends=user.getFriends();
+	    List listF = new ArrayList<>();
+	    if(friends!=null){
+	    	
+	    	String[] strs=friends.split(" ");
+	    	for(int i=0;i<strs.length;i++){
+	    		String[] str=strs[i].split("=");
+	    		Map<String,Object> map=new HashMap<String,Object>();
+	    		CmsUser u=channelMng.findUserImage(str[1].toString());
+	    		String newName=str[0]+"~"+u.getId()+"~"+u.getUserExt().getUserImg();
+	    		map.put(newName, u.getUserExt().getUserImg());
+	    		listF.add(map);
+	    	}
+	    	model.addAttribute("friendsList", listF);
+	    	model.addAttribute("friends", friends.replaceAll(" ", "\r\n"));
+	    }else{
+	    	model.addAttribute("friendsList", listF);
+	    	model.addAttribute("friends","");
+	    }
+	    
+	    
 		List<Columns> columnsList = (new BlogDao()).findByUserId(user_id, path);
 		model.addAttribute("columnsList", columnsList);
 		model.addAttribute("column_id", column_id);
@@ -574,6 +709,75 @@ public class AbstractContentMemberAct {
 		String path = request.getSession().getServletContext().getRealPath("/");
 		List<Columns> columnsList = (new BlogDao()).findByUserId(user_id, path);
 		model.addAttribute("columnsList", columnsList);
+		
+		
+		//获取链接列表
+		String linkUrl=user.getLinkUrl();
+		List listU=new ArrayList();
+		if(linkUrl!=null){
+			String[] strs=linkUrl.split(" ");
+			String newUrl="";
+			for(int i=0;i<strs.length;i++){
+				if(i!=strs.length-1){
+					if(!strs[i].contains("http")&&strs[i+1].contains("http")){
+						newUrl+="~"+strs[i]+" ";
+					}else{
+						newUrl+=strs[i]+" ";
+					}
+				}else{
+					if(!strs[i].contains("http")){
+						newUrl+="~"+strs[i]+" ";
+					}else{
+						newUrl+=strs[i]+" ";
+					}
+				}
+			}
+			String[] str=newUrl.split("~");
+			for(int j=0;j<str.length;j++){
+				Map<String,Object> map=new HashMap<String,Object>();
+				String[] st=str[j].toString().split(" ");
+				List lists=new ArrayList();
+				String newName="";
+				for(int k=0;k<st.length;k++){
+					if(st[0].contains("http")){
+						newName="";
+					}else{
+						newName=st[0];
+					}
+					lists.add(st[k]);
+				}
+				map.put(newName, lists);
+				listU.add(map);
+			}
+			model.addAttribute("urlList", listU);
+			model.addAttribute("linkUrls", linkUrl.replaceAll(" ", "\r\n"));
+		}else{
+			model.addAttribute("urlList",listU);
+			model.addAttribute("linkUrls","");
+			
+		}
+		//获取好友列表
+		String friends=user.getFriends();
+		List listF = new ArrayList<>();
+		if(friends!=null){
+			
+			String[] strs=friends.split(" ");
+			for(int i=0;i<strs.length;i++){
+				String[] str=strs[i].split("=");
+				Map<String,Object> map=new HashMap<String,Object>();
+				CmsUser u=channelMng.findUserImage(str[1].toString());
+				String newName=str[0]+"~"+u.getId()+"~"+u.getUserExt().getUserImg();
+				map.put(newName, u.getUserExt().getUserImg());
+				listF.add(map);
+			}
+			model.addAttribute("friendsList", listF);
+			model.addAttribute("friends", friends.replaceAll(" ", "\r\n"));
+		}else{
+			model.addAttribute("friendsList", listF);
+			model.addAttribute("friends","");
+		}
+		
+		
 		if(hasPermission){
 			FrontUtils.frontData(request, model, site);
 			// 获得本站栏目列表
@@ -598,6 +802,73 @@ public class AbstractContentMemberAct {
 			CmsUser user = CmsUtils.getUser(request);
 			int user_id = user.getId();
 			String path = request.getSession().getServletContext().getRealPath("/");
+			
+			//获取链接列表
+			String linkUrl=user.getLinkUrl();
+			List listU=new ArrayList();
+			if(linkUrl!=null){
+				String[] strs=linkUrl.split(" ");
+				String newUrl="";
+				for(int i=0;i<strs.length;i++){
+					if(i!=strs.length-1){
+						if(!strs[i].contains("http")&&strs[i+1].contains("http")){
+							newUrl+="~"+strs[i]+" ";
+						}else{
+							newUrl+=strs[i]+" ";
+						}
+					}else{
+						if(!strs[i].contains("http")){
+							newUrl+="~"+strs[i]+" ";
+						}else{
+							newUrl+=strs[i]+" ";
+						}
+					}
+				}
+				String[] str=newUrl.split("~");
+				for(int j=0;j<str.length;j++){
+					Map<String,Object> map=new HashMap<String,Object>();
+					String[] st=str[j].toString().split(" ");
+					List lists=new ArrayList();
+					String newName="";
+					for(int k=0;k<st.length;k++){
+						if(st[0].contains("http")){
+							newName="";
+						}else{
+							newName=st[0];
+						}
+						lists.add(st[k]);
+					}
+					map.put(newName, lists);
+					listU.add(map);
+				}
+				model.addAttribute("urlList", listU);
+				model.addAttribute("linkUrls", linkUrl.replaceAll(" ", "\r\n"));
+			}else{
+				model.addAttribute("urlList",listU);
+				model.addAttribute("linkUrls","");
+				
+			}
+			//获取好友列表
+			String friends=user.getFriends();
+			List listF = new ArrayList<>();
+			if(friends!=null){
+				
+				String[] strs=friends.split(" ");
+				for(int i=0;i<strs.length;i++){
+					String[] str=strs[i].split("=");
+					Map<String,Object> map=new HashMap<String,Object>();
+					CmsUser u=channelMng.findUserImage(str[1].toString());
+					String newName=str[0]+"~"+u.getId()+"~"+u.getUserExt().getUserImg();
+					map.put(newName, u.getUserExt().getUserImg());
+					listF.add(map);
+				}
+				model.addAttribute("friendsList", listF);
+				model.addAttribute("friends", friends.replaceAll(" ", "\r\n"));
+			}else{
+				model.addAttribute("friendsList", listF);
+				model.addAttribute("friends","");
+			}
+			
 			List<Columns> columnsList = (new BlogDao()).findByUserId(user_id, path);
 			model.addAttribute("columnsList", columnsList);
 			FrontUtils.frontData(request, model, site);
@@ -680,6 +951,74 @@ public class AbstractContentMemberAct {
 			String path = request.getSession().getServletContext().getRealPath("/");
 			List<Columns> columnsList = (new BlogDao()).findByUserId(user_id, path);
 			model.addAttribute("columnsList", columnsList);
+			
+			//获取链接列表
+			String linkUrl=user.getLinkUrl();
+			List listU=new ArrayList();
+			if(linkUrl!=null){
+				String[] strs=linkUrl.split(" ");
+				String newUrl="";
+				for(int i=0;i<strs.length;i++){
+					if(i!=strs.length-1){
+						if(!strs[i].contains("http")&&strs[i+1].contains("http")){
+							newUrl+="~"+strs[i]+" ";
+						}else{
+							newUrl+=strs[i]+" ";
+						}
+					}else{
+						if(!strs[i].contains("http")){
+							newUrl+="~"+strs[i]+" ";
+						}else{
+							newUrl+=strs[i]+" ";
+						}
+					}
+				}
+				String[] str=newUrl.split("~");
+				for(int j=0;j<str.length;j++){
+					Map<String,Object> map=new HashMap<String,Object>();
+					String[] st=str[j].toString().split(" ");
+					List lists=new ArrayList();
+					String newName="";
+					for(int k=0;k<st.length;k++){
+						if(st[0].contains("http")){
+							newName="";
+						}else{
+							newName=st[0];
+						}
+						lists.add(st[k]);
+					}
+					map.put(newName, lists);
+					listU.add(map);
+				}
+				model.addAttribute("urlList", listU);
+				model.addAttribute("linkUrls", linkUrl.replaceAll(" ", "\r\n"));
+			}else{
+				model.addAttribute("urlList",listU);
+				model.addAttribute("linkUrls","");
+				
+			}
+			//获取好友列表
+			String friends=user.getFriends();
+			List listF = new ArrayList<>();
+			if(friends!=null){
+				
+				String[] strs=friends.split(" ");
+				for(int i=0;i<strs.length;i++){
+					String[] str=strs[i].split("=");
+					Map<String,Object> map=new HashMap<String,Object>();
+					CmsUser u=channelMng.findUserImage(str[1].toString());
+					String newName=str[0]+"~"+u.getId()+"~"+u.getUserExt().getUserImg();
+					map.put(newName, u.getUserExt().getUserImg());
+					listF.add(map);
+				}
+				model.addAttribute("friendsList", listF);
+				model.addAttribute("friends", friends.replaceAll(" ", "\r\n"));
+			}else{
+				model.addAttribute("friendsList", listF);
+				model.addAttribute("friends","");
+			}
+			
+			
 			Columns column = new Columns(Integer.parseInt(id),user.getId(),name,Integer.parseInt(orderId));
 			model.addAttribute("column", column);
 			FrontUtils.frontData(request, model, site);
@@ -750,6 +1089,75 @@ public class AbstractContentMemberAct {
 		}
 		int user_id = user.getId();
 		String path = request.getSession().getServletContext().getRealPath("/");
+		
+		//获取链接列表
+		String linkUrl=user.getLinkUrl();
+		List listU=new ArrayList();
+		if(linkUrl!=null){
+			String[] strs=linkUrl.split(" ");
+			String newUrl="";
+			for(int i=0;i<strs.length;i++){
+				if(i!=strs.length-1){
+					if(!strs[i].contains("http")&&strs[i+1].contains("http")){
+						newUrl+="~"+strs[i]+" ";
+					}else{
+						newUrl+=strs[i]+" ";
+					}
+				}else{
+					if(!strs[i].contains("http")){
+						newUrl+="~"+strs[i]+" ";
+					}else{
+						newUrl+=strs[i]+" ";
+					}
+				}
+			}
+			String[] str=newUrl.split("~");
+			for(int j=0;j<str.length;j++){
+				Map<String,Object> map=new HashMap<String,Object>();
+				String[] st=str[j].toString().split(" ");
+				List lists=new ArrayList();
+				String newName="";
+				for(int k=0;k<st.length;k++){
+					if(st[0].contains("http")){
+						newName="";
+					}else{
+						newName=st[0];
+					}
+					lists.add(st[k]);
+				}
+				map.put(newName, lists);
+				listU.add(map);
+			}
+			model.addAttribute("urlList", listU);
+			model.addAttribute("linkUrls", linkUrl.replaceAll(" ", "\r\n"));
+		}else{
+			model.addAttribute("urlList",listU);
+			model.addAttribute("linkUrls","");
+			
+		}
+		//获取好友列表
+		String friends=user.getFriends();
+		List listF = new ArrayList<>();
+		if(friends!=null){
+			
+			String[] strs=friends.split(" ");
+			for(int i=0;i<strs.length;i++){
+				String[] str=strs[i].split("=");
+				Map<String,Object> map=new HashMap<String,Object>();
+				CmsUser u=channelMng.findUserImage(str[1].toString());
+				String newName=str[0]+"~"+u.getId()+"~"+u.getUserExt().getUserImg();
+				map.put(newName, u.getUserExt().getUserImg());
+				listF.add(map);
+			}
+			model.addAttribute("friendsList", listF);
+			model.addAttribute("friends", friends.replaceAll(" ", "\r\n"));
+		}else{
+			model.addAttribute("friendsList", listF);
+			model.addAttribute("friends","");
+		}
+		
+		
+		
 		List<Columns> columnsList = (new BlogDao()).findByUserId(user_id, path);
 		model.addAttribute("columnsList", columnsList);
 	/*	WebErrors errors = validateEdit(id, site, user, request);
@@ -836,9 +1244,6 @@ public class AbstractContentMemberAct {
 		if (user == null) {
 			return FrontUtils.showLogin(request, model, site);
 		}
-		if(linkUrl.trim()==""){
-			linkUrl=null;
-		}
 		channelMng.updateLinkUrl(linkUrl,user);
 		return FrontUtils.showSuccess(request, model, nextUrl);
 	}
@@ -851,9 +1256,6 @@ public class AbstractContentMemberAct {
 		FrontUtils.frontData(request, model, site);
 		if (user == null) {
 			return FrontUtils.showLogin(request, model, site);
-		}
-		if(friends.trim()==""){
-			friends=null;
 		}
 		channelMng.updateFriends(friends,user);
 		return FrontUtils.showSuccess(request, model, nextUrl);
