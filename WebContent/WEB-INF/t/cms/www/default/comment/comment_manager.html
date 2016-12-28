@@ -33,7 +33,7 @@ function del_c_by_id(commentId) {
             $("#commentId").val(commentId);
             $("#userId").val("");
             $("#ip").val("");
-            tableForm.action="comment_delete.jspx?commentId="+commentId;
+            tableForm.action="comment_delete.jspx?commentId="+commentId+"&nextUrl="+'news_comments.jspx';
             tableForm.onsubmit=null;
             tableForm.submit();
         }
@@ -48,7 +48,7 @@ function del_c_by_user(userId) {
             $("#commentId").val("");
             $("#userId").val(userId);
             $("#ip").val("");
-            tableForm.action="comment_delete.jspx?userId="+userId;
+            tableForm.action="comment_delete.jspx?userId="+userId+"&nextUrl="+'news_comments.jspx';
             tableForm.onsubmit=null;
             tableForm.submit();
         }
@@ -63,7 +63,7 @@ function del_c_by_ip(ip) {
             $("#commentId").val("");
             $("#userId").val("");
             $("#ip").val(ip);
-            tableForm.action="comment_delete.jspx?ip="+ip;
+            tableForm.action="comment_delete.jspx?ip="+ip+"&nextUrl="+'news_comments.jspx';
             tableForm.onsubmit=null;
             tableForm.submit();
         }
@@ -161,8 +161,7 @@ function del_c_by_ip(ip) {
 				                <td>${c.createTime}</td>
 				                <td title="${c.textHtml!}">[@text_cut s=c.textHtml len='15' append='...'/]</td>
 				                <td><span style="cursor: pointer;" onclick="del_c_by_ip('${c.ip!}')">${c.ip!}</span></td>
-				                <td><span style="cursor: pointer;" onclick="del_c_by_id('${c.id!}')">删除${c.id!}</span></td>
-				                ，			<input id="nextUrl" name="nextUrl" value="news_comments.jspx" type="hidden"></input>
+				                <td><span style="cursor: pointer;" onclick="del_c_by_id('${c.id!}')">删除</span></td>				               
 				              </tr>
 				              [/#list]
 				              <tr>
