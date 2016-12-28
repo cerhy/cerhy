@@ -79,11 +79,23 @@ $('.user-menu-links li').click(function(){
 					         		[#list friendsList as map]
 						         		[#list map?keys as k]
 						         			[#if k?split("~")[2]=='null'] 
-					         			<li  style="padding-left:45px;"><img  src="/${res}/images/userImg.png" alt="" style="width: 50px;height: 50px;cursor: pointer;"/><br />
-					         			<a  style="padding-left: 10px;" target="_blank" href="${base}/blog/find_all_url_friend.jspx?userIds=${k?split("~")[1]}">${k?split("~")[0]}</a></li>
+					         			<li style="height: 90px;">
+						         			<div class="users-a-link-wrap clearfix">
+					                            <a target="_blank" href="${base}/blog/find_all_url_friend.jspx?userIds=${k?split("~")[1]}" class="users-a-link" style="padding-right: 40px;">
+					                                <img src="/${res}/images/userImg.png" alt="" width="47" height="47">
+					                                <span>${k?split("~")[0]}</span>
+					                            </a>
+					                        </div>
+					         			</li>
 			         			    [#else]
-								         <li  style="padding-left: 45px;"><img src="${k?split("~")[2]}" alt="" style="width: 50px;height: 50px;cursor: pointer;" /><br />
-								         <a style="padding-left: 10px; target="_blank" href="${base}/blog/find_all_url_friend.jspx?userIds=${k?split("~")[1]}">${k?split("~")[0]}</a></li>
+			         			    	<li style="height: 90px;">
+						         			<div class="users-a-link-wrap clearfix">
+					                            <a target="_blank" href="${base}/blog/find_all_url_friend.jspx?userIds=${k?split("~")[1]}" class="users-a-link" style="padding-right: 40px;">
+					                                <img src="${k?split("~")[2]}" alt="" width="47" height="47">
+					                                <span>${k?split("~")[0]}</span>
+					                            </a>
+					                        </div>
+					         			</li>
 							         		[/#if]
 							         	[/#list]
 						         	[/#list]
