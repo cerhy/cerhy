@@ -9,7 +9,10 @@
 <link  type="text/css" rel="stylesheet" href="/${res}/css/SimpleTree.css" />
 <script src="/${res}/js/SimpleTree.js"></script>
 <style>
+td{border:1px solid #e7e7e7; line-height:38px; color:#666666; text-align:center;width:120px;height:20px;}
+.table1{border:1px solid #e7e7e7; }
 .st_tree ul .change a:hover{color:red;}
+.st_tree ul li a:hover{color:blue;}
 .st_tree ul .change :hover{background-color:#e7e7e7 }
 ::-webkit-scrollbar{width:0px}
 .clear{clear:both}
@@ -54,7 +57,7 @@ $('.user-menu-links li').click(function(){
                     <div class="user-menu-links">
                     <ul>
 				        <li><a href="${base}/blog/contribute_add.jspx">发表博客</a></li>
-				          <li ><a><em></em>博客栏目</a>
+				          <li ><a style="cursor: pointer;"><em></em>博客栏目</a>
                              <ul>
                               [#list columnsList as c]
 		                       <li><a href="${base}/blog/contribute_list.jspx?column_id=${c.column_id}" ><em></em>${c.column_name}</a></li>
@@ -62,7 +65,7 @@ $('.user-menu-links li').click(function(){
                              </ul>
                           </li>
 			              <li><a href="${base}/blog/collection_list.jspx">转载</a></li>
-				          <li ><a><em></em>设置</a>
+				          <li style="cursor: pointer;"><a><em></em>设置</a>
                               <ul>
                               <li><a  href="${base}/blog/columns_list.jspx" ><em></em>新建栏目</a></li>
                               <li><a  href="${base}/blog/tzsetting.jspx" ><em></em>博客信息</a></li>
@@ -79,11 +82,23 @@ $('.user-menu-links li').click(function(){
 					         		[#list friendsList as map]
 						         		[#list map?keys as k]
 						         			[#if k?split("~")[2]=='null'] 
-					         			<li  style="padding-left:45px;"><img  src="/${res}/images/userImg.png" alt="" style="width: 50px;height: 50px;cursor: pointer;"/><br />
-					         			<a  style="padding-left: 0px;" target="_blank" href="${base}/blog/find_all_url_friend.jspx?userIds=${k?split("~")[1]}">${k?split("~")[0]}</a></li>
+					         			<li style="height: 90px;">
+						         			<div class="users-a-link-wrap clearfix">
+					                            <a target="_blank" href="${base}/blog/find_all_url_friend.jspx?userIds=${k?split("~")[1]}" class="users-a-link" style="padding-right: 40px;">
+					                                <img src="/${res}/images/userImg.png" alt="" width="47" height="47">
+					                                <span>${k?split("~")[0]}</span>
+					                            </a>
+					                        </div>
+					         			</li>
 			         			    [#else]
-								         <li  style="padding-left: 45px;"><img src="${k?split("~")[2]}" alt="" style="width: 50px;height: 50px;cursor: pointer;" /><br />
-								         <a style="padding-left: 0px; target="_blank" href="${base}/blog/find_all_url_friend.jspx?userIds=${k?split("~")[1]}">${k?split("~")[0]}</a></li>
+			         			    	<li style="height: 90px;">
+						         			<div class="users-a-link-wrap clearfix">
+					                            <a target="_blank" href="${base}/blog/find_all_url_friend.jspx?userIds=${k?split("~")[1]}" class="users-a-link" style="padding-right: 40px;">
+					                                <img src="${k?split("~")[2]}" alt="" width="47" height="47">
+					                                <span>${k?split("~")[0]}</span>
+					                            </a>
+					                        </div>
+					         			</li>
 							         		[/#if]
 							         	[/#list]
 						         	[/#list]
@@ -136,7 +151,7 @@ $('.user-menu-links li').click(function(){
                     
                     <div class="tab-content" style="display: block;">
                       
-			        <div class="tggl" style="text-align: -webkit-center;">
+			        <div class="table1">
 			          <form id="tableForm" action="${base}/blog/index.jspx" method="post">
 			          [#if pagination.list?size gt 0]
 			          <table cellpadding="0" cellspacing="0" >
@@ -150,7 +165,7 @@ $('.user-menu-links li').click(function(){
 			              [#list pagination.list as c]
 			              <tr>
 			                <td>${c.id}</td>
-			                <td style="text-align:center;" ><a href="${c.url!}"></input>[@text_cut s=c.title?html len='24' append='...'/]</a></td>
+			                <td style="text-align:left; text-indent:5px;" ><a href="${c.url!}"></input>[@text_cut s=c.title?html len='24' append='...'/]</a></td>
 			                <td>${c.views}</td>
 			                <td>${c.releaseDate?string('yyyy-MM-dd')}</td>
 			              </tr>
@@ -158,7 +173,7 @@ $('.user-menu-links li').click(function(){
 			            </tbody>
 			          </table>
 			          <input type="hidden" name="pageNo"/>
-			           <table style="border:0px;"><tr><td align="center" class="pn-sp">
+			           <table  style="margin-left:40px;border:0px" ><tbody><tr><td style="border:0px; ">
                 共 ${pagination.totalCount} 条&nbsp;
                 每页 ${pagination.pageSize} 条&nbsp;
                 <input style="cursor: pointer;" type="button" value="首 页" onclick="_gotoPage('1');"[#if pagination.firstPage] disabled="disabled"[/#if]/>
@@ -166,9 +181,10 @@ $('.user-menu-links li').click(function(){
                 <input style="cursor: pointer;" type="button" value="下一页" onclick="_gotoPage('${pagination.nextPage}');"[#if pagination.lastPage] disabled="disabled"[/#if]/>
                 <input style="cursor: pointer;" type="button" value="尾 页" onclick="_gotoPage('${pagination.totalPage}');"[#if pagination.lastPage] disabled="disabled"[/#if]/>&nbsp;
                 当前 ${pagination.pageNo}/${pagination.totalPage} 页 &nbsp;转到第<input type="text" id="_goPs" onfocus="this.select();" onkeypress="if(event.keyCode==13){$('#_goPage').click();return false;}" style="width:50px; border:1px solid #e7e7e7;"/>页
-                <input style="cursor: pointer;" id="_goPage" type="button" value="转" onclick="_gotoPage($('#_goPs').val());"[#if pagination.totalPage==1] disabled="disabled"[/#if] />
+                <input style="cursor: pointer;" id="_goPage" type="button" value="转" class="sub2" onclick="_gotoPage($('#_goPs').val());"[#if pagination.totalPage==1] disabled="disabled"[/#if] />
             </td>
             </tr>
+            </tbody>
             </table>
 			           
 			          <script type="text/javascript">

@@ -225,3 +225,17 @@ padding-top: 32px;
 .sub1:hover {
     background: #14bdff;
 }
+
+.sub2 {
+	width: 50px;
+	height: 25px;
+	background: #00a8eb;
+	color: #FFF;
+	text-align: center;
+	font-size: 14px;
+	border-radius: 3px;
+}
+
+.sub2:hover {
+    background: #14bdff;
+}
