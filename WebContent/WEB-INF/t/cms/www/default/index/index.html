@@ -382,7 +382,7 @@ function HoverLi(x,y,m,n,counter){
                     </div>
                     <div class="tab-content">
                     <!--友情链接  ctgId='1' 为文字链接,ctgId='2' 图片链接-->
-                    	[@cms_friendlink_list ctgId='1']
+                    	[@cms_friendlink_list ctgId='1' channelId='274']
 							 [#list tag_list as link]
 							   <div style="margin-left:1.5%; float:left;">
 							   	 <a href="${link.domain}" onclick="$.get('${base}/friendlink_view.jspx?id=${link.id}')" target="_blank">${link.name}</a>

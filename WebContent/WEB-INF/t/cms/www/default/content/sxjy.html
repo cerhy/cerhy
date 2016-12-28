@@ -112,6 +112,14 @@
 						        [/#if]
 				      [/#if]
 				    </div>
+				    [#if content.attachments?size gt 0]           
+						<h4>附件:</h4>           
+						<ul>           
+						[#list content.attachments as attach]           
+						<li><a href="${attach.path}" id="attach${attach_index}">${attach.name}</a></li>           
+						[/#list]           
+						</ul>           
+					[/#if]   
 					<!-- 分页 -->
 					<div class="pagebar">[#include "../style_page/content.html"/]</div>
                     <div class="prev-next-wz clearfix">
