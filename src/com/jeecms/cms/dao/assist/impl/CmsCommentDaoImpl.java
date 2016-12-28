@@ -102,7 +102,8 @@ public class CmsCommentDaoImpl extends HibernateBaseDao<CmsComment, Integer>
 			f.append(" and bean.commentUser.id=:commentUserId");
 			f.setParam("commentUserId", toUserId);
 		}else if(fromUserId!=null){
-			f.append(" and bean.content.user.id=:fromUserId");
+			f.append(" and (bean.content.user.id=:fromUserId");
+			f.append(" or bean.channel.id is not null)");
 			f.setParam("fromUserId", fromUserId);
 		}
 		if (greaterThen != null) {
