@@ -58,7 +58,7 @@ $(function(){
                     <div class="user-menu-links">
                     <ul>
 				        <li><a href="${base}/blog/contribute_add.jspx">发表博客</a></li>
-				          <li ><a><em></em>博客栏目</a>
+				          <li style="cursor: pointer;"><a><em></em>博客栏目</a>
                              <ul>
                               [#list columnsList as c]
 		                       <li><a href="${base}/blog/contribute_list.jspx?column_id=${c.column_id}" ><em></em>${c.column_name}</a></li>
@@ -66,7 +66,7 @@ $(function(){
                              </ul>
                           </li>
 			              <li><a href="${base}/blog/collection_list.jspx">转载</a></li>
-				          <li ><a><em></em>设置</a>
+				          <li style="cursor: pointer;"><a><em></em>设置</a>
                               <ul>
                               <li><a  href="${base}/blog/columns_list.jspx" ><em></em>新建栏目</a></li>
                               <li><a  href="${base}/blog/tzsetting.jspx" ><em></em>博客信息</a></li>
