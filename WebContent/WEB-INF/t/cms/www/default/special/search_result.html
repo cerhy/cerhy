@@ -18,7 +18,7 @@
   <section class="content_w850">
     [#if q??]
     [@cms_lucene_page q='q' channelId=channelId startDate=startDate endDate=endDate descLen='170' append='...' count='10' ]
-    <div class="searchNav">您搜索的“<span>${input!}</span>”， 共有<span>${tag_pagination.totalCount!}</span>个结果</div>
+    <div class="searchNav" style="margin-left: 0px;">您搜索的“<span>${input!}</span>”， 共有<span>${tag_pagination.totalCount!}</span>个结果</div>
     <div class="searchList">
       [#list tag_list as s]
       <div class="item">
@@ -37,10 +37,7 @@
      [/@cms_lucene_page]	  
      [/#if]
   </section>
-
-  [#include "../include/right310.html"/]
 </div>
-[#include "../include/footer.html"/]
-
 </body>
+[#include "../hyinclude/end.html"/]
 </html>
