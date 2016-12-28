@@ -597,8 +597,13 @@ public class ContributeAct extends AbstractContentMemberAct {
 				String[] str=strs[i].split("=");
 				Map<String,Object> map=new HashMap<String,Object>();
 				CmsUser u=channelMng.findUserImage(str[1].toString());
-				String newName=str[0]+"~"+u.getId()+"~"+u.getUserExt().getUserImg();
-				map.put(newName, u.getUserExt().getUserImg());
+				if(null==u){
+					String newName="";
+					map.put(newName, null);
+				}else{
+					String newName=str[0]+"~"+u.getId()+"~"+u.getUserExt().getUserImg();
+					map.put(newName, u.getUserExt().getUserImg());
+				}
 				listF.add(map);
 			}
 			model.addAttribute("friendsList", listF);
@@ -683,8 +688,13 @@ public class ContributeAct extends AbstractContentMemberAct {
 				String[] str=strs[i].split("=");
 				Map<String,Object> map=new HashMap<String,Object>();
 				CmsUser u=channelMng.findUserImage(str[1].toString());
-				String newName=str[0]+"~"+u.getId()+"~"+u.getUserExt().getUserImg();
-				map.put(newName, u.getUserExt().getUserImg());
+				if(null==u){
+					String newName="";
+					map.put(newName, null);
+				}else{
+					String newName=str[0]+"~"+u.getId()+"~"+u.getUserExt().getUserImg();
+					map.put(newName, u.getUserExt().getUserImg());
+				}
 				listF.add(map);
 			}
 			model.addAttribute("friendsList", listF);

@@ -85,7 +85,8 @@ $(function(){
 	                                [#if friendsList??]
 					         		[#list friendsList as map]
 						         		[#list map?keys as k]
-						         			[#if k?split("~")[2]=='null'] 
+						         			[#if k!='']
+						         	[#if k?split("~")[2]=='null'] 
 					         			<li style="height: 90px;">
 						         			<div class="users-a-link-wrap clearfix">
 					                            <a target="_blank" href="${base}/blog/find_all_url_friend.jspx?userIds=${k?split("~")[1]}" class="users-a-link" style="padding-right: 40px;">
@@ -103,7 +104,8 @@ $(function(){
 					                            </a>
 					                        </div>
 					         			</li>
-							         		[/#if]
+							         [/#if]
+							         [/#if]
 							         	[/#list]
 						         	[/#list]
 						         	[/#if]
