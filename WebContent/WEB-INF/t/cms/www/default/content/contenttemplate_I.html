@@ -81,7 +81,6 @@
 						您需要更高的权限浏览全部内容!<br />以下会员组可浏览全部内容: [#list groups as g]
 						${g.name!}[#if g_has_next],[/#if] [/#list] [#else] ${txt!} [/#if]
 					</div>
-					<!-- 分页 -->
 				<div class="content-txt">
 			     [#if content.mediaPath?? && content.mediaType??]
 				        <div class="video-con clearfix">
@@ -114,6 +113,15 @@
 					        <embed height="500" width="100%" type="video/x-ms-wmv" src="${content.mediaPath}" console="cons" controls="ImageWindow" autostart="true"></embed>
 					        [/#if]
 			      [/#if]
+			      <!-- 分页 -->
+			      [#if content.attachments?size gt 0]           
+						<h4>附件:</h4>           
+						<ul>           
+						[#list content.attachments as attach]           
+						<li><a href="${attach.path}" id="attach${attach_index}">${attach.name}</a></li>           
+						[/#list]           
+						</ul>           
+					[/#if] 
 				<div class="pagebar">[#include "../style_page/content.html"/]</div>
 			    </div>
                     <div class="prev-next-wz clearfix">

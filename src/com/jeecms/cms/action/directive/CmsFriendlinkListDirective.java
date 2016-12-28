@@ -3,6 +3,7 @@ package com.jeecms.cms.action.directive;
 import static com.jeecms.common.web.freemarker.DirectiveUtils.OUT_LIST;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.jeecms.cms.entity.assist.CmsFriendlink;
 import com.jeecms.cms.entity.main.Channel;
 import com.jeecms.cms.manager.assist.CmsFriendlinkMng;
+import com.jeecms.cms.manager.main.ChannelMng;
 import com.jeecms.common.web.freemarker.DefaultObjectWrapperBuilderFactory;
 import com.jeecms.common.web.freemarker.DirectiveUtils;
 import com.jeecms.core.web.util.FrontUtils;
@@ -55,6 +57,15 @@ public class CmsFriendlinkListDirective implements TemplateDirectiveModel {
 			enabled = true;
 		}
 		Integer channelId = getChannelId(params);
+		//首页一级栏目判断首次点击显示
+		if(channelId==98||channelId==99||channelId==100||channelId==101
+				||channelId==102||channelId==103||channelId==104){
+			Channel cc = channelMng.findById(channelId);
+			List<Channel> topList = new ArrayList<Channel>();
+			topList.add(cc);
+			List<Channel> channelList = Channel.getListForSelect(topList, null, true);
+			channelId=channelList.get(2).getId();
+		}
 		List<CmsFriendlink> list = cmsFriendlinkMng.getList1(siteId, ctgId,channelId,
 				enabled);
 
@@ -89,4 +100,7 @@ public class CmsFriendlinkListDirective implements TemplateDirectiveModel {
 
 	@Autowired
 	private CmsFriendlinkMng cmsFriendlinkMng;
+	
+	@Autowired
+	private ChannelMng channelMng;
 }
