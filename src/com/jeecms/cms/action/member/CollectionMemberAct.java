@@ -4,6 +4,7 @@ import static com.jeecms.cms.Constants.TPLDIR_MEMBER;
 import static com.jeecms.cms.Constants.TPLDIR_BLOG;
 import static com.jeecms.common.page.SimplePage.cpn;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -81,6 +82,22 @@ public class CollectionMemberAct {
 		}
 		return FrontUtils.getTplPath(request, site.getSolutionPath(),
 				TPLDIR_MEMBER, COLLECTION_LIST);
+	}
+	
+	@RequestMapping(value = "/blog/checkout.jspx")
+	public void checkout( 
+			HttpServletRequest request, HttpServletResponse response,
+			ModelMap model) throws JSONException {
+		CmsUser user = CmsUtils.getUser(request);
+		String s = request.getParameter("CUId");
+		if(Integer.parseInt(s) == user.getId()){
+			try {
+				response.getWriter().println("1");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+		}
 	}
 	
 	@RequestMapping(value = "/member/collect.jspx")

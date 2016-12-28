@@ -52,7 +52,23 @@
 <script type="text/javascript">
 $(function() {
 	
-       Cms.collectexist("${base}","${content.id!}","cancelSpan","comfirmSpan");
+	$.ajax({
+		type:"post",
+		url:"${base}/blog/checkout.jspx",
+		data:{
+			"CUId":${content.user.id},
+		},
+		success:function(data){
+			if(1 == data){
+				$("#cancelSpan").hide();
+				$("#comfirmSpan").hide();
+			}else{
+				Cms.collectexist("${base}","${content.id!}","cancelSpan","comfirmSpan");
+		}
+	});
+	
+	
+       
        $("#comfirmSpan").click(function(){
     	   Cms.collect_blog("${base}","${content.id}",1,"cancelSpan","comfirmSpan");
        });
