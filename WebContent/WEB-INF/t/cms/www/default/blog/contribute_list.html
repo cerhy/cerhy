@@ -24,6 +24,9 @@ $('.user-menu-links li').click(function(){
 <link  type="text/css" rel="stylesheet" href="/${res}/css/SimpleTree.css" />
 <script src="/${res}/js/SimpleTree.js"></script>
 <style>
+.tggl-top{line-height:28px; background:#f7f7f7; font-size:12px; color:#999999;}
+td{border:1px solid #e7e7e7; line-height:38px; color:#666666; text-align:center;width:120px;height:20px;}
+.table1{border:1px solid #e7e7e7; }
 .st_tree ul .change a:hover{color:red;}
 .st_tree ul .change :hover{background-color:#e7e7e7 }
 ::-webkit-scrollbar{width:0px}
@@ -142,10 +145,10 @@ $(function(){
 				<div class="personCenter-userInfo blog_right" >
 				
 				    <div class="member-main">
-        <div class="tggl" style="text-align: -webkit-center;">
+        <div class="">
           <form id="tableForm" action="contribute_list.jspx" method="post" >
           [#if pagination.list?size gt 0]
-          <table cellpadding="0" cellspacing="0">
+          <table cellpadding="0" cellspacing="0" class="table1">
             <tbody>
               <tr>
                 <td class="tggl-top">ID</td><td class="tggl-top">标题</td><td class="tggl-top">点击</td><td class="tggl-top">发布时间</td><td class="tggl-top">操作</td>
@@ -162,7 +165,7 @@ $(function(){
             </tbody>
           </table>
           <input type="hidden" name="pageNo"/>
-          <table width="100%" border="0" cellpadding="0" cellspacing="0"><tr><td align="center" class="pn-sp">
+         <table width="100%" border="0" cellpadding="0" cellspacing="0" class="table1"><tr><td align="center" class="pn-sp">
 			                共 ${pagination.totalCount} 条&nbsp;
 			                每页 ${pagination.pageSize} 条&nbsp;
 			                <input type="button" value="首 页" onclick="_gotoPage('1');"[#if pagination.firstPage] disabled="disabled"[/#if]/>
@@ -170,11 +173,10 @@ $(function(){
 			                <input type="button" value="下一页" onclick="_gotoPage('${pagination.nextPage}');"[#if pagination.lastPage] disabled="disabled"[/#if]/>
 			                <input type="button" value="尾 页" onclick="_gotoPage('${pagination.totalPage}');"[#if pagination.lastPage] disabled="disabled"[/#if]/>&nbsp;
 			                当前 ${pagination.pageNo}/${pagination.totalPage} 页 &nbsp;转到第<input type="text" id="_goPs" onfocus="this.select();" onkeypress="if(event.keyCode==13){$('#_goPage').click();return false;}" style="width:50px; border:1px solid #e7e7e7;"/>页
-			                <input id="_goPage" type="button" value="转" onclick="_gotoPage($('#_goPs').val());"[#if pagination.totalPage==1] disabled="disabled"[/#if] />
+			                <input id="_goPage" type="button" value="转" class="sub2" onclick="_gotoPage($('#_goPs').val());"[#if pagination.totalPage==1] disabled="disabled"[/#if] />
 			            </td>
 			            </tr>
-		</table>
-         
+	     </table>
           <script type="text/javascript">
             function _gotoPage(pageNo) {
                 try{
