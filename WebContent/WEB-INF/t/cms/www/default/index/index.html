@@ -241,7 +241,7 @@ function HoverLi(x,y,m,n,counter){
                     <div class="info-div">
                   		<div class="info-div-head clearfix">
                             <h3>
-                                <span>教育政策</span>
+                                <span>政策研究</span>
                             </h3>
                              [@cms_channel id='177']
                             	<a href="${tag_bean.url}" class="more" title="更多" target="_blank"></a>
@@ -279,7 +279,7 @@ function HoverLi(x,y,m,n,counter){
                     </a>
                 </div>
                 <div class="info-wrap clearfix">
-                    <div class="info-div long-info-div">
+                    <div class="info-div">
                      	<div class="info-div-head clearfix">
                             <h3>
                                 <span>教育科研</span>
@@ -294,7 +294,7 @@ function HoverLi(x,y,m,n,counter){
                             </ul>
                         </div>
                     </div>
-                    <div class="info-div long-info-div">
+                    <div class="info-div">
                        <div class="info-div-head clearfix">
                             <h3>
                                 <span>党群建设</span>
@@ -304,6 +304,19 @@ function HoverLi(x,y,m,n,counter){
                         <div class="info-div-content">
                             <ul class="has-dot-list">
                                 [@cms_content_list  channelId='260' count='8' titLen='14' orderBy='2' channelOption='1'][#list tag_list as a]<li><a href="${a.url}" class="of" target="_blank">[@text_cut s=a.title len=titLen append='...'/]<span class="gray9">(${a.releaseDate?string('MM-dd')})</span></a></li>[/#list][/@cms_content_list]
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="info-div">
+                       <div class="info-div-head clearfix">
+                            <h3>
+                                <span>文件通知</span>
+                            </h3>
+                            [@cms_channel id='101']<a href="${tag_bean.url}" class="more" title="更多" target="_blank"></a>[/@cms_channel ]
+                        </div>
+                        <div class="info-div-content">
+                            <ul class="has-dot-list">
+                                [@cms_content_list  channelId='101' count='8' titLen='14' orderBy='2' channelOption='1'][#list tag_list as a]<li><a href="${a.url}" class="of" target="_blank">[@text_cut s=a.title len=titLen append='...'/]<span class="gray9">(${a.releaseDate?string('MM-dd')})</span></a></li>[/#list][/@cms_content_list]
                             </ul>
                         </div>
                     </div>
