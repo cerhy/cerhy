@@ -118,7 +118,7 @@ public class ContributeAct extends AbstractContentMemberAct {
 	 */
 	@RequestMapping(value = "/member/contribute_save.jspx")
 	public String save(String title, String author, String description,
-			String txt, String tagStr, Integer channelId,Integer modelId, 
+			String txt, String tagStr, Integer channelId,Integer column_id,Integer modelId, 
 			String captcha,String mediaPath,String mediaType,
 			String[] attachmentPaths, String[] attachmentNames,
 			String[] attachmentFilenames, String[] picPaths, String[] picDescs,
@@ -127,7 +127,7 @@ public class ContributeAct extends AbstractContentMemberAct {
 			HttpServletResponse response, ModelMap model) {
 		   String blog = request.getParameter("blog");
 		   if(null != blog ){
-			  return super.blog_save(title, author, description, txt, tagStr, channelId,modelId,
+			  return super.blog_save(title, author, description, txt, tagStr, channelId,column_id,modelId,
 						null, captcha,mediaPath,mediaType,attachmentPaths,attachmentNames, attachmentFilenames
 						,picPaths,picDescs,charge,chargeAmount,
 						nextUrl, request, response, model);
@@ -182,7 +182,7 @@ public class ContributeAct extends AbstractContentMemberAct {
 	 */
 	@RequestMapping(value = "/member/contribute_update.jspx")
 	public String update(Integer id, String title, String author,
-			String description, String txt, String tagStr, Integer channelId,
+			String description, String txt, String tagStr, Integer column_id,Integer channelId,
 			String mediaPath,String mediaType,
 			String[] attachmentPaths, String[] attachmentNames,
 			String[] attachmentFilenames, String[] picPaths, String[] picDescs,
@@ -192,7 +192,7 @@ public class ContributeAct extends AbstractContentMemberAct {
 		String blog = request.getParameter("blog");
 		   if(null != blog ){
 			   return super.blog_update(id, title, author, description, txt, tagStr,
-						channelId, mediaPath,mediaType,attachmentPaths,
+					   column_id,channelId, mediaPath,mediaType,attachmentPaths,
 						attachmentNames, attachmentFilenames
 						,picPaths,picDescs,null,charge, chargeAmount,
 						nextUrl, request, response, model);
@@ -438,10 +438,10 @@ public class ContributeAct extends AbstractContentMemberAct {
 	}
 	
 	@RequestMapping(value = "/blog/contribute_list.jspx")
-	public String blog_list(String queryTitle, Integer modelId,
+	public String blog_list(Integer column_id,Integer channelId,String queryTitle, Integer modelId,
 			Integer queryChannelId, Integer pageNo, HttpServletRequest request,
 			ModelMap model) {
-		return super.blog_list(queryTitle, modelId, queryChannelId, CONTRIBUTE_LIST,
+		return super.blog_list(column_id,channelId,queryTitle, modelId, queryChannelId, CONTRIBUTE_LIST,
 				pageNo, request, model);
 	}
 	
@@ -527,8 +527,8 @@ public class ContributeAct extends AbstractContentMemberAct {
 	}*/
 
 	@RequestMapping(value = "/blog/contribute_delete.jspx")
-	public void blog_delete(Integer ids,Integer column_id, HttpServletRequest request, HttpServletResponse response, ModelMap model) {
-		 super.blog_delete(ids,column_id, request,  response, model);
+	public void blog_delete(Integer ids,Integer column_id,Integer channelId, HttpServletRequest request, HttpServletResponse response, ModelMap model) {
+		 super.blog_delete(ids,column_id,channelId, request,  response, model);
 	}
 	
 	

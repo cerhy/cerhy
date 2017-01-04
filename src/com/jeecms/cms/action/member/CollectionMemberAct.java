@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -22,6 +23,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.jeecms.cms.dao.main.impl.BlogDao;
+import com.jeecms.cms.entity.main.Channel;
 import com.jeecms.cms.entity.main.Columns;
 import com.jeecms.cms.manager.main.ChannelMng;
 import com.jeecms.cms.manager.main.ContentMng;
@@ -167,8 +169,8 @@ public class CollectionMemberAct {
 			HttpServletResponse response, ModelMap model) {
 		CmsSite site = CmsUtils.getSite(request);
 		CmsUser user = CmsUtils.getUser(request);
-		int user_id = user.getId();
-		String path = request.getSession().getServletContext().getRealPath("/");
+		model = getColumn(request,model,user);
+	    model = getChannel(request,model,user,site);
 		
 		//获取链接列表
 	    String linkUrl=user.getLinkUrl();
@@ -236,9 +238,6 @@ public class CollectionMemberAct {
 	    	model.addAttribute("friends","");
 	    }
 		
-		
-		List<Columns> columnsList = (new BlogDao()).findByUserId(user_id, path);
-		model.addAttribute("columnsList", columnsList);
 		FrontUtils.frontData(request, model, site);
 		Pagination p = contentMng.getPageForCollection(site.getId(), user
 				.getId(), cpn(pageNo), CookieUtils.getPageSize(request));
@@ -267,6 +266,66 @@ public class CollectionMemberAct {
 			userMng.updateUserConllection(user,id,0);
 		}
 		return collection_list_blog(null, null, pageNo, request, response, model);
+	}
+	
+	public ModelMap getColumn(HttpServletRequest request,ModelMap model,CmsUser user){
+		if ((null != user.getGroup().getId())&&(4==user.getGroup().getId()) || 5 == user.getGroup().getId()){
+			String path = request.getSession().getServletContext().getRealPath("/");
+			List<Columns> columnsList = (new BlogDao()).findByUserId(user.getId(), path);
+			model.addAttribute("columnsList", columnsList);
+		}
+		return model;
+	}
+	
+	public ModelMap getChannel(HttpServletRequest request,ModelMap model,CmsUser user,CmsSite site) {
+		// 学科教研，市县教研专用
+		List<Channel> channelList2 = null;
+		List<Channel> channelList3 = null;
+		if (null != user.getGroup()) {
+			// 获得本站栏目列表
+			Set<Channel> rights = user.getGroup().getContriChannels();
+			List<Channel> topList = channelMng.getTopList(site.getId(), true);
+			List<Channel> channelList = Channel.getListForSelect(topList, rights, true);
+
+			channelList2 = new ArrayList<Channel>();// 学科教研
+			channelList3 = new ArrayList<Channel>();// 市县教研
+
+			if (4 == user.getGroup().getId()) {
+				for (Channel c : channelList) {
+					if (c.getId() == 98) {
+						channelList2.add(c);
+					} else if (null != c.getParent()) {
+						if (c.getParent().getId() == 98) {
+							channelList2.add(c);
+						} else if (null != c.getParent().getParent()) {
+							if (c.getParent().getParent().getId() == 98)
+								channelList2.add(c);
+						}
+					}
+				}
+			} else if (5 == user.getGroup().getId()) {
+				for (Channel c : channelList) {
+					if (c.getId() == 98) {
+						channelList3.add(c);
+					} else if (null != c.getParent()) {
+						if (c.getParent().getId() == 98) {
+							channelList3.add(c);
+						} else if (null != c.getParent().getParent()) {
+							if (c.getParent().getParent().getId() == 98)
+								channelList3.add(c);
+						}
+					}
+				}
+
+			}
+
+			if (null != channelList2 && channelList2.size() > 0) {
+				model.addAttribute("channelList", channelList2);
+			} else if (null != channelList3 && channelList3.size() > 0) {
+				model.addAttribute("channelList", channelList3);
+			}
+		}
+		return model;
 	}
 	
 	@Autowired

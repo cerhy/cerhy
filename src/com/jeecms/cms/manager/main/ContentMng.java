@@ -51,7 +51,7 @@ public interface ContentMng {
 			Integer siteId, Integer modelId,Integer memberId, int pageNo, int pageSize);
 	
 	public Pagination getPageForMember_blog(String title, Integer channelId,
-			Integer siteId, Integer modelId,Integer memberId, int pageNo, int pageSize,String column_name);
+			Integer siteId, Integer modelId,Integer memberId, int pageNo, int pageSize,Integer column_id,Integer channelId2);
 	/**
 	 * 根据内容ID数组获取文章列表
 	 * 
@@ -140,7 +140,7 @@ public interface ContentMng {
 			Integer[] channelIds, Integer[] topicIds, Integer[] viewGroupIds,
 			String[] tagArr, String[] attachmentPaths,
 			String[] attachmentNames, String[] attachmentFilenames,
-			String[] picPaths, String[] picDescs, String columnName,
+			String[] picPaths, String[] picDescs, Integer channelId,Integer column_id,
 			Integer typeId, Boolean draft,Boolean contribute,
 			Short charge,Double chargeAmount,
 			CmsUser user, boolean forMember);
@@ -161,7 +161,7 @@ public interface ContentMng {
 			Integer[] viewGroupIds, String[] attachmentPaths,
 			String[] attachmentNames, String[] attachmentFilenames,
 			String[] picPaths, String[] picDescs, Map<String, String> attr,
-			Integer channelId, Integer typeId, Boolean draft,
+			Integer column_id,Integer channelId, Integer typeId, Boolean draft,
 			Short charge,Double chargeAmount,CmsUser user,boolean forMember);
 	
 	

@@ -450,11 +450,8 @@ public class AbstractContentMemberAct {
 	public String tzsetting(HttpServletRequest request,HttpServletResponse response, ModelMap model) {
 		CmsSite site = CmsUtils.getSite(request);
 		CmsUser user = CmsUtils.getUser(request);
-
-		int user_id = user.getId();
-		String path = request.getSession().getServletContext().getRealPath("/");
-		List<Columns> columnsList = (new BlogDao()).findByUserId(user_id, path);
-		model.addAttribute("columnsList", columnsList);
+		model = getColumn(request,model,user);
+	    model = getChannel(request,model,user,site);
 		
 		//获取链接列表
 		String linkUrl=user.getLinkUrl();
@@ -527,8 +524,6 @@ public class AbstractContentMemberAct {
 			model.addAttribute("friends","");
 		}
 		
-		
-		model.addAttribute("user", user);
 		FrontUtils.frontData(request, model, site);
 		return FrontUtils.getTplPath(request, site.getSolutionPath(),TPLDIR_BLOG,"tpl.blogSetting");
 	}
@@ -536,9 +531,9 @@ public class AbstractContentMemberAct {
 	protected String center(String q, Integer modelId,Integer queryChannelId,String nextUrl,Integer pageNo,HttpServletRequest request, ModelMap model) {
 		CmsSite site = CmsUtils.getSite(request);
 		CmsUser user = CmsUtils.getUser(request);
-		int user_id = user.getId();
-		String path = request.getSession().getServletContext().getRealPath("/");
-		List<Columns> columnsList = (new BlogDao()).findByUserId(user_id, path);
+		model = getColumn(request,model,user);
+	    model = getChannel(request,model,user,site);
+		
 		//获取链接列表
 		String linkUrl=user.getLinkUrl();
 		List listU=new ArrayList();
@@ -610,9 +605,8 @@ public class AbstractContentMemberAct {
 			model.addAttribute("friends","");
 		}
 		
-		model.addAttribute("columnsList", columnsList);
 		FrontUtils.frontData(request, model, site);
-		Pagination p = contentMng.getPageForMember_blog(q, queryChannelId,site.getId(), modelId,user.getId(), cpn(pageNo), 20,null);
+		Pagination p = contentMng.getPageForMember_blog(q, queryChannelId,site.getId(), modelId,user.getId(), cpn(pageNo), 20,null,null);
 		model.addAttribute("pagination", p);
 		if (!StringUtils.isBlank(q)) {
 			model.addAttribute("q", q);
@@ -623,12 +617,20 @@ public class AbstractContentMemberAct {
 		return FrontUtils.getTplPath(request, site.getSolutionPath(), TPLDIR_BLOG, nextUrl);
 	}
 	
-	protected String blog_list(String q, Integer modelId,Integer queryChannelId,String nextUrl,Integer pageNo,HttpServletRequest request, ModelMap model) {
+	protected String blog_list(Integer column_id,Integer channelId,String q, Integer modelId,Integer queryChannelId,String nextUrl,Integer pageNo,HttpServletRequest request, ModelMap model) {
 		CmsSite site = CmsUtils.getSite(request);
 		CmsUser user = CmsUtils.getUser(request);
-		String column_id = request.getParameter("column_id");
-		int user_id = user.getId();
-	    String path = request.getSession().getServletContext().getRealPath("/");
+		 
+		//为了删除内容之后能跳转到该栏目列表
+		if(null != request.getParameter("column_id")){
+			model.addAttribute("column_id", request.getParameter("column_id"));
+		}
+		if(null != request.getParameter("channelId")){
+			model.addAttribute("channelId", request.getParameter("channelId"));
+		}
+		
+		model = getColumn(request,model,user);
+	    model = getChannel(request,model,user,site);
 	    
 	    //获取链接列表
 	    String linkUrl=user.getLinkUrl();
@@ -701,12 +703,8 @@ public class AbstractContentMemberAct {
 	    	model.addAttribute("friends","");
 	    }
 	    
-	    
-		List<Columns> columnsList = (new BlogDao()).findByUserId(user_id, path);
-		model.addAttribute("columnsList", columnsList);
-		model.addAttribute("column_id", column_id);
 		FrontUtils.frontData(request, model, site);
-		Pagination p = contentMng.getPageForMember_blog(q, queryChannelId,site.getId(), modelId,user.getId(), cpn(pageNo), 20,column_id);
+		Pagination p = contentMng.getPageForMember_blog(q, queryChannelId,site.getId(), modelId,user.getId(), cpn(pageNo), 20,column_id,channelId);
 		model.addAttribute("pagination", p);
 		if (!StringUtils.isBlank(q)) {
 			model.addAttribute("q", q);
@@ -720,12 +718,8 @@ public class AbstractContentMemberAct {
 	public String blog_add(boolean hasPermission,String nextUrl,HttpServletRequest request,HttpServletResponse response, ModelMap model) {
 		CmsSite site = CmsUtils.getSite(request);
 		CmsUser user = CmsUtils.getUser(request);
-		int user_id = user.getId();
-		String path = request.getSession().getServletContext().getRealPath("/");
-		List<Columns> columnsList = (new BlogDao()).findByUserId(user_id, path);
-		model.addAttribute("columnsList", columnsList);
-		
-		
+		model = getColumn(request,model,user);
+	    model = getChannel(request,model,user,site);
 		//获取链接列表
 		String linkUrl=user.getLinkUrl();
 		List listU=new ArrayList();
@@ -797,15 +791,9 @@ public class AbstractContentMemberAct {
 			model.addAttribute("friends","");
 		}
 		
-		
 		if(hasPermission){
 			FrontUtils.frontData(request, model, site);
-			// 获得本站栏目列表
-			Set<Channel> rights = user.getGroup().getContriChannels();
-			List<Channel> topList=channelMng.getTopList(site.getId(), true);
-			List<Channel> channelList = Channel.getListForSelect(topList, rights,true);
 			model.addAttribute("site", site);
-			model.addAttribute("channelList", channelList);
 			model.addAttribute("sessionId",request.getSession().getId());
 			return FrontUtils.getTplPath(request, site.getSolutionPath(),TPLDIR_BLOG, nextUrl);
 		}else{
@@ -822,6 +810,8 @@ public class AbstractContentMemberAct {
 			CmsUser user = CmsUtils.getUser(request);
 			int user_id = user.getId();
 			String path = request.getSession().getServletContext().getRealPath("/");
+			List<Columns> columnsList = (new BlogDao()).findByUserId(user_id, path);
+			model.addAttribute("columnsList", columnsList);
 			
 			//获取链接列表
 			String linkUrl=user.getLinkUrl();
@@ -894,8 +884,6 @@ public class AbstractContentMemberAct {
 				model.addAttribute("friends","");
 			}
 			
-			List<Columns> columnsList = (new BlogDao()).findByUserId(user_id, path);
-			model.addAttribute("columnsList", columnsList);
 			FrontUtils.frontData(request, model, site);
 			Pagination p = contentMng.getPageForMember(q, queryChannelId,site.getId(), modelId,user.getId(), cpn(pageNo), 20);
 			model.addAttribute("pagination", p);
@@ -1056,7 +1044,7 @@ public class AbstractContentMemberAct {
 		}
 		
 	public String blog_save(String title, String author, String description,
-			String txt, String tagStr, Integer id, Integer modelId,ContentDoc doc,
+			String txt, String tagStr, Integer channelId,Integer column_id,Integer modelId,ContentDoc doc,
 			String captcha,String mediaPath,String mediaType,
 			String[] attachmentPaths, String[] attachmentNames,
 			String[] attachmentFilenames, String[] picPaths, String[] picDescs,
@@ -1066,7 +1054,7 @@ public class AbstractContentMemberAct {
 				CmsSite site = CmsUtils.getSite(request);
 				CmsUser user = CmsUtils.getUser(request);
 				FrontUtils.frontData(request, model, site);
-			String column_id = request.getParameter("column_id");
+//			String column_id = request.getParameter("column_id");
 			if (user == null) {
 				return FrontUtils.showLogin(request, model, site);
 			}
@@ -1100,7 +1088,7 @@ public class AbstractContentMemberAct {
 		}
 		c = contentMng.blog_save(c, ext, t,null, null, null, null, tagArr,
 				attachmentPaths,attachmentNames, attachmentFilenames
-				,picPaths,picDescs,column_id, typeId, null,true,
+				,picPaths,picDescs,channelId,column_id, typeId, null,true,
 				charge,chargeAmount, user, true);
 		if(doc!=null){
 			contentDocMng.save(doc, c);
@@ -1122,8 +1110,8 @@ public class AbstractContentMemberAct {
 		if (user == null) {
 			return FrontUtils.showLogin(request, model, site);
 		}
-		int user_id = user.getId();
-		String path = request.getSession().getServletContext().getRealPath("/");
+		model = getColumn(request,model,user);
+	    model = getChannel(request,model,user,site);
 		
 		//获取链接列表
 		String linkUrl=user.getLinkUrl();
@@ -1197,39 +1185,35 @@ public class AbstractContentMemberAct {
 		}
 		
 		
-		
-		List<Columns> columnsList = (new BlogDao()).findByUserId(user_id, path);
-		model.addAttribute("columnsList", columnsList);
 	/*	WebErrors errors = validateEdit(id, site, user, request);
 		if (errors.hasErrors()) {
 			return FrontUtils.showError(request, response, model, errors);
 		}*/
 		Content content = contentMng.findById(id);
-		// 获得本站栏目列表
-		Set<Channel> rights = user.getGroup().getContriChannels();
-		List<Channel> topList = channelMng.getTopList(site.getId(), true);
-		List<Channel> channelList = Channel.getListForSelect(topList, rights,
-				true);
 		model.addAttribute("content", content);
 		model.addAttribute("site", site);
-		model.addAttribute("channelList", channelList);
 		model.addAttribute("sessionId",request.getSession().getId());
 		return FrontUtils.getTplPath(request, site.getSolutionPath(),
 				TPLDIR_BLOG, nextUrl);
 	}
 	
-	public void blog_delete(Integer id,Integer column_id, HttpServletRequest request,
+	public void blog_delete(Integer contentId,Integer column_id,Integer channelId, HttpServletRequest request,
 			  HttpServletResponse response, ModelMap model) {
-			contentMng.deleteByIdBlog(id);
+			contentMng.deleteByIdBlog(contentId);
 		try {
-			request.getRequestDispatcher("/blog/contribute_list.jspx?column_id="+column_id).forward(request, response);
+			if(null != column_id){
+				request.getRequestDispatcher("/blog/contribute_list.jspx?column_id="+column_id).forward(request, response);
+			}else{
+				request.getRequestDispatcher("/blog/contribute_list.jspx?channelId="+channelId).forward(request, response);
+			}
+		
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 	
 	public String blog_update(Integer id, String title, String author,
-			String description, String txt, String tagStr, Integer channelId,
+			String description, String txt, String tagStr,Integer column_id, Integer channelId,
 			String mediaPath,String mediaType,
 			String[] attachmentPaths, String[] attachmentNames,
 			String[] attachmentFilenames, String[] picPaths, String[] picDescs,
@@ -1239,8 +1223,11 @@ public class AbstractContentMemberAct {
 		CmsSite site = CmsUtils.getSite(request);
 		CmsUser user = CmsUtils.getUser(request);
 		FrontUtils.frontData(request, model, site);
-		channelId = 81;
-		String column_id = request.getParameter("column_id");
+		if(null != column_id){
+			channelId = 81;
+		}
+		
+//		String column_id = request.getParameter("column_id");
 		/*MemberConfig mcfg = site.getConfig().getMemberConfig();
 		// 没有开启会员功能
 		if (!mcfg.isMemberOn()) {
@@ -1269,7 +1256,7 @@ public class AbstractContentMemberAct {
 		String[] tagArr = StrUtils.splitAndTrim(tagStr, ",", null);
 		contentMng.blog_update(c, ext, t,null, tagArr, null, null, null, 
 				attachmentPaths,attachmentNames, attachmentFilenames
-				,picPaths,picDescs, null, Integer.parseInt(column_id), null, null, 
+				,picPaths,picDescs, null, column_id,channelId, null, null, 
 				charge,chargeAmount,user, true);
 		if(doc!=null){
 			contentDocMng.update(doc, c);
@@ -1482,7 +1469,7 @@ public class AbstractContentMemberAct {
 		model.addAttribute("columnsList", columnsList);
 		model.addAttribute("column_id", column_id);
 		FrontUtils.frontData(request, model, site);
-		Pagination p = contentMng.getPageForMember_blog(q, queryChannelId,site.getId(), modelId,user.getId(), cpn(pageNo), 20,column_id);
+		Pagination p = contentMng.getPageForMember_blog(q, queryChannelId,site.getId(), modelId,user.getId(), cpn(pageNo), 20,Integer.parseInt(column_id),null);
 		model.addAttribute("pagination", p);
 		if (!StringUtils.isBlank(q)) {
 			model.addAttribute("q", q);
@@ -1491,5 +1478,65 @@ public class AbstractContentMemberAct {
 			model.addAttribute("modelId", modelId);
 		}
 		return FrontUtils.getTplPath(request, site.getSolutionPath(), TPLDIR_BLOG, nextUrl);
+	}
+	
+	public ModelMap getColumn(HttpServletRequest request,ModelMap model,CmsUser user){
+		if ((null != user.getGroup().getId())&&(4==user.getGroup().getId()) || 5 == user.getGroup().getId()){
+			String path = request.getSession().getServletContext().getRealPath("/");
+			List<Columns> columnsList = (new BlogDao()).findByUserId(user.getId(), path);
+			model.addAttribute("columnsList", columnsList);
+		}
+		return model;
+	}
+	
+	public ModelMap getChannel(HttpServletRequest request,ModelMap model,CmsUser user,CmsSite site) {
+		// 学科教研，市县教研专用
+		List<Channel> channelList2 = null;
+		List<Channel> channelList3 = null;
+		if (null != user.getGroup()) {
+			// 获得本站栏目列表
+			Set<Channel> rights = user.getGroup().getContriChannels();
+			List<Channel> topList = channelMng.getTopList(site.getId(), true);
+			List<Channel> channelList = Channel.getListForSelect(topList, rights, true);
+
+			channelList2 = new ArrayList<Channel>();// 学科教研
+			channelList3 = new ArrayList<Channel>();// 市县教研
+
+			if (4 == user.getGroup().getId()) {
+				for (Channel c : channelList) {
+					if (c.getId() == 98) {
+						channelList2.add(c);
+					} else if (null != c.getParent()) {
+						if (c.getParent().getId() == 98) {
+							channelList2.add(c);
+						} else if (null != c.getParent().getParent()) {
+							if (c.getParent().getParent().getId() == 98)
+								channelList2.add(c);
+						}
+					}
+				}
+			} else if (5 == user.getGroup().getId()) {
+				for (Channel c : channelList) {
+					if (c.getId() == 98) {
+						channelList3.add(c);
+					} else if (null != c.getParent()) {
+						if (c.getParent().getId() == 98) {
+							channelList3.add(c);
+						} else if (null != c.getParent().getParent()) {
+							if (c.getParent().getParent().getId() == 98)
+								channelList3.add(c);
+						}
+					}
+				}
+
+			}
+
+			if (null != channelList2 && channelList2.size() > 0) {
+				model.addAttribute("channelList", channelList2);
+			} else if (null != channelList3 && channelList3.size() > 0) {
+				model.addAttribute("channelList", channelList3);
+			}
+		}
+		return model;
 	}
 }
