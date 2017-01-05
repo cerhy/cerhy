@@ -56,11 +56,20 @@ $('.user-menu-links li').click(function(){
                     <ul>
 				        <li><a href="${base}/blog/contribute_add.jspx">发表博客</a></li>
 				          <li style="cursor: pointer;"><a><em></em>博客栏目</a>
+                              [#if columnsList??]
                              <ul>
                               [#list columnsList as c]
 		                       <li><a href="${base}/blog/contribute_list.jspx?column_id=${c.column_id}" ><em></em>${c.column_name}</a></li>
 		                      [/#list]
                              </ul>
+                           [#else]
+                             <ul>
+				                [#assign origDeep=channelList[0].deep+1/]
+				                [#list channelList as c]
+				                   <li><a href="${base}/blog/contribute_list.jspx?channelId=${c.id}" ><em></em>[#if c.deep gte origDeep][#list origDeep..c.deep as i]&nbsp;&nbsp;&nbsp;[/#list][/#if]${c.name}</a></li> 
+				                [/#list]
+                             </ul>
+                           [/#if]
                           </li>
 			              <li><a href="${base}/blog/collection_list.jspx">转载</a></li>
 				          <li style="cursor: pointer;"><a><em></em>设置</a>
