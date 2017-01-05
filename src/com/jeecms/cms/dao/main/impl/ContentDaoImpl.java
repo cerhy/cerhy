@@ -1120,7 +1120,7 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 			f.append(" and bean.model.id=:modelId").setParam("modelId", modelId);
 		}
 		inputUserId=ids;
-		appendQuery_blog(f, title, typeId, inputUserId, status, topLevel, recommend,Integer.parseInt(column_id));
+		appendQuery_blog(f, title, typeId, inputUserId, status, topLevel, recommend,null);
 		appendOrder(f, orderBy);
 		return find(f, pageNo, pageSize);
 	}
