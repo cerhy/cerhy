@@ -1481,7 +1481,8 @@ public class AbstractContentMemberAct {
 	}
 	
 	public ModelMap getColumn(HttpServletRequest request,ModelMap model,CmsUser user){
-		if ((null != user.getGroup().getId())&&(4!=user.getGroup().getId()) || 5 != user.getGroup().getId()){
+		int groupId = user.getGroup().getId();
+		if (4!=groupId || 5 != groupId ){
 			String path = request.getSession().getServletContext().getRealPath("/");
 			List<Columns> columnsList = (new BlogDao()).findByUserId(user.getId(), path);
 			model.addAttribute("columnsList", columnsList);
@@ -1501,8 +1502,9 @@ public class AbstractContentMemberAct {
 
 			channelList2 = new ArrayList<Channel>();// 学科教研
 			channelList3 = new ArrayList<Channel>();// 市县教研
-
-			if (4 == user.getGroup().getId()) {
+			int groupId = user.getGroup().getId();
+System.out.println(user.getGroup().getId());
+			if (4 == groupId) {
 				for (Channel c : channelList) {
 					if (c.getId() == 98) {
 						channelList2.add(c);
@@ -1515,7 +1517,7 @@ public class AbstractContentMemberAct {
 						}
 					}
 				}
-			} else if (5 == user.getGroup().getId()) {
+			} else if (5 == groupId) {
 				for (Channel c : channelList) {
 					if (c.getId() == 98) {
 						channelList3.add(c);

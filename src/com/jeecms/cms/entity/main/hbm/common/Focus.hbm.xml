@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.jeecms.cms.entity.main">
+	<class name="Focus" table="jc_focus">
+		<meta attribute="sync-DAO">false</meta>
+		<cache usage="read-write"/>
+		<id name="focusId" type="java.lang.Integer" column="focus_id"><generator class="assigned"/></id>
+		<property name="userId" column="user_id" type="integer" not-null="true" length="11"/>
+		<property name="focusUserId" column="focus_user_id" type="integer" not-null="true" length="11"/>
+		<property name="focusUserName" column="focus_user_name" type="string" not-null="false" length="600"/>
+		<property name="focusTime" column="focus_time" type="string" not-null="false" length="30"/>
+	</class>
+</hibernate-mapping>
+

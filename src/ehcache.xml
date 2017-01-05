@@ -75,4 +75,5 @@
     
     <cache name="com.jeecms.cms.front.ContentOrderTemp" maxElementsInMemory="50000" eternal="false" timeToIdleSeconds="7200" overflowToDisk="true" diskPersistent="true"/>
     
+    <cache name="com.jeecms.cms.entity.main.Focus" maxElementsInMemory="100" eternal="false" timeToIdleSeconds="600" timeToLiveSeconds="7200" overflowToDisk="true"/>
 </ehcache>
