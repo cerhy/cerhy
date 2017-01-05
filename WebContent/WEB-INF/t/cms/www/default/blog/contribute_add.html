@@ -25,10 +25,17 @@ $.validator.methods.leafChannel = function(value, element, param) {
 $(function() {
 	$("#jvForm").validate({
 		rules: {
+			channelId: {
+				required: true,
+				leafChannel: true
+			},
 			column_id: "required",
 			title:"required",
 		},
 		messages:{
+			channelId: {
+				leafChannel: "请选择末级栏目"
+			},
 			column_id: "请选择栏目",
 			title: "请输入标题",
 		}
@@ -199,16 +206,27 @@ $(function(){
                   <ul>
 				        <li><a href="${base}/blog/contribute_add.jspx">发表博客</a></li>
 				          <li style="cursor: pointer;"><a><em></em>博客栏目</a>
+                               [#if columnsList??]
                              <ul>
                               [#list columnsList as c]
 		                       <li><a href="${base}/blog/contribute_list.jspx?column_id=${c.column_id}" ><em></em>${c.column_name}</a></li>
 		                      [/#list]
                              </ul>
+                           [#else]
+                             <ul>
+				                [#assign origDeep=channelList[0].deep+1/]
+				                [#list channelList as c]
+				                   <li><a href="${base}/blog/contribute_list.jspx?channelId=${c.id}" ><em></em>[#if c.deep gte origDeep][#list origDeep..c.deep as i]&nbsp;&nbsp;&nbsp;[/#list][/#if]${c.name}</a></li> 
+				                [/#list]
+                             </ul>
+                           [/#if]
                           </li>
 			              <li><a href="${base}/blog/collection_list.jspx">转载</a></li>
 				          <li style="cursor: pointer;"><a><em></em>设置</a>
                               <ul>
+                               [#if columnsList??]
                               <li><a  href="${base}/blog/columns_list.jspx" ><em></em>新建栏目</a></li>
+                              [/#if]
                               <li><a  href="${base}/blog/tzsetting.jspx" ><em></em>博客信息</a></li>
                               <li><a  style="cursor: pointer;" onclick="set();" ><em></em>页面模板</a></li>
                               <li><a  href="${base}/blog/link_list.jspx" ><em></em>链接管理</a></li>
@@ -309,14 +327,26 @@ $(function(){
               <tr class="blog_column">
                 <td class="tggl-top">栏目</td>
                 <td>
-                <select name="column_id" class="member-change">
-                <option value="" class="sel-disabled">--请选择--</option>
-                [#if columnsList?size gt 0]
-                [#list columnsList as c]
-                    <option value="${c.column_id}">${c.column_name}</option>
-                [/#list]
+                [#if columnsList??]
+	                 <select name="column_id" class="member-change">
+	                 <option value="" class="sel-disabled">--请选择--</option>
+	                  [#if columnsList?size gt 0]
+	                  [#list columnsList as c]
+	                    <option value="${c.column_id}">${c.column_name}</option>
+	                  [/#list]
+	                  [/#if]
+	                 </select>
+                 [#else]
+	                <select name="channelId" class="member-change" id="channelId">
+	                <option value="" class="sel-disabled">--请选择--</option>
+	                [#if channelList?size gt 0]
+	                [#assign origDeep=channelList[0].deep+1/]
+	                [#list channelList as c]
+	                    <option value="${c.id}"[#if c.child?size gt 0] class="sel-disabled"[/#if]>[#if c.deep gte origDeep][#list origDeep..c.deep as i]&nbsp;&nbsp;[/#list]>[/#if]${c.name}</option>
+	                [/#list]
+	                [/#if]
+	                </select>
                 [/#if]
-                </select>
                 </td>
               </tr>
               <tr>

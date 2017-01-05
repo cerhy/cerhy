@@ -122,8 +122,8 @@ public class ContentMngImpl implements ContentMng, ChannelDeleteChecker {
 		return dao.getPage(title, null,memberId,memberId, false, false,ContentStatus.all, null, siteId,modelId,  channelId, 0, pageNo,pageSize);
 	}
 	
-	public Pagination getPageForMember_blog(String title, Integer channelId,Integer siteId,Integer modelId, Integer memberId, int pageNo, int pageSize,String column_id) {
-		return dao.getPage_blog(title, null,memberId,memberId, false, false,ContentStatus.all, null, siteId,modelId,  channelId, 0, pageNo,pageSize,column_id);
+	public Pagination getPageForMember_blog(String title, Integer channelId,Integer siteId,Integer modelId, Integer memberId, int pageNo, int pageSize,Integer column_id,Integer channelId2) {
+		return dao.getPage_blog(title, null,memberId,memberId, false, false,ContentStatus.all, null, siteId,modelId,  channelId, 0, pageNo,pageSize,column_id,channelId2);
 	}
 	
 	@Transactional(readOnly = true)
@@ -320,10 +320,10 @@ public class ContentMngImpl implements ContentMng, ChannelDeleteChecker {
 			Integer[] channelIds, Integer[] topicIds, Integer[] viewGroupIds,
 			String[] tagArr, String[] attachmentPaths,
 			String[] attachmentNames, String[] attachmentFilenames,
-			String[] picPaths, String[] picDescs, String column_id,
+			String[] picPaths, String[] picDescs, Integer channelId,Integer column_id,
 			Integer typeId, Boolean draft,Boolean contribute, 
 			Short charge,Double chargeAmount,CmsUser user, boolean forMember) {
-		saveContent_blog(bean, ext, txt,doc, column_id, typeId, draft,contribute,user, forMember);
+		saveContent_blog(bean, ext, txt,doc,channelId,column_id, typeId, draft,contribute,user, forMember);
 		
 		// 保存附件
 		if (attachmentPaths != null && attachmentPaths.length > 0) {
@@ -450,9 +450,17 @@ public class ContentMngImpl implements ContentMng, ChannelDeleteChecker {
 	}
 
 	private Content saveContent_blog(Content bean, ContentExt ext, ContentTxt txt,ContentDoc doc,
-			String column_id,Integer typeId, Boolean draft,Boolean contribute,CmsUser user, boolean forMember){
-		Channel channel = channelMng.findById(81);
-		bean.setColumn_id(Integer.parseInt(column_id));
+			Integer channelId,Integer column_id,Integer typeId, Boolean draft,Boolean contribute,CmsUser user, boolean forMember){
+		Channel channel;
+		if(channelId != null){
+			 channel = channelMng.findById(channelId);
+		}else{
+			 channel = channelMng.findById(81);
+		}
+		if(column_id != null){
+			bean.setColumn_id(column_id);
+		}
+		
 		bean.setChannel(channel);
 		bean.setType(contentTypeMng.findById(typeId));
 		bean.setUser(user);
@@ -616,7 +624,7 @@ public class ContentMngImpl implements ContentMng, ChannelDeleteChecker {
 			Integer[] viewGroupIds, String[] attachmentPaths,
 			String[] attachmentNames, String[] attachmentFilenames,
 			String[] picPaths, String[] picDescs, Map<String, String> attr,
-			Integer column_id, Integer typeId, Boolean draft,
+			Integer column_id,Integer channelId, Integer typeId, Boolean draft,
 			Short charge,Double chargeAmount,CmsUser user,boolean forMember) {
 		Content entity = findById(bean.getId());
 		//更新column_id
@@ -671,11 +679,11 @@ public class ContentMngImpl implements ContentMng, ChannelDeleteChecker {
 		/*//共享状态处理
 		processContentShareCheck(bean);
 		// 是否有标题图
-		bean.setHasTitleImg(!StringUtils.isBlank(ext.getTitleImg()));
+		bean.setHasTitleImg(!StringUtils.isBlank(ext.getTitleImg()));*/
 		// 更新栏目
-		if (channelId != null) {
+		if (channelId != null && channelId != 81) {
 			bean.setChannel(channelMng.findById(channelId));
-		}*/
+		}
 	/*	// 更新类型
 		if (typeId != null) {
 			bean.setType(contentTypeMng.findById(typeId));
