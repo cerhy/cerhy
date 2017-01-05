@@ -862,4 +862,36 @@ public class ContributeAct extends AbstractContentMemberAct {
 		FrontUtils.frontData(request, model, site);
 		return FrontUtils.getTplPath(request, site.getSolutionPath(),TPLDIR_BLOG, "tpl.toMyComment");
 	}
+	
+	/**
+	 *校验添加的好友是否存在!
+	 */
+	@RequestMapping(value = "/member/checkAddfinds.jspx")
+	public void checkAddfinds(String friends,HttpServletRequest request,HttpServletResponse response, ModelMap model)throws UnsupportedEncodingException, JSONException {
+		String[] strs=friends.split("~");
+		int num=0;
+		int addnum=1;
+		String no="";
+		for(int i=0;i<strs.length;i++){
+			CmsUser u=channelMng.findUserImage(strs[i].split("=")[1].toString());
+			if(null==u){
+				no+=strs[i].split("=")[1].toString()+",";
+			}
+		}
+		if(no!=""){
+			addnum=0;
+		}else{
+			addnum=1;
+		}
+		JSONObject json = new JSONObject();
+		CmsSite site=CmsUtils.getSite(request);
+		FrontUtils.frontData(request, model, site);
+		if(addnum==0){
+			json.put("status",no.substring(0,no.length() - 1));
+		}else{
+			json.put("status","");	
+		}
+		ResponseUtils.renderJson(response, json.toString());
+	}
+	
 }
