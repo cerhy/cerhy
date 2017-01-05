@@ -1,0 +1,1 @@
+alter table `jc_comment` add column `isOrNo` int(11) DEFAULT NULL COMMENT '是否已经查看(1:已读)(null:未读)',
