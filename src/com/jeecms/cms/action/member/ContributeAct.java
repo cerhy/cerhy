@@ -731,6 +731,15 @@ public class ContributeAct extends AbstractContentMemberAct {
 	}
 	
 	
+	/**
+	 *博客关注 
+	  */
+	@RequestMapping(value = "/blog/focus.jspx")
+	public String blog_focus(Integer focusUserId,String focusUserName, HttpServletRequest request) {
+		return super.blog_focus(focusUserId,focusUserName, request);
+	}
+	
+	
 	@RequestMapping(value = "/blog/changeTheme.jspx", method = RequestMethod.POST)
 	public String updateTheme(String theme, String nextUrl,
 			HttpServletRequest request, HttpServletResponse response,

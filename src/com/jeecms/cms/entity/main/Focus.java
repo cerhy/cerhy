@@ -7,6 +7,33 @@ public class Focus {
 	private String focusUserName;
 	private String focusTime;
 	
+	public Focus(){
+		
+	}
+	public Focus(
+			Integer userId,
+			Integer focusUserId,
+			String focusUserName,
+			String focusTime){
+		this.userId = userId;
+		this.focusUserId = focusUserId;
+		this.focusUserName = focusUserName;
+		this.focusTime = focusTime;
+	}
+	
+	public Focus(
+			Integer focusId,
+			Integer userId,
+			Integer focusUserId,
+			String focusUserName,
+			String focusTime){
+		this.focusId = focusId;
+		this.userId = userId;
+		this.focusUserId = focusUserId;
+		this.focusUserName = focusUserName;
+		this.focusTime = focusTime;
+	}
+	
 	public Integer getFocusId() {
 		return focusId;
 	}

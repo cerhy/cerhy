@@ -16,19 +16,28 @@
 </style>
 <script type="text/javascript">
 $(function(){
+	$('#focus').click(function(){
+		$.ajax({
+			type:"post",
+			url:"${base}/blog/focus.jspx",
+			data:{
+				"focusUserId":${usert.id},
+			},
+			success:function(data){
+			 alert("o");
+			}
+		});	
+	});
+	
+	$('.user-menu-links li').click(function(){
+	    $(this).toggleClass('on');
+	});
 	$(".st_tree").SimpleTree({
 		click:function(a){
 			if(!$(a).attr("hasChild"))
 				alert($(a).attr("ref"));
 		}
 	});
-});
-</script>
-<script type="text/javascript">
-$(function(){
-$('.user-menu-links li').click(function(){
-    $(this).toggleClass('on');
-});
 });
 </script>
 [#include "../hyinclude/header.html"/]
@@ -42,15 +51,15 @@ $('.user-menu-links li').click(function(){
         <div class="mb20 clearfix">
             <div class="wrap-left">
                 <div class="user-center-left">
-                    <!-- <div class="user-setting">
+                     <div class="user-setting">
                         <div class="pic-dt">
-                        [#if user.userImg??]<img src="${user.userImg}" width="120" height="120" alt="">
+                        [#if usert.userImg??]<img src="${usert.userImg}" width="120" height="120" alt="">
                         [#else]
                         <img src="/${res}/images/userImg-large.png" width="120" height="120" alt="">[/#if]
                         </div>
-                        <div class="user-name-dt"><a href="${base}/blog/index.jspx">${user.username}</a></div>
-                        <a href="${base}/logout.jspx" class="user-oparetion-btn">退出</a>
-                    </div> -->
+                        <div class="user-name-dt"><a href="${base}/blog/index.jspx">${usert.username}</a></div>
+                        <a id="focus" class="user-oparetion-btn">关注</a>
+                    </div> 
                     <div class="user-menu-links">
                     <ul>
 				         <li style="cursor: pointer;"><a><em></em>博客栏目</a>
@@ -135,7 +144,7 @@ $('.user-menu-links li').click(function(){
                 </div>
             </div>
             <div class="wrap-right">
-                <div class="personCenter-userInfo">
+                <div class="personCenter-userInfo" style="min-height: 600px;">
                     
                     <div class="tab-content" style="display: block;">
                       
@@ -153,7 +162,7 @@ $('.user-menu-links li').click(function(){
 			              [#list pagination.list as c]
 			              <tr>
 			                <td>${c.id}</td>
-			                <td style="text-align:center;"  width="600px;"><a href="${c.url!}">[@text_cut s=c.title?html len='24' append='...'/]</a></td>
+			                <td style="text-align:left;padding-left:10px;"  width="600px;"><a href="${c.url!}">[@text_cut s=c.title?html len='24' append='...'/]</a></td>
 			                <td>${c.views}</td>
 			                <td>${c.releaseDate?string('yyyy-MM-dd')}</td>
 			              </tr>

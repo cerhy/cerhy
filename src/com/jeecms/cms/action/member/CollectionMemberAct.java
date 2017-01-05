@@ -270,10 +270,12 @@ public class CollectionMemberAct {
 	
 	public ModelMap getColumn(HttpServletRequest request,ModelMap model,CmsUser user){
 		int groupId = user.getGroup().getId();
-		if (4 !=groupId || 5 != groupId ){
-			String path = request.getSession().getServletContext().getRealPath("/");
-			List<Columns> columnsList = (new BlogDao()).findByUserId(user.getId(), path);
-			model.addAttribute("columnsList", columnsList);
+		if (4!=groupId){
+			if(5 != groupId){
+				String path = request.getSession().getServletContext().getRealPath("/");
+				List<Columns> columnsList = (new BlogDao()).findByUserId(user.getId(), path);
+				model.addAttribute("columnsList", columnsList);
+			}
 		}
 		return model;
 	}

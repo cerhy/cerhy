@@ -6,7 +6,10 @@ import static com.jeecms.cms.Constants.TPLDIR_MEMBER;
 import static com.jeecms.common.page.SimplePage.cpn;
 
 import java.io.UnsupportedEncodingException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,6 +37,7 @@ import com.jeecms.cms.manager.main.CmsModelMng;
 import com.jeecms.cms.manager.main.ContentDocMng;
 import com.jeecms.cms.manager.main.ContentMng;
 import com.jeecms.cms.manager.main.ContentTypeMng;
+import com.jeecms.cms.manager.main.impl.FocusMng;
 import com.jeecms.common.page.Pagination;
 import com.jeecms.common.upload.FileRepository;
 import com.jeecms.common.util.StrUtils;
@@ -398,7 +402,8 @@ public class AbstractContentMemberAct {
 		return false;
 	}
 	
-	
+	@Autowired
+	protected FocusMng focusMng;
 
 	@Autowired
 	protected ContentMng contentMng;
@@ -1203,7 +1208,9 @@ public class AbstractContentMemberAct {
 		try {
 			if(null != column_id){
 				request.getRequestDispatcher("/blog/contribute_list.jspx?column_id="+column_id).forward(request, response);
-			}else{
+			}
+
+            if(null != channelId){
 				request.getRequestDispatcher("/blog/contribute_list.jspx?channelId="+channelId).forward(request, response);
 			}
 		
@@ -1480,12 +1487,24 @@ public class AbstractContentMemberAct {
 		return FrontUtils.getTplPath(request, site.getSolutionPath(), TPLDIR_BLOG, nextUrl);
 	}
 	
+	public String blog_focus(Integer focusUserId,String focusUserName, HttpServletRequest request) {
+		  Date date=new Date();
+		  DateFormat format=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		  String focusTime=format.format(date);
+		  CmsUser user = CmsUtils.getUser(request);
+		focusMng.add(user.getId(),focusUserId, focusUserName, focusTime);
+		return "fo";
+	}
+	
+	
 	public ModelMap getColumn(HttpServletRequest request,ModelMap model,CmsUser user){
 		int groupId = user.getGroup().getId();
-		if (4!=groupId || 5 != groupId ){
-			String path = request.getSession().getServletContext().getRealPath("/");
-			List<Columns> columnsList = (new BlogDao()).findByUserId(user.getId(), path);
-			model.addAttribute("columnsList", columnsList);
+		if (4!=groupId){
+			if(5 != groupId){
+				String path = request.getSession().getServletContext().getRealPath("/");
+				List<Columns> columnsList = (new BlogDao()).findByUserId(user.getId(), path);
+				model.addAttribute("columnsList", columnsList);
+			}
 		}
 		return model;
 	}
@@ -1503,7 +1522,6 @@ public class AbstractContentMemberAct {
 			channelList2 = new ArrayList<Channel>();// 学科教研
 			channelList3 = new ArrayList<Channel>();// 市县教研
 			int groupId = user.getGroup().getId();
-System.out.println(user.getGroup().getId());
 			if (4 == groupId) {
 				for (Channel c : channelList) {
 					if (c.getId() == 98) {

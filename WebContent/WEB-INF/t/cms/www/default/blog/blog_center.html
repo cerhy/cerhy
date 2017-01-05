@@ -19,6 +19,10 @@ td{border:1px solid #e7e7e7; line-height:38px; color:#666666; text-align:center;
 </style>
 <script type="text/javascript">
 $(function(){
+	$('.user-menu-links li').click(function(){
+	    $(this).toggleClass('on');
+	});
+	
 	$(".st_tree").SimpleTree({
 		click:function(a){
 			if(!$(a).attr("hasChild"))
@@ -27,15 +31,8 @@ $(function(){
 	});
 });
 </script>
-<script type="text/javascript">
-$(function(){
-$('.user-menu-links li').click(function(){
-    $(this).toggleClass('on');
-});
-});
-</script>
-[#include "../hyinclude/header.html"/]
 
+[#include "../hyinclude/header.html"/]
 <div class="blog-con">
   <div class="blogHead">
 	  <div style="font-size:30px;margin:30px auto 20px;"><a href="${base}/blog/index.jspx">[#if user.blogTitle??]${user.blogTitle}[#else]标题[/#if]</a></div>
