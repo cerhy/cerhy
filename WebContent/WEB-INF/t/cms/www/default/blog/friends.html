@@ -146,7 +146,7 @@ $('.user-menu-links li').click(function(){
                 </div>
             </div>
             <div class="wrap-right">
-	          <form id="jvForm" action="add_friends.jspx" method="post">
+	          <form id="jvForm" onsubmit="return validate_form(this)" action="add_friends.jspx" method="post">
 	         	<textarea id="friends" name="friends" rows="18" cols="90">${friends }</textarea>
 	         	<br />
 	          	<span class="fl">
@@ -171,3 +171,38 @@ $('.user-menu-links li').click(function(){
 [#include "../include/footer.html"/]
 </body>
 </html>
+<script type="text/javascript">
+    
+	function validate_required(field,alerttxt){
+		with (field){
+			var str =field.split("~");
+			var num=0;
+			for(var i=0;i<str.length;i++){
+				if(str[i].indexOf("=")!=-1){
+					num++;
+					var st=str[i].split("=")
+					if(st[1]==''){
+						num--;
+					}
+				}
+			}
+			if(num!=str.length){
+				alert(alerttxt);
+				return false;
+			}else{
+				return true;
+			}
+	    }
+	}
+
+	function validate_form(thisform){
+	    var friends=$("#friends").val();
+		var friendss = friends.replace(new RegExp( "\\n", "g" ),"~");
+		with (thisform){
+		  if (validate_required(friendss,"请填写正确的好友格式!")==false){
+			  friends.focus();
+			  return false
+		  	}
+		  }
+	}
+</script>
