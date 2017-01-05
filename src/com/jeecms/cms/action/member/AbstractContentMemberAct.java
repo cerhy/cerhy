@@ -1481,7 +1481,7 @@ public class AbstractContentMemberAct {
 	}
 	
 	public ModelMap getColumn(HttpServletRequest request,ModelMap model,CmsUser user){
-		if ((null != user.getGroup().getId())&&(4==user.getGroup().getId()) || 5 == user.getGroup().getId()){
+		if ((null != user.getGroup().getId())&&(4!=user.getGroup().getId()) || 5 != user.getGroup().getId()){
 			String path = request.getSession().getServletContext().getRealPath("/");
 			List<Columns> columnsList = (new BlogDao()).findByUserId(user.getId(), path);
 			model.addAttribute("columnsList", columnsList);
