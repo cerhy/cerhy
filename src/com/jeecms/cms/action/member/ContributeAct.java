@@ -5,6 +5,7 @@ import static com.jeecms.cms.Constants.TPLDIR_MEMBER;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -28,14 +29,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.jeecms.cms.dao.main.impl.BlogDao;
+import com.jeecms.cms.entity.assist.CmsComment;
 import com.jeecms.cms.entity.main.Channel;
 import com.jeecms.cms.entity.main.Columns;
+import com.jeecms.cms.manager.assist.CmsCommentMng;
 import com.jeecms.cms.manager.assist.CmsFileMng;
 import com.jeecms.cms.manager.main.ChannelMng;
+import com.jeecms.cms.manager.main.ContentMng;
 import com.jeecms.common.web.ResponseUtils;
 import com.jeecms.core.entity.CmsSite;
 import com.jeecms.core.entity.CmsUser;
-import com.jeecms.core.entity.CmsUserExt;
 import com.jeecms.core.entity.Ftp;
 import com.jeecms.core.entity.MemberConfig;
 import com.jeecms.core.manager.CmsUserMng;
@@ -751,4 +754,118 @@ public class ContributeAct extends AbstractContentMemberAct {
 		return FrontUtils.showSuccess(request, model, nextUrl);
 	}
 	
+	
+	@Autowired
+	private ContentMng contentMng;
+
+	@Autowired
+	private CmsCommentMng cmsCommentMng;
+	
+	/**
+	 *读取评论消息数目
+	 */
+	@RequestMapping(value = "/member/findCommentNu.jspx")
+	public void findCommentNu(HttpServletRequest request,HttpServletResponse response, ModelMap model)throws UnsupportedEncodingException, JSONException {
+		CmsUser user = CmsUtils.getUser(request);
+		if(user!=null){
+			JSONObject json = new JSONObject();
+			CmsSite site=CmsUtils.getSite(request);
+			FrontUtils.frontData(request, model, site);
+			Date lastDate=user.getLastLoginTime();
+			int userId=user.getId();
+			List<CmsComment> listNum=contentMng.findCommentByConid(userId,lastDate);
+			json.put("status", listNum.size());
+			ResponseUtils.renderJson(response, json.toString());
+		}
+	}
+	
+	/**
+	 *展示评论
+	 */
+	@RequestMapping(value = "/blog/showCommet.jspx")
+	public String showComment(HttpServletRequest request,HttpServletResponse response, ModelMap model) {
+		CmsSite site = CmsUtils.getSite(request);
+		CmsUser user = CmsUtils.getUser(request);
+		int user_id = user.getId();
+		String path = request.getSession().getServletContext().getRealPath("/");
+		List<Columns> columnsList = (new BlogDao()).findByUserId(user_id, path);
+		//获取链接列表
+		String linkUrl=user.getLinkUrl();
+		List listU=new ArrayList();
+		if(linkUrl!=null){
+			String[] strs=linkUrl.split(" ");
+			String newUrl="";
+			for(int i=0;i<strs.length;i++){
+				if(i!=strs.length-1){
+					if(!strs[i].contains("http")&&strs[i+1].contains("http")){
+						newUrl+="~"+strs[i]+" ";
+					}else{
+						newUrl+=strs[i]+" ";
+					}
+				}else{
+					if(!strs[i].contains("http")){
+						newUrl+="~"+strs[i]+" ";
+					}else{
+						newUrl+=strs[i]+" ";
+					}
+				}
+			}
+			String[] str=newUrl.split("~");
+			for(int j=0;j<str.length;j++){
+				Map<String,Object> map=new HashMap<String,Object>();
+				String[] st=str[j].toString().split(" ");
+				List lists=new ArrayList();
+				String newName="";
+				for(int k=0;k<st.length;k++){
+					if(st[0].contains("http")){
+						newName="";
+					}else{
+						newName=st[0];
+					}
+					lists.add(st[k]);
+				}
+				map.put(newName, lists);
+				listU.add(map);
+			}
+			model.addAttribute("urlList", listU);
+			model.addAttribute("linkUrls", linkUrl.replaceAll(" ", "\r\n"));
+		}else{
+			model.addAttribute("urlList",listU);
+			model.addAttribute("linkUrls","");
+		}
+		//获取好友列表
+		String friends=user.getFriends();
+		List listF = new ArrayList<>();
+		if(friends!=null){
+			
+			String[] strs=friends.split(" ");
+			for(int i=0;i<strs.length;i++){
+				String[] str=strs[i].split("=");
+				Map<String,Object> map=new HashMap<String,Object>();
+				CmsUser u=channelMng.findUserImage(str[1].toString());
+				if(null==u){
+					String newName="";
+					map.put(newName, null);
+				}else{
+					String newName=str[0]+"~"+u.getId()+"~"+u.getUserExt().getUserImg();
+					map.put(newName, u.getUserExt().getUserImg());
+				}
+				listF.add(map);
+			}
+			model.addAttribute("friendsList", listF);
+			model.addAttribute("friends", friends.replaceAll(" ", "\r\n"));
+		}else{
+			model.addAttribute("friendsList", listF);
+			model.addAttribute("friends","");
+		}
+		model.addAttribute("columnsList", columnsList);
+		List<CmsComment> commentList=contentMng.findCommentByConid(user.getId(),null);
+		
+		
+		
+		
+		cmsCommentMng.updateByUserId(user.getId());
+		FrontUtils.frontData(request, model, site);
+		return FrontUtils.getTplPath(request, site.getSolutionPath(),TPLDIR_BLOG, "tpl.toMyComment");
+	}
 }

@@ -13,6 +13,7 @@
 		<property name="checked" column="is_checked" type="java.lang.Boolean" not-null="true"/>
 		<property name="score"  column="score" type="integer" not-null="false" length="11"/>
 		<property name="replyCount"  column="reply_count" type="integer" not-null="false" length="11"/>
+		<property name="isOrNo"  column="isOrNo" type="integer" not-null="false" length="11"/>
 		<one-to-one name="commentExt" class="CmsCommentExt" cascade="delete"/>
 		<many-to-one name="channel" column="channel_id" class="com.jeecms.cms.entity.main.Channel" not-null="false"></many-to-one>
 		<many-to-one name="content" column="content_id" class="com.jeecms.cms.entity.main.Content" not-null="false"></many-to-one>

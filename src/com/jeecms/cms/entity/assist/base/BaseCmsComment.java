@@ -28,6 +28,7 @@ public abstract class BaseCmsComment  implements Serializable {
 	public static String PROP_CONTENT = "content";
 	public static String PROP_CHANNEL = "channel";
 	public static String PROP_ID = "id";
+	public static String PROP_ISORNO = "isOrNo";
 
 
 	// constructors
@@ -80,7 +81,7 @@ public abstract class BaseCmsComment  implements Serializable {
 		java.lang.Short ups,
 		java.lang.Short downs,
 		java.lang.Boolean recommend,
-		java.lang.Boolean checked) {
+		java.lang.Boolean checked,java.lang.Integer isOrNo) {
 
 		this.setId(id);
 		this.setChannel(channel);
@@ -91,6 +92,7 @@ public abstract class BaseCmsComment  implements Serializable {
 		this.setDowns(downs);
 		this.setRecommend(recommend);
 		this.setChecked(checked);
+		this.setIsOrNo(isOrNo);
 		initialize();
 	}
 	
@@ -112,6 +114,23 @@ public abstract class BaseCmsComment  implements Serializable {
 	private java.lang.Boolean checked;
 	private java.lang.Integer score;
 	
+	//zph
+	private java.lang.Integer isOrNo;
+	
+	
+	/**
+	 * Return the value associated with the column: isOrNo
+	 */
+	public java.lang.Integer getIsOrNo() {
+		return isOrNo;
+	}
+
+	public void setIsOrNo(java.lang.Integer isOrNo) {
+		this.isOrNo = isOrNo;
+	}
+
+
+
 	private java.lang.Integer replyCount;
 	private com.jeecms.cms.entity.assist.CmsComment parent;
 

@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import com.jeecms.cms.entity.assist.CmsComment;
 import com.jeecms.cms.entity.main.Columns;
 import com.jeecms.cms.entity.main.Content;
 import com.jeecms.cms.entity.main.ContentDoc;
@@ -219,6 +220,12 @@ public interface ContentMng {
 
 	public Pagination getPageForMember_firendsBlog(int ids,String title, Integer channelId,
 			Integer siteId, Integer modelId,Integer memberId, int pageNo, int pageSize,String column_name);
+
+
+	public List<Content> findListInfo(int userId);
+
+
+	public List<CmsComment> findCommentByConid(int userId,Date lastDate);
 	
 	
 }

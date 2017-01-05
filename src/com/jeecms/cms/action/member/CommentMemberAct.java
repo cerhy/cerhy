@@ -99,6 +99,10 @@ public class CommentMemberAct {
 		return FrontUtils.getTplPath(request, site.getSolutionPath(),
 				TPLDIR_COMMENT, COMMENT_REPLY);
 	}
+	
+	
+	@Autowired
+	private CmsCommentMng cmsCommentMng;
 
 	/**
 	 * 我的信息所有的评论
@@ -127,6 +131,7 @@ public class CommentMemberAct {
 		Pagination pagination = commentMng.getPageForMember(site.getId(), null,
 				null, user.getId(), null, null, null, true, cpn(pageNo),
 				CookieUtils.getPageSize(request));
+		cmsCommentMng.updateByUserId(user.getId());
 		model.addAttribute("pagination", pagination);
 		return FrontUtils.getTplPath(request, site.getSolutionPath(),
 				TPLDIR_COMMENT, COMMENT_MNG);

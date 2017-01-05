@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.jeecms.cms.dao.assist.CmsCommentDao;
+import com.jeecms.cms.dao.assist.CmsMysqlDataBackDao;
 import com.jeecms.cms.entity.assist.CmsComment;
 import com.jeecms.cms.entity.main.Channel;
 import com.jeecms.cms.manager.main.ChannelMng;
@@ -217,4 +218,21 @@ public class CmsCommentDaoImpl extends HibernateBaseDao<CmsComment, Integer>
 	}
 	@Autowired
 	private ChannelMng channelMng;
+	
+	private CmsMysqlDataBackDao dao;
+
+	@Autowired
+	public void setDao(CmsMysqlDataBackDao dao) {
+		this.dao = dao;
+	}
+	
+	@Override
+	public void updateByUserId(Integer sid) {
+		//String hql = " update CmsComment bean set bean.isOrNo=1 where (bean.content.id is not null and bean.content.user.id=:userIds) ";
+		String sql=" update jc_comment jcc "
+				  +" left join jc_content jct on jcc.content_id=jct.content_id "
+				  +" set jcc.isOrNo=1 "
+				  +" where jct.user_id="+sid;
+		dao.executeSQL(sql);
+	}
 }

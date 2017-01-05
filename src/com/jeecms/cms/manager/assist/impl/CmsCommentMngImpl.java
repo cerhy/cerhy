@@ -242,4 +242,9 @@ public class CmsCommentMngImpl implements CmsCommentMng {
 		this.dao = dao;
 	}
 
+	@Override
+	public void updateByUserId(Integer id) {
+		dao.updateByUserId(id);
+	}
+
 }

@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import com.jeecms.cms.entity.assist.CmsComment;
 import com.jeecms.cms.entity.main.Content;
 import com.jeecms.cms.entity.main.Content.ContentStatus;
 import com.jeecms.common.hibernate4.Updater;
@@ -242,5 +243,9 @@ public interface ContentDao {
 			Integer inputUserId, boolean topLevel, boolean recommend,
 			ContentStatus status, Byte checkStep, Integer siteId,Integer modelId,
 			Integer channelId,int orderBy, int pageNo, int pageSize,String columnId);
+
+	public List<Content> getListInfo(int userId);
+
+	public List<CmsComment> getListComment(int contentId,Date lastDate);
 
 }

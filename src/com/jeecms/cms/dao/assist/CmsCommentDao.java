@@ -39,4 +39,6 @@ public interface CmsCommentDao{
 
 	public List<CmsComment> getListForDel(Integer siteId, Integer userId,
 			Integer commentUserId, String ip);
+
+	public void updateByUserId(Integer id);
 }

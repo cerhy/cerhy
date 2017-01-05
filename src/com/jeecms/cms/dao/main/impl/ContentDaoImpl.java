@@ -21,6 +21,12 @@ import static com.jeecms.cms.action.directive.abs.AbstractContentDirective.PARAM
 
 
 
+
+
+
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -33,6 +39,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.jeecms.cms.dao.main.ContentDao;
+import com.jeecms.cms.entity.assist.CmsComment;
 import com.jeecms.cms.entity.main.Content;
 import com.jeecms.cms.entity.main.ContentCheck;
 import com.jeecms.cms.entity.main.ContentDoc;
@@ -1116,5 +1123,25 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 		appendQuery_blog(f, title, typeId, inputUserId, status, topLevel, recommend,column_id);
 		appendOrder(f, orderBy);
 		return find(f, pageNo, pageSize);
+	}
+
+	@Override
+	public List<Content> getListInfo(int userId) {
+		Finder f = Finder.create("from Content bean");
+		f.append(" where 1=1");
+		f.append(" and bean.user.id=:userId");
+		f.setParam("userId", userId);
+		return find(f);
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<CmsComment> getListComment(int userId,Date lastDate) {
+		Finder f = Finder.create("select bean from CmsComment bean");
+		f.append(" where 1=1");
+		f.append(" and (bean.content.user.id=:userId and bean.content.id is not null)");
+		f.append(" and bean.isOrNo is null)");
+		f.setParam("userId", userId);
+		return find(f);
 	}
 }

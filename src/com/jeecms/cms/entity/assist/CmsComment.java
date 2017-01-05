@@ -99,7 +99,7 @@ public class CmsComment extends BaseCmsComment {
 		java.lang.Short ups,
 		java.lang.Short downs,
 		java.lang.Boolean recommend,
-		java.lang.Boolean checked) {
+		java.lang.Boolean checked,java.lang.Integer isOrNo) {
 
 		super (
 			id,
@@ -110,7 +110,8 @@ public class CmsComment extends BaseCmsComment {
 			ups,
 			downs,
 			recommend,
-			checked);
+			checked,
+			isOrNo);
 	}
 	/* [CONSTRUCTOR MARKER END] */
 

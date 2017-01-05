@@ -84,4 +84,6 @@ public interface CmsCommentMng {
 	public void downs(Integer id);
 
 	public CmsComment[] checkByIds(Integer[] ids, CmsUser user, boolean checked);
+
+	public void updateByUserId(Integer id);
 }

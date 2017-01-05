@@ -59,6 +59,7 @@ function qkeypress(){
 			         			<a href="${base}/member/index.jspx">会员中心</a>
 			         			<a href="${base}/blog/index.jspx">我的博客</a>
 			         			<a href="${base}/logout.jspx">退出账号</a>
+			         			<a id="showInfo" style="display: none;text-decoration:underline;color: red;" href="${base}/member/news_comments.jspx" ></a>
 		         			</div>
 	         			</div>
          			[#else]
@@ -85,3 +86,23 @@ function qkeypress(){
         </div>
     </div>
 </div>
+<script type="text/javascript">
+
+$(function(){
+	$.ajax({
+        url: "${base}/member/findCommentNu.jspx",
+        type: "POST",
+        dataType:"json",
+        data: "",
+        success: function (data) {
+        	if(data.status>0){
+				$("#showInfo").show();
+				$("#showInfo").html("消息:("+data.status+")")
+        	}
+        }
+    });
+	
+	
+});
+
+</script>

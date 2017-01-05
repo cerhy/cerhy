@@ -20,6 +20,7 @@ import org.springframework.util.Assert;
 
 import com.jeecms.cms.dao.main.ContentDao;
 import com.jeecms.cms.dao.main.impl.BlogDao;
+import com.jeecms.cms.entity.assist.CmsComment;
 import com.jeecms.cms.entity.assist.CmsFile;
 import com.jeecms.cms.entity.main.Channel;
 import com.jeecms.cms.entity.main.Channel.AfterCheckEnum;
@@ -1300,5 +1301,16 @@ public class ContentMngImpl implements ContentMng, ChannelDeleteChecker {
 	public Pagination getPageForMember_firendsBlog(int ids,String title, Integer channelId,
 			Integer siteId, Integer modelId,Integer memberId, int pageNo, int pageSize,String column_id) {
 		return dao.getPage_friendsBlog(ids,title, null,memberId,memberId, false, false,ContentStatus.all, null, siteId,modelId,  channelId, 0, pageNo,pageSize,column_id);
+	}
+
+	@Override
+	public List<Content> findListInfo(int userId) {
+		
+		return dao.getListInfo(userId);
+	}
+
+	@Override
+	public List<CmsComment> findCommentByConid(int userId,Date lastDate) {
+		return  dao.getListComment(userId,lastDate);
 	}
 }
