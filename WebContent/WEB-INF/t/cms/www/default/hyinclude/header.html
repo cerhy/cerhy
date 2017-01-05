@@ -35,6 +35,16 @@ function qkeypress(){
     .user-child{display:none; top:15px; width:100%; background-color:rgba(255,255,255,0.9); position:absolute; padding:16px 0 8px; z-index:3; box-shadow:0 2px 5px rgba(34,25,25,.4); -moz-box-shadow:0 2px 5px rgba(34,25,25,.4); -webkit-box-shadow:0 2px 5px rgba(34,25,25,.4);}
     .login-user:hover .user-child{display:block;}
     .user-child a{width:100%; display:block; line-height:24px; text-align:center; font-size:14px;}
+    .showComment{
+	  display:block;
+	  background:#f00;
+	  border-radius:50%;
+	  width:6px;
+	  height:6px;
+	  top:2px;
+	  right:0px;
+	  position:absolute;
+	}
 	</style>
 </head>
 <body class="bodybg">
@@ -54,7 +64,7 @@ function qkeypress(){
                     <li><a href="#">官方微信</a><em></em></li>
          			[#if user?? && !status??]
 	         			<div class="login-user">
-		         			<a>[#if user.userImg??]<img src="${user.userImg}">[#else]<img src="/${res}/images/userImg.png">[/#if]${user.username}</a>
+		         			<a>[#if user.userImg??]<img src="${user.userImg}">[#else]<img src="/${res}/images/userImg.png">[/#if]${user.username}<i id="showComment" class="showComment" style="display: none"></i></a>
 		         			<div class="user-child">
 			         			<a href="${base}/member/index.jspx">会员中心</a>
 			         			<a href="${base}/blog/index.jspx">我的博客</a>
@@ -87,7 +97,6 @@ function qkeypress(){
     </div>
 </div>
 <script type="text/javascript">
-
 $(function(){
 	$.ajax({
         url: "${base}/member/findCommentNu.jspx",
@@ -96,13 +105,11 @@ $(function(){
         data: "",
         success: function (data) {
         	if(data.status>0){
+				$("#showComment").show();
 				$("#showInfo").show();
 				$("#showInfo").html("消息:("+data.status+")")
         	}
         }
     });
-	
-	
 });
-
 </script>
