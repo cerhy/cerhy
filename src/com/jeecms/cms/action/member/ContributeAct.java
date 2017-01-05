@@ -780,7 +780,7 @@ public class ContributeAct extends AbstractContentMemberAct {
 	}
 	
 	/**
-	 *展示评论
+	 *展示评论(--没用到 先留着)
 	 */
 	@RequestMapping(value = "/blog/showCommet.jspx")
 	public String showComment(HttpServletRequest request,HttpServletResponse response, ModelMap model) {
@@ -859,12 +859,6 @@ public class ContributeAct extends AbstractContentMemberAct {
 			model.addAttribute("friends","");
 		}
 		model.addAttribute("columnsList", columnsList);
-		List<CmsComment> commentList=contentMng.findCommentByConid(user.getId(),null);
-		
-		
-		
-		
-		cmsCommentMng.updateByUserId(user.getId());
 		FrontUtils.frontData(request, model, site);
 		return FrontUtils.getTplPath(request, site.getSolutionPath(),TPLDIR_BLOG, "tpl.toMyComment");
 	}
