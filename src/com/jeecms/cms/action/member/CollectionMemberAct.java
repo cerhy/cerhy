@@ -308,13 +308,13 @@ public class CollectionMemberAct {
 				}
 			} else if (5 == groupId) {
 				for (Channel c : channelList) {
-					if (c.getId() == 98) {
+					if (c.getId() == 168) {
 						channelList3.add(c);
 					} else if (null != c.getParent()) {
-						if (c.getParent().getId() == 98) {
+						if (c.getParent().getId() == 168) {
 							channelList3.add(c);
 						} else if (null != c.getParent().getParent()) {
-							if (c.getParent().getParent().getId() == 98)
+							if (c.getParent().getParent().getId() == 168)
 								channelList3.add(c);
 						}
 					}
