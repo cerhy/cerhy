@@ -786,7 +786,15 @@ public class ContributeAct extends AbstractContentMemberAct {
 			Date lastDate=user.getLastLoginTime();
 			int userId=user.getId();
 			List<CmsComment> listNum=contentMng.findCommentByConid(userId,lastDate);
-			json.put("status", listNum.size());
+			int number=0;
+			for(int i=0;i<listNum.size();i++){
+				if(listNum.get(i).getContent().getUser().getId()==userId){
+					if(listNum.get(i).getCommentUser().getId()!=userId){
+						number++;
+					}
+				}
+			}
+			json.put("status", number);
 			ResponseUtils.renderJson(response, json.toString());
 		}
 	}
