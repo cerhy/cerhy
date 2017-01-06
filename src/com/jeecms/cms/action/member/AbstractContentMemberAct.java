@@ -622,18 +622,20 @@ public class AbstractContentMemberAct {
 		return FrontUtils.getTplPath(request, site.getSolutionPath(), TPLDIR_BLOG, nextUrl);
 	}
 	
-	protected String blog_list(Integer column_id,Integer channelId,String q, Integer modelId,Integer queryChannelId,String nextUrl,Integer pageNo,HttpServletRequest request, ModelMap model) {
+	protected String blog_list(String q, Integer modelId,Integer queryChannelId,String nextUrl,Integer pageNo,HttpServletRequest request, ModelMap model) {
 		CmsSite site = CmsUtils.getSite(request);
 		CmsUser user = CmsUtils.getUser(request);
-		 
-		//为了删除内容之后能跳转到该栏目列表
+		Integer column_id = null;
+		Integer channelId = null;
+		//为了删除文章后能跳转回本栏目下
 		if(null != request.getParameter("column_id")){
 			model.addAttribute("column_id", request.getParameter("column_id"));
+			column_id = Integer.parseInt(request.getParameter("column_id"));
 		}
 		if(null != request.getParameter("channelId")){
 			model.addAttribute("channelId", request.getParameter("channelId"));
+			channelId = Integer.parseInt(request.getParameter("channelId"));
 		}
-		
 		model = getColumn(request,model,user);
 	    model = getChannel(request,model,user,site);
 	    
@@ -1067,7 +1069,16 @@ public class AbstractContentMemberAct {
 		Content c = new Content();
 		c.setSite(site);
 		CmsModel defaultModel=cmsModelMng.getDefModel();
-		modelId = 9;
+		
+		int groupId = user.getGroup().getId();//学科教研模板，市县教内容研模板
+		if (4 == groupId) {
+			modelId = 11;
+		} else if (5 == groupId) {
+			modelId = 21;
+		} else {
+			modelId = 9;
+		}
+		
 		CmsModel m=cmsModelMng.findById(modelId);
 		if(m!=null){
 			c.setModel(m);
@@ -1205,13 +1216,16 @@ public class AbstractContentMemberAct {
 	public void blog_delete(Integer contentId,Integer column_id,Integer channelId, HttpServletRequest request,
 			  HttpServletResponse response, ModelMap model) {
 			contentMng.deleteByIdBlog(contentId);
+			int id;
 		try {
 			if(null != column_id){
-				request.getRequestDispatcher("/blog/contribute_list.jspx?column_id="+column_id).forward(request, response);
+				id = column_id;
+				request.getRequestDispatcher("/blog/contribute_list.jspx?column_id="+id).forward(request, response);
 			}
 
             if(null != channelId){
-				request.getRequestDispatcher("/blog/contribute_list.jspx?channelId="+channelId).forward(request, response);
+            	id = channelId;
+				request.getRequestDispatcher("/blog/contribute_list.jspx?channelId="+id).forward(request, response);
 			}
 		
 		} catch (Exception e) {

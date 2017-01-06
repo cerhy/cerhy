@@ -185,11 +185,9 @@ $(function(){
                 <td style="text-align:left; text-indent:5px;"><a href="${c.url!}">[@text_cut s=c.title?html len='24' append='...'/]</a></td>
                 <td>${c.views}</td>
                 <td>${c.releaseDate?string('yyyy-MM-dd')}</td>
-                [#if columnsList??]
-                <td><a href="contribute_edit.jspx?id=${c.id}&nextUrl=contribute_list.jspx">修改<a> | <a href="contribute_delete.jspx?ids=${c.id}&column_id=${column_id}">删除<a></td>
-                [#else]
-                <td><a href="contribute_edit.jspx?id=${c.id}&nextUrl=contribute_list.jspx">修改<a> | <a href="contribute_delete.jspx?ids=${c.id}&channelId=${channelId}">删除<a></td>
-                [/#if]
+                <td>
+                <a href="contribute_edit.jspx?id=${c.id}&nextUrl=contribute_list.jspx">修改<a> | [#if columnsList??]<a href="contribute_delete.jspx?ids=${c.id}&column_id=${column_id}">删除<a>[#else]<a href="contribute_delete.jspx?ids=${c.id}&channelId=${channelId}">删除<a> [/#if]
+                </td>
               </tr>
               [/#list]
             </tbody>

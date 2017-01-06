@@ -158,9 +158,7 @@ $(function(){
             </div>
             <div class="wrap-right">
                 <div class="personCenter-userInfo" style="min-height: 600px;">
-                    
                     <div class="tab-content" style="display: block;">
-                      
 			        <div class="table1">
 			          <form id="tableForm" action="${base}/blog/index.jspx" method="post">
 			          [#if pagination.list?size gt 0]
@@ -168,7 +166,7 @@ $(function(){
 			            <tbody>
 			              <tr>
 			                <td class="tggl-top">ID</td>
-			                <td class="tggl-top">标题</td>
+			                <td class="tggl-top" style="min-width:347px;">标题</td>
 			                <td class="tggl-top">浏览次数</td>
 			                <td class="tggl-top">发布时间</td>
 			              </tr>
@@ -196,7 +194,6 @@ $(function(){
             </tr>
             </tbody>
             </table>
-			           
 			          <script type="text/javascript">
 			            function _gotoPage(pageNo) {
 			                try{
@@ -210,13 +207,11 @@ $(function(){
 			                }
 			            }
 			            </script>
-			            
-			            [#else]
-			                <div>暂无博文</div>
-			            [/#if]
 			          </form>
 			        </div>
-			        
+			        [#else]
+			         <div>暂无博文</div>
+			        [/#if]
                 </div>
             </div>
             <div class="gonggao">

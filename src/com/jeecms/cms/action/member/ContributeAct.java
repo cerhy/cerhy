@@ -441,10 +441,10 @@ public class ContributeAct extends AbstractContentMemberAct {
 	}
 	
 	@RequestMapping(value = "/blog/contribute_list.jspx")
-	public String blog_list(Integer column_id,Integer channelId,String queryTitle, Integer modelId,
+	public String blog_list(String queryTitle, Integer modelId,
 			Integer queryChannelId, Integer pageNo, HttpServletRequest request,
 			ModelMap model) {
-		return super.blog_list(column_id,channelId,queryTitle, modelId, queryChannelId, CONTRIBUTE_LIST,
+		return super.blog_list(queryTitle, modelId, queryChannelId, CONTRIBUTE_LIST,
 				pageNo, request, model);
 	}
 	
