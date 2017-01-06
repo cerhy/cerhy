@@ -8,6 +8,9 @@
 <link type="text/css" rel="stylesheet" href="/${res}/css/custom.css" />
 <script src="${resSys}/jqueryUI/jquery-ui.js" type="text/javascript"></script>
 <link href="${resSys}/jqueryUI/jquery.ui.css" rel="stylesheet" type="text/css" />
+<style>
+ .actives{color: red;}
+</style>
 <div class="local">
     <div class="wrap">
         <span class="local-icon icon-font"></span>
@@ -31,7 +34,7 @@
                             <ul class="clearfix">
 		                	 [@cms_channel_list parentId=b.id orderBy='4']
 						        [#list tag_list as c]
-		                                <li><a href="${c.url}">${c.name}</a></li>
+		                                <li><a [#if parentId??&&channel.id=c.id]style="color:red;"[/#if] href="${c.url}">${c.name}</a></li>
 						        [/#list]
 						      [/@cms_channel_list]
                             </ul>
