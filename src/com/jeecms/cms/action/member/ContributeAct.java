@@ -544,7 +544,7 @@ public class ContributeAct extends AbstractContentMemberAct {
 		CmsUser user = CmsUtils.getUser(request);
 		int user_id = user.getId();
 		String path = request.getSession().getServletContext().getRealPath("/");
-		List<Columns> columnsList = (new BlogDao()).findByUserId(user_id, path);
+		//List<Columns> columnsList = (new BlogDao()).findByUserId(user_id, path);
 		//获取链接列表
 		String linkUrl=user.getLinkUrl();
 		List listU=new ArrayList();
@@ -615,8 +615,9 @@ public class ContributeAct extends AbstractContentMemberAct {
 			model.addAttribute("friendsList", listF);
 			model.addAttribute("friends","");
 		}
-		
-		model.addAttribute("columnsList", columnsList);
+		model = super.getColumn(request,model,user);
+	    model = super.getChannel(request,model,user,site);
+		//model.addAttribute("columnsList", columnsList);
 		FrontUtils.frontData(request, model, site);
 		return FrontUtils.getTplPath(request, site.getSolutionPath(),TPLDIR_BLOG, "tpl.linkList");
 	}
@@ -635,7 +636,7 @@ public class ContributeAct extends AbstractContentMemberAct {
 		CmsUser user = CmsUtils.getUser(request);
 		int user_id = user.getId();
 		String path = request.getSession().getServletContext().getRealPath("/");
-		List<Columns> columnsList = (new BlogDao()).findByUserId(user_id, path);
+		//List<Columns> columnsList = (new BlogDao()).findByUserId(user_id, path);
 		//获取链接列表
 		String linkUrl=user.getLinkUrl();
 		List listU=new ArrayList();
@@ -706,7 +707,9 @@ public class ContributeAct extends AbstractContentMemberAct {
 			model.addAttribute("friendsList", listF);
 			model.addAttribute("friends","");
 		}
-		model.addAttribute("columnsList", columnsList);
+		model = super.getColumn(request,model,user);
+	    model = super.getChannel(request,model,user,site);
+		//model.addAttribute("columnsList", columnsList);
 		FrontUtils.frontData(request, model, site);
 		return FrontUtils.getTplPath(request, site.getSolutionPath(),TPLDIR_BLOG, "tpl.friends");
 	}

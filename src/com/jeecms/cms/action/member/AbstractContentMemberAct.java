@@ -1313,8 +1313,10 @@ public class AbstractContentMemberAct {
 		CmsUser userT=cmsUserMng.findById(Integer.valueOf(userIds.toString()));
 		int user_id = Integer.valueOf(userIds);
 		String path = request.getSession().getServletContext().getRealPath("/");
-		List<Columns> columnsList = (new BlogDao()).findByUserId(user_id, path);
-		model.addAttribute("columnsList", columnsList);
+		//List<Columns> columnsList = (new BlogDao()).findByUserId(user_id, path);
+		//model.addAttribute("columnsList", columnsList);
+		model = getColumn(request,model,userT);
+	    model = getChannel(request,model,userT,site);
 		FrontUtils.frontData(request, model, site);
 		Pagination p = contentMng.getPageForMember_firendsBlog(Integer.valueOf(userIds),q, queryChannelId,site.getId(), modelId,user_id, cpn(pageNo), 20,null);
 		
