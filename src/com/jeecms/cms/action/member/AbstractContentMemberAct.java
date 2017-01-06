@@ -1069,7 +1069,16 @@ public class AbstractContentMemberAct {
 		Content c = new Content();
 		c.setSite(site);
 		CmsModel defaultModel=cmsModelMng.getDefModel();
-		modelId = 9;
+		
+		int groupId = user.getGroup().getId();//学科教研模板，市县教内容研模板
+		if (4 == groupId) {
+			modelId = 11;
+		} else if (5 == groupId) {
+			modelId = 21;
+		} else {
+			modelId = 9;
+		}
+		
 		CmsModel m=cmsModelMng.findById(modelId);
 		if(m!=null){
 			c.setModel(m);
