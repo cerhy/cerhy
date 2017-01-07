@@ -1139,9 +1139,11 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 	public List<CmsComment> getListComment(int userId,Date lastDate) {
 		Finder f = Finder.create("select bean from CmsComment bean");
 		f.append(" where 1=1");
-		f.append(" and (bean.content.user.id=:userId and bean.content.id is not null)");
-		f.append(" and bean.isOrNo is null)");
-		f.setParam("userId", userId);
+		/*f.append(" and (bean.content.user.id=:userId and bean.content.id is not null)");
+		f.append(" and (bean.replayUser.id!=:userId or bean.commentUser.id!=:userId)");*/
+		f.append(" and bean.checked!=0");
+		f.append(" and bean.isOrNo is null");
+		//f.setParam("userId", userId);
 		return find(f);
 	}
 }

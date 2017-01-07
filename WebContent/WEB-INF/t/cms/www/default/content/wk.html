@@ -12,7 +12,10 @@
 <link type="text/css" rel="stylesheet" href="/${res}/css/main.css" />
 <link type="text/css" rel="stylesheet" href="/${res}/css/custom.css" />
 <link href="${resSys}/jqueryUI/jquery.ui.css" rel="stylesheet" type="text/css" />
-
+<style>
+ .bz a:hover{color: #DEB887;}
+ .bz{color: #999;}
+</style>
 <script type="text/javascript">
 	$(function() {
 		Cms.checkPerm("${base}", "${content.id}");
@@ -80,8 +83,6 @@ $(function() {
 <div class="local">
     <div class="wrap">
         <span class="local-icon icon-font"></span>
-       <span class="position"> 作者：${content.author!'本站编辑'}</span>
-        <em> &gt; </em>
         <span class="position"> <a href="${base}/blog/index.jspx">博客中心</a></span>
         <em> &gt; </em>
         <span class="cur-page">${content.title}</span>
@@ -94,7 +95,9 @@ $(function() {
 					<h2>${content.title}</h2>
 					<p class="gray9 h2dt pt5">
 						<span class="pr15">发布时间：${content.releaseDate}</span>
-						 <span class="pr15">作者：${content.author!'本站编辑'}</span>
+						 <span class="pr15">
+						 	<a target="_blank" href="${base}/blog/find_all_url_friend.jspx?userIds=${content.user.id}" class="bz">博主：${content.user.username}</a>
+						 </span>
 						 <span class="pr15">来源：${content.origin!'本站原创'}</span> 
 						 <span class="pr15 yuedu">浏览次数：<span id="views"></span></span> 
 						 <span class="pr15 pinglun">评论：${content.commentsCheckedNum!} </span>

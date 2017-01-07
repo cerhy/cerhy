@@ -86,7 +86,7 @@ $(function(){
 [#include "../hyinclude/header.html"/]
 <div class="blog-con">
   <div class="blogHead">
-	  <div style="font-size:30px;margin:10px auto 0;"><a href="${base}/blog/index.jspx">[#if usert.blogTitle??]${usert.blogTitle}[#else]标题[/#if]</a></div>
+	  <div style="font-size:30px;margin:10px auto 0;"><a href="${base}/blog/find_all_url_friend.jspx?userIds=${usert.id}">[#if usert.blogTitle??]${usert.blogTitle}[#else]标题[/#if]</a></div>
 	  <div style="font-size:15px;margin:15px auto 10px;">[#if usert.blogTitle2??]${usert.blogTitle2}[#else]副标题[/#if]</div>
   </div>
   
@@ -241,7 +241,7 @@ $(function(){
 			                try{
 			                    var tableForm = document.getElementById("tableForm");
 			                    $("input[name=pageNo]").val(pageNo);
-			                    tableForm.action="${base}/blog/index.jspx";
+			                    tableForm.action="${base}/blog/find_all_url_friend.jspx?userIds=${usert.id}";
 			                    tableForm.onsubmit=null;
 			                    tableForm.submit();
 			                } catch(e) {
