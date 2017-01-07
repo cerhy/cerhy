@@ -1,37 +1,47 @@
 package com.jeecms.cms.entity.main;
 
 public class Focus {
+	@SuppressWarnings("unused")
+	private static final long serialVersionUID = 1L;
 	private Integer focusId;
 	private Integer userId;
+	private String username;
 	private Integer focusUserId;
 	private String focusUserName;
 	private String focusTime;
-	
-	public Focus(){
-		
+
+	public Focus() {
+
 	}
-	public Focus(
-			Integer userId,
-			Integer focusUserId,
-			String focusUserName,
-			String focusTime){
+
+	public Focus(Integer userId, Integer focusUserId) {
 		this.userId = userId;
+		this.focusUserId = focusUserId;
+	}
+
+	public Focus(Integer userId,String username, Integer focusUserId, String focusUserName, String focusTime) {
+		this.userId = userId;
+		this.username = username;
 		this.focusUserId = focusUserId;
 		this.focusUserName = focusUserName;
 		this.focusTime = focusTime;
 	}
-	
-	public Focus(
-			Integer focusId,
-			Integer userId,
-			Integer focusUserId,
-			String focusUserName,
-			String focusTime){
+
+	public Focus(Integer focusId, Integer userId, String username, Integer focusUserId, String focusUserName, String focusTime) {
 		this.focusId = focusId;
 		this.userId = userId;
+		this.username = username;
 		this.focusUserId = focusUserId;
 		this.focusUserName = focusUserName;
 		this.focusTime = focusTime;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
 	}
 	
 	public Integer getFocusId() {

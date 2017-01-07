@@ -272,6 +272,8 @@
 	<bean id="accountDrawDao" class="com.jeecms.cms.dao.assist.impl.CmsAccountDrawDaoImpl"/>
 	<bean id="accountPayDao" class="com.jeecms.cms.dao.assist.impl.CmsAccountPayDaoImpl"/>
 	
+	<bean id="blogAct" class="com.jeecms.cms.action.blog.BlogAct"/>
+	<bean id="blogCommon" class="com.jeecms.cms.action.blog.BlogCommon"/>
 	<bean id="focusMng" class="com.jeecms.cms.manager.main.impl.FocusMng"/>
 	<bean id="focusDao" class="com.jeecms.cms.dao.main.impl.FocusDao"/>
 	

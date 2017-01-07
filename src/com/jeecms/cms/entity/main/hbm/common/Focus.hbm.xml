@@ -4,11 +4,12 @@
 	<class name="Focus" table="jc_focus">
 		<meta attribute="sync-DAO">false</meta>
 		<cache usage="read-write"/>
-		<id name="focusId" type="java.lang.Integer" column="focus_id"><generator class="assigned"/></id>
+		<id name="focusId" type="java.lang.Integer" column="focus_id"><generator class="identity"/></id>
 		<property name="userId" column="user_id" type="integer" not-null="true" length="11"/>
+		<property name="username" column="user_name" type="string" not-null="false" length="60"/>
 		<property name="focusUserId" column="focus_user_id" type="integer" not-null="true" length="11"/>
-		<property name="focusUserName" column="focus_user_name" type="string" not-null="false" length="600"/>
-		<property name="focusTime" column="focus_time" type="string" not-null="false" length="30"/>
+		<property name="focusUserName" column="focus_user_name" type="string" not-null="false" length="60"/>
+		<property name="focusTime" column="focus_time" type="string" not-null="false" length="60"/>
 	</class>
 </hibernate-mapping>
 

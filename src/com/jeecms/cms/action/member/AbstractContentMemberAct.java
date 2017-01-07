@@ -1,32 +1,20 @@
 package com.jeecms.cms.action.member;
 
 
-import static com.jeecms.cms.Constants.TPLDIR_BLOG;
 import static com.jeecms.cms.Constants.TPLDIR_MEMBER;
 import static com.jeecms.common.page.SimplePage.cpn;
 
-import java.io.UnsupportedEncodingException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
 
-import com.jeecms.cms.dao.main.impl.BlogDao;
 import com.jeecms.cms.entity.main.Channel;
 import com.jeecms.cms.entity.main.CmsModel;
-import com.jeecms.cms.entity.main.Columns;
 import com.jeecms.cms.entity.main.Content;
 import com.jeecms.cms.entity.main.ContentDoc;
 import com.jeecms.cms.entity.main.ContentExt;
@@ -424,7 +412,7 @@ public class AbstractContentMemberAct {
 	@Autowired
 	protected CmsUserMng cmsUserMng;
 	
-	public void updateSetting(HttpServletRequest request,HttpServletResponse response, ModelMap model) {
+	/*public void updateSetting(HttpServletRequest request,HttpServletResponse response, ModelMap model) {
 		CmsUser user = CmsUtils.getUser(request);
 		CmsSite site = CmsUtils.getSite(request);
 		if (null != user) {
@@ -444,7 +432,6 @@ public class AbstractContentMemberAct {
 			model.addAttribute("user", u);
 			FrontUtils.frontData(request, model, site);
 		}
-		
 		try {
 			request.getRequestDispatcher("/blog/index.jspx").forward(request, response);
 		} catch (Exception e) {
@@ -457,78 +444,8 @@ public class AbstractContentMemberAct {
 		CmsUser user = CmsUtils.getUser(request);
 		model = getColumn(request,model,user);
 	    model = getChannel(request,model,user,site);
-		
-		//获取链接列表
-		String linkUrl=user.getLinkUrl();
-		List listU=new ArrayList();
-		if(linkUrl!=null){
-			String[] strs=linkUrl.split(" ");
-			String newUrl="";
-			for(int i=0;i<strs.length;i++){
-				if(i!=strs.length-1){
-					if(!strs[i].contains("http")&&strs[i+1].contains("http")){
-						newUrl+="~"+strs[i]+" ";
-					}else{
-						newUrl+=strs[i]+" ";
-					}
-				}else{
-					if(!strs[i].contains("http")){
-						newUrl+="~"+strs[i]+" ";
-					}else{
-						newUrl+=strs[i]+" ";
-					}
-				}
-			}
-			String[] str=newUrl.split("~");
-			for(int j=0;j<str.length;j++){
-				Map<String,Object> map=new HashMap<String,Object>();
-				String[] st=str[j].toString().split(" ");
-				List lists=new ArrayList();
-				String newName="";
-				for(int k=0;k<st.length;k++){
-					if(st[0].contains("http")){
-						newName="";
-					}else{
-						newName=st[0];
-					}
-					lists.add(st[k]);
-				}
-				map.put(newName, lists);
-				listU.add(map);
-			}
-			model.addAttribute("urlList", listU);
-			model.addAttribute("linkUrls", linkUrl.replaceAll(" ", "\r\n"));
-		}else{
-			model.addAttribute("urlList",listU);
-			model.addAttribute("linkUrls","");
-			
-		}
-		//获取好友列表
-		String friends=user.getFriends();
-		List listF = new ArrayList<>();
-		if(friends!=null){
-			
-			String[] strs=friends.split(" ");
-			for(int i=0;i<strs.length;i++){
-				String[] str=strs[i].split("=");
-				Map<String,Object> map=new HashMap<String,Object>();
-				CmsUser u=channelMng.findUserImage(str[1].toString());
-				if(null==u){
-					String newName="";
-					map.put(newName, null);
-				}else{
-					String newName=str[0]+"~"+u.getId()+"~"+u.getUserExt().getUserImg();
-					map.put(newName, u.getUserExt().getUserImg());
-				}
-				listF.add(map);
-			}
-			model.addAttribute("friendsList", listF);
-			model.addAttribute("friends", friends.replaceAll(" ", "\r\n"));
-		}else{
-			model.addAttribute("friendsList", listF);
-			model.addAttribute("friends","");
-		}
-		
+	    model = getLinks(model,user);
+	    model = getFriends(model,user);
 		FrontUtils.frontData(request, model, site);
 		return FrontUtils.getTplPath(request, site.getSolutionPath(),TPLDIR_BLOG,"tpl.blogSetting");
 	}
@@ -538,78 +455,9 @@ public class AbstractContentMemberAct {
 		CmsUser user = CmsUtils.getUser(request);
 		model = getColumn(request,model,user);
 	    model = getChannel(request,model,user,site);
-		
-		//获取链接列表
-		String linkUrl=user.getLinkUrl();
-		List listU=new ArrayList();
-		if(linkUrl!=null){
-			String[] strs=linkUrl.split(" ");
-			String newUrl="";
-			for(int i=0;i<strs.length;i++){
-				if(i!=strs.length-1){
-					if(!strs[i].contains("http")&&strs[i+1].contains("http")){
-						newUrl+="~"+strs[i]+" ";
-					}else{
-						newUrl+=strs[i]+" ";
-					}
-				}else{
-					if(!strs[i].contains("http")){
-						newUrl+="~"+strs[i]+" ";
-					}else{
-						newUrl+=strs[i]+" ";
-					}
-				}
-			}
-			String[] str=newUrl.split("~");
-			for(int j=0;j<str.length;j++){
-				Map<String,Object> map=new HashMap<String,Object>();
-				String[] st=str[j].toString().split(" ");
-				List lists=new ArrayList();
-				String newName="";
-				for(int k=0;k<st.length;k++){
-					if(st[0].contains("http")){
-						newName="";
-					}else{
-						newName=st[0];
-					}
-					lists.add(st[k]);
-				}
-				map.put(newName, lists);
-				listU.add(map);
-			}
-			model.addAttribute("urlList", listU);
-			model.addAttribute("linkUrls", linkUrl.replaceAll(" ", "\r\n"));
-		}else{
-			model.addAttribute("urlList",listU);
-			model.addAttribute("linkUrls","");
-			
-		}
-		//获取好友列表
-		String friends=user.getFriends();
-		List listF = new ArrayList<>();
-		if(friends!=null){
-			
-			String[] strs=friends.split(" ");
-			for(int i=0;i<strs.length;i++){
-				String[] str=strs[i].split("=");
-				Map<String,Object> map=new HashMap<String,Object>();
-				CmsUser u=channelMng.findUserImage(str[1].toString());
-				if(null==u){
-					String newName="";
-					map.put(newName, null);
-				}else{
-					String newName=str[0]+"~"+u.getId()+"~"+u.getUserExt().getUserImg();
-					map.put(newName, u.getUserExt().getUserImg());
-				}
-				listF.add(map);
-			}
-			model.addAttribute("friendsList", listF);
-			model.addAttribute("friends", friends.replaceAll(" ", "\r\n"));
-		}else{
-			model.addAttribute("friendsList", listF);
-			model.addAttribute("friends","");
-		}
-		
+	    model = blog_focus_find(request,model);
+	    model = getLinks(model,user);
+	    model = getFriends(model,user);
 		FrontUtils.frontData(request, model, site);
 		Pagination p = contentMng.getPageForMember_blog(q, queryChannelId,site.getId(), modelId,user.getId(), cpn(pageNo), 20,null,null);
 		model.addAttribute("pagination", p);
@@ -638,78 +486,8 @@ public class AbstractContentMemberAct {
 		}
 		model = getColumn(request,model,user);
 	    model = getChannel(request,model,user,site);
-	    
-	    //获取链接列表
-	    String linkUrl=user.getLinkUrl();
-	    List listU=new ArrayList();
-	    if(linkUrl!=null){
-	    	String[] strs=linkUrl.split(" ");
-	    	String newUrl="";
-	    	for(int i=0;i<strs.length;i++){
-	    		if(i!=strs.length-1){
-	    			if(!strs[i].contains("http")&&strs[i+1].contains("http")){
-	    				newUrl+="~"+strs[i]+" ";
-	    			}else{
-	    				newUrl+=strs[i]+" ";
-	    			}
-	    		}else{
-	    			if(!strs[i].contains("http")){
-	    				newUrl+="~"+strs[i]+" ";
-	    			}else{
-	    				newUrl+=strs[i]+" ";
-	    			}
-	    		}
-	    	}
-	    	String[] str=newUrl.split("~");
-	    	for(int j=0;j<str.length;j++){
-	    		Map<String,Object> map=new HashMap<String,Object>();
-	    		String[] st=str[j].toString().split(" ");
-	    		List lists=new ArrayList();
-	    		String newName="";
-	    		for(int k=0;k<st.length;k++){
-	    			if(st[0].contains("http")){
-	    				newName="";
-	    			}else{
-	    				newName=st[0];
-	    			}
-	    			lists.add(st[k]);
-	    		}
-	    		map.put(newName, lists);
-	    		listU.add(map);
-	    	}
-	    	model.addAttribute("urlList", listU);
-	    	model.addAttribute("linkUrls", linkUrl.replaceAll(" ", "\r\n"));
-	    }else{
-	    	model.addAttribute("urlList",listU);
-	    	model.addAttribute("linkUrls","");
-	    	
-	    }
-	    //获取好友列表
-	    String friends=user.getFriends();
-	    List listF = new ArrayList<>();
-	    if(friends!=null){
-	    	
-	    	String[] strs=friends.split(" ");
-	    	for(int i=0;i<strs.length;i++){
-	    		String[] str=strs[i].split("=");
-	    		Map<String,Object> map=new HashMap<String,Object>();
-	    		CmsUser u=channelMng.findUserImage(str[1].toString());
-	    		if(null==u){
-					String newName="";
-					map.put(newName, null);
-				}else{
-					String newName=str[0]+"~"+u.getId()+"~"+u.getUserExt().getUserImg();
-					map.put(newName, u.getUserExt().getUserImg());
-				}
-				listF.add(map);
-	    	}
-	    	model.addAttribute("friendsList", listF);
-	    	model.addAttribute("friends", friends.replaceAll(" ", "\r\n"));
-	    }else{
-	    	model.addAttribute("friendsList", listF);
-	    	model.addAttribute("friends","");
-	    }
-	    
+	    model = getLinks(model,user);
+	    model = getFriends(model,user);
 		FrontUtils.frontData(request, model, site);
 		Pagination p = contentMng.getPageForMember_blog(q, queryChannelId,site.getId(), modelId,user.getId(), cpn(pageNo), 20,column_id,channelId);
 		model.addAttribute("pagination", p);
@@ -727,77 +505,8 @@ public class AbstractContentMemberAct {
 		CmsUser user = CmsUtils.getUser(request);
 		model = getColumn(request,model,user);
 	    model = getChannel(request,model,user,site);
-		//获取链接列表
-		String linkUrl=user.getLinkUrl();
-		List listU=new ArrayList();
-		if(linkUrl!=null){
-			String[] strs=linkUrl.split(" ");
-			String newUrl="";
-			for(int i=0;i<strs.length;i++){
-				if(i!=strs.length-1){
-					if(!strs[i].contains("http")&&strs[i+1].contains("http")){
-						newUrl+="~"+strs[i]+" ";
-					}else{
-						newUrl+=strs[i]+" ";
-					}
-				}else{
-					if(!strs[i].contains("http")){
-						newUrl+="~"+strs[i]+" ";
-					}else{
-						newUrl+=strs[i]+" ";
-					}
-				}
-			}
-			String[] str=newUrl.split("~");
-			for(int j=0;j<str.length;j++){
-				Map<String,Object> map=new HashMap<String,Object>();
-				String[] st=str[j].toString().split(" ");
-				List lists=new ArrayList();
-				String newName="";
-				for(int k=0;k<st.length;k++){
-					if(st[0].contains("http")){
-						newName="";
-					}else{
-						newName=st[0];
-					}
-					lists.add(st[k]);
-				}
-				map.put(newName, lists);
-				listU.add(map);
-			}
-			model.addAttribute("urlList", listU);
-			model.addAttribute("linkUrls", linkUrl.replaceAll(" ", "\r\n"));
-		}else{
-			model.addAttribute("urlList",listU);
-			model.addAttribute("linkUrls","");
-			
-		}
-		//获取好友列表
-		String friends=user.getFriends();
-		List listF = new ArrayList<>();
-		if(friends!=null){
-			
-			String[] strs=friends.split(" ");
-			for(int i=0;i<strs.length;i++){
-				String[] str=strs[i].split("=");
-				Map<String,Object> map=new HashMap<String,Object>();
-				CmsUser u=channelMng.findUserImage(str[1].toString());
-				if(null==u){
-					String newName="";
-					map.put(newName, null);
-				}else{
-					String newName=str[0]+"~"+u.getId()+"~"+u.getUserExt().getUserImg();
-					map.put(newName, u.getUserExt().getUserImg());
-				}
-				listF.add(map);
-			}
-			model.addAttribute("friendsList", listF);
-			model.addAttribute("friends", friends.replaceAll(" ", "\r\n"));
-		}else{
-			model.addAttribute("friendsList", listF);
-			model.addAttribute("friends","");
-		}
-		
+	    model = getLinks(model,user);
+	    model = getFriends(model,user);
 		if(hasPermission){
 			FrontUtils.frontData(request, model, site);
 			model.addAttribute("site", site);
@@ -815,82 +524,9 @@ public class AbstractContentMemberAct {
 				HttpServletRequest request, ModelMap model) {
 			CmsSite site = CmsUtils.getSite(request);
 			CmsUser user = CmsUtils.getUser(request);
-			int user_id = user.getId();
-			String path = request.getSession().getServletContext().getRealPath("/");
-			List<Columns> columnsList = (new BlogDao()).findByUserId(user_id, path);
-			model.addAttribute("columnsList", columnsList);
-			
-			//获取链接列表
-			String linkUrl=user.getLinkUrl();
-			List listU=new ArrayList();
-			if(linkUrl!=null){
-				String[] strs=linkUrl.split(" ");
-				String newUrl="";
-				for(int i=0;i<strs.length;i++){
-					if(i!=strs.length-1){
-						if(!strs[i].contains("http")&&strs[i+1].contains("http")){
-							newUrl+="~"+strs[i]+" ";
-						}else{
-							newUrl+=strs[i]+" ";
-						}
-					}else{
-						if(!strs[i].contains("http")){
-							newUrl+="~"+strs[i]+" ";
-						}else{
-							newUrl+=strs[i]+" ";
-						}
-					}
-				}
-				String[] str=newUrl.split("~");
-				for(int j=0;j<str.length;j++){
-					Map<String,Object> map=new HashMap<String,Object>();
-					String[] st=str[j].toString().split(" ");
-					List lists=new ArrayList();
-					String newName="";
-					for(int k=0;k<st.length;k++){
-						if(st[0].contains("http")){
-							newName="";
-						}else{
-							newName=st[0];
-						}
-						lists.add(st[k]);
-					}
-					map.put(newName, lists);
-					listU.add(map);
-				}
-				model.addAttribute("urlList", listU);
-				model.addAttribute("linkUrls", linkUrl.replaceAll(" ", "\r\n"));
-			}else{
-				model.addAttribute("urlList",listU);
-				model.addAttribute("linkUrls","");
-				
-			}
-			//获取好友列表
-			String friends=user.getFriends();
-			List listF = new ArrayList<>();
-			if(friends!=null){
-				
-				String[] strs=friends.split(" ");
-				for(int i=0;i<strs.length;i++){
-					String[] str=strs[i].split("=");
-					Map<String,Object> map=new HashMap<String,Object>();
-					CmsUser u=channelMng.findUserImage(str[1].toString());
-					if(null==u){
-						String newName="";
-						map.put(newName, null);
-					}else{
-						String newName=str[0]+"~"+u.getId()+"~"+u.getUserExt().getUserImg();
-						map.put(newName, u.getUserExt().getUserImg());
-					}
-					listF.add(map);
-				}
-				model.addAttribute("friendsList", listF);
-				model.addAttribute("friends", friends.replaceAll(" ", "\r\n"));
-			}else{
-				model.addAttribute("friendsList", listF);
-				model.addAttribute("friends","");
-			}
-			
+			model = getColumn(request,model,user);
+			model = getLinks(model,user);
+			model = getFriends(model,user);
 			FrontUtils.frontData(request, model, site);
 			Pagination p = contentMng.getPageForMember(q, queryChannelId,site.getId(), modelId,user.getId(), cpn(pageNo), 20);
 			model.addAttribute("pagination", p);
@@ -967,83 +603,9 @@ public class AbstractContentMemberAct {
 			} catch (UnsupportedEncodingException e) {
 				e.printStackTrace();
 			}
-			int user_id = user.getId();
-			String path = request.getSession().getServletContext().getRealPath("/");
-			List<Columns> columnsList = (new BlogDao()).findByUserId(user_id, path);
-			model.addAttribute("columnsList", columnsList);
-			
-			//获取链接列表
-			String linkUrl=user.getLinkUrl();
-			List listU=new ArrayList();
-			if(linkUrl!=null){
-				String[] strs=linkUrl.split(" ");
-				String newUrl="";
-				for(int i=0;i<strs.length;i++){
-					if(i!=strs.length-1){
-						if(!strs[i].contains("http")&&strs[i+1].contains("http")){
-							newUrl+="~"+strs[i]+" ";
-						}else{
-							newUrl+=strs[i]+" ";
-						}
-					}else{
-						if(!strs[i].contains("http")){
-							newUrl+="~"+strs[i]+" ";
-						}else{
-							newUrl+=strs[i]+" ";
-						}
-					}
-				}
-				String[] str=newUrl.split("~");
-				for(int j=0;j<str.length;j++){
-					Map<String,Object> map=new HashMap<String,Object>();
-					String[] st=str[j].toString().split(" ");
-					List lists=new ArrayList();
-					String newName="";
-					for(int k=0;k<st.length;k++){
-						if(st[0].contains("http")){
-							newName="";
-						}else{
-							newName=st[0];
-						}
-						lists.add(st[k]);
-					}
-					map.put(newName, lists);
-					listU.add(map);
-				}
-				model.addAttribute("urlList", listU);
-				model.addAttribute("linkUrls", linkUrl.replaceAll(" ", "\r\n"));
-			}else{
-				model.addAttribute("urlList",listU);
-				model.addAttribute("linkUrls","");
-				
-			}
-			//获取好友列表
-			String friends=user.getFriends();
-			List listF = new ArrayList<>();
-			if(friends!=null){
-				
-				String[] strs=friends.split(" ");
-				for(int i=0;i<strs.length;i++){
-					String[] str=strs[i].split("=");
-					Map<String,Object> map=new HashMap<String,Object>();
-					CmsUser u=channelMng.findUserImage(str[1].toString());
-					if(null==u){
-						String newName="";
-						map.put(newName, null);
-					}else{
-						String newName=str[0]+"~"+u.getId()+"~"+u.getUserExt().getUserImg();
-						map.put(newName, u.getUserExt().getUserImg());
-					}
-					listF.add(map);
-				}
-				model.addAttribute("friendsList", listF);
-				model.addAttribute("friends", friends.replaceAll(" ", "\r\n"));
-			}else{
-				model.addAttribute("friendsList", listF);
-				model.addAttribute("friends","");
-			}
-			
-			
+			model = getColumn(request,model,user);
+			model = getLinks(model,user);
+			model = getFriends(model,user);
 			Columns column = new Columns(Integer.parseInt(id),user.getId(),name,Integer.parseInt(orderId));
 			model.addAttribute("column", column);
 			FrontUtils.frontData(request, model, site);
@@ -1128,83 +690,12 @@ public class AbstractContentMemberAct {
 		}
 		model = getColumn(request,model,user);
 	    model = getChannel(request,model,user,site);
-		
-		//获取链接列表
-		String linkUrl=user.getLinkUrl();
-		List listU=new ArrayList();
-		if(linkUrl!=null){
-			String[] strs=linkUrl.split(" ");
-			String newUrl="";
-			for(int i=0;i<strs.length;i++){
-				if(i!=strs.length-1){
-					if(!strs[i].contains("http")&&strs[i+1].contains("http")){
-						newUrl+="~"+strs[i]+" ";
-					}else{
-						newUrl+=strs[i]+" ";
-					}
-				}else{
-					if(!strs[i].contains("http")){
-						newUrl+="~"+strs[i]+" ";
-					}else{
-						newUrl+=strs[i]+" ";
-					}
-				}
-			}
-			String[] str=newUrl.split("~");
-			for(int j=0;j<str.length;j++){
-				Map<String,Object> map=new HashMap<String,Object>();
-				String[] st=str[j].toString().split(" ");
-				List lists=new ArrayList();
-				String newName="";
-				for(int k=0;k<st.length;k++){
-					if(st[0].contains("http")){
-						newName="";
-					}else{
-						newName=st[0];
-					}
-					lists.add(st[k]);
-				}
-				map.put(newName, lists);
-				listU.add(map);
-			}
-			model.addAttribute("urlList", listU);
-			model.addAttribute("linkUrls", linkUrl.replaceAll(" ", "\r\n"));
-		}else{
-			model.addAttribute("urlList",listU);
-			model.addAttribute("linkUrls","");
-			
-		}
-		//获取好友列表
-		String friends=user.getFriends();
-		List listF = new ArrayList<>();
-		if(friends!=null){
-			
-			String[] strs=friends.split(" ");
-			for(int i=0;i<strs.length;i++){
-				String[] str=strs[i].split("=");
-				Map<String,Object> map=new HashMap<String,Object>();
-				CmsUser u=channelMng.findUserImage(str[1].toString());
-				if(null==u){
-					String newName="";
-					map.put(newName, null);
-				}else{
-					String newName=str[0]+"~"+u.getId()+"~"+u.getUserExt().getUserImg();
-					map.put(newName, u.getUserExt().getUserImg());
-				}
-				listF.add(map);
-			}
-			model.addAttribute("friendsList", listF);
-			model.addAttribute("friends", friends.replaceAll(" ", "\r\n"));
-		}else{
-			model.addAttribute("friendsList", listF);
-			model.addAttribute("friends","");
-		}
-		
-		
-	/*	WebErrors errors = validateEdit(id, site, user, request);
+	    model = getLinks(model,user);
+		model = getFriends(model,user);
+		WebErrors errors = validateEdit(id, site, user, request);
 		if (errors.hasErrors()) {
 			return FrontUtils.showError(request, response, model, errors);
-		}*/
+		}
 		Content content = contentMng.findById(id);
 		model.addAttribute("content", content);
 		model.addAttribute("site", site);
@@ -1249,7 +740,7 @@ public class AbstractContentMemberAct {
 		}
 		
 //		String column_id = request.getParameter("column_id");
-		/*MemberConfig mcfg = site.getConfig().getMemberConfig();
+		MemberConfig mcfg = site.getConfig().getMemberConfig();
 		// 没有开启会员功能
 		if (!mcfg.isMemberOn()) {
 			return FrontUtils.showMessage(request, model, "member.memberClose");
@@ -1260,7 +751,7 @@ public class AbstractContentMemberAct {
 		WebErrors errors = validateUpdate(id, channelId, site, user, request);
 		if (errors.hasErrors()) {
 			return FrontUtils.showError(request, response, model, errors);
-		}*/
+		}
 		Content c = new Content();
 		c.setId(id);
 		c.setSite(site);
@@ -1320,80 +811,12 @@ public class AbstractContentMemberAct {
 		CmsSite site = CmsUtils.getSite(request);
 		CmsUser user = CmsUtils.getUser(request);
 		CmsUser userT=cmsUserMng.findById(Integer.valueOf(userIds.toString()));
-		int user_id = Integer.valueOf(userIds);
-		String path = request.getSession().getServletContext().getRealPath("/");
-		//List<Columns> columnsList = (new BlogDao()).findByUserId(user_id, path);
-		//model.addAttribute("columnsList", columnsList);
 		model = getColumn(request,model,userT);
 	    model = getChannel(request,model,userT,site);
+	    model = getLinks(model,user);
+		model = getFriends(model,user);
 		FrontUtils.frontData(request, model, site);
-		Pagination p = contentMng.getPageForMember_firendsBlog(Integer.valueOf(userIds),q, queryChannelId,site.getId(), modelId,user_id, cpn(pageNo), 20,null);
-		
-		//展示好友的链接
-		String linkUrl=userT.getLinkUrl();
-		List listU=new ArrayList();
-		if(linkUrl!=null){
-			String[] strs=linkUrl.split(" ");
-			String newUrl="";
-			for(int i=0;i<strs.length;i++){
-				if(i!=strs.length-1){
-					if(!strs[i].contains("http")&&strs[i+1].contains("http")){
-						newUrl+="~"+strs[i]+" ";
-					}else{
-						newUrl+=strs[i]+" ";
-					}
-				}else{
-					if(!strs[i].contains("http")){
-						newUrl+="~"+strs[i]+" ";
-					}else{
-						newUrl+=strs[i]+" ";
-					}
-				}
-			}
-			String[] str=newUrl.split("~");
-			for(int j=0;j<str.length;j++){
-				Map<String,Object> map=new HashMap<String,Object>();
-				String[] st=str[j].toString().split(" ");
-				List lists=new ArrayList();
-				String newName="";
-				for(int k=0;k<st.length;k++){
-					if(st[0].contains("http")){
-						newName="";
-					}else{
-						newName=st[0];
-					}
-					lists.add(st[k]);
-				}
-				map.put(newName, lists);
-				listU.add(map);
-			}
-			model.addAttribute("urlList", listU);
-			model.addAttribute("linkUrls", linkUrl.replaceAll(" ", "\r\n"));
-		}else{
-			model.addAttribute("urlList",listU);
-			model.addAttribute("linkUrls","");
-			
-		}
-		//展示好友的好友
-		String friends=userT.getFriends();
-		List listF = new ArrayList<>();
-		if(friends!=null){
-			
-			String[] strs=friends.split(" ");
-			for(int i=0;i<strs.length;i++){
-				String[] str=strs[i].split("=");
-				Map<String,Object> map=new HashMap<String,Object>();
-				CmsUser u=channelMng.findUserImage(str[1].toString());
-				String newName=str[0]+"~"+u.getId()+"~"+u.getUserExt().getUserImg();
-				map.put(newName, u.getUserExt().getUserImg());
-				listF.add(map);
-			}
-			model.addAttribute("friendsList", listF);
-			model.addAttribute("friends", friends.replaceAll(" ", "\r\n"));
-		}else{
-			model.addAttribute("friendsList", listF);
-			model.addAttribute("friends","");
-		}
+		Pagination p = contentMng.getPageForMember_firendsBlog(Integer.valueOf(userIds),q, queryChannelId,site.getId(), modelId,user.getId(), cpn(pageNo), 20,null);
 		model.addAttribute("pagination", p);
 		model.addAttribute("usert", userT);
 		model.addAttribute("userIds", userIds);
@@ -1412,84 +835,11 @@ public class AbstractContentMemberAct {
 		String column_id = request.getParameter("column_id");
 		String user_ids = request.getParameter("user_ids");
 		CmsUser user=cmsUserMng.findById(Integer.valueOf(user_ids.toString()));
-		int user_id = user.getId();
-	    String path = request.getSession().getServletContext().getRealPath("/");
-	    
-	    //获取链接列表
-	    String linkUrl=user.getLinkUrl();
-	    List listU=new ArrayList();
-	    if(linkUrl!=null){
-	    	String[] strs=linkUrl.split(" ");
-	    	String newUrl="";
-	    	for(int i=0;i<strs.length;i++){
-	    		if(i!=strs.length-1){
-	    			if(!strs[i].contains("http")&&strs[i+1].contains("http")){
-	    				newUrl+="~"+strs[i]+" ";
-	    			}else{
-	    				newUrl+=strs[i]+" ";
-	    			}
-	    		}else{
-	    			if(!strs[i].contains("http")){
-	    				newUrl+="~"+strs[i]+" ";
-	    			}else{
-	    				newUrl+=strs[i]+" ";
-	    			}
-	    		}
-	    	}
-	    	String[] str=newUrl.split("~");
-	    	for(int j=0;j<str.length;j++){
-	    		Map<String,Object> map=new HashMap<String,Object>();
-	    		String[] st=str[j].toString().split(" ");
-	    		List lists=new ArrayList();
-	    		String newName="";
-	    		for(int k=0;k<st.length;k++){
-	    			if(st[0].contains("http")){
-	    				newName="";
-	    			}else{
-	    				newName=st[0];
-	    			}
-	    			lists.add(st[k]);
-	    		}
-	    		map.put(newName, lists);
-	    		listU.add(map);
-	    	}
-	    	model.addAttribute("urlList", listU);
-	    	model.addAttribute("linkUrls", linkUrl.replaceAll(" ", "\r\n"));
-	    }else{
-	    	model.addAttribute("urlList",listU);
-	    	model.addAttribute("linkUrls","");
-	    	
-	    }
-	    //获取好友列表
-	    String friends=user.getFriends();
-	    List listF = new ArrayList<>();
-	    if(friends!=null){
-	    	
-	    	String[] strs=friends.split(" ");
-	    	for(int i=0;i<strs.length;i++){
-	    		String[] str=strs[i].split("=");
-	    		Map<String,Object> map=new HashMap<String,Object>();
-	    		CmsUser u=channelMng.findUserImage(str[1].toString());
-	    		if(null==u){
-					String newName="";
-					map.put(newName, null);
-				}else{
-					String newName=str[0]+"~"+u.getId()+"~"+u.getUserExt().getUserImg();
-					map.put(newName, u.getUserExt().getUserImg());
-				}
-				listF.add(map);
-	    	}
-	    	model.addAttribute("friendsList", listF);
-	    	model.addAttribute("friends", friends.replaceAll(" ", "\r\n"));
-	    }else{
-	    	model.addAttribute("friendsList", listF);
-	    	model.addAttribute("friends","");
-	    }
+		model = getColumn(request,model,user);
+		model = getLinks(model,user);
+		model = getFriends(model,user);
 		model.addAttribute("usert", user);
 		model.addAttribute("userIds", user.getId());
-	    
-		List<Columns> columnsList = (new BlogDao()).findByUserId(user_id, path);
-		model.addAttribute("columnsList", columnsList);
 		model.addAttribute("column_id", column_id);
 		FrontUtils.frontData(request, model, site);
 		Pagination p = contentMng.getPageForMember_blog(q, queryChannelId,site.getId(), modelId,user.getId(), cpn(pageNo), 20,Integer.parseInt(column_id),null);
@@ -1503,15 +853,53 @@ public class AbstractContentMemberAct {
 		return FrontUtils.getTplPath(request, site.getSolutionPath(), TPLDIR_BLOG, nextUrl);
 	}
 	
-	public String blog_focus(Integer focusUserId,String focusUserName, HttpServletRequest request) {
-		  Date date=new Date();
-		  DateFormat format=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		  String focusTime=format.format(date);
-		  CmsUser user = CmsUtils.getUser(request);
-		focusMng.add(user.getId(),focusUserId, focusUserName, focusTime);
-		return "fo";
+	public void blog_focus(String focusUserId,String focusUserName, HttpServletRequest request, HttpServletResponse response) throws IOException {
+		Date date = new Date();
+		DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String focusTime = format.format(date);
+		CmsUser user = CmsUtils.getUser(request);
+		Focus f = focusMng.add(user.getId(),user.getUsername(), Integer.parseInt(focusUserId), focusUserName, focusTime);
+		if(null != f){
+			response.getWriter().print("1");
+		}else{
+			response.getWriter().print("0");
+		}
 	}
 	
+	public void blog_focus_check(String focusUserId, HttpServletRequest request, HttpServletResponse response) throws IOException {
+		CmsUser user = CmsUtils.getUser(request);
+		List<Focus> list= focusMng.find(user.getId(), Integer.parseInt(focusUserId));
+		if(null != list && list.size()>0){
+			response.getWriter().print("1");
+		}else{
+			response.getWriter().print("0");
+		}
+	}
+	
+	
+	public void blog_cancel_focus(String focusUserId, HttpServletRequest request, HttpServletResponse response) throws IOException {
+		CmsUser user = CmsUtils.getUser(request);
+		Focus f = focusMng.delete(user.getId(), Integer.parseInt(focusUserId));
+		if(null != f ){
+			response.getWriter().print("1");
+		}else{
+			response.getWriter().print("0");
+		}
+	}
+	
+	public ModelMap blog_focus_find(HttpServletRequest request, ModelMap model) {
+		CmsUser user = CmsUtils.getUser(request);
+		List<List<Focus>> list = focusMng.findByUserId(user.getId());
+		if (null != list) {
+			if (null != list.get(0)) {
+				model.addAttribute("focus", list.get(0));
+			}
+			if (null != list.get(1)) {
+				model.addAttribute("fans", list.get(1));
+			}
+		}
+		return model;
+	}
 	
 	public ModelMap getColumn(HttpServletRequest request,ModelMap model,CmsUser user){
 		int groupId = user.getGroup().getId();
@@ -1575,4 +963,82 @@ public class AbstractContentMemberAct {
 		}
 		return model;
 	}
+	
+	//获取链接列表
+	public ModelMap getLinks(ModelMap model, CmsUser user) {
+		String linkUrl = user.getLinkUrl();
+		List<Object> listU = new ArrayList<Object>();
+		if (linkUrl != null) {
+			String[] strs = linkUrl.split(" ");
+			String newUrl = "";
+			for (int i = 0; i < strs.length; i++) {
+				if (i != strs.length - 1) {
+					if (!strs[i].contains("http") && strs[i + 1].contains("http")) {
+						newUrl += "~" + strs[i] + " ";
+					} else {
+						newUrl += strs[i] + " ";
+					}
+				} else {
+					if (!strs[i].contains("http")) {
+						newUrl += "~" + strs[i] + " ";
+					} else {
+						newUrl += strs[i] + " ";
+					}
+				}
+			}
+			String[] str = newUrl.split("~");
+			for (int j = 0; j < str.length; j++) {
+				Map<String, Object> map = new HashMap<String, Object>();
+				String[] st = str[j].toString().split(" ");
+				List<Object> lists = new ArrayList<Object>();
+				String newName = "";
+				for (int k = 0; k < st.length; k++) {
+					if (st[0].contains("http")) {
+						newName = "";
+					} else {
+						newName = st[0];
+					}
+					lists.add(st[k]);
+				}
+				map.put(newName, lists);
+				listU.add(map);
+			}
+			model.addAttribute("urlList", listU);
+			model.addAttribute("linkUrls", linkUrl.replaceAll(" ", "\r\n"));
+		} else {
+			model.addAttribute("urlList", listU);
+			model.addAttribute("linkUrls", "");
+		}
+		return model;
+	}
+	
+	//获取好友列表
+	public ModelMap getFriends(ModelMap model, CmsUser user) {
+		String friends = user.getFriends();
+		List<Object> listF = new ArrayList<Object>();
+		if (friends != null) {
+
+			String[] strs = friends.split(" ");
+			for (int i = 0; i < strs.length; i++) {
+				String[] str = strs[i].split("=");
+				Map<String, Object> map = new HashMap<String, Object>();
+				CmsUser u = channelMng.findUserImage(str[1].toString());
+				if (null == u) {
+					String newName = "";
+					map.put(newName, null);
+				} else {
+					String newName = str[0] + "~" + u.getId() + "~" + u.getUserExt().getUserImg();
+					map.put(newName, u.getUserExt().getUserImg());
+				}
+				listF.add(map);
+			}
+			model.addAttribute("friendsList", listF);
+			model.addAttribute("friends", friends.replaceAll(" ", "\r\n"));
+		} else {
+			model.addAttribute("friendsList", listF);
+			model.addAttribute("friends", "");
+		}
+		return model;
+	}
+	*/
 }

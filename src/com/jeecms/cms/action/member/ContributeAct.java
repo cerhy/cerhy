@@ -28,11 +28,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.jeecms.cms.action.blog.BlogAct;
+import com.jeecms.cms.action.blog.BlogCommon;
 import com.jeecms.cms.dao.main.impl.BlogDao;
 import com.jeecms.cms.entity.assist.CmsComment;
 import com.jeecms.cms.entity.main.Channel;
 import com.jeecms.cms.entity.main.Columns;
-import com.jeecms.cms.manager.assist.CmsCommentMng;
 import com.jeecms.cms.manager.assist.CmsFileMng;
 import com.jeecms.cms.manager.main.ChannelMng;
 import com.jeecms.cms.manager.main.ContentMng;
@@ -130,7 +131,7 @@ public class ContributeAct extends AbstractContentMemberAct {
 			HttpServletResponse response, ModelMap model) {
 		   String blog = request.getParameter("blog");
 		   if(null != blog ){
-			  return super.blog_save(title, author, description, txt, tagStr, channelId,column_id,modelId,
+			  return blogAct.blog_save(title, author, description, txt, tagStr, channelId,column_id,modelId,
 						null, captcha,mediaPath,mediaType,attachmentPaths,attachmentNames, attachmentFilenames
 						,picPaths,picDescs,charge,chargeAmount,
 						nextUrl, request, response, model);
@@ -194,7 +195,7 @@ public class ContributeAct extends AbstractContentMemberAct {
 			HttpServletResponse response, ModelMap model) {
 		String blog = request.getParameter("blog");
 		   if(null != blog ){
-			   return super.blog_update(id, title, author, description, txt, tagStr,
+			   return blogAct.blog_update(id, title, author, description, txt, tagStr,
 					   column_id,channelId, mediaPath,mediaType,attachmentPaths,
 						attachmentNames, attachmentFilenames
 						,picPaths,picDescs,null,charge, chargeAmount,
@@ -409,6 +410,20 @@ public class ContributeAct extends AbstractContentMemberAct {
 	private CmsFileMng fileMng;
 	@Autowired
 	protected ChannelMng channelMng;
+	@Autowired
+	private ContentMng contentMng;
+	@Autowired
+	protected BlogAct blogAct;
+	@Autowired
+	protected BlogCommon blogCommon;
+	
+	@RequestMapping(value = "/blog/index.jspx")
+	public String blog_index(String queryTitle, Integer modelId,
+			Integer queryChannelId, Integer pageNo, HttpServletRequest request,
+			ModelMap model) {
+		return blogAct.blog_index(queryTitle, modelId, queryChannelId, "tpl.blogCenter",
+				pageNo, request, model);
+	} 
 	
 	@RequestMapping(value = "/blog/help.jspx")
 	public String blogHelp(HttpServletRequest request,HttpServletResponse response, ModelMap model) {
@@ -424,27 +439,19 @@ public class ContributeAct extends AbstractContentMemberAct {
 	
 	@RequestMapping(value = "/blog/tzsetting.jspx")
 	public String tzsetting(HttpServletRequest request, HttpServletResponse response,ModelMap model) {
-		return super.tzsetting(request, response, model);
+		return blogAct.tzsetting(request, response, model);
 	}
 
 	@RequestMapping(value = "/blog/updateSetting.jspx")
 	public void updateSetting(HttpServletRequest request, HttpServletResponse response,ModelMap model) {
-		 super.updateSetting(request, response, model);
-	}
-	
-	@RequestMapping(value = "/blog/index.jspx")
-	public String center(String queryTitle, Integer modelId,
-			Integer queryChannelId, Integer pageNo, HttpServletRequest request,
-			ModelMap model) {
-		return super.center(queryTitle, modelId, queryChannelId, "tpl.blogCenter",
-				pageNo, request, model);
+		blogAct.updateSetting(request, response, model);
 	}
 	
 	@RequestMapping(value = "/blog/contribute_list.jspx")
 	public String blog_list(String queryTitle, Integer modelId,
 			Integer queryChannelId, Integer pageNo, HttpServletRequest request,
 			ModelMap model) {
-		return super.blog_list(queryTitle, modelId, queryChannelId, CONTRIBUTE_LIST,
+		return blogAct.blog_list(queryTitle, modelId, queryChannelId, CONTRIBUTE_LIST,
 				pageNo, request, model);
 	}
 	
@@ -453,42 +460,42 @@ public class ContributeAct extends AbstractContentMemberAct {
 	public String blog_list_friend(String queryTitle, Integer modelId,
 			Integer queryChannelId, Integer pageNo, HttpServletRequest request,
 			ModelMap model) {
-		return super.blog_list_friend(queryTitle, modelId, queryChannelId, "tpl.testPage",
+		return blogAct.blog_list_friend(queryTitle, modelId, queryChannelId, "tpl.testPage",
 				pageNo, request, model);
 	}
 
 	@RequestMapping(value = "/blog/contribute_add.jspx")
 	public String blog_add(HttpServletRequest request, HttpServletResponse response,
 			ModelMap model) {
-		return super.blog_add(true, CONTRIBUTE_ADD, request, response, model);
+		return blogAct.blog_add(true, CONTRIBUTE_ADD, request, response, model);
 	}
 	
 	@RequestMapping(value = "/blog/columns_list.jspx")
 	public String blog_columns_list(String queryTitle, Integer modelId,
 			Integer queryChannelId, Integer pageNo, HttpServletRequest request,
 			ModelMap model) {
-		return super.blog_columns_list(queryTitle, modelId, queryChannelId, "tpl.columnsList",
+		return blogAct.blog_columns_list(queryTitle, modelId, queryChannelId, "tpl.columnsList",
 				pageNo, request, model);
 	}
 	
 	@RequestMapping(value = "/blog/newColumn.jspx")
 	public void columns_add(HttpServletRequest request, HttpServletResponse response,ModelMap model) {
-		 super.columns_add(request, response, model);
+		blogAct.columns_add(request, response, model);
 	}
 	
 	@RequestMapping(value = "/blog/deteleColumn.jspx")
 	public void columns_detele(HttpServletRequest request, HttpServletResponse response,ModelMap model) {
-		 super.columns_detele(request, response, model);
+		blogAct.columns_detele(request, response, model);
 	}
 	
 	@RequestMapping(value = "/blog/update_tz.jspx")
 	public String update_tz(String id, String orderId, HttpServletRequest request, HttpServletResponse response,ModelMap model) {
-		return super.update_tz(id,orderId,request, response, model);
+		return blogAct.update_tz(id,orderId,request, response, model);
 	}
 	
 	@RequestMapping(value = "/blog/updateColumn.jspx")
 	public void columns_update(HttpServletRequest request, HttpServletResponse response,ModelMap model) {
-		 super.columns_update(request, response, model);
+		blogAct.columns_update(request, response, model);
 	}
 	
 
@@ -510,7 +517,7 @@ public class ContributeAct extends AbstractContentMemberAct {
 	@RequestMapping(value = "/blog/contribute_edit.jspx")
 	public String blog_edit(Integer id, HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
-		return super.blog_edit(id, CONTRIBUTE_EDIT, request, response, model);
+		return blogAct.blog_edit(id, CONTRIBUTE_EDIT, request, response, model);
 	}
 
 /*	@RequestMapping(value = "/blog/contribute_update.jspx")
@@ -531,7 +538,7 @@ public class ContributeAct extends AbstractContentMemberAct {
 
 	@RequestMapping(value = "/blog/contribute_delete.jspx")
 	public void blog_delete(Integer ids,Integer column_id,Integer channelId, HttpServletRequest request, HttpServletResponse response, ModelMap model) {
-		 super.blog_delete(ids,column_id,channelId, request,  response, model);
+		blogAct.blog_delete(ids,column_id,channelId, request,  response, model);
 	}
 	
 	
@@ -542,81 +549,13 @@ public class ContributeAct extends AbstractContentMemberAct {
 	public String linkList(HttpServletRequest request,HttpServletResponse response, ModelMap model) {
 		CmsSite site = CmsUtils.getSite(request);
 		CmsUser user = CmsUtils.getUser(request);
-		int user_id = user.getId();
-		String path = request.getSession().getServletContext().getRealPath("/");
+		user.getId();
+		request.getSession().getServletContext().getRealPath("/");
 		//List<Columns> columnsList = (new BlogDao()).findByUserId(user_id, path);
-		//获取链接列表
-		String linkUrl=user.getLinkUrl();
-		List listU=new ArrayList();
-		if(linkUrl!=null){
-			String[] strs=linkUrl.split(" ");
-			String newUrl="";
-			for(int i=0;i<strs.length;i++){
-				if(i!=strs.length-1){
-					if(!strs[i].contains("http")&&strs[i+1].contains("http")){
-						newUrl+="~"+strs[i]+" ";
-					}else{
-						newUrl+=strs[i]+" ";
-					}
-				}else{
-					if(!strs[i].contains("http")){
-						newUrl+="~"+strs[i]+" ";
-					}else{
-						newUrl+=strs[i]+" ";
-					}
-				}
-			}
-			String[] str=newUrl.split("~");
-			for(int j=0;j<str.length;j++){
-				Map<String,Object> map=new HashMap<String,Object>();
-				String[] st=str[j].toString().split(" ");
-				List lists=new ArrayList();
-				String newName="";
-				for(int k=0;k<st.length;k++){
-					if(st[0].contains("http")){
-						newName="";
-					}else{
-						newName=st[0];
-					}
-					lists.add(st[k]);
-				}
-				map.put(newName, lists);
-				listU.add(map);
-			}
-			model.addAttribute("urlList", listU);
-			model.addAttribute("linkUrls", linkUrl.replaceAll(" ", "\r\n"));
-		}else{
-			model.addAttribute("urlList",listU);
-			model.addAttribute("linkUrls","");
-			
-		}
-		//获取好友列表
-		String friends=user.getFriends();
-		List listF = new ArrayList<>();
-		if(friends!=null){
-			
-			String[] strs=friends.split(" ");
-			for(int i=0;i<strs.length;i++){
-				String[] str=strs[i].split("=");
-				Map<String,Object> map=new HashMap<String,Object>();
-				CmsUser u=channelMng.findUserImage(str[1].toString());
-				if(null==u){
-					String newName="";
-					map.put(newName, null);
-				}else{
-					String newName=str[0]+"~"+u.getId()+"~"+u.getUserExt().getUserImg();
-					map.put(newName, u.getUserExt().getUserImg());
-				}
-				listF.add(map);
-			}
-			model.addAttribute("friendsList", listF);
-			model.addAttribute("friends", friends.replaceAll(" ", "\r\n"));
-		}else{
-			model.addAttribute("friendsList", listF);
-			model.addAttribute("friends","");
-		}
-		model = super.getColumn(request,model,user);
-	    model = super.getChannel(request,model,user,site);
+		model = blogCommon.getLinks(model,user);
+		model = blogCommon.getFriends(model,user);
+		model = blogCommon.getColumn(request,model,user);
+	    model = blogCommon.getChannel(request,model,user,site);
 		//model.addAttribute("columnsList", columnsList);
 		FrontUtils.frontData(request, model, site);
 		return FrontUtils.getTplPath(request, site.getSolutionPath(),TPLDIR_BLOG, "tpl.linkList");
@@ -624,7 +563,7 @@ public class ContributeAct extends AbstractContentMemberAct {
 	
 	@RequestMapping(value = "/blog/add_link.jspx")
 	public String custom(String linkUrl,String nextUrl,HttpServletRequest request,HttpServletResponse response, ModelMap model) {
-		return super.link_save(linkUrl.replaceAll("\r\n", " "),nextUrl,request, response, model);
+		return blogAct.link_save(linkUrl.replaceAll("\r\n", " "),nextUrl,request, response, model);
 	}
 	
 	/**
@@ -634,81 +573,13 @@ public class ContributeAct extends AbstractContentMemberAct {
 	public String friends(HttpServletRequest request,HttpServletResponse response, ModelMap model) {
 		CmsSite site = CmsUtils.getSite(request);
 		CmsUser user = CmsUtils.getUser(request);
-		int user_id = user.getId();
-		String path = request.getSession().getServletContext().getRealPath("/");
+		user.getId();
+		request.getSession().getServletContext().getRealPath("/");
 		//List<Columns> columnsList = (new BlogDao()).findByUserId(user_id, path);
-		//获取链接列表
-		String linkUrl=user.getLinkUrl();
-		List listU=new ArrayList();
-		if(linkUrl!=null){
-			String[] strs=linkUrl.split(" ");
-			String newUrl="";
-			for(int i=0;i<strs.length;i++){
-				if(i!=strs.length-1){
-					if(!strs[i].contains("http")&&strs[i+1].contains("http")){
-						newUrl+="~"+strs[i]+" ";
-					}else{
-						newUrl+=strs[i]+" ";
-					}
-				}else{
-					if(!strs[i].contains("http")){
-						newUrl+="~"+strs[i]+" ";
-					}else{
-						newUrl+=strs[i]+" ";
-					}
-				}
-			}
-			String[] str=newUrl.split("~");
-			for(int j=0;j<str.length;j++){
-				Map<String,Object> map=new HashMap<String,Object>();
-				String[] st=str[j].toString().split(" ");
-				List lists=new ArrayList();
-				String newName="";
-				for(int k=0;k<st.length;k++){
-					if(st[0].contains("http")){
-						newName="";
-					}else{
-						newName=st[0];
-					}
-					lists.add(st[k]);
-				}
-				map.put(newName, lists);
-				listU.add(map);
-			}
-			model.addAttribute("urlList", listU);
-			model.addAttribute("linkUrls", linkUrl.replaceAll(" ", "\r\n"));
-		}else{
-			model.addAttribute("urlList",listU);
-			model.addAttribute("linkUrls","");
-			
-		}
-		//获取好友列表
-		String friends=user.getFriends();
-		List listF = new ArrayList<>();
-		if(friends!=null){
-			
-			String[] strs=friends.split(" ");
-			for(int i=0;i<strs.length;i++){
-				String[] str=strs[i].split("=");
-				Map<String,Object> map=new HashMap<String,Object>();
-				CmsUser u=channelMng.findUserImage(str[1].toString());
-				if(null==u){
-					String newName="";
-					map.put(newName, null);
-				}else{
-					String newName=str[0]+"~"+u.getId()+"~"+u.getUserExt().getUserImg();
-					map.put(newName, u.getUserExt().getUserImg());
-				}
-				listF.add(map);
-			}
-			model.addAttribute("friendsList", listF);
-			model.addAttribute("friends", friends.replaceAll(" ", "\r\n"));
-		}else{
-			model.addAttribute("friendsList", listF);
-			model.addAttribute("friends","");
-		}
-		model = super.getColumn(request,model,user);
-	    model = super.getChannel(request,model,user,site);
+		model = blogCommon.getLinks(model,user);
+		model = blogCommon.getFriends(model,user);
+		model = blogCommon.getColumn(request,model,user);
+	    model = blogCommon.getChannel(request,model,user,site);
 		//model.addAttribute("columnsList", columnsList);
 		FrontUtils.frontData(request, model, site);
 		return FrontUtils.getTplPath(request, site.getSolutionPath(),TPLDIR_BLOG, "tpl.friends");
@@ -717,7 +588,7 @@ public class ContributeAct extends AbstractContentMemberAct {
 
 	@RequestMapping(value = "/blog/add_friends.jspx")
 	public String friends(String friends,String nextUrl,HttpServletRequest request,HttpServletResponse response, ModelMap model) {
-		return super.friends_save(friends.replaceAll("\r\n", " "),nextUrl,request, response, model);
+		return blogAct.friends_save(friends.replaceAll("\r\n", " "),nextUrl,request, response, model);
 	}
 	
 	
@@ -729,19 +600,36 @@ public class ContributeAct extends AbstractContentMemberAct {
 	public String findAllInfo(String userIds,String queryTitle, Integer modelId,
 			Integer queryChannelId, Integer pageNo, HttpServletRequest request,
 			ModelMap model) {
-		return super.friendCenter(userIds,queryTitle, modelId, queryChannelId, "tpl.testPage",
+		return blogAct.friendCenter(userIds,queryTitle, modelId, queryChannelId, "tpl.testPage",
 				pageNo, request, model);
 	}
 	
 	
 	/**
 	 *博客关注 
+	 * @throws IOException 
 	  */
 	@RequestMapping(value = "/blog/focus.jspx")
-	public String blog_focus(Integer focusUserId,String focusUserName, HttpServletRequest request) {
-		return super.blog_focus(focusUserId,focusUserName, request);
+	public void blog_focus(String focusUserId,String focusUserName, HttpServletRequest request,HttpServletResponse response) throws IOException {
+		blogAct.blog_focus(focusUserId,focusUserName, request, response);
 	}
 	
+	/**
+	 * 博客检验是否关注
+	 */
+	@RequestMapping(value = "blog/focuscheck.jspx")
+	public void blog_focus_check(String focusUserId, HttpServletRequest request,HttpServletResponse response) throws IOException {
+		blogAct.blog_focus_check(focusUserId,request, response);
+	}
+	
+	/**
+	 * 博客取消关注
+	 *  
+	 */
+	@RequestMapping(value = "blog/cancelfocus.jspx")
+	public void blog_cancel_focus(String focusUserId, HttpServletRequest request,HttpServletResponse response) throws IOException {
+		blogAct.blog_cancel_focus(focusUserId,request, response);
+	}
 	
 	@RequestMapping(value = "/blog/changeTheme.jspx", method = RequestMethod.POST)
 	public String updateTheme(String theme, String nextUrl,
@@ -765,13 +653,6 @@ public class ContributeAct extends AbstractContentMemberAct {
 		}	
 		return FrontUtils.showSuccess(request, model, nextUrl);
 	}
-	
-	
-	@Autowired
-	private ContentMng contentMng;
-
-	@Autowired
-	private CmsCommentMng cmsCommentMng;
 	
 	/**
 	 *读取评论消息数目
@@ -881,7 +762,6 @@ public class ContributeAct extends AbstractContentMemberAct {
 	@RequestMapping(value = "/member/checkAddfinds.jspx")
 	public void checkAddfinds(String friends,HttpServletRequest request,HttpServletResponse response, ModelMap model)throws UnsupportedEncodingException, JSONException {
 		String[] strs=friends.split("~");
-		int num=0;
 		int addnum=1;
 		String no="";
 		for(int i=0;i<strs.length;i++){
