@@ -72,7 +72,7 @@ $(function() {
 	        <ul>
 	            <#list modelList as model>
 	            <#if model.name!='新闻'&& model.name!='下载'&& model.name!='图库'
-	            && model.name!='招聘'&& model.name!='文库'&& model.name!='视频'&& model.name!='单页'>
+	            && model.name!='招聘'&& model.name!='视频'&& model.name!='单页'>
 			 	<li value="1">
 	            <a href="v_add.do?modelId=${model.id}&root=${root!}">
 	            	${model.name}</a>

@@ -1,5 +1,6 @@
 package com.jeecms.cms.manager.assist.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,6 @@ import com.jeecms.common.page.Pagination;
 import com.jeecms.core.entity.CmsUser;
 import com.jeecms.core.manager.CmsSiteMng;
 import com.jeecms.core.manager.CmsUserMng;
-import com.jeecms.core.web.util.CmsUtils;
 
 @Service
 @Transactional
@@ -98,6 +98,7 @@ public class CmsCommentMngImpl implements CmsCommentMng {
 			CmsComment parent=findById(parentId);
 			comment.setParent(parent);
 			parent.setReplayUser(user);
+			parent.setReplayTime(new Date());
 			parent.setReplyCount(parent.getReplyCount()+1);
 			parent.getCommentExt().setReply(text);
 			update(parent, parent.getCommentExt());
@@ -128,6 +129,7 @@ public class CmsCommentMngImpl implements CmsCommentMng {
 			CmsComment parent=findById(parentId);
 			comment.setParent(parent);
 			parent.setReplayUser(user);
+			parent.setReplayTime(new Date());
 			parent.getCommentExt().setReply(text);
 			parent.setReplyCount(parent.getReplyCount()+1);
 			update(parent, parent.getCommentExt());
