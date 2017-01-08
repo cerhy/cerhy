@@ -1,81 +1,76 @@
 <div class="wrap-left">
-                <div class="user-center-left">
-                    <div class="user-setting">
-                        <div class="pic-dt">
-                        [#if user.userImg??]<img src="${user.userImg}" width="120" height="120" alt="">
+     <div class="user-center-left">
+           <div class="user-setting">
+                 <div class="pic-dt">
+                      [#if user.userImg??]<img src="${user.userImg}" width="120" height="120" alt="">
+                      [#else]<img src="/${res}/images/userImg-large.png" width="120" height="120" alt="">
+                      [/#if]
+                 </div>
+                 <div class="user-name-dt"><a href="${base}/blog/index.jspx">${user.username}</a></div>
+                     [#if usert??]
+                     <a id="focus" class="user-oparetion-btn">关注</a>
+                    <a id="cancelfocus" class="user-oparetion-btn">取消关注</a>
+                    [#else]
+                     <a href="${base}/logout.jspx" class="user-oparetion-btn">退出</a>
+                     [/#if]
+                     
+           </div>
+           <div class="user-menu-links">
+                <ul>
+				    <li><a href="${base}/blog/contribute_add.jspx">发表博客</a></li>
+				    <li><a style="cursor: pointer;"><em></em>博客栏目</a>
+				        [#if columnsList??]
+                          <ul>
+                            [#list columnsList as c]
+		                    <li><a href="${base}/blog/contribute_list.jspx?column_id=${c.column_id}" ><em></em>${c.column_name}</a></li>
+		                    [/#list]
+                             </ul>
                         [#else]
-                        <img src="/${res}/images/userImg-large.png" width="120" height="120" alt="">[/#if]
-                        </div>
-                        <div class="user-name-dt"><a href="${base}/blog/index.jspx">${user.username}</a></div>
-                        <a href="${base}/logout.jspx" class="user-oparetion-btn">退出</a>
-                    </div>
-                    <div class="user-menu-links">
-                    <ul>
-				        <li><a href="${base}/blog/contribute_add.jspx">发表博客</a></li>
-				          <li ><a style="cursor: pointer;"><em></em>博客栏目</a>
-				          [#if columnsList??]
-                             <ul>
-                              [#list columnsList as c]
-		                       <li><a href="${base}/blog/contribute_list.jspx?column_id=${c.column_id}" ><em></em>${c.column_name}</a></li>
-		                      [/#list]
+                          <ul>
+				             [#assign origDeep=channelList[0].deep+1/]
+				             [#list channelList as c]
+				             <li><a href="${base}/blog/contribute_list.jspx?channelId=${c.id}" ><em></em>[#if c.deep gte origDeep][#list origDeep..c.deep as i]&nbsp;&nbsp;&nbsp;[/#list][/#if]${c.name}</a></li> 
+				             [/#list]
                              </ul>
-                           [#else]
-                             <ul>
-				                [#assign origDeep=channelList[0].deep+1/]
-				                [#list channelList as c]
-				                   <li><a href="${base}/blog/contribute_list.jspx?channelId=${c.id}" ><em></em>[#if c.deep gte origDeep][#list origDeep..c.deep as i]&nbsp;&nbsp;&nbsp;[/#list][/#if]${c.name}</a></li> 
-				                [/#list]
-                             </ul>
-                           [/#if]
-                          </li>
-			              <li><a href="${base}/blog/collection_list.jspx">转载</a></li>
-				          <li style="cursor: pointer;"><a><em></em>设置</a>
-                              <ul>
-                              [#if columnsList??]
-                              <li><a  href="${base}/blog/columns_list.jspx" ><em></em>新建栏目</a></li>
-                              [/#if]
-                              <li><a  href="${base}/blog/tzsetting.jspx" ><em></em>博客信息</a></li>
-                              <li><a  style="cursor: pointer;" onclick="set();" ><em></em>页面模板</a></li>
-                              <li><a  href="${base}/blog/link_list.jspx" ><em></em>链接管理</a></li>
-                              <li><a  href="${base}/blog/friends.jspx" ><em></em>好友管理</a></li>
-                              </ul>
-                         </li>
-                         
-                         <li>
-                                <a href="javascript:;"><em></em>好友</a>
-	                                <ul>
-	                                [#if friendsList??]
-					         		[#list friendsList as map]
-						         	[#list map?keys as k]
-						         	[#if k!='']
-						         	[#if k?split("~")[2]=='null'] 
-					         			<li style="height: 90px;">
-						         			<div class="users-a-link-wrap clearfix">
-					                            <a target="_blank" href="${base}/blog/find_all_url_friend.jspx?userIds=${k?split("~")[1]}" class="users-a-link" style="padding-right: 40px;">
-					                                <img src="/${res}/images/userImg.png" alt="" width="47" height="47">
-					                                <span>${k?split("~")[0]}</span>
-					                            </a>
-					                        </div>
-					         			</li>
-			         			    [#else]
-			         			    	<li style="height: 90px;">
-						         			<div class="users-a-link-wrap clearfix">
-					                            <a target="_blank" href="${base}/blog/find_all_url_friend.jspx?userIds=${k?split("~")[1]}" class="users-a-link" style="padding-right: 40px;">
-					                                <img src="${k?split("~")[2]}" alt="" width="47" height="47">
-					                                <span>${k?split("~")[0]}</span>
-					                            </a>
-					                        </div>
-					         			</li>
-							         [/#if]
-							         [/#if]
-							        [/#list]
-						         	[/#list]
-						         	[/#if]
-	                              </ul>
-                         </li>
-				         <div class="st_tree">
-				        	 <ul  show="true">
-				        	 <li><a href="javascript:;" style="text-decoration:none;"><em></em>链接</a></li>
+                        [/#if]
+                    </li>
+			        <li><a href="${base}/blog/collection_list.jspx">转载</a></li>
+				    
+                   <li>
+                      <a href="javascript:;"><em></em>好友</a>
+                           <ul>
+                           [#if friendsList??]
+        		           [#list friendsList as map]
+         	               [#list map?keys as k]
+         	               [#if k!='']
+         	               [#if k?split("~")[2]=='null'] 
+		        			<li style="height: 90px;">
+		         			<div class="users-a-link-wrap clearfix">
+		                           <a target="_blank" href="${base}/blog/find_all_url_friend.jspx?userIds=${k?split("~")[1]}" class="users-a-link" style="padding-right: 40px;">
+		                               <img src="/${res}/images/userImg.png" alt="" width="47" height="47">
+		                               <span>${k?split("~")[0]}</span>
+		                           </a>
+		                       </div>
+		        			</li>
+      			    	   [#else]
+	      			    	<li style="height: 90px;">
+	         			     <div class="users-a-link-wrap clearfix">
+	                           <a target="_blank" href="${base}/blog/find_all_url_friend.jspx?userIds=${k?split("~")[1]}" class="users-a-link" style="padding-right: 40px;">
+	                               <img src="${k?split("~")[2]}" alt="" width="47" height="47">
+	                               <span>${k?split("~")[0]}</span>
+	                           </a>
+	                         </div>
+	        			    </li>
+					         [/#if]
+					         [/#if]
+					        [/#list]
+				         	[/#list]
+				         	[/#if]
+                         </ul>
+                   </li>
+				   <div class="st_tree">
+				        <ul  show="true">
+				        	<li><a href="javascript:;" style="text-decoration:none;"><em></em>链接</a></li>
 				        	 <ul>
 				         		[#if urlList??]
 						         [#list urlList as map]
@@ -107,34 +102,40 @@
 						          	[/#list]
 						         [/#list]
 						         [/#if]
-						         </ul>
-						         </ul>
-						         </div>
-						         <li style="cursor: pointer;"><a><em></em>关注列表</a>
-						           <ul>
-						              <li style="cursor: pointer;">我关注的(${focus?size})
-						              [#if focus??]
-			                             <ul>
-			                              [#list focus as c]
-					                       <li><a target="_blank" href="${base}/blog/find_all_url_friend.jspx?userIds=${c.focusUserId}" ><em></em>${c.focusUserName}</a></li>
-					                      [/#list]
-			                             </ul>
-			                           [/#if]
-						              </li>
-						              <li style="cursor: pointer;">粉丝(${fans?size})
-						               [#if fans??]
-			                             <ul>
-			                              [#list fans as c]
-					                       <li><a target="_blank" href="${base}/blog/find_all_url_friend.jspx?userIds=${c.userId}" ><em></em>${c.userName}</a></li>
-					                      [/#list]
-			                             </ul>
-			                           [/#if]
-						              </li>
-						           </ul>
-						         
-						         </li>
-						         
-       				</ul>
-                    </div>
-                </div>
-            </div>
+						   </ul>
+					 </ul>
+				</div>
+				<li><a style="cursor: pointer;"><em></em>关注&nbsp;[#if focus??](${focus?size})[/#if]</a>
+				 [#if focus??]
+                    <ul>
+                     [#list focus as c]
+                    <li><a target="_blank" href="${base}/blog/find_all_url_friend.jspx?userIds=${c.focusUserId}" ><em></em>${c.focusUserName}</a></li>
+                  [/#list]
+                    </ul>
+                  [/#if]
+                </li> 
+                <li><a style="cursor: pointer;"><em></em>粉丝&nbsp;[#if fans??](${fans?size})[/#if]</a>
+				   [#if fans??]
+                        <ul>
+                         [#list fans as c]
+                         <li><a target="_blank" href="${base}/blog/find_all_url_friend.jspx?userIds=${c.userId}"><em></em>${c.userName}</a></li>
+                      [/#list]
+                        </ul>
+                    [/#if]
+                </li> 
+                
+			 	<li style="cursor: pointer;"><a><em></em>设置</a>
+                       <ul>
+                       [#if columnsList??]
+                       <li><a  href="${base}/blog/columns_list.jspx" ><em></em>新建栏目</a></li>
+                       [/#if]
+                       <li><a  href="${base}/blog/tzsetting.jspx" ><em></em>博客信息</a></li>
+                       <li><a  style="cursor: pointer;" onclick="set();" ><em></em>页面模板</a></li>
+                       <li><a  href="${base}/blog/link_list.jspx" ><em></em>链接管理</a></li>
+                       <li><a  href="${base}/blog/friends.jspx" ><em></em>好友管理</a></li>
+                       </ul>
+                </li>  
+		    </ul>
+        </div>
+     </div>
+</div>

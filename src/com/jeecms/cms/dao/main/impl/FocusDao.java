@@ -13,6 +13,12 @@ public class FocusDao extends HibernateBaseDao<Focus, Integer> {
 		return f;
 	}
 	
+	  @SuppressWarnings("unchecked")
+		public List<Focus> findMaxFocusCount(){
+		  return find(Finder.create("SELECT * from (select focusUserId,count(1) cnt from Focus GROUP BY focusUserId) p where  p.cnt in (SELECT max(b.cnt) from (select focusUserId,count(1) cnt from Focus GROUP BY focusUserId) b)"));
+		}
+		
+	
     @SuppressWarnings("unchecked")
 	public List<Focus> findByUserId(Integer userId){
     	Finder f = Finder.create("select bean from Focus bean");

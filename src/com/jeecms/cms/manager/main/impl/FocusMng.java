@@ -19,6 +19,10 @@ public class FocusMng {
 	public Focus delete(Integer userId,Integer focusUserId) {
 		 return focusDao.delete(userId,focusUserId);
 	}
+	
+	public List<Focus> findMaxFocusCount(){
+		return focusDao.findMaxFocusCount();
+	}
 
 	public List<Focus> find(Integer userId,Integer focusUserId) {
 		return focusDao.find(userId,focusUserId);

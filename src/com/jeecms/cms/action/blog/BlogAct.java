@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -51,6 +52,22 @@ public class BlogAct {
 	    model = blogCommon.blog_focus_find(request,model);
 	    model = blogCommon.getLinks(model,user);
 	    model = blogCommon.getFriends(model,user);
+	    String path = request.getSession().getServletContext().getRealPath("/");
+		List<Focus> list = (new BlogDao()).findMaxFocusCount( path);
+	    List<Focus> l = null;
+	    if(null != list){
+	    	if(list.size()>3){
+	    		l = new ArrayList<Focus>();
+	    		for(int i =0;i<3;i++){
+	    			l.add(list.get(i));
+	    		}
+	    	}
+	    	if(null != l){
+	    		model.addAttribute("focusMax", l);
+	    	}else{
+	    		model.addAttribute("focusMax", list);
+	    	}
+	    }
 		FrontUtils.frontData(request, model, site);
 		Pagination p = contentMng.getPageForMember_blog(q, queryChannelId,site.getId(), modelId,user.getId(), cpn(pageNo), 20,null,null);
 		model.addAttribute("pagination", p);
@@ -95,6 +112,7 @@ public class BlogAct {
 		CmsUser user = CmsUtils.getUser(request);
 		model = blogCommon.getColumn(request,model,user);
 	    model = blogCommon.getChannel(request,model,user,site);
+	    model = blogCommon.blog_focus_find(request,model);
 	    model = blogCommon.getLinks(model,user);
 	    model = blogCommon.getFriends(model,user);
 		FrontUtils.frontData(request, model, site);
@@ -117,6 +135,7 @@ public class BlogAct {
 		}
 		model = blogCommon.getColumn(request,model,user);
 	    model = blogCommon.getChannel(request,model,user,site);
+	    model = blogCommon.blog_focus_find(request,model);
 	    model = blogCommon.getLinks(model,user);
 	    model = blogCommon.getFriends(model,user);
 		FrontUtils.frontData(request, model, site);
@@ -136,6 +155,7 @@ public class BlogAct {
 		CmsUser user = CmsUtils.getUser(request);
 		model = blogCommon.getColumn(request,model,user);
 	    model = blogCommon.getChannel(request,model,user,site);
+	    model = blogCommon.blog_focus_find(request,model);
 	    model = blogCommon.getLinks(model,user);
 	    model = blogCommon.getFriends(model,user);
 		if(hasPermission){
@@ -156,6 +176,7 @@ public class BlogAct {
 			CmsSite site = CmsUtils.getSite(request);
 			CmsUser user = CmsUtils.getUser(request);
 			model = blogCommon.getColumn(request,model,user);
+			model = blogCommon.blog_focus_find(request,model);
 			model = blogCommon.getLinks(model,user);
 			model = blogCommon.getFriends(model,user);
 			FrontUtils.frontData(request, model, site);
@@ -235,6 +256,7 @@ public class BlogAct {
 				e.printStackTrace();
 			}
 			model = blogCommon.getColumn(request,model,user);
+			model = blogCommon.blog_focus_find(request,model);
 			model = blogCommon.getLinks(model,user);
 			model = blogCommon.getFriends(model,user);
 			Columns column = new Columns(Integer.parseInt(id),user.getId(),name,Integer.parseInt(orderId));
@@ -321,6 +343,7 @@ public class BlogAct {
 		}
 		model = blogCommon.getColumn(request,model,user);
 	    model = blogCommon.getChannel(request,model,user,site);
+	    model = blogCommon.blog_focus_find(request,model);
 	    model = blogCommon.getLinks(model,user);
 		model = blogCommon.getFriends(model,user);
 	/*	WebErrors errors = validateEdit(id, site, user, request);
@@ -444,6 +467,7 @@ public class BlogAct {
 		CmsUser userT=cmsUserMng.findById(Integer.valueOf(userIds.toString()));
 		model = blogCommon.getColumn(request,model,userT);
 	    model = blogCommon.getChannel(request,model,userT,site);
+	    model = blogCommon.blog_focus_find(request,model);
 	    model = blogCommon.getLinks(model,user);
 		model = blogCommon.getFriends(model,user);
 		FrontUtils.frontData(request, model, site);
@@ -467,6 +491,7 @@ public class BlogAct {
 		String user_ids = request.getParameter("user_ids");
 		CmsUser user=cmsUserMng.findById(Integer.valueOf(user_ids.toString()));
 		model = blogCommon.getColumn(request,model,user);
+		model = blogCommon.blog_focus_find(request,model);
 		model = blogCommon.getLinks(model,user);
 		model = blogCommon.getFriends(model,user);
 		model.addAttribute("usert", user);

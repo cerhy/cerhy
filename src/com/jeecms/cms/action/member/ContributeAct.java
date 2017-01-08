@@ -429,10 +429,8 @@ public class ContributeAct extends AbstractContentMemberAct {
 	public String blogHelp(HttpServletRequest request,HttpServletResponse response, ModelMap model) {
 		CmsSite site = CmsUtils.getSite(request);
 		CmsUser user = CmsUtils.getUser(request);
-		int user_id = user.getId();
-		String path = request.getSession().getServletContext().getRealPath("/");
-		List<Columns> columnsList = (new BlogDao()).findByUserId(user_id, path);
-		model.addAttribute("columnsList", columnsList);
+		model = blogCommon.blog_focus_find(request,model);
+		model = blogCommon.getColumn(request, model, user);
 		FrontUtils.frontData(request, model, site);
 		return FrontUtils.getTplPath(request, site.getSolutionPath(),TPLDIR_BLOG, "tpl.blogHelp");
 	}
@@ -554,6 +552,7 @@ public class ContributeAct extends AbstractContentMemberAct {
 		//List<Columns> columnsList = (new BlogDao()).findByUserId(user_id, path);
 		model = blogCommon.getLinks(model,user);
 		model = blogCommon.getFriends(model,user);
+		model = blogCommon.blog_focus_find(request,model);
 		model = blogCommon.getColumn(request,model,user);
 	    model = blogCommon.getChannel(request,model,user,site);
 		//model.addAttribute("columnsList", columnsList);
@@ -578,6 +577,7 @@ public class ContributeAct extends AbstractContentMemberAct {
 		//List<Columns> columnsList = (new BlogDao()).findByUserId(user_id, path);
 		model = blogCommon.getLinks(model,user);
 		model = blogCommon.getFriends(model,user);
+		model = blogCommon.blog_focus_find(request,model);
 		model = blogCommon.getColumn(request,model,user);
 	    model = blogCommon.getChannel(request,model,user,site);
 		//model.addAttribute("columnsList", columnsList);
