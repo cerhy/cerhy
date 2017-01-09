@@ -22,6 +22,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.jeecms.cms.action.blog.BlogCommon;
 import com.jeecms.cms.dao.main.impl.BlogDao;
 import com.jeecms.cms.entity.main.Channel;
 import com.jeecms.cms.entity.main.Columns;
@@ -162,6 +163,8 @@ public class CollectionMemberAct {
 	private ContentMng contentMng;
 	@Autowired
 	private CmsUserMng userMng;
+	@Autowired
+	protected BlogCommon blogCommon;
 
 	@RequestMapping(value = "/blog/collection_list.jspx")
 	public String collection_list_blog(String queryTitle, Integer queryChannelId,
@@ -169,74 +172,11 @@ public class CollectionMemberAct {
 			HttpServletResponse response, ModelMap model) {
 		CmsSite site = CmsUtils.getSite(request);
 		CmsUser user = CmsUtils.getUser(request);
-		model = getColumn(request,model,user);
-	    model = getChannel(request,model,user,site);
-		
-		//获取链接列表
-	    String linkUrl=user.getLinkUrl();
-	    List listU=new ArrayList();
-	    if(linkUrl!=null){
-	    	String[] strs=linkUrl.split(" ");
-	    	String newUrl="";
-	    	for(int i=0;i<strs.length;i++){
-	    		if(i!=strs.length-1){
-	    			if(!strs[i].contains("http")&&strs[i+1].contains("http")){
-	    				newUrl+="~"+strs[i]+" ";
-	    			}else{
-	    				newUrl+=strs[i]+" ";
-	    			}
-	    		}else{
-	    			if(!strs[i].contains("http")){
-	    				newUrl+="~"+strs[i]+" ";
-	    			}else{
-	    				newUrl+=strs[i]+" ";
-	    			}
-	    		}
-	    	}
-	    	String[] str=newUrl.split("~");
-	    	for(int j=0;j<str.length;j++){
-	    		Map<String,Object> map=new HashMap<String,Object>();
-	    		String[] st=str[j].toString().split(" ");
-	    		List lists=new ArrayList();
-	    		String newName="";
-	    		for(int k=0;k<st.length;k++){
-	    			if(st[0].contains("http")){
-	    				newName="";
-	    			}else{
-	    				newName=st[0];
-	    			}
-	    			lists.add(st[k]);
-	    		}
-	    		map.put(newName, lists);
-	    		listU.add(map);
-	    	}
-	    	model.addAttribute("urlList", listU);
-	    	model.addAttribute("linkUrls", linkUrl.replaceAll(" ", "\r\n"));
-	    }else{
-	    	model.addAttribute("urlList",listU);
-	    	model.addAttribute("linkUrls","");
-	    	
-	    }
-	    //获取好友列表
-	    String friends=user.getFriends();
-	    List listF = new ArrayList<>();
-	    if(friends!=null){
-	    	
-	    	String[] strs=friends.split(" ");
-	    	for(int i=0;i<strs.length;i++){
-	    		String[] str=strs[i].split("=");
-	    		Map<String,Object> map=new HashMap<String,Object>();
-	    		CmsUser u=channelMng.findUserImage(str[1].toString());
-	    		String newName=str[0]+"~"+u.getId()+"~"+u.getUserExt().getUserImg();
-	    		map.put(newName, u.getUserExt().getUserImg());
-	    		listF.add(map);
-	    	}
-	    	model.addAttribute("friendsList", listF);
-	    	model.addAttribute("friends", friends.replaceAll(" ", "\r\n"));
-	    }else{
-	    	model.addAttribute("friendsList", listF);
-	    	model.addAttribute("friends","");
-	    }
+		model = blogCommon.getColumn(request,model,user);
+	    model = blogCommon.getChannel(request,model,user,site);
+	    model = blogCommon.blog_focus_find(null,request,model);
+	    model = blogCommon.getLinks(model,user);
+		model = blogCommon.getFriends(model,user);
 		
 		FrontUtils.frontData(request, model, site);
 		Pagination p = contentMng.getPageForCollection(site.getId(), user
@@ -266,69 +206,6 @@ public class CollectionMemberAct {
 			userMng.updateUserConllection(user,id,0);
 		}
 		return collection_list_blog(null, null, pageNo, request, response, model);
-	}
-	
-	public ModelMap getColumn(HttpServletRequest request,ModelMap model,CmsUser user){
-		int groupId = user.getGroup().getId();
-		if (4!=groupId){
-			if(5 != groupId){
-				String path = request.getSession().getServletContext().getRealPath("/");
-				List<Columns> columnsList = (new BlogDao()).findByUserId(user.getId(), path);
-				model.addAttribute("columnsList", columnsList);
-			}
-		}
-		return model;
-	}
-	
-	public ModelMap getChannel(HttpServletRequest request,ModelMap model,CmsUser user,CmsSite site) {
-		// 学科教研，市县教研专用
-		List<Channel> channelList2 = null;
-		List<Channel> channelList3 = null;
-		if (null != user.getGroup()) {
-			// 获得本站栏目列表
-			Set<Channel> rights = user.getGroup().getContriChannels();
-			List<Channel> topList = channelMng.getTopList(site.getId(), true);
-			List<Channel> channelList = Channel.getListForSelect(topList, rights, true);
-
-			channelList2 = new ArrayList<Channel>();// 学科教研
-			channelList3 = new ArrayList<Channel>();// 市县教研
-			int groupId = user.getGroup().getId();
-			if (4 == groupId) {
-				for (Channel c : channelList) {
-					if (c.getId() == 98) {
-						channelList2.add(c);
-					} else if (null != c.getParent()) {
-						if (c.getParent().getId() == 98) {
-							channelList2.add(c);
-						} else if (null != c.getParent().getParent()) {
-							if (c.getParent().getParent().getId() == 98)
-								channelList2.add(c);
-						}
-					}
-				}
-			} else if (5 == groupId) {
-				for (Channel c : channelList) {
-					if (c.getId() == 168) {
-						channelList3.add(c);
-					} else if (null != c.getParent()) {
-						if (c.getParent().getId() == 168) {
-							channelList3.add(c);
-						} else if (null != c.getParent().getParent()) {
-							if (c.getParent().getParent().getId() == 168)
-								channelList3.add(c);
-						}
-					}
-				}
-
-			}
-
-			if (null != channelList2 && channelList2.size() > 0) {
-				model.addAttribute("channelList", channelList2);
-			} else if (null != channelList3 && channelList3.size() > 0) {
-				model.addAttribute("channelList", channelList3);
-			}
-		}
-		return model;
 	}
 	
 	@Autowired
