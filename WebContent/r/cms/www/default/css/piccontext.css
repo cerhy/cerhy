@@ -59,8 +59,8 @@ img{border:none;}
 .close2 a{background:url('../images/close.jpg') 0px 0px no-repeat;width:15px;height:15px;display:block;float:right;}
 .replay{height:24px;margin-top:20px;overflow:hidden;}
 .replay h2{float:left;font-size:16px;}
-.replay p{float:left;margin-left:15px;display:inline;line-height:24px;padding-right:25px;background:url('../images/replay.png') right no-repeat;}
-.replay p a{color:white;font-size:14px;}
+.replay p{float:left;margin-left:15px;display:inline;line-height:24px;padding-right:25px;}
+.replay p a{color:black;font-size:14px;}
 .replay p a:hover{color:#FF702D;text-decoration:underline;}
 .pictwo{width:270px;height:88px;overflow:hidden;margin-top:20px;}
 .pictwo ul li{width:120px;height:88px;float:left;margin-right:15px;position:relative;overflow:hidden;}
@@ -71,5 +71,5 @@ img{border:none;}
 .returnbtn {margin-top:35px;margin-left:50px;}
 .returnbtn a{width:115px;height:22px;border:1px solid #ccc;padding:5px 15px;line-height:22px;text-align:center;color:White;font-size:16px;display:block;}
 .returnbtn a:hover{color:#FF702D;text-decoration:underline;border:1px solid #8d5a00;}
-.firsttop{width:270px;padding:20px;background:#1C1C1C;position:fixed;top:170px;left:0px;z-index:1200;color:White;display:none;}
-.endtop{width:270px;padding:20px;background:#1C1C1C;position:fixed;top:170px;left:0px;z-index:1200;color:White;display:none;}
+.firsttop{width:270px;padding:20px;background:white;position:fixed;top:170px;left:0px;z-index:1200;color:White;display:none;}
+.endtop{width:270px;padding:20px;background:white;position:fixed;top:170px;left:0px;z-index:1200;color:White;display:none;}
