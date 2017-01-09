@@ -100,7 +100,7 @@ $(function(){
 		                      [#else]<img src="/${res}/images/userImg-large.png" width="120" height="120" alt="">
 		                      [/#if]
 		                 </div>
-		                 <div class="user-name-dt"><a href="${base}/blog/index.jspx">${usert.username}</a></div>
+		                 <div class="user-name-dt"><a href="#">${usert.username}</a></div>
 		                     [#if usert??]
 		                     <a id="focus" class="user-oparetion-btn">关注</a>
 		                    <a id="cancelfocus" class="user-oparetion-btn">取消关注</a>
@@ -293,7 +293,7 @@ $(function(){
   </div>
 [#include "../hyinclude/end.html"/]
  <script type="text/javascript">
-		skinChange(${user.theme!0});
+		skinChange(${usert.theme!0});
 	function skinChange(n){
 		document.all.MrJin.href="/${res}/css/skin/"+n+".css"; 
 	}
