@@ -200,7 +200,9 @@ $(function(){
 						 [#if focus??]
 		                    <ul>
 		                     [#list focus as c]
+		                     [#if c??]
 		                    <li><a target="_blank" href="${base}/blog/find_all_url_friend.jspx?userIds=${c.focusUserId}" ><em></em>${c.focusUserName}</a></li>
+		                   [/#if]
 		                  [/#list]
 		                    </ul>
 		                  [/#if]
@@ -209,7 +211,9 @@ $(function(){
 						   [#if fans??]
 		                        <ul>
 		                         [#list fans as c]
-		                         <li><a target="_blank" href="${base}/blog/find_all_url_friend.jspx?userIds=${c.userId}"><em></em></a></li>
+		                         [#if c??]
+		                         <li><a target="_blank" href="${base}/blog/find_all_url_friend.jspx?userIds=${c.userId}"><em></em>${c.username}</a></li>
+		                       [/#if]
 		                      [/#list]
 		                        </ul>
 		                    [/#if]

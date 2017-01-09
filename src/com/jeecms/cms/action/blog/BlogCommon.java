@@ -163,9 +163,12 @@ public class BlogCommon {
 		return model;
 	}
 	
-	public ModelMap blog_focus_find(HttpServletRequest request, ModelMap model) {
-		CmsUser user = CmsUtils.getUser(request);
-		List<List<Focus>> list = focusMng.findByUserId(user.getId());
+	public ModelMap blog_focus_find(Integer userid,HttpServletRequest request, ModelMap model) {
+		if(null == userid){
+			CmsUser user = CmsUtils.getUser(request);
+			userid = user.getId();
+		}
+		List<List<Focus>> list = focusMng.findByUserId(userid);
 		if (null != list) {
 			if (null != list.get(0)) {
 				model.addAttribute("focus", list.get(0));
