@@ -95,7 +95,9 @@ public class CommentMemberAct {
 			errors.addErrorCode("error.noPermissionsView");
 			return FrontUtils.showError(request, response, model, errors);
 		}
+		List<CmsComment> commentList=commentMng.findByParentId(id);
 		model.addAttribute("comment", comment);
+		model.addAttribute("commentList", commentList);
 		return FrontUtils.getTplPath(request, site.getSolutionPath(),
 				TPLDIR_COMMENT, COMMENT_REPLY);
 	}

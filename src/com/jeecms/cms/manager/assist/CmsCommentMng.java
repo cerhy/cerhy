@@ -86,4 +86,6 @@ public interface CmsCommentMng {
 	public CmsComment[] checkByIds(Integer[] ids, CmsUser user, boolean checked);
 
 	public void updateByUserId(Integer id);
+
+	public List<CmsComment> findByParentId(Integer id);
 }

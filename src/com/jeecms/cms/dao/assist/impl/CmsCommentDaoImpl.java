@@ -235,4 +235,12 @@ public class CmsCommentDaoImpl extends HibernateBaseDao<CmsComment, Integer>
 				  +" where jct.user_id="+sid;
 		dao.executeSQL(sql);
 	}
+	
+	@Override
+	public List<CmsComment> findByParentId(Integer id) {
+		Finder f = Finder.create("from CmsComment bean where 1=1");
+		f.append(" and bean.parent.id=:parentId");
+		f.setParam("parentId", id);
+		return find(f);
+	}
 }
