@@ -455,7 +455,7 @@ public class ContentMngImpl implements ContentMng, ChannelDeleteChecker {
 		if(channelId != null){
 			 channel = channelMng.findById(channelId);
 		}else{
-			 channel = channelMng.findById(81);
+			 channel = channelMng.findById(280);
 		}
 		if(column_id != null){
 			bean.setColumn_id(column_id);
@@ -681,7 +681,7 @@ public class ContentMngImpl implements ContentMng, ChannelDeleteChecker {
 		// 是否有标题图
 		bean.setHasTitleImg(!StringUtils.isBlank(ext.getTitleImg()));*/
 		// 更新栏目
-		if (channelId != null && channelId != 81) {
+		if (channelId != null && channelId != 280) {
 			bean.setChannel(channelMng.findById(channelId));
 		}
 	/*	// 更新类型

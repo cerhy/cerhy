@@ -390,7 +390,7 @@ public class BlogAct {
 		CmsUser user = CmsUtils.getUser(request);
 		FrontUtils.frontData(request, model, site);
 		if(null != column_id){
-			channelId = 81;
+			channelId = 280;
 		}
 		
 //		String column_id = request.getParameter("column_id");
