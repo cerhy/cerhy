@@ -41,4 +41,6 @@ public interface CmsCommentDao{
 			Integer commentUserId, String ip);
 
 	public void updateByUserId(Integer id);
+
+	public List<CmsComment> findByParentId(Integer id);
 }

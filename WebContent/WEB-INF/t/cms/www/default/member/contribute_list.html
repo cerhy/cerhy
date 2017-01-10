@@ -92,7 +92,6 @@ $(function() {
 			                <td class="tggl-top"  style="min-width:70px;">操作</td>
 			              </tr>
 			              [#list pagination.list as c]
-			              [#if c.channel.name !="博客"]
 			              <tr>
 			                <td>${c.id}</td>
 			                <td style="text-align:left; text-indent:5px;"><a href="${c.url!}">[@text_cut s=c.title?html len='24' append='...'/]</a></td>
@@ -102,7 +101,6 @@ $(function() {
 			                <td>${c.releaseDate?string('yyyy-MM-dd')}</td>
 			                <td>[#if c.checkStep==0]<a href="contribute_edit.jspx?id=${c.id}&nextUrl=contribute_list.jspx">修改<a> | <a href="contribute_delete.jspx?ids=${c.id}&nextUrl=contribute_list.jspx">删除<a>[#else]修改 | 删除[/#if]</td>
 			              </tr>
-			              [/#if]
 			              [/#list]
 			            </tbody>
 			          </table>

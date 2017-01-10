@@ -249,4 +249,9 @@ public class CmsCommentMngImpl implements CmsCommentMng {
 		dao.updateByUserId(id);
 	}
 
+	@Override
+	public List<CmsComment> findByParentId(Integer id) {
+		return dao.findByParentId(id);
+	}
+
 }

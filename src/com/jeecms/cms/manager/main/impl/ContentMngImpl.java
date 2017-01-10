@@ -104,7 +104,7 @@ public class ContentMngImpl implements ContentMng, ChannelDeleteChecker {
 			// 拥有所有栏目权限，能够管理不属于自己的数据
 			p = dao.getPage(title, typeId,currUserId, inputUserId, topLevel, recommend,
 					status, checkStep, siteId,null,channelId,orderBy, pageNo,
-					pageSize);
+					pageSize,null);
 		} else {
 			p = dao.getPageByRight(title, typeId, currUserId,inputUserId, topLevel,
 					recommend, status, checkStep, siteId, channelId,departId, userId,
@@ -115,11 +115,12 @@ public class ContentMngImpl implements ContentMng, ChannelDeleteChecker {
 	
 	public Pagination getPageBySite(String title, Integer typeId,Integer inputUserId,boolean topLevel,
 			boolean recommend,ContentStatus status, Integer siteId,int orderBy, int pageNo,int pageSize){
-		return dao.getPage(title, typeId, null, inputUserId, topLevel, recommend, status, null, siteId, null, null, orderBy, pageNo, pageSize);
+		return dao.getPage(title, typeId, null, inputUserId, topLevel, recommend, status, null, siteId, null, null, orderBy, pageNo, pageSize,null);
 	}
 
 	public Pagination getPageForMember(String title, Integer channelId,Integer siteId,Integer modelId, Integer memberId, int pageNo, int pageSize) {
-		return dao.getPage(title, null,memberId,memberId, false, false,ContentStatus.all, null, siteId,modelId,  channelId, 0, pageNo,pageSize);
+		String removeBlog="true";
+		return dao.getPage(title, null,memberId,memberId, false, false,ContentStatus.all, null, siteId,modelId,  channelId, 0, pageNo,pageSize,removeBlog);
 	}
 	
 	public Pagination getPageForMember_blog(String title, Integer channelId,Integer siteId,Integer modelId, Integer memberId, int pageNo, int pageSize,Integer columnId,Integer channelId2) {

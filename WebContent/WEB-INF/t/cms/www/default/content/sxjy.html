@@ -68,6 +68,7 @@ $(function() {
 			}else{
 				Cms.collectexist("${base}","${content.id!}","cancelSpan","comfirmSpan");
 		}
+	  }
 	});
 	
        $("#comfirmSpan").click(function(){
@@ -155,7 +156,8 @@ $(function() {
 						<li><a href="${attach.path}" id="attach${attach_index}">${attach.name}</a></li>           
 						[/#list]           
 						</ul>           
-					[/#if]   
+					[/#if]
+					 [#include "../content/picture.html"/]   
 					<!-- 分页 -->
 					<div class="pagebar">[#include "../style_page/content.html"/]</div>
                     <div class="prev-next-wz clearfix">

@@ -25,6 +25,7 @@ import static com.jeecms.cms.action.directive.abs.AbstractContentDirective.PARAM
 
 
 
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -55,7 +56,7 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 	public Pagination getPage(String title, Integer typeId,Integer currUserId,
 			Integer inputUserId, boolean topLevel, boolean recommend,
 			ContentStatus status, Byte checkStep, Integer siteId,Integer modelId,
-			Integer channelId,int orderBy, int pageNo, int pageSize) {
+			Integer channelId,int orderBy, int pageNo, int pageSize,String removeBlog) {
 		Finder f = Finder.create("select  bean from Content bean left join bean.contentShareCheckSet shareCheck left join shareCheck.channel tarChannel ");
 		if (rejected == status) {
 			f.append("  join bean.contentCheckSet check ");
@@ -89,6 +90,9 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 		}
 		if(modelId!=null){
 			f.append(" and bean.model.id=:modelId").setParam("modelId", modelId);
+		}
+		if(removeBlog!=null){
+			f.append(" and bean.channel.id!=280");
 		}
 		appendQuery(f, title, typeId, inputUserId, status, topLevel, recommend);
 		appendOrder(f, orderBy);
