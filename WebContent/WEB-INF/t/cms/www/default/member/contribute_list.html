@@ -83,7 +83,13 @@ $(function() {
 			          <table cellpadding="0" cellspacing="0">
 			            <tbody>
 			              <tr>
-			                <td class="tggl-top">ID</td><td class="tggl-top">标题</td><td class="tggl-top">栏目</td><td class="tggl-top">状态</td><td class="tggl-top">点击</td><td class="tggl-top">发布时间</td><td class="tggl-top">操作</td>
+			                <td class="tggl-top" style="min-width:40px;">ID</td>
+			                <td class="tggl-top" style="min-width:257px;">标题</td>
+			                <td class="tggl-top" style="min-width:60px;">栏目</td>
+			                <td class="tggl-top" style="min-width:50px;">状态</td>
+			                <td class="tggl-top" style="min-width:40px;">点击</td>
+			                <td class="tggl-top"  style="min-width:70px;">发布时间</td>
+			                <td class="tggl-top"  style="min-width:70px;">操作</td>
 			              </tr>
 			              [#list pagination.list as c]
 			              [#if c.channel.name !="博客"]
