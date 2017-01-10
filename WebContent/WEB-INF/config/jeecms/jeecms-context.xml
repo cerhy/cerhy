@@ -276,5 +276,6 @@
 	<bean id="blogCommon" class="com.jeecms.cms.action.blog.BlogCommon"/>
 	<bean id="focusMng" class="com.jeecms.cms.manager.main.impl.FocusMng"/>
 	<bean id="focusDao" class="com.jeecms.cms.dao.main.impl.FocusDao"/>
-	
+	<bean id="columnsMng" class="com.jeecms.cms.manager.main.impl.ColumnsMng"/>
+	<bean id="columnsDao" class="com.jeecms.cms.dao.main.impl.ColumnsDao"/>
 </beans>

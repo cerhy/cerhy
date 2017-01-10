@@ -68,12 +68,12 @@ $(function(){
 				<div class="personCenter-userInfo blog_right">
 					<div class="tggl">
 						<form
-							action="${base}/blog/updateColumn.jspx?id=${column.column_id}"
+							action="${base}/blog/updateColumn.jspx?id=${column.columnId}"
 							id="newColumn" method="post">
 							<div style="font-size: 15px">栏目名:</div>
-							<input type="text" name="updateName" value="${column.column_name}" style="margin:10px 10px 20px 0;color: #858585;padding:10px;"/>
+							<input type="text" name="updateName" value="${column.columnName}" style="margin:10px 10px 20px 0;color: #858585;padding:10px;"/>
 							<div style="font-size: 15px">栏目序号:</div>
-							<input type="text" name="updateOrderId" value="${column.order_id}" style="margin:10px 10px 20px 0;color: #858585;padding:10px;"/>
+							<input type="text" name="updateOrderId" value="${column.orderId}" style="margin:10px 10px 20px 0;color: #858585;padding:10px;"/>
 							<div style="margin-bottom: 20px"> <input type="submit" value="更新" class="sub2" /> </div>
 						</form>
 					</div>

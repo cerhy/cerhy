@@ -122,7 +122,7 @@ public class ContributeAct extends AbstractContentMemberAct {
 	 */
 	@RequestMapping(value = "/member/contribute_save.jspx")
 	public String save(String title, String author, String description,
-			String txt, String tagStr, Integer channelId,Integer column_id,Integer modelId, 
+			String txt, String tagStr, Integer channelId,Integer columnId,Integer modelId, 
 			String captcha,String mediaPath,String mediaType,
 			String[] attachmentPaths, String[] attachmentNames,
 			String[] attachmentFilenames, String[] picPaths, String[] picDescs,
@@ -131,7 +131,7 @@ public class ContributeAct extends AbstractContentMemberAct {
 			HttpServletResponse response, ModelMap model) {
 		   String blog = request.getParameter("blog");
 		   if(null != blog ){
-			  return blogAct.blog_save(title, author, description, txt, tagStr, channelId,column_id,modelId,
+			  return blogAct.blog_save(title, author, description, txt, tagStr, channelId,columnId,modelId,
 						null, captcha,mediaPath,mediaType,attachmentPaths,attachmentNames, attachmentFilenames
 						,picPaths,picDescs,charge,chargeAmount,
 						nextUrl, request, response, model);
@@ -186,7 +186,7 @@ public class ContributeAct extends AbstractContentMemberAct {
 	 */
 	@RequestMapping(value = "/member/contribute_update.jspx")
 	public String update(Integer id, String title, String author,
-			String description, String txt, String tagStr, Integer column_id,Integer channelId,
+			String description, String txt, String tagStr, Integer columnId,Integer channelId,
 			String mediaPath,String mediaType,
 			String[] attachmentPaths, String[] attachmentNames,
 			String[] attachmentFilenames, String[] picPaths, String[] picDescs,
@@ -196,7 +196,7 @@ public class ContributeAct extends AbstractContentMemberAct {
 		String blog = request.getParameter("blog");
 		   if(null != blog ){
 			   return blogAct.blog_update(id, title, author, description, txt, tagStr,
-					   column_id,channelId, mediaPath,mediaType,attachmentPaths,
+					   columnId,channelId, mediaPath,mediaType,attachmentPaths,
 						attachmentNames, attachmentFilenames
 						,picPaths,picDescs,null,charge, chargeAmount,
 						nextUrl, request, response, model);
@@ -499,14 +499,14 @@ public class ContributeAct extends AbstractContentMemberAct {
 
 /*	@RequestMapping(value = "/blog/contribute_save.jspx")
 	public String blog_save(String title, String author, String description,
-			String txt, String tagStr, String column_id,Integer modelId, 
+			String txt, String tagStr, String columnId,Integer modelId, 
 			String captcha,String mediaPath,String mediaType,
 			String[] attachmentPaths, String[] attachmentNames,
 			String[] attachmentFilenames, String[] picPaths, String[] picDescs,
 			Short charge,Double chargeAmount,
 			String nextUrl, HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
-		return super.blog_save(title, author, description, txt, tagStr, column_id,modelId,
+		return super.blog_save(title, author, description, txt, tagStr, columnId,modelId,
 				null, captcha,mediaPath,mediaType,attachmentPaths,attachmentNames, attachmentFilenames
 				,picPaths,picDescs,charge,chargeAmount,
 				nextUrl, request, response, model);
@@ -535,8 +535,8 @@ public class ContributeAct extends AbstractContentMemberAct {
 	}*/
 
 	@RequestMapping(value = "/blog/contribute_delete.jspx")
-	public void blog_delete(Integer ids,Integer column_id,Integer channelId, HttpServletRequest request, HttpServletResponse response, ModelMap model) {
-		blogAct.blog_delete(ids,column_id,channelId, request,  response, model);
+	public void blog_delete(Integer ids,Integer columnId,Integer channelId, HttpServletRequest request, HttpServletResponse response, ModelMap model) {
+		blogAct.blog_delete(ids,columnId,channelId, request,  response, model);
 	}
 	
 	
@@ -687,9 +687,11 @@ public class ContributeAct extends AbstractContentMemberAct {
 	public String showComment(HttpServletRequest request,HttpServletResponse response, ModelMap model) {
 		CmsSite site = CmsUtils.getSite(request);
 		CmsUser user = CmsUtils.getUser(request);
-		int user_id = user.getId();
+		model = blogCommon.getColumn(request, model, user);
+		/*int user_id = user.getId();
 		String path = request.getSession().getServletContext().getRealPath("/");
 		List<Columns> columnsList = (new BlogDao()).findByUserId(user_id, path);
+		*/
 		//获取链接列表
 		String linkUrl=user.getLinkUrl();
 		List listU=new ArrayList();
@@ -759,7 +761,6 @@ public class ContributeAct extends AbstractContentMemberAct {
 			model.addAttribute("friendsList", listF);
 			model.addAttribute("friends","");
 		}
-		model.addAttribute("columnsList", columnsList);
 		FrontUtils.frontData(request, model, site);
 		return FrontUtils.getTplPath(request, site.getSolutionPath(),TPLDIR_BLOG, "tpl.toMyComment");
 	}

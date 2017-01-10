@@ -1,46 +1,58 @@
 package com.jeecms.cms.entity.main;
 
 public class Columns {
+	private static final long serialVersionUID = 1L;
+	private Integer columnId;
+	private Integer userId;
+	private String columnName;
+	private Integer orderId;
 
-	private int column_id;
-	private int user_id;
-	private String column_name;
-    private int order_id;
-    
-	public int getOrder_id() {
-		return order_id;
-	}
-	public void setOrder_id(int order_id) {
-		this.order_id = order_id;
-	}
-	public Columns(){}
-	public Columns(int column_id, int user_id, String column_name,int order_id){
-		this.column_id = column_id;
-		this.user_id = user_id;
-		this.column_name = column_name;
-		this.order_id = order_id;
-	}
-	public int getColumn_id() {
-		return column_id;
+	public Columns() {
 	}
 
-	public void setColumn_id(int column_id) {
-		this.column_id = column_id;
+	public Columns(Integer userId, String columnName, Integer orderId) {
+		this.userId = userId;
+		this.columnName = columnName;
+		this.orderId = orderId;
 	}
 
-	public int getUser_id() {
-		return user_id;
+	public Columns(Integer columnId, Integer userId, String columnName, Integer orderId) {
+		this.columnId = columnId;
+		this.userId = userId;
+		this.columnName = columnName;
+		this.orderId = orderId;
 	}
 
-	public void setUser_id(int user_id) {
-		this.user_id = user_id;
+	public Integer getColumnId() {
+		return columnId;
 	}
 
-	public String getColumn_name() {
-		return column_name;
+	public void setColumnId(Integer columnId) {
+		this.columnId = columnId;
 	}
 
-	public void setColumn_name(String column_name) {
-		this.column_name = column_name;
+	public Integer getUserId() {
+		return userId;
 	}
+
+	public void setUserId(Integer userId) {
+		this.userId = userId;
+	}
+
+	public String getColumnName() {
+		return columnName;
+	}
+
+	public void setColumnName(String columnName) {
+		this.columnName = columnName;
+	}
+
+	public Integer getOrderId() {
+		return orderId;
+	}
+
+	public void setOrderId(Integer orderId) {
+		this.orderId = orderId;
+	}
+
 }

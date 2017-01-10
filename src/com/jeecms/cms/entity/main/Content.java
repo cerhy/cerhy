@@ -38,15 +38,15 @@ import com.jeecms.core.web.ContentInterface;
 public class Content extends BaseContent implements ContentInterface {
 	private static final long serialVersionUID = 1L;
 
-	private Integer column_id;
+	private Integer columnId;
 	
 
-	public Integer getColumn_id() {
-		return column_id;
+	public Integer getColumnId() {
+		return columnId;
 	}
 
-	public void setColumn_id(Integer column_id) {
-		this.column_id = column_id;
+	public void setColumnId(Integer columnId) {
+		this.columnId = columnId;
 	}
 
 	/**

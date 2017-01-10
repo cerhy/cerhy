@@ -98,7 +98,7 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 	public Pagination getPage_blog(String title, Integer typeId,Integer currUserId,
 			Integer inputUserId, boolean topLevel, boolean recommend,
 			ContentStatus status, Byte checkStep, Integer siteId,Integer modelId,
-			Integer channelId,int orderBy, int pageNo, int pageSize,Integer column_id,Integer channelId2) {
+			Integer channelId,int orderBy, int pageNo, int pageSize,Integer columnId,Integer channelId2) {
 		channelId = channelId2;
 		Finder f = Finder.create("select  bean from Content bean left join bean.contentShareCheckSet shareCheck left join shareCheck.channel tarChannel ");
 		if (rejected == status) {
@@ -135,7 +135,7 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 			f.append(" and bean.model.id=:modelId").setParam("modelId", modelId);
 		}
 		
-		appendQuery_blog(f, title, typeId, inputUserId, status, topLevel, recommend,column_id);
+		appendQuery_blog(f, title, typeId, inputUserId, status, topLevel, recommend,columnId);
 		appendOrder(f, orderBy);
 		return find(f, pageNo, pageSize);
 	}
@@ -282,7 +282,7 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 
 	private void appendQuery_blog(Finder f, String title, Integer typeId,
 			Integer inputUserId, ContentStatus status, boolean topLevel,
-			boolean recommend ,Integer column_id) {
+			boolean recommend ,Integer columnId) {
 		
 		if (inputUserId != null&&inputUserId!=0) {
 			f.append(" and bean.user.id=:inputUserId");
@@ -306,9 +306,9 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 		if (recommend) {
 			f.append(" and bean.recommend=true");
 		}
-		if(null != column_id ){
-			f.append(" and bean.column_id=:column_id");
-			f.setParam("column_id", column_id);
+		if(null != columnId ){
+			f.append(" and bean.columnId=:columnId");
+			f.setParam("columnId", columnId);
 		}
 		if (draft == status) {
 			f.append(" and bean.status=:status");
@@ -1024,6 +1024,16 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 		query.setParameter("parentId", channelId);
 		return ((Number) (query.iterate().next())).intValue();
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Content> countByColumnId(Integer columnId) {
+		Finder f = Finder.create("select bean from Content bean");
+		if (columnId != null) {
+			f.append(" where bean.columnId=:columnId  ");
+			f.setParam("columnId", columnId);
+		} 
+		return find(f);
+	}
 
 	public Content findById(Integer id) {
 		Content entity = get(id);
@@ -1084,7 +1094,7 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 			Integer currUserId, Integer inputUserId, boolean topLevel,
 			boolean recommend, ContentStatus status, Byte checkStep,
 			Integer siteId, Integer modelId, Integer channelId, int orderBy,
-			int pageNo, int pageSize, String column_id) {
+			int pageNo, int pageSize, String columnId) {
 		Finder f = Finder.create("select  bean from Content bean left join bean.contentShareCheckSet shareCheck left join shareCheck.channel tarChannel ");
 		if (rejected == status) {
 			f.append("  join bean.contentCheckSet check ");

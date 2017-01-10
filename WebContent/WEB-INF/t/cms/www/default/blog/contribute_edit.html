@@ -21,11 +21,11 @@
 $(function() {
 	$("#jvForm").validate({
 		rules: {
-			column_id: "required",
+			columnId: "required",
 			title:"required",
 		},
 		messages:{
-			column_id: "请选择栏目",
+			columnId: "请选择栏目",
 			title: "请输入标题",
 		}
 	});
@@ -197,7 +197,7 @@ $(function(){
           [#include "media_upload.html"/]
           [#include "image_upload.html"/]
           [#include "attachment_upload.html"/]
-          <form id="jvForm" action="${base}/member/blog_update.jspx" method="post">
+          <form id="jvForm" action="${base}/member/contribut_update.jspx?blog='1'" method="post">
           <table cellpadding="0" cellspacing="0">
             <tbody>
               <tr>
@@ -210,11 +210,11 @@ $(function(){
                 <td class="tggl-top">栏目</td>
                 <td>
                 [#if columnsList??]
-	                 <select name="column_id" class="member-change">
+	                 <select name="columnId" class="member-change">
 	                 <option value="" class="sel-disabled">--请选择--</option>
 	                  [#if columnsList?size gt 0]
 	                  [#list columnsList as c]
-	                    <option value="${c.column_id}">${c.column_name}</option>
+	                    <option value="${c.columnId}">${c.columnName}</option>
 	                  [/#list]
 	                  [/#if]
 	                 </select>

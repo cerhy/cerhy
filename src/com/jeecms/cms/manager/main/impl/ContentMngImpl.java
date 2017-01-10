@@ -122,8 +122,8 @@ public class ContentMngImpl implements ContentMng, ChannelDeleteChecker {
 		return dao.getPage(title, null,memberId,memberId, false, false,ContentStatus.all, null, siteId,modelId,  channelId, 0, pageNo,pageSize);
 	}
 	
-	public Pagination getPageForMember_blog(String title, Integer channelId,Integer siteId,Integer modelId, Integer memberId, int pageNo, int pageSize,Integer column_id,Integer channelId2) {
-		return dao.getPage_blog(title, null,memberId,memberId, false, false,ContentStatus.all, null, siteId,modelId,  channelId, 0, pageNo,pageSize,column_id,channelId2);
+	public Pagination getPageForMember_blog(String title, Integer channelId,Integer siteId,Integer modelId, Integer memberId, int pageNo, int pageSize,Integer columnId,Integer channelId2) {
+		return dao.getPage_blog(title, null,memberId,memberId, false, false,ContentStatus.all, null, siteId,modelId,  channelId, 0, pageNo,pageSize,columnId,channelId2);
 	}
 	
 	@Transactional(readOnly = true)
@@ -252,6 +252,10 @@ public class ContentMngImpl implements ContentMng, ChannelDeleteChecker {
 		return entity;
 	}
 
+	public List<Content> countByColumnId(Integer id){
+	 return dao.countByColumnId(id);	
+	}
+	
 	public Content save(Content bean, ContentExt ext, ContentTxt txt,ContentDoc doc,
 			Integer[] channelIds, Integer[] topicIds, Integer[] viewGroupIds,
 			String[] tagArr, String[] attachmentPaths,
@@ -320,10 +324,10 @@ public class ContentMngImpl implements ContentMng, ChannelDeleteChecker {
 			Integer[] channelIds, Integer[] topicIds, Integer[] viewGroupIds,
 			String[] tagArr, String[] attachmentPaths,
 			String[] attachmentNames, String[] attachmentFilenames,
-			String[] picPaths, String[] picDescs, Integer channelId,Integer column_id,
+			String[] picPaths, String[] picDescs, Integer channelId,Integer columnId,
 			Integer typeId, Boolean draft,Boolean contribute, 
 			Short charge,Double chargeAmount,CmsUser user, boolean forMember) {
-		saveContent_blog(bean, ext, txt,doc,channelId,column_id, typeId, draft,contribute,user, forMember);
+		saveContent_blog(bean, ext, txt,doc,channelId,columnId, typeId, draft,contribute,user, forMember);
 		
 		// 保存附件
 		if (attachmentPaths != null && attachmentPaths.length > 0) {
@@ -450,15 +454,15 @@ public class ContentMngImpl implements ContentMng, ChannelDeleteChecker {
 	}
 
 	private Content saveContent_blog(Content bean, ContentExt ext, ContentTxt txt,ContentDoc doc,
-			Integer channelId,Integer column_id,Integer typeId, Boolean draft,Boolean contribute,CmsUser user, boolean forMember){
+			Integer channelId,Integer columnId,Integer typeId, Boolean draft,Boolean contribute,CmsUser user, boolean forMember){
 		Channel channel;
 		if(channelId != null){
 			 channel = channelMng.findById(channelId);
 		}else{
 			 channel = channelMng.findById(280);
 		}
-		if(column_id != null){
-			bean.setColumn_id(column_id);
+		if(columnId != null){
+			bean.setColumnId(columnId);
 		}
 		
 		bean.setChannel(channel);
@@ -624,12 +628,12 @@ public class ContentMngImpl implements ContentMng, ChannelDeleteChecker {
 			Integer[] viewGroupIds, String[] attachmentPaths,
 			String[] attachmentNames, String[] attachmentFilenames,
 			String[] picPaths, String[] picDescs, Map<String, String> attr,
-			Integer column_id,Integer channelId, Integer typeId, Boolean draft,
+			Integer columnId,Integer channelId, Integer typeId, Boolean draft,
 			Short charge,Double chargeAmount,CmsUser user,boolean forMember) {
 		Content entity = findById(bean.getId());
-		//更新column_id
-		if(bean.getColumn_id() != column_id){
-			bean.setColumn_id(column_id);
+		//更新columnId
+		if(bean.getColumnId() != columnId){
+			bean.setColumnId(columnId);
 		}
 		// 执行监听器
 		List<Map<String, Object>> mapList = preChange(entity);
@@ -1307,8 +1311,8 @@ public class ContentMngImpl implements ContentMng, ChannelDeleteChecker {
 
 	@Override
 	public Pagination getPageForMember_firendsBlog(int ids,String title, Integer channelId,
-			Integer siteId, Integer modelId,Integer memberId, int pageNo, int pageSize,String column_id) {
-		return dao.getPage_friendsBlog(ids,title, null,memberId,memberId, false, false,ContentStatus.all, null, siteId,modelId,  channelId, 0, pageNo,pageSize,column_id);
+			Integer siteId, Integer modelId,Integer memberId, int pageNo, int pageSize,String columnId) {
+		return dao.getPage_friendsBlog(ids,title, null,memberId,memberId, false, false,ContentStatus.all, null, siteId,modelId,  channelId, 0, pageNo,pageSize,columnId);
 	}
 
 	@Override

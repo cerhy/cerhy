@@ -76,9 +76,9 @@ $(function(){
               </tr>
               [#list columnsList as c]
               <tr>
-              <td>${c.order_id}</td>
-                <td>${c.column_name}</td>
-                <td><a href="${base}/blog/update_tz.jspx?id=${c.column_id}&name=${c.column_name}&orderId=${c.order_id}">修改<a> | <a href="${base}/blog/deteleColumn.jspx?id=${c.column_id}">删除<a></td>
+              <td>${c.orderId}</td>
+                <td>${c.columnName}</td>
+                <td><a href="${base}/blog/update_tz.jspx?id=${c.columnId}&name=${c.columnName}&orderId=${c.orderId}">修改<a> | <a href="${base}/blog/deteleColumn.jspx?id=${c.columnId}">删除<a></td>
               </tr>
               [/#list]
             </tbody>

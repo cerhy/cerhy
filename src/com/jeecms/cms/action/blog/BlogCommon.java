@@ -5,17 +5,19 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
 
-import com.jeecms.cms.dao.main.impl.BlogDao;
 import com.jeecms.cms.entity.main.Channel;
 import com.jeecms.cms.entity.main.Columns;
 import com.jeecms.cms.entity.main.Focus;
 import com.jeecms.cms.manager.main.ChannelMng;
+import com.jeecms.cms.manager.main.impl.ColumnsMng;
 import com.jeecms.cms.manager.main.impl.FocusMng;
 import com.jeecms.core.entity.CmsSite;
 import com.jeecms.core.entity.CmsUser;
@@ -27,8 +29,7 @@ public class BlogCommon {
 		int groupId = user.getGroup().getId();
 		if (4!=groupId){
 			if(5 != groupId){
-				String path = request.getSession().getServletContext().getRealPath("/");
-				List<Columns> columnsList = (new BlogDao()).findByUserId(user.getId(), path);
+				List<Columns> columnsList = columnsMng.getColumnsByUserId(user.getId());
 				model.addAttribute("columnsList", columnsList);
 			}
 		}
@@ -180,6 +181,17 @@ public class BlogCommon {
 		return model;
 	}
 	
+	public boolean isNumeric(String str){ 
+		String regex = "[0-9]+";
+		   Pattern pattern = Pattern.compile(regex); 
+		   Matcher isNum = pattern.matcher(str);
+		   if( !isNum.matches() ){
+		       return false; 
+		   } 
+		   return true; 
+		}
+	@Autowired
+	protected ColumnsMng columnsMng;
 	@Autowired
 	protected FocusMng focusMng;
 	@Autowired
