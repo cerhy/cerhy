@@ -23,23 +23,6 @@ $.validator.methods.leafChannel = function(value, element, param) {
 	return $(element.options[i]).attr("class")!="sel-disabled";
 }
 $(function() {
-	$("#jvForm").validate({
-		rules: {
-			channelId: {
-				required: true,
-				leafChannel: true
-			},
-			columnId: "required",
-			title:"required",
-		},
-		messages:{
-			channelId: {
-				leafChannel: "请选择末级栏目"
-			},
-			columnId: "请选择栏目",
-			title: "请输入标题",
-		}
-	});
 	var uploadPicsUrl = "${base}/member/o_swfPicsUpload.jspx";
 	var uploadAttachsUrl = "${base}/member/o_swfAttachsUpload.jspx";
 	//在firefox、chrome下，上传不能保留登录信息，所以必须加上jsessionid。
@@ -47,8 +30,7 @@ $(function() {
 	if(jsessionid) {
 		uploadPicsUrl += ";jsessionid="+jsessionid;
 		uploadAttachsUrl += ";jsessionid="+jsessionid;
-	}
-	swfu=new SWFUpload({
+	}	swfu=new SWFUpload({
 		upload_url : uploadPicsUrl,
 		flash_url : "${base}/thirdparty/swfupload/swfupload.swf",
 		file_size_limit : "20 MB",
@@ -200,14 +182,14 @@ $(function(){
           [#include "media_upload.html"/]
           [#include "image_upload.html"/]
           [#include "attachment_upload.html"/]
-          <form id="jvForm" action="${base}/member/contribute_save.jspx?blog='1'" method="post"> 
+          <form id="jvForm" action="${base}/member/contribute_save.jspx?blog='1'" method="post" > 
           <table cellpadding="0" cellspacing="0">
             <tbody>
               <tr class="blog_column">
-                <td class="tggl-top">标题</td><td><input type="text" name="title" maxlength="150" class="member-change" style="width:300px;" /></td>
+                <td class="tggl-top">标题</td><td><input type="text" name="title" maxlength="150" class="member-change" style="width:300px;" required="required" oninvalid="setCustomValidity('请输入标题');" oninput="setCustomValidity('');" /><span style="color:#f00; margin-left:10px;">*</span></td>
               </tr>
               <tr>
-                <td class="tggl-top">作者</td><td><input type="text" name="author" maxlength="100" class="member-change" /></td>
+                <td class="tggl-top">作者</td><td><input type="text" name="author" maxlength="100" class="member-change" required="required" oninvalid="setCustomValidity('请输入作者');" oninput="setCustomValidity('');"/><span style="color:#f00; margin-left:10px;">*</span></td>
               </tr>
               <tr class="blog_column">
                 <td class="tggl-top">栏目</td>
@@ -221,6 +203,7 @@ $(function(){
 	                  [/#list]
 	                  [/#if]
 	                 </select>
+	                 <span style="color:#f00; margin-left:10px;">*</span>
                  [#else]
 	                <select name="channelId" class="member-change" id="channelId">
 	                <option value="" class="sel-disabled">--请选择--</option>
@@ -231,6 +214,7 @@ $(function(){
 	                [/#list]
 	                [/#if]
 	                </select>
+	                <span style="color:#f00; margin-left:10px;">*</span>
                 [/#if]
                 </td>
               </tr>

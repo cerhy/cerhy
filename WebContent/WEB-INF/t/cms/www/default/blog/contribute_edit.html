@@ -201,10 +201,10 @@ $(function(){
           <table cellpadding="0" cellspacing="0">
             <tbody>
               <tr>
-                <td class="tggl-top">标题</td><td><input type="text" name="title" value="${content.title!?html}" maxlength="150" class="member-change" style="width:300px;" /><span style="color:#f00; margin-left:10px;">*</span></td>
+                <td class="tggl-top">标题</td><td><input type="text" name="title" value="${content.title!?html}" maxlength="150" class="member-change" style="width:300px;" required="required" oninvalid="setCustomValidity('请输入标题');" oninput="setCustomValidity('');"/><span style="color:#f00; margin-left:10px;">*</span></td>
               </tr>
               <tr>
-                <td class="tggl-top">作者</td><td><input type="text" name="author" value="${content.author!?html}" maxlength="100" class="member-change" /></td>
+                <td class="tggl-top">作者</td><td><input type="text" name="author" value="${content.author!?html}" maxlength="100" class="member-change" required="required" oninvalid="setCustomValidity('请输入作者');" oninput="setCustomValidity('');"/><span style="color:#f00; margin-left:10px;">*</span></td>
               </tr>
               <tr>
                 <td class="tggl-top">栏目</td>
@@ -218,6 +218,7 @@ $(function(){
 	                  [/#list]
 	                  [/#if]
 	                 </select>
+	                 <span style="color:#f00; margin-left:10px;">*</span>
                  [#else]
 	                <select name="channelId" class="member-change" id="channelId">
 	                <option value="" class="sel-disabled">--请选择--</option>
@@ -228,6 +229,7 @@ $(function(){
 	                [/#list]
 	                [/#if]
 	                </select>
+	                <span style="color:#f00; margin-left:10px;">*</span>
                 [/#if]
                 </td>
               </tr>

@@ -20,7 +20,7 @@ $('.user-menu-links li').click(function(){
 <script src="/${res}/js/SimpleTree.js"></script>
 <style>
 .s1{
-    margin: 25px 0 60px 80px;}
+    margin: 25px 0 60px 0;}
 .st_tree ul .change a:hover{color:red;}
 .st_tree ul li a:hover{color:blue;}
 .st_tree ul .change :hover{background-color:#e7e7e7 }
@@ -56,7 +56,8 @@ $(function(){
         <form id="newColumn" action="${base}/blog/newColumn.jspx"  method="post">
         <div >
 	        <span style="font-size:16px;">栏目名称:</span>
-	        <input type="text" name="columnInput" style="margin:10px;width: 180px;height: 30px;" rerequired oninvalid="setCustomValidity('请输入名cheng');" oninput="setCustomValidity('');"/>
+	        <input type="text" name="columnInput" style="margin:10px;width: 180px;height: 30px;" rerequired oninvalid="setCustomValidity('请输入栏目名称');" oninput="setCustomValidity('');"/><span style="color:#f00; margin-left:10px;">*</span>
+							<div style="font-size: 15px">栏目序号:</div>
         </div>
         <div>
          <span style="font-size:16px;">栏目序号:</span>
@@ -73,7 +74,7 @@ $(function(){
             <tbody>
               <tr>
                <td class="tggl-top" style="font-size:14px;min-width: 80px;">栏目序号</td>
-               <td class="tggl-top" style="font-size:14px;min-width: 250px;">栏目名称</td>
+               <td class="tggl-top" style="font-size:14px;min-width: 300px;">栏目名称</td>
                <td class="tggl-top" style="font-size:14px;min-width: 100px;">操作</td>
               </tr>
               [#list columnsList as c]
