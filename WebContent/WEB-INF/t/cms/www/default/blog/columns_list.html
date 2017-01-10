@@ -19,6 +19,8 @@ $('.user-menu-links li').click(function(){
 <link  type="text/css" rel="stylesheet" href="/${res}/css/SimpleTree.css" />
 <script src="/${res}/js/SimpleTree.js"></script>
 <style>
+.s1{
+    margin: 25px 0 60px 80px;}
 .st_tree ul .change a:hover{color:red;}
 .st_tree ul li a:hover{color:blue;}
 .st_tree ul .change :hover{background-color:#e7e7e7 }
@@ -52,15 +54,15 @@ $(function(){
 				
         <div class="tggl" >
         <form id="newColumn" action="${base}/blog/newColumn.jspx"  method="post">
-        <div>
-	        <span style="font-size:15px;">栏目名称:</span>
-	        <input type="text" name="columnInput" style="margin:10px "/>
+        <div >
+	        <span style="font-size:16px;">栏目名称:</span>
+	        <input type="text" name="columnInput" style="margin:10px;width: 180px;height: 30px;" rerequired oninvalid="setCustomValidity('请输入名cheng');" oninput="setCustomValidity('');"/>
         </div>
         <div>
-         <span style="font-size:15px;">栏目序号:</span>
-         <input type="text" name="columnOrder" style="margin:10px "/>
+         <span style="font-size:16px;">栏目序号:</span>
+         <input type="text" name="columnOrder" style="margin:10px;width: 180px;height: 30px;" placeholder="默认 0"/>
          </div>
-         <div style="margin:10px 0 50px 175px">
+         <div class="s1">
              <input type="submit" value="新建" class="sub1" />
          </div>
         </form>
@@ -70,9 +72,9 @@ $(function(){
           <table cellpadding="0" cellspacing="0">
             <tbody>
               <tr>
-               <td class="tggl-top" style="font-size:14px;">栏目序号</td>
-               <td class="tggl-top" style="font-size:14px;">栏目名称</td>
-               <td class="tggl-top" style="font-size:14px;">操作</td>
+               <td class="tggl-top" style="font-size:14px;min-width: 80px;">栏目序号</td>
+               <td class="tggl-top" style="font-size:14px;min-width: 250px;">栏目名称</td>
+               <td class="tggl-top" style="font-size:14px;min-width: 100px;">操作</td>
               </tr>
               [#list columnsList as c]
               <tr>

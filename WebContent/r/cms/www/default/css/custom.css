@@ -210,11 +210,9 @@ padding-top: 32px;
 }
 
 .sub1 {
-	position: absolute;
-	top: 473px;
-	left: 680px;
-	width: 50px;
-	height: 25px;
+	
+	width: 55px;
+	height: 30px;
 	background: #00a8eb;
 	color: #FFF;
 	text-align: center;
