@@ -35,3 +35,13 @@
 [#include "../include/footer.html"/]
 </body>
 </html>
+<script type="text/javascript">
+//id="checkSta"
+	$(document).on('change',"#checkSta",function(){
+	    if ($(this).is(':checked')) {
+	        alert("选中");
+	    }else{
+	        alert("取消");
+	    }
+	})  
+</script>
