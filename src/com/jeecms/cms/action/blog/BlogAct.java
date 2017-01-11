@@ -70,7 +70,7 @@ public class BlogAct {
 	    	}
 	    }
 		FrontUtils.frontData(request, model, site);
-		Pagination p = contentMng.getPageForMember_blog(q, queryChannelId,site.getId(), modelId,user.getId(), cpn(pageNo), 20,null);
+		Pagination p = contentMng.getPageForMember_blog(q, queryChannelId,site.getId(), modelId,user.getId(), cpn(pageNo), 20,null,null);
 		model.addAttribute("pagination", p);
 		if (!StringUtils.isBlank(q)) {
 			model.addAttribute("q", q);
@@ -141,8 +141,7 @@ public class BlogAct {
 	    model = blogCommon.getLinks(model,user);
 	    model = blogCommon.getFriends(model,user);
 		FrontUtils.frontData(request, model, site);
-		queryChannelId = channelId;
-		Pagination p = contentMng.getPageForMember_blog(q, queryChannelId,site.getId(), modelId,user.getId(), cpn(pageNo), 20,columnId);
+		Pagination p = contentMng.getPageForMember_blog(q, queryChannelId,site.getId(), modelId,user.getId(), cpn(pageNo), 20,columnId,channelId);
 		model.addAttribute("pagination", p);
 		if (!StringUtils.isBlank(q)) {
 			model.addAttribute("q", q);
@@ -209,11 +208,12 @@ public class BlogAct {
 			c.setModel(defaultModel);
 		}
 		ContentExt ext = new ContentExt();
-		if(null != title){
+		ext.setTitle(title);
+		/*if(null != title){
 			ext.setTitle(title);
 		}else{
 			ext.setTitle("title");
-		}
+		}*/
 		ext.setAuthor(author);
 		ext.setDescription(description);
 		ext.setMediaPath(mediaPath);
@@ -506,7 +506,7 @@ public class BlogAct {
 		model.addAttribute("userIds", user.getId());
 		model.addAttribute("columnId", columnId);
 		FrontUtils.frontData(request, model, site);
-		Pagination p = contentMng.getPageForMember_blog(q, queryChannelId,site.getId(), modelId,user.getId(), cpn(pageNo), 20,Integer.parseInt(columnId));
+		Pagination p = contentMng.getPageForMember_blog(q, queryChannelId,site.getId(), modelId,user.getId(), cpn(pageNo), 20,Integer.parseInt(columnId),null);
 		model.addAttribute("pagination", p);
 		if (!StringUtils.isBlank(q)) {
 			model.addAttribute("q", q);
