@@ -1,0 +1,1 @@
+alter table `jc_user` add column  `blogVisitNum` int(11) NOT NULL DEFAULT '0' COMMENT '博客访问数'
