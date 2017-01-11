@@ -48,4 +48,6 @@ public interface ChannelDao {
 
 	public CmsUser findUserImage(String name);
 
+	public void updateBlogVisitNum(CmsUser userT);
+
 }

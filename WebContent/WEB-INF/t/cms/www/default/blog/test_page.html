@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-<title>好研网-好友博客</title>
+<title>好研网-${usert.username}的博客</title>
 <link href="${resSys}/front.css" rel="stylesheet" type="text/css"/>
 <script src="${resSys}/jquery.js" type="text/javascript"></script>
 <script src="${resSys}/front.js" type="text/javascript"></script>
@@ -91,6 +91,14 @@ $(function(){
   </div>
   
       <div>
+      <div>
+      	<div style="text-align:left;padding-right: 50px;margin: 10px;font-size: 15px">
+     	 	文章数:0&nbsp;&nbsp;评论:0&nbsp;&nbsp;访问:0&nbsp;&nbsp;最后登录:0
+      	</div>
+      	<div style="text-align:right;padding-right: 50px;margin: 10px;font-size: 16px">
+     	 	明星博主： [#if focusMax?? ][#list focusMax as c]${c.focusUserName}&nbsp;&nbsp;[/#list][/#if]
+      	</div>
+      </div>
         <div class="mb20 clearfix">
         <div class="wrap-left">
 		     <div class="user-center-left">
@@ -115,14 +123,14 @@ $(function(){
 						        [#if columnsList??]
 		                          <ul>
 		                            [#list columnsList as c]
-				                    <li><a href="${base}/blog/contribute_list.jspx?columnId=${c.columnId}" ><em></em>${c.columnName}</a></li>
+				                    <li><a href="${base}/blog/contribute_list_friend.jspx?columnId=${c.columnId}&user_ids=${userIds}" ><em></em>${c.columnName}</a></li>
 				                    [/#list]
 		                             </ul>
 		                        [#else]
 		                          <ul>
 						             [#assign origDeep=channelList[0].deep+1/]
 						             [#list channelList as c]
-						             <li><a href="${base}/blog/contribute_list.jspx?channelId=${c.id}" ><em></em>[#if c.deep gte origDeep][#list origDeep..c.deep as i]&nbsp;&nbsp;&nbsp;[/#list][/#if]${c.name}</a></li> 
+						             <li><a href="${base}/blog/contribute_list_friend.jspx?channelId=${c.id}&user_ids=${userIds}" ><em></em>[#if c.deep gte origDeep][#list origDeep..c.deep as i]&nbsp;&nbsp;&nbsp;[/#list][/#if]${c.name}</a></li> 
 						             [/#list]
 		                             </ul>
 		                        [/#if]

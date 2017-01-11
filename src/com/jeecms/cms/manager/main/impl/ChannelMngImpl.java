@@ -395,5 +395,10 @@ public class ChannelMngImpl implements ChannelMng {
 		return dao.findUserImage(name);
 	}
 
+	@Override
+	public void updateBlogVisitNum(CmsUser userT) {
+		dao.updateBlogVisitNum(userT);
+	}
+
 
 }
