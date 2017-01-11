@@ -37,7 +37,7 @@ public abstract class BaseCmsUser  implements Serializable {
 	public static String PROP_LINK_URL = "linkUrl";
 	public static String PROP_THEME = "theme";
 	public static String PROP_FRIENDS = "Friends";
-
+	public static String PROP_BLOGVISITNUM = "blogVisitNum";
 	// constructors
 	public BaseCmsUser () {
 		initialize();
@@ -100,7 +100,7 @@ public abstract class BaseCmsUser  implements Serializable {
 			java.lang.Boolean admin,
 			java.lang.Boolean viewonlyAdmin,
 			java.lang.Boolean selfAdmin,
-			java.lang.Boolean disabled,java.lang.String linkUrl,java.lang.String Friends) {
+			java.lang.Boolean disabled,java.lang.String linkUrl,java.lang.String Friends,java.lang.Integer blogVisitNum) {
 		
 		this.setId(id);
 		this.setGroup(group);
@@ -117,6 +117,7 @@ public abstract class BaseCmsUser  implements Serializable {
 		this.setDisabled(disabled);
 		this.setLinkUrl(linkUrl);
 		this.setFriends(Friends);
+		this.setBlogVisitNum(blogVisitNum);
 		initialize();
 	}
 
@@ -152,8 +153,25 @@ public abstract class BaseCmsUser  implements Serializable {
 	private java.lang.String linkUrl;
 	private java.lang.String theme;
 	private java.lang.String Friends;
+	private java.lang.Integer blogVisitNum;
 	
 	
+	
+	
+	/**
+	 * Return the value associated with the column: blogVisitNum
+	 */
+	public java.lang.Integer getBlogVisitNum() {
+		return blogVisitNum;
+	}
+
+	public void setBlogVisitNum(java.lang.Integer blogVisitNum) {
+		this.blogVisitNum = blogVisitNum;
+	}
+	
+	/**
+	 * Return the value associated with the column: theme
+	 */
 	public java.lang.String getTheme() {
 		return theme;
 	}
