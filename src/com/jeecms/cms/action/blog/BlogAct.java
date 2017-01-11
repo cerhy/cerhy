@@ -473,6 +473,7 @@ public class BlogAct {
 		CmsSite site = CmsUtils.getSite(request);
 		CmsUser user = CmsUtils.getUser(request);
 		CmsUser userT=cmsUserMng.findById(Integer.valueOf(userIds.toString()));
+		channelMng.updateBlogVisitNum(userT);
 		model = blogCommon.getColumn(request,model,userT);
 	    model = blogCommon.getChannel(request,model,userT,site);
 	    model = blogCommon.blog_focus_find(Integer.parseInt(userIds),request,model);
@@ -495,10 +496,20 @@ public class BlogAct {
 	public String blog_list_friend(String q, Integer modelId,Integer queryChannelId,String nextUrl,Integer pageNo,HttpServletRequest request, ModelMap model) {
 		CmsSite site = CmsUtils.getSite(request);
 		//CmsUser user = CmsUtils.getUser(request);
-		String columnId = request.getParameter("columnId");
 		String user_ids = request.getParameter("user_ids");
+		Integer columnId = null;
+		Integer channelId = null;
+		if(null != request.getParameter("columnId")){
+			model.addAttribute("columnId", request.getParameter("columnId"));
+			columnId = Integer.parseInt(request.getParameter("columnId"));
+		}
+		if(null != request.getParameter("channelId")){
+			model.addAttribute("channelId", request.getParameter("channelId"));
+			channelId = Integer.parseInt(request.getParameter("channelId"));
+		}
 		CmsUser user=cmsUserMng.findById(Integer.valueOf(user_ids.toString()));
 		model = blogCommon.getColumn(request,model,user);
+		model = blogCommon.getChannel(request,model,user,site);
 		model = blogCommon.blog_focus_find(null,request,model);
 		model = blogCommon.getLinks(model,user);
 		model = blogCommon.getFriends(model,user);
@@ -506,7 +517,7 @@ public class BlogAct {
 		model.addAttribute("userIds", user.getId());
 		model.addAttribute("columnId", columnId);
 		FrontUtils.frontData(request, model, site);
-		Pagination p = contentMng.getPageForMember_blog(q, queryChannelId,site.getId(), modelId,user.getId(), cpn(pageNo), 20,Integer.parseInt(columnId),null);
+		Pagination p = contentMng.getPageForMember_blog(q, queryChannelId,site.getId(), modelId,user.getId(), cpn(pageNo), 20,columnId,channelId);
 		model.addAttribute("pagination", p);
 		if (!StringUtils.isBlank(q)) {
 			model.addAttribute("q", q);
