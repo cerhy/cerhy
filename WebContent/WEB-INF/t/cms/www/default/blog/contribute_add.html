@@ -341,7 +341,7 @@ $(function(){
                 <td class="tggl-top">验证码</td><td><input type="text" name="captcha" maxlength="20" class="member-change" style="float:left; margin-left:15px;" /><img id="guestbookCaptcha" src="${base}/captcha.svl" onclick="this.src='${base}/captcha.svl?d='+new Date()"/></td>
               </tr>
               <tr>
-                <td colspan="2" style="text-align:center; padding:20px 0;"><input type="hidden" name="nextUrl" value="index.jspx" /><input type="submit" class="member-submit" value="提交" /><input type="reset" class="member-reset" value="重置" /></td>
+                <td colspan="2" style="text-align:center; padding:20px 0;"><input type="hidden" name="nextUrl" value="${base}" /><input type="submit" class="member-submit" value="提交" /><input type="reset" class="member-reset" value="重置" /></td>
               </tr>
             </tbody>
           </table>
