@@ -23,6 +23,9 @@ $.validator.methods.leafChannel = function(value, element, param) {
 	return $(element.options[i]).attr("class")!="sel-disabled";
 }
 $(function() {
+	$("#jvForm").validate({
+		 
+	});
 	var uploadPicsUrl = "${base}/member/o_swfPicsUpload.jspx";
 	var uploadAttachsUrl = "${base}/member/o_swfAttachsUpload.jspx";
 	//在firefox、chrome下，上传不能保留登录信息，所以必须加上jsessionid。

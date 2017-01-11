@@ -76,7 +76,7 @@ public interface ContentDao {
 	public Pagination getPage_blog(String title, Integer typeId,Integer currUserId,
 			Integer inputUserId, boolean topLevel, boolean recommend,
 			ContentStatus status, Byte checkStep, Integer siteId,Integer modelId,
-			Integer channelId,int orderBy, int pageNo, int pageSize,Integer columnId,Integer channelId2);
+			Integer channelId,int orderBy, int pageNo, int pageSize,Integer columnId);
 	
 	/**
 	 * 获得自己发布的内容列表

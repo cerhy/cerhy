@@ -52,7 +52,7 @@ public interface ContentMng {
 			Integer siteId, Integer modelId,Integer memberId, int pageNo, int pageSize);
 	
 	public Pagination getPageForMember_blog(String title, Integer channelId,
-			Integer siteId, Integer modelId,Integer memberId, int pageNo, int pageSize,Integer columnId,Integer channelId2);
+			Integer siteId, Integer modelId,Integer memberId, int pageNo, int pageSize,Integer columnId);
 	/**
 	 * 根据内容ID数组获取文章列表
 	 * 
