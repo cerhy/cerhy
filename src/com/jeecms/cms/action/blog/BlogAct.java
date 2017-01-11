@@ -78,7 +78,6 @@ public class BlogAct {
 		if (modelId != null) {
 			model.addAttribute("modelId", modelId);
 		}
-		System.out.println("3blogAct");
 		return FrontUtils.getTplPath(request, site.getSolutionPath(), TPLDIR_BLOG, nextUrl);
 	}
 	
