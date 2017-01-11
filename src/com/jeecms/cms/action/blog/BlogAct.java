@@ -208,11 +208,12 @@ public class BlogAct {
 			c.setModel(defaultModel);
 		}
 		ContentExt ext = new ContentExt();
-		if(null != title){
+		ext.setTitle(title);
+		/*if(null != title){
 			ext.setTitle(title);
 		}else{
 			ext.setTitle("title");
-		}
+		}*/
 		ext.setAuthor(author);
 		ext.setDescription(description);
 		ext.setMediaPath(mediaPath);
