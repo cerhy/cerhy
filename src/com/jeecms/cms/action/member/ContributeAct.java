@@ -30,10 +30,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.jeecms.cms.action.blog.BlogAct;
 import com.jeecms.cms.action.blog.BlogCommon;
-import com.jeecms.cms.dao.main.impl.BlogDao;
 import com.jeecms.cms.entity.assist.CmsComment;
 import com.jeecms.cms.entity.main.Channel;
-import com.jeecms.cms.entity.main.Columns;
 import com.jeecms.cms.manager.assist.CmsFileMng;
 import com.jeecms.cms.manager.main.ChannelMng;
 import com.jeecms.cms.manager.main.ContentMng;
