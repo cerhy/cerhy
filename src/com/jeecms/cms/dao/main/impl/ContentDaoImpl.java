@@ -141,11 +141,15 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 		}
 		if(modelId!=null){
 			f.append(" and bean.model.id=:modelId").setParam("modelId", modelId);
+			f.append(" and bean.model.id in (11,21,24)");
+		}else{
+			f.append(" and bean.model.id in (11,21,24)");
 		}
 		appendQuery_blog(f, title, typeId, inputUserId, status, topLevel, recommend,columnId);
 		appendOrder(f, orderBy);
 		return find(f, pageNo, pageSize);
 	}
+
 
 	//只能管理自己的数据不能审核他人信息，工作流相关表无需查询
 	public Pagination getPageBySelf(String title, Integer typeId,
