@@ -70,7 +70,7 @@ public class BlogAct {
 	    	}
 	    }
 		FrontUtils.frontData(request, model, site);
-		Pagination p = contentMng.getPageForMember_blog(q, queryChannelId,site.getId(), modelId,null, cpn(pageNo), 20,null,null);
+		Pagination p = contentMng.getPageForMember_blog(q, queryChannelId,site.getId(), modelId,user.getId(), cpn(pageNo), 20,null,null);
 		model.addAttribute("pagination", p);
 		if (!StringUtils.isBlank(q)) {
 			model.addAttribute("q", q);
