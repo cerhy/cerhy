@@ -103,6 +103,7 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 			Integer inputUserId, boolean topLevel, boolean recommend,
 			ContentStatus status, Byte checkStep, Integer siteId,Integer modelId,
 			Integer channelId,int orderBy, int pageNo, int pageSize,Integer columnId,Integer channelId2) {
+		channelId = channelId2;
 		Finder f = Finder.create("select  bean from Content bean left join bean.contentShareCheckSet shareCheck left join shareCheck.channel tarChannel ");
 		if (rejected == status) {
 			f.append("  join bean.contentCheckSet check ");
@@ -115,15 +116,15 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 			f.append(" where ((channel.lft between parent.lft and parent.rgt");
 			f.append(" and channel.site.id=parent.site.id");
 			f.append(" and parent.id=:parentId  )   or ( shareCheck.checkStatus<>0 and shareCheck.shareValid=true and  tarChannel.lft between parent.lft and parent.rgt and tarChannel.site.id=parent.site.id and parent.id=:parentId))");
-			f.append(" and  channel.id in (280,98,168) or channel.parent.id in (98,168) or channel.parent.parent.id in (98,168)");
+//			f.append(" and  channel.id in (280,98,168) or channel.parent.id in (98,168) or channel.parent.parent.id in (98,168)");
 			f.setParam("parentId", channelId);
 		} else if (siteId != null) {
 			f.append(" where (bean.site.id=:siteId  or (shareCheck.checkStatus<>0 and shareCheck.shareValid=true and tarChannel.site.id=:siteId))");
-			f.append(" and  bean.channel.id in (280,98,168) or bean.channel.parent.id in (98,168) or bean.channel.parent.parent.id in (98,168)");
+//			f.append(" and  bean.channel.id in (280,98,168) or bean.channel.parent.id in (98,168) or bean.channel.parent.parent.id in (98,168)");
 			f.setParam("siteId", siteId);
 		} else {
 			f.append(" where 1=1");
-			f.append(" and  bean.channel.id in (280,98,168) or bean.channel.parent.id in (98,168) or bean.channel.parent.parent.id in (98,168)");
+//			f.append(" and  bean.channel.id in (280,98,168) or bean.channel.parent.id in (98,168) or bean.channel.parent.parent.id in (98,168)");
 		}
 		
 		//跳级审核人不应该看到？
@@ -143,7 +144,6 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 		}
 		appendQuery_blog(f, title, typeId, inputUserId, status, topLevel, recommend,columnId);
 		appendOrder(f, orderBy);
-		System.out.println(f.toString()+"dao2");
 		return find(f, pageNo, pageSize);
 	}
 

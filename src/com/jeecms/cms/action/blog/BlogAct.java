@@ -78,7 +78,6 @@ public class BlogAct {
 		if (modelId != null) {
 			model.addAttribute("modelId", modelId);
 		}
-		System.out.println("3blogAct");
 		return FrontUtils.getTplPath(request, site.getSolutionPath(), TPLDIR_BLOG, nextUrl);
 	}
 	
@@ -192,13 +191,13 @@ public class BlogAct {
 		c.setSite(site);
 		CmsModel defaultModel=cmsModelMng.getDefModel();
 		
-		int groupId = user.getGroup().getId();//学科教研模板，市县教内容研模板
+		int groupId = user.getGroup().getId();//学科教研模板，市县教研内容模板
 		if (4 == groupId) {
-			modelId = 11;
+			modelId = 11;//学科教研
 		} else if (5 == groupId) {
-			modelId = 21;
+			modelId = 21;//市县教研
 		} else {
-			modelId = 24;
+			modelId = 24;//普通博客
 		}
 		
 		CmsModel m=cmsModelMng.findById(modelId);
@@ -209,11 +208,6 @@ public class BlogAct {
 		}
 		ContentExt ext = new ContentExt();
 		ext.setTitle(title);
-		/*if(null != title){
-			ext.setTitle(title);
-		}else{
-			ext.setTitle("title");
-		}*/
 		ext.setAuthor(author);
 		ext.setDescription(description);
 		ext.setMediaPath(mediaPath);
@@ -236,12 +230,13 @@ public class BlogAct {
 		if(doc!=null){
 			contentDocMng.save(doc, c);
 		}
-		try {
+		/*try {
 			request.getRequestDispatcher("/blog/index.jspx?").forward(request, response);
 		} catch (Exception e) {
 			e.printStackTrace();
-		}
-		return null;
+		}*/
+		nextUrl += "/blog/index.jspx";
+		return FrontUtils.showSuccess(request, model, nextUrl);
 	}
 	
 	public String blog_edit(Integer id, String nextUrl,HttpServletRequest request,
@@ -319,12 +314,8 @@ public class BlogAct {
 		if(doc!=null){
 			contentDocMng.update(doc, c);
 		}
-		try {
-			request.getRequestDispatcher("/blog/index.jspx?").forward(request, response);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return null;
+		nextUrl += "/blog/index.jspx";
+		return FrontUtils.showSuccess(request, model, nextUrl);
 	}
 	
 	public void blog_delete(Integer contentId,Integer columnId,Integer channelId, HttpServletRequest request,

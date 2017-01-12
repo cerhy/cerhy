@@ -421,7 +421,6 @@ public class ContributeAct extends AbstractContentMemberAct {
 	public String blog_index(String queryTitle, Integer modelId,
 			Integer queryChannelId, Integer pageNo, HttpServletRequest request,
 			ModelMap model) {
-		System.out.println("1contributeAct");
 		 return blogAct.blog_index(queryTitle, modelId, queryChannelId, "tpl.blogCenter",
 				pageNo, request, model);
 	} 
