@@ -91,7 +91,7 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 		return find(f, pageNo, pageSize);
 	}
 	
-	public Pagination getPage_blog(String title, Integer typeId,Integer inputUserId,
+	public Pagination getPage_blog(String title, Integer typeId,Integer userId,
 			Integer userGroupId, boolean topLevel, boolean recommend,
 			ContentStatus status, Byte checkStep, Integer siteId,Integer modelId,
 			Integer channelId,int orderBy, int pageNo, int pageSize,Integer columnId,Integer channelId2) {
@@ -125,7 +125,7 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 		}else{
 			f.append(" and bean.model.id in (11,21,24)");
 		}
-		appendQuery_blog(f, title, typeId, inputUserId,userGroupId,status, topLevel, recommend,columnId);
+		appendQuery_blog(f, title, typeId, userId,userGroupId,status, topLevel, recommend,columnId);
 		appendOrder(f, orderBy);
 		return find(f, pageNo, pageSize);
 	}
