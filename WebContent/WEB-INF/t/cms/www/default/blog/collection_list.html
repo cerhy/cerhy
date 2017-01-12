@@ -19,8 +19,8 @@ $('.user-menu-links li').click(function(){
 <link  type="text/css" rel="stylesheet" href="/${res}/css/SimpleTree.css" />
 <script src="/${res}/js/SimpleTree.js"></script>
 <style>
-td{border:1px solid #e7e7e7; line-height:38px; color:#666666; text-align:center;width:120px;height:20px;}
-.table1{border:1px solid #e7e7e7; }
+td{border:1px solid #e7e7e7; line-height:38px; color:#666666;height:20px;}
+
 .st_tree ul .change a:hover{color:red;}
 .st_tree ul li a:hover{color:blue;}
 .st_tree ul .change :hover{background-color:#e7e7e7 }
@@ -56,19 +56,19 @@ $(function(){
 				  <div class=" tggl" style="text-align: -webkit-center;">
           <form id="tableForm" action="${base}/blog/columns_list.jspx" method="post">
             [#if pagination.list?size gt 0]
-          <table class="table1">
+          <table >
             <tbody>
               <tr>
-                <td class="tggl-top">ID</td>
-                <td class="tggl-top">标题</td>
-				<td class="tggl-top">点击</td>
-				<td class="tggl-top">发布时间</td>
-				<td class="tggl-top">操作</td>
+                <td class="tggl-top" style="min-width:40px;">ID</td>
+                <td class="tggl-top" style="min-width:380px;">标题</td>
+				<td class="tggl-top" style="min-width:40px;">点击</td>
+				<td class="tggl-top" style="min-width:80px;">发布时间</td>
+				<td class="tggl-top" style="min-width:60px;">操作</td>
               </tr>
               [#list pagination.list as c]
               <tr id="tr_${c.id}">
                 <td>${c.id}</td>
-                <td><a href="${c.url!}">${c.title?html}</a></td>
+                <td style="text-align:left;padding-left:10px;"><a href="${c.url!}" target="_blank">${c.title?html}</a></td>
                 <td>${c.views}</td>
                 <td>${c.releaseDate?string('yyyy-MM-dd')}</td>
                 <td><a href="${base}/blog/collect_cancel.jspx?cIds=${c.id}&pageNo=${pagination.pageNo}">取消转载</a></td>

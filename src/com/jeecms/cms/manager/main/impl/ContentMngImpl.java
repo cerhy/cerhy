@@ -3,7 +3,6 @@ package com.jeecms.cms.manager.main.impl;
 import static com.jeecms.cms.entity.main.ContentCheck.DRAFT;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -19,13 +18,11 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import com.jeecms.cms.dao.main.ContentDao;
-import com.jeecms.cms.dao.main.impl.BlogDao;
 import com.jeecms.cms.entity.assist.CmsComment;
 import com.jeecms.cms.entity.assist.CmsFile;
 import com.jeecms.cms.entity.main.Channel;
 import com.jeecms.cms.entity.main.Channel.AfterCheckEnum;
 import com.jeecms.cms.entity.main.CmsTopic;
-import com.jeecms.cms.entity.main.Columns;
 import com.jeecms.cms.entity.main.Content;
 import com.jeecms.cms.entity.main.Content.ContentStatus;
 import com.jeecms.cms.entity.main.ContentCharge;
@@ -37,7 +34,6 @@ import com.jeecms.cms.entity.main.ContentRecord.ContentOperateType;
 import com.jeecms.cms.entity.main.ContentShareCheck;
 import com.jeecms.cms.entity.main.ContentTag;
 import com.jeecms.cms.entity.main.ContentTxt;
-import com.jeecms.cms.entity.main.base.BaseChannel;
 import com.jeecms.cms.manager.assist.CmsCommentMng;
 import com.jeecms.cms.manager.assist.CmsFileMng;
 import com.jeecms.cms.manager.main.ChannelCountMng;
@@ -123,8 +119,8 @@ public class ContentMngImpl implements ContentMng, ChannelDeleteChecker {
 		return dao.getPage(title, null,memberId,memberId, false, false,ContentStatus.all, null, siteId,modelId,  channelId, 0, pageNo,pageSize,removeBlog);
 	}
 	
-	public Pagination getPageForMember_blog(String title, Integer channelId,Integer siteId,Integer modelId, Integer memberId, int pageNo, int pageSize,Integer columnId,Integer channelId2) {
-		return dao.getPage_blog(title, null,memberId,memberId, false, false,ContentStatus.all, null, siteId,modelId,  channelId, 0, pageNo,pageSize,columnId,channelId2);
+	public Pagination getPageForMember_blog(String title, Integer channelId,Integer siteId,Integer modelId, Integer userId, Integer userGroupId, int pageNo, int pageSize,Integer columnId,Integer channelId2) {
+		return dao.getPage_blog(title, null,userId,userGroupId, false, false,ContentStatus.all, null, siteId,modelId,  channelId, 0, pageNo,pageSize,columnId,channelId2);
 	}
 	
 	@Transactional(readOnly = true)

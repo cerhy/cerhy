@@ -74,8 +74,8 @@ public interface ContentDao {
 			ContentStatus status, Byte checkStep, Integer siteId,Integer modelId,
 			Integer channelId,int orderBy, int pageNo, int pageSize,String removeBlog);
 
-	public Pagination getPage_blog(String title, Integer typeId,Integer currUserId,
-			Integer inputUserId, boolean topLevel, boolean recommend,
+	public Pagination getPage_blog(String title, Integer typeId,Integer inputUserId,
+			Integer userGroupId, boolean topLevel, boolean recommend,
 			ContentStatus status, Byte checkStep, Integer siteId,Integer modelId,
 			Integer channelId,int orderBy, int pageNo, int pageSize,Integer columnId,Integer channelId2);
 	

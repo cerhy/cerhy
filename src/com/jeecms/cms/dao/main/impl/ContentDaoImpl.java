@@ -19,16 +19,6 @@ import static com.jeecms.cms.action.directive.abs.AbstractContentDirective.PARAM
 import static com.jeecms.cms.action.directive.abs.AbstractContentDirective.PARAM_ATTR_LT;
 import static com.jeecms.cms.action.directive.abs.AbstractContentDirective.PARAM_ATTR_LTE;
 
-
-
-
-
-
-
-
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -101,8 +91,8 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 		return find(f, pageNo, pageSize);
 	}
 	
-	public Pagination getPage_blog(String title, Integer typeId,Integer currUserId,
-			Integer inputUserId, boolean topLevel, boolean recommend,
+	public Pagination getPage_blog(String title, Integer typeId,Integer inputUserId,
+			Integer userGroupId, boolean topLevel, boolean recommend,
 			ContentStatus status, Byte checkStep, Integer siteId,Integer modelId,
 			Integer channelId,int orderBy, int pageNo, int pageSize,Integer columnId,Integer channelId2) {
 		channelId = channelId2;
@@ -118,26 +108,14 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 			f.append(" where ((channel.lft between parent.lft and parent.rgt");
 			f.append(" and channel.site.id=parent.site.id");
 			f.append(" and parent.id=:parentId  )   or ( shareCheck.checkStatus<>0 and shareCheck.shareValid=true and  tarChannel.lft between parent.lft and parent.rgt and tarChannel.site.id=parent.site.id and parent.id=:parentId))");
-//			f.append(" and  channel.id in (280,98,168) or channel.parent.id in (98,168) or channel.parent.parent.id in (98,168)");
 			f.setParam("parentId", channelId);
 		} else if (siteId != null) {
 			f.append(" where (bean.site.id=:siteId  or (shareCheck.checkStatus<>0 and shareCheck.shareValid=true and tarChannel.site.id=:siteId))");
-//			f.append(" and  bean.channel.id in (280,98,168) or bean.channel.parent.id in (98,168) or bean.channel.parent.parent.id in (98,168)");
 			f.setParam("siteId", siteId);
 		} else {
 			f.append(" where 1=1");
-//			f.append(" and  bean.channel.id in (280,98,168) or bean.channel.parent.id in (98,168) or bean.channel.parent.parent.id in (98,168)");
 		}
 		
-		//跳级审核人不应该看到？
-		/*if (passed == status) {
-			//操作人不在待审人列表中且非终审 或非发起人
-			f.append("  and ((:operateId not in(select eventUser.user.id from CmsWorkflowEventUser eventUser where eventUser.event.id=event.id) and event.initiator.id!=:operateId) or event.initiator.id=:operateId) and event.nextStep!=-1").setParam("operateId", currUserId);
-		}
-		if (prepared == status) {
-			//操作人在待审人列表中
-			f.append("  and :operateId in(select eventUser.user.id from CmsWorkflowEventUser eventUser where eventUser.event.id=event.id)").setParam("operateId", currUserId);
-		}*/
 		if (rejected == status) {
 			f.append(" and check.rejected=true");
 		}
@@ -147,7 +125,7 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 		}else{
 			f.append(" and bean.model.id in (11,21,24)");
 		}
-		appendQuery_blog(f, title, typeId, inputUserId, status, topLevel, recommend,columnId);
+		appendQuery_blog(f, title, typeId, inputUserId,userGroupId,status, topLevel, recommend,columnId);
 		appendOrder(f, orderBy);
 		return find(f, pageNo, pageSize);
 	}
@@ -294,7 +272,7 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 	}
 
 	private void appendQuery_blog(Finder f, String title, Integer typeId,
-			Integer inputUserId, ContentStatus status, boolean topLevel,
+			Integer inputUserId, Integer userGroupId, ContentStatus status, boolean topLevel,
 			boolean recommend ,Integer columnId) {
 		
 		if (inputUserId != null&&inputUserId!=0) {
@@ -303,7 +281,10 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 		}else{
 		
 		}
-		
+		if(null != userGroupId){
+			f.append(" and bean.user.group.id=:group");
+			f.setParam("group", userGroupId);
+		}
 		if (!StringUtils.isBlank(title)) {
 			f.append(" and bean.contentExt.title like :title");
 			f.setParam("title", "%" + title + "%");
@@ -1146,7 +1127,7 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 			f.append(" and bean.model.id in (11,21,24)");
 		}
 		inputUserId=ids;
-		appendQuery_blog(f, title, typeId, inputUserId, status, topLevel, recommend,null);
+		appendQuery_blog(f, title, typeId, inputUserId,null, status, topLevel, recommend,null);
 		appendOrder(f, orderBy);
 		return find(f, pageNo, pageSize);
 	}

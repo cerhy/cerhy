@@ -423,16 +423,6 @@ public class ContributeAct extends AbstractContentMemberAct {
 				pageNo, request, model);
 	} 
 	
-	@RequestMapping(value = "/blog/help.jspx")
-	public String blogHelp(HttpServletRequest request,HttpServletResponse response, ModelMap model) {
-		CmsSite site = CmsUtils.getSite(request);
-		CmsUser user = CmsUtils.getUser(request);
-		model = blogCommon.blog_focus_find(null,request,model);
-		model = blogCommon.getColumn(request, model, user);
-		FrontUtils.frontData(request, model, site);
-		return FrontUtils.getTplPath(request, site.getSolutionPath(),TPLDIR_BLOG, "tpl.blogHelp");
-	}
-	
 	@RequestMapping(value = "/blog/tzsetting.jspx")
 	public String tzsetting(HttpServletRequest request, HttpServletResponse response,ModelMap model) {
 		return blogAct.tzsetting(request, response, model);

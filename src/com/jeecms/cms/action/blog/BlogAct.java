@@ -72,7 +72,7 @@ public class BlogAct {
 	    	}
 	    }
 		FrontUtils.frontData(request, model, site);
-		Pagination p = contentMng.getPageForMember_blog(q, queryChannelId,site.getId(), modelId,user.getId(), cpn(pageNo), 20,null,null);
+		Pagination p = contentMng.getPageForMember_blog(q, queryChannelId,site.getId(), modelId,user.getId(),user.getGroup().getId(), cpn(pageNo), 20,null,null);
 		model.addAttribute("pagination", p);
 		if (!StringUtils.isBlank(q)) {
 			model.addAttribute("q", q);
@@ -146,7 +146,7 @@ public class BlogAct {
 	    model = blogCommon.getTotalArticleNum(model,user);
  		model = blogCommon.getTotalCommentNum(model, user);
 		FrontUtils.frontData(request, model, site);
-		Pagination p = contentMng.getPageForMember_blog(q, queryChannelId,site.getId(), modelId,user.getId(), cpn(pageNo), 20,columnId,channelId);
+		Pagination p = contentMng.getPageForMember_blog(q, queryChannelId,site.getId(), modelId,user.getId(),user.getGroup().getId(), cpn(pageNo), 20,columnId,channelId);
 		model.addAttribute("pagination", p);
 		if (!StringUtils.isBlank(q)) {
 			model.addAttribute("q", q);
@@ -487,22 +487,6 @@ public class BlogAct {
  		model = blogCommon.getTotalArticleNum(model,userT);
  		model = blogCommon.getTotalCommentNum(model, userT);
 		FrontUtils.frontData(request, model, site);
-		 String path = request.getSession().getServletContext().getRealPath("/");
-		List<Focus> list = (new BlogDao()).findMaxFocusCount(path);
-	    List<Focus> l = null;
-	    if(null != list){
-	    	if(list.size()>3){
-	    		l = new ArrayList<Focus>();
-	    		for(int i =0;i<3;i++){
-	    			l.add(list.get(i));
-	    		}
-	    	}
-	    	if(null != l){
-	    		model.addAttribute("focusMax", l);
-	    	}else{
-	    		model.addAttribute("focusMax", list);
-	    	}
-	    }
 		Pagination p = contentMng.getPageForMember_firendsBlog(Integer.valueOf(userIds),q, queryChannelId,site.getId(), modelId,user.getId(), cpn(pageNo), 20,null);
 		model.addAttribute("pagination", p);
 		model.addAttribute("usert", userT);
@@ -542,7 +526,7 @@ public class BlogAct {
 		model.addAttribute("userIds", user.getId());
 		model.addAttribute("columnId", columnId);
 		FrontUtils.frontData(request, model, site);
-		Pagination p = contentMng.getPageForMember_blog(q, queryChannelId,site.getId(), modelId,user.getId(), cpn(pageNo), 20,columnId,channelId);
+		Pagination p = contentMng.getPageForMember_blog(q, queryChannelId,site.getId(), modelId,user.getId(),user.getGroup().getId(), cpn(pageNo), 20,columnId,channelId);
 		model.addAttribute("pagination", p);
 		if (!StringUtils.isBlank(q)) {
 			model.addAttribute("q", q);
