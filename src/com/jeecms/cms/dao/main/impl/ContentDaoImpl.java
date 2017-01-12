@@ -19,13 +19,6 @@ import static com.jeecms.cms.action.directive.abs.AbstractContentDirective.PARAM
 import static com.jeecms.cms.action.directive.abs.AbstractContentDirective.PARAM_ATTR_LT;
 import static com.jeecms.cms.action.directive.abs.AbstractContentDirective.PARAM_ATTR_LTE;
 
-
-
-
-
-
-
-
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -47,6 +40,7 @@ import com.jeecms.cms.service.ContentQueryFreshTimeCache;
 import com.jeecms.common.hibernate4.Finder;
 import com.jeecms.common.hibernate4.HibernateBaseDao;
 import com.jeecms.common.page.Pagination;
+import com.jeecms.core.entity.CmsUser;
 
 @Repository
 public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
@@ -1128,6 +1122,9 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 		}
 		if(modelId!=null){
 			f.append(" and bean.model.id=:modelId").setParam("modelId", modelId);
+			f.append(" and bean.model.id in (11,21,24)");
+		}else{
+			f.append(" and bean.model.id in (11,21,24)");
 		}
 		inputUserId=ids;
 		appendQuery_blog(f, title, typeId, inputUserId,null, status, topLevel, recommend,null);
@@ -1156,5 +1153,26 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 		f.append(" and bean.isOrNo is null");
 		f.setParam("userId", userId);
 		return find(f);
+	}
+
+	@Override
+	public int getTotalArticleNum(CmsUser user) {
+		String hql = "select count(*) from Content bean"
+				+ " where 1=1"
+				+ " and bean.model.id in (11,21,24)"
+				+ " and bean.user.id="+user.getId();
+		Query query = getSession().createQuery(hql);
+		return ((Number) (query.iterate().next())).intValue();
+	}
+
+	@Override
+	public int getTotalCommentNum(CmsUser user) {
+		String hql = "select count(*) from CmsComment bean"
+				+ " where 1=1"
+				+ " and bean.content.id is not null "
+				+ " and bean.content.model.id in (11,21,24)"
+				+ " and bean.content.user.id="+user.getId();
+		Query query = getSession().createQuery(hql);
+		return ((Number) (query.iterate().next())).intValue();
 	}
 }

@@ -53,6 +53,8 @@ public class BlogAct {
 	    model = blogCommon.blog_focus_find(null,request,model);
 	    model = blogCommon.getLinks(model,user);
 	    model = blogCommon.getFriends(model,user);
+	    model = blogCommon.getTotalArticleNum(model,user);
+ 		model = blogCommon.getTotalCommentNum(model, user);
 	    String path = request.getSession().getServletContext().getRealPath("/");
 		List<Focus> list = (new BlogDao()).findMaxFocusCount( path);
 	    List<Focus> l = null;
@@ -116,6 +118,8 @@ public class BlogAct {
 	    model = blogCommon.blog_focus_find(null,request,model);
 	    model = blogCommon.getLinks(model,user);
 	    model = blogCommon.getFriends(model,user);
+	    model = blogCommon.getTotalArticleNum(model,user);
+ 		model = blogCommon.getTotalCommentNum(model, user);
 		FrontUtils.frontData(request, model, site);
 		return FrontUtils.getTplPath(request, site.getSolutionPath(),TPLDIR_BLOG,"tpl.blogSetting");
 	}
@@ -139,6 +143,8 @@ public class BlogAct {
 	    model = blogCommon.blog_focus_find(null,request,model);
 	    model = blogCommon.getLinks(model,user);
 	    model = blogCommon.getFriends(model,user);
+	    model = blogCommon.getTotalArticleNum(model,user);
+ 		model = blogCommon.getTotalCommentNum(model, user);
 		FrontUtils.frontData(request, model, site);
 		Pagination p = contentMng.getPageForMember_blog(q, queryChannelId,site.getId(), modelId,user.getId(),user.getGroup().getId(), cpn(pageNo), 20,columnId,channelId);
 		model.addAttribute("pagination", p);
@@ -159,6 +165,8 @@ public class BlogAct {
 	    model = blogCommon.blog_focus_find(null,request,model);
 	    model = blogCommon.getLinks(model,user);
 	    model = blogCommon.getFriends(model,user);
+	    model = blogCommon.getTotalArticleNum(model,user);
+ 		model = blogCommon.getTotalCommentNum(model, user);
 		if(hasPermission){
 			FrontUtils.frontData(request, model, site);
 			model.addAttribute("site", site);
@@ -253,6 +261,8 @@ public class BlogAct {
 	    model = blogCommon.blog_focus_find(null,request,model);
 	    model = blogCommon.getLinks(model,user);
 		model = blogCommon.getFriends(model,user);
+		model = blogCommon.getTotalArticleNum(model,user);
+ 		model = blogCommon.getTotalCommentNum(model, user);
 	/*	WebErrors errors = validateEdit(id, site, user, request);
 		if (errors.hasErrors()) {
 			return FrontUtils.showError(request, response, model, errors);
@@ -347,6 +357,8 @@ public class BlogAct {
 		model = blogCommon.blog_focus_find(null,request,model);
 		model = blogCommon.getLinks(model,user);
 		model = blogCommon.getFriends(model,user);
+		model = blogCommon.getTotalArticleNum(model,user);
+ 		model = blogCommon.getTotalCommentNum(model, user);
 		FrontUtils.frontData(request, model, site);
 		Pagination p = contentMng.getPageForMember(q, queryChannelId,site.getId(), modelId,user.getId(), cpn(pageNo), 20);
 		model.addAttribute("pagination", p);
@@ -428,6 +440,8 @@ public class BlogAct {
 		model = blogCommon.blog_focus_find(null,request,model);
 		model = blogCommon.getLinks(model,user);
 		model = blogCommon.getFriends(model,user);
+		model = blogCommon.getTotalArticleNum(model,user);
+ 		model = blogCommon.getTotalCommentNum(model, user);
 		Columns column = new Columns(Integer.parseInt(id),user.getId(),name,Integer.parseInt(orderId));
 		model.addAttribute("column", column);
 		FrontUtils.frontData(request, model, site);
@@ -470,6 +484,8 @@ public class BlogAct {
 	    model = blogCommon.blog_focus_find(Integer.parseInt(userIds),request,model);
 	    model = blogCommon.getLinks(model,userT);
 		model = blogCommon.getFriends(model,userT);
+ 		model = blogCommon.getTotalArticleNum(model,userT);
+ 		model = blogCommon.getTotalCommentNum(model, userT);
 		FrontUtils.frontData(request, model, site);
 		Pagination p = contentMng.getPageForMember_firendsBlog(Integer.valueOf(userIds),q, queryChannelId,site.getId(), modelId,user.getId(), cpn(pageNo), 20,null);
 		model.addAttribute("pagination", p);
@@ -504,6 +520,8 @@ public class BlogAct {
 		model = blogCommon.blog_focus_find(null,request,model);
 		model = blogCommon.getLinks(model,user);
 		model = blogCommon.getFriends(model,user);
+		model = blogCommon.getTotalArticleNum(model,user);
+ 		model = blogCommon.getTotalCommentNum(model, user);
 		model.addAttribute("usert", user);
 		model.addAttribute("userIds", user.getId());
 		model.addAttribute("columnId", columnId);

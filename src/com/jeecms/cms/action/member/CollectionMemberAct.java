@@ -177,7 +177,8 @@ public class CollectionMemberAct {
 	    model = blogCommon.blog_focus_find(null,request,model);
 	    model = blogCommon.getLinks(model,user);
 		model = blogCommon.getFriends(model,user);
-		
+		model = blogCommon.getTotalArticleNum(model,user);
+ 		model = blogCommon.getTotalCommentNum(model, user);
 		FrontUtils.frontData(request, model, site);
 		Pagination p = contentMng.getPageForCollection(site.getId(), user
 				.getId(), cpn(pageNo), CookieUtils.getPageSize(request));

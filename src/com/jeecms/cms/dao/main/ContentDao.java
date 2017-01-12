@@ -251,4 +251,8 @@ public interface ContentDao {
 	
 	public List<CmsComment> getListComment(int contentId,Date lastDate);
 
+	public int getTotalArticleNum(CmsUser user);
+
+	public int getTotalCommentNum(CmsUser user);
+
 }

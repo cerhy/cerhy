@@ -186,7 +186,11 @@ $(function(){
 	  <div style="font-size:30px;margin:30px auto 20px;"><a href="${base}/blog/index.jspx">[#if user.blogTitle??]${user.blogTitle}[#else]标题[/#if]</a></div>
 	  <div style="font-size:15px;margin:5px auto 15px;">[#if user.blogTitle2??]${user.blogTitle2}[#else]副标题[/#if]</div>
   </div>
-  
+  <div>
+      	<div style="text-align:left;padding-right: 50px;margin: 10px;font-size: 15px">
+     	 	文章数:${articleCount}&nbsp;&nbsp;评论:${commentCount}&nbsp;&nbsp;访问:${user.blogVisitNum}&nbsp;&nbsp;最后登录:${user.lastLoginTime?string('yyyy-MM-dd HH:mm:ss')}
+      	</div>
+      </div>
   <div class="mb20 clearfix">
             [#include "blog_left.html"/]
             
