@@ -93,7 +93,7 @@ $(function(){
       <div>
       <div>
       	<div style="text-align:left;padding-right: 50px;margin: 10px;font-size: 15px">
-     	 	文章数:0&nbsp;&nbsp;评论:0&nbsp;&nbsp;访问:0&nbsp;&nbsp;最后登录:0
+     	 	文章数:${articleCount}&nbsp;&nbsp;评论:${commentCount}&nbsp;&nbsp;访问:${usert.blogVisitNum}&nbsp;&nbsp;最后登录:${usert.lastLoginTime?string('yyyy-MM-dd HH:mm:ss')}
       	</div>
       	<div style="text-align:right;padding-right: 50px;margin: 10px;font-size: 16px">
      	 	明星博主： [#if focusMax?? ][#list focusMax as c]${c.focusUserName}&nbsp;&nbsp;[/#list][/#if]

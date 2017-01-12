@@ -15,8 +15,10 @@ import org.springframework.ui.ModelMap;
 
 import com.jeecms.cms.entity.main.Channel;
 import com.jeecms.cms.entity.main.Columns;
+import com.jeecms.cms.entity.main.Content;
 import com.jeecms.cms.entity.main.Focus;
 import com.jeecms.cms.manager.main.ChannelMng;
+import com.jeecms.cms.manager.main.ContentMng;
 import com.jeecms.cms.manager.main.impl.ColumnsMng;
 import com.jeecms.cms.manager.main.impl.FocusMng;
 import com.jeecms.core.entity.CmsSite;
@@ -190,11 +192,34 @@ public class BlogCommon {
 		   } 
 		   return true; 
 		}
+	
+	/**
+	 * 获取文章总数
+	 **/
+	public ModelMap getTotalArticleNum(ModelMap model, CmsUser user){
+		int articleCount=contentMng.getTotalArticleNum(user);
+		model.addAttribute("articleCount", articleCount);
+		return model;
+	}
+	
+	/**
+	 * 获取评论总数
+	 **/
+	public ModelMap getTotalCommentNum(ModelMap model, CmsUser user){
+		int commentCount=contentMng.getTotalCommentNum(user);
+		model.addAttribute("commentCount", commentCount);
+		return model;
+	}
+	
+	
 	@Autowired
 	protected ColumnsMng columnsMng;
 	@Autowired
 	protected FocusMng focusMng;
 	@Autowired
 	protected ChannelMng channelMng;
+	
+	@Autowired
+	private ContentMng contentMng;
 
 }

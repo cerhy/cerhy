@@ -9,6 +9,7 @@ import com.jeecms.cms.entity.main.Content;
 import com.jeecms.cms.entity.main.Content.ContentStatus;
 import com.jeecms.common.hibernate4.Updater;
 import com.jeecms.common.page.Pagination;
+import com.jeecms.core.entity.CmsUser;
 
 /**
  * 内容DAO接口。
@@ -249,5 +250,9 @@ public interface ContentDao {
 	public List<Content> countByColumnId(Integer parseInt);
 	
 	public List<CmsComment> getListComment(int contentId,Date lastDate);
+
+	public int getTotalArticleNum(CmsUser user);
+
+	public int getTotalCommentNum(CmsUser user);
 
 }

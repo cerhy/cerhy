@@ -1326,4 +1326,14 @@ public class ContentMngImpl implements ContentMng, ChannelDeleteChecker {
 	public List<CmsComment> findCommentByConid(int userId,Date lastDate) {
 		return  dao.getListComment(userId,lastDate);
 	}
+
+	@Override
+	public int getTotalArticleNum(CmsUser user) {
+		return  dao.getTotalArticleNum(user);
+	}
+
+	@Override
+	public int getTotalCommentNum(CmsUser user) {
+		return dao.getTotalCommentNum(user);
+	}
 }

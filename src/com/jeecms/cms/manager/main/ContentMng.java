@@ -229,6 +229,12 @@ public interface ContentMng {
 
 
 	public List<Content> countByColumnId(Integer parseInt);
+
+
+	public int getTotalArticleNum(CmsUser user);
+
+
+	public int getTotalCommentNum(CmsUser user);
 	
 	
 }

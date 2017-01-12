@@ -553,6 +553,8 @@ public class ContributeAct extends AbstractContentMemberAct {
 		model = blogCommon.blog_focus_find(null,request,model);
 		model = blogCommon.getColumn(request,model,user);
 	    model = blogCommon.getChannel(request,model,user,site);
+	    model = blogCommon.getTotalArticleNum(model,user);
+ 		model = blogCommon.getTotalCommentNum(model, user);
 		//model.addAttribute("columnsList", columnsList);
 		FrontUtils.frontData(request, model, site);
 		return FrontUtils.getTplPath(request, site.getSolutionPath(),TPLDIR_BLOG, "tpl.linkList");
@@ -578,6 +580,8 @@ public class ContributeAct extends AbstractContentMemberAct {
 		model = blogCommon.blog_focus_find(null,request,model);
 		model = blogCommon.getColumn(request,model,user);
 	    model = blogCommon.getChannel(request,model,user,site);
+	    model = blogCommon.getTotalArticleNum(model,user);
+ 		model = blogCommon.getTotalCommentNum(model, user);
 		//model.addAttribute("columnsList", columnsList);
 		FrontUtils.frontData(request, model, site);
 		return FrontUtils.getTplPath(request, site.getSolutionPath(),TPLDIR_BLOG, "tpl.friends");
