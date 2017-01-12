@@ -1139,6 +1139,9 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 		}
 		if(modelId!=null){
 			f.append(" and bean.model.id=:modelId").setParam("modelId", modelId);
+			f.append(" and bean.model.id in (11,21,24)");
+		}else{
+			f.append(" and bean.model.id in (11,21,24)");
 		}
 		inputUserId=ids;
 		appendQuery_blog(f, title, typeId, inputUserId, status, topLevel, recommend,null);
