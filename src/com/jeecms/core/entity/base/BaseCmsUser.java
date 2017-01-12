@@ -100,7 +100,7 @@ public abstract class BaseCmsUser  implements Serializable {
 			java.lang.Boolean admin,
 			java.lang.Boolean viewonlyAdmin,
 			java.lang.Boolean selfAdmin,
-			java.lang.Boolean disabled,java.lang.String linkUrl,java.lang.String Friends,java.lang.Integer blogVisitNum) {
+			java.lang.Boolean disabled,java.lang.String linkUrl,java.lang.String Friends,java.lang.String blogVisitNum) {
 		
 		this.setId(id);
 		this.setGroup(group);
@@ -153,7 +153,7 @@ public abstract class BaseCmsUser  implements Serializable {
 	private java.lang.String linkUrl;
 	private java.lang.String theme;
 	private java.lang.String Friends;
-	private java.lang.Integer blogVisitNum;
+	private java.lang.String blogVisitNum;
 	
 	
 	
@@ -161,11 +161,11 @@ public abstract class BaseCmsUser  implements Serializable {
 	/**
 	 * Return the value associated with the column: blogVisitNum
 	 */
-	public java.lang.Integer getBlogVisitNum() {
+	public java.lang.String getBlogVisitNum() {
 		return blogVisitNum;
 	}
 
-	public void setBlogVisitNum(java.lang.Integer blogVisitNum) {
+	public void setBlogVisitNum(java.lang.String blogVisitNum) {
 		this.blogVisitNum = blogVisitNum;
 	}
 	

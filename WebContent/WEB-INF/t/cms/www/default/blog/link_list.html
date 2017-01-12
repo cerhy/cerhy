@@ -41,7 +41,7 @@ $('.user-menu-links li').click(function(){
   </div>
       <div>
       	<div style="text-align:left;padding-right: 50px;margin: 10px;font-size: 15px">
-     	 	文章数:${articleCount}&nbsp;&nbsp;评论:${commentCount}&nbsp;&nbsp;访问:${user.blogVisitNum}&nbsp;&nbsp;最后登录:${user.lastLoginTime?string('yyyy-MM-dd HH:mm:ss')}
+     	 	文章数:${articleCount}&nbsp;&nbsp;评论:${commentCount}&nbsp;&nbsp;访问:${user.blogVisitNum!'0'}&nbsp;&nbsp;最后登录:${user.lastLoginTime?string('yyyy-MM-dd HH:mm:ss')}
       	</div>
       </div>
         <div class="mb20 clearfix">

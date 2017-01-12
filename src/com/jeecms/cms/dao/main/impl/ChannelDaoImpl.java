@@ -251,10 +251,13 @@ public class ChannelDaoImpl extends HibernateBaseDao<Channel, Integer>
 
 	@Override
 	public void updateBlogVisitNum(CmsUser userT) {
-		Integer visnum=userT.getBlogVisitNum();
-		Integer totnum=visnum+1;
+		String visnum=userT.getBlogVisitNum();
+		if(null==visnum){
+			visnum=String.valueOf(0);
+		}
+		Integer totnum=Integer.valueOf(visnum)+1;
 		String hql = "update CmsUser bean set bean.blogVisitNum=:blogVisitNum  where bean.id=:userId";
-		Query query = getSession().createQuery(hql).setParameter("blogVisitNum", totnum).setParameter("userId", userT.getId());
+		Query query = getSession().createQuery(hql).setParameter("blogVisitNum", String.valueOf(totnum)).setParameter("userId", userT.getId());
 		query.executeUpdate();
 	}
 	
