@@ -43,7 +43,7 @@ $(function(){
             <div class="wrap-right">
                 <div class="personCenter-userInfo" style="min-height: 600px;">
                     <div class="tab-content" style="display: block;">
-			        <div class="table1">
+			        
 			          <form id="tableForm" action="${base}/blog/index.jspx" method="post">
 			          [#if pagination.list?size gt 0]
 			          <table cellpadding="0" cellspacing="0" >
@@ -57,7 +57,7 @@ $(function(){
 			              [#list pagination.list as c]
 			              <tr>
 			                <td>${c.id}</td>
-			                <td style="text-align:left; text-indent:5px;" ><a href="${c.url!}"></input>[@text_cut s=c.title?html len='24' append='...'/]</a></td>
+			                <td style="text-align:left; text-indent:5px;" ><a href="${c.url!}" target="_blank"></input>[@text_cut s=c.title?html len='24' append='...'/]</a></td>
 			                <td>${c.views}</td>
 			                <td>${c.releaseDate?string('yyyy-MM-dd')}</td>
 			              </tr>
@@ -91,11 +91,12 @@ $(function(){
 			                }
 			            }
 			            </script>
-			          </form>
-			        </div>
-			        [#else]
+			             [#else]
 			         <div>暂无博文</div>
 			        [/#if]
+			          </form>
+			    
+			       
                 </div>
             </div>
             <div class="gonggao">

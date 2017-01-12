@@ -249,7 +249,7 @@ $(function(){
 			              [#list pagination.list as c]
 			              <tr>
 			                <td>${c.id}</td>
-			                <td style="text-align:left;padding-left:10px;"  width="600px;"><a href="${c.url!}">[@text_cut s=c.title?html len='24' append='...'/]</a></td>
+			                <td style="text-align:left;padding-left:10px;"  width="600px;"><a href="${c.url!}" target="_blank">[@text_cut s=c.title?html len='24' append='...'/]</a></td>
 			                <td>${c.views}</td>
 			                <td>${c.releaseDate?string('yyyy-MM-dd')}</td>
 			              </tr>
