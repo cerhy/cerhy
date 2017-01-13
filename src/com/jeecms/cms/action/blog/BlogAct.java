@@ -550,6 +550,22 @@ public class BlogAct {
 		if (modelId != null) {
 			model.addAttribute("modelId", modelId);
 		}
+		String path = request.getSession().getServletContext().getRealPath("/");
+		List<Focus> list = (new BlogDao()).findMaxFocusCount( path);
+	    List<Focus> l = null;
+	    if(null != list){
+	    	if(list.size()>3){
+	    		l = new ArrayList<Focus>();
+	    		for(int i =0;i<3;i++){
+	    			l.add(list.get(i));
+	    		}
+	    	}
+	    	if(null != l){
+	    		model.addAttribute("focusMax", l);
+	    	}else{
+	    		model.addAttribute("focusMax", list);
+	    	}
+	    }
 		return FrontUtils.getTplPath(request, site.getSolutionPath(), TPLDIR_BLOG, nextUrl);
 	}
 	
