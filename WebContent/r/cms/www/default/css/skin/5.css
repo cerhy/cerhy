@@ -18,12 +18,47 @@ a			{ color: #084387; }
 
 .blogBody{
 	width:100%;
-	background: #000  url(05.jpg) no-repeat center top;
+	background:#C9DCE8  url(05.jpg) no-repeat center top;
 }
 .footer_style {
-	background: #000; 
+	background: #C9DCE8; 
 }
-.blogHead,.tj{color: #f4f3f3;}
+.blogHead,.tj{color: #B6333B;}
+.tj{
+	padding-bottom:100px;
+}
 #title1{
-	color: #0070b8;
+	color: #B6333B;
 }
+
+
+.user-center-left .user-menu-links, .personCenter-userInfo, .user-center-left .user-setting {
+   background: #F4F8FB
+} 
+
+.user-center-left .user-menu-links li{
+	margin-top:-1px;
+	border-bottom: none; 
+}
+.user-center-left .user-menu-links a {
+    border : none; 
+    text-decoration:none;
+}
+.user-menu-links li a em {
+     background: transparent; 
+}
+.user-menu-links li.on a em {
+   background: transparent; 
+}
+.user-menu-links li a {
+	color: #666666;
+}
+.user-menu-links li a:hover {
+	color:#0070b8;
+}
+#_goPs{
+	background: transparent;
+}
+body, button, input, select, textarea {
+	 background: transparent;
+	}

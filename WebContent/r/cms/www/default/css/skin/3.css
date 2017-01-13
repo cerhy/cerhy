@@ -18,10 +18,43 @@ a			{ color: #074387; }
 }
 
 .footer_style {
-	background-image: url(03.jpg); 
+	background : #250f11; 
 }
-.blogHead,.tj{color: #f4f3f3;}
-
+.blogHead,.tj{color: #666666;}
+.tj{
+	padding-bottom:80px;
+}
 #title1{
-	color: #0070b8;
+	color: #666666;
 }
+
+.user-center-left .user-menu-links, .personCenter-userInfo, .user-center-left .user-setting {
+   background: #311411;
+} 
+
+.user-center-left .user-menu-links li{
+	margin-top:-1px;
+	border-bottom: none; 
+}
+.user-center-left .user-menu-links a {
+    border : none; 
+    text-decoration:none;
+}
+.user-menu-links li a em {
+     background: transparent; 
+}
+.user-menu-links li.on a em {
+   background: transparent; 
+}
+.user-menu-links li a {
+	color: #666666;
+}
+.user-menu-links li a:hover {
+	color:#0070b8;
+}
+#_goPs{
+	background: transparent;
+}
+body, button, input, select, textarea {
+	 background: transparent;
+	}

@@ -15,10 +15,13 @@
 
 
 
-/* .user-center-left .user-menu-links, .personCenter-userInfo, .user-center-left .user-setting {
-    background: transparent;
-} */
+ .user-center-left .user-menu-links, .personCenter-userInfo, .user-center-left .user-setting {
+    background: #222222;
+} 
 .blogHead,.tj{color: #fff;}
+.tj{
+	padding-bottom:40px;
+}
 .c1{ color: #666666;}
 .blogBody{
 	width:100%;
@@ -26,12 +29,12 @@
 	background: #000  url(02.gif); 
 }
 #title1{
-	color: #0070b8;
+	color: #fff;
 }
 .footer_style {
 	background-image: url(02.gif); 
 }
-/* .user-center-left .user-menu-links li{
+ .user-center-left .user-menu-links li{
 	margin-top:-1px;
 	border-bottom: none; 
 }
@@ -57,4 +60,7 @@ body, button, input, select, textarea {
 	}
 input{
 	 background-color: transparent;
-} */
+} 
+#_goPs{
+	background: transparent;
+}
