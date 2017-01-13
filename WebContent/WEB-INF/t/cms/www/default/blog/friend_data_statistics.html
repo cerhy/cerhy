@@ -1,0 +1,263 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<title>好研网-${usert.username}的博客</title>
+<link href="${resSys}/front.css" rel="stylesheet" type="text/css"/>
+<script src="${resSys}/jquery.js" type="text/javascript"></script>
+<script src="${resSys}/front.js" type="text/javascript"></script>
+<link id="hello" type="text/css" rel="stylesheet" href="/${res}/css/custom.css" />
+<link  type="text/css" rel="stylesheet" href="/${res}/css/hyindex.css" />
+<link  type="text/css" rel="stylesheet" href="/${res}/css/SimpleTree.css" />
+<script src="/${res}/js/SimpleTree.js"></script>
+<style>
+.st_tree ul .change a:hover{color:red;}
+.st_tree ul .change :hover{background-color:#e7e7e7 }
+::-webkit-scrollbar{width:0px}
+.clear{clear:both}
+</style>
+<script type="text/javascript">
+$(function(){
+	$.ajax({
+		type:"post",
+		url:"${base}/blog/focuscheck.jspx",
+		dateType:'json',
+		data:{
+			"focusUserId":${usert.id},
+		},
+		success:function(data){
+		if(1 == data){
+			$('#focus').hide();
+			$('#cancelfocus').show();
+		}else{
+			$('#focus').show();
+			$('#cancelfocus').hide();
+		}
+		}
+		
+	});	
+	
+	$('#focus').click(function(){
+		$.ajax({
+			type:"post",
+			url:"${base}/blog/focus.jspx",
+			dateType:'json',
+			data:{
+				"focusUserId":${usert.id},
+				"focusUserName":'${usert.username}',
+			},
+			success:function(data){
+			if(1 == data){
+				$('#focus').hide();
+				$('#cancelfocus').show();
+			}
+			}
+			
+		});	
+	});
+	
+	$('#cancelfocus').click(function(){
+		$.ajax({
+			type:"post",
+			url:"${base}/blog/cancelfocus.jspx",
+			dateType:'json',
+			data:{
+				"focusUserId":${usert.id},
+			},
+			success:function(data){
+			if(1 == data){
+				$('#focus').show();
+				$('#cancelfocus').hide();
+			}
+			}
+			
+		});	
+	});
+	
+	$('.user-menu-links li').click(function(){
+	    $(this).toggleClass('on');
+	});
+	$(".st_tree").SimpleTree({
+		click:function(a){
+			if(!$(a).attr("hasChild"))
+				alert($(a).attr("ref"));
+		}
+	});
+});
+</script>
+[#include "../hyinclude/header.html"/]
+<div class="blog-con">
+  <div class="blogHead">
+	  <div style="font-size:30px;margin:10px auto 0;"><a href="${base}/blog/find_all_url_friend.jspx?userIds=${usert.id}">[#if usert.blogTitle??]${usert.blogTitle}[#else]标题[/#if]</a></div>
+	  <div style="font-size:15px;margin:15px auto 10px;">[#if usert.blogTitle2??]${usert.blogTitle2}[#else]副标题[/#if]</div>
+  </div>
+  
+      <div>
+      <div>
+      	<div style="text-align:left;padding-right: 50px;font-size: 15px">
+     	 	文章数:${articleCount}&nbsp;&nbsp;评论:${commentCount}&nbsp;&nbsp;访问:${usert.blogVisitNum!'0'}&nbsp;&nbsp;最后登录:${usert.lastLoginTime?string('yyyy-MM-dd HH:mm:ss')}
+      	</div>
+      	<div style="text-align:right;padding-right: 50px;font-size: 16px">
+     	 	明星博主： [#if focusMax?? ][#list focusMax as c]${c.focusUserName}&nbsp;&nbsp;[/#list][/#if]
+      	</div>
+      </div>
+        <div class="mb20 clearfix">
+        <div class="wrap-left">
+		     <div class="user-center-left">
+		           <div class="user-setting">
+		                 <div class="pic-dt">
+		                      [#if usert.userImg??]<img src="${usert.userImg}" width="120" height="120" alt="">
+		                      [#else]<img src="/${res}/images/userImg-large.png" width="120" height="120" alt="">
+		                      [/#if]
+		                 </div>
+		                 <div class="user-name-dt"><a href="#">${usert.username}</a></div>
+		                     [#if usert??]
+		                     <a id="focus" class="user-oparetion-btn">关注</a>
+		                    <a id="cancelfocus" class="user-oparetion-btn">取消关注</a>
+		                    [#else]
+		                     <a href="${base}/logout.jspx" class="user-oparetion-btn">退出</a>
+		                     [/#if]
+		                     
+		           </div>
+		           <div class="user-menu-links">
+		                <ul>
+						    <li><a style="cursor: pointer;"><em></em>博客栏目</a>
+						        [#if columnsList??]
+		                          <ul>
+		                            [#list columnsList as c]
+				                    <li><a href="${base}/blog/contribute_list_friend.jspx?columnId=${c.columnId}&user_ids=${userIds}" ><em></em>${c.columnName}</a></li>
+				                    [/#list]
+		                             </ul>
+		                        [#else]
+		                          <ul>
+						             [#assign origDeep=channelList[0].deep+1/]
+						             [#list channelList as c]
+						             <li><a href="${base}/blog/contribute_list_friend.jspx?channelId=${c.id}&user_ids=${userIds}" ><em></em>[#if c.deep gte origDeep][#list origDeep..c.deep as i]&nbsp;&nbsp;&nbsp;[/#list][/#if]${c.name}</a></li> 
+						             [/#list]
+		                             </ul>
+		                        [/#if]
+		                    </li>
+		                   <li>
+		                      <a href="javascript:;"><em></em>好友</a>
+		                           <ul>
+		                           [#if friendsList??]
+		        		           [#list friendsList as map]
+		         	               [#list map?keys as k]
+		         	               [#if k!='']
+		         	               [#if k?split("~")[2]=='null'] 
+				        			<li style="height: 90px;">
+				         			<div class="users-a-link-wrap clearfix">
+				                           <a target="_blank" href="${base}/blog/find_all_url_friend.jspx?userIds=${k?split("~")[1]}" class="users-a-link" style="padding-right: 40px;">
+				                               <img src="/${res}/images/userImg.png" alt="" width="47" height="47">
+				                               <span>${k?split("~")[0]}</span>
+				                           </a>
+				                       </div>
+				        			</li>
+		      			    	   [#else]
+			      			    	<li style="height: 90px;">
+			         			     <div class="users-a-link-wrap clearfix">
+			                           <a target="_blank" href="${base}/blog/find_all_url_friend.jspx?userIds=${k?split("~")[1]}" class="users-a-link" style="padding-right: 40px;">
+			                               <img src="${k?split("~")[2]}" alt="" width="47" height="47">
+			                               <span>${k?split("~")[0]}</span>
+			                           </a>
+			                         </div>
+			        			    </li>
+							         [/#if]
+							         [/#if]
+							        [/#list]
+						         	[/#list]
+						         	[/#if]
+		                         </ul>
+		                   </li>
+						   <div class="st_tree">
+						        <ul  show="true">
+						        	<li><a href="javascript:;" style="text-decoration:none;"><em></em>链接</a></li>
+						        	 <ul>
+						         		[#if urlList??]
+								         [#list urlList as map]
+								          	[#list map?keys as k]
+								          		 [#if k=='']
+										            [#list map[k] as v]
+										            	[#if v?index_of("=")!=-1]
+										         			<li  class="change"><a style="font-size: 12px;" target="_blank" href="${v?split("=")[1]}">${v?split("=")[0]}</a></li>
+										         		[/#if]
+										         		[#if v?index_of("|")!=-1]
+										         			<li  class="change"><a style="font-size: 12px;" target="_blank" href="${v?split("|")[1]}">${v?split("|")[0]}</a></li>
+										         		[/#if]
+										            [/#list]
+										         [#else]
+										          <li><a href="javascript:;" style="text-decoration:none;"><em></em>${k}</a></li>
+										          <ul>
+										            [#list map[k] as v]
+										            	[#if v?index_of("http:")!=-1]
+											            	[#if v?index_of("=")!=-1]
+											         			<li class="change"><a style="font-size: 12px;" target="_blank" href="${v?split("=")[1]}">${v?split("=")[0]}</a></li>
+											         		[/#if]
+											         		[#if v?index_of("|")!=-1]
+											         			<li class="change"><a style="font-size: 12px;" target="_blank" href="${v?split("|")[1]}">${v?split("|")[0]}</a></li>
+											         		[/#if]
+										            	[/#if]
+										            [/#list]
+										           </ul>	
+										          [/#if]
+								          	[/#list]
+								         [/#list]
+								         [/#if]
+								   </ul>
+							 </ul>
+						</div>
+						<li><a style="cursor: pointer;"><em></em>关注&nbsp;[#if focus??](${focus?size})[/#if]</a>
+						 [#if focus??]
+		                    <ul>
+		                     [#list focus as c]
+		                     [#if c??]
+		                    <li><a target="_blank" href="${base}/blog/find_all_url_friend.jspx?userIds=${c.focusUserId}" ><em></em>${c.focusUserName}</a></li>
+		                   [/#if]
+		                  [/#list]
+		                    </ul>
+		                  [/#if]
+		                </li> 
+		                <li><a style="cursor: pointer;"><em></em>粉丝&nbsp;[#if fans??](${fans?size})[/#if]</a>
+						   [#if fans??]
+		                        <ul>
+		                         [#list fans as c]
+		                         [#if c??]
+		                         <li><a target="_blank" href="${base}/blog/find_all_url_friend.jspx?userIds=${c.userId}"><em></em>${c.username}</a></li>
+		                       [/#if]
+		                      [/#list]
+		                        </ul>
+		                    [/#if]
+		                </li> 
+		                <li><a  href="${base}/blog/friendDataStatistics.jspx?userIds=${usert.id}" >数据统计</a></li>
+				    </ul>
+		        </div>
+		     </div>
+		</div>
+            <div class="wrap-right">
+               <div class="wrap-right" style="background-color: white;min-height: 506px;margin-left: 10px;width: 96%;">
+            <div style="padding-top: 5%;padding-left: 10%;width: 300px;">
+	                         基本信息:
+	            <ul style="padding-left: 50px;">
+				  <li  style="list-style-type: disc;">访问人次:${usert.blogVisitNum!'0'} </li>
+				  <li  style="list-style-type: disc;">发表文章数:${articleCount} </li>
+				  <li  style="list-style-type: disc;">发表评论数:${coverCommentCount}</li>
+				  <li  style="list-style-type: disc;">文章阅读数:${readCount} </li>
+				  <li  style="list-style-type: disc;">文章被评数:${commentCount} </li>
+				</ul>
+            </div>
+            </div>
+            <div class="gonggao">
+            <p style="color:red;font-size:16px;text-align:center;">公告</p>
+             [#if usert.blogNotice??]${usert.blogNotice}[/#if]
+             </div>
+        </div>
+</div>
+  </div>
+  </div>
+[#include "../hyinclude/end.html"/]
+ <script type="text/javascript">
+		skinChange(${usert.theme!0});
+	function skinChange(n){
+		document.all.MrJin.href="/${res}/css/skin/"+n+".css"; 
+	}
+</script>
+</body>
+</html>
