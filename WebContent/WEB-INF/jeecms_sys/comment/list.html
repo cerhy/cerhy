@@ -71,8 +71,8 @@ function optCheckCancel() {
 		<#if cmsComment.reply??><br/><span style="color:red">${cmsComment.reply?html}</span></#if>
 	</@p.column><#t/>
 	<@p.column code="cmsComment.doc" align="center">
-		<#if cmsComment.content??><a href="${cmsComment.content.urlDynamic}" target="_blank" title="${cmsComment.content.title}">${cmsComment.content.title}</a></#if>
-		<#if cmsComment.channel??><a href="${cmsComment.channel.urlDynamic!}" target="_blank" title="${cmsComment.channel.name}">${cmsComment.channel.name}</a></#if>
+		<#if cmsComment.content??><a href="${cmsComment.content.urlDynamic}" target="_blank" title="${cmsComment.content.title}"><@text_cut s=cmsComment.content.title len=20 append='...'/></a></#if>
+		<#if cmsComment.channel??><a href="${cmsComment.channel.urlDynamic!}" target="_blank" title="${cmsComment.channel.name}"><@text_cut s=cmsComment.channel.name len=20 append='...'/></a></#if>
 	</@p.column><#t/>
 	<@p.column code="cmsComment.commentUser" align="center">
 		<#if (cmsComment.commentUser.username)??>${cmsComment.commentUser.username}<#else><@s.m "cmsComment.anonymity"/></#if><br/>
