@@ -255,4 +255,8 @@ public interface ContentDao {
 
 	public int getTotalCommentNum(CmsUser user);
 
+	public int getTotalCoverCommentNum(CmsUser user);
+
+	public int getTotalReadNum(CmsUser user);
+
 }

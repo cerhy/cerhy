@@ -203,11 +203,27 @@ public class BlogCommon {
 	}
 	
 	/**
-	 * 获取评论总数
+	 * 获取自己文章下评论总数
 	 **/
 	public ModelMap getTotalCommentNum(ModelMap model, CmsUser user){
 		int commentCount=contentMng.getTotalCommentNum(user);
 		model.addAttribute("commentCount", commentCount);
+		return model;
+	}
+	/**
+	 * 获取我评论总数
+	 **/
+	public ModelMap getTotalCoverCommentNum(ModelMap model, CmsUser user){
+		int coverCommentCount=contentMng.getTotalCoverCommentNum(user);
+		model.addAttribute("coverCommentCount", coverCommentCount);
+		return model;
+	}
+	/**
+	 * 获取我的博客文章总数
+	 **/
+	public ModelMap getTotalReadNum(ModelMap model, CmsUser user){
+		int readCount=contentMng.getTotalReadNum(user);
+		model.addAttribute("readCount", readCount);
 		return model;
 	}
 	

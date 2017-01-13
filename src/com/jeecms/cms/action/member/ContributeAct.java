@@ -1,6 +1,7 @@
 package com.jeecms.cms.action.member;
 import static com.jeecms.cms.Constants.TPLDIR_BLOG;
 import static com.jeecms.cms.Constants.TPLDIR_MEMBER;
+import static com.jeecms.common.page.SimplePage.cpn;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -30,11 +31,14 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.jeecms.cms.action.blog.BlogAct;
 import com.jeecms.cms.action.blog.BlogCommon;
+import com.jeecms.cms.dao.main.impl.BlogDao;
 import com.jeecms.cms.entity.assist.CmsComment;
 import com.jeecms.cms.entity.main.Channel;
+import com.jeecms.cms.entity.main.Focus;
 import com.jeecms.cms.manager.assist.CmsFileMng;
 import com.jeecms.cms.manager.main.ChannelMng;
 import com.jeecms.cms.manager.main.ContentMng;
+import com.jeecms.common.page.Pagination;
 import com.jeecms.common.web.ResponseUtils;
 import com.jeecms.core.entity.CmsSite;
 import com.jeecms.core.entity.CmsUser;
@@ -787,4 +791,64 @@ public class ContributeAct extends AbstractContentMemberAct {
 		ResponseUtils.renderJson(response, json.toString());
 	}
 	
+	
+	/**
+	 *跳转登陆人数据统计页面方法 
+	 */
+	@RequestMapping(value = "/blog/dataStatistics.jspx")
+	public String dataStatistics(HttpServletRequest request,HttpServletResponse response, ModelMap model) {
+		CmsSite site = CmsUtils.getSite(request);
+		CmsUser user = CmsUtils.getUser(request);
+		user.getId();
+		request.getSession().getServletContext().getRealPath("/");
+		model = blogCommon.getLinks(model,user);
+		model = blogCommon.getFriends(model,user);
+		model = blogCommon.blog_focus_find(null,request,model);
+		model = blogCommon.getColumn(request,model,user);
+	    model = blogCommon.getChannel(request,model,user,site);
+	    model = blogCommon.getTotalArticleNum(model,user);
+ 		model = blogCommon.getTotalCommentNum(model, user);
+ 		model = blogCommon.getTotalCoverCommentNum(model, user);
+ 		model = blogCommon.getTotalReadNum(model, user);
+		FrontUtils.frontData(request, model, site);
+		return FrontUtils.getTplPath(request, site.getSolutionPath(),TPLDIR_BLOG, "tpl.dataStatistics");
+	}
+	/**
+	 *跳转好友数据统计页面方法 
+	 */
+	@RequestMapping(value = "/blog/friendDataStatistics.jspx")
+	public String friendDataStatistics(String userIds,String q,HttpServletRequest request,HttpServletResponse response, ModelMap model) {
+		CmsSite site = CmsUtils.getSite(request);
+		CmsUser user = CmsUtils.getUser(request);
+		CmsUser userT=cmsUserMng.findById(Integer.valueOf(userIds.toString()));
+		model = blogCommon.getColumn(request,model,userT);
+	    model = blogCommon.getChannel(request,model,userT,site);
+	    model = blogCommon.blog_focus_find(Integer.parseInt(userIds),request,model);
+	    model = blogCommon.getLinks(model,userT);
+		model = blogCommon.getFriends(model,userT);
+ 		model = blogCommon.getTotalArticleNum(model,userT);
+ 		model = blogCommon.getTotalCommentNum(model, userT);
+ 		model = blogCommon.getTotalCoverCommentNum(model, userT);
+ 		model = blogCommon.getTotalReadNum(model, userT);
+		String path = request.getSession().getServletContext().getRealPath("/");
+		List<Focus> list = (new BlogDao()).findMaxFocusCount( path);
+	    List<Focus> l = null;
+	    if(null != list){
+	    	if(list.size()>3){
+	    		l = new ArrayList<Focus>();
+	    		for(int i =0;i<3;i++){
+	    			l.add(list.get(i));
+	    		}
+	    	}
+	    	if(null != l){
+	    		model.addAttribute("focusMax", l);
+	    	}else{
+	    		model.addAttribute("focusMax", list);
+	    	}
+	    }
+	    model.addAttribute("usert", userT);
+	    model.addAttribute("userIds", userIds);
+	    FrontUtils.frontData(request, model, site);
+		return FrontUtils.getTplPath(request, site.getSolutionPath(),TPLDIR_BLOG, "tpl.friendDataStatistics");
+	}
 }

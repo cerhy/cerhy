@@ -1175,4 +1175,25 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 		Query query = getSession().createQuery(hql);
 		return ((Number) (query.iterate().next())).intValue();
 	}
+
+	@Override
+	public int getTotalCoverCommentNum(CmsUser user) {
+		String hql = "select count(*) from CmsComment bean"
+				+ " where 1=1"
+				+ " and bean.content.id is not null "
+				+ " and bean.content.model.id in (11,21,24)"
+				+ " and bean.commentUser.id="+user.getId();
+		Query query = getSession().createQuery(hql);
+		return ((Number) (query.iterate().next())).intValue();
+	}
+
+	@Override
+	public int getTotalReadNum(CmsUser user) {
+		String hql = "select sum(bean.contentCount.views) from Content bean"
+				+ " where 1=1"
+				+ " and bean.model.id in (11,21,24)"
+				+ " and bean.user.id="+user.getId();
+		Query query = getSession().createQuery(hql);
+		return ((Number) (query.iterate().next())).intValue();
+	}
 }
