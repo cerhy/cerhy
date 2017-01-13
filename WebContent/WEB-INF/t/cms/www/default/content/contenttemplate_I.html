@@ -13,6 +13,41 @@
 <link type="text/css" rel="stylesheet" href="/${res}/css/main.css" />
 <link type="text/css" rel="stylesheet" href="/${res}/css/custom.css" />
 <link href="${resSys}/jqueryUI/jquery.ui.css" rel="stylesheet" type="text/css" />
+<link id="artDialogSkin" href="/${res}/css/skin/facebook/facebook.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="${resSys}/postil.js"></script>
+<script type="text/javascript" src="${resSys}/artDialog.min.js"></script>
+<style type="text/css">
+	.list {
+		border: 1px solid #ddd;
+		height: 350px;
+		width: 250px;
+	}
+	.list div {
+		border: 1px solid #ddd;
+		margin-bottom: 5px;
+		padding: 10px;
+		cursor: pointer;
+	}
+	/*css批注样式*/
+	.postil, .postilFocus {
+		border-left: 1px solid red;
+		border-right: 1px solid red;
+		text-decoration: none;
+		cursor: default;
+	}
+	.postil {
+		background: yellow;
+	}
+	.postilFocus {
+		background: Tomato;
+	}
+	/*批注提示图标样式*/
+	.tipsIcon {
+		opacity: 0.80;
+		z-index: 1;
+		filter:alpha(opacity=80);
+	}
+  </style>
 <style>
  .bz a:hover{color: #DEB887;}
  .bz{color: #999;}
@@ -114,11 +149,18 @@ $(function() {
 					     <span id="comfirmSpan" style="display:none;cursor: pointer;">转载</span>
 					     <span id="cancelSpan" style="display:none; cursor: pointer;">取消转载</span>
 					</p>
+					<!-- [#if channel.parent.parent.id==98]
+					<div id="icon" style="display: none; position: absolute;" title="添加批注"><img src="/${res}/images/tips.png" class="tipsIcon"></div>
+					<input id="postilUserId" value="${user.username}" style="display: none;">
+					[/#if] -->
 					<div class="xueke-content-detail">
 						[#if preview??] [@text_cut s=txt! len=100 append="..."/]<br />
 						您需要更高的权限浏览全部内容!<br />以下会员组可浏览全部内容: [#list groups as g]
 						${g.name!}[#if g_has_next],[/#if] [/#list] [#else] ${txt!} [/#if]
 					</div>
+					<!-- <input type="button" value="保存我的批注" onclick="savePostil(${user.id},${content.id})" />
+					<div class="list"></div>
+  					<input type="button" value="加载批注" onclick="loader()" /> -->
 				<div class="content-txt">
 			     [#if content.mediaPath?? && content.mediaType??]
 				        <div class="video-con clearfix">
