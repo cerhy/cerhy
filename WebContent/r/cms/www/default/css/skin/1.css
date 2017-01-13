@@ -7,8 +7,11 @@
 .qs .q, .qs .placeholder	{ color: #666; }
 .popDlg, .pad	{ border-color: #333; }
 
-.blog-con		{ background: #684C1C url(01.jpg) no-repeat center top; }
-a			{ color: #A56E00; }
+.blogBody{
+	width:100%;
+	background: #bcd3e5 url(01.jpg) no-repeat center top;
+}
+ 
 #owner		{ color: #fff; }
 .box, #sbr .vbr	{ border: 1px solid #8A795C; background: #E1DBD2; }
 .box .cap		{ color: #744D00; background: #EECD87; }

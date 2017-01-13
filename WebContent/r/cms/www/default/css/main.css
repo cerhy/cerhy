@@ -31,7 +31,7 @@ table{border-spacing:0;border-collapse:collapse;}
 .mr10{margin-right: 10px!important;}
 .mt10{margin-top: 10px!important;}
 .mb10{margin-bottom: 10px!important;}
-.mb20{margin-bottom: 20px!important;}
+.mb20{padding-bottom: 20px!important;}
 .mr25{margin-right: 25px!important;}
 
 .pd-layout{padding:10px!important;}

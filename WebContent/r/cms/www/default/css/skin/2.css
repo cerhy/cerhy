@@ -9,9 +9,52 @@
 .topicView .row.active, .menu a.active, .menu span.active, .cascade h3.active	{ background-color: #DEDAC7; }
 .commentView .btn,
 .topicView .row:hover, .menu a:hover, .menu span:hover	{ background-color: #D5CFB9; }
-
-.blog-con		{ background: #E4D6A7 url(02.jpg) no-repeat center top; }
-a			{ color: #24666B; }
 #owner		{ color: #fff; }
 .box, #sbr .vbr	{ border: 1px solid #D2CBAE; background: #CFC9AE; }
 .box .cap		{ color: #34482D; background: #EFF2E9; }
+
+
+
+/* .user-center-left .user-menu-links, .personCenter-userInfo, .user-center-left .user-setting {
+    background: transparent;
+} */
+.blogHead,.tj{color: #fff;}
+.c1{ color: #666666;}
+.blogBody{
+	width:100%;
+	/* color: #c0bdbb; */
+	background: #000  url(02.gif); 
+}
+#title1{
+	color: #0070b8;
+}
+.footer_style {
+	background-image: url(02.gif); 
+}
+/* .user-center-left .user-menu-links li{
+	margin-top:-1px;
+	border-bottom: none; 
+}
+.user-center-left .user-menu-links a {
+    border : none; 
+    text-decoration:none;
+}
+.user-menu-links li a em {
+     background: transparent; 
+}
+.user-menu-links li.on a em {
+   background: transparent; 
+}
+.user-menu-links li a {
+	color: #666666;
+}
+.user-menu-links li a:hover {
+	color:#0070b8;
+}
+
+body, button, input, select, textarea {
+	 background: transparent;
+	}
+input{
+	 background-color: transparent;
+} */

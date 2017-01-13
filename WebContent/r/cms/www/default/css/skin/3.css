@@ -7,8 +7,21 @@
 .qs .q, .qs .placeholder	{ color: #666; }
 .popDlg, .pad	{ border-color: #333; }
 
-.blog-con		{ background: #9DAEC0 url(03.jpg) no-repeat center top; }
 a			{ color: #074387; }
 #owner		{ color: #fff; }
 .box, #sbr .vbr	{ border: 1px solid #919BA2; background: #EBF0F4; }
 .box .cap		{ color: #3A3A3A; background: #D2DCE4; }
+
+.blogBody{
+	width:100%;
+	background: #250f11 url(03.jpg) no-repeat center top;
+}
+
+.footer_style {
+	background-image: url(03.jpg); 
+}
+.blogHead,.tj{color: #f4f3f3;}
+
+#title1{
+	color: #0070b8;
+}

@@ -10,8 +10,20 @@
 .commentView .btn,
 .topicView .row:hover, .menu a:hover, .menu span:hover	{ background-color: #FAE2BE; }
 
-.blog-con	{ background: #E8A534 url(05.jpg) no-repeat center -50px; }
+/* .blog-con	{ background: #E8A534 url(05.jpg) no-repeat center -50px; } */
 a			{ color: #084387; }
 #owner		{ color: #402B19; }
 .box, #sbr .vbr	{ border: 1px solid #D6AE69; background: #FCEDD6; }
 .box .cap		{ color: #6F5508; background: #FAD15B; }
+
+.blogBody{
+	width:100%;
+	background: #000  url(05.jpg) no-repeat center top;
+}
+.footer_style {
+	background: #000; 
+}
+.blogHead,.tj{color: #f4f3f3;}
+#title1{
+	color: #0070b8;
+}

@@ -51,9 +51,10 @@ $(function(){
 });
 </script>
 	[#include "../hyinclude/header.html"/]
+<div class="blogBody">
 	<div class="blog-con">
 		<div class="blogHead">
-			<div style="font-size: 30px; margin: 30px auto 20px;">
+			<div style="font-size: 30px; margin:0px auto 20px; padding-top:30px;">
 				<a href="${base}/blog/index.jspx">[#if
 					user.blogTitle??]${user.blogTitle}[#else]标题[/#if]</a>
 			</div>
@@ -84,7 +85,7 @@ $(function(){
 
 		</div>
 	</div>
-
+</div>
 [#include "model.html"/]
 [#include "../include/footer.html"/]
 </body>
