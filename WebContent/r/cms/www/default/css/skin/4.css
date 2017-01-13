@@ -7,8 +7,56 @@
 .qs .q, .qs .placeholder	{ color: #666; }
 .popDlg, .pad	{ border-color: #333; }
 
-.blog-con		{ background: #FEFEFE url(04.jpg) no-repeat center top; }
+/* .blog-con		{ background: #FEFEFE url(04.jpg) no-repeat center top; } */
 a			{ color: #074387; }
 #owner		{ color: #2481AB; }
 .box, #sbr .vbr	{ border: 1px solid #C8E2EF; background: #EBF0F4; }
 .box .cap		{ color: #434343; background: #EFFAFD; }
+
+
+.blogBody{
+	width:100%;
+	background: #E0912F  url(04.jpg) no-repeat center top;
+}
+.footer_style {
+	background: #E0912F; 
+}
+
+.blogHead,.tj{color: #fff;}
+.tj{
+	padding-bottom:90px;
+}
+#title1{
+	color: #fff;
+}
+
+.user-center-left .user-menu-links, .personCenter-userInfo, .user-center-left .user-setting {
+   background: #FDE09F;;
+} 
+
+.user-center-left .user-menu-links li{
+	margin-top:-1px;
+	border-bottom: none; 
+}
+.user-center-left .user-menu-links a {
+    border : none; 
+    text-decoration:none;
+}
+.user-menu-links li a em {
+     background: transparent; 
+}
+.user-menu-links li.on a em {
+   background: transparent; 
+}
+.user-menu-links li a {
+	color: #666666;
+}
+.user-menu-links li a:hover {
+	color:#0070b8;
+}
+#_goPs{
+	background: transparent;
+}
+body, button, input, select, textarea {
+	 background: transparent;
+	}

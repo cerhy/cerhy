@@ -10,8 +10,55 @@
 .commentView .btn,
 .topicView .row:hover, .menu a:hover, .menu span:hover	{ background-color: #FAE2BE; }
 
-.blog-con	{ background: #E8A534 url(05.jpg) no-repeat center -50px; }
+/* .blog-con	{ background: #E8A534 url(05.jpg) no-repeat center -50px; } */
 a			{ color: #084387; }
 #owner		{ color: #402B19; }
 .box, #sbr .vbr	{ border: 1px solid #D6AE69; background: #FCEDD6; }
 .box .cap		{ color: #6F5508; background: #FAD15B; }
+
+.blogBody{
+	width:100%;
+	background:#C9DCE8  url(05.jpg) no-repeat center top;
+}
+.footer_style {
+	background: #C9DCE8; 
+}
+.blogHead,.tj{color: #B6333B;}
+.tj{
+	padding-bottom:100px;
+}
+#title1{
+	color: #B6333B;
+}
+
+
+.user-center-left .user-menu-links, .personCenter-userInfo, .user-center-left .user-setting {
+   background: #F4F8FB
+} 
+
+.user-center-left .user-menu-links li{
+	margin-top:-1px;
+	border-bottom: none; 
+}
+.user-center-left .user-menu-links a {
+    border : none; 
+    text-decoration:none;
+}
+.user-menu-links li a em {
+     background: transparent; 
+}
+.user-menu-links li.on a em {
+   background: transparent; 
+}
+.user-menu-links li a {
+	color: #666666;
+}
+.user-menu-links li a:hover {
+	color:#0070b8;
+}
+#_goPs{
+	background: transparent;
+}
+body, button, input, select, textarea {
+	 background: transparent;
+	}

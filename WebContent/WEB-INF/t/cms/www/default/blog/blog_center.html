@@ -32,19 +32,19 @@ $(function(){
 });
 </script>
 [#include "../hyinclude/header.html"/]
+ <div class="blogBody">
 <div class="blog-con">
   <div class="blogHead">
-	  <div style="font-size:30px;margin:30px auto 20px;"><a href="${base}/blog/index.jspx">[#if user.blogTitle??]${user.blogTitle}[#else]标题[/#if]</a></div>
+	  <div class="title1"><a href="${base}/blog/index.jspx"><span id="title1">[#if user.blogTitle??]${user.blogTitle}[#else]标题[/#if]</span></a></div>
 	  <div style="font-size:15px;margin:5px auto 15px;">[#if user.blogTitle2??]${user.blogTitle2}[#else]副标题[/#if]</div>
   </div>
-      <div>
-      	<div style="text-align:left;padding-right: 50px;font-size: 15px">
-     	 	文章数:${articleCount}&nbsp;&nbsp;评论:${commentCount}&nbsp;&nbsp;访问:${user.blogVisitNum!'0'}&nbsp;&nbsp;最后登录:${user.lastLoginTime?string('yyyy-MM-dd HH:mm:ss')}
+      	<div class="tj">
+     	 	文章数:${articleCount}&nbsp;&nbsp;
+     	 	评论:${commentCount}&nbsp;&nbsp;
+     	 	访问:${user.blogVisitNum!'0'}&nbsp;&nbsp;
+     	 	最后登录:${user.lastLoginTime?string('yyyy-MM-dd HH:mm:ss')}&nbsp;&nbsp;
+     	 	 明星博主： [#if focusMax?? ][#list focusMax as c]${c.focusUserName}&nbsp;&nbsp;[/#list][/#if]
       	</div>
-      	<div style="text-align:right;padding-right: 50px;margin: 10px;font-size: 16px">
-     	 	明星博主： [#if focusMax?? ][#list focusMax as c]${c.focusUserName}&nbsp;&nbsp;[/#list][/#if]
-      	</div>
-      </div>
         <div class="mb20 clearfix">
           [#include "blog_left.html"/]
             <div class="wrap-right">
@@ -64,7 +64,7 @@ $(function(){
 			              [#list pagination.list as c]
 			              <tr>
 			                <td>${c.id}</td>
-			                <td style="text-align:left; text-indent:5px;" ><a href="${c.url!}" target="_blank"></input>[@text_cut s=c.title?html len='24' append='...'/]</a></td>
+			                <td style="text-align:left; text-indent:5px;" ><a href="${c.url!}" target="_blank"></input><span class="c1">[@text_cut s=c.title?html len='24' append='...'/]</span></a></td>
 			                <td>${c.views}</td>
 			                <td>${c.releaseDate?string('yyyy-MM-dd')}</td>
 			              </tr>
@@ -72,7 +72,7 @@ $(function(){
 			            </tbody>
 			          </table>
 			          <input type="hidden" name="pageNo"/>
-			           <table  style="margin-left:40px;border:0px" ><tbody><tr><td style="border:0px; ">
+			           <table  style="margin:20px; 0 0 40px;border:0px" ><tbody><tr><td style="border:0px; ">
                 共 ${pagination.totalCount} 条&nbsp;
                 每页 ${pagination.pageSize} 条&nbsp;
                 <input style="cursor: pointer;" type="button" value="首 页" onclick="_gotoPage('1');"[#if pagination.firstPage] disabled="disabled"[/#if]/>
@@ -114,7 +114,7 @@ $(function(){
 
   </div>
   </div>
-  
+</div> 
 [#include "model.html"/]
 [#include "../include/footer.html"/]
 </body>

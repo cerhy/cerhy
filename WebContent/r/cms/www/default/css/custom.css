@@ -237,3 +237,15 @@ padding-top: 32px;
 .sub2:hover {
     background: #14bdff;
 }
+
+.title1{
+	font-size:30px;
+	margin:0px auto 20px; 
+	padding-top:30px;
+}
+.tj{font-size: 15px ;padding:10px 0 20px 0;}
+
+.footer_style{
+    background-color: #0b91df;
+    height: 117px;
+    }
