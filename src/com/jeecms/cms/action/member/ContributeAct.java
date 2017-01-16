@@ -810,6 +810,7 @@ public class ContributeAct extends AbstractContentMemberAct {
  		model = blogCommon.getTotalCommentNum(model, user);
  		model = blogCommon.getTotalCoverCommentNum(model, user);
  		model = blogCommon.getTotalReadNum(model, user);
+ 		model = blogCommon.getMaxFocus(request, model);
 		FrontUtils.frontData(request, model, site);
 		return FrontUtils.getTplPath(request, site.getSolutionPath(),TPLDIR_BLOG, "tpl.dataStatistics");
 	}
