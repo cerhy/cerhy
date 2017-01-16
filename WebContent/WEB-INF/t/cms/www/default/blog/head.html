@@ -1,0 +1,115 @@
+<link rel="stylesheet" type="text/css" href="/${res}/css/login.css" />
+<script>
+function qkeypress(){
+	var q=$("input[name=q]");
+	if(q.val().trim()!=""){
+		$("input[name=q]").autocomplete("enable");
+	}else{
+		$("input[name=q]").autocomplete("disable");
+	}
+}
+</script>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <title>好研网</title>
+    <link rel="shortcut icon" href="/${res}/images/small-prev-page-on.png" type="image/x-icon" />
+    <link rel="stylesheet" href="/${res}/css/main.css"/>
+    <link id="MrJin" rel="stylesheet"/>
+    <style type="text/css">
+	.page-large{margin:40px 0 20px; text-align:center;}
+	.page-large a{width:34px; height:34px; display:inline-block; border:1px solid #d5d5d5; box-sizing:border-box; -moz-box-sizing:border-box; -o-box-sizing:border-box; -webkit-box-sizing:border-box; line-height:34px; text-align:center; float:left; text-indent:0; color:#666666; font-size:12px; font-family:Arial, Helvetica, sans-serif; margin:0 3px;}
+	.page-large a.on{border:1px solid #ef3838; background:#ef3838; color:#fff;}
+	.page-large a.none{border:none;}
+	.page-large .Num:hover{border:1px solid #ef3838; color:#ef3838;}
+	.page-large .on:hover{border:1px solid #ef3838; color:#fff;}
+	.page-large .prev-page{background:url(/${res}/images/small-prev-page.png) center center no-repeat;}
+	.page-large .next-page{background:url(/${res}/images/small-next-page.png) center center no-repeat;}
+	.page-large .prev-page:hover{border:1px solid #ef3838; background:url(/${res}/images/small-prev-page-on.png) center center no-repeat #ef3838;}
+	.page-large .next-page:hover{border:1px solid #ef3838; background:url(/${res}/images/small-next-page-on.png) center center no-repeat #ef3838;}
+	.login-user{float:left; line-height:30px; margin-left:20px; padding-right:14px; color:#979797; font-size:12px; position:relative; cursor:pointer;}
+    .login-user a{z-index:4; position:relative; display:inline-block;}
+    .login-user img{width:30px; height:30px; float:left; margin-right:5px; border-radius:100%; -moz-border-radius:100%; -o-border-radius:100%; -webkit-border-radius:100%;}
+    .login-user:before{z-index:4; content:''; position:absolute; display:inline-block; width:6px; height:5px; right:0; top:14px; }
+    .user-child{display:none; top:15px; width:100%; background-color:rgba(255,255,255,0.9); position:absolute; padding:16px 0 8px; z-index:3; box-shadow:0 2px 5px rgba(34,25,25,.4); -moz-box-shadow:0 2px 5px rgba(34,25,25,.4); -webkit-box-shadow:0 2px 5px rgba(34,25,25,.4);}
+    .login-user:hover .user-child{display:block;}
+    .user-child a{width:100%; display:block; line-height:24px; text-align:center; font-size:14px;}
+    .showComment{
+	  display:block;
+	  background:#f00;
+	  border-radius:50%;
+	  width:6px;
+	  height:6px;
+	  top:2px;
+	  right:0px;
+	  position:absolute;
+	}
+	</style>
+</head>
+<body class="bodybg">
+<div class="header">
+    <div class="header-top">
+        <div class="wrap clearfix">
+            <div class="header-right">
+                <div class="search-bar">
+                    <form action="${base}/search.jspx" target="_blank" id="searchForm">
+        				<input type="text" name="q" value="${oldq!}" maxlength="50" autocomplete="off" class="searchCon">
+        				<input type="submit" value="" class="search-btn" style="height: 26px;width: 26px;">
+       			    </form>
+                </div>
+                <ul class="header-right-list">
+                    <li><a href="http://edu.cerhy.com/" target="_blank">素质测评</a><em></em></li> 
+                    <li><a href="#">官方客服</a><em></em></li>
+                    <li><a href="#">官方微信</a><em></em></li>
+         			[#if user?? && !status??]
+	         			<div class="login-user">
+		         			<a>[#if user.userImg??]<img src="${user.userImg}">[#else]<img src="/${res}/images/userImg.png">[/#if]${user.username}<i id="showComment" class="showComment" style="display: none"></i></a>
+		         			<div class="user-child">
+			         			<a href="${base}/member/index.jspx">会员中心</a>
+			         			<a href="${base}/blog/index.jspx">我的博客</a>
+			         			<a href="${base}/logout.jspx">退出账号</a>
+			         			<a id="showInfo" style="display: none;text-decoration:underline;color: red;" href="${base}/member/news_comments.jspx" ></a>
+		         			</div>
+	         			</div>
+         			[#else]
+      					<li><a href="${base}/login.jspx">登录</a></li>
+     				[/#if]                   
+                </ul>
+			</div>
+            </div>
+        </div>
+    </div>
+    <!-- <div class="banner">
+        <div class="wrap">
+            <a href="${base}/"><img src="/${res}/images/head.png" width="1000" height="192" alt=""></a>
+        </div>
+    </div> -->
+
+</div>
+<!-- <div class="nav">
+    <div class="wrap">
+        <div class="nav-list">
+            <ul class="clearfix">
+                 [#include "../hyinclude/nav.html"]
+            </ul>
+        </div>
+    </div>
+</div> -->
+<script type="text/javascript">
+$(function(){
+	$.ajax({
+        url: "${base}/member/findCommentNu.jspx",
+        type: "POST",
+        dataType:"json",
+        data: "",
+        success: function (data) {
+        	if(data.status>0){
+				$("#showComment").show();
+				$("#showInfo").show();
+				$("#showInfo").html("消息:("+data.status+")")
+        	}
+        }
+    });
+});
+</script>

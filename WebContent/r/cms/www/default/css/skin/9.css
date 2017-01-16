@@ -1,22 +1,22 @@
-/* view 03 */
+/* view 09 */
 .blogBody{
 	width:100%;
-	background: #250f11 url(03.jpg) no-repeat center top;
+	background:#e5e7e7  url(09.jpg) no-repeat center top;
 }
-
 .footer_style {
-	background : #250f11; 
+	background: #e5e7e7; 
 }
-.blogHead,.tj{color: #666666;}
+.blogHead,.tj{color: #666;}
 .tj{
-	padding-bottom:80px;
+	padding-bottom:100px;
 }
 #title1{
-	color: #666666;
+	color: #666;
 }
 
+
 .user-center-left .user-menu-links, .personCenter-userInfo, .user-center-left .user-setting {
-   background: #311411;
+   background: #F4F8FB
 } 
 
 .user-center-left .user-menu-links li{
@@ -44,10 +44,9 @@
 }
 .tggl .tggl-top {background: transparent;}
 body, button, input, select, textarea { background: transparent;}
-
 .tggl a {color:#666666;}
 .a2{color:#666666;}
 .inp2{color:#666666;}
-.tggl td{border-color:#666666;}
-.tggl table{border-color:#666666;}
+.tggl td{border-color:#e7e7e7;}
+.tggl table{border-color:#e7e7e7;}
 .tggl-top{background:transparent;}

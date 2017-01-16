@@ -83,7 +83,7 @@ $(function(){
 	});
 });
 </script>
-[#include "../hyinclude/header.html"/]
+[#include "head.html"/]
 <div class="blogBody">
 <div class="blog-con">
   <div class="blogHead">
@@ -241,15 +241,15 @@ $(function(){
 			          <table cellpadding="0" cellspacing="0">
 			            <tbody>
 			              <tr>
-			                <td class="tggl-top">ID</td>
-			                <td class="tggl-top" width="600px;">标题</td>
-			                <td class="tggl-top">浏览次数</td>
-			                <td class="tggl-top">发布时间</td>
+			                 <td class="tggl-top" style="min-width:40px;">ID</td>
+				             <td class="tggl-top" style="min-width:420px;">标题</td>
+							 <td class="tggl-top" style="min-width:40px;">浏览次数</td>
+							 <td class="tggl-top" style="min-width:80px;">发布时间</td>
 			              </tr>
 			              [#list pagination.list as c]
 			              <tr>
 			                <td>${c.id}</td>
-			                <td style="text-align:left;padding-left:10px;"  width="600px;"><a href="${c.url!}" target="_blank">[@text_cut s=c.title?html len='24' append='...'/]</a></td>
+			                <td style="text-align:left;padding-left:10px;"><a href="${c.url!}" target="_blank" class="a2">[@text_cut s=c.title?html len='24' append='...'/]</a></td>
 			                <td>${c.views}</td>
 			                <td>${c.releaseDate?string('yyyy-MM-dd')}</td>
 			              </tr>
@@ -257,15 +257,15 @@ $(function(){
 			            </tbody>
 			          </table>
 			          <input type="hidden" name="pageNo"/>
-			           <table width="100%" border="0" cellpadding="0" cellspacing="0"><tr><td align="center" class="pn-sp">
+			           <table style="margin:20px 0 0 40px;border:0px"><tr><td style="border:0px;">
                 共 ${pagination.totalCount} 条&nbsp;
                 每页 ${pagination.pageSize} 条&nbsp;
-                <input style="cursor: pointer;"  type="button" value="首 页" onclick="_gotoPage('1');"[#if pagination.firstPage] disabled="disabled"[/#if]/>
-                <input style="cursor: pointer;" type="button" value="上一页" onclick="_gotoPage('${pagination.prePage}');"[#if pagination.firstPage] disabled="disabled"[/#if]/>
-                <input style="cursor: pointer;" type="button" value="下一页" onclick="_gotoPage('${pagination.nextPage}');"[#if pagination.lastPage] disabled="disabled"[/#if]/>
-                <input style="cursor: pointer;" type="button" value="尾 页" onclick="_gotoPage('${pagination.totalPage}');"[#if pagination.lastPage] disabled="disabled"[/#if]/>&nbsp;
-                当前 ${pagination.pageNo}/${pagination.totalPage} 页 &nbsp;转到第<input type="text" id="_goPs" onfocus="this.select();" onkeypress="if(event.keyCode==13){$('#_goPage').click();return false;}" style="width:50px; border:1px solid #e7e7e7;"/>页
-                <input style="cursor: pointer;" id="_goPage" type="button" value="转" onclick="_gotoPage($('#_goPs').val());"[#if pagination.totalPage==1] disabled="disabled"[/#if] />
+                <input style="cursor: pointer;"  type="button" value="首 页" onclick="_gotoPage('1');"[#if pagination.firstPage] disabled="disabled"[/#if] class="inp2"/>
+                <input style="cursor: pointer;" type="button" value="上一页" onclick="_gotoPage('${pagination.prePage}');"[#if pagination.firstPage] disabled="disabled"[/#if] class="inp2"/>
+                <input style="cursor: pointer;" type="button" value="下一页" onclick="_gotoPage('${pagination.nextPage}');"[#if pagination.lastPage] disabled="disabled"[/#if] class="inp2"/>
+                <input style="cursor: pointer;" type="button" value="尾 页" onclick="_gotoPage('${pagination.totalPage}');"[#if pagination.lastPage] disabled="disabled"[/#if] class="inp2"/>&nbsp;
+                当前 ${pagination.pageNo}/${pagination.totalPage} 页 &nbsp;转到第<input type="text" id="_goPs" onfocus="this.select();" onkeypress="if(event.keyCode==13){$('#_goPage').click();return false;}" class="inp1"/>页
+                <input style="cursor: pointer;" id="_goPage" type="button" value="转" class="sub2" onclick="_gotoPage($('#_goPs').val());"[#if pagination.totalPage==1] disabled="disabled"[/#if] />
             </td>
             </tr>
             </table>
@@ -300,17 +300,7 @@ $(function(){
   </div>
   </div>
   </div>
-[#include "../hyinclude/end.html"/]
- <script type="text/javascript">
-		skinChange(${usert.theme!0});
-	function skinChange(n){
-		document.all.MrJin.href="/${res}/css/skin/"+n+".css"; 
-	}
-</script>
-<script type="text/javascript">
-
-
-
-</script>
+[#include "model.html"/]
+[#include "../include/footer.html"/]
 </body>
 </html>
