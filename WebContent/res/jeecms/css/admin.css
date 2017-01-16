@@ -2,7 +2,7 @@
 ul,ol,li,dl,dt,dd{ list-style-type:none; margin:0; padding:0;}
 h1,h2,h3,h4,h5,h6,form,input,textarea,label,table,tr,td,p,dl,em{ margin:0; padding:0;}
 img{ border:0 none; display:inline-block; interpolation-mode:bicubic;}
-a:link,a:visited{ text-decoration:none;}
+a:link,a:visited{ color:#333333; text-decoration:none;}
 a:active,a:hover{ color:#0070b8; text-decoration:none;}
 body{ margin:0; padding:0; font-size:14px; font-family:"Microsoft YaHei",微软雅黑,Arial, Helvetica, sans-serif;}
 .f_l{ float:left;}

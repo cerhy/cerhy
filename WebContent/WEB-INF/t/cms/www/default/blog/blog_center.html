@@ -42,7 +42,6 @@ $(function(){
      	 	评论:${commentCount}&nbsp;&nbsp;
      	 	访问:${user.blogVisitNum!'0'}&nbsp;&nbsp;
      	 	最后登录:${user.lastLoginTime?string('yyyy-MM-dd HH:mm:ss')}&nbsp;&nbsp;
-     	 	 明星博主： [#if focusMax?? ][#list focusMax as c]${c.focusUserName}&nbsp;&nbsp;[/#list][/#if]
       	</div>
         <div class="mb20 clearfix">
           [#include "blog_left.html"/]
