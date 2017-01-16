@@ -54,6 +54,7 @@
 #_goPs{
 	background: transparent;
 }
+.tggl .tggl-top {background: transparent;}
 body, button, input, select, textarea {
 	 background: transparent;
 	}

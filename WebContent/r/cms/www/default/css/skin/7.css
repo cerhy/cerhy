@@ -1,38 +1,24 @@
-/* view 04 */
-
-#layout, #sbr	{ background-color: transparent; }
-#sbr .vbr	{ margin: 0 0 6px 0; }
-#header		{ padding: 60px 0 80px 0; color: #333; background: transparent; }
-.qs			{ border-color: #666; }
-.qs .q, .qs .placeholder	{ color: #666; }
-.popDlg, .pad	{ border-color: #333; }
-
-/* .blog-con		{ background: #FEFEFE url(04.jpg) no-repeat center top; } */
-a			{ color: #074387; }
-#owner		{ color: #2481AB; }
-.box, #sbr .vbr	{ border: 1px solid #C8E2EF; background: #EBF0F4; }
-.box .cap		{ color: #434343; background: #EFFAFD; }
-
-
 .blogBody{
 	width:100%;
-	background: #E0912F  url(04.jpg) no-repeat center top;
+	background: #e3ebf0 url(07.jpg) no-repeat center top;
 }
+
 .footer_style {
-	background: #E0912F; 
+	background : #e3ebf0; 
 }
+.blogHead,.tj{color: #808080;}
 
-.blogHead,.tj{color: #fff;}
-.tj{
-	padding-bottom:90px;
-}
 #title1{
-	color: #fff;
+	color: #808080;
 }
-
+.tj{
+	padding-bottom:70px;
+}
 .user-center-left .user-menu-links, .personCenter-userInfo, .user-center-left .user-setting {
-   background: #FDE09F;;
+   background: #e7e7e7;
 } 
+
+td {border: 1px solid #fff;}
 
 .user-center-left .user-menu-links li{
 	margin-top:-1px;
@@ -57,13 +43,13 @@ a			{ color: #074387; }
 #_goPs{
 	background: transparent;
 }
+.inp1{border-color:transparent;}
 .tggl .tggl-top {background: transparent;}
 body, button, input, select, textarea { background: transparent;}
-
 .tggl a {color:#666666;}
 .a2{color:#666666;}
 .inp2{color:#666666;}
-.tggl td{border-color:#666666;}
-.tggl table{border-color:#666666;}
+.tggl td{border-color:#808080;}
+.tggl table{border-color:#808080;}
 .tggl-top{background:transparent;}
-
+	

@@ -32,7 +32,7 @@ $('.user-menu-links li').click(function(){
 });
 });
 </script>
-[#include "../hyinclude/header.html"/]
+[#include "head.html"/]
 <div class="blogBody">
 <div class="blog-con">
   <div class="blogHead">
@@ -47,6 +47,7 @@ $('.user-menu-links li').click(function(){
         <div class="mb20 clearfix">
             [#include "blog_left.html"/]
             <div class="wrap-right">
+            <div class="personCenter-userInfo blog_right" >
 	          <form id="jvForm" onsubmit="return validate_form(this)" action="add_friends.jspx" method="post">
 	         	<textarea id="friends" name="friends" rows="18" cols="90">${friends }</textarea>
 	         	<br />
@@ -59,6 +60,7 @@ $('.user-menu-links li').click(function(){
 	          	    <input type="submit" value="提交" class="submit">
 				</span>
          	 </form>
+            </div>
             </div>
             <div class="gonggao">
             <p style="color:red;font-size:16px;text-align:center;">公告</p>

@@ -193,7 +193,7 @@ padding-top: 32px;
  
 .gonggao{
 	position: absolute;
-    top:290px;
+    top:60px;
     left: 1140px;
     min-width: 190px;
     min-height: 150px;
@@ -249,3 +249,4 @@ padding-top: 32px;
     background-color: #0b91df;
     height: 117px;
     }
+.inp1{width:50px; border:1px solid #e7e7e7;}

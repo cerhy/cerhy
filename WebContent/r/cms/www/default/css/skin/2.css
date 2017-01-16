@@ -17,13 +17,16 @@
 
  .user-center-left .user-menu-links, .personCenter-userInfo, .user-center-left .user-setting {
     background: #222222;
-} 
+}  
 .blogHead,.tj{color: #c5c9ce;}
-
+.tggl a {color:#666666;}
 .tj{padding-bottom:40px;}
-
-.c1{ color: #666666;}
-
+.tggl-top{background:transparent;}
+.a2{color:#666666;}
+.inp2{color:#666666;}
+.tggl td{border-color:#666666;}
+.tggl table{border-color:#666666;}
+ 
 .blogBody{
 	width:100%;
 	background: #000  url(02.gif); 
@@ -49,7 +52,9 @@
 
 .tggl .tggl-top {background: transparent;}
 
-
+body, button, input, select, textarea {
+	 background: transparent;
+	}
 
 	
 	

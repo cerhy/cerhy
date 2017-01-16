@@ -37,7 +37,7 @@ $(function(){
 	});
 });
 </script>
-[#include "../hyinclude/header.html"/]
+[#include "head.html"/]
 <div class="blogBody">
 <div class="blog-con">
  <div class="blogHead">
@@ -69,24 +69,24 @@ $(function(){
               [#list pagination.list as c]
               <tr id="tr_${c.id}">
                 <td>${c.id}</td>
-                <td style="text-align:left;padding-left:10px;"><a href="${c.url!}" target="_blank">${c.title?html}</a></td>
+                <td style="text-align:left;padding-left:10px;"><a href="${c.url!}" target="_blank" class="a2">${c.title?html}</a></td>
                 <td>${c.views}</td>
                 <td>${c.releaseDate?string('yyyy-MM-dd')}</td>
-                <td><a href="${base}/blog/collect_cancel.jspx?cIds=${c.id}&pageNo=${pagination.pageNo}">取消转载</a></td>
+                <td><a href="${base}/blog/collect_cancel.jspx?cIds=${c.id}&pageNo=${pagination.pageNo}" class="a2">取消转载</a></td>
               </tr>
               [/#list]
                 </tbody>
           </table>
                
                   <input type="hidden" name="pageNo"/>
-		          <table style="margin-left:40px;border:0px" ><tr><td style="border:0px; ">
+		          <table style="margin:20px 0 0 40px;border:0px"><tr><td style="border:0px;">
 		                共 ${pagination.totalCount} 条&nbsp;
 		                每页 ${pagination.pageSize} 条&nbsp;
-		                <input style="cursor: pointer;" type="button" value="首 页" onclick="_gotoPage('1');"[#if pagination.firstPage] disabled="disabled"[/#if]/>
-		                <input style="cursor: pointer;" type="button" value="上一页" onclick="_gotoPage('${pagination.prePage}');"[#if pagination.firstPage] disabled="disabled"[/#if]/>
-		                <input style="cursor: pointer;" type="button" value="下一页" onclick="_gotoPage('${pagination.nextPage}');"[#if pagination.lastPage] disabled="disabled"[/#if]/>
-		                <input style="cursor: pointer;" type="button" value="尾 页" onclick="_gotoPage('${pagination.totalPage}');"[#if pagination.lastPage] disabled="disabled"[/#if]/>&nbsp;
-		                当前 ${pagination.pageNo}/${pagination.totalPage} 页 &nbsp;转到第<input type="text" id="_goPs" onfocus="this.select();" onkeypress="if(event.keyCode==13){$('#_goPage').click();return false;}" style="width:50px; border:1px solid #e7e7e7;"/>页
+		                <input style="cursor: pointer;" type="button" value="首 页" onclick="_gotoPage('1');"[#if pagination.firstPage] disabled="disabled"[/#if] class="inp2"/>
+		                <input style="cursor: pointer;" type="button" value="上一页" onclick="_gotoPage('${pagination.prePage}');"[#if pagination.firstPage] disabled="disabled"[/#if] class="inp2"/>
+		                <input style="cursor: pointer;" type="button" value="下一页" onclick="_gotoPage('${pagination.nextPage}');"[#if pagination.lastPage] disabled="disabled"[/#if] class="inp2"/>
+		                <input style="cursor: pointer;" type="button" value="尾 页" onclick="_gotoPage('${pagination.totalPage}');"[#if pagination.lastPage] disabled="disabled"[/#if] class="inp2"/>&nbsp;
+		                当前 ${pagination.pageNo}/${pagination.totalPage} 页 &nbsp;转到第<input type="text" id="_goPs" onfocus="this.select();" onkeypress="if(event.keyCode==13){$('#_goPage').click();return false;}" class="inp1"/>页
 		                <input style="cursor: pointer;" id="_goPage" type="button" value="转" class="sub2" onclick="_gotoPage($('#_goPs').val());"[#if pagination.totalPage==1] disabled="disabled"[/#if] />
 		            </td>
 		            </tr>
