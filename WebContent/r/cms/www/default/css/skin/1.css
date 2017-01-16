@@ -1,21 +1,10 @@
 /* view 01 */
 
-#layout, #sbr	{ background-color: transparent; }
-#sbr .vbr	{ margin: 0 0 6px 0; }
-#header		{ padding: 60px 0 80px 0; color: #333; background: transparent; }
-.qs			{ border-color: #666; }
-.qs .q, .qs .placeholder	{ color: #666; }
-.popDlg, .pad	{ border-color: #333; }
-
-#owner		{ color: #fff; }
-.box, #sbr .vbr	{ border: 1px solid #8A795C; background: #E1DBD2; }
-.box .cap		{ color: #744D00; background: #EECD87; }
-
 .blogBody{
 	width:100%;
 	background: #bcd3e5 url(01.jpg) no-repeat center top;
 }
-
+.header-top {background: #bcd3e5;border-bottom:0px;}
 .footer_style {
 	background : #bcd3e5; 
 }

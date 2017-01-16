@@ -3,6 +3,7 @@
 	width:100%;
 	background:#d6bc6b  url(10.jpg) no-repeat center top;
 }
+.header-top {background: #d6bc6b;border-bottom:0px;}
 .footer_style {
 	background: #d6bc6b; 
 }

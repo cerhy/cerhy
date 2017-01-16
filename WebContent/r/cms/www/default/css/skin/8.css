@@ -2,7 +2,7 @@
 	width:100%;
 	background: #000 url(08.jpg) no-repeat center top;
 }
-
+.header-top {background: #000;border-bottom:0px;}
 .footer_style {
 	background : #000; 
 }

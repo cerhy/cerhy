@@ -1,24 +1,23 @@
+/* view 10 */
 .blogBody{
 	width:100%;
-	background: #e3ebf0 url(07.jpg) no-repeat center top;
+	background:#EAF7FD  url(13.jpg) no-repeat center top;
 }
-.header-top {background: #e3ebf0;border-bottom:0px;}
+.header-top {background: #EAF7FD;border-bottom:0px;}
 .footer_style {
-	background : #e3ebf0; 
+	background: #EAF7FD; 
 }
-.blogHead,.tj{color: #808080;}
-
-#title1{
-	color: #808080;
-}
+.blogHead,.tj{color: #376043;}
 .tj{
-	padding-bottom:70px;
+	padding-bottom:90px;
 }
-.user-center-left .user-menu-links, .personCenter-userInfo, .user-center-left .user-setting {
-   background: #e7e7e7;
-} 
+#title1{
+	color: #376043;
+}
 
-td {border: 1px solid #fff;}
+.user-center-left .user-menu-links, .personCenter-userInfo, .user-center-left .user-setting {
+   background: #F5FFFD;
+} 
 
 .user-center-left .user-menu-links li{
 	margin-top:-1px;
@@ -43,7 +42,6 @@ td {border: 1px solid #fff;}
 #_goPs{
 	background: transparent;
 }
-.inp1{border-color:transparent;}
 .tggl .tggl-top {background: transparent;}
 body, button, input, select, textarea { background: transparent;}
 .tggl a {color:#666666;}
@@ -52,4 +50,3 @@ body, button, input, select, textarea { background: transparent;}
 .tggl td{border-color:#808080;}
 .tggl table{border-color:#808080;}
 .tggl-top{background:transparent;}
-	

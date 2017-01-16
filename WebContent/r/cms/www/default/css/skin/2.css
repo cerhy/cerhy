@@ -1,19 +1,5 @@
 /* view 02 */
 
-#layout, #sbr	{ background-color: transparent; }
-#sbr .vbr	{ margin: 0 0 6px 0; }
-#header		{ padding: 60px 0 80px 0; color: #333; background: transparent; }
-.qs			{ border-color: #666; }
-.qs .q, .qs .placeholder	{ color: #666; }
-.popDlg, .pad	{ border-color: #333; }
-.topicView .row.active, .menu a.active, .menu span.active, .cascade h3.active	{ background-color: #DEDAC7; }
-.commentView .btn,
-.topicView .row:hover, .menu a:hover, .menu span:hover	{ background-color: #D5CFB9; }
-#owner		{ color: #fff; }
-.box, #sbr .vbr	{ border: 1px solid #D2CBAE; background: #CFC9AE; }
-.box .cap		{ color: #34482D; background: #EFF2E9; }
-
-
 
  .user-center-left .user-menu-links, .personCenter-userInfo, .user-center-left .user-setting {
     background: #222222;
@@ -32,7 +18,7 @@
 	background: #000  url(02.gif); 
 }
 #title1{color: #c5c9ce;}
-
+.header-top {background: #000;border-bottom:0px;}
 .footer_style {background-image: url(02.gif); }
 
  .user-center-left .user-menu-links li{

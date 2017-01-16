@@ -3,6 +3,7 @@
 	width:100%;
 	background:#C9DCE8  url(05.jpg) no-repeat center top;
 }
+.header-top {background: #C9DCE8;border-bottom:0px;}
 .footer_style {
 	background: #C9DCE8; 
 }
@@ -47,6 +48,6 @@ body, button, input, select, textarea { background: transparent;}
 .tggl a {color:#666666;}
 .a2{color:#666666;}
 .inp2{color:#666666;}
-.tggl td{border-color:##e7e7e7;}
+.tggl td{border-color:#e7e7e7;}
 .tggl table{border-color:#e7e7e7;}
 .tggl-top{background:transparent;}
