@@ -1,0 +1,55 @@
+/* view 16 */
+.blogBody{
+	width:100%;
+	background:#1E1F47  url(16.jpg) no-repeat center top;
+}
+.header-top {background: #1E1F47;border-bottom:0px;}
+.footer_style {
+	background: #1E1F47; 
+}
+.blogHead,.tj{color: #fff;}
+.tj{
+	padding-bottom:100px;
+}
+#title1{
+	color: #fff;
+}
+
+
+.user-center-left .user-menu-links, .personCenter-userInfo, .user-center-left .user-setting {
+   background: #D2D2DA;
+} 
+
+.user-center-left .user-menu-links li{
+	margin-top:-1px;
+	border-bottom: none; 
+}
+.user-center-left .user-menu-links a {
+    border : none; 
+    text-decoration:none;
+}
+.user-menu-links li a em {
+     background: transparent; 
+}
+.user-menu-links li.on a em {
+   background: transparent; 
+}
+.user-menu-links li a {
+	color: #666666;
+}
+.user-menu-links li a:hover {
+	color:#0070b8;
+}
+#_goPs{
+	background: transparent;
+}
+.tggl .tggl-top {background: transparent;}
+body, button, input, select, textarea { background: transparent;}
+.tggl a {color:#666666;}
+.a2{color:#666666;}
+.inp2{color:#666666;}
+.tggl td{border-color:#e7e7e7;}
+.tggl table{border-color:#e7e7e7;}
+.tggl-top{background:transparent;}
+.st_tree ul li a:hover {color:#0070b8;}
+
