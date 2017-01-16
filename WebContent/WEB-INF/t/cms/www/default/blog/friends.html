@@ -54,6 +54,8 @@ $('.user-menu-links li').click(function(){
 	          	<span class="fl">
 					<p>每行可以输入一个好友，姓名和账号之间用“=”分隔开，最多可设置300个。</p>
 					<p>例如：ZXGHL=8001</p>
+					<p>等号之前名字可以任意填写(ZXGHL)</p>
+					<p>等号之后名字须为好友的用户名(8001)</p>
 					<p>*注:请勿留有空格!</p>
 	          		<input style="display: none;" name="nextUrl" value="friends.jspx" />
 	          	    <input type="text" id="che" value="" style="display: none;">
@@ -75,68 +77,6 @@ $('.user-menu-links li').click(function(){
 [#include "../include/footer.html"/]
 </body>
 </html>
-<!-- <script type="text/javascript">
-    
-	function validate_required(field,alerttxt){
-		with (field){
-			var str =field.split("~");
-			var num=0;
-			for(var i=0;i<str.length;i++){
-				if(str[i].indexOf("=")!=-1){
-					num++;
-					var st=str[i].split("=")
-					if(st[1]==''){
-						num--;
-					}
-				}
-			}
-			if(num!=str.length){
-				alert(alerttxt);
-				return false;
-			} else{
-				return true;
-			}
-			
-	    }
-	}
-
-	function validate_form(thisform){
-		check();
-	    var friends=$("#friends").val();
-		var friendss = friends.replace(new RegExp( "\\n", "g" ),"~");
-		with (thisform){
-		  if (validate_required(friendss,"请填写正确的好友格式!")==false){
-			  friends.focus();
-			  return false
-		  	}else{
-		  		alert($("#che").val())
-		  		return false;
-		  	}
-		  }
-	}
-	
-	
-	function check(){
-		var friends=$("#friends").val();
-		var friendss = friends.replace(new RegExp( "\\n", "g" ),"~");
-		var result=false;
-		$.ajax({
-	        url: "${base}/member/checkAddfinds.jspx?friends="+friendss,
-	        type: "POST",
-	        dataType:"json",
-	        data: "",
-	        success: function (data) {
-	        	if(data.status!=''){
-	        		result=false;
-	        	}else{
-	        		result=true;
-	        	}
-	        }
-	    });
-	 	$("#che").val(result)
-	}
-	
-</script> -->
 <script type="text/javascript">
 (function($){
     $(document).ready(function(){
