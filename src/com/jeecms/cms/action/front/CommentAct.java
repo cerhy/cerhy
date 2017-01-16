@@ -94,6 +94,14 @@ public class CommentAct {
 			List<Channel> channelList = Channel.getListForSelect(topList, null, true);
 			channelId=channelList.get(2).getId();
 		}
+		//二级栏目获取第一个子栏目处理方式
+		if(channelId==282){
+			Channel cc = channelMng.findById(channelId);
+			List<Channel> topList = new ArrayList<Channel>();
+			topList.add(cc);
+			List<Channel> channelList = Channel.getListForSelect(topList, null, true);
+			channelId=channelList.get(1).getId();
+		}
 		if(channelId==null){
 			return FrontUtils.showMessage(request, model,
 					"comment.contentNotFound");
@@ -357,6 +365,7 @@ public class CommentAct {
 			String text, String captcha,String sessionId,
 			HttpServletRequest request, HttpServletResponse response,
 			ModelMap model) throws JSONException, IOException {
+		//三级栏目获取第一个子栏目处理方式
 		if(channelId==98||channelId==99||channelId==100||channelId==101
 				||channelId==102||channelId==103||channelId==104){
 			Channel cc = channelMng.findById(channelId);
@@ -364,6 +373,14 @@ public class CommentAct {
 			topList.add(cc);
 			List<Channel> channelList = Channel.getListForSelect(topList, null, true);
 			channelId=channelList.get(2).getId();
+		}
+		//二级栏目获取第一个子栏目处理方式
+		if(channelId==282){
+			Channel cc = channelMng.findById(channelId);
+			List<Channel> topList = new ArrayList<Channel>();
+			topList.add(cc);
+			List<Channel> channelList = Channel.getListForSelect(topList, null, true);
+			channelId=channelList.get(1).getId();
 		}
 		CmsSite site = CmsUtils.getSite(request);
 		CmsUser user = CmsUtils.getUser(request);

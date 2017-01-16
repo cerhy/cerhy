@@ -157,6 +157,14 @@ public class CmsCommentDaoImpl extends HibernateBaseDao<CmsComment, Integer>
 				List<Channel> channelList = Channel.getListForSelect(topList, null, true);
 				channelId=channelList.get(2).getId();
 			}
+			//二级栏目获取第一个子栏目处理方式
+			if(channelId==282){
+				Channel cc = channelMng.findById(channelId);
+				List<Channel> topList = new ArrayList<Channel>();
+				topList.add(cc);
+				List<Channel> channelList = Channel.getListForSelect(topList, null, true);
+				channelId=channelList.get(1).getId();
+			}
 			f.append(" and (bean.channel.id=:channelId and bean.parent is null )");
 			f.setParam("channelId", channelId);
 		}

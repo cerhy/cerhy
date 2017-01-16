@@ -66,6 +66,15 @@ public class CmsFriendlinkListDirective implements TemplateDirectiveModel {
 			List<Channel> channelList = Channel.getListForSelect(topList, null, true);
 			channelId=channelList.get(2).getId();
 		}
+		//二级栏目获取第一个子栏目处理方式
+		if(channelId==282){
+			Channel cc = channelMng.findById(channelId);
+			List<Channel> topList = new ArrayList<Channel>();
+			topList.add(cc);
+			List<Channel> channelList = Channel.getListForSelect(topList, null, true);
+			channelId=channelList.get(1).getId();
+		}
+		
 		List<CmsFriendlink> list = cmsFriendlinkMng.getList1(siteId, ctgId,channelId,
 				enabled);
 
