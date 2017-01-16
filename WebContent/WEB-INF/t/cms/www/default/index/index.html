@@ -375,11 +375,11 @@ function HoverLi(x,y,m,n,counter){
             <div class="friendly-links">
                 <div class="tab-wrap tab-btm-wrap">
                     <div class="tab-head">
-                        <a href="javascript:;" class="active">市县教研</a>
-                        <a href="javascript:;">学校教研</a>
-                        <a href="javascript:;">友情链接</a>
+                        <!-- <a href="javascript:;" class="active">市县教研</a>
+                        <a href="javascript:;">学校教研</a> -->
+                        <a href="javascript:;" class="active">友情链接</a>
                     </div>
-                    <div class="tab-content" style="display: block">
+<!--                     <div class="tab-content" style="display: block">
                     	[@cms_channel_list parentId='168' orderBy='4']
 					        [#list tag_list as b]
 					       		<a href="${b.url}" rel="nofollow" target="_blank">${b.name }</a>
@@ -393,7 +393,7 @@ function HoverLi(x,y,m,n,counter){
 					        [/#list]
 				        [/@cms_channel_list]
                     </div>
-                    <div class="tab-content">
+ -->                    <div class="tab-content" style="display: block">
                     <!--友情链接  ctgId='1' 为文字链接,ctgId='2' 图片链接-->
                     	[@cms_friendlink_list ctgId='1' channelId='274']
 							 [#list tag_list as link]

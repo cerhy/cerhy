@@ -59,7 +59,7 @@ public class CmsFriendlinkListDirective implements TemplateDirectiveModel {
 		Integer channelId = getChannelId(params);
 		//首页一级栏目判断首次点击显示
 		if(channelId==98||channelId==99||channelId==100||channelId==101
-				||channelId==102||channelId==103||channelId==104){
+				||channelId==102||channelId==103||channelId==104||channelId==168){
 			Channel cc = channelMng.findById(channelId);
 			List<Channel> topList = new ArrayList<Channel>();
 			topList.add(cc);

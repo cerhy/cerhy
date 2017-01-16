@@ -150,7 +150,7 @@ public class CmsCommentDaoImpl extends HibernateBaseDao<CmsComment, Integer>
 		else if (channelId != null) {
 			//按照栏目ID来查询对栏目的直接评论
 			if(channelId==98||channelId==99||channelId==100||channelId==101
-					||channelId==102||channelId==103||channelId==104){
+					||channelId==102||channelId==103||channelId==104||channelId==168){
 				Channel cc = channelMng.findById(channelId);
 				List<Channel> topList = new ArrayList<Channel>();
 				topList.add(cc);

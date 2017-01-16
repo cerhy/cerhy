@@ -87,7 +87,7 @@ public class CommentAct {
 			ModelMap model) {
 		CmsSite site = CmsUtils.getSite(request);
 		if(channelId==98||channelId==99||channelId==100||channelId==101
-				||channelId==102||channelId==103||channelId==104){
+				||channelId==102||channelId==103||channelId==104||channelId==168){
 			Channel cc = channelMng.findById(channelId);
 			List<Channel> topList = new ArrayList<Channel>();
 			topList.add(cc);
@@ -367,7 +367,7 @@ public class CommentAct {
 			ModelMap model) throws JSONException, IOException {
 		//三级栏目获取第一个子栏目处理方式
 		if(channelId==98||channelId==99||channelId==100||channelId==101
-				||channelId==102||channelId==103||channelId==104){
+				||channelId==102||channelId==103||channelId==104||channelId==168){
 			Channel cc = channelMng.findById(channelId);
 			List<Channel> topList = new ArrayList<Channel>();
 			topList.add(cc);
