@@ -1,0 +1,52 @@
+/* view 10 */
+.blogBody{
+	width:100%;
+	background:#C70000  url(14.jpg) no-repeat center top;
+}
+.header-top {background: #C70000;border-bottom:0px;}
+.footer_style {
+	background: #C70000; 
+}
+.blogHead,.tj{color: #fff;}
+.tj{
+	padding-bottom:125px;
+}
+#title1{
+	color: #fff;
+}
+
+.user-center-left .user-menu-links, .personCenter-userInfo, .user-center-left .user-setting {
+   background: #fff;
+} 
+
+.user-center-left .user-menu-links li{
+	margin-top:-1px;
+	border-bottom: none; 
+}
+.user-center-left .user-menu-links a {
+    border : none; 
+    text-decoration:none;
+}
+.user-menu-links li a em {
+     background: transparent; 
+}
+.user-menu-links li.on a em {
+   background: transparent; 
+}
+.user-menu-links li a {
+	color: #666666;
+}
+.user-menu-links li a:hover {
+	color:#0070b8;
+}
+#_goPs{
+	background: transparent;
+}
+.tggl .tggl-top {background: transparent;}
+body, button, input, select, textarea { background: transparent;}
+.tggl a {color:#666666;}
+.a2{color:#666666;}
+.inp2{color:#666666;}
+.tggl td{border-color:#808080;}
+.tggl table{border-color:#808080;}
+.tggl-top{background:transparent;}
