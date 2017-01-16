@@ -2,22 +2,20 @@
 <html>
 <title>好研网-${channel.title}</title>
 [#include "../hyinclude/header.html"/]
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta http-equiv="keywords" content="${channel.keywords!}"/>
-<meta http-equiv="description" content="${channel.description!}"/>
 <script src="${resSys}/jquery.js" type="text/javascript"></script>
 <script src="${resSys}/front.js" type="text/javascript"></script>
 <script type="text/javascript" src="/${res}/js/jquery.SuperSlide.js"></script>
 <link type="text/css" rel="stylesheet" href="/${res}/css/hyindex.css" />
 <link type="text/css" rel="stylesheet" href="/${res}/css/custom.css" />
-
 <script src="${resSys}/jqueryUI/jquery-ui.js" type="text/javascript"></script>
 <link href="${resSys}/jqueryUI/jquery.ui.css" rel="stylesheet" type="text/css" />
+<style>
+ .actives{color: red;}
+</style>
 <div class="local">
     <div class="wrap">
         <span class="local-icon icon-font"></span>
-        <a href="${base}/">首页</a>
+        <a href="javascript:;">${channel.parent.title}</a>
         <em> &gt; </em>
         <a class="cur-page" href="${channel.url}">${channel.title}</a>
     </div>
@@ -25,32 +23,43 @@
 <div class="container">
     <div class="wrap">
         <div class="xueke clearfix bd-padding">
+        <div class="wrap-left">
+                <ul class="fst-lv-ul">
+                	 [@cms_channel_list parentId=channel.parent.id orderBy='4']
+				        [#list tag_list as b]
+				        <li [#if parentId??&&channel.id==b.id]class="active"[/#if]>
+				        <a href="${b.url}">${b.name}</a>
+				        </li>
+				        [/#list]
+				      [/@cms_channel_list]
+                </ul>
+           </div>
+               <div class="wrap-right">
                 <div class="article-list-wrap">
                     <ul class="report-list sm mb20">
-								     [@cms_content_page count='10' recommend='2'  orderBy='2' channelId=channel.id channelOption='1']
+								     [@cms_content_page count='10' recommend='2'  orderBy='4' channelId=channel.id channelOption='1']
 								      [#list tag_pagination.list as a]
-                        			<li>
-	                           		 <a class="hasImg clearfix" href="${a.url}" target="_blank">
-									      <div class="item clearfix" [#if a_index<1]style="border-top:none;"[/#if]>
-									          [#if a.typeImg??]
-									          <img width="108" height="108" src="${a.typeImg!}" alt="">
-									          [/#if]
-									          <div class="report-text">
-									            <h3>${a.title}</h3>
-									            <p>[#if a.typeImg??][@text_cut s=a.description len=116 append='...'/][#else][@text_cut s=a.description len=176 append='...'/][/#if]</p>
-									          	<div class="fl"><span class="ch">${a.ctgName}<em>${a.date?string("yyyy-MM-dd")}</em></span></div>
-									          </div>
-									          <em class="arrowBtn"></em>
-									      </div>
-	                           			 </a>
-                        			</li>
+	                        			<li>
+		                           		 <a class="hasImg clearfix" href="${a.url}" target="_blank">
+										      <div class="item clearfix" [#if a_index<1]style="border-top:none;"[/#if]>
+										          [#if a.typeImg??]
+										          <img width="108" height="108" src="${a.typeImg!}" alt="">
+										          [/#if]
+										          <div class="report-text">
+										            <h3>${a.title}</h3>
+										            <p>[#if a.typeImg??][@text_cut s=a.description len=116 append='...'/][#else][@text_cut s=a.description len=176 append='...'/][/#if]</p>
+										          	<div class="fl"><span class="ch">${a.ctgName}<em>${a.date?string("yyyy-MM-dd")}</em></span></div>
+										          </div>
+										          <em class="arrowBtn"></em>
+										      </div>
+		                           			 </a>
+	                        			</li>
 								       [/#list]
 								      [#if tag_pagination.list?size>0]
 										 [#include "../include/page.html"/]
 									  [/#if]
 								    [/@cms_content_page]
                     </ul>
-                   <!-- <a href="javascript:;" data-index="2" class="loading-more icon-font">浏览更多</a> -->
                 </div>
                 <div class="news-comments">		
            		 [#if channel.commentControl!=2]		  

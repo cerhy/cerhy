@@ -68,7 +68,9 @@
 					                           			 </a>
 				                        			</li>
 										          [/#list]
-										          [#include "../include/page.html"/]
+										          [#if tag_pagination.list?size>0]
+										          	[#include "../include/page.html"/]
+										          [/#if]
 									        [/@cms_content_page]
 									        </ul>
 										 </ul>
