@@ -143,9 +143,8 @@
                    <ul>
                        [#if focusMax?? ]
 		                 [#list focusMax as c]
-		                 
-		                      [#if c.userImg??]<img src="${c.userImg}" width="40" height="40" alt="" >
-		                      [#else]<img src="/${res}/images/userImg-large.png" width="40" height="40" alt="">
+		                      [#if c.userImg??]<img src="${c.userImg}" width="40" height="40" alt="" style="float: left;padding: 5px 15px 0 23px">
+		                      [#else]<img src="/${res}/images/userImg-large.png" width="40" height="40" alt="" style="float: left;padding: 5px 15px 0 23px">
 		                      [/#if]
 		                      <a href="${base}/blog/find_all_url_friend.jspx?userIds=${c.id}">${c.username}</a>
 		                 
