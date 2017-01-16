@@ -1,6 +1,6 @@
 ﻿//初始化页面元素
 $(function(){
-	$(".xueke-content-detail").mousedown(function(e){
+	$(".xueke-content-detail").mouseup(function(e){
 		var selectedText ;
 		if(window.getSelection) {
 			selectedText = window.getSelection().toString();
@@ -55,6 +55,7 @@ function addPostil() {
 	, function(){
 		var value = document.getElementById("postil").value;
 		var postilUserId = document.getElementById("postilUserId").value;
+		var postilUserName = document.getElementById("postilUserName").value;
 		if(!value){
 			art.dialog({
 				content:'批注内容不能为空！', time: 1
@@ -80,7 +81,7 @@ function addPostil() {
 			var id = RegExp.$1,
 			comment = RegExp.$2,
 			c = RegExp.$3;
-			var reHtml = "<ins id='"+id+"' comment='"+comment+"' postilUserName="+postilUserId+"' class='postil' >"+c+"</ins>";
+			var reHtml = "<ins title=批注人:"+postilUserName+"批注内容:"+comment+" id='"+id+"' comment='"+comment+"' postilUserId='"+postilUserId+"' class='postil' >"+c+"</ins>";
 			content = content.replace(reg, reHtml);
 			$(".xueke-content-detail").html(content);
 		}else if(ie_range) {
@@ -94,8 +95,11 @@ function addPostil() {
 function loader(){
 	var $list = $(".list");
 	$list.children().remove();
+	var postilUserId = document.getElementById("postilUserId").value;
 	$.each($(".xueke-content-detail ins"), function(a, b){
 		var content = $(b).attr("comment");
+		var userId = $(b).attr("postilUserId");
+		if(postilUserId==userId){
 		var $postil = $("<div forid='"+$(b).get(0).id+"'>"+content+"<span onClick='removePostil(this)'>　　x</span></div>");
 		$postil.hover(function(){
 			$(this).css("border-color", "red");
@@ -109,13 +113,23 @@ function loader(){
 		$(b).hover(function(){
 			$(this).removeClass().addClass("postilFocus");
 			$("div[forid='"+$(this).get(0).id+"']").css("border-color", "red");
+			//$("em[id='"+$(this).get(0).id+"']").animate({opacity: "show", top: "-75"}, "slow"); 
+			//$("div[forid='"+$(this).get(0).id+"']").css("display", "inline");
 		}
 		,
 		function(){
 			$(this).removeClass().addClass("postil");
 			$("div[forid='"+$(this).get(0).id+"']").css("border-color", "#ddd");
+			//$("em[id='"+$(this).get(0).id+"']").animate({opacity: "hide", top: "-85"}, "fast");  
+			//$("div[forid='"+$(this).get(0).id+"']").css("display", "none");
 		});
 		$list.append($postil);
+		$("#saves").val($(".xueke-content-detail").html().trim());
+		}else{
+			$(this).removeClass("postil");
+			$(this).css("text-decoration", "none");
+			$(this).attr("title","");
+		}
 	});
 }
 //删除批注
@@ -128,40 +142,64 @@ function removePostil(arg){
 	loader();
 }
 
-function savePostil(userId,contentId){
-	$.ajax({
-        //url: "${base}/blog/savePostil.jspx",
-        type: "POST",
-        dataType:"json",
-        data: "",
-        success: function (data) {
-        	if(data.status>0){
-				
-        	}
-        }
-    });
-	alert($(".xueke-content-detail").html());
+
+//解析批注
+function loader2(){
+	var $list = $(".list");
+	var postilUserId = document.getElementById("postilUserId").value;
+	$list.children().remove();
+	$.each($(".xueke-content-detail ins"), function(a, b){
+		var content = $(b).attr("comment");
+		var userId = $(b).attr("postilUserId");
+		if(postilUserId==userId){
+			var $postil = $("<div forid='"+$(b).get(0).id+"'>"+content+"<span onClick='removePostil(this)'>　　x</span></div>");
+			$postil.hover(function(){
+				$(this).css("border-color", "red");
+				$("#"+$(this).attr("forid")+"").removeClass().addClass("postilFocus");
+			}
+			,
+			function(){
+				$(this).css("border-color", "#ddd");
+				$("#"+$(this).attr("forid")+"").removeClass().addClass("postil");
+			});
+			$(b).hover(function(){
+				$(this).removeClass().addClass("postilFocus");
+				$("div[forid='"+$(this).get(0).id+"']").css("border-color", "red");
+			}
+			,
+			function(){
+				$(this).removeClass().addClass("postil");
+				$("div[forid='"+$(this).get(0).id+"']").css("border-color", "#ddd");
+			});
+			$list.append($postil);
+			$("#saves").val($(".xueke-content-detail").html().trim());
+		}else{
+			$(this).removeClass("postil");
+			$(this).css("text-decoration", "none");
+			$(this).attr("title","");
+		}
+	});
 }
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+function savePostil(userId,contentId){
+	if($(".xueke-content-detail").html().trim()!=""){
+		$.ajax({
+			url: "${base}/blog/savePostil.jspx?contentId="+contentId+"&txt"+$(".xueke-content-detail").html().trim(),
+			type: "POST",
+			dataType:"json",
+			data: "",
+			success: function (data) {
+				if(data.status>0){
+					alert("批注保存成功!");
+				}else{
+					alert("批注保存失败!");
+				}
+			}
+		});
+	}else{
+		alert("文章没有进行批注不需要保存!");
+	}
+}
