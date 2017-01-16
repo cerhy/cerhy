@@ -138,7 +138,21 @@
                        <li><a  href="${base}/blog/link_list.jspx" ><em></em>链接管理</a></li>
                        <li><a  href="${base}/blog/friends.jspx" ><em></em>好友管理</a></li>
                        </ul>
-                </li>  
+                </li> 
+                <li style="cursor: pointer;"><a><em></em> 明星博主</a>
+                   <ul>
+                       [#if focusMax?? ]
+		                 [#list focusMax as c]
+		                 <div>
+		                      [#if c.userImg??]<img src="${c.userImg}" width="40" height="40" alt="" >
+		                      [#else]<img src="/${res}/images/userImg-large.png" width="40" height="40" alt="">
+		                      [/#if]
+		                      <a href="${base}/blog/find_all_url_friend.jspx?userIds=${c.id}">${c.username}</a></div>
+		                 </div>
+		                [/#list]
+		                [/#if]
+                   </ul>
+                </li> 
 		    </ul>
         </div>
      </div>

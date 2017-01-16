@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
 
+import com.jeecms.cms.dao.main.impl.BlogDao;
 import com.jeecms.cms.entity.main.Channel;
 import com.jeecms.cms.entity.main.Columns;
 import com.jeecms.cms.entity.main.Content;
@@ -23,6 +24,7 @@ import com.jeecms.cms.manager.main.impl.ColumnsMng;
 import com.jeecms.cms.manager.main.impl.FocusMng;
 import com.jeecms.core.entity.CmsSite;
 import com.jeecms.core.entity.CmsUser;
+import com.jeecms.core.manager.CmsUserMng;
 import com.jeecms.core.web.util.CmsUtils;
 
 public class BlogCommon {
@@ -183,6 +185,32 @@ public class BlogCommon {
 		return model;
 	}
 	
+	public ModelMap getMaxFocus(HttpServletRequest request,  ModelMap model){
+		String path = request.getSession().getServletContext().getRealPath("/");
+		List<Focus> list = (new BlogDao()).findMaxFocusCount( path);
+	    List<Focus> l = null;
+	    List<CmsUser> u = new ArrayList<CmsUser>();
+	    if(null != list){
+	    	if(list.size()>5){
+	    		l = new ArrayList<Focus>();
+	    		for(int i =0;i<5;i++){
+	    			l.add(list.get(i));
+	    		}
+	    	}
+	    	if(null != l){
+	    		for(Focus f : l){
+	    			u.add(cmsUserMng.findById(f.getFocusUserId()));
+	    		}
+	    	}else{
+	    		for(Focus f : list){
+	    			u.add(cmsUserMng.findById(f.getFocusUserId()));
+	    		}
+	    	}
+	    	model.addAttribute("focusMax", u);
+	    }
+	    return model;
+	}
+	
 	public boolean isNumeric(String str){ 
 		String regex = "[0-9]+";
 		   Pattern pattern = Pattern.compile(regex); 
@@ -228,6 +256,8 @@ public class BlogCommon {
 	}
 	
 	
+	@Autowired
+	protected CmsUserMng cmsUserMng;
 	@Autowired
 	protected ColumnsMng columnsMng;
 	@Autowired

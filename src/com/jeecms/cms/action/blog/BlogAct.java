@@ -55,22 +55,7 @@ public class BlogAct {
 	    model = blogCommon.getFriends(model,user);
 	    model = blogCommon.getTotalArticleNum(model,user);
  		model = blogCommon.getTotalCommentNum(model, user);
-	    String path = request.getSession().getServletContext().getRealPath("/");
-		List<Focus> list = (new BlogDao()).findMaxFocusCount( path);
-	    List<Focus> l = null;
-	    if(null != list){
-	    	if(list.size()>3){
-	    		l = new ArrayList<Focus>();
-	    		for(int i =0;i<3;i++){
-	    			l.add(list.get(i));
-	    		}
-	    	}
-	    	if(null != l){
-	    		model.addAttribute("focusMax", l);
-	    	}else{
-	    		model.addAttribute("focusMax", list);
-	    	}
-	    }
+	    model = blogCommon.getMaxFocus(request, model);
 		FrontUtils.frontData(request, model, site);
 		Pagination p = contentMng.getPageForMember_blog(q, queryChannelId,site.getId(), modelId,null,user.getGroup().getId(), cpn(pageNo), 20,null,null);
 		model.addAttribute("pagination", p);
@@ -120,6 +105,7 @@ public class BlogAct {
 	    model = blogCommon.getFriends(model,user);
 	    model = blogCommon.getTotalArticleNum(model,user);
  		model = blogCommon.getTotalCommentNum(model, user);
+ 		model = blogCommon.getMaxFocus(request, model);
 		FrontUtils.frontData(request, model, site);
 		return FrontUtils.getTplPath(request, site.getSolutionPath(),TPLDIR_BLOG,"tpl.blogSetting");
 	}
@@ -145,6 +131,7 @@ public class BlogAct {
 	    model = blogCommon.getFriends(model,user);
 	    model = blogCommon.getTotalArticleNum(model,user);
  		model = blogCommon.getTotalCommentNum(model, user);
+ 		model = blogCommon.getMaxFocus(request, model);
 		FrontUtils.frontData(request, model, site);
 		Pagination p = contentMng.getPageForMember_blog(q, queryChannelId,site.getId(), modelId,user.getId(),user.getGroup().getId(), cpn(pageNo), 20,columnId,channelId);
 		model.addAttribute("pagination", p);
@@ -167,6 +154,7 @@ public class BlogAct {
 	    model = blogCommon.getFriends(model,user);
 	    model = blogCommon.getTotalArticleNum(model,user);
  		model = blogCommon.getTotalCommentNum(model, user);
+ 		model = blogCommon.getMaxFocus(request, model);
 		if(hasPermission){
 			FrontUtils.frontData(request, model, site);
 			model.addAttribute("site", site);
@@ -263,6 +251,7 @@ public class BlogAct {
 		model = blogCommon.getFriends(model,user);
 		model = blogCommon.getTotalArticleNum(model,user);
  		model = blogCommon.getTotalCommentNum(model, user);
+ 		model = blogCommon.getMaxFocus(request, model);
 	/*	WebErrors errors = validateEdit(id, site, user, request);
 		if (errors.hasErrors()) {
 			return FrontUtils.showError(request, response, model, errors);
@@ -359,6 +348,7 @@ public class BlogAct {
 		model = blogCommon.getFriends(model,user);
 		model = blogCommon.getTotalArticleNum(model,user);
  		model = blogCommon.getTotalCommentNum(model, user);
+ 		model = blogCommon.getMaxFocus(request, model);
 		FrontUtils.frontData(request, model, site);
 		Pagination p = contentMng.getPageForMember(q, queryChannelId,site.getId(), modelId,user.getId(), cpn(pageNo), 20);
 		model.addAttribute("pagination", p);
@@ -442,6 +432,7 @@ public class BlogAct {
 		model = blogCommon.getFriends(model,user);
 		model = blogCommon.getTotalArticleNum(model,user);
  		model = blogCommon.getTotalCommentNum(model, user);
+ 		model = blogCommon.getMaxFocus(request, model);
 		Columns column = new Columns(Integer.parseInt(id),user.getId(),name,Integer.parseInt(orderId));
 		model.addAttribute("column", column);
 		FrontUtils.frontData(request, model, site);
@@ -486,23 +477,8 @@ public class BlogAct {
 		model = blogCommon.getFriends(model,userT);
  		model = blogCommon.getTotalArticleNum(model,userT);
  		model = blogCommon.getTotalCommentNum(model, userT);
+ 		model = blogCommon.getMaxFocus(request, model);
 		FrontUtils.frontData(request, model, site);
-		String path = request.getSession().getServletContext().getRealPath("/");
-		List<Focus> list = (new BlogDao()).findMaxFocusCount( path);
-	    List<Focus> l = null;
-	    if(null != list){
-	    	if(list.size()>3){
-	    		l = new ArrayList<Focus>();
-	    		for(int i =0;i<3;i++){
-	    			l.add(list.get(i));
-	    		}
-	    	}
-	    	if(null != l){
-	    		model.addAttribute("focusMax", l);
-	    	}else{
-	    		model.addAttribute("focusMax", list);
-	    	}
-	    }
 		Pagination p = contentMng.getPageForMember_firendsBlog(Integer.valueOf(userIds),q, queryChannelId,site.getId(), modelId,user.getId(), cpn(pageNo), 20,null);
 		model.addAttribute("pagination", p);
 		model.addAttribute("usert", userT);
@@ -538,6 +514,7 @@ public class BlogAct {
 		model = blogCommon.getFriends(model,user);
 		model = blogCommon.getTotalArticleNum(model,user);
  		model = blogCommon.getTotalCommentNum(model, user);
+ 		model = blogCommon.getMaxFocus(request, model);
 		model.addAttribute("usert", user);
 		model.addAttribute("userIds", user.getId());
 		model.addAttribute("columnId", columnId);
@@ -550,22 +527,6 @@ public class BlogAct {
 		if (modelId != null) {
 			model.addAttribute("modelId", modelId);
 		}
-		String path = request.getSession().getServletContext().getRealPath("/");
-		List<Focus> list = (new BlogDao()).findMaxFocusCount( path);
-	    List<Focus> l = null;
-	    if(null != list){
-	    	if(list.size()>3){
-	    		l = new ArrayList<Focus>();
-	    		for(int i =0;i<3;i++){
-	    			l.add(list.get(i));
-	    		}
-	    	}
-	    	if(null != l){
-	    		model.addAttribute("focusMax", l);
-	    	}else{
-	    		model.addAttribute("focusMax", list);
-	    	}
-	    }
 		return FrontUtils.getTplPath(request, site.getSolutionPath(), TPLDIR_BLOG, nextUrl);
 	}
 	
