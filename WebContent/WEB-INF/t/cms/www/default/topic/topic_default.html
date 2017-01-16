@@ -49,7 +49,9 @@
                          			 </a>
                      			</li>
 					       [/#list]
+					     [#if tag_pagination.list?size>0]  
 					    [#include "../include/page.html"/]
+					    [/#if]
 					    [/@cms_content_page]
                     </ul>
                    <!-- <a href="javascript:;" data-index="2" class="loading-more icon-font">浏览更多</a> -->
