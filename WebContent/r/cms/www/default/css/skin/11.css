@@ -1,24 +1,23 @@
+/* view 10 */
 .blogBody{
 	width:100%;
-	background: #e3ebf0 url(07.jpg) no-repeat center top;
+	background:#e1e1e1  url(11.jpg) no-repeat center top;
 }
-.header-top {background: #e3ebf0;border-bottom:0px;}
+.header-top {background: #e1e1e1;border-bottom:0px;}
 .footer_style {
-	background : #e3ebf0; 
+	background: #e1e1e1; 
 }
-.blogHead,.tj{color: #808080;}
-
-#title1{
-	color: #808080;
-}
+.blogHead,.tj{color: #465715;}
 .tj{
-	padding-bottom:70px;
+	padding-bottom:80px;
 }
-.user-center-left .user-menu-links, .personCenter-userInfo, .user-center-left .user-setting {
-   background: #e7e7e7;
-} 
+#title1{
+	color: #465715;
+}
 
-td {border: 1px solid #fff;}
+.user-center-left .user-menu-links, .personCenter-userInfo, .user-center-left .user-setting {
+   background: #E7E7E7;
+} 
 
 .user-center-left .user-menu-links li{
 	margin-top:-1px;
@@ -43,13 +42,11 @@ td {border: 1px solid #fff;}
 #_goPs{
 	background: transparent;
 }
-.inp1{border-color:transparent;}
 .tggl .tggl-top {background: transparent;}
 body, button, input, select, textarea { background: transparent;}
 .tggl a {color:#666666;}
 .a2{color:#666666;}
 .inp2{color:#666666;}
-.tggl td{border-color:#808080;}
-.tggl table{border-color:#808080;}
+.tggl td{border-color:#666666;}
+.tggl table{border-color:#666666;}
 .tggl-top{background:transparent;}
-	
