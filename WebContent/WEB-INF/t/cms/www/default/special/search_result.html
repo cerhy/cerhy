@@ -4,22 +4,22 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>全文检索列表 - ${site.name}</title>
-<link href="${resSys}/front.css" rel="stylesheet" type="text/css"/>
-<link href="${resSys}/jqueryUI/jquery.ui.css" rel="stylesheet" type="text/css"/>
-<link type="text/css" rel="stylesheet" href="/${res}/css/hyindex.css" />
+<link rel="shortcut icon" href="/${res}/images/cerhyheard.png" type="image/x-icon" />
 <script src="${resSys}/jquery.js" type="text/javascript"></script>
 <script src="${resSys}/jqueryUI/jquery-ui.js" type="text/javascript"></script>
 <script src="${resSys}/front.js" type="text/javascript"></script>
-<script src="/${res}/js/common.js" type="text/javascript"></script>
-
-
+<script src="${resSys}/ckplayer/ckplayer.js" type="text/javascript"></script>
+<script src="${resSys}/ckplayer/offlights.js" type="text/javascript"></script>
+<link type="text/css" rel="stylesheet" href="/${res}/css/main.css" />
+<link type="text/css" rel="stylesheet" href="/${res}/css/custom.css" />
+<link href="${resSys}/jqueryUI/jquery.ui.css" rel="stylesheet" type="text/css" />
 [#include "../hyinclude/header.html"/]
 <div class="main container clearfix">
   <section class="content_w850">
     [#if q??]
     [@cms_lucene_page q='q' channelId=channelId startDate=startDate endDate=endDate descLen='170' append='...' count='10' ]
-    <div class="searchNav" style="margin-left: 0px;">您搜索的“<span>${input!}</span>”， 共有<span>${tag_pagination.totalCount!}</span>个结果</div>
-    <div class="searchList">
+    <div class="searchNav" style="margin-left: 0px;">您搜索的“<span style="color: red;">${input!}</span>”， 共有<span style="color: red;">${tag_pagination.totalCount!}</span>个结果</div>
+    <div class="searchList" style="min-height: 250px;">
       [#list tag_list as s]
       <div class="item">
         <div class="search-title"><a href="${s.url}" title="${s.title}" target="_blank">${s.title?replace('${q!}', "<span>${q!}</span>")}</a></div>
@@ -33,11 +33,13 @@
       </div>
       [/#list]
     </div>
+    [#if tag_list?size>0]
     [#include "../include/page.html"/]
+    [/#if]
      [/@cms_lucene_page]	  
      [/#if]
   </section>
-</div>
 </body>
-[#include "../hyinclude/end.html"/]
+[#include "../include/footer.html"/]
+</div>
 </html>
