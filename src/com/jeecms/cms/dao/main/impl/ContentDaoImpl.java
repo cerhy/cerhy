@@ -1194,6 +1194,11 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 				+ " and bean.model.id in (11,21,24)"
 				+ " and bean.user.id="+user.getId();
 		Query query = getSession().createQuery(hql);
-		return ((Number) (query.iterate().next())).intValue();
+		if(null != query.iterate() && null != query.iterate().next()){
+			return ((Number) (query.iterate().next())).intValue();
+		}else{
+			return 0 ;
+		}
+		
 	}
 }
