@@ -102,7 +102,7 @@
 		;
 	});
 </script>
-<script type="text/javascript">
+<!-- <script type="text/javascript">
 $(function() {
 	
 	$.ajax({
@@ -128,7 +128,7 @@ $(function() {
     	   Cms.collect_blog("${base}","${content.id!}",0,"cancelSpan","comfirmSpan");
        });
 });
-</script>
+</script> -->
 <body class="bodybg">
 [#include "../hyinclude/header.html"/]
 <div class="local">
@@ -159,8 +159,8 @@ $(function() {
 						 <span class="pr15">来源：${content.origin!'本站原创'}</span> 
 						 <span class="pr15 yuedu">浏览次数：<span id="views"></span></span> 
 						 <span class="pr15 pinglun">评论：${content.commentsCheckedNum!} </span>
-					     <span id="comfirmSpan" style="display:none;cursor: pointer;">转载</span>
-					     <span id="cancelSpan" style="display:none; cursor: pointer;">取消转载</span>
+					     <!-- <span id="comfirmSpan" style="display:none;cursor: pointer;">转载</span>
+					     <span id="cancelSpan" style="display:none; cursor: pointer;">取消转载</span> -->
 					</p>
 					<div class="xueke-content-detail">
 						[#if preview??] [@text_cut s=txt! len=100 append="..."/]<br />
