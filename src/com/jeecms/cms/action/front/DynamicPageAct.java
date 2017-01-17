@@ -224,14 +224,14 @@ public class DynamicPageAct {
 		//非终审文章
 		CmsConfig config=CmsUtils.getSite(request).getConfig();
 		Boolean preview=config.getConfigAttr().getPreview();
-		if(config.getViewOnlyChecked()&&!content.getStatus().equals(ContentCheck.CHECKED)){
+		/*if(config.getViewOnlyChecked()&&!content.getStatus().equals(ContentCheck.CHECKED)){
 			return FrontUtils.showMessage(request, model, CONTENT_STATUS_FORBIDDEN);
-		}
+		}*/
 		CmsUser user = CmsUtils.getUser(request);
 		CmsSite site = content.getSite();
 		Set<CmsGroup> groups = content.getViewGroupsExt();
 		int len = groups.size();
-		// 需要浏览权限
+		/*// 需要浏览权限
 		if (len != 0) {
 			// 没有登录
 			if (user == null) {
@@ -258,9 +258,9 @@ public class DynamicPageAct {
 				model.addAttribute("preview", preview);
 				model.addAttribute("groups", groups);
 			}
-		}
+		}*/
 		//收费模式
-		if(content.getCharge()){
+		/*if(content.getCharge()){
 			if(user==null){
 				session.setAttribute(request, response, "loginSource", "charge");
 				return FrontUtils.showLogin(request, model, site);
@@ -282,7 +282,7 @@ public class DynamicPageAct {
 					}
 				}
 			}
-		}
+		}*/
 		String txt = content.getTxtByNo(pageNo);
 		// 内容加上关键字
 		txt = cmsKeywordMng.attachKeyword(site.getId(), txt);
