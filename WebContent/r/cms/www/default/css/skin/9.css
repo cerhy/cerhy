@@ -17,7 +17,7 @@
 
 
 .user-center-left .user-menu-links, .personCenter-userInfo, .user-center-left .user-setting {
-   background: #F4F8FB
+   background: #F4F8FB;
 } 
 
 .user-center-left .user-menu-links li{
@@ -51,3 +51,5 @@ body, button, input, select, textarea { background: transparent;}
 .tggl td{border-color:#e7e7e7;}
 .tggl table{border-color:#e7e7e7;}
 .tggl-top{background:transparent;}
+.st_tree ul li a:hover {color:#0070b8;}
+

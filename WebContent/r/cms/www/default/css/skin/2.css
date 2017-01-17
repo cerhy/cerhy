@@ -38,9 +38,7 @@
 
 .tggl .tggl-top {background: transparent;}
 
-body, button, input, select, textarea {
-	 background: transparent;
-	}
-
+body, button, input, select, textarea {background: transparent;}
+.st_tree ul li a:hover {color:#0070b8;}
 	
 	
