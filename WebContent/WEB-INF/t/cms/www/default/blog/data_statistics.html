@@ -47,7 +47,8 @@ $('.user-menu-links li').click(function(){
         <div class="mb20 clearfix">
             [#include "blog_left.html"/]
             <div class="wrap-right" style="min-height: 661px;margin-left: 10px;width: 72%;">
-            <div style="padding-top: 5%;padding-left: 10%;width: 300px;height: 300px;" class="personCenter-userInfo">
+            <div class="personCenter-userInfo blog_right">
+          
 	                         基本信息:
 	            <ul style="padding-left: 50px;">
 				  <li  style="list-style-type: disc;">访问人次:${user.blogVisitNum!'0'} </li>
@@ -57,6 +58,7 @@ $('.user-menu-links li').click(function(){
 				  <li  style="list-style-type: disc;">文章被评数:${commentCount} </li>
 				</ul>
 			</div>
+			
             </div>
             </div>
             <div class="gonggao">
@@ -65,7 +67,7 @@ $('.user-menu-links li').click(function(){
              </div>
         </div>
 
-  </div>
+
   </div>
 [#include "model.html"/]
 [#include "../include/footer.html"/]
