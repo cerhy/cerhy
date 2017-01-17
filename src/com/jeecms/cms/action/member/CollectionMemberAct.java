@@ -92,15 +92,17 @@ public class CollectionMemberAct {
 			HttpServletRequest request, HttpServletResponse response,
 			ModelMap model) throws JSONException {
 		CmsUser user = CmsUtils.getUser(request);
-		String s = request.getParameter("CUId");
-		if(Integer.parseInt(s) == user.getId()){
-			try {
-				response.getWriter().println("1");
-			} catch (IOException e) {
-				e.printStackTrace();
+		if(null != user){
+			String s = request.getParameter("CUId");
+			if(Integer.parseInt(s) == user.getId()){
+				try {
+					response.getWriter().println("1");
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 			}
-			
 		}
+		
 	}
 	
 	@RequestMapping(value = "/member/collect.jspx")
