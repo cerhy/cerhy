@@ -113,11 +113,11 @@ $(function() {
 		},
 		success:function(data){
 			if(1 == data){
+				Cms.collectexist("${base}","${content.id!}","cancelSpan","comfirmSpan");
+			}else {
 				$("#cancelSpan").hide();
 				$("#comfirmSpan").hide();
-			}else{
-				Cms.collectexist("${base}","${content.id!}","cancelSpan","comfirmSpan");
-		}
+		    }
 	  }
 	});
 	

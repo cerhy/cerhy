@@ -94,7 +94,7 @@ public class CollectionMemberAct {
 		CmsUser user = CmsUtils.getUser(request);
 		if(null != user){
 			String s = request.getParameter("CUId");
-			if(Integer.parseInt(s) == user.getId()){
+			if(Integer.parseInt(s) != user.getId()){
 				try {
 					response.getWriter().println("1");
 				} catch (IOException e) {
@@ -102,7 +102,6 @@ public class CollectionMemberAct {
 				}
 			}
 		}
-		
 	}
 	
 	@RequestMapping(value = "/member/collect.jspx")
