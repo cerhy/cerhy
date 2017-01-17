@@ -32,7 +32,7 @@
         <div class="xueke clearfix bd-padding">
                 <div class="article-list-wrap">
                     <ul class="report-list sm mb20">
-					     [@cms_content_page count='5' recommend='2'  orderBy='4' topicId='4' channelOption='1']
+					     [@cms_content_page count='5000' recommend='2'  orderBy='4' topicId='4' channelOption='1']
 					      [#list tag_pagination.list as a]
                      			<li>
                          		 <a class="hasImg clearfix" href="${a.url}" target="_blank">
@@ -49,9 +49,7 @@
                          			 </a>
                      			</li>
 					       [/#list]
-					     [#if tag_pagination.list?size>0]  
 					    [#include "../include/page.html"/]
-					    [/#if]
 					    [/@cms_content_page]
                     </ul>
                    <!-- <a href="javascript:;" data-index="2" class="loading-more icon-font">浏览更多</a> -->
