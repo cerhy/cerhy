@@ -1405,9 +1405,7 @@ a:hover{
     vertical-align: middle;
     margin-left: 35px;
 }
-.personCenter-userInfo .tab-content{
-    padding: 35px 35px;
-}
+
 .personCenter-userInfo .user-info-dtTable{width: 100%;table-layout: fixed;}
 .personCenter-userInfo .user-info-dtTable td,.personCenter-userInfo .user-info-dtTable th{
     padding-bottom: 25px;
