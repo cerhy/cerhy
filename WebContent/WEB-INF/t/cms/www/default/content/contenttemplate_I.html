@@ -164,22 +164,11 @@ $(function() {
 					     <span id="comfirmSpan" style="display:none;cursor: pointer;">转载</span>
 					     <span id="cancelSpan" style="display:none; cursor: pointer;">取消转载</span>
 					</p>
-					<!-- [#if channel.parent.parent.id==98]
-					<div id="icon" style="display: none; position: absolute;" title="添加批注">
-					<img src="/${res}/images/tips.png" class="tipsIcon">
-					</div>
-					<input id="postilUserName" value="${user.username}" style="display: none;">
-					<input id="postilUserId" value="${user.id}" style="display: none;">
-					[/#if] -->
 					<div class="xueke-content-detail">
 						[#if preview??] [@text_cut s=txt! len=100 append="..."/]<br />
 						您需要更高的权限浏览全部内容!<br />以下会员组可浏览全部内容: [#list groups as g]
 						${g.name!}[#if g_has_next],[/#if] [/#list] [#else] ${txt!} [/#if]
 					</div>
-					<!-- <input type="button" value="保存我的批注" onclick="savePostil(${user.id},${content.id})" />
-					<input id="saves" value="">
-					<div class="list"></div>
-  					<input type="button" value="加载批注" onclick="loader()" /> -->
 				<div class="content-txt">
 			     [#if content.mediaPath?? && content.mediaType??]
 				        <div class="video-con clearfix">
@@ -267,24 +256,3 @@ $(function() {
 	<script src="/${res}/js/main.js"></script>
 </body>
 </html>
-<!-- <script type="text/javascript">
-loader2();
-
-
-function savePostil(userId,contentId){
-	alert("===="+$("#saves").val());
-	$.ajax({
-        url: "${base}/blog/savePostil.jspx?contentId="+contentId+"&txt="+$("#saves").val(),
-        type: "POST",
-        dataType:"json",
-        data: "",
-        success: function (data) {
-        	if(data.status>0){
-				alert("批注保存成功!");
-        	}else{
-        		alert("批注保存失败!");
-        	}
-        }
-    });
-}
-</script> -->
