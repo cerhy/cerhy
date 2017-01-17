@@ -198,11 +198,11 @@ $(function(){
              <div class="wrap-right " >
 				<div class="personCenter-userInfo blog_right" >
              <div class=" tggl fbgj">
-          [#if channelList?size gt 0]
+
           [#include "media_upload.html"/]
           [#include "image_upload.html"/]
           [#include "attachment_upload.html"/]
-          <form id="jvForm" action="${base}/member/contribut_update.jspx?blog='1'" method="post">
+          <form id="jvForm" action="${base}/member/contribute_update.jspx?blog='1'" method="post">
           <table cellpadding="0" cellspacing="0">
             <tbody>
               <tr>
@@ -377,13 +377,9 @@ $(function(){
 						</div>
 						<script type="text/javascript">
 						var picIndex = ${content.pictures?size} ;
-						var picTpl = $.format($("#picTable").html
-
-());
+						var picTpl = $.format($("#picTable").html());
 						function addPicLine() {
-							$('#picBefore').before(picTpl
-
-(picIndex++));
+							$('#picBefore').before(picTpl(picIndex++));
 						}
 						</script>
                 </td>
@@ -400,9 +396,7 @@ $(function(){
             </tbody>
           </table>
           </form>
-            [#else]
-            <div>系统不允许发布博客，请联系管理员！</div>
-            [/#if]
+           
         </div>
             </div>
             </div>
