@@ -66,15 +66,13 @@ $(function(){
           <table cellpadding="0" cellspacing="0" >
             <tbody>
               <tr class="tit1">
-                 <td class="tggl-top" style="min-width:40px;">ID</td>
-                <td class="tggl-top" style="min-width:380px;">标题</td>
+                <td class="tggl-top" style="min-width:420px;">标题</td>
 				<td class="tggl-top" style="min-width:40px;">点击</td>
 				<td class="tggl-top" style="min-width:80px;">发布时间</td>
 				<td class="tggl-top" style="min-width:60px;">操作</td>
               </tr>
               [#list pagination.list as c]
               <tr>
-                <td>${c.id}</td>
                 <td style="text-align:left; text-indent:5px;"><a href="${c.url!}" target="_blank" class="a2">[@text_cut s=c.title?html len='24' append='...'/]</a></td>
                 <td>${c.views}</td>
                 <td>${c.releaseDate?string('yyyy-MM-dd')}</td>
