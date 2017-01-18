@@ -121,6 +121,12 @@
 					[#include "../content/picture.html"/] 
 					<!-- 分页 -->
 					<div class="pagebar">[#include "../style_page/content.html"/]</div>
+					<div class="inter clearfix"> 
+			      [#if channel.allowUpdown]
+			      <div class="downs" title="踩" ><a onclick="Cms.down('${base}',${content.id},${content.downs});"><span id="downs"></span></a></div>
+			      <div class="ups" title="赞"><a onclick="Cms.up('${base}',${content.id},${content.ups});"><span id="ups"></span></a></div>
+			      [/#if]
+			    </div>
                     <div class="prev-next-wz clearfix">
                     [@cms_content id=content.id next='1' channelId=channel.id]
                     	[#if tag_bean??]

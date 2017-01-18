@@ -251,5 +251,20 @@ padding-top: 32px;
     }
 .inp1{width:50px; border:1px solid #e7e7e7;}
  
- 
+ .inter{margin:60px 0 20px;}
+.inter > div{float:right;}
+.reward{width:100%; text-align:center; margin:20px 0 40px;; background:url(../images/ds_bj.png) center center no-repeat; height:130px;}
+.reward a{width:100px; height:100px; display:inline-block; background:url(../images/ds_btn.png) center center no-repeat; margin-top:15px;}
+.reward a:hover{background:url(../images/ds_btn_on.png) center center no-repeat;}
+.inter .ups{}
+.inter .ups a{width:70px; height:70px; border-radius:100%; -moz-border-radius:100%; -o-border-radius:100%; -webkit-border-radius:100%; border:1px solid #1e8dff; text-align:center; line-height:44px; background:#fff; color:#4d4c4c; font-size:13px; display:block; cursor:pointer; position:relative;}
+.inter .ups a:before{width:17px; height:17px; display:block; position:absolute; content:""; bottom:13px; left:27px; background:url(../images/content-ups.png) top center no-repeat;}
+.inter .ups a:hover{ box-shadow:0px 0px 8px rgba(30,141,255,.8); -moz-box-shadow:0px 0px 8px rgba(30,141,255,.8); -webkit-box-shadow:0px 0px 8px rgba(30,141,255,.8);}
+.inter .downs{margin-left:36px;}
+.inter .downs a{width:70px; height:70px; border-radius:100%; -moz-border-radius:100%; -o-border-radius:100%; -webkit-border-radius:100%; border:1px solid #999999; text-align:center; line-height:44px; background:#fff; color:#4d4c4c; font-size:13px; display:block; cursor:pointer; position:relative;}
+.inter .downs a:before{width:17px; height:17px; display:block; position:absolute; content:""; bottom:13px; left:27px; background:url(../images/content-downs.png) top center no-repeat;}
+.inter .downs a:after{width:19px; height:32px; display:block; position:absolute; content:""; bottom:20px; right:-150px; background:url(../images/inter.png) top center no-repeat;}
+.inter .downs a:hover{ box-shadow:0px 0px 8px rgba(153,153,153,.8); -moz-box-shadow:0px 0px 8px rgba(153,153,153,.8); -webkit-box-shadow:0px 0px 8px rgba(153,153,153,.8);}
+.inter .score{float:right;}
+.inter .score li{margin-left:4px;}
  
