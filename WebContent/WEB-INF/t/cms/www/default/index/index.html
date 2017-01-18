@@ -318,17 +318,39 @@ function HoverLi(x,y,m,n,counter){
                             </ul>
                         </div>
                     </div>
-                    <div class="info-div">
-                       <div class="info-div-head clearfix">
+                    <div class="info-div">                    
+                         <div class="info-div-head clearfix">
                             <h3>
-                                <span>党群建设</span>
+                                <span>职业教育</span>
                             </h3>
-                            [@cms_channel id='260']<a href="${tag_bean.url}" class="more" title="更多" target="_blank"></a>[/@cms_channel ]
+                            <div class="info-tab-head">
+                            	 [@cms_channel_list parentId='100' orderBy='4']
+							        [#list tag_list as b]
+							        	[#if b_index=0]
+							       		 <a href="javascript:;" class="active">${b.name }<em></em></a>
+							       		 [#else]
+									        	[#if b_index=1]
+						                             <a href="javascript:;">${b.name }</a>
+									       		 [/#if]
+							       		 [/#if]
+							        [/#list]
+					        	[/@cms_channel_list]
+                            </div>
+                            [@cms_channel id='100']
+                            	<a href="${tag_bean.url}" class="more" title="更多" target="_blank"></a>
+					        [/@cms_channel ]
                         </div>
                         <div class="info-div-content">
-                            <ul class="has-dot-list">
-                                [@cms_content_list  channelId='260' count='8' titLen='14' orderBy='2' channelOption='1'][#list tag_list as a]<li><a href="${a.url}" class="of" target="_blank">[@text_cut s=a.title len=titLen append='...'/]<span class="gray9">(${a.releaseDate?string('MM-dd')})</span></a></li>[/#list][/@cms_content_list]
-                            </ul>
+                            <div class="info-tab-content" style="display: block;">
+                                <ul class="has-dot-list">
+                                 [@cms_content_list  channelId='178' count='8' titLen='15' orderBy='2' channelOption='1'][#list tag_list as a]<li><a href="${a.url}" class="of" target="_blank">[@text_cut s=a.title len=titLen append='...'/]<span class="gray9">(${a.releaseDate?string('MM-dd')})</span></a></li>[/#list][/@cms_content_list]
+                                </ul>
+                            </div>
+                            <div class="info-tab-content">
+                                <ul class="has-dot-list">
+                                  [@cms_content_list  channelId='181' count='8' titLen='15' orderBy='2' channelOption='1'][#list tag_list as a]<li><a href="${a.url}" class="of" target="_blank">[@text_cut s=a.title len=titLen append='...'/]<span class="gray9">(${a.releaseDate?string('MM-dd')})</span></a></li>[/#list][/@cms_content_list]
+                                </ul>
+                            </div>
                         </div>
                     </div>
                     <div class="info-div">                    
@@ -368,7 +390,20 @@ function HoverLi(x,y,m,n,counter){
                     </div>
                 </div>
                 <div class="info-wrap clearfix">
-                    <div class="info-div long-info-div">
+                  <div class="info-div">
+                       <div class="info-div-head clearfix">
+                            <h3>
+                                <span>党群建设</span>
+                            </h3>
+                            [@cms_channel id='260']<a href="${tag_bean.url}" class="more" title="更多" target="_blank"></a>[/@cms_channel ]
+                        </div>
+                        <div class="info-div-content">
+                            <ul class="has-dot-list">
+                                [@cms_content_list  channelId='260' count='8' titLen='14' orderBy='2' channelOption='1'][#list tag_list as a]<li><a href="${a.url}" class="of" target="_blank">[@text_cut s=a.title len=titLen append='...'/]<span class="gray9">(${a.releaseDate?string('MM-dd')})</span></a></li>[/#list][/@cms_content_list]
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="info-div">
                          <div class="info-div-head clearfix">
                             <h3>
                                 <span>教育学会</span>
@@ -377,11 +412,11 @@ function HoverLi(x,y,m,n,counter){
                         </div>
                         <div class="info-div-content">
                             <ul class="has-dot-list">
-                                [@cms_content_list  channelId='266' count='8' titLen='24' orderBy='2' channelOption='1'][#list tag_list as a]<li><a href="${a.url}" class="of" target="_blank">[@text_cut s=a.title len=titLen append='...'/]<span class="gray9">(${a.releaseDate?string('MM-dd')})</span></a></li>[/#list][/@cms_content_list]
+                                [@cms_content_list  channelId='266' count='8' titLen='14' orderBy='2' channelOption='1'][#list tag_list as a]<li><a href="${a.url}" class="of" target="_blank">[@text_cut s=a.title len=titLen append='...'/]<span class="gray9">(${a.releaseDate?string('MM-dd')})</span></a></li>[/#list][/@cms_content_list]
                             </ul>
                         </div>
                     </div>
-                    <div class="info-div long-info-div">
+                    <div class="info-div">
                         <div class="info-div-head clearfix">
                             <h3>
                                 <span>博客推荐</span>
@@ -390,17 +425,17 @@ function HoverLi(x,y,m,n,counter){
                         </div>
                         <div class="info-div-content">
                             <ul class="blog-content-list">
-                            	 [@cms_content_list channelId='280' count='3' typeId='5' titLen='24' orderBy='2' channelOption='1']
+                            	 [@cms_content_list channelId='280' count='3' typeId='5' titLen='14' orderBy='2' channelOption='1']
                             	[#list tag_list as a]
                                 <li>
                                     <a href="${a.url}">
                                         <span class="trend"></span>
                                         <div class="con clearfix">
-                                        	[#if a.typeImg??]<img src="${a.typeImg!}" width="70" height="70" alt="" class="blog-left-img">[#else]<img src="/${res}/images/blog1.png" width="70" height="70" alt="" class="blog-left-img">[/#if]                                                                    
-                                            <div class="con-right">
-                                                <h4 class="of">【[@text_cut s=a.title len=titLen append='...'/]】</h4>
+                                        	[#if a.typeImg??]<img src="${a.typeImg!}" width="40" height="40" alt="" class="blog-left-img">[#else]<img src="/${res}/images/blog1.png" width="70" height="70" alt="" class="blog-left-img">[/#if]                                                                    
+                                            <div class="con-right" style="width: 50px;">
+                                                <h4 class="of">【[@text_cut s=a.title len=8 append='...'/]】</h4>
                                                 <p class="small-con of"> [@text_cut s=a.description! len=titLen append='...' /]</p>
-                                                <div class="time-num clearfix">
+                                                <div class="time-num clearfix" style="width: 190px;">
                                                     <span class="comments pinglun">评论 <em>${a.commentsCheckedNum!0}</em></span>
                                                     <span class="time gray9">${a.releaseDate?string('yyyy-MM-dd')}</span>
                                                 </div>
