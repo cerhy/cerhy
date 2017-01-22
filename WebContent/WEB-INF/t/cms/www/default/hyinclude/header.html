@@ -46,6 +46,21 @@ function qkeypress(){
 	  position:absolute;
 	}
 	</style>
+	<style>
+	.dropdown {
+	  position: relative;
+	  display: inline-block;
+	}
+	.dropdown-content {
+	  display: none;
+	  position: absolute;
+	  background-color: #f9f9f9;
+	  padding: 12px 16px;
+	}
+	.dropdown:hover .dropdown-content {
+	  display: block;
+	}
+</style>
 </head>
 <body class="bodybg">
 <div class="header">
@@ -62,7 +77,15 @@ function qkeypress(){
                     <li><a href="${base}/">首页</a><em></em></li> 
                     <li><a href="http://edu.cerhy.com/" target="_blank">综合素质测评</a><em></em></li> 
                     <li><a href="#">官方客服</a><em></em></li>
-                    <li><a href="#">官方微信</a><em></em></li>
+                    <li>
+                    <div class="dropdown">
+					  <a href="#"><span>官方微信</span></a>
+					  <div class="dropdown-content">
+					    <p><img alt="" src="/${res}/images/cerhywechat.png" width="150px"></p>
+					  </div>
+					</div>
+                    <em></em>
+                    </li>
          			[#if user?? && !status??]
 	         			<div class="login-user">
 		         			<a>[#if user.userImg??]<img src="${user.userImg}">[#else]<img src="/${res}/images/userImg.png">[/#if]${user.username}<i id="showComment" class="showComment" style="display: none"></i></a>
