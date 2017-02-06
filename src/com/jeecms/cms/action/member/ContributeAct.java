@@ -822,7 +822,7 @@ public class ContributeAct extends AbstractContentMemberAct {
 	@RequestMapping(value = "/blog/friendDataStatistics.jspx")
 	public String friendDataStatistics(String userIds,String q,HttpServletRequest request,HttpServletResponse response, ModelMap model) {
 		CmsSite site = CmsUtils.getSite(request);
-		CmsUser user = CmsUtils.getUser(request);
+		//CmsUser user = CmsUtils.getUser(request);
 		CmsUser userT=cmsUserMng.findById(Integer.valueOf(userIds.toString()));
 		model = blogCommon.getColumn(request,model,userT);
 	    model = blogCommon.getChannel(request,model,userT,site);
@@ -854,4 +854,67 @@ public class ContributeAct extends AbstractContentMemberAct {
 	    FrontUtils.frontData(request, model, site);
 		return FrontUtils.getTplPath(request, site.getSolutionPath(),TPLDIR_BLOG, "tpl.friendDataStatistics");
 	}
+	
+	/**
+	 *查询访客 
+	 */
+	@RequestMapping(value = "/blog/visitor.jspx")
+	public String visitor(String queryTitle, Integer modelId,Integer queryChannelId, Integer pageNo,HttpServletRequest request,HttpServletResponse response, ModelMap model) {
+		CmsSite site = CmsUtils.getSite(request);
+		CmsUser user = CmsUtils.getUser(request);
+		request.getSession().getServletContext().getRealPath("/");
+		model = blogCommon.getLinks(model,user);
+		model = blogCommon.getFriends(model,user);
+		model = blogCommon.blog_focus_find(null,request,model);
+		model = blogCommon.getColumn(request,model,user);
+	    model = blogCommon.getChannel(request,model,user,site);
+	    model = blogCommon.getTotalArticleNum(model,user);
+ 		model = blogCommon.getTotalCommentNum(model, user);
+ 		model = blogCommon.getMaxFocus(request, model);
+ 		model = blogCommon.getAllVistor(request, model,user);
+ 		model = blogAct.getAllVisitors(queryTitle, modelId, queryChannelId,pageNo, request, model,user);
+		FrontUtils.frontData(request, model, site);
+		return FrontUtils.getTplPath(request, site.getSolutionPath(),TPLDIR_BLOG, "tpl.visitor");
+	}
+	
+	
+	/**
+	 *跳转好友数据统计页面方法 
+	 */
+	@RequestMapping(value = "/blog/friends_visitor.jspx")
+	public String friends_visitor(String userIds,String q,Integer modelId,Integer queryChannelId, Integer pageNo,HttpServletRequest request,HttpServletResponse response, ModelMap model) {
+		CmsSite site = CmsUtils.getSite(request);
+		CmsUser userT=cmsUserMng.findById(Integer.valueOf(userIds.toString()));
+		model = blogCommon.getColumn(request,model,userT);
+	    model = blogCommon.getChannel(request,model,userT,site);
+	    model = blogCommon.blog_focus_find(Integer.parseInt(userIds),request,model);
+	    model = blogCommon.getLinks(model,userT);
+		model = blogCommon.getFriends(model,userT);
+ 		model = blogCommon.getTotalArticleNum(model,userT);
+ 		model = blogCommon.getTotalCommentNum(model, userT);
+ 		model = blogCommon.getTotalCoverCommentNum(model, userT);
+ 		model = blogCommon.getTotalReadNum(model, userT);
+ 		model = blogAct.getAllVisitors(q, modelId, queryChannelId,pageNo, request, model,userT);
+		String path = request.getSession().getServletContext().getRealPath("/");
+		List<Focus> list = (new BlogDao()).findMaxFocusCount( path);
+	    List<Focus> l = null;
+	    if(null != list){
+	    	if(list.size()>3){
+	    		l = new ArrayList<Focus>();
+	    		for(int i =0;i<3;i++){
+	    			l.add(list.get(i));
+	    		}
+	    	}
+	    	if(null != l){
+	    		model.addAttribute("focusMax", l);
+	    	}else{
+	    		model.addAttribute("focusMax", list);
+	    	}
+	    }
+	    model.addAttribute("usert", userT);
+	    model.addAttribute("userIds", userIds);
+	    FrontUtils.frontData(request, model, site);
+		return FrontUtils.getTplPath(request, site.getSolutionPath(),TPLDIR_BLOG, "tpl.friends_visitor");
+	}
+	
 }

@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import com.jeecms.cms.entity.assist.CmsBlogVisitor;
 import com.jeecms.cms.entity.assist.CmsComment;
 import com.jeecms.cms.entity.main.Columns;
 import com.jeecms.cms.entity.main.Content;
@@ -242,6 +243,12 @@ public interface ContentMng {
 
 
 	public int getTotalReadNum(CmsUser user);
-	
+
+
+	public List<CmsBlogVisitor> getgetAllVistor(CmsUser user);
+
+
+	public Pagination getPageForMember_visitor(int pageNo, int pageSize, CmsUser user);
+
 	
 }

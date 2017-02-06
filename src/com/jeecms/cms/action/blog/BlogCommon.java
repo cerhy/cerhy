@@ -14,9 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
 
 import com.jeecms.cms.dao.main.impl.BlogDao;
+import com.jeecms.cms.entity.assist.CmsBlogVisitor;
 import com.jeecms.cms.entity.main.Channel;
 import com.jeecms.cms.entity.main.Columns;
-import com.jeecms.cms.entity.main.Content;
 import com.jeecms.cms.entity.main.Focus;
 import com.jeecms.cms.manager.main.ChannelMng;
 import com.jeecms.cms.manager.main.ContentMng;
@@ -255,6 +255,15 @@ public class BlogCommon {
 		return model;
 	}
 	
+	/**
+	 * 获取博客访问者/日期
+	 **/
+	public ModelMap getAllVistor(HttpServletRequest request, ModelMap model,CmsUser user) {
+		List<CmsBlogVisitor> visitorList=contentMng.getgetAllVistor(user);
+		model.addAttribute("visitorList", visitorList);
+		return model;
+	}
+	
 	
 	@Autowired
 	protected CmsUserMng cmsUserMng;
@@ -267,5 +276,7 @@ public class BlogCommon {
 	
 	@Autowired
 	private ContentMng contentMng;
+
+	
 
 }

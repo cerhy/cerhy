@@ -471,6 +471,9 @@ public class BlogAct {
 		if(user!=null){
 			CmsUser userT=cmsUserMng.findById(Integer.valueOf(userIds.toString()));
 			channelMng.updateBlogVisitNum(userT);
+			if(user.getId()!=userT.getId()){
+				channelMng.updateBlogVisitorTime(user,userT);
+			}
 			model = blogCommon.getColumn(request,model,userT);
 			model = blogCommon.getChannel(request,model,userT,site);
 			model = blogCommon.blog_focus_find(Integer.parseInt(userIds),request,model);
@@ -567,6 +570,19 @@ public class BlogAct {
 			response.getWriter().print("0");
 		}
 	}
+	
+	
+	public ModelMap getAllVisitors(String q, Integer modelId,
+			Integer queryChannelId, Integer pageNo, HttpServletRequest request,
+			ModelMap model, CmsUser user) {
+		Pagination visitorList = contentMng.getPageForMember_visitor(cpn(pageNo), 24,user);
+		model.addAttribute("pagination", visitorList);
+		return model;
+	}
+	
+	
+	
+	
 	
 	@Autowired
 	protected ColumnsMng columnsMng;
