@@ -123,7 +123,7 @@ public class ContributeAct extends AbstractContentMemberAct {
 	 * @return
 	 */
 	@RequestMapping(value = "/member/contribute_save.jspx")
-	public String save(String title, String author, String description,
+	public void save(String title, String author, String description,
 			String txt, String tagStr, Integer channelId,Integer columnId,Integer modelId, 
 			String captcha,String mediaPath,String mediaType,
 			String[] attachmentPaths, String[] attachmentNames,
@@ -133,12 +133,12 @@ public class ContributeAct extends AbstractContentMemberAct {
 			HttpServletResponse response, ModelMap model) {
 		   String blog = request.getParameter("blog");
 		   if(null != blog ){
-			  return blogAct.blog_save(title, author, description, txt, tagStr, channelId,columnId,modelId,
+			  blogAct.blog_save(title, author, description, txt, tagStr, channelId,columnId,modelId,
 						null, captcha,mediaPath,mediaType,attachmentPaths,attachmentNames, attachmentFilenames
 						,picPaths,picDescs,charge,chargeAmount,
 						nextUrl, request, response, model);
 					   }else{
-			   return super.save(title, author, description, txt, tagStr, channelId,modelId,
+			   super.save(title, author, description, txt, tagStr, channelId,modelId,
 						null, captcha,mediaPath,mediaType,attachmentPaths,attachmentNames, attachmentFilenames
 						,picPaths,picDescs,charge,chargeAmount,
 						nextUrl, request, response, model);

@@ -168,7 +168,7 @@ public class BlogAct {
 	}
 	
 		
-	public String blog_save(String title, String author, String description,
+	public void blog_save(String title, String author, String description,
 			String txt, String tagStr, Integer channelId,Integer columnId,Integer modelId,ContentDoc doc,
 			String captcha,String mediaPath,String mediaType,
 			String[] attachmentPaths, String[] attachmentNames,
@@ -180,7 +180,7 @@ public class BlogAct {
 				CmsUser user = CmsUtils.getUser(request);
 				FrontUtils.frontData(request, model, site);
 			if (user == null) {
-				return FrontUtils.showLogin(request, model, site);
+				FrontUtils.showLogin(request, model, site);
 			}
 
 		Content c = new Content();
@@ -226,13 +226,13 @@ public class BlogAct {
 		if(doc!=null){
 			contentDocMng.save(doc, c);
 		}
-		/*try {
-			request.getRequestDispatcher("/blog/index.jspx?").forward(request, response);
+		try {
+			response.sendRedirect("../blog/index.jspx");
 		} catch (Exception e) {
 			e.printStackTrace();
-		}*/
-		nextUrl += "/blog/index.jspx";
-		return FrontUtils.showSuccess(request, model, nextUrl);
+		}
+		/*nextUrl += "/blog/index.jspx";
+		return FrontUtils.showSuccess(request, model, nextUrl);*/
 	}
 	
 	public String blog_edit(Integer id, String nextUrl,HttpServletRequest request,
