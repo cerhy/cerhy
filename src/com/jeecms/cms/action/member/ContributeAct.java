@@ -464,7 +464,7 @@ public class ContributeAct extends AbstractContentMemberAct {
 	public String blog_columns_list(String queryTitle, Integer modelId,
 			Integer queryChannelId, Integer pageNo, HttpServletRequest request,
 			ModelMap model) {
-		return blogAct.blog_columns_list(queryTitle, modelId, queryChannelId, "tpl.columnsList",
+		return blogAct.blog_columns_list(queryTitle, modelId, queryChannelId, "tpl.",
 				pageNo, request, model);
 	}
 	
@@ -879,7 +879,7 @@ public class ContributeAct extends AbstractContentMemberAct {
 	
 	
 	/**
-	 *跳转好友数据统计页面方法 
+	 *好友访客页面 
 	 */
 	@RequestMapping(value = "/blog/friends_visitor.jspx")
 	public String friends_visitor(String userIds,String q,Integer modelId,Integer queryChannelId, Integer pageNo,HttpServletRequest request,HttpServletResponse response, ModelMap model) {
