@@ -150,6 +150,7 @@ public class BlogCommon {
 				String[] str = strs[i].split("=");
 				list.add(channelMng.findUserImage(str[1].toString()));
 			}
+			model.addAttribute("friends", friends.replaceAll(" ", "\r\n"));
 			//分页显示好友数据
 			List<CmsUser> listPage = new ArrayList<CmsUser>();
 			if(null != list && list.size()>0){
@@ -165,7 +166,9 @@ public class BlogCommon {
 				p = new Pagination(pageNo, 24, list.size());	
 				p.setList(listPage);
 			}
-		}	
+		}else{
+			model.addAttribute("friends", "");
+		}
 		model.addAttribute("pagination", p);
 		return model;
 	}

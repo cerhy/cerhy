@@ -591,6 +591,7 @@ public class ContributeAct extends AbstractContentMemberAct {
 		CmsUser user = CmsUtils.getUser(request);
 		model = blogCommon.getColumn(request,model,user);
 	    model = blogCommon.getChannel(request,model,user,site);
+	    model = blogCommon.getFriends(user.getId(), model, 1);
 	    model = blogCommon.getTotalArticleNum(model,user);
  		model = blogCommon.getTotalCommentNum(model, user);
  		model = blogCommon.getStarBlogger(request, model);
