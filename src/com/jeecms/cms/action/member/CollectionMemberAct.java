@@ -5,12 +5,6 @@ import static com.jeecms.cms.Constants.TPLDIR_BLOG;
 import static com.jeecms.common.page.SimplePage.cpn;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -23,9 +17,6 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.jeecms.cms.action.blog.BlogCommon;
-import com.jeecms.cms.dao.main.impl.BlogDao;
-import com.jeecms.cms.entity.main.Channel;
-import com.jeecms.cms.entity.main.Columns;
 import com.jeecms.cms.manager.main.ChannelMng;
 import com.jeecms.cms.manager.main.ContentMng;
 import com.jeecms.common.page.Pagination;
@@ -170,19 +161,25 @@ public class CollectionMemberAct {
 	@RequestMapping(value = "/blog/collection_list.jspx")
 	public String collection_list_blog(String queryTitle, Integer queryChannelId,
 			Integer pageNo, HttpServletRequest request,
-			HttpServletResponse response, ModelMap model) {
+			HttpServletResponse response, ModelMap model,String userId) {
 		CmsSite site = CmsUtils.getSite(request);
 		CmsUser user = CmsUtils.getUser(request);
+		int id;
+		if(null != userId){
+			id = Integer.parseInt(userId);
+		}else{
+			id = user.getId();
+		}
 		model = blogCommon.getColumn(request,model,user);
 	    model = blogCommon.getChannel(request,model,user,site);
-	    model = blogCommon.blog_focus_find(null,request,model);
-	    model = blogCommon.getLinks(model,user);
-		model = blogCommon.getFriends(model,user);
+//	    model = blogCommon.blog_focus_find(null,request,model);
+//	    model = blogCommon.getLinks(model,user);
+//		model = blogCommon.getFriends(model,user);
 		model = blogCommon.getTotalArticleNum(model,user);
  		model = blogCommon.getTotalCommentNum(model, user);
+ 		model.addAttribute("submitOn", 1);
 		FrontUtils.frontData(request, model, site);
-		Pagination p = contentMng.getPageForCollection(site.getId(), user
-				.getId(), cpn(pageNo), CookieUtils.getPageSize(request));
+		Pagination p = contentMng.getPageForCollection(site.getId(), id, cpn(pageNo), CookieUtils.getPageSize(request));
 		model.addAttribute("pagination", p);
 		if (!StringUtils.isBlank(queryTitle)) {
 			model.addAttribute("queryTitle", queryTitle);
@@ -190,8 +187,7 @@ public class CollectionMemberAct {
 		if (queryChannelId != null) {
 			model.addAttribute("queryChannelId", queryChannelId);
 		}
-		return FrontUtils.getTplPath(request, site.getSolutionPath(),
-				TPLDIR_BLOG, COLLECTION_LIST);
+		return FrontUtils.getTplPath(request, site.getSolutionPath(),TPLDIR_BLOG, COLLECTION_LIST);
 	}
 	
 	@RequestMapping(value = "/blog/collect_cancel.jspx")
@@ -207,7 +203,7 @@ public class CollectionMemberAct {
 		for(Integer  id:cIds){
 			userMng.updateUserConllection(user,id,0);
 		}
-		return collection_list_blog(null, null, pageNo, request, response, model);
+		return collection_list_blog(null, null, pageNo, request, response, model,null);
 	}
 	
 	@Autowired

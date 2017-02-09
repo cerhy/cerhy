@@ -251,7 +251,7 @@ padding-top: 32px;
     }
 .inp1{width:50px; border:1px solid #e7e7e7;}
  
- .inter{margin:60px 0 20px;}
+.inter{margin:60px 0 20px;}
 .inter > div{float:right;}
 .reward{width:100%; text-align:center; margin:20px 0 40px;; background:url(../images/ds_bj.png) center center no-repeat; height:130px;}
 .reward a{width:100px; height:100px; display:inline-block; background:url(../images/ds_btn.png) center center no-repeat; margin-top:15px;}
@@ -268,3 +268,25 @@ padding-top: 32px;
 .inter .score{float:right;}
 .inter .score li{margin-left:4px;}
  
+ /* 用户图像*/
+.commentAvatarDiv{
+width: 50px;
+height: 50px;
+padding:2px;
+background: #ececec;
+border-radius:32px;
+box-shadow: 0px 0px 1px rgba(0,0,0,0.4);
+-moz-border-radius: 32px;
+-webkit-border-radius: 32px;
+}
+
+.commentAvatarImage{
+width:50px;
+height:50px;
+line-height: 0;	/* remove line-height */ 
+display: inline-block;	/* circle wraps image */
+border-radius: 50%;	/* relative value */
+-moz-border-radius: 50%;
+-webkit-border-radius: 50%;
+transition: linear 0.25s;
+}

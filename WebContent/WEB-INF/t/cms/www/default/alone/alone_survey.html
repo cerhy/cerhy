@@ -40,7 +40,7 @@ $(function() {
             <ul>
 	           <li class="on"><a style="cursor: pointer;"><em></em>进行中调查</a>
 	             <ul>
-	              [@cms_vote]<li><a>${tag_bean.title?html}</a></li>[/@cms_vote]
+	              [@cms_vote]<li><a>[#if tag_bean??]${tag_bean.title?html}[/#if]</a></li>[/@cms_vote]
 	             </ul>
 	           </li>
 	           

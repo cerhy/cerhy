@@ -1,5 +1,7 @@
 package com.jeecms.cms.action.blog;
 
+import static com.jeecms.common.page.SimplePage.cpn;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -16,12 +18,12 @@ import org.springframework.ui.ModelMap;
 import com.jeecms.cms.dao.main.impl.BlogDao;
 import com.jeecms.cms.entity.main.Channel;
 import com.jeecms.cms.entity.main.Columns;
-import com.jeecms.cms.entity.main.Content;
 import com.jeecms.cms.entity.main.Focus;
 import com.jeecms.cms.manager.main.ChannelMng;
 import com.jeecms.cms.manager.main.ContentMng;
 import com.jeecms.cms.manager.main.impl.ColumnsMng;
 import com.jeecms.cms.manager.main.impl.FocusMng;
+import com.jeecms.common.page.Pagination;
 import com.jeecms.core.entity.CmsSite;
 import com.jeecms.core.entity.CmsUser;
 import com.jeecms.core.manager.CmsUserMng;
@@ -91,7 +93,7 @@ public class BlogCommon {
 		return model;
 	}
 	
-	//获取链接列表
+	/*//获取链接列表
 	public ModelMap getLinks(ModelMap model, CmsUser user) {
 		String linkUrl = user.getLinkUrl();
 		List<Object> listU = new ArrayList<Object>();
@@ -137,63 +139,60 @@ public class BlogCommon {
 			model.addAttribute("linkUrls", "");
 		}
 		return model;
-	}
+	}*/
 	
 	//获取好友列表
-	public ModelMap getFriends(ModelMap model, CmsUser user) {
-		String friends = user.getFriends();
-		List<Object> listF = new ArrayList<Object>();
+	public ModelMap getFriends(int id, ModelMap model,int pageNo) {
+		String friends = cmsUserMng.findById(id).getFriends();
+		Pagination p = null;
 		if (friends != null) {
-
+			List<CmsUser> list = new ArrayList<CmsUser>();
 			String[] strs = friends.split(" ");
 			for (int i = 0; i < strs.length; i++) {
 				String[] str = strs[i].split("=");
-				Map<String, Object> map = new HashMap<String, Object>();
-				CmsUser u = channelMng.findUserImage(str[1].toString());
-				if (null == u) {
-					String newName = "";
-					map.put(newName, null);
-				} else {
-					String newName = str[0] + "~" + u.getId() + "~" + u.getUserExt().getUserImg();
-					map.put(newName, u.getUserExt().getUserImg());
+				list.add(channelMng.findUserImage(str[1].toString()));
+			}
+			//分页显示好友数据
+			List<CmsUser> listPage = new ArrayList<CmsUser>();
+			if(null != list && list.size()>0){
+				if(pageNo*24 <= list.size()){
+					for(int i=(pageNo-1)*24;i<pageNo*24;i++){
+						listPage.add(list.get(i));
+					}
+				}else{
+					for(int i=(pageNo-1)*24;i<list.size();i++){
+						listPage.add(list.get(i));
+					}
 				}
-				listF.add(map);
+				p = new Pagination(pageNo, 24, list.size());	
+				p.setList(listPage);
 			}
-			model.addAttribute("friendsList", listF);
-			model.addAttribute("friends", friends.replaceAll(" ", "\r\n"));
-		} else {
-			model.addAttribute("friendsList", listF);
-			model.addAttribute("friends", "");
-		}
+		}	
+		model.addAttribute("pagination", p);
 		return model;
 	}
 	
-	public ModelMap blog_focus_find(Integer userid,HttpServletRequest request, ModelMap model) {
-		if(null == userid){
-			CmsUser user = CmsUtils.getUser(request);
-			userid = user.getId();
-		}
-		List<List<Focus>> list = focusMng.findByUserId(userid);
-		if (null != list) {
-			if (null != list.get(0)) {
-				model.addAttribute("focus", list.get(0));
-			}
-			if (null != list.get(1)) {
-				model.addAttribute("fans", list.get(1));
-			}
-		}
+	public ModelMap getBlogFocus(int id, ModelMap model,Integer pageNo) {
+		Pagination p = focusMng.pagingQueryFocus(id,cpn(pageNo),26);
+		model.addAttribute("pagination", p);
 		return model;
 	}
 	
-	public ModelMap getMaxFocus(HttpServletRequest request,  ModelMap model){
+	public ModelMap getBlogFans(int id, ModelMap model,Integer pageNo) {
+		Pagination p = focusMng.pagingQueryFans(id,cpn(pageNo),26);
+		model.addAttribute("pagination", p);
+		return model;
+	}
+	
+	public ModelMap getStarBlogger(HttpServletRequest request,  ModelMap model){
 		String path = request.getSession().getServletContext().getRealPath("/");
 		List<Focus> list = (new BlogDao()).findMaxFocusCount( path);
 	    List<Focus> l = null;
 	    List<CmsUser> u = new ArrayList<CmsUser>();
 	    if(null != list){
-	    	if(list.size()>5){
+	    	if(list.size()>3){
 	    		l = new ArrayList<Focus>();
-	    		for(int i =0;i<5;i++){
+	    		for(int i =0;i<3;i++){
 	    			l.add(list.get(i));
 	    		}
 	    	}
@@ -206,9 +205,41 @@ public class BlogCommon {
 	    			u.add(cmsUserMng.findById(f.getFocusUserId()));
 	    		}
 	    	}
-	    	model.addAttribute("focusMax", u);
+	    	model.addAttribute("starBlogger", u);
+	    	if(list.size()>3){
+	    		model.addAttribute("moreStarBloggerExist",1);
+	    	}
+	    	
 	    }
 	    return model;
+	}
+	
+	public ModelMap getMoreStarBlogger(HttpServletRequest request, ModelMap model,int pageNo) {
+		List<CmsUser> u = null;
+		String path = request.getSession().getServletContext().getRealPath("/");
+		List<Focus> list = (new BlogDao()).findMaxFocusCount( path);
+		Pagination p = null; 
+		if(pageNo != 1 || pageNo != 2){
+			pageNo =1;
+		}
+
+		if(null != list && list.size()>0){
+			u = new ArrayList<CmsUser>();
+			if(pageNo*24 <= list.size()){
+				for(int i=(pageNo-1)*24;i<pageNo*24;i++){
+					u.add(cmsUserMng.findById(list.get(i).getFocusUserId()));
+				}
+			}else{
+				for(int i=(pageNo-1)*24;i<list.size();i++){
+					u.add(cmsUserMng.findById(list.get(i).getFocusUserId()));
+				}
+			}
+			p = new Pagination(pageNo, 24, list.size());
+			p.setList(u);
+		}
+		
+		model.addAttribute("pagination", p);
+		return model;
 	}
 	
 	public boolean isNumeric(String str){ 
@@ -264,7 +295,6 @@ public class BlogCommon {
 	protected FocusMng focusMng;
 	@Autowired
 	protected ChannelMng channelMng;
-	
 	@Autowired
 	private ContentMng contentMng;
 
