@@ -768,6 +768,7 @@ public class ContributeAct extends AbstractContentMemberAct {
 	 */
 	@RequestMapping(value = "/member/checkAddfinds.jspx")
 	public void checkAddfinds(String friends,HttpServletRequest request,HttpServletResponse response, ModelMap model)throws UnsupportedEncodingException, JSONException {
+		CmsUser user = CmsUtils.getUser(request);
 		String[] strs=friends.split("~");
 		int addnum=1;
 		String no="";
@@ -775,10 +776,19 @@ public class ContributeAct extends AbstractContentMemberAct {
 			CmsUser u=channelMng.findUserImage(strs[i].split("=")[1].toString());
 			if(null==u){
 				no+=strs[i].split("=")[1].toString()+",";
+			}else{
+				if(user.getId()==u.getId()){
+					no="repeatName";
+					break;
+				}
 			}
 		}
 		if(no!=""){
-			addnum=0;
+			if(no.equals("repeatName")){
+				addnum=2;
+			}else{
+				addnum=0;
+			}
 		}else{
 			addnum=1;
 		}
@@ -787,6 +797,8 @@ public class ContributeAct extends AbstractContentMemberAct {
 		FrontUtils.frontData(request, model, site);
 		if(addnum==0){
 			json.put("status",no.substring(0,no.length() - 1));
+		}else if(addnum==2){
+			json.put("status",2);
 		}else{
 			json.put("status","");	
 		}
