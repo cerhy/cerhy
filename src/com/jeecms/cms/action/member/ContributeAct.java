@@ -1,6 +1,7 @@
 package com.jeecms.cms.action.member;
 import static com.jeecms.cms.Constants.TPLDIR_BLOG;
 import static com.jeecms.cms.Constants.TPLDIR_MEMBER;
+
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
@@ -29,6 +30,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.jeecms.cms.action.blog.BlogAct;
 import com.jeecms.cms.action.blog.BlogCommon;
+import com.jeecms.cms.action.blog.CreateSerialNo;
 import com.jeecms.cms.dao.main.impl.BlogDao;
 import com.jeecms.cms.entity.assist.CmsComment;
 import com.jeecms.cms.entity.main.Channel;
@@ -944,4 +946,17 @@ public class ContributeAct extends AbstractContentMemberAct {
 	    FrontUtils.frontData(request, model, site);
 		return FrontUtils.getTplPath(request, site.getSolutionPath(),TPLDIR_BLOG, "tpl.friends_visitor");
 	}
+	
+	
+	/**
+	 * 产生不重复的六位数
+	 */
+	@RequestMapping(value = "/blog/uniqueNum.jspx")
+	public void uniqueNum(HttpServletRequest request,HttpServletResponse response, ModelMap model)throws UnsupportedEncodingException, JSONException {
+			JSONObject json = new JSONObject();
+			json.put("status", CreateSerialNo.generateNumber());
+			ResponseUtils.renderJson(response, json.toString());
+	}
+	
+	
 }
