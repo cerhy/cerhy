@@ -848,6 +848,7 @@ public class ContributeAct extends AbstractContentMemberAct {
  		model = blogCommon.getTotalCommentNum(model, userT);
  		model = blogCommon.getTotalCoverCommentNum(model, userT);
  		model = blogCommon.getTotalReadNum(model, userT);
+ 		model = blogCommon.getStarBlogger(request, model);
 		String path = request.getSession().getServletContext().getRealPath("/");
 		List<Focus> list = (new BlogDao()).findMaxFocusCount( path);
 	    List<Focus> l = null;
@@ -897,6 +898,7 @@ public class ContributeAct extends AbstractContentMemberAct {
  		model = blogCommon.getTotalCommentNum(model, user);
 // 		model = blogCommon.getMaxFocus(request, model);
  		model = blogCommon.getAllVistor(request, model,user);
+ 		model = blogCommon.getStarBlogger(request, model);
  		model = blogAct.getAllVisitors(queryTitle, modelId, queryChannelId,pageNo, request, model,user);
 		FrontUtils.frontData(request, model, site);
 		return FrontUtils.getTplPath(request, site.getSolutionPath(),TPLDIR_BLOG, "tpl.visitor");
@@ -919,6 +921,7 @@ public class ContributeAct extends AbstractContentMemberAct {
  		model = blogCommon.getTotalCommentNum(model, userT);
  		model = blogCommon.getTotalCoverCommentNum(model, userT);
  		model = blogCommon.getTotalReadNum(model, userT);
+ 		model = blogCommon.getStarBlogger(request, model);
  		model = blogAct.getAllVisitors(q, modelId, queryChannelId,pageNo, request, model,userT);
 		String path = request.getSession().getServletContext().getRealPath("/");
 		List<Focus> list = (new BlogDao()).findMaxFocusCount( path);

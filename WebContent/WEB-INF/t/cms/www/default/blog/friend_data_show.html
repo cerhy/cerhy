@@ -119,7 +119,7 @@ $(function(){
 		                            [#list columnsList as c]
 				                    <li><a href="${base}/blog/contribute_list_friend.jspx?columnId=${c.columnId}&user_ids=${userIds}" ><em></em>${c.columnName}</a></li>
 				                    [/#list]
-				                    <li><a href="${base}/blog/collection_list.jspx?userId=${usert.id}">转载</a></li>
+				                    <li><a href="${base}/blog/friend_collection_list.jspx?userIds=${usert.id}">转载</a></li>
 		                             </ul>
 		                        [#else]
 		                          <ul>
@@ -127,7 +127,7 @@ $(function(){
 						             [#list channelList as c]
 						             <li><a href="${base}/blog/contribute_list_friend.jspx?channelId=${c.id}&user_ids=${userIds}" ><em></em>[#if c.deep gte origDeep][#list origDeep..c.deep as i]&nbsp;&nbsp;&nbsp;[/#list][/#if]${c.name}</a></li> 
 						             [/#list]
-						             <li><a href="${base}/blog/collection_list.jspx?userId=${usert.id}">转载</a></li>
+						             <li><a href="${base}/blog/friend_collection_list.jspx?userIds=${usert.id}">转载</a></li>
 		                             </ul>
 		                        [/#if]
 		                    </li>

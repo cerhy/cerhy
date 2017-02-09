@@ -123,6 +123,7 @@ $(function(){
 		                            [#list columnsList as c]
 				                    <li><a href="${base}/blog/contribute_list_friend.jspx?columnId=${c.columnId}&user_ids=${userIds}" ><em></em>${c.columnName}</a></li>
 				                    [/#list]
+		                             <li><a href="${base}/blog/friend_collection_list.jspx?userIds=${usert.id}">转载</a></li>
 		                             </ul>
 		                        [#else]
 		                          <ul>
@@ -130,103 +131,30 @@ $(function(){
 						             [#list channelList as c]
 						             <li><a href="${base}/blog/contribute_list_friend.jspx?channelId=${c.id}&user_ids=${userIds}" ><em></em>[#if c.deep gte origDeep][#list origDeep..c.deep as i]&nbsp;&nbsp;&nbsp;[/#list][/#if]${c.name}</a></li> 
 						             [/#list]
+		                   			 <li><a href="${base}/blog/friend_collection_list.jspx?userIds=${usert.id}">转载</a></li>
 		                             </ul>
 		                        [/#if]
 		                    </li>
-		                    <li><a href="${base}/blog/friend_collection_list.jspx?userIds=${usert.id}">转载</a></li>
-		                   <li>
-		                      <a href="javascript:;"><em></em>好友</a>
-		                           <ul>
-		                           [#if friendsList??]
-		        		           [#list friendsList as map]
-		         	               [#list map?keys as k]
-		         	               [#if k!='']
-		         	               [#if k?split("~")[2]=='null'] 
-				        			<li style="height: 90px;">
-				         			<div class="users-a-link-wrap clearfix">
-				                           <a target="_blank" href="${base}/blog/find_all_url_friend.jspx?userIds=${k?split("~")[1]}" class="users-a-link" style="padding-right: 40px;">
-				                               <img src="/${res}/images/userImg.png" alt="" width="47" height="47">
-				                               <span>${k?split("~")[0]}</span>
-				                           </a>
-				                       </div>
-				        			</li>
-		      			    	   [#else]
-			      			    	<li style="height: 90px;">
-			         			     <div class="users-a-link-wrap clearfix">
-			                           <a target="_blank" href="${base}/blog/find_all_url_friend.jspx?userIds=${k?split("~")[1]}" class="users-a-link" style="padding-right: 40px;">
-			                               <img src="${k?split("~")[2]}" alt="" width="47" height="47">
-			                               <span>${k?split("~")[0]}</span>
-			                           </a>
-			                         </div>
-			        			    </li>
-							         [/#if]
-							         [/#if]
-							        [/#list]
-						         	[/#list]
-						         	[/#if]
-		                         </ul>
-		                   </li>
-						   <div class="st_tree">
-						        <ul  show="true">
-						        	<li><a href="javascript:;" style="text-decoration:none;"><em></em>链接</a></li>
-						        	 <ul>
-						         		[#if urlList??]
-								         [#list urlList as map]
-								          	[#list map?keys as k]
-								          		 [#if k=='']
-										            [#list map[k] as v]
-										            	[#if v?index_of("=")!=-1]
-										         			<li  class="change"><a style="font-size: 12px;" target="_blank" href="${v?split("=")[1]}">${v?split("=")[0]}</a></li>
-										         		[/#if]
-										         		[#if v?index_of("|")!=-1]
-										         			<li  class="change"><a style="font-size: 12px;" target="_blank" href="${v?split("|")[1]}">${v?split("|")[0]}</a></li>
-										         		[/#if]
-										            [/#list]
-										         [#else]
-										          <li><a href="javascript:;" style="text-decoration:none;"><em></em>${k}</a></li>
-										          <ul>
-										            [#list map[k] as v]
-										            	[#if v?index_of("http:")!=-1]
-											            	[#if v?index_of("=")!=-1]
-											         			<li class="change"><a style="font-size: 12px;" target="_blank" href="${v?split("=")[1]}">${v?split("=")[0]}</a></li>
-											         		[/#if]
-											         		[#if v?index_of("|")!=-1]
-											         			<li class="change"><a style="font-size: 12px;" target="_blank" href="${v?split("|")[1]}">${v?split("|")[0]}</a></li>
-											         		[/#if]
-										            	[/#if]
-										            [/#list]
-										           </ul>	
-										          [/#if]
-								          	[/#list]
-								         [/#list]
-								         [/#if]
-								   </ul>
-							 </ul>
-						</div>
-						<li><a style="cursor: pointer;"><em></em>关注&nbsp;[#if focus??](${focus?size})[/#if]</a>
-						 [#if focus??]
-		                    <ul>
-		                     [#list focus as c]
-		                     [#if c??]
-		                    <li><a target="_blank" href="${base}/blog/find_all_url_friend.jspx?userIds=${c.focusUserId}" ><em></em>${c.focusUserName}</a></li>
-		                   [/#if]
-		                  [/#list]
-		                    </ul>
-		                  [/#if]
-		                </li> 
-		                <li><a style="cursor: pointer;"><em></em>粉丝&nbsp;[#if fans??](${fans?size})[/#if]</a>
-						   [#if fans??]
-		                        <ul>
-		                         [#list fans as c]
-		                         [#if c??]
-		                         <li><a target="_blank" href="${base}/blog/find_all_url_friend.jspx?userIds=${c.userId}"><em></em>${c.username}</a></li>
-		                       [/#if]
-		                      [/#list]
-		                        </ul>
-		                    [/#if]
-		                </li>
+		                    <li><a  href="${base}/blog/gotoDataShowFriend.jspx?dataFlag=1&userId=${usert.id}" >好友</a></li>
+			                <li><a  href="${base}/blog/gotoDataShowFriend.jspx?dataFlag=2&userId=${usert.id}" >关注</a></li>
+			                <li><a  href="${base}/blog/gotoDataShowFriend.jspx?dataFlag=3&userId=${usert.id}" >粉丝</a></li>
 		                <li><a href="${base}/blog/friends_visitor.jspx?userIds=${usert.id}" >访客</a></li>  
 		                <li><a  href="${base}/blog/friendDataStatistics.jspx?userIds=${usert.id}" >访问统计</a></li>
+				   		<li style="cursor: pointer;"><a><em></em> 明星博主</a>
+		                   <ul>
+		                       [#if starBlogger?? ]
+				                 [#list starBlogger as c]
+				                      [#if c.userImg??]<img src="${c.userImg}" width="40" height="40" alt="" style="float: left;padding: 5px 15px 0 23px">
+				                      [#else]<img src="/${res}/images/userImg-large.png" width="40" height="40" alt="" style="float: left;padding: 5px 15px 0 23px">
+				                      [/#if]
+				                      <a href="${base}/blog/find_all_url_friend.jspx?userIds=${c.id}" target="_blank">${c.username}</a>
+				                [/#list]
+		                        [#if moreStarBloggerExist??]
+				                 <a href="${base}/blog/gotoDataShowFriend.jspx?dataFlag=4">更多 &nbsp;>></a>
+		                        [/#if]
+				                [/#if]
+		                   </ul>
+                       </li>
 				    </ul>
 		        </div>
 		     </div>

@@ -217,6 +217,7 @@ public class CollectionMemberAct {
 	    model = blogCommon.getChannel(request,model,userT,site);
 		model = blogCommon.getTotalArticleNum(model,userT);
  		model = blogCommon.getTotalCommentNum(model, userT);
+ 		model = blogCommon.getStarBlogger(request, model);
 		FrontUtils.frontData(request, model, site);
 		Pagination p = contentMng.getPageForCollection(site.getId(), userT
 				.getId(), cpn(pageNo), CookieUtils.getPageSize(request));

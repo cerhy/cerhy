@@ -123,7 +123,7 @@ $(function(){
 		                            [#list columnsList as c]
 				                    <li><a href="${base}/blog/contribute_list_friend.jspx?columnId=${c.columnId}&user_ids=${userIds}" ><em></em>${c.columnName}</a></li>
 				                    [/#list]
-				                    <li><a href="${base}/blog/collection_list.jspx?userId=${usert.id}">转载</a></li>
+				                    <li><a href="${base}/blog/friend_collection_list.jspx?userIds=${usert.id}">转载</a></li>
 		                             </ul>
 		                        [#else]
 		                          <ul>
@@ -131,13 +131,13 @@ $(function(){
 						             [#list channelList as c]
 						             <li><a href="${base}/blog/contribute_list_friend.jspx?channelId=${c.id}&user_ids=${userIds}" ><em></em>[#if c.deep gte origDeep][#list origDeep..c.deep as i]&nbsp;&nbsp;&nbsp;[/#list][/#if]${c.name}</a></li> 
 						             [/#list]
-						             <li><a href="${base}/blog/collection_list.jspx?userId=${usert.id}">转载</a></li>
+						             <li><a href="${base}/blog/friend_collection_list.jspx?userIds=${usert.id}">转载</a></li>
 		                             </ul>
 		                        [/#if]
 		                    </li>
-		                    <li><a  href="${base}/blog/gotoDataShow.jspx?dataFlag=1&userId=${usert.id}" >好友</a></li>
-			                <li><a  href="${base}/blog/gotoDataShow.jspx?dataFlag=2&userId=${usert.id}" >关注</a></li>
-			                <li><a  href="${base}/blog/gotoDataShow.jspx?dataFlag=3&userId=${usert.id}" >粉丝</a></li>
+		                    <li><a  href="${base}/blog/gotoDataShowFriend.jspx?dataFlag=1&userId=${usert.id}" >好友</a></li>
+			                <li><a  href="${base}/blog/gotoDataShowFriend.jspx?dataFlag=2&userId=${usert.id}" >关注</a></li>
+			                <li><a  href="${base}/blog/gotoDataShowFriend.jspx?dataFlag=3&userId=${usert.id}" >粉丝</a></li>
 		                <li><a href="${base}/blog/friends_visitor.jspx?userIds=${usert.id}" >访客</a></li>  
 		                <li><a  href="${base}/blog/friendDataStatistics.jspx?userIds=${usert.id}" >访问统计</a></li>
 		                <li style="cursor: pointer;"><a><em></em> 明星博主</a>
@@ -150,7 +150,7 @@ $(function(){
 				                      <a href="${base}/blog/find_all_url_friend.jspx?userIds=${c.id}" target="_blank">${c.username}</a>
 				                [/#list]
 		                        [#if moreStarBloggerExist??]
-				                 <a href="${base}/blog/gotoDataShow.jspx?dataFlag=4">更多 &nbsp;>></a>
+				                 <a href="${base}/blog/gotoDataShowFriend.jspx?dataFlag=4">更多 &nbsp;>></a>
 		                        [/#if]
 				                [/#if]
 		                   </ul>
