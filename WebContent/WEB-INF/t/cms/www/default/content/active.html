@@ -65,13 +65,16 @@
 			<div class="bd-padding">
 				<div class="xueke-acticle">
 					<h2>${content.title}</h2>
-					<p class="gray9 h2dt pt5">
+					<div class="gray9 h2dt pt5">
 						<span class="pr15">发布时间：${content.releaseDate}</span>
 						 <span class="pr15">作者：${content.author!'本站编辑'}</span>
 						 <span class="pr15">来源：${content.origin!'本站原创'}</span> 
 						 <span class="pr15 yuedu">浏览次数：<span id="views"></span></span> 
 						 <span class="pr15 pinglun">评论：${content.commentsCheckedNum!} </span>
-					</p>
+						 <span class="content-share">分享
+							 [#include "inc_share.html"/]
+						 </span>
+					</div>
 					<div class="xueke-content-detail">
 						[#if preview??] [@text_cut s=txt! len=100 append="..."/]<br />
 						您需要更高的权限浏览全部内容!<br />以下会员组可浏览全部内容: [#list groups as g]

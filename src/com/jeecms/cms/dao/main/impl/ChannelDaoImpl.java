@@ -1,11 +1,13 @@
 package com.jeecms.cms.dao.main.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Query;
 import org.springframework.stereotype.Repository;
 
 import com.jeecms.cms.dao.main.ChannelDao;
+import com.jeecms.cms.entity.assist.CmsBlogVisitor;
 import com.jeecms.cms.entity.main.Channel;
 import com.jeecms.common.hibernate4.Finder;
 import com.jeecms.common.hibernate4.HibernateBaseDao;
@@ -259,6 +261,25 @@ public class ChannelDaoImpl extends HibernateBaseDao<Channel, Integer>
 		String hql = "update CmsUser bean set bean.blogVisitNum=:blogVisitNum  where bean.id=:userId";
 		Query query = getSession().createQuery(hql).setParameter("blogVisitNum", String.valueOf(totnum)).setParameter("userId", userT.getId());
 		query.executeUpdate();
+	}
+
+	@Override
+	public void updateBlogVisitorTime(CmsUser user,CmsUser userT) {
+		String hql ="select count(*) from CmsBlogVisitor bean where 1=1 and bean.visitorId.id=:userId and bean.byVisitorId.id=:userTId";
+		Query query = getSession().createQuery(hql);
+		query.setParameter("userId", user.getId());
+		query.setParameter("userTId", userT.getId());
+		if(((Number) (query.iterate().next())).intValue()!=0){
+			String hql2 = "update CmsBlogVisitor bean set bean.visitorTime=:visitorTime  where bean.visitorId.id=:userId and bean.byVisitorId.id=:userTId ";
+			Query query2 = getSession().createQuery(hql2).setParameter("visitorTime", new Date()).setParameter("userId", user.getId()).setParameter("userTId", userT.getId());
+			query2.executeUpdate();
+		}else{
+			CmsBlogVisitor cv=new CmsBlogVisitor();
+			cv.setVisitorId(user);
+			cv.setByVisitorId(userT);
+			cv.setVisitorTime(new Date());
+			getSession().save(cv);
+		}
 	}
 	
 }

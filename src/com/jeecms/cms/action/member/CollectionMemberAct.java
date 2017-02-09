@@ -1,7 +1,7 @@
 package com.jeecms.cms.action.member;
 
-import static com.jeecms.cms.Constants.TPLDIR_MEMBER;
 import static com.jeecms.cms.Constants.TPLDIR_BLOG;
+import static com.jeecms.cms.Constants.TPLDIR_MEMBER;
 import static com.jeecms.common.page.SimplePage.cpn;
 
 import java.io.IOException;
@@ -39,6 +39,7 @@ import com.jeecms.core.web.util.FrontUtils;
 public class CollectionMemberAct {
 
 	public static final String COLLECTION_LIST = "tpl.collectionList";
+	public static final String FRIEND_COLLECTION_LIST = "tpl.friendCollectionList";
 
 	/**
 	 * 我的收藏信息
@@ -172,9 +173,6 @@ public class CollectionMemberAct {
 		}
 		model = blogCommon.getColumn(request,model,user);
 	    model = blogCommon.getChannel(request,model,user,site);
-//	    model = blogCommon.blog_focus_find(null,request,model);
-//	    model = blogCommon.getLinks(model,user);
-//		model = blogCommon.getFriends(model,user);
 		model = blogCommon.getTotalArticleNum(model,user);
  		model = blogCommon.getTotalCommentNum(model, user);
  		model.addAttribute("submitOn", 1);
@@ -206,7 +204,55 @@ public class CollectionMemberAct {
 		return collection_list_blog(null, null, pageNo, request, response, model,null);
 	}
 	
+	/**
+	 * 好友转载显示页面
+	 */
+	@RequestMapping(value = "/blog/friend_collection_list.jspx")
+	public String friend_collection_list(String userIds,String queryTitle, Integer queryChannelId,
+			Integer pageNo, HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		CmsSite site = CmsUtils.getSite(request);
+		CmsUser userT=cmsUserMng.findById(Integer.valueOf(userIds.toString()));
+		model = blogCommon.getColumn(request,model,userT);
+	    model = blogCommon.getChannel(request,model,userT,site);
+		model = blogCommon.getTotalArticleNum(model,userT);
+ 		model = blogCommon.getTotalCommentNum(model, userT);
+		FrontUtils.frontData(request, model, site);
+		Pagination p = contentMng.getPageForCollection(site.getId(), userT
+				.getId(), cpn(pageNo), CookieUtils.getPageSize(request));
+		model.addAttribute("pagination", p);
+		if (!StringUtils.isBlank(queryTitle)) {
+			model.addAttribute("queryTitle", queryTitle);
+		}
+		if (queryChannelId != null) {
+			model.addAttribute("queryChannelId", queryChannelId);
+		}
+		model.addAttribute("usert", userT);
+	    model.addAttribute("userIds", userIds);
+		return FrontUtils.getTplPath(request, site.getSolutionPath(),
+				TPLDIR_BLOG, FRIEND_COLLECTION_LIST);
+	}
+	
+	@RequestMapping(value = "/blog/friend_collect_cancel.jspx")
+	public String  friend_collect_cancel(String userIds,Integer[] cIds,Integer pageNo,HttpServletRequest request, HttpServletResponse response,
+			ModelMap model) throws JSONException {
+		CmsUser userT=cmsUserMng.findById(Integer.valueOf(userIds.toString()));
+		CmsSite site = CmsUtils.getSite(request);
+		FrontUtils.frontData(request, model, site);
+		 
+		if (userT == null) {
+			return FrontUtils.showLogin(request, model, site);
+		}
+		for(Integer  id:cIds){
+			userMng.updateUserConllection(userT,id,0);
+		}
+		return friend_collection_list(userIds,null, null, pageNo, request, response, model);
+	}
+	
+	
 	@Autowired
 	protected ChannelMng channelMng;
+	@Autowired
+	private CmsUserMng cmsUserMng;
 	
 }

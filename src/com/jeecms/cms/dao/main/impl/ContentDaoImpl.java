@@ -1,23 +1,23 @@
 package com.jeecms.cms.dao.main.impl;
 
-import static com.jeecms.cms.entity.main.Content.ContentStatus.all;
-import static com.jeecms.cms.entity.main.Content.ContentStatus.checked;
-import static com.jeecms.cms.entity.main.Content.ContentStatus.draft;
-import static com.jeecms.cms.entity.main.Content.ContentStatus.passed;
-import static com.jeecms.cms.entity.main.Content.ContentStatus.prepared;
-import static com.jeecms.cms.entity.main.Content.ContentStatus.recycle;
-import static com.jeecms.cms.entity.main.Content.ContentStatus.rejected;
-import static com.jeecms.cms.entity.main.Content.ContentStatus.contribute;
-import static com.jeecms.cms.entity.main.Content.ContentStatus.pigeonhole;
-import static com.jeecms.cms.action.directive.abs.AbstractContentDirective.PARAM_ATTR_START;
 import static com.jeecms.cms.action.directive.abs.AbstractContentDirective.PARAM_ATTR_END;
-import static com.jeecms.cms.action.directive.abs.AbstractContentDirective.PARAM_ATTR_LIKE;
-import static com.jeecms.cms.action.directive.abs.AbstractContentDirective.PARAM_ATTR_IN;
 import static com.jeecms.cms.action.directive.abs.AbstractContentDirective.PARAM_ATTR_EQ;
 import static com.jeecms.cms.action.directive.abs.AbstractContentDirective.PARAM_ATTR_GT;
 import static com.jeecms.cms.action.directive.abs.AbstractContentDirective.PARAM_ATTR_GTE;
+import static com.jeecms.cms.action.directive.abs.AbstractContentDirective.PARAM_ATTR_IN;
+import static com.jeecms.cms.action.directive.abs.AbstractContentDirective.PARAM_ATTR_LIKE;
 import static com.jeecms.cms.action.directive.abs.AbstractContentDirective.PARAM_ATTR_LT;
 import static com.jeecms.cms.action.directive.abs.AbstractContentDirective.PARAM_ATTR_LTE;
+import static com.jeecms.cms.action.directive.abs.AbstractContentDirective.PARAM_ATTR_START;
+import static com.jeecms.cms.entity.main.Content.ContentStatus.all;
+import static com.jeecms.cms.entity.main.Content.ContentStatus.checked;
+import static com.jeecms.cms.entity.main.Content.ContentStatus.contribute;
+import static com.jeecms.cms.entity.main.Content.ContentStatus.draft;
+import static com.jeecms.cms.entity.main.Content.ContentStatus.passed;
+import static com.jeecms.cms.entity.main.Content.ContentStatus.pigeonhole;
+import static com.jeecms.cms.entity.main.Content.ContentStatus.prepared;
+import static com.jeecms.cms.entity.main.Content.ContentStatus.recycle;
+import static com.jeecms.cms.entity.main.Content.ContentStatus.rejected;
 
 import java.util.Date;
 import java.util.Iterator;
@@ -31,11 +31,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.jeecms.cms.dao.main.ContentDao;
+import com.jeecms.cms.entity.assist.CmsBlogVisitor;
 import com.jeecms.cms.entity.assist.CmsComment;
 import com.jeecms.cms.entity.main.Content;
+import com.jeecms.cms.entity.main.Content.ContentStatus;
 import com.jeecms.cms.entity.main.ContentCheck;
 import com.jeecms.cms.entity.main.ContentDoc;
-import com.jeecms.cms.entity.main.Content.ContentStatus;
 import com.jeecms.cms.service.ContentQueryFreshTimeCache;
 import com.jeecms.common.hibernate4.Finder;
 import com.jeecms.common.hibernate4.HibernateBaseDao;
@@ -1213,4 +1214,25 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 		}
 		
 	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<CmsBlogVisitor> getgetAllVistor(CmsUser user) {
+		Finder f = Finder.create("select bean from CmsBlogVisitor bean");
+		f.append(" where 1=1");
+		f.append(" and bean.byVisitorId.id=:userId");
+		f.setParam("userId", user.getId());
+		return find(f);
+	}
+
+	@Override
+	public Pagination getPage_visitor(int orderBy, int pageNo, int pageSize, CmsUser user) {
+		Finder f = Finder.create("select bean from CmsBlogVisitor bean");
+		f.append(" where 1=1");
+		f.append(" and bean.byVisitorId.id=:userId");
+		f.append(" order by bean.visitorTime desc");
+		f.setParam("userId", user.getId());
+		return findLimit(f, pageNo, pageSize);
+	}
+
 }

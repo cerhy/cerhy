@@ -99,13 +99,13 @@ public class DocAct  extends AbstractContentMemberAct{
 	 * @return
 	 */
 	@RequestMapping(value = "/member/doc_save.jspx")
-	public String save(String title, String author, String description,
+	public void save(String title, String author, String description,
 			String txt, String tagStr, Integer channelId,Integer modelId,
 			ContentDoc doc,String captcha,Short charge,Double chargeAmount,
 			String nextUrl, HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		updateUserUploadDocNum(request, 1);
-		return super.save(title, author, description, txt, tagStr, 
+		super.save(title, author, description, txt, tagStr, 
 				channelId,modelId, doc, captcha, 
 				null,null,null,null,null,null,null,
 				charge,chargeAmount,nextUrl,

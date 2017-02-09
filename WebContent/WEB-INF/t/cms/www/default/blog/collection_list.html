@@ -55,7 +55,7 @@ $(function(){
 			<div class="wrap-right ">
 				<div class="personCenter-userInfo blog_right">
 				  <div class=" tggl" style="text-align: -webkit-center;">
-          <form id="tableForm" action="${base}/blog/columns_list.jspx" method="post">
+          <form id="tableForm" action="${base}/blog/collection_list.jspx" method="post">
             [#if pagination.list?size gt 0]
           <table >
             <tbody>
@@ -67,7 +67,7 @@ $(function(){
               </tr>
               [#list pagination.list as c]
               <tr id="tr_${c.id}">
-                <td style="text-align:left;padding-left:10px;"><a href="${c.url!}" target="_blank" class="a2">${c.title?html}</a></td>
+                <td style="text-align:left;padding-left:10px;"><a href="${c.url!}" target="_blank" class="a2">[@text_cut s=c.title?html len=26 append='...'/]</a></td>
                 <td>${c.views}</td>
                 <td>${c.releaseDate?string('yyyy-MM-dd')}</td>
                 <td><a href="${base}/blog/collect_cancel.jspx?cIds=${c.id}&pageNo=${pagination.pageNo}" class="a2">取消转载</a></td>
@@ -98,7 +98,7 @@ $(function(){
                 try{
                     var tableForm = document.getElementById("tableForm");
                     $("input[name=pageNo]").val(pageNo);
-                    tableForm.action="${base}/blog/columns_list.jspx";
+                    tableForm.action="${base}/blog/collection_list.jspx";
                     tableForm.onsubmit=null;
                     tableForm.submit();
                 } catch(e) {

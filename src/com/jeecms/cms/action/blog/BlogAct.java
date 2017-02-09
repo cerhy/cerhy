@@ -4,7 +4,6 @@ import static com.jeecms.cms.Constants.TPLDIR_BLOG;
 import static com.jeecms.common.page.SimplePage.cpn;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -156,7 +155,7 @@ public class BlogAct {
 	}
 	
 		
-	public String blog_save(String title, String author, String description,
+	public void blog_save(String title, String author, String description,
 			String txt, String tagStr, Integer channelId,Integer columnId,Integer modelId,ContentDoc doc,
 			String captcha,String mediaPath,String mediaType,
 			String[] attachmentPaths, String[] attachmentNames,
@@ -168,7 +167,7 @@ public class BlogAct {
 				CmsUser user = CmsUtils.getUser(request);
 				FrontUtils.frontData(request, model, site);
 			if (user == null) {
-				return FrontUtils.showLogin(request, model, site);
+				FrontUtils.showLogin(request, model, site);
 			}
 
 		Content c = new Content();
@@ -214,8 +213,11 @@ public class BlogAct {
 		if(doc!=null){
 			contentDocMng.save(doc, c);
 		}
-		nextUrl += "/blog/index.jspx";
-		return FrontUtils.showSuccess(request, model, nextUrl);
+		try {
+			response.sendRedirect("../blog/index.jspx");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public String blog_edit(Integer id, String nextUrl,HttpServletRequest request,
@@ -437,6 +439,9 @@ public class BlogAct {
 		if(user!=null){
 			CmsUser userT=cmsUserMng.findById(Integer.valueOf(userIds.toString()));
 			channelMng.updateBlogVisitNum(userT);
+			if(user.getId()!=userT.getId()){
+				channelMng.updateBlogVisitorTime(user,userT);
+			}
 			model = blogCommon.getColumn(request,model,userT);
 			model = blogCommon.getChannel(request,model,userT,site);
 			model = blogCommon.getTotalArticleNum(model,userT);
@@ -525,6 +530,14 @@ public class BlogAct {
 		}else{
 			response.getWriter().print("0");
 		}
+	}
+	
+	public ModelMap getAllVisitors(String q, Integer modelId,
+			Integer queryChannelId, Integer pageNo, HttpServletRequest request,
+			ModelMap model, CmsUser user) {
+		Pagination visitorList = contentMng.getPageForMember_visitor(cpn(pageNo), 24,user);
+		model.addAttribute("pagination", visitorList);
+		return model;
 	}
 	
 	public String gotoDataShow(int dataFlag, HttpServletRequest request,HttpServletResponse response, ModelMap model,Integer pageNo) {

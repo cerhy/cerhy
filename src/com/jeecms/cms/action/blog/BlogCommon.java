@@ -3,9 +3,7 @@ package com.jeecms.cms.action.blog;
 import static com.jeecms.common.page.SimplePage.cpn;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -16,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
 
 import com.jeecms.cms.dao.main.impl.BlogDao;
+import com.jeecms.cms.entity.assist.CmsBlogVisitor;
 import com.jeecms.cms.entity.main.Channel;
 import com.jeecms.cms.entity.main.Columns;
 import com.jeecms.cms.entity.main.Focus;
@@ -27,7 +26,6 @@ import com.jeecms.common.page.Pagination;
 import com.jeecms.core.entity.CmsSite;
 import com.jeecms.core.entity.CmsUser;
 import com.jeecms.core.manager.CmsUserMng;
-import com.jeecms.core.web.util.CmsUtils;
 
 public class BlogCommon {
 	
@@ -286,6 +284,15 @@ public class BlogCommon {
 		return model;
 	}
 	
+	/**
+	 * 获取博客访问者/日期
+	 **/
+	public ModelMap getAllVistor(HttpServletRequest request, ModelMap model,CmsUser user) {
+		List<CmsBlogVisitor> visitorList=contentMng.getgetAllVistor(user);
+		model.addAttribute("visitorList", visitorList);
+		return model;
+	}
+	
 	
 	@Autowired
 	protected CmsUserMng cmsUserMng;
@@ -297,5 +304,7 @@ public class BlogCommon {
 	protected ChannelMng channelMng;
 	@Autowired
 	private ContentMng contentMng;
+
+	
 
 }

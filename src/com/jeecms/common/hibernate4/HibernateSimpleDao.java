@@ -85,6 +85,47 @@ public abstract class HibernateSimpleDao {
 		return p;
 	}
 	
+	/**
+	 * 
+	 * @param finder
+	 * @param pageNo
+	 * @param pageSize
+	 * @return
+	 */
+	protected Pagination findLimit(Finder finder, int pageNo, int pageSize) {
+		int totalCount = countQueryResultLimit(finder);
+		if(totalCount>50){
+			totalCount=50;
+		}
+		Pagination p = new Pagination(pageNo, pageSize, totalCount);
+		if (totalCount < 1) {
+			p.setList(new ArrayList());
+			return p;
+		}
+		Query query = getSession().createQuery(finder.getOrigHql());
+		finder.setParamsToQuery(query);
+		query.setFirstResult(p.getFirstResult());
+		query.setMaxResults(p.getPageSize());
+		if (finder.isCacheable()) {
+			query.setCacheable(true);
+		}
+		List list = query.list();
+		p.setList(list);
+		return p;
+	}
+	
+	protected int countQueryResultLimit(Finder finder) {
+		Query query = getSession().createQuery(finder.getRowCountHql());
+		finder.setParamsToQuery(query);
+		if (finder.isCacheable()) {
+			query.setCacheable(true);
+		}
+		return ((Number) query.iterate().next()).intValue();
+	}
+	
+	
+	
+	
 	protected Pagination findByGroup(Finder finder,String selectSql, int pageNo, int pageSize) {
 		return findByTotalCount(finder, pageNo, pageSize,  countQueryResultByGroup(finder,selectSql));
 	}

@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.jeecms.cms.entity.assist">
+	<class name="CmsBlogVisitor" table="jc_blog_visitor">
+		<meta attribute="sync-DAO">false</meta>
+		<cache usage="read-write"/>
+		<id name="id" type="integer" column="vis_id"><generator class="identity"/></id>
+		<property name="visitorTime" column="visitor_time" type="timestamp" not-null="false" length="19"/>
+		<many-to-one name="visitorId" column="visitor_id" class="com.jeecms.core.entity.CmsUser" not-null="false"></many-to-one>
+		<many-to-one name="byVisitorId" column="by_visitor_id" class="com.jeecms.core.entity.CmsUser" not-null="false"></many-to-one>
+	</class>
+</hibernate-mapping>

@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import com.jeecms.cms.dao.main.ContentDao;
+import com.jeecms.cms.entity.assist.CmsBlogVisitor;
 import com.jeecms.cms.entity.assist.CmsComment;
 import com.jeecms.cms.entity.assist.CmsFile;
 import com.jeecms.cms.entity.main.Channel;
@@ -1342,4 +1343,16 @@ public class ContentMngImpl implements ContentMng, ChannelDeleteChecker {
 	public int getTotalReadNum(CmsUser user) {
 		return dao.getTotalReadNum(user);
 	}
+
+	@Override
+	public List<CmsBlogVisitor> getgetAllVistor(CmsUser user) {
+		return dao.getgetAllVistor(user);
+	}
+
+	@Override
+	public Pagination getPageForMember_visitor(int pageNo,int pageSize, CmsUser user) {
+		return dao.getPage_visitor(0, pageNo,pageSize,user);
+	}
+	
+
 }

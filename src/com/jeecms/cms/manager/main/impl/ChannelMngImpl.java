@@ -400,5 +400,10 @@ public class ChannelMngImpl implements ChannelMng {
 		dao.updateBlogVisitNum(userT);
 	}
 
+	@Override
+	public void updateBlogVisitorTime(CmsUser user,CmsUser userT) {
+		dao.updateBlogVisitorTime(user,userT);
+	}
+
 
 }

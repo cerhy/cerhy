@@ -4,6 +4,7 @@ package com.jeecms.cms.action.member;
 import static com.jeecms.cms.Constants.TPLDIR_MEMBER;
 import static com.jeecms.common.page.SimplePage.cpn;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Set;
 
@@ -100,7 +101,7 @@ public class AbstractContentMemberAct {
 		}
 	}
 	
-	public String save(String title, String author, String description,
+	public void save(String title, String author, String description,
 			String txt, String tagStr, Integer channelId, Integer modelId,ContentDoc doc,
 			String captcha,String mediaPath,String mediaType,
 			String[] attachmentPaths, String[] attachmentNames,
@@ -114,15 +115,15 @@ public class AbstractContentMemberAct {
 		MemberConfig mcfg = site.getConfig().getMemberConfig();
 		// 没有开启会员功能
 		if (!mcfg.isMemberOn()) {
-			return FrontUtils.showMessage(request, model, "member.memberClose");
+			FrontUtils.showMessage(request, model, "member.memberClose");
 		}
 		if (user == null) {
-			return FrontUtils.showLogin(request, model, site);
+			FrontUtils.showLogin(request, model, site);
 		}
 		WebErrors errors = validateSave(title, author, description, txt,doc,
 				tagStr, channelId, site, user, captcha, request, response);
 		if (errors.hasErrors()) {
-			return FrontUtils.showError(request, response, model, errors);
+			FrontUtils.showError(request, response, model, errors);
 		}
 
 		Content c = new Content();
@@ -162,7 +163,11 @@ public class AbstractContentMemberAct {
 		if(doc!=null){
 			contentDocMng.save(doc, c);
 		}
-		return FrontUtils.showSuccess(request, model, nextUrl);
+		try {
+			response.sendRedirect("../member/contribute_list.jspx");
+		} catch (IOException e) {
+			e.printStackTrace();
+		};
 	}
 	
 	public String edit(Integer id, String nextUrl,HttpServletRequest request,

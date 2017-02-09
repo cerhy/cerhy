@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import com.jeecms.cms.entity.assist.CmsBlogVisitor;
 import com.jeecms.cms.entity.assist.CmsComment;
 import com.jeecms.cms.entity.main.Content;
 import com.jeecms.cms.entity.main.Content.ContentStatus;
@@ -258,5 +259,10 @@ public interface ContentDao {
 	public int getTotalCoverCommentNum(CmsUser user);
 
 	public int getTotalReadNum(CmsUser user);
+
+	public List<CmsBlogVisitor> getgetAllVistor(CmsUser user);
+
+
+	public Pagination getPage_visitor(int i, int pageNo, int pageSize, CmsUser user);
 
 }

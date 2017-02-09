@@ -120,7 +120,7 @@ public class ContributeAct extends AbstractContentMemberAct {
 	 * @return
 	 */
 	@RequestMapping(value = "/member/contribute_save.jspx")
-	public String save(String title, String author, String description,
+	public void save(String title, String author, String description,
 			String txt, String tagStr, Integer channelId,Integer columnId,Integer modelId, 
 			String captcha,String mediaPath,String mediaType,
 			String[] attachmentPaths, String[] attachmentNames,
@@ -130,12 +130,12 @@ public class ContributeAct extends AbstractContentMemberAct {
 			HttpServletResponse response, ModelMap model) {
 		   String blog = request.getParameter("blog");
 		   if(null != blog ){
-			  return blogAct.blog_save(title, author, description, txt, tagStr, channelId,columnId,modelId,
+			  blogAct.blog_save(title, author, description, txt, tagStr, channelId,columnId,modelId,
 						null, captcha,mediaPath,mediaType,attachmentPaths,attachmentNames, attachmentFilenames
 						,picPaths,picDescs,charge,chargeAmount,
 						nextUrl, request, response, model);
 					   }else{
-			   return super.save(title, author, description, txt, tagStr, channelId,modelId,
+			   super.save(title, author, description, txt, tagStr, channelId,modelId,
 						null, captcha,mediaPath,mediaType,attachmentPaths,attachmentNames, attachmentFilenames
 						,picPaths,picDescs,charge,chargeAmount,
 						nextUrl, request, response, model);
@@ -779,6 +779,7 @@ public class ContributeAct extends AbstractContentMemberAct {
 	 */
 	@RequestMapping(value = "/member/checkAddfinds.jspx")
 	public void checkAddfinds(String friends,HttpServletRequest request,HttpServletResponse response, ModelMap model)throws UnsupportedEncodingException, JSONException {
+		CmsUser user = CmsUtils.getUser(request);
 		String[] strs=friends.split("~");
 		int addnum=1;
 		String no="";
@@ -786,10 +787,19 @@ public class ContributeAct extends AbstractContentMemberAct {
 			CmsUser u=channelMng.findUserImage(strs[i].split("=")[1].toString());
 			if(null==u){
 				no+=strs[i].split("=")[1].toString()+",";
+			}else{
+				if(user.getId()==u.getId()){
+					no="repeatName";
+					break;
+				}
 			}
 		}
 		if(no!=""){
-			addnum=0;
+			if(no.equals("repeatName")){
+				addnum=2;
+			}else{
+				addnum=0;
+			}
 		}else{
 			addnum=1;
 		}
@@ -798,6 +808,8 @@ public class ContributeAct extends AbstractContentMemberAct {
 		FrontUtils.frontData(request, model, site);
 		if(addnum==0){
 			json.put("status",no.substring(0,no.length() - 1));
+		}else if(addnum==2){
+			json.put("status",2);
 		}else{
 			json.put("status","");	
 		}
@@ -868,4 +880,64 @@ public class ContributeAct extends AbstractContentMemberAct {
 		public String gotoDataShowFriend(int dataFlag,HttpServletRequest request, HttpServletResponse response,ModelMap model,Integer pageNo,String userId) {
 			return blogAct.gotoDataShowFriend(dataFlag, request, response, model,pageNo,userId);
 		}
+	/**
+	 *查询访客 
+	 */
+	@RequestMapping(value = "/blog/visitor.jspx")
+	public String visitor(String queryTitle, Integer modelId,Integer queryChannelId, Integer pageNo,HttpServletRequest request,HttpServletResponse response, ModelMap model) {
+		CmsSite site = CmsUtils.getSite(request);
+		CmsUser user = CmsUtils.getUser(request);
+//		model = blogCommon.getLinks(model,user);
+//		model = blogCommon.getFriends(model,user);
+//		model = blogCommon.blog_focus_find(null,request,model);
+		model = blogCommon.getColumn(request,model,user);
+	    model = blogCommon.getChannel(request,model,user,site);
+	    model = blogCommon.getTotalArticleNum(model,user);
+ 		model = blogCommon.getTotalCommentNum(model, user);
+// 		model = blogCommon.getMaxFocus(request, model);
+ 		model = blogCommon.getAllVistor(request, model,user);
+ 		model = blogAct.getAllVisitors(queryTitle, modelId, queryChannelId,pageNo, request, model,user);
+		FrontUtils.frontData(request, model, site);
+		return FrontUtils.getTplPath(request, site.getSolutionPath(),TPLDIR_BLOG, "tpl.visitor");
+	}
+	
+	
+	/**
+	 *好友访客页面 
+	 */
+	@RequestMapping(value = "/blog/friends_visitor.jspx")
+	public String friends_visitor(String userIds,String q,Integer modelId,Integer queryChannelId, Integer pageNo,HttpServletRequest request,HttpServletResponse response, ModelMap model) {
+		CmsSite site = CmsUtils.getSite(request);
+		CmsUser userT=cmsUserMng.findById(Integer.valueOf(userIds.toString()));
+		model = blogCommon.getColumn(request,model,userT);
+	    model = blogCommon.getChannel(request,model,userT,site);
+//	    model = blogCommon.blog_focus_find(Integer.parseInt(userIds),request,model);
+//	    model = blogCommon.getLinks(model,userT);
+//		model = blogCommon.getFriends(model,userT);
+ 		model = blogCommon.getTotalArticleNum(model,userT);
+ 		model = blogCommon.getTotalCommentNum(model, userT);
+ 		model = blogCommon.getTotalCoverCommentNum(model, userT);
+ 		model = blogCommon.getTotalReadNum(model, userT);
+ 		model = blogAct.getAllVisitors(q, modelId, queryChannelId,pageNo, request, model,userT);
+		String path = request.getSession().getServletContext().getRealPath("/");
+		List<Focus> list = (new BlogDao()).findMaxFocusCount( path);
+	    List<Focus> l = null;
+	    if(null != list){
+	    	if(list.size()>3){
+	    		l = new ArrayList<Focus>();
+	    		for(int i =0;i<3;i++){
+	    			l.add(list.get(i));
+	    		}
+	    	}
+	    	if(null != l){
+	    		model.addAttribute("focusMax", l);
+	    	}else{
+	    		model.addAttribute("focusMax", list);
+	    	}
+	    }
+	    model.addAttribute("usert", userT);
+	    model.addAttribute("userIds", userIds);
+	    FrontUtils.frontData(request, model, site);
+		return FrontUtils.getTplPath(request, site.getSolutionPath(),TPLDIR_BLOG, "tpl.friends_visitor");
+	}
 }

@@ -191,17 +191,6 @@ padding-top: 32px;
 .blog_column{}
 .blog_column label{float: inherit; margin-left:10px;color:red}
  
-.gonggao{
-	position: absolute;
-    top:60px;
-    left: 1140px;
-    width: 200px;
-    min-height: 150px;
-    border: 1px solid #F00;
-    font-size:16px;
-    font-family: "Microsoft YaHei",Arial;
-    padding:5px;
-}
 
 .blog_right{
 	padding:35px;
@@ -290,3 +279,23 @@ border-radius: 50%;	/* relative value */
 -webkit-border-radius: 50%;
 transition: linear 0.25s;
 }
+
+
+.content-share{color:#666666; padding-left:20px; position:relative; cursor:pointer;}
+.content-share{padding-bottom:8px;}
+.content-share:before{content:""; position:absolute;}
+.content-share:before{width:12px; height:12px; background:url(../images/content_tubiao.png) -13px -103px no-repeat; left:2px; bottom:10px;}
+.content-share:hover:before{background:url(../images/content_tubiao.png) -37px -103px no-repeat;}
+#content-share-list{display:none; position:absolute; width:90px; height:120px; background-color:#fff; border:1px solid #e4e4e4; box-sizing:border-box; border-radius:3px; -moz-border-radius:3px; -o-border-radius:3px; -webkit-border-radius:3px; left:-50%; bottom:-120px; z-index:999;}
+.content-share:hover > #content-share-list{display:block;}
+#content-share-list:before{content:""; position:absolute; height:5px; background:url(../images/content-share-list.png) center center no-repeat; top:-5px; z-index:2; width:10px; left:40px;}
+#content-share-list li{padding-left:9px; margin-top:10px; line-height:17px;}
+#content-share-list li a{color:#1f1f1f; line-height:17px; display:inline-block; position:relative; padding-left:22px;}
+#content-share-list li a:hover{color:#FF0000;}
+#content-share-list li a:before{content:""; position:absolute; left:0; bottom:0; width:17px; height:17px;}
+#content-share-list .content_qq:before{ background:url(../images/content_tubiao.png) -13px -134px no-repeat;}
+#content-share-list .content_qqzone:before{ background:url(../images/content_tubiao.png) -13px -164px no-repeat;}
+#content-share-list .content_weixin:before{ background:url(../images/content_tubiao.png) -13px -194px no-repeat;}
+#content-share-list .content_sina:before{ background:url(../images/content_tubiao.png) -13px -224px no-repeat;}
+#content-share-list li a{background:none; height:auto; margin:0; float:none;}
+ 
