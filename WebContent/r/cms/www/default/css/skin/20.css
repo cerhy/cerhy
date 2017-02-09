@@ -1,0 +1,33 @@
+.blogBody{
+	width:100%;
+	background: #3C6645; 
+}
+.user-center-left .user-menu-links, .personCenter-userInfo, .user-center-left .user-setting {
+    background: #37563F;
+}
+
+.header-top {background: #37563F;border-bottom:0px;}
+.footer_style {background: #37563F; }
+
+ .user-center-left .user-menu-links li{
+	margin-top:-1px;
+	border-bottom: none; 
+}
+.user-center-left .user-menu-links a {
+    border: none; 
+    text-decoration:none;
+}
+
+.user-menu-links li a em {background: transparent; }
+.user-menu-links li.on a em {background: transparent; }
+
+.tggl .tggl-top {background: transparent;color:black;}
+.tggl td{border-color:#C6C6C6;}
+.tggl table{border-color:#C6C6C6;}
+
+body, button, input, select, textarea {background: transparent;}
+.st_tree ul li a:hover {color:#b4cdae;}
+
+#_goPs{
+	background: transparent;
+}

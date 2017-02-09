@@ -93,7 +93,7 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 	}
 	
 	public Pagination getPage_blog(String title, Integer typeId,Integer userId,
-			Integer userGroupId, boolean topLevel, boolean recommend,
+		   boolean topLevel, boolean recommend,
 			ContentStatus status, Byte checkStep, Integer siteId,Integer modelId,
 			Integer channelId,int orderBy, int pageNo, int pageSize,Integer columnId,Integer channelId2) {
 		channelId = channelId2;
@@ -122,11 +122,11 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 		}
 		if(modelId!=null){
 			f.append(" and bean.model.id=:modelId").setParam("modelId", modelId);
+			/*f.append(" and bean.model.id in (11,21,24)");*/
+		}/*else{
 			f.append(" and bean.model.id in (11,21,24)");
-		}else{
-			f.append(" and bean.model.id in (11,21,24)");
-		}
-		appendQuery_blog(f, title, typeId, userId,userGroupId,status, topLevel, recommend,columnId);
+		}*/
+		appendQuery_blog(f, title, typeId, userId,status, topLevel, recommend,columnId);
 		appendOrder(f, orderBy);
 		return find(f, pageNo, pageSize);
 	}
@@ -273,7 +273,7 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 	}
 
 	private void appendQuery_blog(Finder f, String title, Integer typeId,
-			Integer inputUserId, Integer userGroupId, ContentStatus status, boolean topLevel,
+			Integer inputUserId, ContentStatus status, boolean topLevel,
 			boolean recommend ,Integer columnId) {
 		
 		if (inputUserId != null&&inputUserId!=0) {
@@ -282,10 +282,10 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 		}else{
 		
 		}
-		if(null != userGroupId){
+		/*if(null != userGroupId){
 			f.append(" and bean.user.group.id=:group");
 			f.setParam("group", userGroupId);
-		}
+		}*/
 		if (!StringUtils.isBlank(title)) {
 			f.append(" and bean.contentExt.title like :title");
 			f.setParam("title", "%" + title + "%");
@@ -1128,7 +1128,7 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 			f.append(" and bean.model.id in (11,21,24)");
 		}
 		inputUserId=ids;
-		appendQuery_blog(f, title, typeId, inputUserId,null, status, topLevel, recommend,null);
+		appendQuery_blog(f, title, typeId, inputUserId, status, topLevel, recommend,null);
 		appendOrder(f, orderBy);
 		return find(f, pageNo, pageSize);
 	}

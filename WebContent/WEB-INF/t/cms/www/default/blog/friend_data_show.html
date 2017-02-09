@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-<title>好研网-${usert.username}的博客</title>
+<title>好研网</title>
 <link href="${resSys}/front.css" rel="stylesheet" type="text/css"/>
 <script src="${resSys}/jquery.js" type="text/javascript"></script>
 <script src="${resSys}/front.js" type="text/javascript"></script>
@@ -9,7 +9,9 @@
 <link  type="text/css" rel="stylesheet" href="/${res}/css/SimpleTree.css" />
 <script src="/${res}/js/SimpleTree.js"></script>
 <style>
+
 .st_tree ul .change a:hover{color:red;}
+.st_tree ul li a:hover{color:blue;}
 .st_tree ul .change :hover{background-color:#e7e7e7 }
 ::-webkit-scrollbar{width:0px}
 .clear{clear:both}
@@ -75,6 +77,7 @@ $(function(){
 	$('.user-menu-links li').click(function(){
 	    $(this).toggleClass('on');
 	});
+	
 	$(".st_tree").SimpleTree({
 		click:function(a){
 			if(!$(a).attr("hasChild"))
@@ -87,18 +90,16 @@ $(function(){
 <div class="blogBody">
 <div class="blog-con">
   <div class="blogHead">
-   <div class="title1"><a href="#"><span id="title1">[#if usert.blogTitle??]${usert.blogTitle}[#else]标题[/#if]</span></a></div>
-	  <div style="font-size:15px;margin:15px auto 10px;">[#if usert.blogTitle2??]${usert.blogTitle2}[#else]副标题[/#if]</div>
+   <div class="title1"><a href="${base}/blog/index.jspx"><span id="title1">[#if usert.blogTitle??]${usert.blogTitle}[#else]标题[/#if]</span></a></div>
+	  <div style="font-size:15px;margin:5px auto 15px;">[#if usert.blogTitle2??]${usert.blogTitle2}[#else]副标题[/#if]</div>
   </div>
-  
-      <div>
       <div>
       	<div class="tj">
      	 	文章数:${articleCount}&nbsp;&nbsp;评论:${commentCount}&nbsp;&nbsp;访问:${usert.blogVisitNum!'0'}&nbsp;&nbsp;最后登录:${usert.lastLoginTime?string('yyyy-MM-dd HH:mm:ss')}
       	</div>
       </div>
         <div class="mb20 clearfix">
-        <div class="wrap-left">
+            <div class="wrap-left">
 		     <div class="user-center-left">
 		           <div class="user-setting">
 		                 <div class="pic-dt">
@@ -107,13 +108,8 @@ $(function(){
 		                      [/#if]
 		                 </div>
 		                 <div class="user-name-dt"><a href="#">${usert.username}</a></div>
-		                     [#if usert??]
 		                     <a id="focus" class="user-oparetion-btn">关注</a>
-		                    <a id="cancelfocus" class="user-oparetion-btn">取消关注</a>
-		                    [#else]
-		                     <a href="${base}/logout.jspx" class="user-oparetion-btn">退出</a>
-		                     [/#if]
-		                     
+		                     <a id="cancelfocus" class="user-oparetion-btn">取消关注</a>
 		           </div>
 		           <div class="user-menu-links">
 		                <ul>
@@ -135,10 +131,10 @@ $(function(){
 		                             </ul>
 		                        [/#if]
 		                    </li>
-		                    <li><a  href="${base}/blog/gotoDataShow.jspx?dataFlag=1&userId=${usert.id}" >好友</a></li>
-			                <li><a  href="${base}/blog/gotoDataShow.jspx?dataFlag=2&userId=${usert.id}" >关注</a></li>
-			                <li><a  href="${base}/blog/gotoDataShow.jspx?dataFlag=3&userId=${usert.id}" >粉丝</a></li>
-		                <li><a href="${base}/blog/friends_visitor.jspx?userIds=${usert.id}" >访客</a></li>  
+		                    <li><a  href="${base}/blog/gotoDataShowFriend.jspx?dataFlag=1&userId=${usert.id}" >好友</a></li>
+			                <li><a  href="${base}/blog/gotoDataShowFriend.jspx?dataFlag=2&userId=${usert.id}" >关注</a></li>
+			                <li><a  href="${base}/blog/gotoDataShowFriend.jspx?dataFlag=3&userId=${usert.id}" >粉丝</a></li>
+		                   
 		                <li><a  href="${base}/blog/friendDataStatistics.jspx?userIds=${usert.id}" >访问统计</a></li>
 		                <li style="cursor: pointer;"><a><em></em> 明星博主</a>
 		                   <ul>
@@ -150,7 +146,7 @@ $(function(){
 				                      <a href="${base}/blog/find_all_url_friend.jspx?userIds=${c.id}" target="_blank">${c.username}</a>
 				                [/#list]
 		                        [#if moreStarBloggerExist??]
-				                 <a href="${base}/blog/gotoDataShow.jspx?dataFlag=4">更多 &nbsp;>></a>
+				                 <a href="${base}/blog/gotoDataShowFriend.jspx?dataFlag=4">更多 &nbsp;>></a>
 		                        [/#if]
 				                [/#if]
 		                   </ul>
@@ -158,32 +154,24 @@ $(function(){
 				    </ul>
 		        </div>
 		     </div>
-		</div>
-            <div class="mb20 clearfix">
-            <div class="wrap-right" style="min-height: 661px;margin-left: 10px;width: 72%;">
-           <div class="personCenter-userInfo blog_right">
-	                         基本信息:
-	            <ul style="padding-left: 50px;">
-				  <li  style="list-style-type: disc;">访问人次:${usert.blogVisitNum!'0'} </li>
-				  <li  style="list-style-type: disc;">发表文章数:${articleCount} </li>
-				  <li  style="list-style-type: disc;">发表评论数:${coverCommentCount}</li>
-				  <li  style="list-style-type: disc;">文章阅读数:${readCount} </li>
-				  <li  style="list-style-type: disc;">文章被评数:${commentCount} </li>
-				</ul>
-            </div>
-            </div>
-        </div>
+		</div>           
+
+           <div class="wrap-right">
+            <div class="links-wrap" style="margin-top:0px;">
+            <div class="personCenter-userInfo blog_right" >
+		              [#if dataFlag??]    
+		                [#if dataFlag==1] [#include "./data_show/friend_show.html"/][/#if]
+		                [#if dataFlag==2] [#include "./data_show/focus_show.html"/][/#if]
+		                [#if dataFlag==3] [#include "./data_show/fans_show.html"/][/#if]
+		                [#if dataFlag==4] [#include "./data_show/star_blogger_show.html"/][/#if]
+		              [/#if]  
+				</div>
+				</div>
+           </div>
+     </div> 
+  </div>
 </div>
-  </div>
-  </div>
-  </div>
-[#include "../hyinclude/end.html"/]
- <script type="text/javascript">
-		skinChange(${usert.theme!0});
-	function skinChange(n){
-		document.all.MrJin.href="/${res}/css/skin/"+n+".css"; 
-	}
-</script>
-[#include "model_friend.html"/]
+[#include "model.html"/]
+[#include "../include/footer.html"/]
 </body>
 </html>

@@ -4,10 +4,8 @@ import static com.jeecms.cms.Constants.TPLDIR_BLOG;
 import static com.jeecms.common.page.SimplePage.cpn;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -18,7 +16,6 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
 
-import com.jeecms.cms.dao.main.impl.BlogDao;
 import com.jeecms.cms.entity.main.CmsModel;
 import com.jeecms.cms.entity.main.Columns;
 import com.jeecms.cms.entity.main.Content;
@@ -50,14 +47,11 @@ public class BlogAct {
 		CmsUser user = CmsUtils.getUser(request);
 		model = blogCommon.getColumn(request,model,user);
 	    model = blogCommon.getChannel(request,model,user,site);
-	    model = blogCommon.blog_focus_find(null,request,model);
-	    model = blogCommon.getLinks(model,user);
-	    model = blogCommon.getFriends(model,user);
 	    model = blogCommon.getTotalArticleNum(model,user);
  		model = blogCommon.getTotalCommentNum(model, user);
-	    model = blogCommon.getMaxFocus(request, model);
+	    model = blogCommon.getStarBlogger(request, model);
 		FrontUtils.frontData(request, model, site);
-		Pagination p = contentMng.getPageForMember_blog(q, queryChannelId,site.getId(), modelId,null,user.getGroup().getId(), cpn(pageNo), 20,null,null);
+		Pagination p = contentMng.getPageForMember_blog(q, queryChannelId,site.getId(), modelId,user.getId(), cpn(pageNo), 20,null,null);
 		model.addAttribute("pagination", p);
 		if (!StringUtils.isBlank(q)) {
 			model.addAttribute("q", q);
@@ -100,12 +94,9 @@ public class BlogAct {
 		CmsUser user = CmsUtils.getUser(request);
 		model = blogCommon.getColumn(request,model,user);
 	    model = blogCommon.getChannel(request,model,user,site);
-	    model = blogCommon.blog_focus_find(null,request,model);
-	    model = blogCommon.getLinks(model,user);
-	    model = blogCommon.getFriends(model,user);
 	    model = blogCommon.getTotalArticleNum(model,user);
  		model = blogCommon.getTotalCommentNum(model, user);
- 		model = blogCommon.getMaxFocus(request, model);
+ 		model = blogCommon.getStarBlogger(request, model);
 		FrontUtils.frontData(request, model, site);
 		return FrontUtils.getTplPath(request, site.getSolutionPath(),TPLDIR_BLOG,"tpl.blogSetting");
 	}
@@ -118,22 +109,21 @@ public class BlogAct {
 		//为了删除文章后能跳转回本栏目下
 		if(null != request.getParameter("columnId")){
 			model.addAttribute("columnId", request.getParameter("columnId"));
+			model.addAttribute("submitOn", 1);
 			columnId = Integer.parseInt(request.getParameter("columnId"));
 		}
 		if(null != request.getParameter("channelId")){
 			model.addAttribute("channelId", request.getParameter("channelId"));
+			model.addAttribute("submitOn", 1);
 			channelId = Integer.parseInt(request.getParameter("channelId"));
 		}
 		model = blogCommon.getColumn(request,model,user);
 	    model = blogCommon.getChannel(request,model,user,site);
-	    model = blogCommon.blog_focus_find(null,request,model);
-	    model = blogCommon.getLinks(model,user);
-	    model = blogCommon.getFriends(model,user);
 	    model = blogCommon.getTotalArticleNum(model,user);
  		model = blogCommon.getTotalCommentNum(model, user);
- 		model = blogCommon.getMaxFocus(request, model);
+ 		model = blogCommon.getStarBlogger(request, model);
 		FrontUtils.frontData(request, model, site);
-		Pagination p = contentMng.getPageForMember_blog(q, queryChannelId,site.getId(), modelId,user.getId(),user.getGroup().getId(), cpn(pageNo), 20,columnId,channelId);
+		Pagination p = contentMng.getPageForMember_blog(q, queryChannelId,site.getId(), modelId,user.getId(), cpn(pageNo), 20,columnId,channelId);
 		model.addAttribute("pagination", p);
 		if (!StringUtils.isBlank(q)) {
 			model.addAttribute("q", q);
@@ -149,12 +139,9 @@ public class BlogAct {
 		CmsUser user = CmsUtils.getUser(request);
 		model = blogCommon.getColumn(request,model,user);
 	    model = blogCommon.getChannel(request,model,user,site);
-	    model = blogCommon.blog_focus_find(null,request,model);
-	    model = blogCommon.getLinks(model,user);
-	    model = blogCommon.getFriends(model,user);
 	    model = blogCommon.getTotalArticleNum(model,user);
  		model = blogCommon.getTotalCommentNum(model, user);
- 		model = blogCommon.getMaxFocus(request, model);
+ 		model = blogCommon.getStarBlogger(request, model);
 		if(hasPermission){
 			FrontUtils.frontData(request, model, site);
 			model.addAttribute("site", site);
@@ -231,8 +218,6 @@ public class BlogAct {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		/*nextUrl += "/blog/index.jspx";
-		return FrontUtils.showSuccess(request, model, nextUrl);*/
 	}
 	
 	public String blog_edit(Integer id, String nextUrl,HttpServletRequest request,
@@ -246,12 +231,9 @@ public class BlogAct {
 		}
 		model = blogCommon.getColumn(request,model,user);
 	    model = blogCommon.getChannel(request,model,user,site);
-	    model = blogCommon.blog_focus_find(null,request,model);
-	    model = blogCommon.getLinks(model,user);
-		model = blogCommon.getFriends(model,user);
 		model = blogCommon.getTotalArticleNum(model,user);
  		model = blogCommon.getTotalCommentNum(model, user);
- 		model = blogCommon.getMaxFocus(request, model);
+ 		model = blogCommon.getStarBlogger(request, model);
 	/*	WebErrors errors = validateEdit(id, site, user, request);
 		if (errors.hasErrors()) {
 			return FrontUtils.showError(request, response, model, errors);
@@ -325,13 +307,12 @@ public class BlogAct {
 			if(null != columnId){
 				id = columnId;
 				request.getRequestDispatcher("/blog/contribute_list.jspx?columnId="+id).forward(request, response);
-			}
-
-            if(null != channelId){
+			}else if(null != channelId){
             	id = channelId;
 				request.getRequestDispatcher("/blog/contribute_list.jspx?channelId="+id).forward(request, response);
+			}else{
+				request.getRequestDispatcher("/blog/index.jspx").forward(request, response);
 			}
-		
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -343,12 +324,9 @@ public class BlogAct {
 		CmsSite site = CmsUtils.getSite(request);
 		CmsUser user = CmsUtils.getUser(request);
 		model = blogCommon.getColumn(request,model,user);
-		model = blogCommon.blog_focus_find(null,request,model);
-		model = blogCommon.getLinks(model,user);
-		model = blogCommon.getFriends(model,user);
 		model = blogCommon.getTotalArticleNum(model,user);
  		model = blogCommon.getTotalCommentNum(model, user);
- 		model = blogCommon.getMaxFocus(request, model);
+ 		model = blogCommon.getStarBlogger(request, model);
 		FrontUtils.frontData(request, model, site);
 		Pagination p = contentMng.getPageForMember(q, queryChannelId,site.getId(), modelId,user.getId(), cpn(pageNo), 20);
 		model.addAttribute("pagination", p);
@@ -419,21 +397,11 @@ public class BlogAct {
 	public String update_tz(String id,String orderId,HttpServletRequest request,HttpServletResponse response, ModelMap model) {
 		CmsSite site = CmsUtils.getSite(request);
 		CmsUser user = CmsUtils.getUser(request);
-		String name =null ;
-		  try {
-			request.setCharacterEncoding("UTF-8");
-		    name = new String(request.getParameter("name").getBytes("ISO-8859-1"), "utf-8");
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}
 		model = blogCommon.getColumn(request,model,user);
-		model = blogCommon.blog_focus_find(null,request,model);
-		model = blogCommon.getLinks(model,user);
-		model = blogCommon.getFriends(model,user);
 		model = blogCommon.getTotalArticleNum(model,user);
  		model = blogCommon.getTotalCommentNum(model, user);
- 		model = blogCommon.getMaxFocus(request, model);
-		Columns column = new Columns(Integer.parseInt(id),user.getId(),name,Integer.parseInt(orderId));
+ 		model = blogCommon.getStarBlogger(request, model);
+		Columns column = new Columns(Integer.parseInt(id),user.getId(),request.getParameter("name"),Integer.parseInt(orderId));
 		model.addAttribute("column", column);
 		FrontUtils.frontData(request, model, site);
 		return FrontUtils.getTplPath(request, site.getSolutionPath(),TPLDIR_BLOG,"tpl.columnsUpdate");
@@ -476,12 +444,9 @@ public class BlogAct {
 			}
 			model = blogCommon.getColumn(request,model,userT);
 			model = blogCommon.getChannel(request,model,userT,site);
-			model = blogCommon.blog_focus_find(Integer.parseInt(userIds),request,model);
-			model = blogCommon.getLinks(model,userT);
-			model = blogCommon.getFriends(model,userT);
 			model = blogCommon.getTotalArticleNum(model,userT);
 			model = blogCommon.getTotalCommentNum(model, userT);
-			model = blogCommon.getMaxFocus(request, model);
+			model = blogCommon.getStarBlogger(request, model);
 			FrontUtils.frontData(request, model, site);
 			Pagination p = contentMng.getPageForMember_firendsBlog(Integer.valueOf(userIds),q, queryChannelId,site.getId(), modelId,user.getId(), cpn(pageNo), 20,null);
 			model.addAttribute("pagination", p);
@@ -501,7 +466,6 @@ public class BlogAct {
 
 	public String blog_list_friend(String q, Integer modelId,Integer queryChannelId,String nextUrl,Integer pageNo,HttpServletRequest request, ModelMap model) {
 		CmsSite site = CmsUtils.getSite(request);
-		//CmsUser user = CmsUtils.getUser(request);
 		String user_ids = request.getParameter("user_ids");
 		Integer columnId = null;
 		Integer channelId = null;
@@ -516,17 +480,14 @@ public class BlogAct {
 		CmsUser user=cmsUserMng.findById(Integer.valueOf(user_ids.toString()));
 		model = blogCommon.getColumn(request,model,user);
 		model = blogCommon.getChannel(request,model,user,site);
-		model = blogCommon.blog_focus_find(null,request,model);
-		model = blogCommon.getLinks(model,user);
-		model = blogCommon.getFriends(model,user);
 		model = blogCommon.getTotalArticleNum(model,user);
  		model = blogCommon.getTotalCommentNum(model, user);
- 		model = blogCommon.getMaxFocus(request, model);
+ 		model = blogCommon.getStarBlogger(request, model);
 		model.addAttribute("usert", user);
 		model.addAttribute("userIds", user.getId());
 		model.addAttribute("columnId", columnId);
 		FrontUtils.frontData(request, model, site);
-		Pagination p = contentMng.getPageForMember_blog(q, queryChannelId,site.getId(), modelId,user.getId(),user.getGroup().getId(), cpn(pageNo), 20,columnId,channelId);
+		Pagination p = contentMng.getPageForMember_blog(q, queryChannelId,site.getId(), modelId,user.getId(), cpn(pageNo), 20,columnId,channelId);
 		model.addAttribute("pagination", p);
 		if (!StringUtils.isBlank(q)) {
 			model.addAttribute("q", q);
@@ -571,7 +532,6 @@ public class BlogAct {
 		}
 	}
 	
-	
 	public ModelMap getAllVisitors(String q, Integer modelId,
 			Integer queryChannelId, Integer pageNo, HttpServletRequest request,
 			ModelMap model, CmsUser user) {
@@ -580,9 +540,65 @@ public class BlogAct {
 		return model;
 	}
 	
+	public String gotoDataShow(int dataFlag, HttpServletRequest request,HttpServletResponse response, ModelMap model,Integer pageNo) {
+		CmsUser u = CmsUtils.getUser(request);
+		CmsSite site = CmsUtils.getSite(request);
+		//好友
+		if(1 == dataFlag){
+			model = blogCommon.getFriends(u.getId(),model,cpn(pageNo));
+			model.addAttribute("dataFlag", 1);
+		//关注	
+		}else if(2 == dataFlag){
+			model = blogCommon.getBlogFocus(u.getId(),model,cpn(pageNo));
+			model.addAttribute("dataFlag", 2);
+		//粉丝	
+		}else if(3 == dataFlag){
+			model = blogCommon.getBlogFans(u.getId(),model,cpn(pageNo));
+			model.addAttribute("dataFlag", 3);
+		//明星博主	
+		}else if(4 == dataFlag){
+			model = blogCommon.getMoreStarBlogger(request,model,cpn(pageNo));
+			model.addAttribute("dataFlag", 4);
+		}
+		model = blogCommon.getChannel(request,model,u,site);
+		model = blogCommon.getColumn(request,model,u);
+		model = blogCommon.getTotalArticleNum(model,u);
+ 		model = blogCommon.getTotalCommentNum(model, u);
+ 		model = blogCommon.getStarBlogger(request, model);
+		FrontUtils.frontData(request, model, site);
+		    return FrontUtils.getTplPath(request, site.getSolutionPath(),TPLDIR_BLOG,"tpl.dataShow");
+	}
 	
-	
-	
+	public String gotoDataShowFriend(int dataFlag, HttpServletRequest request,HttpServletResponse response, ModelMap model,Integer pageNo,String userId) {
+		CmsSite site = CmsUtils.getSite(request);
+		CmsUser u =cmsUserMng.findById( Integer.parseInt(userId));
+		model.addAttribute("userIds", userId);
+		model.addAttribute("usert", u);
+		//好友
+		if(1 == dataFlag){
+			model = blogCommon.getFriends(u.getId(),model,cpn(pageNo));
+			model.addAttribute("dataFlag", 1);
+		//关注	
+		}else if(2 == dataFlag){
+			model = blogCommon.getBlogFocus(u.getId(),model,cpn(pageNo));
+			model.addAttribute("dataFlag", 2);
+		//粉丝	
+		}else if(3 == dataFlag){
+			model = blogCommon.getBlogFans(u.getId(),model,cpn(pageNo));
+			model.addAttribute("dataFlag", 3);
+		//明星博主	
+		}else if(4 == dataFlag){
+			model = blogCommon.getMoreStarBlogger(request,model,cpn(pageNo));
+			model.addAttribute("dataFlag", 4);
+		}
+		model = blogCommon.getChannel(request,model,u,site);
+		model = blogCommon.getColumn(request,model,u);
+		model = blogCommon.getTotalArticleNum(model,u);
+ 		model = blogCommon.getTotalCommentNum(model, u);
+ 		model = blogCommon.getStarBlogger(request, model);
+		FrontUtils.frontData(request, model, site);
+		return FrontUtils.getTplPath(request, site.getSolutionPath(),TPLDIR_BLOG,"tpl.frienddataShow");
+	}
 	
 	@Autowired
 	protected ColumnsMng columnsMng;
