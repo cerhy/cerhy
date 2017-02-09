@@ -108,8 +108,8 @@ $(function(){
 		                 </div>
 		                 <div class="user-name-dt"><a href="#">${usert.username}</a></div>
 		                     [#if usert??]
-		                     <a id="focus" class="user-oparetion-btn">关注</a>
-		                    <a id="cancelfocus" class="user-oparetion-btn">取消关注</a>
+		                     <a id="focus" style="cursor: pointer;" class="user-oparetion-btn">关注</a>
+		                    <a id="cancelfocus" style="cursor: pointer;" class="user-oparetion-btn">取消关注</a>
 		                    [#else]
 		                     <a href="${base}/logout.jspx" class="user-oparetion-btn">退出</a>
 		                     [/#if]
