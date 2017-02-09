@@ -464,7 +464,7 @@ public class ContributeAct extends AbstractContentMemberAct {
 	public String blog_columns_list(String queryTitle, Integer modelId,
 			Integer queryChannelId, Integer pageNo, HttpServletRequest request,
 			ModelMap model) {
-		return blogAct.blog_columns_list(queryTitle, modelId, queryChannelId, "tpl.",
+		return blogAct.blog_columns_list(queryTitle, modelId, queryChannelId, "tpl.columnsList",
 				pageNo, request, model);
 	}
 	
