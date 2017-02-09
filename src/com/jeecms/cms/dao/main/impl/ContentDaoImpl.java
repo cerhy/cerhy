@@ -1232,7 +1232,7 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 		f.append(" and bean.byVisitorId.id=:userId");
 		f.append(" order by bean.visitorTime desc");
 		f.setParam("userId", user.getId());
-		return find(f, pageNo, pageSize);
+		return findLimit(f, pageNo, pageSize);
 	}
 
 }
