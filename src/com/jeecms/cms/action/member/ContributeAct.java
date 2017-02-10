@@ -602,8 +602,8 @@ public class ContributeAct extends AbstractContentMemberAct {
 	}
 
 	@RequestMapping(value = "/blog/add_friends.jspx")
-	public String friends(String friends,String nextUrl,HttpServletRequest request,HttpServletResponse response, ModelMap model) {
-		return blogAct.friends_save(friends.replaceAll("\r\n", " "),nextUrl,request, response, model);
+	public void friends(String friends,String nextUrl,HttpServletRequest request,HttpServletResponse response, ModelMap model) {
+		blogAct.friends_save(friends.replaceAll("\r\n", " "),nextUrl,request, response, model);
 	}
 	
 	/**
@@ -683,14 +683,6 @@ public class ContributeAct extends AbstractContentMemberAct {
 			Date lastDate=user.getLastLoginTime();
 			int userId=user.getId();
 			List<CmsComment> listNum=contentMng.findCommentByConid(userId,lastDate);
-			/*int number=0;
-			for(int i=0;i<listNum.size();i++){
-				if(listNum.get(i).getContent().getUser().getId()==userId){
-					if(listNum.get(i).getCommentUser().getId()!=userId){
-						number++;
-					}
-				}
-			}*/
 			json.put("status", listNum.size());
 			ResponseUtils.renderJson(response, json.toString());
 		}
@@ -873,17 +865,22 @@ public class ContributeAct extends AbstractContentMemberAct {
 		return FrontUtils.getTplPath(request, site.getSolutionPath(),TPLDIR_BLOG, "tpl.friendDataStatistics");
 	}
 	
-	//显示好友，关注，粉丝，明星博主数据
+	/**
+	 * 显示好友，关注，粉丝，明星博主数据-----自己数据
+	 */
 	@RequestMapping(value = "/blog/gotoDataShow.jspx")
 	public String gotoDataShow(int dataFlag,HttpServletRequest request, HttpServletResponse response,ModelMap model,Integer pageNo) {
 		return blogAct.gotoDataShow(dataFlag, request, response, model,pageNo);
 	}
 	
-	//显示好友，关注，粉丝，明星博主数据
-		@RequestMapping(value = "/blog/gotoDataShowFriend.jspx")
-		public String gotoDataShowFriend(int dataFlag,HttpServletRequest request, HttpServletResponse response,ModelMap model,Integer pageNo,String userId) {
-			return blogAct.gotoDataShowFriend(dataFlag, request, response, model,pageNo,userId);
-		}
+	/**
+	 * 显示好友，关注，粉丝，明星博主数据-----好友博客数据
+	 */
+	@RequestMapping(value = "/blog/gotoDataShowFriend.jspx")
+	public String gotoDataShowFriend(int dataFlag,HttpServletRequest request, HttpServletResponse response,ModelMap model,Integer pageNo,String userId) {
+		return blogAct.gotoDataShowFriend(dataFlag, request, response, model,pageNo,userId);
+	}
+	
 	/**
 	 *查询访客 
 	 */
