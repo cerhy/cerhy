@@ -421,17 +421,21 @@ public class BlogAct {
 		return FrontUtils.showSuccess(request, model, nextUrl);
 	}
 
-	public String friends_save(String friends, String nextUrl,
+	public void friends_save(String friends, String nextUrl,
 			HttpServletRequest request, HttpServletResponse response,
 			ModelMap model) {
 		CmsSite site = CmsUtils.getSite(request);
 		CmsUser user = CmsUtils.getUser(request);
 		FrontUtils.frontData(request, model, site);
 		if (user == null) {
-			return FrontUtils.showLogin(request, model, site);
+			FrontUtils.showLogin(request, model, site);
 		}
 		channelMng.updateFriends(friends,user);
-		return FrontUtils.showSuccess(request, model, nextUrl);
+		try {
+			response.sendRedirect("../blog/gotoDataShow.jspx?dataFlag=1");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public String friendCenter(String userIds,String q, Integer modelId,Integer queryChannelId,String nextUrl,Integer pageNo,HttpServletRequest request, ModelMap model) {

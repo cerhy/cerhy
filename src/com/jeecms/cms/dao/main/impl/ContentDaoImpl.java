@@ -122,10 +122,10 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 		}
 		if(modelId!=null){
 			f.append(" and bean.model.id=:modelId").setParam("modelId", modelId);
-			/*f.append(" and bean.model.id in (11,21,24)");*/
-		}/*else{
 			f.append(" and bean.model.id in (11,21,24)");
-		}*/
+		}else{
+			f.append(" and bean.model.id in (11,21,24)");
+		}
 		appendQuery_blog(f, title, typeId, userId,status, topLevel, recommend,columnId);
 		appendOrder(f, orderBy);
 		return find(f, pageNo, pageSize);
@@ -1161,7 +1161,8 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 		String hql = "select count(*) from Content bean"
 				+ " where 1=1"
 				+ " and bean.model.id in (11,21,24)"
-				+ " and bean.user.id="+user.getId();
+				+ " and bean.user.id="+user.getId()
+		        + " and bean.status<>"+ContentCheck.RECYCLE;
 		Query query = getSession().createQuery(hql);
 		if(null != query.iterate() && null != query.iterate().next()){
 			return ((Number) (query.iterate().next())).intValue();
@@ -1176,7 +1177,8 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 				+ " where 1=1"
 				+ " and bean.content.id is not null "
 				+ " and bean.content.model.id in (11,21,24)"
-				+ " and bean.content.user.id="+user.getId();
+				+ " and bean.content.user.id="+user.getId()
+		        + " and bean.content.status<>"+ContentCheck.RECYCLE;
 		Query query = getSession().createQuery(hql);
 		if(null != query.iterate() && null != query.iterate().next()){
 			return ((Number) (query.iterate().next())).intValue();
@@ -1191,7 +1193,8 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 				+ " where 1=1"
 				+ " and bean.content.id is not null "
 				+ " and bean.content.model.id in (11,21,24)"
-				+ " and bean.commentUser.id="+user.getId();
+				+ " and bean.commentUser.id="+user.getId()
+				+ " and bean.content.status<>"+ContentCheck.RECYCLE;
 		Query query = getSession().createQuery(hql);
 		if(null != query.iterate() && null != query.iterate().next()){
 			return ((Number) (query.iterate().next())).intValue();
@@ -1205,7 +1208,8 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 		String hql = "select sum(bean.contentCount.views) from Content bean"
 				+ " where 1=1"
 				+ " and bean.model.id in (11,21,24)"
-				+ " and bean.user.id="+user.getId();
+				+ " and bean.user.id="+user.getId()
+				+ " and bean.status<>"+ContentCheck.RECYCLE;
 		Query query = getSession().createQuery(hql);
 		if(null != query.iterate() && null != query.iterate().next()){
 			return ((Number) (query.iterate().next())).intValue();
