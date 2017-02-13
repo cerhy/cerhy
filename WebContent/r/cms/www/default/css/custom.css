@@ -299,3 +299,90 @@ transition: linear 0.25s;
 #content-share-list .content_sina:before{ background:url(../images/content_tubiao.png) -13px -224px no-repeat;}
 #content-share-list li a{background:none; height:auto; margin:0; float:none;}
  
+.report-list2 {
+    border-top: 1px solid #e6ebf0; }
+.report-list2.sm {
+    border-top: 0 none; }
+.report-list2.sm .report-text h3 {
+    font-size: 18px !important;
+    font-weight: 700 !important;
+    color: #666 !important; }
+.report-list2.sm .report-text p {
+    width: 520px; }
+.report-list2 li {
+    float: none; }
+.report-list2 li a {
+    position: relative;
+    display: block;
+    padding: 10px 0;
+    border-bottom: 1px solid #e6ebf0;
+    font-family: "MicroSoft YaHei";
+    transition: padding 300ms; 
+    min-height:70px;
+    }
+.report-list2 li a .report-text {
+    width: 660px; }
+.report-list2 li a .report-text h3 {
+    font-size: 18px;
+    padding-bottom: 10px;
+    color: #666; }
+.report-list2 li a .report-text p {
+    color: #999; }
+.report-list2 li a .arrowBtn {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    display: block;
+    width: 48px;
+    height: 48px;
+    margin-top: -24px;
+    font-size: 48px;
+    color: #c5c5c5;
+    background: url(images/list-right-arr_01.png) no-repeat;
+}
+.report-list2 li a:hover {
+    padding-left: 10px;
+    background-color: #f7f4ed; }
+.report-list2 li a:hover .report-text h3 {
+    color: #ed4800 !important; 
+}
+.report-list1 li a:hover .report-text p {
+    color: #333; }
+.report-list2 li a:hover .arrowBtn {
+    background: url(images/list-right-arr_02.png) no-repeat;
+}
+.report-list2 li a.hasImg img {
+    width:160px; 
+    height:135px; 
+    float:left; 
+    display:block; 
+    position:relative; 
+    margin-right:20px; 
+    overflow:hidden;
+}
+
+.report-list1 li a.hasImg .report-text {
+    float: left;
+    width: 846px;
+    padding-top: 5px;
+    padding-left: 30px; }
+.report-list1 li a.hasImg .report-text h3 {
+    font-size: 26px;
+    font-weight: 400;
+    color: #333; 
+}
+.report-list1.sp {
+    border-top: 0 none; }
+.report-list1.sp li a .report-text h3 {
+    font-size: 18px;
+    font-weight: 700;
+    color: #666; 
+}
+.item2{border-top:1px solid #f2f2f2; padding:10px 0;}
+.item2:hover{ background-color:rgba(240,240,240,0.4);}
+.f2 {
+	float:right;
+    margin-top: 0px;
+    font-size: 12px;
+    color: #b7b7b7;
+}

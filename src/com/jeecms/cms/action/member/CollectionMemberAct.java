@@ -230,6 +230,7 @@ public class CollectionMemberAct {
 		}
 		model.addAttribute("usert", userT);
 	    model.addAttribute("userIds", userIds);
+        model.addAttribute("submitOn",1);
 		return FrontUtils.getTplPath(request, site.getSolutionPath(),
 				TPLDIR_BLOG, FRIEND_COLLECTION_LIST);
 	}

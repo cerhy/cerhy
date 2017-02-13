@@ -21,21 +21,18 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.jeecms.cms.action.blog.BlogAct;
 import com.jeecms.cms.entity.main.Channel;
 import com.jeecms.cms.entity.main.Content;
-import com.jeecms.cms.entity.main.ContentCheck;
 import com.jeecms.cms.manager.assist.CmsKeywordMng;
 import com.jeecms.cms.manager.main.ChannelMng;
-import com.jeecms.cms.manager.main.ContentBuyMng;
 import com.jeecms.cms.manager.main.ContentMng;
 import com.jeecms.common.page.Paginable;
 import com.jeecms.common.page.SimplePage;
-import com.jeecms.common.web.session.SessionProvider;
 import com.jeecms.common.web.springmvc.RealPathResolver;
 import com.jeecms.core.entity.CmsConfig;
 import com.jeecms.core.entity.CmsGroup;
 import com.jeecms.core.entity.CmsSite;
-import com.jeecms.core.entity.CmsUser;
 import com.jeecms.core.manager.CmsConfigMng;
 import com.jeecms.core.web.util.CmsUtils;
 import com.jeecms.core.web.util.FrontUtils;
@@ -114,6 +111,10 @@ public class DynamicPageAct {
 		PageInfo info = URLHelper.getPageInfo(request);
 		String[] paths = URLHelper.getPaths(request);
 		CmsConfig config=configMng.get();
+//		String d = request.getParameter("d");
+//		if(null != d){
+//			return blogAct.showBlogContent(paths, params, info, pageNo,request, response, model);
+//		}
 		if(config.getInsideSite()){
 			return network(paths, params, info, pageNo, request, response, model);
 		}else{
@@ -209,6 +210,8 @@ public class DynamicPageAct {
 		return channel.getTplChannelOrDef();
 	}
 
+	
+	
 	public String content(Integer id, int pageNo, String[] params,
 			PageInfo info, HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
@@ -223,14 +226,11 @@ public class DynamicPageAct {
 		}
 		//非终审文章
 		CmsConfig config=CmsUtils.getSite(request).getConfig();
-		Boolean preview=config.getConfigAttr().getPreview();
-		/*if(config.getViewOnlyChecked()&&!content.getStatus().equals(ContentCheck.CHECKED)){
-			return FrontUtils.showMessage(request, model, CONTENT_STATUS_FORBIDDEN);
-		}*/
-		CmsUser user = CmsUtils.getUser(request);
+		config.getConfigAttr().getPreview();
+		CmsUtils.getUser(request);
 		CmsSite site = content.getSite();
 		Set<CmsGroup> groups = content.getViewGroupsExt();
-		int len = groups.size();
+		groups.size();
 		/*// 需要浏览权限
 		if (len != 0) {
 			// 没有登录
@@ -342,7 +342,8 @@ public class DynamicPageAct {
 		return FrontUtils.getTplPath(request, site.getSolutionPath(),TPLDIR_INDEX, TPL_INDEX); 
 	}
 	
-
+	@Autowired
+	private BlogAct blogAct;
 	@Autowired
 	private ChannelMng channelMng;
 	@Autowired
@@ -353,8 +354,4 @@ public class DynamicPageAct {
 	private CmsConfigMng configMng;
 	@Autowired
 	private RealPathResolver realPathResolver;
-	@Autowired
-	private ContentBuyMng contentBuyMng;
-	@Autowired
-	private SessionProvider session;
 }

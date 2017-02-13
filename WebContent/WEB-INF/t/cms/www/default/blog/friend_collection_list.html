@@ -87,7 +87,7 @@ $(function(){
 <div class="blogBody">
 <div class="blog-con">
   <div class="blogHead">
-   <div class="title1"><a href="#"><span id="title1">[#if usert.blogTitle??]${usert.blogTitle}[#else]标题[/#if]</span></a></div>
+   <div class="title1"><a href="${base}/blog/find_all_url_friend.jspx?userIds=${usert.id}"><span id="title1">[#if usert.blogTitle??]${usert.blogTitle}[#else]标题[/#if]</span></a></div>
 	  <div style="font-size:15px;margin:15px auto 10px;">[#if usert.blogTitle2??]${usert.blogTitle2}[#else]副标题[/#if]</div>
   </div>
   
@@ -117,7 +117,11 @@ $(function(){
 		           </div>
 		           <div class="user-menu-links">
 		                <ul>
-						    <li><a style="cursor: pointer;"><em></em>博客栏目</a>
+		                 [#if submitOn??] 
+					    <li class="on"><a style="cursor: pointer;"><em></em>博客栏目</a>
+					    [#else] 
+					    <li><a style="cursor: pointer;"><em></em>博客栏目</a>
+					    [/#if]
 						        [#if columnsList??]
 		                          <ul>
 		                            [#list columnsList as c]
@@ -164,25 +168,21 @@ $(function(){
 				<div class="personCenter-userInfo blog_right">
 				  <div class=" tggl" style="text-align: -webkit-center;">
           <form id="tableForm" action="${base}/blog/friend_collection_list.jspx?userIds=${usert.id}" method="post">
-            [#if pagination.list?size gt 0]
-          <table >
-            <tbody>
-              <tr>
-                <td class="tggl-top" style="min-width:420px;">标题</td>
-				<td class="tggl-top" style="min-width:40px;">点击</td>
-				<td class="tggl-top" style="min-width:80px;">发布时间</td>
-				<td class="tggl-top" style="min-width:60px;">操作</td>
-              </tr>
-              [#list pagination.list as c]
-              <tr id="tr_${c.id}">
-                <td style="text-align:left;padding-left:10px;"><a href="${c.url!}" target="_blank" class="a2">[@text_cut s=c.title?html len=26 append='...'/]</a></td>
-                <td>${c.views}</td>
-                <td>${c.releaseDate?string('yyyy-MM-dd')}</td>
-                <td><a href="${base}/blog/friend_collect_cancel.jspx?cIds=${c.id}&pageNo=${pagination.pageNo}&userIds=${usert.id}" class="a2">取消转载</a></td>
-              </tr>
-              [/#list]
-                </tbody>
-          </table>
+            <ul class="report-list2 sm mb20">
+			          [#if pagination.list?size gt 0]
+				          [#list pagination.list as c]
+				         <li>
+				          <a class="hasImg clearfix"  href="${c.url!}" target="_blank">
+							  <div class="item2 clearfix" [#if c_index<1]style="border-top:none;"[/#if]>
+									<div class="report-text">
+										<h3>[@text_cut s=c.title?html len='24' append='...'/]</h3>
+										<div class="f2"><span style="padding-right:10px;"><em>${c.releaseDate?string('yyyy-MM-dd')}</em></span></div>
+									</div>
+					           </div>
+						  </a>
+			             </li>
+			              [/#list]
+			          </ul>
                
                   <input type="hidden" name="pageNo"/>
 		          <table style="margin:20px 0 0 40px;border:0px"><tr><td style="border:0px;">
