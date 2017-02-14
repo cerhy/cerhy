@@ -8,14 +8,18 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
 
+import com.jeecms.cms.action.front.DynamicPageAct;
 import com.jeecms.cms.entity.main.CmsModel;
 import com.jeecms.cms.entity.main.Columns;
 import com.jeecms.cms.entity.main.Content;
@@ -24,6 +28,7 @@ import com.jeecms.cms.entity.main.ContentExt;
 import com.jeecms.cms.entity.main.ContentTxt;
 import com.jeecms.cms.entity.main.ContentType;
 import com.jeecms.cms.entity.main.Focus;
+import com.jeecms.cms.manager.assist.CmsKeywordMng;
 import com.jeecms.cms.manager.main.ChannelMng;
 import com.jeecms.cms.manager.main.CmsModelMng;
 import com.jeecms.cms.manager.main.ContentDocMng;
@@ -31,8 +36,12 @@ import com.jeecms.cms.manager.main.ContentMng;
 import com.jeecms.cms.manager.main.ContentTypeMng;
 import com.jeecms.cms.manager.main.impl.ColumnsMng;
 import com.jeecms.cms.manager.main.impl.FocusMng;
+import com.jeecms.common.page.Paginable;
 import com.jeecms.common.page.Pagination;
+import com.jeecms.common.page.SimplePage;
 import com.jeecms.common.util.StrUtils;
+import com.jeecms.core.entity.CmsConfig;
+import com.jeecms.core.entity.CmsGroup;
 import com.jeecms.core.entity.CmsSite;
 import com.jeecms.core.entity.CmsUser;
 import com.jeecms.core.manager.CmsUserMng;
@@ -42,7 +51,7 @@ import com.jeecms.core.web.util.FrontUtils;
 import com.jeecms.core.web.util.URLHelper.PageInfo;
 
 public class BlogAct {
-
+	private static final Logger log = LoggerFactory.getLogger(DynamicPageAct.class);
 	public String blog_index(String q, Integer modelId,Integer queryChannelId,String nextUrl,Integer pageNo,HttpServletRequest request, ModelMap model) {
 		CmsSite site = CmsUtils.getSite(request);
 		CmsUser user = CmsUtils.getUser(request);
@@ -631,12 +640,51 @@ public class BlogAct {
 		return FrontUtils.getTplPath(request, site.getSolutionPath(),TPLDIR_BLOG,"tpl.frienddataShow");
 	}
 	
-	public String showBlogContent(String[] paths,String[] params,PageInfo info,Integer pageNo,HttpServletRequest request,HttpServletResponse response, ModelMap model){
-		
-		
-		return null;
-	}
+	public String blogContentShow(String[] paths,String[] params,
+			PageInfo info,Integer pageNo,HttpServletRequest request,
+			HttpServletResponse response, ModelMap model){
+			Content content = contentMng.findById(Integer.parseInt(paths[1]));
+			if (content == null) {
+				log.debug("Content id not found: {}", paths[1]);
+				return FrontUtils.pageNotFound(request, response, model);
+			}
+			Integer pageCount=content.getPageCount();
+			if(pageNo>pageCount||pageNo<0){
+				return FrontUtils.pageNotFound(request, response, model);
+			}
+			//非终审文章
+			CmsConfig config=CmsUtils.getSite(request).getConfig();
+			config.getConfigAttr().getPreview();
+			CmsUser u = CmsUtils.getUser(request);
+			CmsSite site = content.getSite();
+			Set<CmsGroup> groups = content.getViewGroupsExt();
+			groups.size();
+			
+			String txt = content.getTxtByNo(pageNo);
+			// 内容加上关键字
+			txt = cmsKeywordMng.attachKeyword(site.getId(), txt);
+			Paginable pagination = new SimplePage(pageNo, 1, content.getPageCount());
+			model.addAttribute("pagination", pagination);
+			FrontUtils.frontPageData(request, model);
+			model.addAttribute("content", content);
+//			System.out.println(content.getMediaPath());
+//			System.out.println(content.getMediaType());
+			model.addAttribute("channel", content.getChannel());
+			model.addAttribute("title", content.getTitleByNo(pageNo));
+			model.addAttribute("txt", txt);
+			model.addAttribute("pic", content.getPictureByNo(pageNo));
+			model = blogCommon.getChannel(request,model,u,site);
+			model = blogCommon.getColumn(request,model,u);
+			model = blogCommon.getTotalArticleNum(model,u);
+	 		model = blogCommon.getTotalCommentNum(model, u);
+	 		model = blogCommon.getStarBlogger(request, model);
+			FrontUtils.frontData(request, model, site);
+			return FrontUtils.getTplPath(request, site.getSolutionPath(),TPLDIR_BLOG,"tpl.blogContentShow");
+		}
 	
+
+    @Autowired
+    private CmsKeywordMng cmsKeywordMng;
 	@Autowired
 	protected ColumnsMng columnsMng;
 	@Autowired
