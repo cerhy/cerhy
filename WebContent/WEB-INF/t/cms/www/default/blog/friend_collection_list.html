@@ -173,3 +173,44 @@ $(function(){
 [#include "model_friend.html"/]
 </body>
 </html>
+<script type="text/javascript">
+function join_group(code,id){
+	$.ajax({
+		url:"${base}/blog/joinGroup.jspx?code="+code+"&createUserId="+id,
+		type:"POST",
+		dataType:"json",
+		data: "",
+		success: function (data) {
+			if(data.status==1){
+				$("#"+code).attr("class", "disableds");
+				$("#"+code).removeAttr("onclick");
+				$("#"+code).html("已加入")
+			}else{
+				alert("加入失败!");
+			}
+        }
+	});
+}
+</script>
+<script type="text/javascript">
+$(function(){
+	var els =document.getElementsByName("uniqueCode");
+	for (var i = 0, j = els.length; i < j; i++){
+		var code=els[i].id;
+		$.ajax({
+			url:"${base}/blog/checkJoinState.jspx?joinState="+els[i].id,
+			type:"POST",
+			dataType:"json",
+			data: "",
+			async: false,
+			success: function (data) {
+				if(data.status==1){
+					$("#"+code).attr("class", "disableds");
+					$("#"+code).removeAttr("onclick");
+					$("#"+code).html("已加入");
+				}
+	        }
+		});
+	}
+});
+</script>
