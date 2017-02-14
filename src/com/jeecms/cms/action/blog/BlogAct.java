@@ -172,7 +172,7 @@ public class BlogAct {
 			String[] attachmentFilenames, String[] picPaths, String[] picDescs,
 			Short charge,Double chargeAmount,
 			String nextUrl, HttpServletRequest request,
-			HttpServletResponse response, ModelMap model) {
+			HttpServletResponse response, ModelMap model,Integer sta) {
 				CmsSite site = CmsUtils.getSite(request);
 				CmsUser user = CmsUtils.getUser(request);
 				FrontUtils.frontData(request, model, site);
@@ -185,9 +185,9 @@ public class BlogAct {
 		CmsModel defaultModel=cmsModelMng.getDefModel();
 		
 		int groupId = user.getGroup().getId();//学科教研模板，市县教研内容模板
-		if (4 == groupId) {
+		if (4 == groupId&&sta!=1) {
 			modelId = 11;//学科教研
-		} else if (5 == groupId) {
+		} else if (5 == groupId&&sta!=1) {
 			modelId = 21;//市县教研
 		} else {
 			modelId = 24;//普通博客

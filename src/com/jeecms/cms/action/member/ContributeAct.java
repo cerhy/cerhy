@@ -135,19 +135,21 @@ public class ContributeAct extends AbstractContentMemberAct {
 			HttpServletResponse response, ModelMap model) {
 		   String blog = request.getParameter("blog");
 		   String channelIds = request.getParameter("channelIds");
+		   int sta=0;
 		   if(channelIds!=null){
 			   String[] str=channelIds.split("&");
-			   if(str[1]==null){
+			   if(str[1].equals("chan")){
 				   channelId=Integer.valueOf(str[0]);
 			   }else if(str[1].equals("colu")){
 				   columnId=Integer.valueOf(str[0]);
+				   sta=1;
 			   }
 		   }
 		   if(null != blog ){
 			  blogAct.blog_save(title, author, description, txt, tagStr, channelId,columnId,modelId,
 						null, captcha,mediaPath,mediaType,attachmentPaths,attachmentNames, attachmentFilenames
 						,picPaths,picDescs,charge,chargeAmount,
-						nextUrl, request, response, model);
+						nextUrl, request, response, model,sta);
 					   }else{
 			   super.save(title, author, description, txt, tagStr, channelId,modelId,
 						null, captcha,mediaPath,mediaType,attachmentPaths,attachmentNames, attachmentFilenames

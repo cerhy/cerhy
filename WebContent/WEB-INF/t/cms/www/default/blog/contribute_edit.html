@@ -214,12 +214,12 @@ $(function(){
               <tr>
                 <td class="tggl-top">栏目</td>
                 <td>
-	                <select name="channelIds" class="member-change" id="channelId">
+	                <select name="channelIds" class="member-change" id="channelIds">
 	                <option value="" class="sel-disabled">--请选择--</option>
 	                [#if channelList??]
 	                [#assign origDeep=channelList[0].deep+1/]
 	                [#list channelList as c]
-	                    <option value="${c.id}"[#if c.child?size gt 0] class="sel-disabled"[/#if]>[#if c.deep gte origDeep][#list origDeep..c.deep as i]&nbsp;&nbsp;[/#list]>[/#if]${c.name}</option>
+	                    <option value="${c.id}&chan"[#if c.child?size gt 0] class="sel-disabled"[/#if]>[#if c.deep gte origDeep][#list origDeep..c.deep as i]&nbsp;&nbsp;[/#list]>[/#if]${c.name}</option>
 	                [/#list]
 	                [/#if]
 	                [#if columnsList?size gt 0]
