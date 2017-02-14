@@ -41,23 +41,27 @@
 		                    [/#if]
                          </ul>
                     </li>
-                    <li><a style="cursor: pointer;"><em></em>群组</a>
-				        [#if columnsList??]
+                    [#if submitOn??] 
+					    <li class="on"><a style="cursor: pointer;"><em></em>群组</a>
+					    [#else] 
+					    <li><a style="cursor: pointer;"><em></em>群组</a>
+					    [/#if]
                           <ul>
+					        [#if columnsList??]
                             [#list columnsList as c]
                             [#if c.uniqueCode??]
 		                    <li><a href="${base}/blog/contribute_list.jspx?columnId=${c.columnId}&joinGroupStata=0" ><em></em>${c.columnName}</a></li>
 		                    [/#if]
 		                    [/#list]
+                         	[/#if]
                              </ul>
-                         [/#if]
-				        [#if joinGroupList??]
                           <ul>
+					        [#if joinGroupList??]
                             [#list joinGroupList as j]
 		                    <li><a href="${base}/blog/contribute_list.jspx?columnId=${j.columnsId.columnId}&joinGroupStata=0" ><em></em>${j.columnsId.columnName}</a></li>
 		                    [/#list]
+	                        [/#if]
                              </ul>
-                         [/#if]
                     </li>
 	                <li><a  href="${base}/blog/gotoDataShow.jspx?dataFlag=1" >好友</a></li>
 	                <li><a  href="${base}/blog/gotoDataShow.jspx?dataFlag=2" >关注</a></li>
