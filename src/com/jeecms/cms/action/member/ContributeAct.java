@@ -33,11 +33,14 @@ import com.jeecms.cms.action.blog.BlogCommon;
 import com.jeecms.cms.action.blog.CreateSerialNo;
 import com.jeecms.cms.dao.main.impl.BlogDao;
 import com.jeecms.cms.entity.assist.CmsComment;
+import com.jeecms.cms.entity.assist.CmsJoinGroup;
 import com.jeecms.cms.entity.main.Channel;
+import com.jeecms.cms.entity.main.Columns;
 import com.jeecms.cms.entity.main.Focus;
 import com.jeecms.cms.manager.assist.CmsFileMng;
 import com.jeecms.cms.manager.main.ChannelMng;
 import com.jeecms.cms.manager.main.ContentMng;
+import com.jeecms.cms.manager.main.impl.ColumnsMng;
 import com.jeecms.common.web.ResponseUtils;
 import com.jeecms.core.entity.CmsSite;
 import com.jeecms.core.entity.CmsUser;
@@ -131,11 +134,22 @@ public class ContributeAct extends AbstractContentMemberAct {
 			String nextUrl, HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		   String blog = request.getParameter("blog");
+		   String channelIds = request.getParameter("channelIds");
+		   int sta=0;
+		   if(channelIds!=null){
+			   String[] str=channelIds.split("&");
+			   if(str[1].equals("chan")){
+				   channelId=Integer.valueOf(str[0]);
+			   }else if(str[1].equals("colu")){
+				   columnId=Integer.valueOf(str[0]);
+				   sta=1;
+			   }
+		   }
 		   if(null != blog ){
 			  blogAct.blog_save(title, author, description, txt, tagStr, channelId,columnId,modelId,
 						null, captcha,mediaPath,mediaType,attachmentPaths,attachmentNames, attachmentFilenames
 						,picPaths,picDescs,charge,chargeAmount,
-						nextUrl, request, response, model);
+						nextUrl, request, response, model,sta);
 					   }else{
 			   super.save(title, author, description, txt, tagStr, channelId,modelId,
 						null, captcha,mediaPath,mediaType,attachmentPaths,attachmentNames, attachmentFilenames
@@ -195,6 +209,15 @@ public class ContributeAct extends AbstractContentMemberAct {
 			String nextUrl, HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		String blog = request.getParameter("blog");
+		String channelIds = request.getParameter("channelIds");
+		   if(channelIds!=null){
+			   String[] str=channelIds.split("&");
+			   if(str[1]==null){
+				   channelId=Integer.valueOf(str[0]);
+			   }else if(str[1].equals("colu")){
+				   columnId=Integer.valueOf(str[0]);
+			   }
+		   }
 		   if(null != blog ){
 			   return blogAct.blog_update(id, title, author, description, txt, tagStr,
 					   columnId,channelId, mediaPath,mediaType,attachmentPaths,
@@ -417,6 +440,9 @@ public class ContributeAct extends AbstractContentMemberAct {
 	protected BlogAct blogAct;
 	@Autowired
 	protected BlogCommon blogCommon;
+	@Autowired
+	protected ColumnsMng columnsMng;
+	
 	
 	//博客主页
 	@RequestMapping(value = "/blog/index.jspx")
@@ -688,86 +714,6 @@ public class ContributeAct extends AbstractContentMemberAct {
 		}
 	}
 	
-	/**
-	 *展示评论(--没用到 先留着)
-	 */
-	@RequestMapping(value = "/blog/showCommet.jspx")
-	public String showComment(HttpServletRequest request,HttpServletResponse response, ModelMap model) {
-		CmsSite site = CmsUtils.getSite(request);
-		CmsUser user = CmsUtils.getUser(request);
-		model = blogCommon.getColumn(request, model, user);
-		//获取链接列表
-		String linkUrl=user.getLinkUrl();
-		List<Object> listU=new ArrayList<Object>();
-		if(linkUrl!=null){
-			String[] strs=linkUrl.split(" ");
-			String newUrl="";
-			for(int i=0;i<strs.length;i++){
-				if(i!=strs.length-1){
-					if(!strs[i].contains("http")&&strs[i+1].contains("http")){
-						newUrl+="~"+strs[i]+" ";
-					}else{
-						newUrl+=strs[i]+" ";
-					}
-				}else{
-					if(!strs[i].contains("http")){
-						newUrl+="~"+strs[i]+" ";
-					}else{
-						newUrl+=strs[i]+" ";
-					}
-				}
-			}
-			String[] str=newUrl.split("~");
-			for(int j=0;j<str.length;j++){
-				Map<String,Object> map=new HashMap<String,Object>();
-				String[] st=str[j].toString().split(" ");
-				List<Object> lists=new ArrayList<Object>();
-				String newName="";
-				for(int k=0;k<st.length;k++){
-					if(st[0].contains("http")){
-						newName="";
-					}else{
-						newName=st[0];
-					}
-					lists.add(st[k]);
-				}
-				map.put(newName, lists);
-				listU.add(map);
-			}
-			model.addAttribute("urlList", listU);
-			model.addAttribute("linkUrls", linkUrl.replaceAll(" ", "\r\n"));
-		}else{
-			model.addAttribute("urlList",listU);
-			model.addAttribute("linkUrls","");
-		}
-		//获取好友列表
-		String friends=user.getFriends();
-		List<Object> listF = new ArrayList<Object>();
-		if(friends!=null){
-			
-			String[] strs=friends.split(" ");
-			for(int i=0;i<strs.length;i++){
-				String[] str=strs[i].split("=");
-				Map<String,Object> map=new HashMap<String,Object>();
-				CmsUser u=channelMng.findUserImage(str[1].toString());
-				if(null==u){
-					String newName="";
-					map.put(newName, null);
-				}else{
-					String newName=str[0]+"~"+u.getId()+"~"+u.getUserExt().getUserImg();
-					map.put(newName, u.getUserExt().getUserImg());
-				}
-				listF.add(map);
-			}
-			model.addAttribute("friendsList", listF);
-			model.addAttribute("friends", friends.replaceAll(" ", "\r\n"));
-		}else{
-			model.addAttribute("friendsList", listF);
-			model.addAttribute("friends","");
-		}
-		FrontUtils.frontData(request, model, site);
-		return FrontUtils.getTplPath(request, site.getSolutionPath(),TPLDIR_BLOG, "tpl.toMyComment");
-	}
 	
 	/**
 	 *校验添加的好友是否存在!
@@ -826,6 +772,7 @@ public class ContributeAct extends AbstractContentMemberAct {
  		model = blogCommon.getTotalCoverCommentNum(model, user);
  		model = blogCommon.getTotalReadNum(model, user);
  		model = blogCommon.getStarBlogger(request, model);
+ 		model = blogCommon.getAlreadyJoinGroup(request, model,user);
 		FrontUtils.frontData(request, model, site);
 		return FrontUtils.getTplPath(request, site.getSolutionPath(),TPLDIR_BLOG, "tpl.dataStatistics");
 	}
@@ -843,6 +790,7 @@ public class ContributeAct extends AbstractContentMemberAct {
  		model = blogCommon.getTotalCoverCommentNum(model, userT);
  		model = blogCommon.getTotalReadNum(model, userT);
  		model = blogCommon.getStarBlogger(request, model);
+ 		model = blogCommon.getAlreadyJoinGroup(request, model,userT);
 		String path = request.getSession().getServletContext().getRealPath("/");
 		List<Focus> list = (new BlogDao()).findMaxFocusCount( path);
 	    List<Focus> l = null;
@@ -898,6 +846,7 @@ public class ContributeAct extends AbstractContentMemberAct {
 // 		model = blogCommon.getMaxFocus(request, model);
  		model = blogCommon.getAllVistor(request, model,user);
  		model = blogCommon.getStarBlogger(request, model);
+ 		model = blogCommon.getAlreadyJoinGroup(request, model,user);
  		model = blogAct.getAllVisitors(queryTitle, modelId, queryChannelId,pageNo, request, model,user);
 		FrontUtils.frontData(request, model, site);
 		return FrontUtils.getTplPath(request, site.getSolutionPath(),TPLDIR_BLOG, "tpl.visitor");
@@ -921,6 +870,7 @@ public class ContributeAct extends AbstractContentMemberAct {
  		model = blogCommon.getTotalCoverCommentNum(model, userT);
  		model = blogCommon.getTotalReadNum(model, userT);
  		model = blogCommon.getStarBlogger(request, model);
+ 		model = blogCommon.getAlreadyJoinGroup(request, model,userT);
  		model = blogAct.getAllVisitors(q, modelId, queryChannelId,pageNo, request, model,userT);
 		String path = request.getSession().getServletContext().getRealPath("/");
 		List<Focus> list = (new BlogDao()).findMaxFocusCount( path);
@@ -953,6 +903,37 @@ public class ContributeAct extends AbstractContentMemberAct {
 			JSONObject json = new JSONObject();
 			json.put("status", CreateSerialNo.generateNumber());
 			ResponseUtils.renderJson(response, json.toString());
+	}
+	
+	/**
+	 * 加入群组
+	 */
+	@RequestMapping(value = "/blog/joinGroup.jspx")
+	public void joinGroup(String code,String createUserId,HttpServletRequest request,HttpServletResponse response, ModelMap model)throws UnsupportedEncodingException, JSONException {
+		CmsUser user = CmsUtils.getUser(request);
+		CmsUser userT=cmsUserMng.findById(Integer.valueOf(createUserId.toString()));
+		Columns cu=columnsMng.findInfoByCode(code);
+		JSONObject json = new JSONObject();
+		CmsJoinGroup cjg=new CmsJoinGroup();
+		cjg.setCreateUserId(userT);
+		cjg.setJoinUserId(user);
+		cjg.setJoinCode(code);
+		cjg.setJoinTime(new Date());
+		cjg.setColumnsId(cu);
+		int joinStatus=columnsMng.saveJoinGroup(cjg);
+		json.put("status",joinStatus);
+		ResponseUtils.renderJson(response, json.toString());
+	}
+	/**
+	 * 检查是否加入群组-页面现在用
+	 */
+	@RequestMapping(value = "/blog/checkJoinState.jspx")
+	public void checkJoinState(String joinState,HttpServletRequest request,HttpServletResponse response, ModelMap model)throws UnsupportedEncodingException, JSONException {
+		CmsUser user = CmsUtils.getUser(request);
+		JSONObject json = new JSONObject();
+		int joinStatus=columnsMng.checkJoinState(joinState,user);
+		json.put("status",joinStatus);
+		ResponseUtils.renderJson(response, json.toString());
 	}
 	
 	

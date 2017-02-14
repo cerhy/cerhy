@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+<link id="hello" type="text/css" rel="stylesheet" href="/${res}/css/custom.css" />
 <link href="${resSys}/front.css" rel="stylesheet" type="text/css"/>
 <script src="${resSys}/jquery.js" type="text/javascript"></script>
 <script src="${resSys}/front.js" type="text/javascript"></script>
@@ -37,6 +37,41 @@ $(function(){
 	});
 });
 </script>
+<script type="text/javascript">
+$(document).ready(function(){
+    $("#checkb").click(function(){
+        enter();
+	});
+});
+function enter(){
+	if($('input[name="checkb"]').prop("checked")){
+		$.ajax({
+	        url: "${base}/blog/uniqueNum.jspx",
+	        type: "POST",
+	        dataType:"json",
+	        data: "",
+	        success: function (data) {
+		 		$("#sh").show();
+				$("#uniqueCode").val(data.status)
+	        }
+	    });
+	}else{
+		$("#sh").hide();
+		$("#uniqueCode").val("")
+	}	
+}
+</script>
+<script type="text/javascript">
+window.onload=function(event){
+    var button=document.getElementById("btn");
+    button.onclick=function(event){
+        document.getElementById("uniqueCode").select();
+        document.execCommand("copy",false,null);
+        $("#info").html("复制成功...");
+        $("#info").animate({opacity: "hide"},5000);
+    };
+};
+</script>
 [#include "head.html"/]
 <div class="blogBody">
 <div class="blog-con">
@@ -60,6 +95,14 @@ $(function(){
         <div >
 	        <span style="font-size:16px;">栏目名称:</span>
 	        <input type="text" name="columnInput" required="required" style="margin:10px;width: 180px;height: 30px;" rerequired oninvalid="setCustomValidity('请输入栏目名称');" oninput="setCustomValidity('');"/><span style="color:#f00; margin-left:10px;">*</span>
+	        <input type="checkbox" id="checkb" name="checkb" onclick="checkb()" />
+        	<span>是否将该栏目作为群组。</span>
+        </div>
+        <div style="display: none;" id="sh">
+        	<span style="font-size:16px;">群组唯一标识码:</span>
+        	<input type="text" style="margin:10px;width: 180px;height: 30px;" id="uniqueCode" name="uniqueCode" readonly="readonly"/>
+        	<span><a onmouseover="this.style.cssText='color:red;cursor: pointer;'" onmouseout="this.style.cssText='color:black'" href="javascript:;" id="btn" >复制</a></span>
+        	<span id="info" style="color: red;font-size: 2px;"></span>
         </div>
         <div>
          <span style="font-size:16px;">栏目序号:</span>
@@ -76,13 +119,15 @@ $(function(){
             <tbody>
               <tr>
                <td class="tggl-top" style="font-size:14px;min-width: 80px;">栏目序号</td>
-               <td class="tggl-top" style="font-size:14px;min-width: 300px;">栏目名称</td>
+               <td class="tggl-top" style="font-size:14px;min-width: 200px;">栏目名称</td>
+               <td class="tggl-top" style="font-size:14px;min-width: 100px;">群组唯一标识码</td>
                <td class="tggl-top" style="font-size:14px;min-width: 100px;">操作</td>
               </tr>
               [#list columnsList as c]
               <tr>
               <td>${c.orderId}</td>
                 <td>${c.columnName}</td>
+                <td>${c.uniqueCode!""}</td>
                 <td><a href="${base}/blog/update_tz.jspx?id=${c.columnId}&name=${c.columnName}&orderId=${c.orderId}">修改<a> | <a href="${base}/blog/deteleColumn.jspx?id=${c.columnId}">删除<a></td>
               </tr>
               [/#list]

@@ -6,6 +6,7 @@ import java.util.Map;
 
 import com.jeecms.cms.entity.assist.CmsBlogVisitor;
 import com.jeecms.cms.entity.assist.CmsComment;
+import com.jeecms.cms.entity.assist.CmsJoinGroup;
 import com.jeecms.cms.entity.main.Content;
 import com.jeecms.cms.entity.main.Content.ContentStatus;
 import com.jeecms.common.hibernate4.Updater;
@@ -264,5 +265,7 @@ public interface ContentDao {
 
 
 	public Pagination getPage_visitor(int i, int pageNo, int pageSize, CmsUser user);
+
+	public List<CmsJoinGroup> getAlreadyJoinGroup(CmsUser user);
 
 }

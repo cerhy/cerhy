@@ -8,6 +8,7 @@
 		<property name="userId" column="user_id" type="integer" not-null="true" length="11"/>
 		<property name="columnName" column="column_name" type="string" not-null="false" length="60"/>
 		<property name="orderId" column="order_id" type="integer" not-null="true" length="11"/>
+		<property name="uniqueCode" column="unique_code" type="string" not-null="false"  length="20"/>
 	</class>
 </hibernate-mapping>
 

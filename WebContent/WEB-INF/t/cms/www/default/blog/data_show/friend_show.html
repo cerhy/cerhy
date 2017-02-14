@@ -1,7 +1,7 @@
-   <span style="font-size:16px;">我的好友</span><span>( ${pagination.totalCount} )</span>
+   <span style="font-size:16px;">好友</span><span> [#if pagination??](${pagination.totalCount} )[/#if]</span>
       <div class="link-content" style="width: 700px;">
          <form id="tableForm" action="${base}/blog/gotoDataShow.jspx?dataFlag=1" method="post">
-			 [#if pagination.list?size gt 0]
+			 [#if pagination??]
 			   <div class="users-a-link-wrap clearfix" style="margin-top:40px;margin-left:25px;">
 				   [#list pagination.list as user]
 	                  <div>

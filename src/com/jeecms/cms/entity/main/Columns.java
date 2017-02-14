@@ -6,6 +6,7 @@ public class Columns {
 	private Integer userId;
 	private String columnName;
 	private Integer orderId;
+	private String uniqueCode;
 
 	public Columns() {
 	}
@@ -21,6 +22,12 @@ public class Columns {
 		this.userId = userId;
 		this.columnName = columnName;
 		this.orderId = orderId;
+	}
+	public Columns(Integer userId, String columnName, Integer orderId,String uniqueCode) {
+		this.userId = userId;
+		this.columnName = columnName;
+		this.orderId = orderId;
+		this.uniqueCode=uniqueCode;
 	}
 
 	public Integer getColumnId() {
@@ -55,4 +62,15 @@ public class Columns {
 		this.orderId = orderId;
 	}
 
+	public String getUniqueCode() {
+		return uniqueCode;
+	}
+
+	public void setUniqueCode(String uniqueCode) {
+		this.uniqueCode = uniqueCode;
+	}
+
+	
+	
+	
 }
