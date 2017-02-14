@@ -46,19 +46,17 @@
 								         [#list columnsList as c]
 		                            	[#if c.uniqueCode??]
 										<li  class="change">
-										<p>
-										<a href="${base}/blog/contribute_list_friend.jspx?columnId=${c.columnId}&user_ids=${userIds}&joinGroupStata=0" >${c.columnName}</a>
+										<a href="${base}/blog/contribute_list_friend.jspx?columnId=${c.columnId}&user_ids=${userIds}&joinGroupStata=0" title="${c.columnName}" >[@text_cut s=c.columnName len=5 append='...'/]</a>
 										[#if c.userId!=user.id]
-										<button type="button" id="${c.uniqueCode}" name="uniqueCode" onclick="join_group(${c.uniqueCode},${usert.id});" class="butt" style="float: right;margin-top: -35px;font-size: 5px;cursor: pointer;">加入</button>
+										<button type="button" id="${c.uniqueCode}" name="uniqueCode" onclick="join_group(${c.uniqueCode},${usert.id});" class="butt" style="float: right;margin-top: -50px;font-size: 5px;cursor: pointer;height: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;加入</button>
 										[/#if]
-										</p>
 										</li>
 								   		[/#if]
 				                        [/#list]
 		                        		[/#if]
 		                        		[#if joinGroupList??]
 			                            [#list joinGroupList as j]
-					                    <li><a href="${base}/blog/contribute_list_friend.jspx?columnId=${j.columnsId.columnId}&user_ids=${userIds}&joinGroupStata=0" >${j.columnsId.columnName}</a></li>
+					                    <li><a href="${base}/blog/contribute_list_friend.jspx?columnId=${j.columnsId.columnId}&user_ids=${userIds}&joinGroupStata=0" title="${j.columnsId.columnName}" >[@text_cut s=j.columnsId.columnName len=5 append='...'/]</a></li>
 					                    [/#list]
 			                            [/#if]
 								   </ul>
