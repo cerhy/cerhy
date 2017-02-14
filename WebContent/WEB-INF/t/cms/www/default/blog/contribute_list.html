@@ -62,42 +62,22 @@ $(function(){
 				    <div >
         <div class="tggl">
           <form id="tableForm" action="contribute_list.jspx" method="post" >
-          [#if pagination.list?size gt 0]
-          <table cellpadding="0" cellspacing="0" >
-            <tbody>
-              <tr class="tit1">
-                <td class="tggl-top" style="min-width:40px;">ID</td>
-	             <td class="tggl-top" style="min-width:350px;">标题</td>
-				 <td class="tggl-top" style="min-width:40px;">浏览次数</td>
-				 <td class="tggl-top" style="min-width:80px;">发布时间</td>
-				 <td class="tggl-top" style="min-width:80px;">操作</td>
-              </tr>
-              [#list pagination.list as c]
-              <tr>
-                <td>${c_index + 1}</td>
-                <td style="text-align:left; text-indent:5px;"><a href="${c.url!}" target="_blank" class="a2">[@text_cut s=c.title?html len='24' append='...'/]</a></td>
-                <td>${c.views}</td>
-                <td>${c.releaseDate?string('yyyy-MM-dd')}</td>
-                <td>
-                [#if c.user.id=user.id]
-                <a href="contribute_edit.jspx?id=${c.id}&nextUrl=contribute_list.jspx" class="a2">修改<a>|
-                [#else]
-                <a href="javascript:;" class="a2" style="cursor: default;color: #D3D3D3;">修改<a>|
-                [/#if] 
-                [#if c.columnId??]
-                [#if c.user.id=user.id]
-                  <a href="contribute_delete.jspx?ids=${c.id}&columnId=${columnId}" class="a2">删除<a>
-                 [#else]
-                 <a href="javascript:;" class="a2" style="cursor: default;color: #D3D3D3;">删除<a>
-                [/#if]
-                [#else]
-                  <a href="contribute_delete.jspx?ids=${c.id}&channelId=${channelId}" class="a2">删除<a> 
-                [/#if]
-                </td>
-              </tr>
-              [/#list]
-            </tbody>
-          </table>
+            	<ul class="report-list2 sm mb20">
+			          [#if pagination.list?size gt 0]
+				          [#list pagination.list as c]
+				         <li>
+				          <a class="hasImg clearfix"  href="${c.url!}" target="_blank">
+							  <div class="item2 clearfix" [#if c_index<1]style="border-top:none;"[/#if]>
+									<div class="report-text">
+										<h3>[@text_cut s=c.title?html len='24' append='...'/]</h3>
+										<div class="f2"><span style="padding-right:10px;"><em>${c.releaseDate?string('yyyy-MM-dd')}</em></span></div>
+									</div>
+					           </div>
+						  </a>
+			             </li>
+			              [/#list]
+			          </ul>
+            
           <input type="hidden" name="pageNo"/>
          <table style="margin:20px 0 0 40px;border:0px"><tr><td style="border:0px;">
 			                共 ${pagination.totalCount} 条&nbsp;

@@ -39,6 +39,7 @@ import com.jeecms.core.manager.CmsUserMng;
 import com.jeecms.core.web.WebErrors;
 import com.jeecms.core.web.util.CmsUtils;
 import com.jeecms.core.web.util.FrontUtils;
+import com.jeecms.core.web.util.URLHelper.PageInfo;
 
 public class BlogAct {
 
@@ -511,6 +512,7 @@ public class BlogAct {
  		model = blogCommon.getStarBlogger(request, model);
  		model = blogCommon.getAlreadyJoinGroup(request, model,user);
 		model.addAttribute("usert", user);
+		model.addAttribute("submitOn", 1);
 		model.addAttribute("userIds", user.getId());
 		model.addAttribute("columnId", columnId);
 		FrontUtils.frontData(request, model, site);
@@ -627,6 +629,12 @@ public class BlogAct {
  		model = blogCommon.getAlreadyJoinGroup(request, model,u);
 		FrontUtils.frontData(request, model, site);
 		return FrontUtils.getTplPath(request, site.getSolutionPath(),TPLDIR_BLOG,"tpl.frienddataShow");
+	}
+	
+	public String showBlogContent(String[] paths,String[] params,PageInfo info,Integer pageNo,HttpServletRequest request,HttpServletResponse response, ModelMap model){
+		
+		
+		return null;
 	}
 	
 	@Autowired

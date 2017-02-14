@@ -54,28 +54,24 @@ $(function(){
 
 			<div class="wrap-right ">
 				<div class="personCenter-userInfo blog_right">
-				  <div class=" tggl" style="text-align: -webkit-center;">
+				  <div class=" tggl">
           <form id="tableForm" action="${base}/blog/collection_list.jspx" method="post">
-            [#if pagination.list?size gt 0]
-          <table >
-            <tbody>
-              <tr>
-                <td class="tggl-top" style="min-width:420px;">标题</td>
-				<td class="tggl-top" style="min-width:40px;">点击</td>
-				<td class="tggl-top" style="min-width:80px;">发布时间</td>
-				<td class="tggl-top" style="min-width:60px;">操作</td>
-              </tr>
-              [#list pagination.list as c]
-              <tr id="tr_${c.id}">
-                <td style="text-align:left;padding-left:10px;"><a href="${c.url!}" target="_blank" class="a2">[@text_cut s=c.title?html len=26 append='...'/]</a></td>
-                <td>${c.views}</td>
-                <td>${c.releaseDate?string('yyyy-MM-dd')}</td>
-                <td><a href="${base}/blog/collect_cancel.jspx?cIds=${c.id}&pageNo=${pagination.pageNo}" class="a2">取消转载</a></td>
-              </tr>
-              [/#list]
-                </tbody>
-          </table>
-               
+           <ul class="report-list2 sm mb20">
+			          [#if pagination.list?size gt 0]
+				          [#list pagination.list as c]
+				         <li>
+				          <a class="hasImg clearfix"  href="${c.url!}" target="_blank">
+							  <div class="item2 clearfix" [#if c_index<1]style="border-top:none;"[/#if]>
+									<div class="report-text">
+										<h3>[@text_cut s=c.title?html len='24' append='...'/]</h3>
+										<div class="f2"><span style="padding-right:10px;"><em>${c.releaseDate?string('yyyy-MM-dd')}</em></span></div>
+									</div>
+					           </div>
+						  </a>
+			             </li>
+			              [/#list]
+			          </ul>
+         
                   <input type="hidden" name="pageNo"/>
 		          <table style="margin:20px 0 0 40px;border:0px"><tr><td style="border:0px;">
 		                共 ${pagination.totalCount} 条&nbsp;
