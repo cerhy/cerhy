@@ -23,36 +23,55 @@
 					    [#else] 
 					    <li><a style="cursor: pointer;"><em></em>博客栏目</a>
 					    [/#if]
-				        [#if columnsList??]
                           <ul>
-                            [#list columnsList as c]
-		                    <li><a href="${base}/blog/contribute_list.jspx?columnId=${c.columnId}" ><em></em>${c.columnName}</a></li>
-		                    [/#list]
-		                    <li><a href="${base}/blog/collection_list.jspx">转载</a></li>
-                             </ul>
-                        [#else]
-                          <ul>
+                            [#if channelList??]
 				             [#assign origDeep=channelList[0].deep+1/]
 				             [#list channelList as c]
 				             <li><a href="${base}/blog/contribute_list.jspx?channelId=${c.id}" ><em></em>[#if c.deep gte origDeep][#list origDeep..c.deep as i]&nbsp;&nbsp;&nbsp;[/#list][/#if]${c.name}</a></li> 
 				             [/#list]
+				             [/#if]
 				             <li><a href="${base}/blog/collection_list.jspx">转载</a></li>
-                             </ul>
-                        [/#if]
+				        	[#if columnsList??]
+                            [#list columnsList as c]
+                            [#if c.uniqueCode??]
+                            [#else]
+		                    <li><a href="${base}/blog/contribute_list.jspx?columnId=${c.columnId}" ><em></em>${c.columnName}</a></li>
+		                    [/#if]
+		                    [/#list]
+		                    [/#if]
+                         </ul>
                     </li>
-                <li><a  href="${base}/blog/gotoDataShow.jspx?dataFlag=1" >好友</a></li>
-                <li><a  href="${base}/blog/gotoDataShow.jspx?dataFlag=2" >关注</a></li>
-                <li><a  href="${base}/blog/gotoDataShow.jspx?dataFlag=3" >粉丝</a></li>
-                <li><a  href="${base}/blog/visitor.jspx" >访客</a></li> 
-             	<li><a  href="${base}/blog/dataStatistics.jspx" >访问统计</a></li>
-			 	<li style="cursor: pointer;"><a><em></em>设置</a>
+                    <li><a style="cursor: pointer;"><em></em>群组</a>
+				        [#if columnsList??]
+                          <ul>
+                            [#list columnsList as c]
+                            [#if c.uniqueCode??]
+		                    <li><a href="${base}/blog/contribute_list.jspx?columnId=${c.columnId}&joinGroupStata=0" ><em></em>${c.columnName}</a></li>
+		                    [/#if]
+		                    [/#list]
+                             </ul>
+                         [/#if]
+				        [#if joinGroupList??]
+                          <ul>
+                            [#list joinGroupList as j]
+		                    <li><a href="${base}/blog/contribute_list.jspx?columnId=${j.columnsId.columnId}&joinGroupStata=0" ><em></em>${j.columnsId.columnName}</a></li>
+		                    [/#list]
+                             </ul>
+                         [/#if]
+                    </li>
+	                <li><a  href="${base}/blog/gotoDataShow.jspx?dataFlag=1" >好友</a></li>
+	                <li><a  href="${base}/blog/gotoDataShow.jspx?dataFlag=2" >关注</a></li>
+	                <li><a  href="${base}/blog/gotoDataShow.jspx?dataFlag=3" >粉丝</a></li>
+	                <li><a  href="${base}/blog/visitor.jspx" >访客</a></li> 
+	             	<li><a  href="${base}/blog/dataStatistics.jspx" >访问统计</a></li>
+			 		<li style="cursor: pointer;"><a><em></em>设置</a>
                        <ul>
-                       [#if columnsList??]
+                       <!-- [#if columnsList??] -->
                        <li><a  href="${base}/blog/columns_list.jspx" ><em></em>新建栏目</a></li>
-                       [/#if]
+                       <!-- [/#if] -->
                        <li><a  href="${base}/blog/tzsetting.jspx" ><em></em>博客信息</a></li>
                        <li><a  style="cursor: pointer;" onclick="set();" ><em></em>页面模板</a></li>
-                       <li><a  href="${base}/blog/link_list.jspx" ><em></em>链接管理</a></li>
+                       <!-- <li><a  href="${base}/blog/link_list.jspx" ><em></em>链接管理</a></li> -->
                        <li><a  href="${base}/blog/friends.jspx" ><em></em>好友管理</a></li>
                        </ul>
                 </li> 

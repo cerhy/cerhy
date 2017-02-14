@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.jeecms.cms.entity.assist">
+	<class name="CmsJoinGroup" table="jc_join_group">
+		<meta attribute="sync-DAO">false</meta>
+		<cache usage="read-write"/>
+		<id name="id" type="integer" column="join_id"><generator class="identity"/></id>
+		<property name="joinCode" column="join_code" type="string" not-null="false" length="19"/>
+		<property name="joinTime" column="join_time" type="timestamp" not-null="false" length="19"/>
+		<many-to-one name="createUserId" column="create_user_id" class="com.jeecms.core.entity.CmsUser" not-null="false"></many-to-one>
+		<many-to-one name="joinUserId" column="join_user_id" class="com.jeecms.core.entity.CmsUser" not-null="false"></many-to-one>
+		<many-to-one name="columnsId" column="columns_id" class="com.jeecms.cms.entity.main.Columns" not-null="false"></many-to-one>
+	</class>
+</hibernate-mapping>

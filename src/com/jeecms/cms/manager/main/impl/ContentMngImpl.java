@@ -21,6 +21,7 @@ import com.jeecms.cms.dao.main.ContentDao;
 import com.jeecms.cms.entity.assist.CmsBlogVisitor;
 import com.jeecms.cms.entity.assist.CmsComment;
 import com.jeecms.cms.entity.assist.CmsFile;
+import com.jeecms.cms.entity.assist.CmsJoinGroup;
 import com.jeecms.cms.entity.main.Channel;
 import com.jeecms.cms.entity.main.Channel.AfterCheckEnum;
 import com.jeecms.cms.entity.main.CmsTopic;
@@ -1352,6 +1353,11 @@ public class ContentMngImpl implements ContentMng, ChannelDeleteChecker {
 	@Override
 	public Pagination getPageForMember_visitor(int pageNo,int pageSize, CmsUser user) {
 		return dao.getPage_visitor(0, pageNo,pageSize,user);
+	}
+
+	@Override
+	public List<CmsJoinGroup> getAlreadyJoinGroup(CmsUser user) {
+		return dao.getAlreadyJoinGroup(user);
 	}
 	
 

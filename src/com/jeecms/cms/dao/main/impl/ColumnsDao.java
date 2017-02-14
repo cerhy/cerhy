@@ -4,9 +4,12 @@ import java.util.List;
 
 import org.hibernate.Query;
 
+import com.jeecms.cms.entity.assist.CmsJoinGroup;
 import com.jeecms.cms.entity.main.Columns;
+import com.jeecms.cms.entity.main.ContentCheck;
 import com.jeecms.common.hibernate4.Finder;
 import com.jeecms.common.hibernate4.HibernateBaseDao;
+import com.jeecms.core.entity.CmsUser;
 
 public class ColumnsDao extends HibernateBaseDao<Columns, Integer>{
 
@@ -40,6 +43,39 @@ public class ColumnsDao extends HibernateBaseDao<Columns, Integer>{
 	protected Class<Columns> getEntityClass() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	public int saveJoinGroup(CmsJoinGroup cjg) {
+		try {
+			getSession().save(cjg);
+			return 1;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return 0;
+		}
+	}
+
+	public int checkJoinState(String code, CmsUser user) {
+		String hql = "select count(*) from CmsJoinGroup bean"
+				+ " where 1=1"
+				+ " and bean.joinCode='"+code+"'"
+				+ " and bean.joinUserId.id="+user.getId();
+		Query query = getSession().createQuery(hql);
+		if(null != query.iterate() && null != query.iterate().next()){
+			return ((Number) (query.iterate().next())).intValue();
+		}else{
+			return 0 ;
+		}
+	}
+
+	public Columns findInfoByCode(String code) {
+		String hql = "select bean from Columns bean where bean.uniqueCode='"+code+"'";
+		Query query = getSession().createQuery(hql);
+		if(null != query.iterate() && null != query.iterate().next()){
+			return ((Columns) (query.iterate().next()));
+		}else{
+			return null ;
+		}
 	}
 
 }

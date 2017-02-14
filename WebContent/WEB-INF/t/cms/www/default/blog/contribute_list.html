@@ -79,9 +79,17 @@ $(function(){
                 <td>${c.views}</td>
                 <td>${c.releaseDate?string('yyyy-MM-dd')}</td>
                 <td>
-                <a href="contribute_edit.jspx?id=${c.id}&nextUrl=contribute_list.jspx" class="a2">修改<a> | 
-                [#if columnsList??]
+                [#if c.user.id=user.id]
+                <a href="contribute_edit.jspx?id=${c.id}&nextUrl=contribute_list.jspx" class="a2">修改<a>|
+                [#else]
+                <a href="javascript:;" class="a2" style="cursor: default;color: #D3D3D3;">修改<a>|
+                [/#if] 
+                [#if c.columnId??]
+                [#if c.user.id=user.id]
                   <a href="contribute_delete.jspx?ids=${c.id}&columnId=${columnId}" class="a2">删除<a>
+                 [#else]
+                 <a href="javascript:;" class="a2" style="cursor: default;color: #D3D3D3;">删除<a>
+                [/#if]
                 [#else]
                   <a href="contribute_delete.jspx?ids=${c.id}&channelId=${channelId}" class="a2">删除<a> 
                 [/#if]

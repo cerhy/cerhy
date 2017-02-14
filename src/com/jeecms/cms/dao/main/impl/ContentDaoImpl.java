@@ -33,6 +33,7 @@ import org.springframework.stereotype.Repository;
 import com.jeecms.cms.dao.main.ContentDao;
 import com.jeecms.cms.entity.assist.CmsBlogVisitor;
 import com.jeecms.cms.entity.assist.CmsComment;
+import com.jeecms.cms.entity.assist.CmsJoinGroup;
 import com.jeecms.cms.entity.main.Content;
 import com.jeecms.cms.entity.main.Content.ContentStatus;
 import com.jeecms.cms.entity.main.ContentCheck;
@@ -1237,6 +1238,16 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 		f.append(" order by bean.visitorTime desc");
 		f.setParam("userId", user.getId());
 		return findLimit(f, pageNo, pageSize);
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<CmsJoinGroup> getAlreadyJoinGroup(CmsUser user) {
+		Finder f = Finder.create("select bean from CmsJoinGroup bean");
+		f.append(" where 1=1");
+		f.append(" and bean.joinUserId.id=:userId");
+		f.setParam("userId", user.getId());
+		return find(f);
 	}
 
 }

@@ -15,6 +15,7 @@ import org.springframework.ui.ModelMap;
 
 import com.jeecms.cms.dao.main.impl.BlogDao;
 import com.jeecms.cms.entity.assist.CmsBlogVisitor;
+import com.jeecms.cms.entity.assist.CmsJoinGroup;
 import com.jeecms.cms.entity.main.Channel;
 import com.jeecms.cms.entity.main.Columns;
 import com.jeecms.cms.entity.main.Focus;
@@ -30,13 +31,13 @@ import com.jeecms.core.manager.CmsUserMng;
 public class BlogCommon {
 	
 	public ModelMap getColumn(HttpServletRequest request,ModelMap model,CmsUser user){
-		int groupId = user.getGroup().getId();
+		/*int groupId = user.getGroup().getId();
 		if (4!=groupId){
-			if(5 != groupId){
+			if(5 != groupId){*/
 				List<Columns> columnsList = columnsMng.getColumnsByUserId(user.getId());
 				model.addAttribute("columnsList", columnsList);
-			}
-		}
+		/*	}
+		}*/
 		return model;
 	}
 	
@@ -296,6 +297,14 @@ public class BlogCommon {
 		return model;
 	}
 	
+	/**
+	 * 查询我已经加入的群组
+	 **/
+	public ModelMap getAlreadyJoinGroup(HttpServletRequest request,ModelMap model, CmsUser user) {
+		List<CmsJoinGroup> joinGroupList=contentMng.getAlreadyJoinGroup(user);
+		model.addAttribute("joinGroupList", joinGroupList);
+		return model;
+	}
 	
 	@Autowired
 	protected CmsUserMng cmsUserMng;
@@ -307,6 +316,7 @@ public class BlogCommon {
 	protected ChannelMng channelMng;
 	@Autowired
 	private ContentMng contentMng;
+	
 
 	
 
