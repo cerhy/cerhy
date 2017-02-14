@@ -257,30 +257,6 @@ padding-top: 32px;
 .inter .score{float:right;}
 .inter .score li{margin-left:4px;}
  
- /* 用户图像*/
-.commentAvatarDiv{
-width: 50px;
-height: 50px;
-padding:2px;
-background: #ececec;
-border-radius:32px;
-box-shadow: 0px 0px 1px rgba(0,0,0,0.4);
--moz-border-radius: 32px;
--webkit-border-radius: 32px;
-}
-
-.commentAvatarImage{
-width:50px;
-height:50px;
-line-height: 0;	/* remove line-height */ 
-display: inline-block;	/* circle wraps image */
-border-radius: 50%;	/* relative value */
--moz-border-radius: 50%;
--webkit-border-radius: 50%;
-transition: linear 0.25s;
-}
-
-
 .content-share{color:#666666; padding-left:20px; position:relative; cursor:pointer;}
 .content-share{padding-bottom:8px;}
 .content-share:before{content:""; position:absolute;}
@@ -311,15 +287,6 @@ transition: linear 0.25s;
     width: 520px; }
 .report-list2 li {
     float: none; }
-.report-list2 li a {
-    position: relative;
-    display: block;
-    padding: 10px 0;
-    border-bottom: 1px solid #e6ebf0;
-    font-family: "MicroSoft YaHei";
-    transition: padding 300ms; 
-    min-height:70px;
-    }
 .report-list2 li a .report-text {
     width: 660px; }
 .report-list2 li a .report-text h3 {
@@ -340,7 +307,15 @@ transition: linear 0.25s;
     color: #c5c5c5;
     background: url(images/list-right-arr_01.png) no-repeat;
 }
-.report-list2 li a:hover {
+.a12 {
+    position: relative;
+    display: block;
+    padding-top: 10px;
+    font-family: "MicroSoft YaHei";
+    transition: padding 300ms; 
+    min-height:70px;
+    }
+.a12:hover {
     padding-left: 10px;
     background-color: #f7f4ed; }
 .report-list2 li a:hover .report-text h3 {
@@ -378,11 +353,14 @@ transition: linear 0.25s;
     font-weight: 700;
     color: #666; 
 }
-.item2{border-top:1px solid #f2f2f2; padding:10px 0;}
+.item2{border-top:1px solid #f2f2f2; padding-top:10px;}
 .item2:hover{ background-color:rgba(240,240,240,0.4);}
 .f2 {
 	float:right;
     margin-top: 0px;
     font-size: 12px;
     color: #b7b7b7;
+}
+.f3 {
+     font-family: "MicroSoft YaHei";
 }

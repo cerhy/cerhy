@@ -172,7 +172,7 @@ $(function(){
 			          [#if pagination.list?size gt 0]
 				          [#list pagination.list as c]
 				         <li>
-				          <a class="hasImg clearfix"  href="${c.url!}" target="_blank">
+				          <a class="hasImg clearfix a12"  href="${c.url!}" target="_blank">
 							  <div class="item2 clearfix" [#if c_index<1]style="border-top:none;"[/#if]>
 									<div class="report-text">
 										<h3>[@text_cut s=c.title?html len='24' append='...'/]</h3>

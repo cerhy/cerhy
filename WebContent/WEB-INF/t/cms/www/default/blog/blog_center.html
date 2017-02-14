@@ -53,14 +53,19 @@ $(function(){
 			          [#if pagination.list?size gt 0]
 				          [#list pagination.list as c]
 				         <li>
-				          <a class="hasImg clearfix"  href="${c.url}?d=1" target="_blank">
+				          <div>
+				          <a class="hasImg clearfix a12"  href="${c.url}?d=1" target="_blank">
 							  <div class="item2 clearfix" [#if c_index<1]style="border-top:none;"[/#if]>
 									<div class="report-text">
-										<h3>[@text_cut s=c.title?html len='24' append='...'/]</h3>
-										<div class="f2"><span style="padding-right:10px;"><em>${c.releaseDate?string('yyyy-MM-dd')}</em></span></div>
+										<div><h3>[@text_cut s=c.title?html len='24' append='...'/]</h3></div>
 									</div>
 					           </div>
-						  </a>
+						   </a>
+						  </div>
+							  <a href="contribute_edit.jspx?id=${c.id}&nextUrl=contribute_list.jspx" class="f3"><em style="color: #b7b7b7;">修改</em></a>&nbsp;|&nbsp;
+				              <a href="contribute_delete.jspx?ids=${c.id}" class="f3"><em style="color: #b7b7b7;">删除</em></a>
+							<div class="f2"><span style="padding-right:10px;"><em>${c.releaseDate?string('yyyy-MM-dd')}</em></span></div>
+									
 			             </li>
 			              [/#list]
 			          </ul>
