@@ -48,7 +48,9 @@
 										<li  class="change">
 										<p>
 										<a href="${base}/blog/contribute_list_friend.jspx?columnId=${c.columnId}&user_ids=${userIds}&joinGroupStata=0" >${c.columnName}</a>
+										[#if c.userId!=user.id]
 										<button type="button" id="${c.uniqueCode}" name="uniqueCode" onclick="join_group(${c.uniqueCode},${usert.id});" class="butt" style="float: right;margin-top: -35px;font-size: 5px;cursor: pointer;">加入</button>
+										[/#if]
 										</p>
 										</li>
 								   		[/#if]
