@@ -210,7 +210,7 @@ public class ContributeAct extends AbstractContentMemberAct {
 			HttpServletResponse response, ModelMap model) {
 		String blog = request.getParameter("blog");
 		String channelIds = request.getParameter("channelIds");
-		   if(channelIds!=null){
+		   if(channelIds!=null&&channelIds!=""){
 			   String[] str=channelIds.split("&");
 			   if(str[1]==null){
 				   channelId=Integer.valueOf(str[0]);
