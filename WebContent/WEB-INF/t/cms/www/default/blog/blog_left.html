@@ -54,7 +54,7 @@
 		                    [/#if]
 		                    [/#list]
                          	[/#if]
-					        [#if joinGroupList??]
+					        [#if joinGroupList?size gt 0]
                             [#list joinGroupList as j]
 		                    <li><a href="${base}/blog/contribute_list.jspx?columnId=${j.columnsId.columnId}&joinGroupStata=0" title="${j.columnsId.columnName}" ><em></em>[@text_cut s=j.columnsId.columnName len=5 append='...'/]</a></li>
 		                    [/#list]

@@ -207,13 +207,29 @@ $(function(){
 	                [/#list]
 	                [/#if]
 	                [#if columnsList?size gt 0]
+	                <option value="" class="sel-disabled">栏目</option>
 	                [#list columnsList as c]
-	                    <option value="${c.columnId}&colu">${c.columnName}</option>
+	                	[#if c.uniqueCode??]
+                        [#else]
+	                    	<option value="${c.columnId}&colu">&nbsp;&nbsp;>${c.columnName}</option>
+	                    [/#if]
 	                [/#list]
 	                [/#if]
-	                [#if joinGroupList??]
+	                [#if columnsList?size gt 0]
+	                	<option value="" class="sel-disabled">群组</option>
+	                [#list columnsList as c]
+	                	[#if c.uniqueCode??]
+	                    	<option value="${c.columnId}&colu">&nbsp;&nbsp;>${c.columnName}</option>
+	                    [/#if]
+	                [/#list]
+	                [/#if]
+	                [#if joinGroupList?size gt 0]
+		                [#if columnsList?size gt 0]
+		                [#else]
+		                <option value="" class="sel-disabled">群组</option>
+		                [/#if]
                         [#list joinGroupList as j]
-                         <option value="${j.columnsId.columnId}&colu">${j.columnsId.columnName}</option>
+                         <option value="${j.columnsId.columnId}&colu">&nbsp;&nbsp;>${j.columnsId.columnName}</option>
 		                [/#list]
                     [/#if]
 	                </select>
