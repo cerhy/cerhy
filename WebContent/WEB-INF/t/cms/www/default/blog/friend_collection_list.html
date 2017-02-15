@@ -19,75 +19,7 @@
     color: blue;
 }
 </style>
-<script type="text/javascript">
-$(function(){
-	$.ajax({
-		type:"post",
-		url:"${base}/blog/focuscheck.jspx",
-		dateType:'json',
-		data:{
-			"focusUserId":${usert.id},
-		},
-		success:function(data){
-		if(1 == data){
-			$('#focus').hide();
-			$('#cancelfocus').show();
-		}else{
-			$('#focus').show();
-			$('#cancelfocus').hide();
-		}
-		}
-		
-	});	
-	
-	$('#focus').click(function(){
-		$.ajax({
-			type:"post",
-			url:"${base}/blog/focus.jspx",
-			dateType:'json',
-			data:{
-				"focusUserId":${usert.id},
-				"focusUserName":'${usert.username}',
-			},
-			success:function(data){
-			if(1 == data){
-				$('#focus').hide();
-				$('#cancelfocus').show();
-			}
-			}
-			
-		});	
-	});
-	
-	$('#cancelfocus').click(function(){
-		$.ajax({
-			type:"post",
-			url:"${base}/blog/cancelfocus.jspx",
-			dateType:'json',
-			data:{
-				"focusUserId":${usert.id},
-			},
-			success:function(data){
-			if(1 == data){
-				$('#focus').show();
-				$('#cancelfocus').hide();
-			}
-			}
-			
-		});	
-	});
-	
-	$('.user-menu-links li').click(function(){
-	    $(this).toggleClass('on');
-	});
-	$(".st_tree").SimpleTree({
-		click:function(a){
-			if(!$(a).attr("hasChild"))
-				alert($(a).attr("ref"));
-		}
-	});
-});
-</script>
+
 [#include "head.html"/]
 <div class="blogBody">
 <div class="blog-con">
@@ -113,7 +45,7 @@ $(function(){
 			          [#if pagination.list?size gt 0]
 				          [#list pagination.list as c]
 				         <li>
-				          <a class="hasImg clearfix a12"  href="${c.url!}" target="_blank">
+				          <a class="hasImg clearfix a12"  href="${c.url}?f=${usert.id}">
 							  <div class="item2 clearfix" [#if c_index<1]style="border-top:none;"[/#if]>
 									<div class="report-text">
 										<h3>[@text_cut s=c.title?html len='24' append='...'/]</h3>

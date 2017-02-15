@@ -1,0 +1,206 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<title>好研网-博客中心</title>
+<link rel="shortcut icon" href="/${res}/images/cerhyheard.png" type="image/x-icon" />
+<script src="${resSys}/jquery.js" type="text/javascript"></script>
+<script src="${resSys}/jqueryUI/jquery-ui.js" type="text/javascript"></script>
+<script src="${resSys}/front.js" type="text/javascript"></script>
+<link type="text/css" rel="stylesheet" href="/${res}/css/main.css" />
+<link type="text/css" rel="stylesheet" href="/${res}/css/custom.css" />
+<link href="${resSys}/jqueryUI/jquery.ui.css" rel="stylesheet" type="text/css" />
+<script src="/${res}/js/main.js"></script>
+<script type="text/javascript">
+$(function() {
+	
+	$.ajax({
+		type:"post",
+		url:"${base}/blog/checkout.jspx",
+		data:{
+			"CUId":${content.user.id},
+		},
+		success:function(data){
+			if(1 == data){
+				Cms.collectexist("${base}","${content.id!}","cancelSpan","comfirmSpan");
+			}else {
+				$("#cancelSpan").hide();
+				$("#comfirmSpan").hide();
+		    }
+	  }
+	});
+	
+       $("#comfirmSpan").click(function(){
+    	   Cms.collect_blog("${base}","${content.id}",1,"cancelSpan","comfirmSpan");
+       });
+       $("#cancelSpan").click(function(){
+    	   Cms.collect_blog("${base}","${content.id!}",0,"cancelSpan","comfirmSpan");
+       });
+});
+</script>
+<script type="text/javascript">
+	$(function() {
+		Cms.checkPerm("${base}", "${content.id}");
+		Cms.collectCsi("${base}", "collectCsiDiv", "collect_csi",
+				"${content.id}");
+		Cms.attachment("${base}", "${content.id}",
+				"${content.attachments?size}", "attach");
+		Cms.viewCount("${base}", "${content.id}");
+		Cms.siteFlow("${base}", location.href, document.referrer,
+				"${site.config.flowSwitch?string}");
+	});
+</script>
+<script type="text/javascript">
+	jQuery(document).ready(function($) {
+		$('.content-comment').click(function() {
+			$('html,body').animate({
+				scrollTop : $('#comments-text').offset().top
+			}, 1000)
+			$('#comments-text').focus();
+		});
+	});
+
+	$(function() {
+		//设置一个定时器，为BUTTON点击事件用
+		var timer = null;
+		var number1 = 0;
+
+		//处理输入的内容是文字还是字母的函数
+		function getLength(str) {
+			return String(str).replace(/[^\x00-\xff]/g, 'aa').length;
+		}
+		;
+	});
+</script>
+[#include "head.html"/]
+<div class="blogBody">
+<div class="blog-con">
+  <div class="blogHead">
+	  <div class="title1"><a href="${base}/blog/index.jspx"><span id="title1">[#if user.blogTitle??]${user.blogTitle}[#else]标题[/#if]</span></a></div>
+	  <div style="font-size:15px;margin:5px auto 15px;">[#if user.blogTitle2??]${user.blogTitle2}[#else]副标题[/#if]</div>
+  </div>
+  <div class="tj">
+	  文章数:${articleCount}&nbsp;&nbsp;
+	  评论:${commentCount}&nbsp;&nbsp;
+	  访问:${user.blogVisitNum!'0'}&nbsp;&nbsp;
+	  最后登录:${user.lastLoginTime?string('yyyy-MM-dd HH:mm:ss')}&nbsp;&nbsp;
+  </div>
+   <div class="mb20 clearfix">
+   [#if who ==1]
+     [#include "blog_left.html"/]
+   [#else]
+     [#include "friend_blog_left.html"]
+   [/#if]
+       <div class="wrap-right">
+           <div class="personCenter-userInfo blog_right xueke-acticle">
+                <div ><h2>${content.title}</h2></div>
+                <div class="gray9 h2dt pt5">
+				    <span class="pr15">发布时间：${content.releaseDate}</span>
+					<span class="pr15">
+					   <a target="_blank" href="${base}/blog/find_all_url_friend.jspx?userIds=${content.user.id}" class="bz">博主：${content.user.username}</a>
+					 </span>
+					 <span class="pr15 yuedu">浏览次数：<span id="views"></span></span> 
+					 <span class="pr15 pinglun">评论：${content.commentsCheckedNum!} </span>
+				     <span id="comfirmSpan" style="display:none;cursor: pointer;">转载</span>
+				     <span id="cancelSpan" style="display:none; cursor: pointer;">取消转载</span>&nbsp;&nbsp;
+					 <span class="content-share">分享
+						 [#include "../content/inc_share.html"/]
+					 </span>
+				</div>
+				<div class="xueke-content-detail" style="margin-top:30px;min-height:170px;">
+					[#if preview??] [@text_cut s=txt! len=100 append="..."/]<br />
+					您需要更高的权限浏览全部内容!<br />以下会员组可浏览全部内容: [#list groups as g]
+					${g.name!}[#if g_has_next],[/#if] [/#list] [#else] ${txt!} [/#if]
+				</div>
+				
+			       [#if content.mediaPath?? && content.mediaType??]
+			        <div class="video-con clearfix">
+				        [#if content.mediaType=='FLV'] 
+				        <object height="500" width="100%" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=7,0,19,0" classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000">
+				        <param name="movie" value="/${res}/img/flvplayer.swf" />
+				        <param name="quality" value="high" />
+				        <param name="allowFullScreen" value="true" />
+				        <param name="FlashVars" value="vcastr_file=${content.mediaPath!}&BufferTime=3" /><embed height="500" width="100%" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" quality="high" flashvars="vcastr_file=${content.mediaPath!}" allowfullscreen="true" src="/${res}/img/flvplayer.swf"></embed>
+				        </object>
+				        [#elseif content.mediaType=='FLASH'] 
+				        <embed height="500" width="100%" type="application/x-shockwave-flash" quality="high" src="${content.mediaPath}" wmode="transparent" align="center"></embed>
+				        [#elseif content.mediaType=='CK']
+			            <!--ckplayer播放视频-->
+			            <div id="video" style="position:relative;z-index: 100;width:100%;height:500px;float: left;"><div id="a1"></div></div>
+				    	<script type="text/javascript">
+				    	//函数名称不允许更改 function ckmarqueeadv(){return '广告内容'};
+						var flashvars={f:'${content.mediaPath!}',c:0,b:1,my_url:'${content.url!}',my_pic:'${content.typeImg!}'};
+						var params={bgcolor:'#FFF',allowFullScreen:true,allowScriptAccess:'always'};
+						CKobject.embedSWF('${resSys}/ckplayer/ckplayer.swf','a1','ckplayer_a1','100%','500',flashvars,params);
+						var box = new LightBox();
+						function closelights(){//关灯
+							box.Show();
+						}
+						function openlights(){//开灯
+							box.Close();
+						}
+						</script>
+				        [#else] 
+				        <embed height="500" width="100%" type="video/x-ms-wmv" src="${content.mediaPath}" console="cons" controls="ImageWindow" autostart="true"></embed>
+				        [/#if]
+				     </div>
+				    [/#if]
+				        [#if content.attachments?size gt 0]           
+						<h4>附件:</h4>           
+						<ul>           
+						[#list content.attachments as attach]           
+						<li><a href="${attach.path}" id="attach${attach_index}">${attach.name}</a></li>           
+						[/#list]           
+						</ul>           
+					[/#if]
+					 
+					<!-- 分页 -->
+					<div class="pagebar">[#include "../style_page/content.html"/]</div>
+					<div class="inter clearfix"> 
+				      [#if channel.allowUpdown]
+				      <div class="downs" title="踩" ><a onclick="Cms.down('${base}',${content.id},${content.downs});"><span id="downs"></span></a></div>
+				      <div class="ups" title="赞"><a onclick="Cms.up('${base}',${content.id},${content.ups});"><span id="ups"></span></a></div>
+				      [/#if]
+				    </div>
+				       
+                    <div class="prev-next-wz clearfix">
+                    [@cms_content id=content.id next='1' channelId=channel.id]
+                    	[#if tag_bean??]
+                    		<a href="${tag_bean.url}?d=1" class="prev-pian">
+                            <span>&lt;上一篇</span>
+                            <em>[@text_cut s=tag_bean.title len=20 append='...'/]</em>
+                        	</a>
+                    	[#else]
+                    		<a href="" class="prev-pian">
+                            <span>&lt;上一篇</span>
+                            <em>没有了</em>
+                        	</a>
+                    	[/#if]
+                    [/@cms_content]
+                    [@cms_content id=content.id next='0' channelId=channel.id]
+	                    [#if tag_bean??]
+	                     <a href="${tag_bean.url}?d=1" class="next-pian">
+                            <em>[@text_cut s=tag_bean.title len=20 append='...'/]</em>
+                            <span>下一篇&gt;</span>
+                        </a>
+	                    [#else]
+		                     <a href="" class="next-pian">
+	                            <em>没有了</em>
+	                            <span>下一篇&gt;</span>
+	                        </a>
+	                    [/#if]
+                    [/@cms_content]
+                    </div>
+               <div class="news-comments" style="width:665px;">
+				    [#if channel.commentControl!=2]
+                    [#include "../content/inc_comment_input.html"/]
+      				[#include "../content/inc_comment_list.html"/]
+    				[/#if]
+				</div>
+           </div>
+       </div>
+  </div>
+ </div>
+</div> 
+
+[#include "../include/footer.html"/]
+</body>
+</html>

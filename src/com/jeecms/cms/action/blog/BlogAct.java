@@ -658,7 +658,7 @@ public class BlogAct {
 	
 	public String blogContentShow(String[] paths,String[] params,
 			PageInfo info,Integer pageNo,HttpServletRequest request,
-			HttpServletResponse response, ModelMap model){
+			HttpServletResponse response, ModelMap model,String friend){
 			Content content = contentMng.findById(Integer.parseInt(paths[1]));
 			if (content == null) {
 				log.debug("Content id not found: {}", paths[1]);
@@ -689,6 +689,15 @@ public class BlogAct {
 			model.addAttribute("title", content.getTitleByNo(pageNo));
 			model.addAttribute("txt", txt);
 			model.addAttribute("pic", content.getPictureByNo(pageNo));
+			if(null != friend){
+				model.addAttribute("who",0);
+				CmsUser user=cmsUserMng.findById(Integer.valueOf(friend.toString()));
+				model.addAttribute("userIds", user.getId());
+				model.addAttribute("usert", user);
+			}else{
+				model.addAttribute("who",1);
+			}
+			model = blogCommon.getAlreadyJoinGroup(request, model,u);
 			model = blogCommon.getChannel(request,model,u,site);
 			model = blogCommon.getColumn(request,model,u);
 			model = blogCommon.getTotalArticleNum(model,u);
