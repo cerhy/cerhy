@@ -403,12 +403,16 @@ public class BlogAct {
 		String columnId = request.getParameter("id");
 		String name = request.getParameter("updateName");
 		String orderId = request.getParameter("updateOrderId");
+		String uniqueCode = request.getParameter("uniqueCode");
+		if(uniqueCode==""){
+			uniqueCode=null;
+		}
 		Integer i = 0;
 		if(null != name && null != user){
 			if(blogCommon.isNumeric(orderId)){
 				i = Integer.parseInt(orderId);
 			}
-			Columns c = new Columns(Integer.parseInt(columnId),user.getId(),name,i);
+			Columns c = new Columns(Integer.parseInt(columnId),user.getId(),name,i,uniqueCode);
 			columnsMng.updateColumns(c);
 		}
 		
@@ -427,7 +431,10 @@ public class BlogAct {
  		model = blogCommon.getTotalCommentNum(model, user);
  		model = blogCommon.getStarBlogger(request, model);
  		model = blogCommon.getAlreadyJoinGroup(request, model,user);
-		Columns column = new Columns(Integer.parseInt(id),user.getId(),request.getParameter("name"),Integer.parseInt(orderId));
+		Columns column = new Columns(Integer.parseInt(id),user.getId(),request.getParameter("name"),Integer.parseInt(orderId),request.getParameter("uniqueCode"));
+		if(column.getUniqueCode()==""){
+			column.setUniqueCode(null);
+		}
 		model.addAttribute("column", column);
 		FrontUtils.frontData(request, model, site);
 		return FrontUtils.getTplPath(request, site.getSolutionPath(),TPLDIR_BLOG,"tpl.columnsUpdate");

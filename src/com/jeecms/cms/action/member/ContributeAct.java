@@ -601,6 +601,7 @@ public class ContributeAct extends AbstractContentMemberAct {
 	    model = blogCommon.getTotalArticleNum(model,user);
  		model = blogCommon.getTotalCommentNum(model, user);
  		model = blogCommon.getStarBlogger(request, model);
+ 		model = blogCommon.getAlreadyJoinGroup(request, model,user);
 		FrontUtils.frontData(request, model, site);
 		return FrontUtils.getTplPath(request, site.getSolutionPath(),TPLDIR_BLOG, "tpl.linkList");
 	}
@@ -623,6 +624,7 @@ public class ContributeAct extends AbstractContentMemberAct {
 	    model = blogCommon.getTotalArticleNum(model,user);
  		model = blogCommon.getTotalCommentNum(model, user);
  		model = blogCommon.getStarBlogger(request, model);
+ 		model = blogCommon.getAlreadyJoinGroup(request, model,user);
 		FrontUtils.frontData(request, model, site);
 		return FrontUtils.getTplPath(request, site.getSolutionPath(),TPLDIR_BLOG, "tpl.friends");
 	}
