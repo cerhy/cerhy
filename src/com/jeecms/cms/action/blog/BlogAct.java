@@ -118,21 +118,27 @@ public class BlogAct {
 		CmsUser user = CmsUtils.getUser(request);
 		int userId=user.getId();
 		String joinGroupStata=request.getParameter("joinGroupStata");
-		if(joinGroupStata!=null&&joinGroupStata.equals("0")){
-			userId=0;
-		}
 		Integer columnId = null;
 		Integer channelId = null;
-		//为了删除文章后能跳转回本栏目下
-		if(null != request.getParameter("columnId")){
-			model.addAttribute("columnId", request.getParameter("columnId"));
-			model.addAttribute("submitOn", 1);
-			columnId = Integer.parseInt(request.getParameter("columnId"));
-		}
-		if(null != request.getParameter("channelId")){
-			model.addAttribute("channelId", request.getParameter("channelId"));
-			model.addAttribute("submitOn", 1);
-			channelId = Integer.parseInt(request.getParameter("channelId"));
+		if(joinGroupStata!=null&&joinGroupStata.equals("0")){
+			userId=0;
+			if(null != request.getParameter("columnId")){
+				model.addAttribute("columnId", request.getParameter("columnId"));
+				model.addAttribute("submitOn1", 1);
+				columnId = Integer.parseInt(request.getParameter("columnId"));
+			}
+		}else{
+			//为了删除文章后能跳转回本栏目下
+			if(null != request.getParameter("columnId")){
+				model.addAttribute("columnId", request.getParameter("columnId"));
+				model.addAttribute("submitOn", 1);
+				columnId = Integer.parseInt(request.getParameter("columnId"));
+			}
+			if(null != request.getParameter("channelId")){
+				model.addAttribute("channelId", request.getParameter("channelId"));
+				model.addAttribute("submitOn", 1);
+				channelId = Integer.parseInt(request.getParameter("channelId"));
+			}
 		}
 		model = blogCommon.getColumn(request,model,user);
 	    model = blogCommon.getChannel(request,model,user,site);

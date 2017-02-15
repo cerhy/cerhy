@@ -141,12 +141,12 @@ public class DocAct  extends AbstractContentMemberAct{
 	 * @return
 	 */
 	@RequestMapping(value = "/member/doc_update.jspx")
-	public String update(Integer id, String title, String author,
+	public void update(Integer id, String title, String author,
 			String description, String txt, String tagStr, Integer channelId,
 			ContentDoc doc,Short charge,Double chargeAmount,
 			String nextUrl, HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
-		return super.update(id, title, author, description, txt, tagStr,
+		super.update(id, title, author, description, txt, tagStr,
 				channelId,null,null,null,null,null,null,null,
 				doc, charge,chargeAmount,nextUrl, 
 				request, response, model);
@@ -165,10 +165,10 @@ public class DocAct  extends AbstractContentMemberAct{
 	 * @return
 	 */
 	@RequestMapping(value = "/member/doc_delete.jspx")
-	public String delete(Integer[] ids, HttpServletRequest request,
+	public void delete(Integer[] ids, HttpServletRequest request,
 			String nextUrl, HttpServletResponse response, ModelMap model) {
 		updateUserUploadDocNum(request, -1);
-		return super.delete(ids, request, nextUrl, response, model);
+		super.delete(ids, request, nextUrl, response, model);
 	}
 
 	@RequestMapping("/member/doc_upload.jspx")
