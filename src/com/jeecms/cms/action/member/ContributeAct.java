@@ -674,7 +674,7 @@ public class ContributeAct extends AbstractContentMemberAct {
 	 * 博客背景
 	 */
 	@RequestMapping(value = "/blog/changeTheme.jspx", method = RequestMethod.POST)
-	public String updateTheme(String theme, String nextUrl,
+	public void updateTheme(String theme, String nextUrl,
 			HttpServletRequest request, HttpServletResponse response,
 			ModelMap model){
 		CmsSite site = CmsUtils.getSite(request);
@@ -683,17 +683,21 @@ public class ContributeAct extends AbstractContentMemberAct {
 		MemberConfig mcfg = site.getConfig().getMemberConfig();
 		// 没有开启会员功能
 		if (!mcfg.isMemberOn()) {
-			return FrontUtils.showMessage(request, model, "member.memberClose");
+			FrontUtils.showMessage(request, model, "member.memberClose");
 		}
 		if (user == null) {
-			return FrontUtils.showLogin(request, model, site);
+			FrontUtils.showLogin(request, model, site);
 		}
 		if(StringUtils.isNotBlank(theme)){
 			user.setTheme(theme);
 			cmsUserMng.updateUser(user);
 			log.info("update CmsUser success. id={}", user.getId());
 		}	
-		return FrontUtils.showSuccess(request, model, nextUrl);
+		try {
+			response.sendRedirect("../blog/index.jspx");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	/**

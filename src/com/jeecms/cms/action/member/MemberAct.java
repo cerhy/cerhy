@@ -129,7 +129,7 @@ public class MemberAct {
 	 * @throws IOException
 	 */
 	@RequestMapping(value = "/member/profile.jspx", method = RequestMethod.POST)
-	public String profileSubmit(CmsUserExt ext, String nextUrl,
+	public void profileSubmit(CmsUserExt ext, String nextUrl,
 			HttpServletRequest request, HttpServletResponse response,
 			ModelMap model) throws IOException {
 		CmsSite site = CmsUtils.getSite(request);
@@ -138,15 +138,19 @@ public class MemberAct {
 		MemberConfig mcfg = site.getConfig().getMemberConfig();
 		// 没有开启会员功能
 		if (!mcfg.isMemberOn()) {
-			return FrontUtils.showMessage(request, model, "member.memberClose");
+			FrontUtils.showMessage(request, model, "member.memberClose");
 		}
 		if (user == null) {
-			return FrontUtils.showLogin(request, model, site);
+			FrontUtils.showLogin(request, model, site);
 		}
 		ext.setId(user.getId());
 		cmsUserExtMng.update(ext, user);
 		log.info("update CmsUserExt success. id={}", user.getId());
-		return FrontUtils.showSuccess(request, model, nextUrl);
+		try {
+			response.sendRedirect("../member/index.jspx");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -193,7 +197,7 @@ public class MemberAct {
 	 * @throws IOException
 	 */
 	@RequestMapping(value = "/member/pwd.jspx", method = RequestMethod.POST)
-	public String passwordSubmit(String origPwd, String newPwd, String email,
+	public void passwordSubmit(String origPwd, String newPwd, String email,
 			String nextUrl, HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) throws IOException {
 		CmsSite site = CmsUtils.getSite(request);
@@ -202,18 +206,22 @@ public class MemberAct {
 		MemberConfig mcfg = site.getConfig().getMemberConfig();
 		// 没有开启会员功能
 		if (!mcfg.isMemberOn()) {
-			return FrontUtils.showMessage(request, model, "member.memberClose");
+			FrontUtils.showMessage(request, model, "member.memberClose");
 		}
 		if (user == null) {
-			return FrontUtils.showLogin(request, model, site);
+			FrontUtils.showLogin(request, model, site);
 		}
 		WebErrors errors = validatePasswordSubmit(user.getId(), origPwd,
 				newPwd, email, request);
 		if (errors.hasErrors()) {
-			return FrontUtils.showError(request, response, model, errors);
+			FrontUtils.showError(request, response, model, errors);
 		}
 		cmsUserMng.updatePwdEmail(user.getId(), newPwd, email);
-		return FrontUtils.showSuccess(request, model, nextUrl);
+		try {
+			response.sendRedirect("../member/index.jspx");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	/**
@@ -243,7 +251,7 @@ public class MemberAct {
 	
 	//完善用户账户资料
 	@RequestMapping(value = "/member/account.jspx", method = RequestMethod.POST)
-	public String accountSubmit(String accountWeiXin,String  accountAlipy,
+	public void accountSubmit(String accountWeiXin,String  accountAlipy,
 			Short drawAccount,String nextUrl,HttpServletRequest request, 
 			HttpServletResponse response,ModelMap model) throws IOException {
 		CmsSite site = CmsUtils.getSite(request);
@@ -252,10 +260,10 @@ public class MemberAct {
 		MemberConfig mcfg = site.getConfig().getMemberConfig();
 		// 没有开启会员功能
 		if (!mcfg.isMemberOn()) {
-			return FrontUtils.showMessage(request, model, "member.memberClose");
+			FrontUtils.showMessage(request, model, "member.memberClose");
 		}
 		if (user == null) {
-			return FrontUtils.showLogin(request, model, site);
+			FrontUtils.showLogin(request, model, site);
 		}
 
 		WebErrors errors=WebErrors.create(request);
@@ -269,11 +277,15 @@ public class MemberAct {
 			}
 		}
 		if(errors.hasErrors()){
-			return FrontUtils.showError(request, response, model, errors);
+			FrontUtils.showError(request, response, model, errors);
 		}
 		cmsUserAccountMng.updateAccountInfo(accountWeiXin, accountAlipy, drawAccount,user);
 		log.info("update CmsUserExt success. id={}", user.getId());
-		return FrontUtils.showSuccess(request, model, nextUrl);
+		try {
+			response.sendRedirect("../member/index.jspx");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	
