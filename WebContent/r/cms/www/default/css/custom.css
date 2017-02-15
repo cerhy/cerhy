@@ -12,7 +12,7 @@
 .plfr1 img{height:40px; margin-left:10px;}
 .plfr1 label{color:#f00; font-size:12px; margin-left:4px;}
 
-.comments{margin-top:80px;}
+.comments{margin-top:50px;}
 .comments h3{color:#1f1f1f; font-size:24px; font-weight:normal; position:relative;}
 .comments h3 span{color:#1f1f1f; font-size:14px; display:inline-block; position:absolute; right:0; bottom:0;}
 .comments h3 span .count{color:#ef3838;}
@@ -251,7 +251,7 @@ padding-top: 32px;
 .inter .downs{margin-left:36px;}
 .inter .downs a{width:70px; height:70px; border-radius:100%; -moz-border-radius:100%; -o-border-radius:100%; -webkit-border-radius:100%; border:1px solid #999999; text-align:center; line-height:44px; background:#fff; color:#4d4c4c; font-size:13px; display:block; cursor:pointer; position:relative;}
 .inter .downs a:before{width:17px; height:17px; display:block; position:absolute; content:""; bottom:13px; left:27px; background:url(../images/content-downs.png) top center no-repeat;}
-.inter .downs a:after{width:19px; height:32px; display:block; position:absolute; content:""; bottom:20px; right:-150px; background:url(../images/inter.png) top center no-repeat;}
+.inter .downs a:after{width:19px; height:32px; display:block; position:absolute; content:""; bottom:20px; right:-150px;}
 .inter .downs a:hover{ box-shadow:0px 0px 8px rgba(153,153,153,.8); -moz-box-shadow:0px 0px 8px rgba(153,153,153,.8); -webkit-box-shadow:0px 0px 8px rgba(153,153,153,.8);}
 .inter .score{float:right;}
 .inter .score li{margin-left:4px;}
