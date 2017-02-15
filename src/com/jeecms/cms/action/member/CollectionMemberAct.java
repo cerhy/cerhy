@@ -175,6 +175,7 @@ public class CollectionMemberAct {
 	    model = blogCommon.getChannel(request,model,user,site);
 		model = blogCommon.getTotalArticleNum(model,user);
  		model = blogCommon.getTotalCommentNum(model, user);
+ 		model = blogCommon.getAlreadyJoinGroup(request, model,user);
  		model.addAttribute("submitOn", 1);
 		FrontUtils.frontData(request, model, site);
 		Pagination p = contentMng.getPageForCollection(site.getId(), id, cpn(pageNo), CookieUtils.getPageSize(request));
@@ -218,6 +219,7 @@ public class CollectionMemberAct {
 		model = blogCommon.getTotalArticleNum(model,userT);
  		model = blogCommon.getTotalCommentNum(model, userT);
  		model = blogCommon.getStarBlogger(request, model);
+ 		model = blogCommon.getAlreadyJoinGroup(request, model,userT);
 		FrontUtils.frontData(request, model, site);
 		Pagination p = contentMng.getPageForCollection(site.getId(), userT
 				.getId(), cpn(pageNo), CookieUtils.getPageSize(request));
