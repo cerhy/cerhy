@@ -107,7 +107,7 @@ $(function(){
             <div class="mb20 clearfix">
             <div class="wrap-right ">
 				<div class="personCenter-userInfo blog_right">
-				  <div class=" tggl" style="text-align: -webkit-center;">
+				  <div class="tggl">
           <form id="tableForm" action="${base}/blog/friend_collection_list.jspx?userIds=${usert.id}" method="post">
             <ul class="report-list2 sm mb20">
 			          [#if pagination.list?size gt 0]
@@ -117,7 +117,7 @@ $(function(){
 							  <div class="item2 clearfix" [#if c_index<1]style="border-top:none;"[/#if]>
 									<div class="report-text">
 										<h3>[@text_cut s=c.title?html len='24' append='...'/]</h3>
-										<div class="f2"><span style="padding-right:10px;"><em>${c.releaseDate?string('yyyy-MM-dd')}</em></span></div>
+										<div class="f2"><span style="padding-right:10px;"><em>博主:${c.user.username}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${c.releaseDate?string('yyyy-MM-dd')}</em></span></div>
 									</div>
 					           </div>
 						  </a>

@@ -50,13 +50,13 @@
 					        [#if columnsList??]
                             [#list columnsList as c]
                             [#if c.uniqueCode??]
-		                    <li><a href="${base}/blog/contribute_list.jspx?columnId=${c.columnId}&joinGroupStata=0" ><em></em>${c.columnName}</a></li>
+		                    <li><a href="${base}/blog/contribute_list.jspx?columnId=${c.columnId}&joinGroupStata=0" title="${c.columnName}" ><em></em>[@text_cut s=c.columnName len=5 append='...'/]</a></li>
 		                    [/#if]
 		                    [/#list]
                          	[/#if]
 					        [#if joinGroupList??]
                             [#list joinGroupList as j]
-		                    <li><a href="${base}/blog/contribute_list.jspx?columnId=${j.columnsId.columnId}&joinGroupStata=0" ><em></em>${j.columnsId.columnName}</a></li>
+		                    <li><a href="${base}/blog/contribute_list.jspx?columnId=${j.columnsId.columnId}&joinGroupStata=0" title="${j.columnsId.columnName}" ><em></em>[@text_cut s=j.columnsId.columnName len=5 append='...'/]</a></li>
 		                    [/#list]
 	                        [/#if]
                           </ul>
