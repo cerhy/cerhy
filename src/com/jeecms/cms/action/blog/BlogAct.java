@@ -266,7 +266,7 @@ public class BlogAct {
 				TPLDIR_BLOG, nextUrl);
 	}
 	
-	public String blog_update(Integer id, String title, String author,
+	public void blog_update(Integer id, String title, String author,
 			String description, String txt, String tagStr,Integer columnId, Integer channelId,
 			String mediaPath,String mediaType,
 			String[] attachmentPaths, String[] attachmentNames,
@@ -315,8 +315,11 @@ public class BlogAct {
 		if(doc!=null){
 			contentDocMng.update(doc, c);
 		}
-		nextUrl += "/blog/index.jspx";
-		return FrontUtils.showSuccess(request, model, nextUrl);
+		try {
+			response.sendRedirect("../blog/index.jspx");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public void blog_delete(Integer contentId,Integer columnId,Integer channelId, HttpServletRequest request,

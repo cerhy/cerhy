@@ -201,7 +201,7 @@ public class AbstractContentMemberAct {
 				TPLDIR_MEMBER, nextUrl);
 	}
 	
-	public String delete(Integer[] ids, HttpServletRequest request,
+	public void delete(Integer[] ids, HttpServletRequest request,
 			String nextUrl, HttpServletResponse response, ModelMap model) {
 		CmsSite site = CmsUtils.getSite(request);
 		CmsUser user = CmsUtils.getUser(request);
@@ -209,20 +209,24 @@ public class AbstractContentMemberAct {
 		MemberConfig mcfg = site.getConfig().getMemberConfig();
 		// 没有开启会员功能
 		if (!mcfg.isMemberOn()) {
-			return FrontUtils.showMessage(request, model, "member.memberClose");
+			FrontUtils.showMessage(request, model, "member.memberClose");
 		}
 		if (user == null) {
-			return FrontUtils.showLogin(request, model, site);
+			FrontUtils.showLogin(request, model, site);
 		}
 		WebErrors errors = validateDelete(ids, site, user, request);
 		if (errors.hasErrors()) {
-			return FrontUtils.showError(request, response, model, errors);
+			FrontUtils.showError(request, response, model, errors);
 		}
 		contentMng.deleteByIds(ids);
-		return FrontUtils.showSuccess(request, model, nextUrl);
+		try {
+			response.sendRedirect("../member/contribute_list.jspx");
+		} catch (IOException e) {
+			e.printStackTrace();
+		};
 	}
 	
-	public String update(Integer id, String title, String author,
+	public void update(Integer id, String title, String author,
 			String description, String txt, String tagStr, Integer channelId,
 			String mediaPath,String mediaType,
 			String[] attachmentPaths, String[] attachmentNames,
@@ -236,14 +240,14 @@ public class AbstractContentMemberAct {
 		MemberConfig mcfg = site.getConfig().getMemberConfig();
 		// 没有开启会员功能
 		if (!mcfg.isMemberOn()) {
-			return FrontUtils.showMessage(request, model, "member.memberClose");
+			FrontUtils.showMessage(request, model, "member.memberClose");
 		}
 		if (user == null) {
-			return FrontUtils.showLogin(request, model, site);
+			FrontUtils.showLogin(request, model, site);
 		}
 		WebErrors errors = validateUpdate(id, channelId, site, user, request);
 		if (errors.hasErrors()) {
-			return FrontUtils.showError(request, response, model, errors);
+			FrontUtils.showError(request, response, model, errors);
 		}
 		Content c = new Content();
 		c.setId(id);
@@ -266,7 +270,11 @@ public class AbstractContentMemberAct {
 		if(doc!=null){
 			contentDocMng.update(doc, c);
 		}
-		return FrontUtils.showSuccess(request, model, nextUrl);
+		try {
+			response.sendRedirect("../member/contribute_list.jspx");
+		} catch (IOException e) {
+			e.printStackTrace();
+		};
 	}
 	
 	private WebErrors validateSave(String title, String author,
