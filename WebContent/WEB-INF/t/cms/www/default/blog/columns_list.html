@@ -128,7 +128,7 @@ window.onload=function(event){
               <td>${c.orderId}</td>
                 <td>${c.columnName}</td>
                 <td>${c.uniqueCode!""}</td>
-                <td><a href="${base}/blog/update_tz.jspx?id=${c.columnId}&name=${c.columnName}&orderId=${c.orderId}">修改<a> | <a href="${base}/blog/deteleColumn.jspx?id=${c.columnId}">删除<a></td>
+                <td><a href="${base}/blog/update_tz.jspx?id=${c.columnId}&name=${c.columnName}&orderId=${c.orderId}&uniqueCode=${c.uniqueCode!''}">修改<a> | <a href="${base}/blog/deteleColumn.jspx?id=${c.columnId}">删除<a></td>
               </tr>
               [/#list]
             </tbody>

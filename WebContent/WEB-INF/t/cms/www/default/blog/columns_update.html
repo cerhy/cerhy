@@ -50,6 +50,30 @@ $(function(){
 	});
 });
 </script>
+<script type="text/javascript">
+$(document).ready(function(){
+    $("#checkb").click(function(){
+        enter();
+	});
+});
+function enter(){
+	if($('input[name="checkb"]').prop("checked")){
+		$.ajax({
+	        url: "${base}/blog/uniqueNum.jspx",
+	        type: "POST",
+	        dataType:"json",
+	        data: "",
+	        success: function (data) {
+		 		$("#sh").show();
+				$("#uniqueCode").val(data.status)
+	        }
+	    });
+	}else{
+		$("#sh").hide();
+		$("#uniqueCode").val("")
+	}	
+}
+</script>
 	[#include "head.html"/]
 <div class="blogBody">
 	<div class="blog-con">
@@ -70,6 +94,22 @@ $(function(){
 							id="newColumn" method="post">
 							<div style="font-size: 15px">栏目名:</div>
 							<input type="text" name="updateName" value="${column.columnName}" required="required" style="margin:10px 0;width: 180px;height: 30px;" required="required" oninvalid="setCustomValidity('请输入栏目名称');" oninput="setCustomValidity('');" maxlength="60"/><span style="color:#f00; margin-left:10px;">*</span>
+							[#if column.uniqueCode??]
+							[#else]
+							<input type="checkbox" id="checkb" name="checkb" onclick="checkb()" />
+        					<span>是否将该栏目作为群组。</span>
+							[/#if]
+							[#if column.uniqueCode??]
+							[#else]
+							<div style="display: none;" id="sh">
+							<span style="font-size:16px;">群组唯一标识码:</span>
+        					<input type="text" style="margin:10px;width: 180px;height: 30px;" id="uniqueCode" name="uniqueCode" readonly="readonly"/>
+							</div>
+							[/#if]
+							[#if column.uniqueCode??]
+							<div style="font-size: 15px">群组唯一标识码:</div>
+							<input type="text" style="width: 180px;height: 30px;" id="uniqueCode" name="uniqueCode" readonly="readonly" value="${column.uniqueCode}"/>
+							[/#if]
 							<div style="font-size: 15px">栏目序号:</div>
 							<input type="text" name="updateOrderId" value="${column.orderId}"  style="margin:10px 0;width: 180px;height: 30px;" required="required" oninvalid="setCustomValidity('请输入栏目序号');" oninput="setCustomValidity('');" maxlength="60"/> 
 							<div style="margin: 20px 0"> <input type="submit" value="更新" class="sub2" /> </div>

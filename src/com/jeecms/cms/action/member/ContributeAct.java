@@ -136,7 +136,7 @@ public class ContributeAct extends AbstractContentMemberAct {
 		   String blog = request.getParameter("blog");
 		   String channelIds = request.getParameter("channelIds");
 		   int sta=0;
-		   if(channelIds!=null){
+		   if(channelIds!=null&&channelIds!=""){
 			   String[] str=channelIds.split("&");
 			   if(str[1].equals("chan")){
 				   channelId=Integer.valueOf(str[0]);
@@ -200,7 +200,7 @@ public class ContributeAct extends AbstractContentMemberAct {
 	 * @return
 	 */
 	@RequestMapping(value = "/member/contribute_update.jspx")
-	public String update(Integer id, String title, String author,
+	public void update(Integer id, String title, String author,
 			String description, String txt, String tagStr, Integer columnId,Integer channelId,
 			String mediaPath,String mediaType,
 			String[] attachmentPaths, String[] attachmentNames,
@@ -219,13 +219,13 @@ public class ContributeAct extends AbstractContentMemberAct {
 			   }
 		   }
 		   if(null != blog ){
-			   return blogAct.blog_update(id, title, author, description, txt, tagStr,
+			   blogAct.blog_update(id, title, author, description, txt, tagStr,
 					   columnId,channelId, mediaPath,mediaType,attachmentPaths,
 						attachmentNames, attachmentFilenames
 						,picPaths,picDescs,null,charge, chargeAmount,
 						nextUrl, request, response, model);
 		   }else{
-			   return super.update(id, title, author, description, txt, tagStr,
+			   super.update(id, title, author, description, txt, tagStr,
 						channelId, mediaPath,mediaType,attachmentPaths,
 						attachmentNames, attachmentFilenames
 						,picPaths,picDescs,null,charge, chargeAmount,
@@ -247,9 +247,9 @@ public class ContributeAct extends AbstractContentMemberAct {
 	 * @return
 	 */
 	@RequestMapping(value = "/member/contribute_delete.jspx")
-	public String delete(Integer[] ids, HttpServletRequest request,
+	public void delete(Integer[] ids, HttpServletRequest request,
 			String nextUrl, HttpServletResponse response, ModelMap model) {
-		return super.delete(ids, request, nextUrl, response, model);
+		super.delete(ids, request, nextUrl, response, model);
 	}
 	
 	@RequestMapping("/member/o_upload_media.jspx")
@@ -601,6 +601,7 @@ public class ContributeAct extends AbstractContentMemberAct {
 	    model = blogCommon.getTotalArticleNum(model,user);
  		model = blogCommon.getTotalCommentNum(model, user);
  		model = blogCommon.getStarBlogger(request, model);
+ 		model = blogCommon.getAlreadyJoinGroup(request, model,user);
 		FrontUtils.frontData(request, model, site);
 		return FrontUtils.getTplPath(request, site.getSolutionPath(),TPLDIR_BLOG, "tpl.linkList");
 	}
@@ -623,13 +624,19 @@ public class ContributeAct extends AbstractContentMemberAct {
 	    model = blogCommon.getTotalArticleNum(model,user);
  		model = blogCommon.getTotalCommentNum(model, user);
  		model = blogCommon.getStarBlogger(request, model);
+ 		model = blogCommon.getAlreadyJoinGroup(request, model,user);
 		FrontUtils.frontData(request, model, site);
 		return FrontUtils.getTplPath(request, site.getSolutionPath(),TPLDIR_BLOG, "tpl.friends");
 	}
 
 	@RequestMapping(value = "/blog/add_friends.jspx")
 	public void friends(String friends,String nextUrl,HttpServletRequest request,HttpServletResponse response, ModelMap model) {
-		blogAct.friends_save(friends.replaceAll("\r\n", " "),nextUrl,request, response, model);
+		if(friends==""){
+			blogAct.friends_save(null,nextUrl,request, response, model);
+		}else{
+			blogAct.friends_save(friends.replaceAll("\r\n", " "),nextUrl,request, response, model);
+		}
+		
 	}
 	
 	/**

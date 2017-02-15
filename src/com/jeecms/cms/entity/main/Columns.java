@@ -29,6 +29,13 @@ public class Columns {
 		this.orderId = orderId;
 		this.uniqueCode=uniqueCode;
 	}
+	public Columns(Integer columnId,Integer userId, String columnName, Integer orderId,String uniqueCode) {
+		this.columnId = columnId;
+		this.userId = userId;
+		this.columnName = columnName;
+		this.orderId = orderId;
+		this.uniqueCode=uniqueCode;
+	}
 
 	public Integer getColumnId() {
 		return columnId;
