@@ -214,22 +214,45 @@ $(function(){
               <tr>
                 <td class="tggl-top">栏目</td>
                 <td>
-	                <select name="channelIds" class="member-change" id="channelIds">
+	                <select name="channelIds" class="member-change" id="channelIds" required>
 	                <option value="" class="sel-disabled">--请选择--</option>
 	                [#if channelList??]
 	                [#assign origDeep=channelList[0].deep+1/]
 	                [#list channelList as c]
-	                    <option value="${c.id}&chan"[#if c.child?size gt 0] class="sel-disabled"[/#if]>[#if c.deep gte origDeep][#list origDeep..c.deep as i]&nbsp;&nbsp;[/#list]>[/#if]${c.name}</option>
+	                    <option value="${c.id}&chan"[#if c.child?size gt 0] class="sel-disabled"[/#if][#if content.channel.id==c.id]selected="selected"[/#if]>[#if c.deep gte origDeep][#list origDeep..c.deep as i]&nbsp;&nbsp;[/#list]>[/#if]${c.name}</option>
+	                [/#list]
+	                [/#if]
+	                
+	                [#if columnsList?size gt 0]
+	                <option value="" class="sel-disabled">栏目</option>
+	                [#list columnsList as c]
+	                	[#if c.uniqueCode??]
+                        [#else]
+	                    	[#if content.columnId??]
+	                    <option value="${c.columnId}&colu"[#if content.columnId==c.columnId]selected="selected"[/#if]>${c.columnName}</option>
+	                	[/#if]
+	                    [/#if]
 	                [/#list]
 	                [/#if]
 	                [#if columnsList?size gt 0]
+	                	<option value="" class="sel-disabled">群组</option>
 	                [#list columnsList as c]
-	                    <option value="${c.columnId}&colu">${c.columnName}</option>
+	                	[#if c.uniqueCode??]
+	                    	[#if content.columnId??]
+	                    <option value="${c.columnId}&colu"[#if content.columnId==c.columnId]selected="selected"[/#if]>${c.columnName}</option>
+	                	[/#if]
+	                    [/#if]
 	                [/#list]
 	                [/#if]
-	                [#if joinGroupList??]
+	                [#if joinGroupList?size gt 0]
+		                [#if columnsList?size gt 0]
+		                [#else]
+		                <option value="" class="sel-disabled">群组</option>
+		                [/#if]
                         [#list joinGroupList as j]
-                         <option value="${j.columnsId.columnId}&colu">${j.columnsId.columnName}</option>
+                         [#if content.columnId??]
+                         <option value="${j.columnsId.columnId}&colu"[#if content.columnId==j.columnsId.columnId]selected="selected"[/#if]>${j.columnsId.columnName}</option>
+		                [/#if]
 		                [/#list]
                     [/#if]
 	                </select>
@@ -249,10 +272,11 @@ $(function(){
 						<input onchange="$('#mediaFileText').val(this.value)" size="19" type="file" name="mediaFile" id="mediaFile" style="height:28px;width:246px;opacity:0;filter:alpha(opacity=0);position:absolute;left:15px;top:0;"/>
 						<input type="button" value="上传" onclick="uploadMedia();" class="change-Btn"  style="float:left;"/>
 						</span> 
+						<span style="color:#f00; margin-left:10px;">*上传的视频文件须为MP4格式!</span>
 					</div>
                 </td>
               </tr>
-              <tr>
+              <tr style="display: none;">
                 <td class="tggl-top">播放器</td><td>[@p.radio name="mediaType" list=["WM","REAL","FLV","FLASH","CK"] value="${content.mediaType!}"/]</td>
               </tr>
               <tr>
@@ -328,7 +352,7 @@ $(function(){
 							</script>
                 </td>
               </tr>
-              <tr>
+              <tr style="display: none;">
                 <td class="tggl-top">图片集</td>
                 <td style="padding:10px 5px;">
                   <div>

@@ -198,7 +198,7 @@ $(function(){
               <tr class="blog_column">
                 <td class="tggl-top">栏目</td>
                 <td>
-	                <select name="channelIds" class="member-change" id="channelIds">
+	                <select name="channelIds" class="member-change" id="channelIds" required>
 	                <option value="" class="sel-disabled">--请选择--</option>
 	                [#if channelList??]
 	                [#assign origDeep=channelList[0].deep+1/]
@@ -207,13 +207,29 @@ $(function(){
 	                [/#list]
 	                [/#if]
 	                [#if columnsList?size gt 0]
+	                <option value="" class="sel-disabled">栏目</option>
 	                [#list columnsList as c]
-	                    <option value="${c.columnId}&colu">${c.columnName}</option>
+	                	[#if c.uniqueCode??]
+                        [#else]
+	                    	<option value="${c.columnId}&colu">&nbsp;&nbsp;>${c.columnName}</option>
+	                    [/#if]
 	                [/#list]
 	                [/#if]
-	                [#if joinGroupList??]
+	                [#if columnsList?size gt 0]
+	                	<option value="" class="sel-disabled">群组</option>
+	                [#list columnsList as c]
+	                	[#if c.uniqueCode??]
+	                    	<option value="${c.columnId}&colu">&nbsp;&nbsp;>${c.columnName}</option>
+	                    [/#if]
+	                [/#list]
+	                [/#if]
+	                [#if joinGroupList?size gt 0]
+		                [#if columnsList?size gt 0]
+		                [#else]
+		                <option value="" class="sel-disabled">群组</option>
+		                [/#if]
                         [#list joinGroupList as j]
-                         <option value="${j.columnsId.columnId}&colu">${j.columnsId.columnName}</option>
+                         <option value="${j.columnsId.columnId}&colu">&nbsp;&nbsp;>${j.columnsId.columnName}</option>
 		                [/#list]
                     [/#if]
 	                </select>
@@ -234,7 +250,7 @@ $(function(){
 						<input type="button" value="上传" onclick="uploadMedia();" class="change-Btn"  style="float:left;"/>
 						</span> 
 					</div>
-					<span style="color:#f00; margin-left:10px;font-size: 2px;">*上传的视频文件须为MP4格式!</span>
+					<span style="color:#f00; margin-left:10px;">*上传的视频文件须为MP4格式!</span>
                 </td>
               </tr>
               <tr style="display: none;">
