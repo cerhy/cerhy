@@ -17,7 +17,11 @@
 		           </div>
 		           <div class="user-menu-links">
 		                <ul>
+						    [#if submitOn??] 
+						    <li class="on"><a style="cursor: pointer;"><em></em>博客栏目</a>
+						    [#else] 
 						    <li><a style="cursor: pointer;"><em></em>博客栏目</a>
+						    [/#if]
 						        [#if columnsList??]
 		                          <ul>
 		                            [#list columnsList as c]
@@ -38,17 +42,19 @@
 		                             </ul>
 		                        [/#if]
 		                    </li>
-		                    <div class="st_tree">
-						        <ul  show="true">
-						        	<li><a href="javascript:;" style="text-decoration:none;"><em></em>群组</a></li>
-						        	 <ul>
-								        [#if columnsList??]
-								         [#list columnsList as c]
+						    [#if submitOn1??] 
+						    <li class="on"><a style="cursor: pointer;"><em></em>群组</a>
+						    [#else] 
+						    <li><a style="cursor: pointer;"><em></em>群组</a>
+						    [/#if]
+						        <ul>
+								    [#if columnsList??]
+								        [#list columnsList as c]
 		                            	[#if c.uniqueCode??]
 										<li  class="change">
-										<a href="${base}/blog/contribute_list_friend.jspx?columnId=${c.columnId}&user_ids=${userIds}&joinGroupStata=0" title="${c.columnName}" >[@text_cut s=c.columnName len=5 append='...'/]</a>
+										<a href="${base}/blog/contribute_list_friend.jspx?columnId=${c.columnId}&user_ids=${userIds}&joinGroupStata=0" title="${c.columnName}" ><em></em>[@text_cut s=c.columnName len=5 append='...'/]</a>
 										[#if c.userId!=user.id]
-										<button type="button" id="${c.uniqueCode}" name="uniqueCode" onclick="join_group(${c.uniqueCode},${usert.id});" class="butt" style="float: right;margin-top: -50px;cursor: pointer;height: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;加入</button>
+										<button type="button" id="${c.uniqueCode}" name="uniqueCode" onclick="join_group(${c.uniqueCode},${usert.id});" class="butt" style="float: right;margin-top: -25px;">&nbsp;&nbsp;&nbsp;&nbsp;加入</button>
 										[/#if]
 										</li>
 								   		[/#if]
@@ -56,12 +62,11 @@
 		                        		[/#if]
 		                        		[#if joinGroupList?size gt 0]
 			                            [#list joinGroupList as j]
-					                    <li class="change"><a href="${base}/blog/contribute_list_friend.jspx?columnId=${j.columnsId.columnId}&user_ids=${userIds}&joinGroupStata=0" title="${j.columnsId.columnName}" >[@text_cut s=j.columnsId.columnName len=5 append='...'/]</a></li>
+					                    <li class="change"><a href="${base}/blog/contribute_list_friend.jspx?columnId=${j.columnsId.columnId}&user_ids=${userIds}&joinGroupStata=0" title="${j.columnsId.columnName}" ><em></em>[@text_cut s=j.columnsId.columnName len=5 append='...'/]</a></li>
 					                    [/#list]
-			                            [/#if]
-								   </ul>
-							 </ul>
-						</div>
+			                        [/#if]    
+								</ul> 	
+							</li>    	
 		                    <li><a  href="${base}/blog/gotoDataShowFriend.jspx?dataFlag=1&userId=${usert.id}" >好友</a></li>
 			                <li><a  href="${base}/blog/gotoDataShowFriend.jspx?dataFlag=2&userId=${usert.id}" >关注</a></li>
 			                <li><a  href="${base}/blog/gotoDataShowFriend.jspx?dataFlag=3&userId=${usert.id}" >粉丝</a></li>

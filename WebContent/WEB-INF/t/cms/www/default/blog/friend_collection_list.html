@@ -11,15 +11,83 @@
 <style>
 .st_tree ul .change a:hover{color:red;}
 .st_tree ul .change :hover{background-color:#e7e7e7 }
-.st_tree ul .change .butt:hover{color:red;}
+.change .butt:hover{color:red;background-color:#e7e7e7}
 ::-webkit-scrollbar{width:0px}
 .clear{clear:both}
-.st_tree ul .change .disableds {
+.change .disableds {
 	border-color:#F0E68C;
     color: blue;
 }
 </style>
-
+<script type="text/javascript">
+$(function(){
+	$.ajax({
+		type:"post",
+		url:"${base}/blog/focuscheck.jspx",
+		dateType:'json',
+		data:{
+			"focusUserId":${usert.id},
+		},
+		success:function(data){
+		if(1 == data){
+			$('#focus').hide();
+			$('#cancelfocus').show();
+		}else{
+			$('#focus').show();
+			$('#cancelfocus').hide();
+		}
+		}
+		
+	});	
+	
+	$('#focus').click(function(){
+		$.ajax({
+			type:"post",
+			url:"${base}/blog/focus.jspx",
+			dateType:'json',
+			data:{
+				"focusUserId":${usert.id},
+				"focusUserName":'${usert.username}',
+			},
+			success:function(data){
+			if(1 == data){
+				$('#focus').hide();
+				$('#cancelfocus').show();
+			}
+			}
+			
+		});	
+	});
+	
+	$('#cancelfocus').click(function(){
+		$.ajax({
+			type:"post",
+			url:"${base}/blog/cancelfocus.jspx",
+			dateType:'json',
+			data:{
+				"focusUserId":${usert.id},
+			},
+			success:function(data){
+			if(1 == data){
+				$('#focus').show();
+				$('#cancelfocus').hide();
+			}
+			}
+			
+		});	
+	});
+	
+	$('.user-menu-links li').click(function(){
+	    $(this).toggleClass('on');
+	});
+	$(".st_tree").SimpleTree({
+		click:function(a){
+			if(!$(a).attr("hasChild"))
+				alert($(a).attr("ref"));
+		}
+	});
+});
+</script>
 [#include "head.html"/]
 <div class="blogBody">
 <div class="blog-con">
