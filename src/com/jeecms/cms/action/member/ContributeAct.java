@@ -596,6 +596,9 @@ public class ContributeAct extends AbstractContentMemberAct {
 	public String linkList(HttpServletRequest request,HttpServletResponse response, ModelMap model) {
 		CmsSite site = CmsUtils.getSite(request);
 		CmsUser user = CmsUtils.getUser(request);
+		if (user == null) {
+			return FrontUtils.showLogin(request, model, site);
+		}
 		model = blogCommon.getColumn(request,model,user);
 	    model = blogCommon.getChannel(request,model,user,site);
 	    model = blogCommon.getTotalArticleNum(model,user);
@@ -618,6 +621,9 @@ public class ContributeAct extends AbstractContentMemberAct {
 	public String friends(HttpServletRequest request,HttpServletResponse response, ModelMap model) {
 		CmsSite site = CmsUtils.getSite(request);
 		CmsUser user = CmsUtils.getUser(request);
+		if (user == null) {
+			return FrontUtils.showLogin(request, model, site);
+		}
 		model = blogCommon.getColumn(request,model,user);
 	    model = blogCommon.getChannel(request,model,user,site);
 	    model = blogCommon.getFriends(user.getId(), model, 1);
@@ -713,15 +719,17 @@ public class ContributeAct extends AbstractContentMemberAct {
 	@RequestMapping(value = "/member/findCommentNu.jspx")
 	public void findCommentNu(HttpServletRequest request,HttpServletResponse response, ModelMap model)throws UnsupportedEncodingException, JSONException {
 		CmsUser user = CmsUtils.getUser(request);
+		CmsSite site=CmsUtils.getSite(request);
 		if(user!=null){
 			JSONObject json = new JSONObject();
-			CmsSite site=CmsUtils.getSite(request);
 			FrontUtils.frontData(request, model, site);
 			Date lastDate=user.getLastLoginTime();
 			int userId=user.getId();
 			List<CmsComment> listNum=contentMng.findCommentByConid(userId,lastDate);
 			json.put("status", listNum.size());
 			ResponseUtils.renderJson(response, json.toString());
+		}else{
+			FrontUtils.showLogin(request, model, site);
 		}
 	}
 	
@@ -732,40 +740,44 @@ public class ContributeAct extends AbstractContentMemberAct {
 	@RequestMapping(value = "/member/checkAddfinds.jspx")
 	public void checkAddfinds(String friends,HttpServletRequest request,HttpServletResponse response, ModelMap model)throws UnsupportedEncodingException, JSONException {
 		CmsUser user = CmsUtils.getUser(request);
-		String[] strs=friends.split("~");
-		int addnum=1;
-		String no="";
-		for(int i=0;i<strs.length;i++){
-			CmsUser u=channelMng.findUserImage(strs[i].split("=")[1].toString());
-			if(null==u){
-				no+=strs[i].split("=")[1].toString()+",";
-			}else{
-				if(user.getId()==u.getId()){
-					no="repeatName";
-					break;
+		CmsSite site = CmsUtils.getSite(request);
+		if(user==null){
+			FrontUtils.showLogin(request, model, site);
+		}else{
+			String[] strs=friends.split("~");
+			int addnum=1;
+			String no="";
+			for(int i=0;i<strs.length;i++){
+				CmsUser u=channelMng.findUserImage(strs[i].split("=")[1].toString());
+				if(null==u){
+					no+=strs[i].split("=")[1].toString()+",";
+				}else{
+					if(user.getId()==u.getId()){
+						no="repeatName";
+						break;
+					}
 				}
 			}
-		}
-		if(no!=""){
-			if(no.equals("repeatName")){
-				addnum=2;
+			if(no!=""){
+				if(no.equals("repeatName")){
+					addnum=2;
+				}else{
+					addnum=0;
+				}
 			}else{
-				addnum=0;
+				addnum=1;
 			}
-		}else{
-			addnum=1;
+			JSONObject json = new JSONObject();
+			FrontUtils.frontData(request, model, site);
+			if(addnum==0){
+				json.put("status",no.substring(0,no.length() - 1));
+			}else if(addnum==2){
+				json.put("status",2);
+			}else{
+				json.put("status","");	
+			}
+			ResponseUtils.renderJson(response, json.toString());
 		}
-		JSONObject json = new JSONObject();
-		CmsSite site=CmsUtils.getSite(request);
-		FrontUtils.frontData(request, model, site);
-		if(addnum==0){
-			json.put("status",no.substring(0,no.length() - 1));
-		}else if(addnum==2){
-			json.put("status",2);
-		}else{
-			json.put("status","");	
-		}
-		ResponseUtils.renderJson(response, json.toString());
 	}
 	
 	
@@ -776,6 +788,9 @@ public class ContributeAct extends AbstractContentMemberAct {
 	public String dataStatistics(HttpServletRequest request,HttpServletResponse response, ModelMap model) {
 		CmsSite site = CmsUtils.getSite(request);
 		CmsUser user = CmsUtils.getUser(request);
+		if(user==null){
+			FrontUtils.showLogin(request, model, site);
+		}
 		model = blogCommon.getColumn(request,model,user);
 	    model = blogCommon.getChannel(request,model,user,site);
 	    model = blogCommon.getTotalArticleNum(model,user);
@@ -793,6 +808,10 @@ public class ContributeAct extends AbstractContentMemberAct {
 	@RequestMapping(value = "/blog/friendDataStatistics.jspx")
 	public String friendDataStatistics(String userIds,String q,HttpServletRequest request,HttpServletResponse response, ModelMap model) {
 		CmsSite site = CmsUtils.getSite(request);
+		CmsUser user = CmsUtils.getUser(request);
+		if(user==null){
+			FrontUtils.showLogin(request, model, site);
+		}
 		CmsUser userT=cmsUserMng.findById(Integer.valueOf(userIds.toString()));
 		model = blogCommon.getColumn(request,model,userT);
 	    model = blogCommon.getChannel(request,model,userT,site);
@@ -847,6 +866,9 @@ public class ContributeAct extends AbstractContentMemberAct {
 	public String visitor(String queryTitle, Integer modelId,Integer queryChannelId, Integer pageNo,HttpServletRequest request,HttpServletResponse response, ModelMap model) {
 		CmsSite site = CmsUtils.getSite(request);
 		CmsUser user = CmsUtils.getUser(request);
+		if(user==null){
+			FrontUtils.showLogin(request, model, site);
+		}
 //		model = blogCommon.getLinks(model,user);
 //		model = blogCommon.getFriends(model,user);
 //		model = blogCommon.blog_focus_find(null,request,model);
@@ -870,6 +892,10 @@ public class ContributeAct extends AbstractContentMemberAct {
 	@RequestMapping(value = "/blog/friends_visitor.jspx")
 	public String friends_visitor(String userIds,String q,Integer modelId,Integer queryChannelId, Integer pageNo,HttpServletRequest request,HttpServletResponse response, ModelMap model) {
 		CmsSite site = CmsUtils.getSite(request);
+		CmsUser user = CmsUtils.getUser(request);
+		if(user==null){
+			FrontUtils.showLogin(request, model, site);
+		}
 		CmsUser userT=cmsUserMng.findById(Integer.valueOf(userIds.toString()));
 		model = blogCommon.getColumn(request,model,userT);
 	    model = blogCommon.getChannel(request,model,userT,site);
@@ -921,7 +947,11 @@ public class ContributeAct extends AbstractContentMemberAct {
 	 */
 	@RequestMapping(value = "/blog/joinGroup.jspx")
 	public void joinGroup(String code,String createUserId,HttpServletRequest request,HttpServletResponse response, ModelMap model)throws UnsupportedEncodingException, JSONException {
+		CmsSite site = CmsUtils.getSite(request);
 		CmsUser user = CmsUtils.getUser(request);
+		if(user==null){
+			FrontUtils.showLogin(request, model, site);
+		}
 		CmsUser userT=cmsUserMng.findById(Integer.valueOf(createUserId.toString()));
 		Columns cu=columnsMng.findInfoByCode(code);
 		JSONObject json = new JSONObject();
@@ -940,7 +970,11 @@ public class ContributeAct extends AbstractContentMemberAct {
 	 */
 	@RequestMapping(value = "/blog/checkJoinState.jspx")
 	public void checkJoinState(String joinState,HttpServletRequest request,HttpServletResponse response, ModelMap model)throws UnsupportedEncodingException, JSONException {
+		CmsSite site = CmsUtils.getSite(request);
 		CmsUser user = CmsUtils.getUser(request);
+		if(user==null){
+			FrontUtils.showLogin(request, model, site);
+		}
 		JSONObject json = new JSONObject();
 		int joinStatus=columnsMng.checkJoinState(joinState,user);
 		json.put("status",joinStatus);

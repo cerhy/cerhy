@@ -55,6 +55,9 @@ public class BlogAct {
 	public String blog_index(String q, Integer modelId,Integer queryChannelId,String nextUrl,Integer pageNo,HttpServletRequest request, ModelMap model) {
 		CmsSite site = CmsUtils.getSite(request);
 		CmsUser user = CmsUtils.getUser(request);
+		if (user == null) {
+			return FrontUtils.showLogin(request, model, site);
+		}
 		model = blogCommon.getColumn(request,model,user);
 	    model = blogCommon.getChannel(request,model,user,site);
 	    model = blogCommon.getTotalArticleNum(model,user);
@@ -76,6 +79,9 @@ public class BlogAct {
 	public void updateSetting(HttpServletRequest request,HttpServletResponse response, ModelMap model) {
 		CmsUser user = CmsUtils.getUser(request);
 		CmsSite site = CmsUtils.getSite(request);
+		if (user == null) {
+			FrontUtils.showLogin(request, model, site);
+		}
 		if (null != user) {
 			String blogTitle = request.getParameter("blogTitle");
 			String blogTitle2 = request.getParameter("blogTitle2");
@@ -103,6 +109,9 @@ public class BlogAct {
 	public String tzsetting(HttpServletRequest request,HttpServletResponse response, ModelMap model) {
 		CmsSite site = CmsUtils.getSite(request);
 		CmsUser user = CmsUtils.getUser(request);
+		if (user == null) {
+			return FrontUtils.showLogin(request, model, site);
+		}
 		model = blogCommon.getColumn(request,model,user);
 	    model = blogCommon.getChannel(request,model,user,site);
 	    model = blogCommon.getTotalArticleNum(model,user);
@@ -116,6 +125,9 @@ public class BlogAct {
 	public String blog_list(String q, Integer modelId,Integer queryChannelId,String nextUrl,Integer pageNo,HttpServletRequest request, ModelMap model) {
 		CmsSite site = CmsUtils.getSite(request);
 		CmsUser user = CmsUtils.getUser(request);
+		if (user == null) {
+			return FrontUtils.showLogin(request, model, site);
+		}
 		int userId=user.getId();
 		String joinGroupStata=request.getParameter("joinGroupStata");
 		Integer columnId = null;
@@ -161,6 +173,9 @@ public class BlogAct {
 	public String blog_add(boolean hasPermission,String nextUrl,HttpServletRequest request,HttpServletResponse response, ModelMap model) {
 		CmsSite site = CmsUtils.getSite(request);
 		CmsUser user = CmsUtils.getUser(request);
+		if (user == null) {
+			return FrontUtils.showLogin(request, model, site);
+		}
 		model = blogCommon.getColumn(request,model,user);
 	    model = blogCommon.getChannel(request,model,user,site);
 	    model = blogCommon.getTotalArticleNum(model,user);
@@ -352,6 +367,9 @@ public class BlogAct {
 			HttpServletRequest request, ModelMap model) {
 		CmsSite site = CmsUtils.getSite(request);
 		CmsUser user = CmsUtils.getUser(request);
+		if (user == null) {
+			return FrontUtils.showLogin(request, model, site);
+		}
 		model = blogCommon.getColumn(request,model,user);
 		model = blogCommon.getTotalArticleNum(model,user);
  		model = blogCommon.getTotalCommentNum(model, user);
@@ -370,13 +388,17 @@ public class BlogAct {
 	}
 	
 	public void columns_add(HttpServletRequest request,HttpServletResponse response, ModelMap model) {
+		CmsSite site = CmsUtils.getSite(request);
+		CmsUser user = CmsUtils.getUser(request);
+		if (user == null) {
+			FrontUtils.showLogin(request, model, site);
+		}
 		String name = request.getParameter("columnInput");
 		String order = request.getParameter("columnOrder");
 		String uniqueCode = request.getParameter("uniqueCode");
 		if(uniqueCode==""){
 			uniqueCode=null;
 		}
-		CmsUser user = CmsUtils.getUser(request);
 		Integer i = 0;
 		if(null != name && null != user){
 			if(blogCommon.isNumeric(order)){
@@ -393,6 +415,11 @@ public class BlogAct {
 	}
 	
 	public void columns_detele(HttpServletRequest request,HttpServletResponse response, ModelMap model) {
+		CmsSite site = CmsUtils.getSite(request);
+		CmsUser user = CmsUtils.getUser(request);
+		if (user == null) {
+			FrontUtils.showLogin(request, model, site);
+		}
 		String columnId = request.getParameter("id");
 		if(null != columnId){
 			List<Content> l = contentMng.countByColumnId(Integer.parseInt(columnId));
@@ -408,7 +435,11 @@ public class BlogAct {
 	}
 
 	public void columns_update(HttpServletRequest request,HttpServletResponse response, ModelMap model) {
+		CmsSite site = CmsUtils.getSite(request);
 		CmsUser user = CmsUtils.getUser(request);
+		if (user == null) {
+			FrontUtils.showLogin(request, model, site);
+		}
 		String columnId = request.getParameter("id");
 		String name = request.getParameter("updateName");
 		String orderId = request.getParameter("updateOrderId");
@@ -435,6 +466,9 @@ public class BlogAct {
 	public String update_tz(String id,String orderId,HttpServletRequest request,HttpServletResponse response, ModelMap model) {
 		CmsSite site = CmsUtils.getSite(request);
 		CmsUser user = CmsUtils.getUser(request);
+		if (user == null) {
+			return FrontUtils.showLogin(request, model, site);
+		}
 		model = blogCommon.getColumn(request,model,user);
 		model = blogCommon.getTotalArticleNum(model,user);
  		model = blogCommon.getTotalCommentNum(model, user);
@@ -565,6 +599,10 @@ public class BlogAct {
 		DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		String focusTime = format.format(date);
 		CmsUser user = CmsUtils.getUser(request);
+		CmsSite site = CmsUtils.getSite(request);
+		if (user == null) {
+			FrontUtils.showLogin(request, null, site);
+		}
 		Focus f = focusMng.add(user.getId(),user.getUsername(), Integer.parseInt(focusUserId), focusUserName, focusTime);
 		if(null != f){
 			response.getWriter().print("1");
@@ -575,6 +613,10 @@ public class BlogAct {
 	
 	public void blog_focus_check(String focusUserId, HttpServletRequest request, HttpServletResponse response) throws IOException {
 		CmsUser user = CmsUtils.getUser(request);
+		CmsSite site = CmsUtils.getSite(request);
+		if (user == null) {
+			FrontUtils.showLogin(request, null, site);
+		}
 		List<Focus> list= focusMng.find(user.getId(), Integer.parseInt(focusUserId));
 		if(null != list && list.size()>0){
 			response.getWriter().print("1");
@@ -605,6 +647,9 @@ public class BlogAct {
 	public String gotoDataShow(int dataFlag, HttpServletRequest request,HttpServletResponse response, ModelMap model,Integer pageNo) {
 		CmsUser u = CmsUtils.getUser(request);
 		CmsSite site = CmsUtils.getSite(request);
+		if(u==null){
+			FrontUtils.showLogin(request, model, site);
+		}
 		//好友
 		if(1 == dataFlag){
 			model = blogCommon.getFriends(u.getId(),model,cpn(pageNo));
