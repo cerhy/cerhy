@@ -94,7 +94,7 @@ window.onload=function(event){
         <form id="newColumn" action="${base}/blog/newColumn.jspx"  method="post">
         <div >
 	        <span style="font-size:16px;">栏目名称:</span>
-	        <input type="text" name="columnInput" required="required" style="margin:10px;width: 180px;height: 30px;" rerequired oninvalid="setCustomValidity('请输入栏目名称');" oninput="setCustomValidity('');"/><span style="color:#f00; margin-left:10px;">*</span>
+	        <input type="text" maxlength="15" name="columnInput" required="required" style="margin:10px;width: 180px;height: 30px;" rerequired oninvalid="setCustomValidity('请输入栏目名称');" oninput="setCustomValidity('');"/><span style="color:#f00; margin-left:10px;">*</span>
 	        <input type="checkbox" id="checkb" name="checkb" onclick="checkb()" />
         	<span>是否将该栏目作为群组。</span>
         </div>
