@@ -93,7 +93,7 @@ function enter(){
 							action="${base}/blog/updateColumn.jspx?id=${column.columnId}"
 							id="newColumn" method="post">
 							<div style="font-size: 15px">栏目名:</div>
-							<input type="text" name="updateName" value="${column.columnName}" required="required" style="margin:10px 0;width: 180px;height: 30px;" required="required" oninvalid="setCustomValidity('请输入栏目名称');" oninput="setCustomValidity('');" maxlength="60"/><span style="color:#f00; margin-left:10px;">*</span>
+							<input type="text" maxlength="15" name="updateName" value="${column.columnName}" required="required" style="margin:10px 0;width: 180px;height: 30px;" required="required" oninvalid="setCustomValidity('请输入栏目名称');" oninput="setCustomValidity('');" maxlength="60"/><span style="color:#f00; margin-left:10px;">*</span>
 							[#if column.uniqueCode??]
 							[#else]
 							<input type="checkbox" id="checkb" name="checkb" onclick="checkb()" />
