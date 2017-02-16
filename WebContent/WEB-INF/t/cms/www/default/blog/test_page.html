@@ -11,12 +11,14 @@
 <style>
 .st_tree ul .change a:hover{color:red;}
 .st_tree ul .change :hover{background-color:#e7e7e7 }
-.st_tree ul .change .butt:hover{color:red;}
+.change .butt:hover{color:red;background-color:#e7e7e7}
+.change .butt{cursor: pointer;}
 ::-webkit-scrollbar{width:0px}
 .clear{clear:both}
-.st_tree ul .change .disableds {
-	border-color:#F0E68C;
-    color: blue;
+.change .disableds{
+	background-color:#F0E68C;
+    color: white;
+    cursor: text;
 }
 </style>
 <script type="text/javascript">
@@ -167,7 +169,7 @@ $(function(){
   </div>
   </div>
   </div>
-
+[#include "model_friend.html"/]
 [#include "../include/footer.html"/]
 </body>
 </html>
