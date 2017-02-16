@@ -9,78 +9,16 @@
 <link type="text/css" rel="stylesheet" href="/${res}/css/custom.css" />
 <link href="${resSys}/jqueryUI/jquery.ui.css" rel="stylesheet" type="text/css" />
 <script src="/${res}/js/main.js"></script>
+<script src="/${res}/js/SimpleTree.js"></script>
 <script type="text/javascript">
-$(function(){
-	$.ajax({
-		type:"post",
-		url:"${base}/blog/focuscheck.jspx",
-		dateType:'json',
-		data:{
-			"focusUserId":${usert.id},
-		},
-		success:function(data){
-		if(1 == data){
-			$('#focus').hide();
-			$('#cancelfocus').show();
-		}else{
-			$('#focus').show();
-			$('#cancelfocus').hide();
-		}
-		}
-		
-	});	
-	
-	$('#focus').click(function(){
-		$.ajax({
-			type:"post",
-			url:"${base}/blog/focus.jspx",
-			dateType:'json',
-			data:{
-				"focusUserId":${usert.id},
-				"focusUserName":'${usert.username}',
-			},
-			success:function(data){
-			if(1 == data){
-				$('#focus').hide();
-				$('#cancelfocus').show();
-			}
-			}
-			
-		});	
-	});
-	
-	$('#cancelfocus').click(function(){
-		$.ajax({
-			type:"post",
-			url:"${base}/blog/cancelfocus.jspx",
-			dateType:'json',
-			data:{
-				"focusUserId":${usert.id},
-			},
-			success:function(data){
-			if(1 == data){
-				$('#focus').show();
-				$('#cancelfocus').hide();
-			}
-			}
-			
-		});	
-	});
-	
-	$('.user-menu-links li').click(function(){
-	    $(this).toggleClass('on');
-	});
+
+$(function() {
 	$(".st_tree").SimpleTree({
 		click:function(a){
 			if(!$(a).attr("hasChild"))
 				alert($(a).attr("ref"));
 		}
 	});
-});
-</script>
-<script type="text/javascript">
-$(function() {
-	
 	$.ajax({
 		type:"post",
 		url:"${base}/blog/checkout.jspx",
@@ -96,26 +34,23 @@ $(function() {
 		    }
 	  }
 	});
-	
-       $("#comfirmSpan").click(function(){
-    	   Cms.collect_blog("${base}","${content.id}",1,"cancelSpan","comfirmSpan");
-       });
-       $("#cancelSpan").click(function(){
-    	   Cms.collect_blog("${base}","${content.id!}",0,"cancelSpan","comfirmSpan");
-       });
+$("#comfirmSpan").click(function(){
+    Cms.collect_blog("${base}","${content.id}",1,"cancelSpan","comfirmSpan");
 });
-</script>
-<script type="text/javascript">
-	$(function() {
-		Cms.checkPerm("${base}", "${content.id}");
-		Cms.collectCsi("${base}", "collectCsiDiv", "collect_csi",
-				"${content.id}");
-		Cms.attachment("${base}", "${content.id}",
-				"${content.attachments?size}", "attach");
-		Cms.viewCount("${base}", "${content.id}");
-		Cms.siteFlow("${base}", location.href, document.referrer,
-				"${site.config.flowSwitch?string}");
-	});
+$("#cancelSpan").click(function(){
+    Cms.collect_blog("${base}","${content.id!}",0,"cancelSpan","comfirmSpan");
+});
+
+Cms.checkPerm("${base}", "${content.id}");
+Cms.collectCsi("${base}", "collectCsiDiv", "collect_csi",
+		"${content.id}");
+Cms.attachment("${base}", "${content.id}",
+		"${content.attachments?size}", "attach");
+Cms.viewCount("${base}", "${content.id}");
+Cms.siteFlow("${base}", location.href, document.referrer,
+		"${site.config.flowSwitch?string}");
+		
+});
 </script>
 <script type="text/javascript">
 	jQuery(document).ready(function($) {
@@ -156,7 +91,8 @@ $(function() {
    [#if who ==1]
      [#include "blog_left.html"/]
    [#else]
-     [#include "friend_blog_left.html"]
+     [#include "friend_blog_left.html"/]
+     [#include "friend_content.html"/]
    [/#if]
        <div class="wrap-right">
            <div class="personCenter-userInfo blog_right xueke-acticle">
