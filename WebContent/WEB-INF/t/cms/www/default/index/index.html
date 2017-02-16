@@ -167,12 +167,7 @@ function HoverLi(x,y,m,n,counter){
 					        	[/@cms_channel ]
                         </div>
                         <div class="info-div-content">
-                            <div class="info-tab-content" style="display: block;">
-                                <ul class="has-dot-list"> 
-	                               [@cms_content_list  channelId='275' count='8' titLen='14' orderBy='2' channelOption='1'][#list tag_list as a]<li><a href="${a.url}" class="of" target="_blank">[@text_cut s=a.title len=titLen append='...'/]<span class="gray9">(${a.releaseDate?string('MM-dd')})</span></a></li>[/#list][/@cms_content_list]
-                                </ul>
-                            </div>
-                            <div class="info-tab-content">
+                            <div class="info-tab-content"  style="display: block;">
                                 <ul class="has-dot-list">
                                    [@cms_content_list channelId='135' count='8' titLen='14' orderBy='2' channelOption='1'][#list tag_list as a]<li><a href="${a.url}" class="of" target="_blank">[@text_cut s=a.title len=titLen append='...'/]<span class="gray9">(${a.releaseDate?string('MM-dd')})</span></a></li>[/#list][/@cms_content_list]
                                 </ul>
@@ -185,6 +180,11 @@ function HoverLi(x,y,m,n,counter){
                             <div class="info-tab-content">
                                 <ul class="has-dot-list">
                                    [@cms_content_list  channelId='137' count='8' titLen='14' orderBy='2' channelOption='1'][#list tag_list as a]<li><a href="${a.url}" class="of" target="_blank">[@text_cut s=a.title len=titLen append='...'/]<span class="gray9">(${a.releaseDate?string('MM-dd')})</span></a></li>[/#list][/@cms_content_list]
+                                </ul>
+                            </div>
+                            <div class="info-tab-content">
+                                <ul class="has-dot-list"> 
+	                               [@cms_content_list  channelId='138' count='8' titLen='14' orderBy='2' channelOption='1'][#list tag_list as a]<li><a href="${a.url}" class="of" target="_blank">[@text_cut s=a.title len=titLen append='...'/]<span class="gray9">(${a.releaseDate?string('MM-dd')})</span></a></li>[/#list][/@cms_content_list]
                                 </ul>
                             </div>
                         </div>
