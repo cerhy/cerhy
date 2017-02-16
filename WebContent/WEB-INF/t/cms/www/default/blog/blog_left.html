@@ -1,3 +1,12 @@
+<script type="text/javascript">
+function del(){
+	if(confirm('确定要删除吗?')) 
+	  { 
+	    return true; 
+	  } 
+	  return false; 
+}
+</script>
 <div class="wrap-left">
      <div class="user-center-left">
            <div class="user-setting">
@@ -35,7 +44,7 @@
                             [#list columnsList as c]
                             [#if c.uniqueCode??]
                             [#else]
-		                    <li><a href="${base}/blog/contribute_list.jspx?columnId=${c.columnId}" ><em></em>${c.columnName}</a></li>
+		                    <li><a href="${base}/blog/contribute_list.jspx?columnId=${c.columnId}" ><em></em>[@text_cut s=c.columnName?html len='10' append='...'/]</a></li>
 		                    [/#if]
 		                    [/#list]
 		                    [/#if]

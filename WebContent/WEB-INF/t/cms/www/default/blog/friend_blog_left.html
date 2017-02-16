@@ -34,7 +34,7 @@
                             [#list columnsList as c]
                             [#if c.uniqueCode??]
                             [#else]
-		                    <li><a href="${base}/blog/contribute_list_friend.jspx?columnId=${c.columnId}&user_ids=${userIds}" ><em></em>${c.columnName}</a></li>
+		                    <li><a href="${base}/blog/contribute_list_friend.jspx?columnId=${c.columnId}&user_ids=${userIds}" ><em></em>[@text_cut s=c.columnName?html len='10' append='...'/]</a></li>
 		                    [/#if]
 		                    [/#list]
 		                    [/#if]

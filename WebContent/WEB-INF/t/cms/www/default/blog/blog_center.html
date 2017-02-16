@@ -18,6 +18,7 @@ td{border:1px solid #e7e7e7; line-height:38px; color:#666666; text-align:center;
 </style>
 
 <script type="text/javascript">
+
 $(function(){
 	$('.user-menu-links li').click(function(){
 	    $(this).toggleClass('on');
@@ -64,7 +65,7 @@ $(function(){
 						   </a>
 						  </div>
 							  <a href="contribute_edit.jspx?id=${c.id}&nextUrl=contribute_list.jspx" class="f3"><em style="color: #b7b7b7;">修改</em></a>&nbsp;|&nbsp;
-				              <a href="contribute_delete.jspx?ids=${c.id}" class="f3"><em style="color: #b7b7b7;">删除</em></a>
+				              <a href="contribute_delete.jspx?ids=${c.id}" onclick="javascript:return del();" class="f3"><em style="color: #b7b7b7;">删除</em></a>
 							<div class="f2"><span style="padding-right:10px;"><em>博主:${c.user.username}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${c.releaseDate?string('yyyy-MM-dd')}</em></span></div>
 									
 			             </li>
