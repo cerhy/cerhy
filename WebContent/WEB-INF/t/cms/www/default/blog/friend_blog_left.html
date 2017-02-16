@@ -22,26 +22,24 @@
 						    [#else] 
 						    <li><a style="cursor: pointer;"><em></em>博客栏目</a>
 						    [/#if]
-						        [#if columnsList??]
-		                          <ul>
-		                            [#list columnsList as c]
-		                            [#if c.uniqueCode??]
-		                            [#else]
-				                    <li><a href="${base}/blog/contribute_list_friend.jspx?columnId=${c.columnId}&user_ids=${userIds}" ><em></em>${c.columnName}</a></li>
-				                    [/#if]
-				                    [/#list]
-				                    <li><a href="${base}/blog/friend_collection_list.jspx?userIds=${usert.id}">转载</a></li>
-		                             </ul>
-		                        [#else]
-		                          <ul>
-						             [#assign origDeep=channelList[0].deep+1/]
-						             [#list channelList as c]
-						             <li><a href="${base}/blog/contribute_list_friend.jspx?channelId=${c.id}&user_ids=${userIds}" ><em></em>[#if c.deep gte origDeep][#list origDeep..c.deep as i]&nbsp;&nbsp;&nbsp;[/#list][/#if]${c.name}</a></li> 
-						             [/#list]
-						              <li><a href="${base}/blog/friend_collection_list.jspx?userIds=${usert.id}">转载</a></li>
-		                             </ul>
-		                        [/#if]
-		                    </li>
+						    	<ul>
+                            [#if channelList??]
+				             [#assign origDeep=channelList[0].deep+1/]
+				             [#list channelList as c]
+				             <li><a href="${base}/blog/contribute_list_friend.jspx?channelId=${c.id}&user_ids=${userIds}" ><em></em>[#if c.deep gte origDeep][#list origDeep..c.deep as i]&nbsp;&nbsp;&nbsp;[/#list][/#if]${c.name}</a></li> 
+				             [/#list]
+				             [/#if]
+				             <li><a href="${base}/blog/friend_collection_list.jspx?userIds=${usert.id}"><em></em>转载</a></li>
+				        	[#if columnsList??]
+                            [#list columnsList as c]
+                            [#if c.uniqueCode??]
+                            [#else]
+		                    <li><a href="${base}/blog/contribute_list_friend.jspx?columnId=${c.columnId}&user_ids=${userIds}" ><em></em>${c.columnName}</a></li>
+		                    [/#if]
+		                    [/#list]
+		                    [/#if]
+                           </ul>
+		                </li>
 						    [#if submitOn1??] 
 						    <li class="on"><a style="cursor: pointer;"><em></em>群组</a>
 						    [#else] 
