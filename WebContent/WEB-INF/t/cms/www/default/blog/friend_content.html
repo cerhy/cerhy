@@ -1,0 +1,61 @@
+<script type="text/javascript">
+$(function(){
+	$.ajax({
+		type:"post",
+		url:"${base}/blog/focuscheck.jspx",
+		dateType:'json',
+		data:{
+			"focusUserId":${usert.id},
+		},
+		success:function(data){
+		if(1 == data){
+			$('#focus').hide();
+			$('#cancelfocus').show();
+		}else{
+			$('#focus').show();
+			$('#cancelfocus').hide();
+		}
+		}
+		
+	});	
+});	
+	$('#focus').click(function(){
+		$.ajax({
+			type:"post",
+			url:"${base}/blog/focus.jspx",
+			dateType:'json',
+			data:{
+				"focusUserId":${usert.id},
+				"focusUserName":'${usert.username}',
+			},
+			success:function(data){
+			if(1 == data){
+				$('#focus').hide();
+				$('#cancelfocus').show();
+			}
+			}
+			
+		});	
+	});
+	
+	$('#cancelfocus').click(function(){
+		$.ajax({
+			type:"post",
+			url:"${base}/blog/cancelfocus.jspx",
+			dateType:'json',
+			data:{
+				"focusUserId":${usert.id},
+			},
+			success:function(data){
+			if(1 == data){
+				$('#focus').show();
+				$('#cancelfocus').hide();
+			}
+			}
+			
+		});	
+	});
+	
+
+
+</script>
