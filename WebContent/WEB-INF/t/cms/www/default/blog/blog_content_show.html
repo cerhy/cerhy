@@ -8,11 +8,14 @@
 <link type="text/css" rel="stylesheet" href="/${res}/css/main.css" />
 <link type="text/css" rel="stylesheet" href="/${res}/css/custom.css" />
 <link href="${resSys}/jqueryUI/jquery.ui.css" rel="stylesheet" type="text/css" />
-<script src="/${res}/js/main.js"></script>
+
 <script src="/${res}/js/SimpleTree.js"></script>
 <script type="text/javascript">
 
 $(function() {
+	$('.user-menu-links li').click(function(){
+	    $(this).toggleClass('on');
+	});
 	$(".st_tree").SimpleTree({
 		click:function(a){
 			if(!$(a).attr("hasChild"))
@@ -205,7 +208,7 @@ Cms.siteFlow("${base}", location.href, document.referrer,
   </div>
  </div>
 </div> 
-
+[#include "model.html"]
 [#include "../include/footer.html"/]
 </body>
 </html>

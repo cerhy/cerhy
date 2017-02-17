@@ -14,13 +14,6 @@ height: 30px;background: #00a8eb;color: #FFF;text-align: center;font-size: 14px;
     background: #14bdff;
 }
 </style>
-<script type="text/javascript">
-$(function(){
-$('.user-menu-links li').click(function(){
-    $(this).toggleClass('on');
-});
-});
-</script>
 <link  type="text/css" rel="stylesheet" href="/${res}/css/SimpleTree.css" />
 <script src="/${res}/js/SimpleTree.js"></script>
 <style>
@@ -32,6 +25,9 @@ $('.user-menu-links li').click(function(){
 </style>
 <script type="text/javascript">
 $(function(){
+	$('.user-menu-links li').click(function(){
+	    $(this).toggleClass('on');
+	});
 	$(".st_tree").SimpleTree({
 		click:function(a){
 			if(!$(a).attr("hasChild"))
