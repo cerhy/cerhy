@@ -170,7 +170,8 @@ Cms.siteFlow("${base}", location.href, document.referrer,
 				    </div>
 				       
                     <div class="prev-next-wz clearfix">
-                    [@cms_content id=content.id next='1' channelId=channel.id]
+                 
+				   [@cms_content id=content.id next='1' channelId=channel.id userId=GroupStataShow]
                     	[#if tag_bean??]
                     		<a href="${tag_bean.url}?d=1" class="prev-pian">
                             <span>&lt;上一篇</span>
@@ -178,12 +179,11 @@ Cms.siteFlow("${base}", location.href, document.referrer,
                         	</a>
                     	[#else]
                     		<a href="" class="prev-pian">
-                            <span>&lt;上一篇</span>
                             <em>没有了</em>
                         	</a>
                     	[/#if]
-                    [/@cms_content]
-                    [@cms_content id=content.id next='0' channelId=channel.id]
+                    	  [/@cms_content]
+				   [@cms_content id=content.id next='0' channelId=channel.id userId=GroupStataShow]
 	                    [#if tag_bean??]
 	                     <a href="${tag_bean.url}?d=1" class="next-pian">
                             <em>[@text_cut s=tag_bean.title len=20 append='...'/]</em>
@@ -192,7 +192,6 @@ Cms.siteFlow("${base}", location.href, document.referrer,
 	                    [#else]
 		                     <a href="" class="next-pian">
 	                            <em>没有了</em>
-	                            <span>下一篇&gt;</span>
 	                        </a>
 	                    [/#if]
                     [/@cms_content]

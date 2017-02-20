@@ -27,6 +27,10 @@ import freemarker.template.TemplateModel;
  */
 public class ContentDirective implements TemplateDirectiveModel {
 	/**
+	 * 输入参数，用户ID
+	 */
+	public static final String PARAM_USER_ID = "userId";
+	/**
 	 * 输入参数，栏目ID。
 	 */
 	public static final String PARAM_ID = "id";
@@ -44,13 +48,14 @@ public class ContentDirective implements TemplateDirectiveModel {
 			TemplateDirectiveBody body) throws TemplateException, IOException {
 		Integer id = getId(params);
 		Boolean next = DirectiveUtils.getBool(PRAMA_NEXT, params);
+		Integer userId = getUserId(params);
 		Content content;
 		if (next == null) {
 			content = contentMng.findById(id);
 		} else {
 			CmsSite site = FrontUtils.getSite(env);
 			Integer channelId = DirectiveUtils.getInt(PARAM_CHANNEL_ID, params);
-			content = contentMng.getSide(id, site.getId(), channelId, next);
+			content = contentMng.getSide(id, site.getId(), channelId, next,userId);
 		}
 
 		Map<String, TemplateModel> paramWrap = new HashMap<String, TemplateModel>(
@@ -69,9 +74,18 @@ public class ContentDirective implements TemplateDirectiveModel {
 			return id;
 		} else {
 			throw new ParamsRequiredException(PARAM_ID);
+			
 		}
 	}
 
+	private Integer getUserId(Map<String, TemplateModel> params)throws TemplateException{
+		Integer userId = DirectiveUtils.getInt(PARAM_USER_ID, params);
+		if (userId != null) {
+			return userId;
+		} else {
+			return null;
+		}
+	}
 	@Autowired
 	private ContentMng contentMng;
 }

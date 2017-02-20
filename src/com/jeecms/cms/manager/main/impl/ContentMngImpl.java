@@ -137,8 +137,8 @@ public class ContentMngImpl implements ContentMng, ChannelDeleteChecker {
 	
 	@Transactional(readOnly = true)
 	public Content getSide(Integer id, Integer siteId, Integer channelId,
-			boolean next) {
-		return dao.getSide(id, siteId, channelId, next, true);
+			boolean next,Integer userId) {
+		return dao.getSide(id, siteId, channelId, next, true,userId);
 	}
 
 	@Transactional(readOnly = true)
@@ -1359,6 +1359,6 @@ public class ContentMngImpl implements ContentMng, ChannelDeleteChecker {
 	public List<CmsJoinGroup> getAlreadyJoinGroup(CmsUser user) {
 		return dao.getAlreadyJoinGroup(user);
 	}
-	
+
 
 }

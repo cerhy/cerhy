@@ -133,6 +133,7 @@ public class BlogAct {
 		Integer columnId = null;
 		Integer channelId = null;
 		if(joinGroupStata!=null&&joinGroupStata.equals("0")){
+			model.addAttribute("GroupStata", 1);
 			userId=0;
 			if(null != request.getParameter("columnId")){
 				model.addAttribute("columnId", request.getParameter("columnId"));
@@ -140,6 +141,7 @@ public class BlogAct {
 				columnId = Integer.parseInt(request.getParameter("columnId"));
 			}
 		}else{
+			model.addAttribute("GroupStata", 0);
 			//为了删除文章后能跳转回本栏目下
 			if(null != request.getParameter("columnId")){
 				model.addAttribute("columnId", request.getParameter("columnId"));
@@ -539,6 +541,7 @@ public class BlogAct {
 			if (modelId != null) {
 				model.addAttribute("modelId", modelId);
 			}
+			model.addAttribute("GroupStata", 0);
 			return FrontUtils.getTplPath(request, site.getSolutionPath(), TPLDIR_BLOG, nextUrl);
 		}else{
 			return FrontUtils.showLogin(request, model, site);
@@ -555,12 +558,14 @@ public class BlogAct {
 		Integer channelId = null;
 		if(joinGroupStata!=null&&joinGroupStata.equals("0")){
 			userId=0;
+			model.addAttribute("GroupStata", 1);
 			if(null != request.getParameter("columnId")){
 				model.addAttribute("columnId", request.getParameter("columnId"));
 				model.addAttribute("submitOn1", 1);
 				columnId = Integer.parseInt(request.getParameter("columnId"));
 			}
 		}else{
+			model.addAttribute("GroupStata", 0);
 			//为了删除文章后能跳转回本栏目下
 			if(null != request.getParameter("columnId")){
 				model.addAttribute("columnId", request.getParameter("columnId"));
@@ -736,8 +741,6 @@ public class BlogAct {
 			model.addAttribute("pagination", pagination);
 			FrontUtils.frontPageData(request, model);
 			model.addAttribute("content", content);
-//			System.out.println(content.getMediaPath());
-//			System.out.println(content.getMediaType());
 			model.addAttribute("channel", content.getChannel());
 			model.addAttribute("title", content.getTitleByNo(pageNo));
 			model.addAttribute("txt", txt);
@@ -749,6 +752,12 @@ public class BlogAct {
 				model.addAttribute("usert", user);
 			}else{
 				model.addAttribute("who",1);
+			}
+			String GroupStata = request.getParameter("GroupStata");
+			if("1".equals(GroupStata)){
+				model.addAttribute("GroupStataShow", -1);
+			}else{
+				model.addAttribute("GroupStataShow", content.getUser().getId());
 			}
 			model = blogCommon.getAlreadyJoinGroup(request, model,u);
 			model = blogCommon.getChannel(request,model,u,site);
