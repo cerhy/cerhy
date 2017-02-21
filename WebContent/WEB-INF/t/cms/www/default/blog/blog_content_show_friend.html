@@ -281,6 +281,12 @@ $(function () {
                 if(inputInfo==''){
                 	alert("批注内容不能为空...")
                 	return;
+                }else{
+                	if(inputInfo.length>30){
+                		$("#posInfo").val($("#posInfo").val().substring(0,30));
+                		$("#words").text("可写字数:"+0);
+	                	return;
+                	}
                 }
                 $.kw.del();
                 smallIcons(X,Y,inputInfo);	

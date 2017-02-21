@@ -281,8 +281,11 @@ $(function () {
                 	alert("批注内容不能为空...")
                 	return;
                 }else{
-                	alert("字数:"+inputInfo.length);
-                	return;
+                	if(inputInfo.length>30){
+                		$("#posInfo").val($("#posInfo").val().substring(0,30));
+                		$("#words").text("可写字数:"+0);
+	                	return;
+                	}
                 }
 	            smallIcons(X,Y,inputInfo);	
                 $.kw.del();
