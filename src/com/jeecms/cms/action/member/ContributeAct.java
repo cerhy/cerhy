@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang.StringUtils;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.slf4j.Logger;
@@ -34,7 +35,9 @@ import com.jeecms.cms.action.blog.CreateSerialNo;
 import com.jeecms.cms.dao.main.impl.BlogDao;
 import com.jeecms.cms.entity.assist.CmsComment;
 import com.jeecms.cms.entity.assist.CmsJoinGroup;
+import com.jeecms.cms.entity.assist.CmsPostilInfo;
 import com.jeecms.cms.entity.main.Channel;
+import com.jeecms.cms.entity.main.CmsTopic;
 import com.jeecms.cms.entity.main.Columns;
 import com.jeecms.cms.entity.main.Focus;
 import com.jeecms.cms.manager.assist.CmsFileMng;
@@ -980,6 +983,89 @@ public class ContributeAct extends AbstractContentMemberAct {
 		json.put("status",joinStatus);
 		ResponseUtils.renderJson(response, json.toString());
 	}
+	/**
+	 * 保存批注
+	 */
+	@RequestMapping(value = "/blog/addTpHtml.jspx")
+	public void saveAddTpHtml(String X,String Y,String contentId,String userId,String inputInfo,String idss,HttpServletRequest request,HttpServletResponse response, ModelMap model)throws UnsupportedEncodingException, JSONException {
+		CmsSite site = CmsUtils.getSite(request);
+		CmsUser user = CmsUtils.getUser(request);
+		if(user==null){
+			FrontUtils.showLogin(request, model, site);
+		}
+		String tbHtml= "<div class='"+idss+"' id='"+idss+"'"
+				     + " style='display: block; top: "+Y+"px; left: "+X+"px; position: absolute; margin: 0px;"
+				     + "border: 0px solid rgb(255, 102, 0); width: 25px; height: 25px;'>"
+				     + "<h2 class='t"+idss+"' style='cursor: move; width: 25px; height: 25px; padding-left: 25px;'>"
+				     + "</h2></div>";
+		CmsPostilInfo cpi=new CmsPostilInfo();
+		cpi.setAddHtml(tbHtml);
+		cpi.setContentId(Integer.valueOf(contentId));
+		cpi.setInputContent(inputInfo);
+		cpi.setPostilUserId(user);
+		cpi.setCreateTime(new Date());
+		cpi.setDivId(idss);
+		int joinStatus=columnsMng.saveAddTpHtml(cpi);
+		JSONObject json = new JSONObject();
+		json.put("status",joinStatus);
+		ResponseUtils.renderJson(response, json.toString());
+	}
 	
+	/**
+	 * 读取批注
+	 * @throws JSONException 
+	 */
+	@RequestMapping(value = "/blog/searchPostil.jspx")
+	public void searchPostil(String contentId,HttpServletRequest request, String reportType,HttpServletResponse response) throws JSONException {
+		JSONObject o;
+		JSONArray arr = new JSONArray();
+		List<CmsPostilInfo> postilList = columnsMng.findList(Integer.valueOf(contentId));
+		for (CmsPostilInfo t : postilList) {
+			o = new JSONObject();
+			o.put("postilDiv", t.getAddHtml());
+			o.put("postilInput", t.getInputContent());
+			o.put("postilDivId", t.getDivId());
+			o.put("postilName", t.getPostilUserId().getUsername());
+			arr.put(o);
+		}
+		ResponseUtils.renderJson(response, arr.toString());
+
+	}
 	
+	/**
+	 * 更新批注坐标
+	 */
+	@RequestMapping(value = "/blog/updateDragCoordinate.jspx")
+	public void updateDragCoordinate(String leftX,String topY,String postilId,HttpServletRequest request,HttpServletResponse response, ModelMap model)throws UnsupportedEncodingException, JSONException {
+		CmsSite site = CmsUtils.getSite(request);
+		CmsUser user = CmsUtils.getUser(request);
+		if(user==null){
+			FrontUtils.showLogin(request, model, site);
+		}
+		String tbHtml= "<div class='"+postilId+"' id='"+postilId+"'"
+			         + " style='display: block; top: "+topY+"px; left: "+leftX+"px; position: absolute; margin: 0px;"
+			         + "border: 0px solid rgb(255, 102, 0); width: 25px; height: 25px;'>"
+			         + "<h2 class='t"+postilId+"' style='cursor: move; width: 25px; height: 25px; padding-left: 25px;'>"
+			         + "</h2></div>";
+		int joinStatus=columnsMng.updateDragCoordinate(leftX,topY,postilId,tbHtml);
+		JSONObject json = new JSONObject();
+		json.put("status",joinStatus);
+		ResponseUtils.renderJson(response, json.toString());
+	}
+	/**
+	 * 删除批注
+	 */
+	@RequestMapping(value = "/blog/delAddHtml.jspx")
+	public void delAddHtml(String postilId,HttpServletRequest request,HttpServletResponse response, ModelMap model)throws UnsupportedEncodingException, JSONException {
+		CmsSite site = CmsUtils.getSite(request);
+		CmsUser user = CmsUtils.getUser(request);
+		if(user==null){
+			FrontUtils.showLogin(request, model, site);
+		}
+		int joinStatus=columnsMng.delAddHtml(postilId);
+		JSONObject json = new JSONObject();
+		json.put("status",joinStatus);
+		ResponseUtils.renderJson(response, json.toString());
+	}
+
 }

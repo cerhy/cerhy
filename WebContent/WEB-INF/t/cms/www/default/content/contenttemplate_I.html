@@ -17,53 +17,6 @@
 <link id="artDialogSkin" href="/${res}/css/skin/facebook/facebook.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="${resSys}/postil.js"></script>
 <script type="text/javascript" src="${resSys}/artDialog.min.js"></script>
-
-<style type="text/css">
-	.list {
-		border: 1px solid #ddd;
-		height: 350px;
-		width: 250px;
-	}
-	.list div {
-		border: 1px solid #ddd;
-		margin-bottom: 5px;
-		padding: 10px;
-		cursor: pointer;
-	}
-	/*css批注样式*/
-	.postil, .postilFocus {
-		border-left: 1px solid red;
-		border-right: 1px solid red;
-		text-decoration: none;
-		cursor: default;
-	}
-	.postil {
-		background: yellow;
-	}
-	.postilFocus {
-		background: Tomato;
-	}
-	/*批注提示图标样式*/
-	.tipsIcon {
-		opacity: 0.80;
-		z-index: 1;
-		filter:alpha(opacity=80);
-	}
-	
-	.xueke-content-detail em {  
-    background: url('http://www.webdesignerwall.com/demo/jquery/images/hover.png') no-repeat;  
-    width: 180px;  
-    height: 45px;  
-    position: absolute;  
-    top: -85px;  
-    left: -15px;  
-    text-align: center;  
-    padding: 20px 12px 10px;  
-    font-style: normal;  
-    z-index: 2;  
-    display: none;  
-} 
-  </style>
 <style>
  .bz a:hover{color: #DEB887;}
  .bz{color: #999;}
@@ -130,7 +83,7 @@ $(function() {
        });
 });
 </script>
-<body class="bodybg">
+<body class="bodybg" id="bodybg">
 [#include "../hyinclude/header.html"/]
 <div class="local">
     <div class="wrap">
@@ -145,9 +98,23 @@ $(function() {
     </div>
 </div>
 	<div class="container_article">
+		<input style="display: none;" id="no3" value="${content.id}">
+		[#if channel.parent.parent.id=98||channel.parent.parent.id=168]
+		[#if user??]
+		<div align="center" id="fudong" class="fudong" style="border: 0;">
+			<h2 class="title">
+			<button id="pos" name="pos" class="pos" style="width: 50px;height: 30px;" onclick="down(0)">批注</button>
+			<input style="display: none;" id="no" value="">
+			<input style="display: none;" id="no1" value="">
+			<input style="display: none;" id="no2" value="${user.username}">
+			<input style="display: none;" id="no4" value="${user.id}">
+			</h2>
+		</div>
+		[/#if]
+		[/#if]
 		<div class="wrap" style="width: 865px;">
 			<div class="bd-padding">
-				<div class="xueke-acticle">
+				<div class="xueke-acticle" id="addAttr">
 					<h2>${content.title}</h2>
 					<div class="gray9 h2dt pt5">
 						
@@ -266,3 +233,460 @@ $(function() {
 	<script src="/${res}/js/main.js"></script>
 </body>
 </html>
+<script type="text/javascript">
+     function down(obj){  
+    	 if(obj==0){
+	    	 $("#pos").html("退出");
+	    	 $("#addAttr").attr("onclick","divPos(this)");
+	    	 $("#addAttr").attr("id","addAttrs");
+	    	 $("#pos").attr("onclick","down(1)");
+	    	 divPos(obj);
+    	 }else{
+	    	 $("#addAttrs").unbind("mousedown");
+	    	 $("#pos").html("批注");
+	    	 $("#addAttrs").removeAttr("onclick");
+	    	 $("#addAttrs").attr("id","addAttr");
+	    	 $("#pos").attr("onclick","down(0)"); 
+    	 }
+     }
+     function divPos(event){
+    	 $("#addAttrs").mousedown(function(e){
+    		$.kw.confirm("提示内容",e.pageX,e.pageY);
+	    	$("#no").val(e.pageX);
+	    	$("#no1").val(e.pageY);
+    	});
+     }
+     
+</script>
+<script type="text/javascript">
+//提示框
+$(function () {    
+    $.kw = {  
+        title      : "发表您的看法", //默认标题 可修改  
+        speed      : 400, //默认速度 可修改  
+        buttonName : "确认", //确定按钮默认名称 可修改  
+        cancel     : "取消", //取消按钮默认名称 可修改  
+        content    : "Content",  
+         //移除遮盖层  
+        del : function () {
+            $("#alert-layer").remove();
+        },  
+        //响应ESC键盘退出  
+        esc : function () {   
+            $(document).keyup(function (event) {  
+                if (event.which == 27) {  
+                    $.kw.del();  
+                }  
+            });  
+        },  
+        //提示  
+        confirm : function (sContent,X,Y,callBack, sTitle) {
+        	$.kw.del();   
+            var title = sTitle || this.title;  
+            var content = sContent || this.content;  
+            var layer = "<div id='alert-layer' name='alert-layer'><div id='alert-container'><div class='alert-top'></div><div class='alert-box'><div id='alert-title'>" + title + "<div id='alert-close' title='关闭'></div></div><textarea id='posInfo' rows='5' cols='39'></textarea><div class='alert-button'><button id='alert-button'>" + this.buttonName + "</button><button id='alert-cancel'>" + this.cancel + "</button></div></div><div class='alert-bottom'></div></div></div>";  
+            $(layer).fadeIn(this.speed).appendTo("body");  
+            this.setting(X,Y); 
+            $("#alert-button").focus(); //获得焦点  
+            this.move();//拖动  
+            $("#alert-close").bind("click", this.del); //移除层  
+            $("#alert-cancel").bind("click", this.del); //移除层  
+            $("#alert-button").bind("click", function () {
+                var inputInfo=$("#posInfo").val();
+                if(inputInfo==''){
+                	alert("批注内容不能为空...")
+                	return;
+                }
+                $.kw.del();
+                smallIcons(X,Y,inputInfo);	
+            });
+            this.esc();  
+        },              
+        //框拖动功能  
+        move : function () {  
+            $("#alert-title").mousedown(function (event) {  
+                var l = parseInt($("#alert-container").css("left"));  
+                t = parseInt($("#alert-container").css("top"));  
+                x = event.pageX - l;  
+                y = event.pageY - t;  
+                $("body").bind("mousemove", function (event) {  
+                    $("#alert-container").css({  
+                        "left" : (event.pageX - x)  
+                    });  
+                    $("#alert-container").css({  
+                        "top" : (event.pageY - y)  
+                    });   
+                });  
+            });  
+            $("body").mouseup(function () {  
+                $("body").unbind("mousemove");    
+            });     
+        },  
+        //设置背景层与内位置  
+        setting : function (X,Y) {
+            bsh = document.documentElement.scrollHeight;  
+            aw  = $("#alert-container").width() / 2;  
+            ah  = $("#alert-container").height() / 2;  
+        	$("#alert-layer").css("height", bsh); 
+            $("#alert-layer").css("background-color", "transparent");  
+        	$("#alert-container").css("position","relative");
+            $("#alert-container").css("background-color", "rgb(248, 153, 30)");
+            $("#alert-container").css({  
+                "top"  : Y,  
+                "left" : X 
+            });  
+        }     
+    };  
+});  
+
+//事件框随滚动条滚动
+window.onscroll=scro;
+function scro(){
+	if(document.getElementById('alert-layer')!=null){
+	 var x=$("#no").val();
+	 var y=$("#no1").val();
+     bsh = document.documentElement.scrollHeight;  
+     aw  = $("#alert-container").width() / 2;  
+     ah  = $("#alert-container").height() / 2;  
+ 	 $("#alert-layer").css("height", bsh); 
+	 $("#alert-container").css("position","relative"); 
+	 $("#alert-layer").css("background-color", "transparent");  
+     $("#alert-container").css("background-color", "rgb(248, 153, 30)"); 
+     document.getElementById('alert-container').style.top = y
+	}
+}
+
+
+function sleep(numberMillis) {    
+	var now = new Date();    
+	var exitTime = now.getTime() + numberMillis;   
+	while (true) { 
+	now = new Date();       
+	if (now.getTime() > exitTime) 
+	return;    
+	} 
+}
+
+
+function smallIcons(X,Y,inputInfo){
+	 var now = new Date();    
+	 var exitTime = now.getTime();
+	 var idss=exitTime
+	 var layer = "<div class='"+idss+"' id='"+idss+"'><h2 class='t"+idss+"'></h2></div>";  
+     $(layer).fadeIn(400).appendTo("body");
+     var oBox = document.getElementById(idss);
+     var oTitle = oBox.getElementsByTagName("h2")[0];
+     var oDrag = new Drag(oBox, {handle:oTitle, limit:false});
+     oDrag.onStop = function ()
+ 	{
+ 		//alert("left:" + this.drag.offsetLeft + ", top:" + this.drag.offsetTop);
+ 		updateDragCoordinate(this.drag.offsetLeft,this.drag.offsetTop,idss);
+ 	};
+     $("#"+idss).css("background","url(/${res}/images/post.png) no-repeat");
+     $("#"+idss).css("border","0px solid #f60");
+     $("#"+idss).css({  
+         "top"  : Y,  
+         "left" : X,
+         "width":25,
+         "height":25
+     });
+     $(".t"+idss).css({  
+         "width":25,
+         "height":25,
+         "padding-left":25
+     }); 
+     $("#"+idss).bind("click", function () {
+	     $("#"+idss).css("background","url(/${res}/images/post.png) no-repeat rgb(62, 142, 7)");
+	     $("#"+idss).css({  
+	         "width":150,
+	         "height":25
+	     });
+	     $(".t"+idss).css({  
+	         "width":150
+	     });
+	     $(".t"+idss).text("["+$("#no2").val()+"]"+inputInfo);
+	     
+     });    
+    $("#"+idss).bind("mouseout", function () {
+	     $(".t"+idss).text("");
+	     $("#"+idss).css("background","url(/${res}/images/post.png) no-repeat");
+	     $("#"+idss).css({  
+	         "width":25,
+	         "height":25
+	     });
+	     $(".t"+idss).css({  
+	         "width":25
+	     });
+     });
+    $("#"+idss).bind("mouseup", function (oEvent) {
+    	document.oncontextmenu = function () {
+			window.event.returnValue = false; 
+		}    
+		document.oncontextmenu=function(e){ 
+			return false;       
+		} 
+    	if (!oEvent) oEvent=window.event;
+        if (oEvent.button==2) {
+        	delAddHtml(idss);
+        	$("#"+idss).remove();
+        }
+     });
+     var tpHtml=document.getElementById(idss).outerHTML;//获取整个批注的HTML代码
+     var contentId=$("#no3").val();//文章ID
+     var userId=$("#no4").val();//添加批注的用户; 
+     $.ajax({
+         url: "${base}/blog/addTpHtml.jspx?X="+X+"&Y="+Y+"&contentId="+contentId+"&userId="+userId+"&inputInfo="+inputInfo+"&idss="+idss,
+         type: "POST",
+         dataType:"json",
+         data: "",
+         success: function (data) {
+         }
+     }); 
+} 
+
+</script>
+<script type="text/javascript">
+function Drag()
+{
+	//初始化
+	this.initialize.apply(this, arguments)
+}
+Drag.prototype = {
+	//初始化
+	initialize : function (drag, options)
+	{
+		this.drag = this.$(drag);
+		this._x = this._y = 0;
+		this._moveDrag = this.bind(this, this.moveDrag);
+		this._stopDrag = this.bind(this, this.stopDrag);
+		
+		this.setOptions(options);
+		
+		this.handle = this.$(this.options.handle);
+		this.maxContainer = this.$(this.options.maxContainer);
+		
+		this.maxTop = Math.max(this.maxContainer.clientHeight, this.maxContainer.scrollHeight) - this.drag.offsetHeight;
+		this.maxLeft = Math.max(this.maxContainer.clientWidth, this.maxContainer.scrollWidth) - this.drag.offsetWidth;
+		
+		this.limit = this.options.limit;
+		this.lockX = this.options.lockX;
+		this.lockY = this.options.lockY;
+		this.lock = this.options.lock;
+		
+		this.onStart = this.options.onStart;
+		this.onMove = this.options.onMove;
+		this.onStop = this.options.onStop;
+		
+		this.handle.style.cursor = "move";
+		
+		this.changeLayout();
+		
+		this.addHandler(this.handle, "mousedown", this.bind(this, this.startDrag))
+	},
+	changeLayout : function ()
+	{
+		this.drag.style.top = this.drag.offsetTop + "px";
+		this.drag.style.left = this.drag.offsetLeft + "px";
+		this.drag.style.position = "absolute";
+		this.drag.style.margin = "0"
+	},
+	startDrag : function (event)
+	{		
+		var event = event || window.event;
+		
+		this._x = event.clientX - this.drag.offsetLeft;
+		this._y = event.clientY - this.drag.offsetTop;
+		
+		this.addHandler(document, "mousemove", this._moveDrag);
+		this.addHandler(document, "mouseup", this._stopDrag);
+		
+		event.preventDefault && event.preventDefault();
+		this.handle.setCapture && this.handle.setCapture();
+		
+		this.onStart()
+	},
+	moveDrag : function (event)
+	{
+		var event = event || window.event;
+		
+		var iTop = event.clientY - this._y;
+		var iLeft = event.clientX - this._x;
+		
+		if (this.lock) return;
+		
+		this.limit && (iTop < 0 && (iTop = 0), iLeft < 0 && (iLeft = 0), iTop > this.maxTop && (iTop = this.maxTop), iLeft > this.maxLeft && (iLeft = this.maxLeft));
+		
+		this.lockY || (this.drag.style.top = iTop + "px");
+		this.lockX || (this.drag.style.left = iLeft + "px");
+		
+		event.preventDefault && event.preventDefault();
+		
+		this.onMove()
+	},
+	stopDrag : function ()
+	{
+		this.removeHandler(document, "mousemove", this._moveDrag);
+		this.removeHandler(document, "mouseup", this._stopDrag);
+		
+		this.handle.releaseCapture && this.handle.releaseCapture();
+		
+		this.onStop()
+	},
+	//参数设置
+	setOptions : function (options)
+	{
+		this.options =
+		{
+			handle:			this.drag, //事件对象
+			limit:			true, //锁定范围
+			lock:			false, //锁定位置
+			lockX:			false, //锁定水平位置
+			lockY:			false, //锁定垂直位置
+			maxContainer:	document.documentElement || document.body, //指定限制容器
+			onStart:		function () {}, //开始时回调函数
+			onMove:			function () {}, //拖拽时回调函数
+			onStop:			function () {
+				
+			}  //停止时回调函数
+		};
+		for (var p in options) this.options[p] = options[p]
+	},
+	//获取id
+	$ : function (id)
+	{
+		return typeof id === "string" ? document.getElementById(id) : id
+	},
+	//添加绑定事件
+	addHandler : function (oElement, sEventType, fnHandler)
+	{
+		return oElement.addEventListener ? oElement.addEventListener(sEventType, fnHandler, false) : oElement.attachEvent("on" + sEventType, fnHandler)
+	},
+	//删除绑定事件
+	removeHandler : function (oElement, sEventType, fnHandler)
+	{
+		return oElement.removeEventListener ? oElement.removeEventListener(sEventType, fnHandler, false) : oElement.detachEvent("on" + sEventType, fnHandler)
+	},
+	//绑定事件到对象
+	bind : function (object, fnHandler)
+	{
+		return function ()
+		{
+			return fnHandler.apply(object, arguments)	
+		}
+	}
+};
+//应用
+window.onload = function ()
+{
+	var oBox = document.getElementById("fudong");
+	var padLe=$(".bd-padding").offset().left+865;
+	$(oBox).css({
+		
+	});
+	var oTitle = oBox.getElementsByTagName("h2")[0];
+	var oDrag = new Drag(oBox, {handle:oTitle, limit:false});
+	oDrag.lock = !oDrag.lock;
+};
+
+
+window.onresize=function(){  
+	var padLe=$(".bd-padding").offset().left+865;
+	$("#fudong").css({
+		"left":padLe
+	});  
+}
+</script>
+<script type="text/javascript">
+	$(function() {
+		$.ajax({
+	         url: "${base}/blog/searchPostil.jspx?contentId="+$("#no3").val(),
+	         type: "POST",
+	         dataType:"json",
+	         data: "",
+	         async: false,
+	         success: function (data) {
+	 				for(var i=0;i<data.length;i++){
+						var layer = data[i].postilDiv;
+					    $(layer).fadeIn(400).appendTo("body");
+						$("#"+data[i].postilDivId).css("background","url(/${res}/images/post.png) no-repeat");
+					    var oBox = document.getElementById(data[i].postilDivId);
+					    var oTitle = oBox.getElementsByTagName("h2")[0];
+					    var oDrag = new Drag(oBox, {handle:oTitle, limit:false});
+					    (function(){
+					    var ids=data[i].postilDivId;
+					    var nam=data[i].postilName;
+					    var inp=data[i].postilInput;
+					    oDrag.onStop = function ()
+						{
+							 updateDragCoordinate(this.drag.offsetLeft,this.drag.offsetTop,ids);
+						};
+						    $("#"+data[i].postilDivId).bind("click", function () {
+							      $("#"+ids).css("background","url(/${res}/images/post.png) no-repeat rgb(62, 142, 7)");
+							      $("#"+ids).css({  
+							         "width":150,
+							         "height":25
+							     });
+							      $(".t"+ids).css({  
+								         "width":150
+								     });
+							     $(".t"+ids).text("["+nam+"]"+inp);
+						     });    
+						    $("#"+data[i].postilDivId).bind("mouseout", function () {
+							     $("#"+ids).css("background","url(/${res}/images/post.png) no-repeat");
+							     $(".t"+ids).text("");
+							      $("#"+ids).css({  
+							         "width":25,
+							         "height":25
+							     });
+							     $(".t"+ids).css({  
+							         "width":25
+							     });
+						     }); 
+						    
+						    $("#"+ids).bind("mouseup", function (oEvent) {
+						    	document.oncontextmenu = function () {
+									window.event.returnValue = false; 
+								}    
+								document.oncontextmenu=function(e){ 
+									return false;       
+								} 
+						    	if (!oEvent) oEvent=window.event;
+						        if (oEvent.button==2) {
+						            delAddHtml(ids);
+						        	$("#"+ids).unbind("mouseup");
+						        	$("#"+ids).remove();
+						        }
+						     });
+							
+					    })();    
+	 				}
+	         }
+	     }); 
+	});
+</script>
+<script type="text/javascript">
+
+function updateDragCoordinate(leftX,topY,postilId){
+	 $.ajax({
+         url: "${base}/blog/updateDragCoordinate.jspx?leftX="+leftX+"&topY="+topY+"&postilId="+postilId,
+         type: "POST",
+         dataType:"json",
+         data: "",
+         success: function (data) {
+         }
+     }); 
+}
+
+function delAddHtml(obj){
+	 $.ajax({
+         url: "${base}/blog/delAddHtml.jspx?postilId="+obj,
+         type: "POST",
+         dataType:"json",
+         data: "",
+         success: function (data) {
+         }
+     });
+}
+
+
+</script>

@@ -5,6 +5,7 @@ import java.util.List;
 import org.hibernate.Query;
 
 import com.jeecms.cms.entity.assist.CmsJoinGroup;
+import com.jeecms.cms.entity.assist.CmsPostilInfo;
 import com.jeecms.cms.entity.main.Columns;
 import com.jeecms.cms.entity.main.ContentCheck;
 import com.jeecms.common.hibernate4.Finder;
@@ -75,6 +76,54 @@ public class ColumnsDao extends HibernateBaseDao<Columns, Integer>{
 			return ((Columns) (query.iterate().next()));
 		}else{
 			return null ;
+		}
+	}
+
+	public int saveAddTpHtml(CmsPostilInfo cpi) {
+		try {
+			getSession().save(cpi);
+			return 1;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return 0;
+		}
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<CmsPostilInfo> findList(Integer contentId) {
+		Finder f = Finder.create("select bean from CmsPostilInfo bean");
+		f.append(" where bean.contentId=:contentId");
+		f.setParam("contentId", contentId);
+		return find(f);
+	}
+
+	public int updateDragCoordinate(String leftX, String topY, String postilId,String tbHtml) {
+		try {
+			StringBuilder hql = new StringBuilder("update CmsPostilInfo bean");
+			hql.append(" set bean.addHtml=:tbHtml");
+			hql.append(" where bean.divId=:divId ");
+			Query query = getSession().createQuery(hql.toString());
+			query.setParameter("divId", postilId);
+			query.setParameter("tbHtml", tbHtml);
+			query.executeUpdate();
+			return 1;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return 0;
+		}
+	}
+
+	public int delAddHtml(String postilId) {
+		try {
+			StringBuilder hql = new StringBuilder("delete CmsPostilInfo bean");
+			hql.append(" where bean.divId=:divId ");
+			Query query = getSession().createQuery(hql.toString());
+			query.setParameter("divId", postilId);
+			query.executeUpdate();
+			return 1;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return 0;
 		}
 	}
 

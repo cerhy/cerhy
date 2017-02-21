@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.jeecms.cms.entity.assist">
+	<class name="CmsPostilInfo" table="jc_postil_info">
+		<meta attribute="sync-DAO">false</meta>
+		<cache usage="read-write"/>
+		<id name="id" type="integer" column="postil_id"><generator class="identity"/></id>
+		<property name="addHtml" column="add_html" type="string" not-null="false" length="3000"/>
+		<property name="inputContent" column="input_content" type="string" not-null="false" length="255"/>
+		<property name="contentId" column="content_id" type="integer" not-null="false" length="10"/>
+		<property name="divId" column="div_id" type="string" not-null="false" length="255"/>
+		<property name="createTime" column="create_time" type="timestamp" not-null="false" length="19"/>
+		<many-to-one name="postilUserId" column="postil_user_id" class="com.jeecms.core.entity.CmsUser" not-null="false"></many-to-one>
+	</class>
+</hibernate-mapping>

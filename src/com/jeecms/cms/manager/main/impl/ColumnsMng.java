@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.jeecms.cms.dao.main.impl.ColumnsDao;
 import com.jeecms.cms.entity.assist.CmsJoinGroup;
+import com.jeecms.cms.entity.assist.CmsPostilInfo;
 import com.jeecms.cms.entity.main.Columns;
 import com.jeecms.core.entity.CmsUser;
 
@@ -35,6 +36,21 @@ public class ColumnsMng {
 	public Columns findInfoByCode(String code) {
 		return columnsDao.findInfoByCode(code);
 	}
+	public int saveAddTpHtml(CmsPostilInfo cpi) {
+		return columnsDao.saveAddTpHtml(cpi);
+	}
+	public List<CmsPostilInfo> findList(Integer contentId) {
+		return columnsDao.findList(contentId);
+	}
+	
+	public int updateDragCoordinate(String leftX, String topY, String postilId,String tbHtml) {
+		return columnsDao.updateDragCoordinate(leftX,topY,postilId,tbHtml);
+	}
+	public int delAddHtml(String postilId) {
+		return columnsDao.delAddHtml(postilId);
+	}
 	@Autowired
 	private ColumnsDao columnsDao;
+
+
 }
