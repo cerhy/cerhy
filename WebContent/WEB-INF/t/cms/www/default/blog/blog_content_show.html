@@ -92,18 +92,18 @@ Cms.siteFlow("${base}", location.href, document.referrer,
 	  最后登录:${user.lastLoginTime?string('yyyy-MM-dd HH:mm:ss')}&nbsp;&nbsp;
   </div>
    <div class="mb20 clearfix">
-	 <div id="fudong" class="fudong" style="border: 0;">
-			<h2 class="title">
-			<button id="pos" name="pos" class="pos" style="width: 50px;height: 30px;" onclick="down(0)">批注</button>
 			<input style="display: none;" id="no" value="">
 			<input style="display: none;" id="no1" value="">
 			<input style="display: none;" id="no2" value="${user.username}">
 		    <input style="display: none;" id="no3" value="${content.id}">
 			<input style="display: none;" id="no4" value="${user.id}">
+	<!--  <div id="fudong" class="fudong" style="border: 0;">
+			<h2 class="title">
+			<button id="pos" name="pos" class="pos" style="width: 50px;height: 30px;" onclick="down(0)">批注</button>
 			</h2>
-	</div>
+	</div> -->
      [#include "blog_left.html"/]
-       <div class="wrap-right" id="addAttr">
+       <div class="wrap-right">
            <div class="personCenter-userInfo blog_right xueke-acticle">
                 <div ><h2>${content.title}</h2></div>
                 <div class="gray9 h2dt pt5">
@@ -114,12 +114,14 @@ Cms.siteFlow("${base}", location.href, document.referrer,
 					 <span class="pr15 yuedu">浏览次数：<span id="views"></span></span> 
 					 <span class="pr15 pinglun">评论：${content.commentsCheckedNum!} </span>
 				     <span id="comfirmSpan" style="display:none;cursor: pointer;">转载</span>
-				     <span id="cancelSpan" style="display:none; cursor: pointer;">取消转载</span>&nbsp;&nbsp;
+				     <span id="cancelSpan" style="display:none; cursor: pointer;">取消转载</span>&nbsp;
 					 <span class="content-share">分享
 						 [#include "../content/inc_share.html"/]
+					 </span>&nbsp;
+					 <span id="pos" name="pos" class="pos" style="width: 40px;height: 20px;" onclick="down(0)">批注
 					 </span>
 				</div>
-				<div class="xueke-content-detail" style="margin-top:30px;min-height:170px;">
+				<div class="xueke-content-detail" style="margin-top:30px;min-height:170px;"  id="addAttr">
 					[#if preview??] [@text_cut s=txt! len=100 append="..."/]<br />
 					您需要更高的权限浏览全部内容!<br />以下会员组可浏览全部内容: [#list groups as g]
 					${g.name!}[#if g_has_next],[/#if] [/#list] [#else] ${txt!} [/#if]
@@ -566,25 +568,25 @@ Drag.prototype = {
 	}
 };
 //应用
-window.onload = function ()
+/* window.onload = function ()
 {
 	var oBox = document.getElementById("fudong");
-/* 	var padLe=$(".bd-padding").offset().left+865;
+	var padLe=$(".bd-padding").offset().left+865;
 	$(oBox).css({
 		
-	}); */
+	});
 	var oTitle = oBox.getElementsByTagName("h2")[0];
 	var oDrag = new Drag(oBox, {handle:oTitle, limit:false});
 	oDrag.lock = !oDrag.lock;
-};
+}; */
 
 
-window.onresize=function(){  
+/* window.onresize=function(){  
 	var padLe=$(".xueke-acticle").offset().left+735;
 	$("#fudong").css({
 		"left":padLe
 	});
-}
+} */
 </script>
 <script type="text/javascript">
 	$(function() {
