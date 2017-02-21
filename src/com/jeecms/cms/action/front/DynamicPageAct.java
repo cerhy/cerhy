@@ -114,10 +114,10 @@ public class DynamicPageAct {
 		String d = request.getParameter("d");//自己博客中心，博客内容跳转.  1
 		String f = request.getParameter("f");//好友  0
 		if(null != d){
-			return blogAct.blogContentShow(paths, params, info, pageNo,request, response, model,null);
+			return blogAct.blogContentShow(paths, params, info, pageNo,request, response, model);
 		}
 		if(null != f){
-			return blogAct.blogContentShow(paths, params, info, pageNo,request, response, model,f);
+			return blogAct.blogContentShowFriend(paths, params, info, pageNo,request, response, model,f);
 		}
 		if(config.getInsideSite()){
 			return network(paths, params, info, pageNo, request, response, model);

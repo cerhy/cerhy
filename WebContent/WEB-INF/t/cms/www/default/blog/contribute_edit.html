@@ -18,6 +18,11 @@
 <link rel="stylesheet" type="text/css" href="/${res}/css/hyindex.css" />
 <link rel="stylesheet" type="text/css" href="/${res}/css/custom.css" />
 <script type="text/javascript">
+$.validator.methods.leafChannel = function(value, element, param) {
+	var i = element.selectedIndex;
+	return $(element.options[i]).attr("class")!="sel-disabled";
+}
+
 $(function() {
 	$("#jvForm").validate({
 		rules: {
@@ -29,12 +34,7 @@ $(function() {
 			title: "请输入标题",
 		}
 	});
-	
-$.validator.methods.leafChannel = function(value, element, param) {
-	var i = element.selectedIndex;
-	return $(element.options[i]).attr("class")!="sel-disabled";
-}
-$(function() {
+
 	var uploadPicsUrl = "o_swfPicsUpload.jspx";
 	var uploadAttachsUrl = "o_swfAttachsUpload.jspx";
 	//在firefox、chrome下，上传不能保留登录信息，所以必须加上jsessionid。

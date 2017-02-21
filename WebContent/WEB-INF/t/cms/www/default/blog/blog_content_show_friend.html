@@ -82,7 +82,7 @@ Cms.siteFlow("${base}", location.href, document.referrer,
 <div class="blogBody">
 <div class="blog-con">
   <div class="blogHead">
-	  <div class="title1"><a href="${base}/blog/index.jspx"><span id="title1">[#if user.blogTitle??]${user.blogTitle}[#else]标题[/#if]</span></a></div>
+	  <div class="title1"><a href="${base}/blog/find_all_url_friend.jspx?userIds=${usert.id}"><span id="title1">[#if user.blogTitle??]${user.blogTitle}[#else]标题[/#if]</span></a></div>
 	  <div style="font-size:15px;margin:5px auto 15px;">[#if user.blogTitle2??]${user.blogTitle2}[#else]副标题[/#if]</div>
   </div>
   <div class="tj">
@@ -92,7 +92,8 @@ Cms.siteFlow("${base}", location.href, document.referrer,
 	  最后登录:${user.lastLoginTime?string('yyyy-MM-dd HH:mm:ss')}&nbsp;&nbsp;
   </div>
    <div class="mb20 clearfix">
-     [#include "blog_left.html"/]
+     [#include "friend_blog_left.html"/]
+     [#include "friend_content.html"/]
        <div class="wrap-right">
            <div class="personCenter-userInfo blog_right xueke-acticle">
                 <div ><h2>${content.title}</h2></div>
@@ -169,7 +170,7 @@ Cms.siteFlow("${base}", location.href, document.referrer,
                  
 				   [@cms_content id=content.id next='1' channelId=channel.id userId=GroupFlagData]
                     	[#if tag_bean??]
-                    		<a href="${tag_bean.url}?d=1&GroupFlag=${GroupFlagData}" class="prev-pian">
+                    		<a href="${tag_bean.url}?f=${usert.id}&GroupFlag=${GroupFlagData}" class="prev-pian">
                             <span>&lt;上一篇</span>
                             <em>[@text_cut s=tag_bean.title len=20 append='...'/]</em>
                         	</a>
@@ -181,7 +182,7 @@ Cms.siteFlow("${base}", location.href, document.referrer,
                     	  [/@cms_content]
 				   [@cms_content id=content.id next='0' channelId=channel.id userId=GroupFlagData]
 	                    [#if tag_bean??]
-	                     <a href="${tag_bean.url}?d=1&GroupFlag=${GroupFlagData}" class="next-pian">
+	                     <a href="${tag_bean.url}?f=${usert.id}&GroupFlag=${GroupFlagData}" class="next-pian">
                             <em>[@text_cut s=tag_bean.title len=20 append='...'/]</em>
                             <span>下一篇&gt;</span>
                         </a>

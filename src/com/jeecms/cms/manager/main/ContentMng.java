@@ -81,7 +81,7 @@ public interface ContentMng {
 	public  List<Content> getPigeonholeContents(Date pigeonholeDay);
 
 	public Content getSide(Integer id, Integer siteId, Integer channelId,
-			boolean next);
+			boolean next,Integer userId);
 
 	public Pagination getPageBySiteIdsForTag(Integer[] siteIds,
 			Integer[] typeIds, Boolean titleImg, Boolean recommend,
