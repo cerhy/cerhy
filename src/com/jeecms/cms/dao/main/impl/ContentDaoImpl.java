@@ -401,9 +401,11 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 	public Content getSide(Integer id, Integer siteId, Integer channelId,
 			boolean next, boolean cacheable,Integer userId) {
 		Finder f = Finder.create("from Content bean where 1=1");
-		if(userId != -1){
-			f.append(" and bean.user.id=:userId");
-			f.setParam("userId", userId);
+		if(null != userId){
+			if(userId != -1){
+				f.append(" and bean.user.id=:userId");
+				f.setParam("userId", userId);
+			}
 		}
 		if (channelId != null) {
 			f.append(" and bean.channel.id=:channelId");
