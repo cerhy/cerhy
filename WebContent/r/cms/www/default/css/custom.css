@@ -5,6 +5,7 @@
 .container_article{
     font-family:"MicroSoft Yahei";
     font-weight:400;
+    overflow-x:hidden;
 }
 
 .plfr1{margin-top:10px;}
@@ -362,4 +363,53 @@ padding-top: 32px;
 }
 .f3 {
      font-family: "MicroSoft YaHei";
+}
+
+
+#alert-layer button:focus{border:1px solid #AAA!important; background:#789!important; color:white; outline:none}  
+#alert-layer{position:absolute;left:0;top:0;width:100%;height:100%;color:#333;line-height:1;z-index:10000; background:rgba(0,0,0,0.1)}  
+#alert-layer #alert-container{border-radius:3px; padding:10px;hight:180px; width:280px; position:fixed; _position:absolute;}  
+#alert-layer .alert-bottom{background:url(images/conner2.png) no-repeat left bottom; height:10px;}  
+#alert-layer #alert-title{font-size:15px; height:40px;line-height:25px;position:relative;font-weight:bold;cursor:move;A}  
+#alert-layer #alert-close{background: url(images/close-x.png) no-repeat center center; width:25px; height:25px; position:absolute; cursor:pointer; right:2px; top:0px;}  
+#alert-layer .alert-button{ padding:5px 10px; text-align:right}  
+#alert-layer #alert-content{background:#F1F1F1; border-top:1px solid #B9B9B9; border-bottom:1px solid #B9B9B9; padding:10px 15px;}  
+.alert-box{background:url(images/tc_bg.png) repeat-y left top; padding:0 6px}  
+  
+#alert-layer button{padding:5px; border:1px solid #CCC; margin:auto 5px; border-radius:2px; min-width:60px;}  
+#alert-layer h1,#alert-layer h2,#alert-layer h3,#alert-layer h4{margin:10px auto; font-size:16px;}  
+
+#alert-layers{position:absolute;left:0;top:0;width:100%;height:100%;color:#333;line-height:1;z-index:10000; background:rgba(0,0,0,0.1)}  
+
+#piz{width:100px;height:100px;border:0px solid #f60;background: url(images/post.png);}
+#piz .titles{height:40px;}
+#fudong{width:50px;height:30px;background:#fef4eb;margin-left:1107px;border:1px solid #f60;}
+#fudong .title{height:30px;width:50px;background:#f60;}
+#fudong .title{background:none;}
+#fudong {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+}
+#pos {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+}
+#fudong:hover {
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
 }
