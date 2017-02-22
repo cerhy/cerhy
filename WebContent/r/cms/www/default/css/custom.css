@@ -408,7 +408,11 @@ padding-top: 32px;
     cursor: pointer;
     -webkit-transition-duration: 0.4s; /* Safari */
     transition-duration: 0.4s;
+     -moz-border-radius: 15px; 
+     -webkit-border-radius: 15px;
+     border-radius:15px;            
 }
 #pos:hover {
     box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 30px 0 rgba(0,0,0,0.19);
+    color:red;
 }

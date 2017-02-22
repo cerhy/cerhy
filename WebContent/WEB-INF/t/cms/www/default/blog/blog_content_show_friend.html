@@ -104,7 +104,7 @@ Cms.siteFlow("${base}", location.href, document.referrer,
 	</div> -->
      [#include "friend_blog_left.html"/]
      [#include "friend_content.html"/]
-       <div class="wrap-right" id="addAttr">
+       <div class="wrap-right">
            <div class="personCenter-userInfo blog_right xueke-acticle">
                 <div ><h2>${content.title}</h2></div>
                 <div class="gray9 h2dt pt5">
@@ -122,7 +122,7 @@ Cms.siteFlow("${base}", location.href, document.referrer,
 					 <span id="pos" name="pos" class="pos" style="width: 40px;height: 20px;" onclick="down(0)">批注
 					 </span>
 				</div>
-				<div class="xueke-content-detail" style="margin-top:30px;min-height:170px;">
+				<div class="xueke-content-detail" style="margin-top:30px;min-height:170px;"  id="addAttr">
 					[#if preview??] [@text_cut s=txt! len=100 append="..."/]<br />
 					您需要更高的权限浏览全部内容!<br />以下会员组可浏览全部内容: [#list groups as g]
 					${g.name!}[#if g_has_next],[/#if] [/#list] [#else] ${txt!} [/#if]
