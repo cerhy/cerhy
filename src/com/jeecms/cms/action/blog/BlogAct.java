@@ -777,7 +777,8 @@ public class BlogAct {
 			//非终审文章
 			CmsConfig config=CmsUtils.getSite(request).getConfig();
 			config.getConfigAttr().getPreview();
-			CmsUser u = CmsUtils.getUser(request);
+			//CmsUser u = CmsUtils.getUser(request);
+			CmsUser user=cmsUserMng.findById(Integer.valueOf(friend.toString()));
 			CmsSite site = content.getSite();
 			Set<CmsGroup> groups = content.getViewGroupsExt();
 			groups.size();
@@ -794,7 +795,6 @@ public class BlogAct {
 			model.addAttribute("txt", txt);
 			model.addAttribute("pic", content.getPictureByNo(pageNo));
 				model.addAttribute("who",0);
-				CmsUser user=cmsUserMng.findById(Integer.valueOf(friend.toString()));
 				model.addAttribute("userIds", user.getId());
 				model.addAttribute("usert", user);
 			String GroupFlag = request.getParameter("GroupFlag");
@@ -803,11 +803,11 @@ public class BlogAct {
 			}else{
 				model.addAttribute("GroupFlagData", content.getUser().getId());
 			}
-			model = blogCommon.getAlreadyJoinGroup(request, model,u);
-			model = blogCommon.getChannel(request,model,u,site);
-			model = blogCommon.getColumn(request,model,u);
-			model = blogCommon.getTotalArticleNum(model,u);
-	 		model = blogCommon.getTotalCommentNum(model, u);
+			model = blogCommon.getAlreadyJoinGroup(request, model,user);
+			model = blogCommon.getChannel(request,model,user,site);
+			model = blogCommon.getColumn(request,model,user);
+			model = blogCommon.getTotalArticleNum(model,user);
+	 		model = blogCommon.getTotalCommentNum(model, user);
 	 		model = blogCommon.getStarBlogger(request, model);
 			FrontUtils.frontData(request, model, site);
 			return FrontUtils.getTplPath(request, site.getSolutionPath(),TPLDIR_BLOG,"tpl.blogContentShowFriend");
