@@ -93,7 +93,11 @@ $(function(){
 			                [/#if]
 			                [#if c.columnId??]
 	                			[#if c.user.id=user.id]
-				                  <a href="contribute_delete.jspx?ids=${c.id}&columnId=${columnId}" onclick="javascript:return del();" class="f3"><em style="color:#b7b7b7;">删除</em></a>
+	                			 	[#if joinGroupStata??]
+					                  <a href="contribute_delete.jspx?ids=${c.id}&columnId=${columnId}&joinGroupStata" onclick="javascript:return del();" class="f3"><em style="color:#b7b7b7;">删除</em></a>
+	                			 	[#else]
+					                  <a href="contribute_delete.jspx?ids=${c.id}&columnId=${columnId}" onclick="javascript:return del();" class="f3"><em style="color:#b7b7b7;">删除</em></a>
+	                			 	[/#if]
 				                [#else]
 				                  <a class="f3"><em style="color:#b7b7b7;">删除</em></a>
 				                [/#if]
