@@ -373,6 +373,7 @@ public class BlogAct {
 		if (user == null) {
 			return FrontUtils.showLogin(request, model, site);
 		}
+		model = blogCommon.getChannel(request,model,user,site);
 		model = blogCommon.getColumn(request,model,user);
 		model = blogCommon.getTotalArticleNum(model,user);
  		model = blogCommon.getTotalCommentNum(model, user);
