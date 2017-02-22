@@ -107,7 +107,7 @@ public class CollectionMemberAct {
 		} else {
 			object.put("result", true);
 			
-			userMng.updateUserConllection(user,cId,1);
+			userMng.updateUserConllection(user,cId,operate);
 		}
 		ResponseUtils.renderJson(response, object.toString());
 	}
