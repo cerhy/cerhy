@@ -110,6 +110,8 @@ $(function(){
 			          </ul>
             
           <input type="hidden" name="pageNo"/>
+          <input style="display: none;" id="ud" name="ud" value="${columnId!''}"/>
+		  <input style="display: none;" id="jg" name="jg" value="${joinGroupStata!''}"/>
          <table style="margin:20px 0 0 40px;border:0px"><tr><td style="border:0px;">
 			                共 ${pagination.totalCount} 条&nbsp;
 			                每页 ${pagination.pageSize} 条&nbsp;
@@ -127,7 +129,11 @@ $(function(){
                 try{
                     var tableForm = document.getElementById("tableForm");
                     $("input[name=pageNo]").val(pageNo);
-                    tableForm.action="contribute_list.jspx?columnId=${columnId!'null'}&joinGroupStata=${joinGroupStata!'null'}";
+                    if($("#ud").val()!=''&&$("#jg").val()!=''){
+                     tableForm.action="${base}/blog/contribute_list.jspx?columnId=${columnId!'null'}&joinGroupStata=${joinGroupStata!'null'}";
+					}else{
+                     tableForm.action="${base}/blog/contribute_list.jspx?channelId=${channelId}";
+					}
                     tableForm.onsubmit=null;
                     tableForm.submit();
                 } catch(e) {
