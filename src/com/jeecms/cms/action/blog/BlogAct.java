@@ -138,6 +138,7 @@ public class BlogAct {
 			if(null != request.getParameter("columnId")){
 				model.addAttribute("columnId", request.getParameter("columnId"));
 				model.addAttribute("columnIdZ", request.getParameter("columnId"));
+				model.addAttribute("joinGroupStata", 0);
 				model.addAttribute("submitOn1", 1);
 				columnId = Integer.parseInt(request.getParameter("columnId"));
 			}
@@ -564,6 +565,7 @@ public class BlogAct {
 			if(null != request.getParameter("columnId")){
 				model.addAttribute("columnId", request.getParameter("columnId"));
 				model.addAttribute("columnIdZ", request.getParameter("columnId"));
+				model.addAttribute("joinGroupStata", 0);
 				model.addAttribute("submitOn1", 1);
 				columnId = Integer.parseInt(request.getParameter("columnId"));
 			}
