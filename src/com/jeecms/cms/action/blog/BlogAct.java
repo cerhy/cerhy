@@ -353,8 +353,13 @@ public class BlogAct {
 			int id;
 		try {
 			if(null != columnId){
+				String joinGroupStata=request.getParameter("joinGroupStata");
 				id = columnId;
-				request.getRequestDispatcher("/blog/contribute_list.jspx?columnId="+id).forward(request, response);
+				if(joinGroupStata!=null&&joinGroupStata.equals("0")){
+					request.getRequestDispatcher("/blog/contribute_list.jspx?columnId="+id+"&joinGroupStata=0").forward(request, response);
+				}else{
+					request.getRequestDispatcher("/blog/contribute_list.jspx?columnId="+id).forward(request, response);
+				}
 			}else if(null != channelId){
             	id = channelId;
 				request.getRequestDispatcher("/blog/contribute_list.jspx?channelId="+id).forward(request, response);
