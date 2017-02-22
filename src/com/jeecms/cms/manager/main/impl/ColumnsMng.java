@@ -49,6 +49,9 @@ public class ColumnsMng {
 	public int delAddHtml(String postilId) {
 		return columnsDao.delAddHtml(postilId);
 	}
+	public int checkCode(String no) {
+		return columnsDao.checkCode(no);
+	}
 	@Autowired
 	private ColumnsDao columnsDao;
 

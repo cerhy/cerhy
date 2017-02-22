@@ -127,4 +127,14 @@ public class ColumnsDao extends HibernateBaseDao<Columns, Integer>{
 		}
 	}
 
+	public int checkCode(String no) {
+		String hql = "select count(*) from Columns bean where bean.uniqueCode='"+no+"'";
+		Query query = getSession().createQuery(hql);
+		if(((Number) (query.iterate().next())).intValue()>0){
+			return 1;
+		}else{
+			return 0 ;
+		}
+	}
+
 }

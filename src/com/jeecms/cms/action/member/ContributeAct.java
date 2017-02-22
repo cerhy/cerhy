@@ -941,7 +941,13 @@ public class ContributeAct extends AbstractContentMemberAct {
 	@RequestMapping(value = "/blog/uniqueNum.jspx")
 	public void uniqueNum(HttpServletRequest request,HttpServletResponse response, ModelMap model)throws UnsupportedEncodingException, JSONException {
 			JSONObject json = new JSONObject();
-			json.put("status", CreateSerialNo.generateNumber());
+			String no=CreateSerialNo.generateNumber();
+			int nu=columnsMng.checkCode(no);
+			while(nu==1){ 
+				no=CreateSerialNo.generateNumber();
+				nu=columnsMng.checkCode(no);
+			}
+			json.put("status",no);
 			ResponseUtils.renderJson(response, json.toString());
 	}
 	
