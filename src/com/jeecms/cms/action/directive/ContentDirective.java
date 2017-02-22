@@ -31,6 +31,10 @@ public class ContentDirective implements TemplateDirectiveModel {
 	 */
 	public static final String PARAM_USER_ID = "userId";
 	/**
+	 * 输入参数，columnId
+	 */
+	public static final String PARAM_COLUMN_ID = "columnId";
+	/**
 	 * 输入参数，栏目ID。
 	 */
 	public static final String PARAM_ID = "id";
@@ -49,13 +53,14 @@ public class ContentDirective implements TemplateDirectiveModel {
 		Integer id = getId(params);
 		Boolean next = DirectiveUtils.getBool(PRAMA_NEXT, params);
 		Integer userId = getUserId(params);
+		Integer columnId = getColumnId(params);
 		Content content;
 		if (next == null) {
 			content = contentMng.findById(id);
 		} else {
 			CmsSite site = FrontUtils.getSite(env);
 			Integer channelId = DirectiveUtils.getInt(PARAM_CHANNEL_ID, params);
-			content = contentMng.getSide(id, site.getId(), channelId, next,userId);
+			content = contentMng.getSide(id, site.getId(), channelId, next,userId,columnId);
 		}
 
 		Map<String, TemplateModel> paramWrap = new HashMap<String, TemplateModel>(
@@ -82,6 +87,14 @@ public class ContentDirective implements TemplateDirectiveModel {
 		Integer userId = DirectiveUtils.getInt(PARAM_USER_ID, params);
 		if (userId != null) {
 			return userId;
+		} else {
+			return null;
+		}
+	}
+	private Integer getColumnId(Map<String, TemplateModel> params)throws TemplateException{
+		Integer columnId = DirectiveUtils.getInt(PARAM_COLUMN_ID, params);
+		if (columnId != null) {
+			return columnId;
 		} else {
 			return null;
 		}

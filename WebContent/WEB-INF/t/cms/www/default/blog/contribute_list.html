@@ -67,7 +67,17 @@ $(function(){
 				          [#list pagination.list as c]
 				         <li>
 				           <div>
-				           <a class="hasImg clearfix a12"  href="${c.url}?d=1&GroupFlag=${GroupFlag}">
+				           [#if columnIdZ??]
+					           <a class="hasImg clearfix a12"  href="${c.url}?d=1&GroupFlag=${GroupFlag}&columnIdZ=${columnIdZ}">
+									  <div class="item2 clearfix" [#if c_index<1]style="border-top:none;"[/#if]>
+											<div class="report-text">
+												<div><h3>[@text_cut s=c.title?html len='24' append='...'/]</h3></div>
+											</div>
+							           </div>
+								   </a>
+							   </div>
+						   [#else]
+				           	  <a class="hasImg clearfix a12"  href="${c.url}?d=1&GroupFlag=${GroupFlag}">
 								  <div class="item2 clearfix" [#if c_index<1]style="border-top:none;"[/#if]>
 										<div class="report-text">
 											<div><h3>[@text_cut s=c.title?html len='24' append='...'/]</h3></div>
@@ -75,6 +85,7 @@ $(function(){
 						           </div>
 							   </a>
 						   </div>
+						   [/#if]
 						    [#if c.user.id=user.id]
 				            <a href="contribute_edit.jspx?id=${c.id}&nextUrl=contribute_list.jspx" class="f3"><em style="color:#b7b7b7;">修改</em></a>&nbsp;|&nbsp;
 			                [#else]

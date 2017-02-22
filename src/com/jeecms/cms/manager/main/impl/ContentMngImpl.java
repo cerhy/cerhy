@@ -137,8 +137,8 @@ public class ContentMngImpl implements ContentMng, ChannelDeleteChecker {
 	
 	@Transactional(readOnly = true)
 	public Content getSide(Integer id, Integer siteId, Integer channelId,
-			boolean next,Integer userId) {
-		return dao.getSide(id, siteId, channelId, next, true,userId);
+			boolean next,Integer userId,Integer columnId) {
+		return dao.getSide(id, siteId, channelId, next, true,userId,columnId);
 	}
 
 	@Transactional(readOnly = true)

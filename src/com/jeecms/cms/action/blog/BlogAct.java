@@ -137,6 +137,7 @@ public class BlogAct {
 			userId=0;
 			if(null != request.getParameter("columnId")){
 				model.addAttribute("columnId", request.getParameter("columnId"));
+				model.addAttribute("columnIdZ", request.getParameter("columnId"));
 				model.addAttribute("submitOn1", 1);
 				columnId = Integer.parseInt(request.getParameter("columnId"));
 			}
@@ -562,6 +563,7 @@ public class BlogAct {
 			model.addAttribute("GroupFlag", -1);
 			if(null != request.getParameter("columnId")){
 				model.addAttribute("columnId", request.getParameter("columnId"));
+				model.addAttribute("columnIdZ", request.getParameter("columnId"));
 				model.addAttribute("submitOn1", 1);
 				columnId = Integer.parseInt(request.getParameter("columnId"));
 			}
@@ -587,7 +589,7 @@ public class BlogAct {
  		model = blogCommon.getAlreadyJoinGroup(request, model,user);
 		model.addAttribute("usert", user);
 		model.addAttribute("userIds", user.getId());
-		model.addAttribute("columnId", columnId);
+		//model.addAttribute("columnId", columnId);
 		FrontUtils.frontData(request, model, site);
 		Pagination p = contentMng.getPageForMember_blog(q, queryChannelId,site.getId(), modelId,userId, cpn(pageNo), 20,columnId,channelId);
 		model.addAttribute("pagination", p);
@@ -717,7 +719,7 @@ public class BlogAct {
 	
 	public String blogContentShow(String[] paths,String[] params,
 			PageInfo info,Integer pageNo,HttpServletRequest request,
-			HttpServletResponse response, ModelMap model){
+			HttpServletResponse response, ModelMap model,String columnId){
 			Content content = contentMng.findById(Integer.parseInt(paths[1]));
 			if (content == null) {
 				log.debug("Content id not found: {}", paths[1]);
@@ -745,6 +747,7 @@ public class BlogAct {
 			model.addAttribute("channel", content.getChannel());
 			model.addAttribute("title", content.getTitleByNo(pageNo));
 			model.addAttribute("txt", txt);
+			model.addAttribute("columnIdZ", columnId);
 			model.addAttribute("pic", content.getPictureByNo(pageNo));
 			String GroupFlag = request.getParameter("GroupFlag");
 			if("-1".equals(GroupFlag)){
@@ -764,7 +767,7 @@ public class BlogAct {
 	
 	public String blogContentShowFriend(String[] paths,String[] params,
 			PageInfo info,Integer pageNo,HttpServletRequest request,
-			HttpServletResponse response, ModelMap model,String friend){
+			HttpServletResponse response, ModelMap model,String friend,String columnId){
 			Content content = contentMng.findById(Integer.parseInt(paths[1]));
 			if (content == null) {
 				log.debug("Content id not found: {}", paths[1]);
@@ -793,6 +796,7 @@ public class BlogAct {
 			model.addAttribute("channel", content.getChannel());
 			model.addAttribute("title", content.getTitleByNo(pageNo));
 			model.addAttribute("txt", txt);
+			model.addAttribute("columnIdZ", columnId);
 			model.addAttribute("pic", content.getPictureByNo(pageNo));
 				model.addAttribute("who",0);
 				model.addAttribute("userIds", user.getId());

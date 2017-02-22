@@ -173,7 +173,7 @@ public interface ContentDao {
 	 * @return
 	 */
 	public Content getSide(Integer id, Integer siteId, Integer channelId,
-			boolean next, boolean cacheable,Integer userId);
+			boolean next, boolean cacheable,Integer userId,Integer columnId);
 
 	/**
 	 * 根据内容ID数组获取内容列表
