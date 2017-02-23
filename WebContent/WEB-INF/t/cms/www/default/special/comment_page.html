@@ -56,8 +56,11 @@ $(function() {
     <div class="wrap">
         <span class="local-icon icon-font"></span>
         <span class="position">评论</span>
+        [#if blogDate??]
+        [#else]
         <em> &gt; </em>
-        <a href="${content.url}">返回到文章内容</a>
+        	<a href="${content.url}">返回到文章内容</a>
+        [/#if]
     </div>
 </div>
 <div class="container_article">
