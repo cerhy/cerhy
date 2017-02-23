@@ -163,8 +163,10 @@ $(function(){
 			                    $("input[name=pageNo]").val(pageNo);
 								if($("#ud").val()!=''&&$("#jg").val()!=''){
 			                    	tableForm.action="${base}/blog/contribute_list_friend.jspx?user_ids=${usert.id}&columnId=${columnId!'null'}&joinGroupStata=${joinGroupStata!'null'}";
+								}else if($("#ud").val()!=''&&$("#jg").val()==''){
+			                    	tableForm.action="${base}/blog/contribute_list_friend.jspx?user_ids=${usert.id}&columnId=${columnId!'null'}";
 								}else{
-			                    	tableForm.action="${base}/blog/find_all_url_friend.jspx?userIds=${usert.id}";
+			                    	tableForm.action="${base}/blog/contribute_list_friend.jspx?channelId=${channelId!''}&user_ids=${usert.id}";
 								}
 			                    tableForm.onsubmit=null;
 			                    tableForm.submit();
