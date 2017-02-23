@@ -221,8 +221,8 @@ public class BlogCommon {
 		String path = request.getSession().getServletContext().getRealPath("/");
 		List<Focus> list = (new BlogDao()).findMaxFocusCount( path);
 		Pagination p = null; 
-		if(pageNo != 1 || pageNo != 2){
-			pageNo =1;
+		if(pageNo>2){
+			pageNo =2;
 		}
 
 		if(null != list && list.size()>0){
