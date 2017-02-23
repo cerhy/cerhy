@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+<title>好研网-${channel.title}</title>
+[#include "../hyinclude/header.html"/]
+<script src="${resSys}/jquery.js" type="text/javascript"></script>
+<script src="${resSys}/front.js" type="text/javascript"></script>
+<script type="text/javascript" src="/${res}/js/jquery.SuperSlide.js"></script>
+<link type="text/css" rel="stylesheet" href="/${res}/css/hyindex.css" />
+<link type="text/css" rel="stylesheet" href="/${res}/css/custom.css" />
+<script src="${resSys}/jqueryUI/jquery-ui.js" type="text/javascript"></script>
+<link href="${resSys}/jqueryUI/jquery.ui.css" rel="stylesheet" type="text/css" />
+<style>
+ .actives{color: red;}
+</style>
+<div class="local">
+    <div class="wrap">
+        <span class="local-icon icon-font"></span>
+        <a href="${channel.url}">${channel.title}</a>
+    </div>
+</div>
+<div class="container">
+    <div class="wrap">
+        <div class="xueke clearfix bd-padding">
+            <div class="wrap-left">
+                <ul class="fst-lv-ul">
+                	 [@cms_channel_list parentId=channel.id orderBy='4']
+				        [#list tag_list as b]
+				        <li  [#if b_index<1]class="active"[/#if]>
+				        <a href="javascript:;">${b.name}<em class="arrow-down"></em></a>
+				        <div class="sub-div">
+                            <ul class="clearfix">
+		                	 [@cms_channel_list parentId=b.id orderBy='4']
+						        [#list tag_list as c]
+		                                <li><a [#if c_index=0&&b_index=0]style="color:red;"[/#if] href="${c.url}">${c.name}</a></li>
+						        [/#list]
+						      [/@cms_channel_list]
+                            </ul>
+                        </div>
+				        </li>
+				        [/#list]
+				      [/@cms_channel_list]
+                </ul>
+           </div>
+           <div class="wrap-right">
+           		<div class="article-list-wrap">
+					[@cms_channel_list parentId=channel.id orderBy='4']
+					  [#list tag_list as b]
+					  [#if b_index=0]
+						      [@cms_channel_list parentId=b.id orderBy='4']
+						      [#list tag_list as c]
+						      [#if c_index=0]
+										  <ul class="report-list sm mb20">
+									        [@cms_content_page orderBy='4'  recommend='2' channelId=c.id channelOption='1' count='10']
+										          [#list tag_pagination.list as a]
+										          <li>
+					                           		 <a class="hasImg clearfix" href="${a.url}" target="_blank">
+													      <div class="item clearfix" [#if a_index<1]style="border-top:none;"[/#if]>
+													          [#if a.typeImg??]
+													          <img width="108" height="108" src="${a.typeImg!}" alt="">
+													          [/#if]
+													          <div class="report-text">
+													            <h3>${a.title}</h3>
+													            <p>[#if a.typeImg??][@text_cut s=a.description len=116 append='...'/][#else][@text_cut s=a.description len=176 append='...'/][/#if]</p>
+													          <div class="fl"><span class="ch">${a.ctgName}<em>${a.date?string("yyyy-MM-dd")}</em></span></div>
+													          </div>
+													          <em class="arrowBtn"></em>
+													      </div>
+					                           			 </a>
+				                        			</li>
+										          [/#list]
+										          [#if tag_pagination.list?size>0]
+										          	[#include "../include/page.html"/]
+										          [/#if]
+									        [/@cms_content_page]
+									        </ul>
+										 </ul>
+						     [/#if]
+						      [/#list]
+						  [/@cms_channel_list]
+						   [/#if]
+				      [/#list]
+				  [/@cms_channel_list]
+                </div>
+                 <div class="news-comments">		
+           		 [#if channel.commentControl!=2]		  
+                    [#include "inc_comment_input.html"/]
+      		[@cms_comment_page channelId=channel.id count='10' recommend='1']
+			  [#if tag_pagination.list?size = 0]
+			  <span>暂无相关评论！</span>
+			  [#else]
+			  [#list tag_pagination.list as c]
+			  <div class="comments-item">
+			    <div class="tx">
+			    <img src="${(c.commentUser.userImg)!'${site.defImg!}'}">
+			    </div>
+			    <div class="rig">
+			      <div class="rig-top"><a class="username">[#if c.commentUser??]${(c.commentUser.username)!"匿名网友"}[#else]匿名网友[/#if]</a><em> ${c.createTime} </em></div>
+			      <div class="rig-txt">${c.textHtml!}</div>
+			      <div class="rig-bottom">
+				     <a class="comments-zan" onclick="Cms.commentUp('${base}',${c.id},${c.ups},'commentups_${c.id}')">赞<span id="commentups_${c.id}">${c.ups!}</span></a>
+			      	 <a class="comments-hf" id="commentreply_${c.id}" onclick="Cms.commentChannelInputLoad('${base}','commentInputDiv_','commentInputDiv_${c.id}','${channelId!}','${c.id}')">回复</a>
+				   	[#if c??&&c.replyCount>0]
+				  [#if c.replyCount>0]
+				  <span style="cursor: pointer;" id="commentviewreply_${c.id}" onclick="Cms.commentListChannelMore('${base}','commentDialog',{parentId:${c.id},channelId:${channelId!},orderBy:0,count:5,checked:1})">查看回复(${c.replyCount!})</span>[/#if]
+	 			 [/#if]
+				   </div>	
+				   <div class="reply" id="commentInputDiv_${c.id}"></div>
+			      [#if c.replyCount>0]
+			      <div class="comments-item comments-child">
+				    <div class="tx"><img src="[#if c.replayUser??]${(c.replayUser.userImg)!'${site.defImg!}'}[#else]'${site.defImg!}'[/#if]"></div>
+				    <div class="rig">
+				      <div class="rig-top"><a class="username">[#if c.replayUser??]${(c.replayUser.username)!"管理员"}[#else]匿名[/#if]</a>
+					  <em>[#if c.replayTime??]${c.replayTime?string("yyyy-MM-dd HH:mm:ss")}[/#if]</em></div>
+				      <div class="rig-txt">${c.replayHtml!}</div>
+				   <div class="rig-bottom">
+	      		 		<!-- <a class="comments-zan" onclick="Cms.commentUp('${base}',${c.id},${c.ups},'commentups_${c.id}')">赞<span id="commentups_${c.id}">${c.ups!}</span></a>
+  				  -->
+		      	 		<!-- <a class="comments-hf" id="commentreply_${c.id}" onclick="Cms.commentChannelInputLoad('${base}','commentInputDiv_','commentInputDiv_${c.id}','${channelId!}','${c.id}')">回复</a> -->
+				  		<!-- [#if c.replyCount>0]
+				 		 <span style="cursor: pointer;" id="commentviewreply_${c.id}" onclick="Cms.commentListChannelMore('${base}','commentDialog',{parentId:${c.id},channelId:${channelId!},orderBy:0,count:5,checked:1})">查看回复(${c.replyCount!})</span>
+				  		[/#if] -->
+						<div id="commentInputDiv_${c.id}"></div>
+	     		 </div>
+				      <div class="reply"><textarea class="reply-text"></textarea><div><input type="submit" value="回复" class="reply-btn"></div></div>
+				    </div>
+			    </div>
+			    [/#if]
+			    </div>
+			  </div>
+			[/#list]
+			  <div class="pagebar">[@cms_pagination sysPage='1'/]</div>			
+			  [/#if]
+			  [/@cms_comment_page]
+				<div id="commentDialog" style="display:none;"></div>
+      			 [/#if]
+				</div>
+		 <!--链接-->
+                <div class="links-wrap">
+                    <h3>链接</h3>
+                    
+                       	[@cms_friendlink_list ctgId='1' channelId=channel.id]
+							 [#list tag_list as link]
+							 <div class="link-content">
+							   	 <a href="${link.domain}" onclick="$.get('${base}/friendlink_view.jspx?id=${link.id}')" target="_blank">${link.name}</a>
+							   </div>
+							   [/#list]
+					     [/@cms_friendlink_list]
+                   
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+	$(function() {
+		$("#commentDialog").dialog({
+			autoOpen: false,
+			modal: true,
+			width: 500,
+			height: 600,
+			position: ["center",20],
+			buttons: {
+				"关闭": function() {
+					$(this).dialog("close");
+				}
+			},
+			close: function(event, ui) {
+			}
+		});
+	    [#if !parentId??]
+	     $(".comments-hf").bind("click", function(){
+	                  $(this).toggleClass("reply-on");
+			  $(this).parent().siblings(".reply").animate({height:'toggle'},10);
+	      });
+	    [#else]
+	      $(".comments-hf").unbind();
+	      $(".comments-hf").bind("click", function(){
+	                  $(this).toggleClass("reply-on");
+			  $(this).parent().siblings(".reply").animate({height:'toggle'},10);
+	      });
+	    [/#if]
+	});
+</script>
+[#include "../include/footer.html"/]
+<script src="/${res}/js/main.js"></script>
+</body>
+</html>
