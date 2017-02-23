@@ -51,14 +51,18 @@ $(function() {
 </script>
 </head>
 <body>
-[#include "../hyinclude/header.html"/]
+        [#if blogDate??]
+        [#include "../blog/head.html"/]
+        [#else]
+		[#include "../hyinclude/header.html"/]
+        [/#if]
 <div class="local">
     <div class="wrap">
         <span class="local-icon icon-font"></span>
         <span class="position">评论</span>
         [#if blogDate??]
         <em> &gt; </em>
-        	<a href="/cerhy/blog/index.jspx">返回到我的博客</a>
+        	<a href="javascript:;" onclick="f1()">返回到我的博客</a>
         [#else]
         <em> &gt; </em>
         	<a href="${content.url}">返回到文章内容</a>
@@ -130,3 +134,9 @@ $(function() {
 [#include "../include/footer.html"/]
 </body>
 </html>
+ <script type="text/javascript">
+function f1()
+ {
+ window.history.back();
+ }
+</script>
