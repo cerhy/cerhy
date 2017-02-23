@@ -17,6 +17,10 @@
 				   [/#list]
               </div>
          <input type="hidden" name="pageNo"/>
+         <input style="display: none;" id="checkPageInfo" name="checkPageInfo" value="${checkPageInfo}"/>
+         [#if usert??]
+	         <input style="display: none;" id="ut" name="ut" value="${usert.id}"/>
+         [/#if]
 		 <table  style="margin:20px 0 0 40px;border:0px" ><tbody><tr><td style="border:0px; ">
 		    共 ${pagination.totalCount} 条&nbsp; 每页 ${pagination.pageSize} 条&nbsp;
              <input style="cursor: pointer;" type="button" value="首 页" onclick="_gotoPage('1');"[#if pagination.firstPage] disabled="disabled"[/#if] class="inp2"/>
@@ -34,7 +38,11 @@
 	                try{
 	                    var tableForm = document.getElementById("tableForm");
 	                    $("input[name=pageNo]").val(pageNo);
-	                    tableForm.action="${base}/blog/gotoDataShow.jspx?dataFlag=4";
+	                    if($("#checkPageInfo").val()==0){
+	                    	tableForm.action="${base}/blog/gotoDataShow.jspx?dataFlag=4";      
+	                    }else{
+	                    	tableForm.action="${base}/blog/gotoDataShowFriend.jspx?dataFlag=4&userId="+$("#ut").val();      
+	                    }
 	                    tableForm.onsubmit=null;
 	                    tableForm.submit();
 	                } catch(e) {
