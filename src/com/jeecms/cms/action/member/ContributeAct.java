@@ -1073,5 +1073,20 @@ public class ContributeAct extends AbstractContentMemberAct {
 		json.put("status",joinStatus);
 		ResponseUtils.renderJson(response, json.toString());
 	}
+	/**
+	 * 退出群组
+	 */
+	@RequestMapping(value = "/blog/signOutGroup.jspx")
+	public void signOutGroup(String groupId,HttpServletRequest request,HttpServletResponse response, ModelMap model)throws UnsupportedEncodingException, JSONException {
+		CmsSite site = CmsUtils.getSite(request);
+		CmsUser user = CmsUtils.getUser(request);
+		if(user==null){
+			FrontUtils.showLogin(request, model, site);
+		}
+		int joinStatus=columnsMng.signOutGroup(groupId);
+		JSONObject json = new JSONObject();
+		json.put("status",joinStatus);
+		ResponseUtils.renderJson(response, json.toString());
+	}
 
 }

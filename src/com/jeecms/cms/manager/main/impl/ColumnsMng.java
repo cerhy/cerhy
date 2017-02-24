@@ -52,6 +52,9 @@ public class ColumnsMng {
 	public int checkCode(String no) {
 		return columnsDao.checkCode(no);
 	}
+	public int signOutGroup(String groupId) {
+		return columnsDao.signOutGroup(groupId);
+	}
 	@Autowired
 	private ColumnsDao columnsDao;
 

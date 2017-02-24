@@ -137,4 +137,18 @@ public class ColumnsDao extends HibernateBaseDao<Columns, Integer>{
 		}
 	}
 
+	public int signOutGroup(String groupId) {
+		try {
+			StringBuilder hql = new StringBuilder("delete CmsJoinGroup bean");
+			hql.append(" where bean.id=:id ");
+			Query query = getSession().createQuery(hql.toString());
+			query.setParameter("id", Integer.valueOf(groupId));
+			query.executeUpdate();
+			return 1;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return 0;
+		}
+	}
+
 }

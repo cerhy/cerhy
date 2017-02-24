@@ -138,6 +138,34 @@ window.onload=function(event){
                 <div>暂无栏目</div>
             [/#if]
           </form>
+          <br />
+          <br />
+          <br />
+		<form id="tableForm" action="" method="post">
+          <table cellpadding="0" cellspacing="0">
+            <tbody>
+              [#if joinGroupList??]
+              <tr>
+               <td class="tggl-top" style="font-size:14px;min-width: 80px;" colspan="4">已加入的群组</td>
+              </tr>
+              <tr>
+               <td class="tggl-top" style="font-size:14px;min-width: 200px;">群组名称</td>
+               <td class="tggl-top" style="font-size:14px;min-width: 100px;">加入时间</td>
+               <td class="tggl-top" style="font-size:14px;min-width: 100px;">群组唯一标识码</td>
+               <td class="tggl-top" style="font-size:14px;min-width: 100px;">操作</td>
+              </tr>
+               [#list joinGroupList as j]
+              <tr id="signOut${j.id}">
+                <td>[@text_cut s=j.columnsId.columnName len=6 append='...'/]</td>
+                <td>${j.joinTime}</td>
+                <td>${j.joinCode}</td>
+                <td onclick="signOut(${j.id})" style="cursor: pointer;" id="signOut" class="signOut">退出群组</td>
+              </tr>
+              [/#list]
+              [/#if]
+            </tbody>
+          </table>
+          </form>
         </div>
       </div>
 			</div>
@@ -148,3 +176,26 @@ window.onload=function(event){
 [#include "../include/footer.html"/]
 </body>
 </html>
+<script type="text/javascript">
+function signOut(obj){
+	var msg = "您真的确定要退出该群组吗？"; 
+	 if (confirm(msg)==true){ 
+		 $.ajax({
+		        url: "${base}/blog/signOutGroup.jspx?groupId="+obj,
+		        type: "POST",
+		        dataType:"json",
+		        data: "",
+		        success: function (data) {
+		        	if(data.status>0){
+						 $("#signOut"+obj).fadeOut();
+		        	}else{
+		        		alert("群组退出失败!");
+		        	}
+		        }
+		    });
+	     return true; 
+	 }else{ 
+	     return false; 
+	 } 
+}
+</script>
