@@ -4,6 +4,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import com.jeecms.cms.entity.assist.CmsBlogVisitor;
 import com.jeecms.cms.entity.assist.CmsComment;
 import com.jeecms.cms.entity.assist.CmsJoinGroup;

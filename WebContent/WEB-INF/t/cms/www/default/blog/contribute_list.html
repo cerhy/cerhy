@@ -131,8 +131,11 @@ $(function(){
                     $("input[name=pageNo]").val(pageNo);
                     if($("#ud").val()!=''&&$("#jg").val()!=''){
                      tableForm.action="${base}/blog/contribute_list.jspx?columnId=${columnId!'null'}&joinGroupStata=${joinGroupStata!'null'}";
+					}else if($("#ud").val()!=''&&$("#jg").val()==''){
+                     tableForm.action="${base}/blog/contribute_list.jspx?columnId=${columnId!'null'}";
 					}else{
-                     tableForm.action="${base}/blog/contribute_list.jspx?channelId=${channelId}";
+                     tableForm.action="${base}/blog/contribute_list.jspx?channelId=${channelId!'null'}";
+						
 					}
                     tableForm.onsubmit=null;
                     tableForm.submit();

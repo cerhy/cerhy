@@ -143,6 +143,7 @@ $(function(){
 			          <input type="hidden" name="pageNo"/>
 			          <input style="display: none;" id="ud" name="ud" value="${columnId!''}"/>
 			          <input style="display: none;" id="jg" name="jg" value="${joinGroupStata!''}"/>
+			          <input style="display: none;" id="cd" name="cd" value="${channelId!''}"/>
 			           <table style="margin:20px 0 0 40px;border:0px"><tr><td style="border:0px;">
                 共 ${pagination.totalCount} 条&nbsp;
                 每页 ${pagination.pageSize} 条&nbsp;
@@ -163,8 +164,15 @@ $(function(){
 			                    $("input[name=pageNo]").val(pageNo);
 								if($("#ud").val()!=''&&$("#jg").val()!=''){
 			                    	tableForm.action="${base}/blog/contribute_list_friend.jspx?user_ids=${usert.id}&columnId=${columnId!'null'}&joinGroupStata=${joinGroupStata!'null'}";
+								}else if($("#ud").val()!=''&&$("#jg").val()==''){
+			                    	tableForm.action="${base}/blog/contribute_list_friend.jspx?user_ids=${usert.id}&columnId=${columnId!'null'}";
 								}else{
-			                    	tableForm.action="${base}/blog/find_all_url_friend.jspx?userIds=${usert.id}";
+									if($("#cd").val()==''){
+				                    	tableForm.action="${base}/blog/find_all_url_friend.jspx?userIds=${usert.id}";
+									}else{
+										
+			                    	    tableForm.action="${base}/blog/contribute_list_friend.jspx?channelId=${channelId!''}&user_ids=${usert.id}";
+									}
 								}
 			                    tableForm.onsubmit=null;
 			                    tableForm.submit();

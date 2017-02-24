@@ -2,6 +2,7 @@ package com.jeecms.cms.manager.main.impl;
 
 import static com.jeecms.cms.entity.main.ContentCheck.DRAFT;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -10,6 +11,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,7 +64,10 @@ import com.jeecms.cms.staticpage.exception.StaticPageNotOpenException;
 import com.jeecms.cms.staticpage.exception.TemplateNotFoundException;
 import com.jeecms.cms.staticpage.exception.TemplateParseException;
 import com.jeecms.common.hibernate4.Updater;
+import com.jeecms.common.office.FileUtils;
+import com.jeecms.common.office.OpenOfficeConverter;
 import com.jeecms.common.page.Pagination;
+import com.jeecms.common.web.springmvc.RealPathResolver;
 import com.jeecms.core.entity.CmsGroup;
 import com.jeecms.core.entity.CmsSite;
 import com.jeecms.core.entity.CmsUser;
@@ -319,6 +325,11 @@ public class ContentMngImpl implements ContentMng, ChannelDeleteChecker {
 		return bean;
 	}
 	
+	@Autowired
+	private OpenOfficeConverter openOfficeConverter;
+	@Autowired
+	private RealPathResolver realPathResolver;
+	
 	public Content blog_save(Content bean, ContentExt ext, ContentTxt txt,ContentDoc doc,
 			Integer[] channelIds, Integer[] topicIds, Integer[] viewGroupIds,
 			String[] tagArr, String[] attachmentPaths,
@@ -332,8 +343,17 @@ public class ContentMngImpl implements ContentMng, ChannelDeleteChecker {
 		if (attachmentPaths != null && attachmentPaths.length > 0) {
 			for (int i = 0, len = attachmentPaths.length; i < len; i++) {
 				if (!StringUtils.isBlank(attachmentPaths[i])) {
-					bean.addToAttachmemts(attachmentPaths[i],
-							attachmentNames[i], attachmentFilenames[i]);
+					String fileRealPath = realPathResolver.get(attachmentPaths[i].substring(attachmentPaths[i].indexOf("/",attachmentPaths[i].indexOf("/")+1) + 1,attachmentPaths[i].length()));
+					String fileName=FileUtils.getFileName(attachmentPaths[i]);
+					String outPdfRealPath = realPathResolver.get(FileUtils.getFilePath(attachmentPaths[i].substring(attachmentPaths[i].indexOf("/",attachmentPaths[i].indexOf("/")+1) + 1,attachmentPaths[i].length())));
+					//String pdfPath=FileUtils.getFilePath(attachmentPaths[i])+fileName+".pdf";
+					if(!fileRealPath.endsWith(OpenOfficeConverter.PDF)){
+						//转换文档成pdf
+						openOfficeConverter.convertToPdf(fileRealPath,outPdfRealPath + "/",fileName);
+					}
+					int lastIndex = attachmentPaths[i].lastIndexOf(".");
+					String pdf=attachmentPaths[i].substring(0, lastIndex)+".pdf";
+					bean.addToAttachmemtsPdf(attachmentPaths[i],attachmentNames[i], attachmentFilenames[i],pdf);
 				}
 			}
 		}

@@ -683,6 +683,7 @@ public class BlogAct {
 			model = blogCommon.getMoreStarBlogger(request,model,cpn(pageNo));
 			model.addAttribute("dataFlag", 4);
 		}
+		model.addAttribute("checkPageInfo", 0);
 		model = blogCommon.getChannel(request,model,u,site);
 		model = blogCommon.getColumn(request,model,u);
 		model = blogCommon.getTotalArticleNum(model,u);
@@ -715,6 +716,7 @@ public class BlogAct {
 			model = blogCommon.getMoreStarBlogger(request,model,cpn(pageNo));
 			model.addAttribute("dataFlag", 4);
 		}
+		model.addAttribute("checkPageInfo", 1);
 		model = blogCommon.getChannel(request,model,u,site);
 		model = blogCommon.getColumn(request,model,u);
 		model = blogCommon.getTotalArticleNum(model,u);

@@ -46,7 +46,11 @@
   [/#list]
   [#list list as c]
   	[#if c??&&c_index<1]
+  		[#if blogDate??]
+	  		<div class="open-more"><a href="${base}/comment.jspx?contentId=${contentId!}&blogDate=0">更多评论</a></div>
+  		[#else]
   		<div class="open-more"><a href="${base}/comment.jspx?contentId=${contentId!}">更多评论</a></div>
+  		[/#if]
   	[/#if]
   [/#list]
 </section>

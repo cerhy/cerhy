@@ -174,6 +174,21 @@ Cms.commentList = function(base, c, options) {
 }
 
 /**
+ * 获取评论列表
+ * 
+ * @param siteId
+ * @param contentId
+ * @param greatTo
+ * @param recommend
+ * @param orderBy
+ * @param count
+ */
+Cms.commentBlogList = function(base, c, options) {
+	c = c || "commentListDiv";
+	$("#" + c).load(base + "/comment_list.jspx?blogDate=0", options);
+}
+
+/**
  * 获取栏目评论
  */
 Cms.commentChannelList = function(base, c, options) {

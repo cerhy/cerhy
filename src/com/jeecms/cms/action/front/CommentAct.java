@@ -75,6 +75,7 @@ public class CommentAct {
 		FrontUtils.frontData(request, model, site);
 		FrontUtils.frontPageData(request, model);
 		model.addAttribute("content", content);
+		model.addAttribute("blogDate", request.getParameter("blogDate"));
 		return FrontUtils.getTplPath(request, site.getSolutionPath(),
 				TPLDIR_SPECIAL, COMMENT_PAGE);
 	}
@@ -206,6 +207,7 @@ public class CommentAct {
 		model.putAll(RequestUtils.getQueryParams(request));
 		model.addAttribute("list", list);
 		model.addAttribute("contentId", contentId);
+		model.addAttribute("blogDate", request.getParameter("blogDate"));
 		CmsSite site = CmsUtils.getSite(request);
 		FrontUtils.frontData(request, model, site);
 		

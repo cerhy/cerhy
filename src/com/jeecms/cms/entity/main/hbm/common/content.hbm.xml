@@ -57,6 +57,7 @@
 				<property name="name" column="attachment_name" type="string" length="100" not-null="true"/>
 				<property name="filename" column="filename" type="string" length="100" not-null="false"/>
 				<property name="count" column="download_count" type="java.lang.Integer" length="10" not-null="true"/>
+				<property name="pdf" column="pdf" type="string" length="255" not-null="false"/>
 			</composite-element>
 		</list>
 		<set name="contentTxtSet" inverse="true" cascade="delete-orphan">

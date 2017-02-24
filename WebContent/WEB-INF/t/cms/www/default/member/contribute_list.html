@@ -80,26 +80,26 @@ $(function() {
                     <div style="display: block;" class="user-info-dtTable" align="left">
                         <form id="tableForm" action="contribute_list.jspx" method="post">
 			          [#if pagination.list?size gt 0]
-			          <table cellpadding="0" cellspacing="0" border="1px" style="border:solid 1px #e3e3e3;">
+			          <table cellpadding="0" cellspacing="0" border="1px" style="border:solid 1px #333;">
 			            <tbody>
 			              <tr>
-			                <td class="tggl-top" align="center" style="min-width:40px;">ID</td>
-			                <td class="tggl-top" align="center" style="min-width:257px;">标题</td>
-			                <td class="tggl-top" align="center" style="min-width:60px;">栏目</td>
-			                <td class="tggl-top" align="center" style="min-width:50px;">状态</td>
-			                <td class="tggl-top" align="center" style="min-width:40px;">点击</td>
-			                <td class="tggl-top"  align="center" style="min-width:70px;">发布时间</td>
-			                <td class="tggl-top"  align="center" style="min-width:70px;">操作</td>
+			                <td class="tggl-top" align="center" style="min-width:40px;padding-bottom: 0px;line-height: 40px;">ID</td>
+			                <td class="tggl-top" align="center" style="min-width:257px;padding-bottom: 0px;line-height: 40px;">标题</td>
+			                <td class="tggl-top" align="center" style="min-width:60px;padding-bottom: 0px;line-height: 40px;">栏目</td>
+			                <td class="tggl-top" align="center" style="min-width:50px;padding-bottom: 0px;line-height: 40px;">状态</td>
+			                <td class="tggl-top" align="center" style="min-width:40px;padding-bottom: 0px;line-height: 40px;">点击</td>
+			                <td class="tggl-top"  align="center" style="min-width:70px;padding-bottom: 0px;line-height: 40px;">发布时间</td>
+			                <td class="tggl-top"  align="center" style="min-width:70px;padding-bottom: 0px;line-height: 40px;">操作</td>
 			              </tr>
 			              [#list pagination.list as c]
 			              <tr>
-			                <td align="center" >${c.id}</td>
-			                <td style="text-align:left; text-indent:5px;"><a target="_blank" href="${c.url!}">[@text_cut s=c.title?html len='24' append='...'/]</a></td>
-			                <td align="center" >${c.channel.name}</td>
-			                <td align="center" >[#if c.checked]审核通过[#elseif c.checkStep==0]未审核[#else]审核中[/#if]</td>
-			                <td align="center" >${c.views}</td>
-			                <td align="center" >${c.releaseDate?string('yyyy-MM-dd')}</td>
-			                <td align="center" >[#if c.checkStep==0]<a href="contribute_edit.jspx?id=${c.id}&nextUrl=contribute_list.jspx">修改<a> | <a href="contribute_delete.jspx?ids=${c.id}&nextUrl=contribute_list.jspx">删除<a>[#else]修改 | 删除[/#if]</td>
+			                <td align="center" style="padding-bottom: 0px;line-height: 40px;">${c_index+1}</td>
+			                <td style="text-align:left; text-indent:5px;padding-bottom: 0px;line-height: 40px;"><a target="_blank" href="${c.url!}">[@text_cut s=c.title?html len='24' append='...'/]</a></td>
+			                <td align="center" style="padding-bottom: 0px;line-height: 40px;">${c.channel.name}</td>
+			                <td align="center" style="padding-bottom: 0px;line-height: 40px;">[#if c.checked]审核通过[#elseif c.checkStep==0]未审核[#else]审核中[/#if]</td>
+			                <td align="center" style="padding-bottom: 0px;line-height: 40px;">${c.views}</td>
+			                <td align="center" style="padding-bottom: 0px;line-height: 40px;">${c.releaseDate?string('yyyy-MM-dd')}</td>
+			                <td align="center" style="padding-bottom: 0px;line-height: 40px;">[#if c.checkStep==0]<a href="contribute_edit.jspx?id=${c.id}&nextUrl=contribute_list.jspx">修改<a> | <a href="contribute_delete.jspx?ids=${c.id}&nextUrl=contribute_list.jspx">删除<a>[#else]修改 | 删除[/#if]</td>
 			              </tr>
 			              [/#list]
 			            </tbody>

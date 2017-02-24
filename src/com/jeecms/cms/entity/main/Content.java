@@ -462,6 +462,18 @@ public class Content extends BaseContent implements ContentInterface {
 		}
 		list.add(ca);
 	}
+	public void addToAttachmemtsPdf(String path, String name, String filename,String pdf) {
+		List<ContentAttachment> list = getAttachments();
+		if (list == null) {
+			list = new ArrayList<ContentAttachment>();
+			setAttachments(list);
+		}
+		ContentAttachment ca = new ContentAttachment(path, name, 0,pdf);
+		if (!StringUtils.isBlank(filename)) {
+			ca.setFilename(filename);
+		}
+		list.add(ca);
+	}
 
 	public void addToPictures(String path, String desc) {
 		List<ContentPicture> list = getPictures();
