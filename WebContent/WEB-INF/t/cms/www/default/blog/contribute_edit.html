@@ -316,7 +316,7 @@ $(function(){
                                         [#list content.attachments as attach]
                                         <tr id="attachTr${attach_index}" style="height:50px;">					
 						<td align="center"><input type="text" id="attachmentNames${attach_index}" name="attachmentNames" value="${attach.name!}"/></td>
-						<td align="center"><input type="text" id="attachmentPaths${attach_index}" name="attachmentPaths" value="${attach.path!}"/></td>
+						<td align="center" style="display: none;"><input type="text" id="attachmentPaths${attach_index}" name="attachmentPaths" value="${attach.path!}"/></td>
 						<td align="center"><span id="afc${attach_index}" style="position:relative;display:block;width:100px;">
 									<input type='text' id='attachmentText${attach_index}'  style="position:absolute;right:120px;width:180px;top:20px;border:1px solid #c7c7c7;"/>  
 									<input onchange="$('#attachmentText${attach_index}').val(this.value)" size="19" type="file" name="attachmentFile" id="attachmentFile${attach_index}" style="width:180px;height:24px;opacity:0;filter:alpha(opacity=0);position:absolute;right:120px;border:1px solid #c7c7c7;top:0;"/>
