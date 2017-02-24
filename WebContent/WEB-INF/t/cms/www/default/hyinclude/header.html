@@ -1,4 +1,5 @@
 <link rel="stylesheet" type="text/css" href="/${res}/css/login.css" />
+<link type="text/css" rel="stylesheet" href="/${res}/css/search.css" />
 <script>
 function qkeypress(){
 	var q=$("input[name=q]");
@@ -60,6 +61,7 @@ function qkeypress(){
 	.dropdown:hover .dropdown-content {
 	  display: block;
 	}
+
 </style>
 </head>
 <body class="bodybg">
@@ -70,7 +72,7 @@ function qkeypress(){
                 <div class="search-bar">
                     <form action="${base}/search.jspx" target="_blank" id="searchForm">
         				<input type="text" name="q" value="${oldq!}" maxlength="50" autocomplete="off" class="searchCon">
-        				<input type="submit" value="" class="search-btn" style="height: 26px;width: 26px;">
+        				<input type="submit" value="" id="search-btn1">
        			    </form>
                 </div>
                 <ul class="header-right-list">
