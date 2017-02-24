@@ -23,6 +23,18 @@ public class ContentAttachment extends BaseContentAttachment {
 			name,
 			count);
 	}
+	public ContentAttachment (
+			java.lang.String path,
+			java.lang.String name,
+			java.lang.Integer count,
+			java.lang.String pdf) {
+		
+		super (
+				path,
+				name,
+				count,
+				pdf);
+	}
 
 	/* [CONSTRUCTOR MARKER END] */
 

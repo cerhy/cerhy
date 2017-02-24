@@ -19,6 +19,7 @@ public abstract class BaseContentAttachment  implements Serializable {
 	public static String PROP_FILENAME = "filename";
 	public static String PROP_NAME = "name";
 	public static String PROP_COUNT = "count";
+	public static String PROP_PDF = "pdf";
 
 
 	// constructors
@@ -39,6 +40,21 @@ public abstract class BaseContentAttachment  implements Serializable {
 		this.setCount(count);
 		initialize();
 	}
+	/**
+	 * Constructor for required fields
+	 */
+	public BaseContentAttachment (
+			java.lang.String path,
+			java.lang.String name,
+			java.lang.Integer count,
+			java.lang.String pdf) {
+		
+		this.setPath(path);
+		this.setName(name);
+		this.setCount(count);
+		this.setPdf(pdf);
+		initialize();
+	}
 
 	protected void initialize () {}
 
@@ -49,7 +65,7 @@ public abstract class BaseContentAttachment  implements Serializable {
 	private java.lang.String name;
 	private java.lang.String filename;
 	private java.lang.Integer count;
-
+	private java.lang.String pdf;
 
 
 
@@ -122,6 +138,19 @@ public abstract class BaseContentAttachment  implements Serializable {
 
 
 
+	/**
+	 * Return the value associated with the column: pdf
+	 */
+	public java.lang.String getPdf() {
+		return pdf;
+	}
+	/**
+	 * Set the value related to the column: pdf
+	 * @param count the pdf value
+	 */
+	public void setPdf(java.lang.String pdf) {
+		this.pdf = pdf;
+	}
 
 	public String toString () {
 		return super.toString();
