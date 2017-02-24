@@ -1,0 +1,1 @@
+alter table `jc_content_attachment` add column  `pdf` varchar(255) DEFAULT NULL COMMENT 'pdf路径', 
