@@ -134,7 +134,7 @@ a.pn-opt:active {color: #0070b8;}
 .inbox/*收件箱管理*/{background:url(../img/theme/sjxgl.jpg) no-repeat; width:102px; height:18px; color:#00325d; line-height:18px; text-indent:18px; border:0 none; cursor:pointer;}
 .sendbox/*发件箱管理*/{background:url(../img/theme/fjxgl.jpg) no-repeat; width:102px; height:18px; color:#00325d; line-height:18px; text-indent:18px; border:0 none; cursor:pointer;}
 .trash/*垃圾箱管理*/{background:url(../img/theme/ljxgl.jpg) no-repeat; width:89px; height:18px; color:#00325d; line-height:18px; text-indent:18px; border:0 none; cursor:pointer;}
-.reply/*回复*/{background:url(../img/theme/shenhe.jpg) no-repeat; width:66px; height:20px; color:#666666; line-height:20px; text-indent:18px; border:0 none; cursor:pointer;}
+.reply/*回复*/{color:#666666; line-height:20px; text-indent:18px; border:0 none; cursor:pointer;}
 .delete-complete/*彻底删除*/{background:url(../img/theme/scgx.jpg) no-repeat; width:100px; height:20px; color:#666666; line-height:20px; text-indent:18px; border:0 none; cursor:pointer;}
 
 .editor-style{background:url(../img/theme/eidtorbg.jpg) repeat-x;height:38px;line-height:38px;}
