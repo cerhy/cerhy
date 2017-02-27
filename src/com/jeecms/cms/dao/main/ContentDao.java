@@ -172,8 +172,14 @@ public interface ContentDao {
 	 *            是否使用缓存。
 	 * @return
 	 */
+	
 	public Content getSide(Integer id, Integer siteId, Integer channelId,
 			boolean next, boolean cacheable,Integer userId,Integer columnId);
+	
+	
+	public Content getContentCollection(Integer id, Integer siteId,
+			boolean next, boolean cacheable,Integer userId);
+	
 
 	/**
 	 * 根据内容ID数组获取内容列表

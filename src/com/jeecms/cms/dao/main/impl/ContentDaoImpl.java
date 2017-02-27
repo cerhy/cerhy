@@ -398,6 +398,26 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 		}
 	}
 
+	public Content getContentCollection(Integer id, Integer siteId, boolean next, boolean cacheable,Integer userId){
+		Finder f = Finder.create("select bean from Content bean join bean.collectUsers user where user.id=:userId").setParam("userId", userId);
+		if (siteId != null) {
+			f.append(" and bean.site.id=:siteId");
+			f.setParam("siteId", siteId);
+		}
+		if (next) {
+			f.append(" and bean.id>:id");
+			f.setParam("id", id);
+			f.append(" order by bean.id asc");
+		} else {
+			f.append(" and bean.id<:id");
+			f.setParam("id", id);
+			f.append(" order by bean.id desc");
+		}
+		Query query = f.createQuery(getSession());
+		query.setCacheable(cacheable).setMaxResults(1);
+		return (Content) query.uniqueResult();
+	}
+	
 	public Content getSide(Integer id, Integer siteId, Integer channelId,
 			boolean next, boolean cacheable,Integer userId,Integer columnId) {
 		Finder f = Finder.create("from Content bean where 1=1");

@@ -13,6 +13,7 @@
 	<bean id="cms_channel_page" class="com.jeecms.cms.action.directive.ChannelPageDirective"/>
 	<bean id="cms_channel" class="com.jeecms.cms.action.directive.ChannelDirective"/>
 	<bean id="cms_content" class="com.jeecms.cms.action.directive.ContentDirective"/>
+	<bean id="cms_content_collection" class="com.jeecms.cms.action.directive.ContentCollectionDirective"/>
 	<bean id="cms_content_list" class="com.jeecms.cms.action.directive.ContentListDirective"/>
 	<bean id="cms_content_page" class="com.jeecms.cms.action.directive.ContentPageDirective"/>
 	<bean id="cms_tag_list" class="com.jeecms.cms.action.directive.ContentTagListDirective"/>
