@@ -201,6 +201,11 @@ Cms.commentListMore = function(base, c, options) {
 	$("#" + c).load(base + "/comment_list.jspx", options);
 	$('#commentDialog').dialog('open');
 }
+Cms.commentListMoreBlog = function(base, c, options) {
+	c = c || "commentListDiv";
+	$("#" + c).load(base + "/comment_list.jspx?blogDate=0", options);
+	$('#commentDialog').dialog('open');
+}
 
 Cms.commentListChannelMore = function(base, c, options) {
 	c = c || "commentListDiv";
