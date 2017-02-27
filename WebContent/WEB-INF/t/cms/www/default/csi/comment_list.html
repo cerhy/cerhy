@@ -17,7 +17,11 @@
       	 <a class="comments-hf" id="commentreply_${c.id}" onclick="Cms.commentInputLoad('${base}','commentInputDiv_','commentInputDiv_${c.id}','${contentId!}','${c.id}')">回复</a>
       [#if c??&&c.replyCount>0]
 				  [#if c.replyCount>0]
-				  <span style="cursor: pointer" id="commentviewreply_${c.id}" onclick="Cms.commentListMore('${base}','commentDialog',{parentId:${c.id},contentId:${contentId!},orderBy:0,count:5,checked:1})">查看回复(${c.replyCount!})</span>
+				 	[#if blogDate??]
+				  		<span style="cursor: pointer" id="commentviewreply_${c.id}" onclick="Cms.commentListMoreBlog('${base}','commentDialog',{parentId:${c.id},contentId:${contentId!},orderBy:0,count:5,checked:1})">查看回复(${c.replyCount!})</span>
+			  		[#else]
+				  		<span style="cursor: pointer" id="commentviewreply_${c.id}" onclick="Cms.commentListMore('${base}','commentDialog',{parentId:${c.id},contentId:${contentId!},orderBy:0,count:5,checked:1})">查看回复(${c.replyCount!})</span>
+			  		[/#if]
 				  [/#if]
 	  [/#if]
 	   </div>	
