@@ -759,11 +759,18 @@ public class BlogAct {
 			model.addAttribute("txt", txt);
 			model.addAttribute("columnIdZ", columnId);
 			model.addAttribute("pic", content.getPictureByNo(pageNo));
-			String GroupFlag = request.getParameter("GroupFlag");
-			if("-1".equals(GroupFlag)){
-				model.addAttribute("GroupFlagData", -1);
+			String collection = request.getParameter("collection");
+			String d = request.getParameter("d");
+			if(null != collection || "2".equals(d)){//转载文章显示
+				model.addAttribute("collection", 1);
+				model.addAttribute("uId", u.getId());
 			}else{
-				model.addAttribute("GroupFlagData", content.getUser().getId());
+				String GroupFlag = request.getParameter("GroupFlag");
+				if("-1".equals(GroupFlag)){
+					model.addAttribute("GroupFlagData", -1);
+				}else{
+					model.addAttribute("GroupFlagData", content.getUser().getId());
+				}
 			}
 			model = blogCommon.getAlreadyJoinGroup(request, model,u);
 			model = blogCommon.getChannel(request,model,u,site);
@@ -791,6 +798,10 @@ public class BlogAct {
 			CmsConfig config=CmsUtils.getSite(request).getConfig();
 			config.getConfigAttr().getPreview();
 			//CmsUser u = CmsUtils.getUser(request);
+			if("2".equals(friend)){
+				friend = request.getParameter("utId");
+				model.addAttribute("collection", 1);
+			}
 			CmsUser user=cmsUserMng.findById(Integer.valueOf(friend.toString()));
 			CmsSite site = content.getSite();
 			Set<CmsGroup> groups = content.getViewGroupsExt();
@@ -811,12 +822,18 @@ public class BlogAct {
 				model.addAttribute("who",0);
 				model.addAttribute("userIds", user.getId());
 				model.addAttribute("usert", user);
-			String GroupFlag = request.getParameter("GroupFlag");
-			if("-1".equals(GroupFlag)){
-				model.addAttribute("GroupFlagData", -1);
+			String collection = request.getParameter("collection");
+			if(null != collection ){//转载文章显示
+				model.addAttribute("collection", 1);
 			}else{
-				model.addAttribute("GroupFlagData", content.getUser().getId());
+				String GroupFlag = request.getParameter("GroupFlag");
+				if("-1".equals(GroupFlag)){
+					model.addAttribute("GroupFlagData", -1);
+				}else{
+					model.addAttribute("GroupFlagData", content.getUser().getId());
+				}
 			}
+			
 			model = blogCommon.getAlreadyJoinGroup(request, model,user);
 			model = blogCommon.getChannel(request,model,user,site);
 			model = blogCommon.getColumn(request,model,user);

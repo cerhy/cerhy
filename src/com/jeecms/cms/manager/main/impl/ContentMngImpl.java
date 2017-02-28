@@ -2,7 +2,6 @@ package com.jeecms.cms.manager.main.impl;
 
 import static com.jeecms.cms.entity.main.ContentCheck.DRAFT;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -11,8 +10,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -145,6 +142,12 @@ public class ContentMngImpl implements ContentMng, ChannelDeleteChecker {
 	public Content getSide(Integer id, Integer siteId, Integer channelId,
 			boolean next,Integer userId,Integer columnId) {
 		return dao.getSide(id, siteId, channelId, next, true,userId,columnId);
+	}
+	
+	@Transactional(readOnly = true)
+	public Content getContentCollection(Integer id, Integer siteId,
+			boolean next,Integer userId) {
+		return dao.getContentCollection(id, siteId, next, true,userId);
 	}
 
 	@Transactional(readOnly = true)

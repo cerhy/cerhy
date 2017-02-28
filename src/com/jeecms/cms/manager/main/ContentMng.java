@@ -85,6 +85,9 @@ public interface ContentMng {
 	public Content getSide(Integer id, Integer siteId, Integer channelId,
 			boolean next,Integer userId,Integer columnId);
 
+	public Content getContentCollection(Integer id, Integer siteId,
+			boolean next,Integer userId);
+	
 	public Pagination getPageBySiteIdsForTag(Integer[] siteIds,
 			Integer[] typeIds, Boolean titleImg, Boolean recommend,
 			String title, int open,Map<String,String[]>attr,int orderBy, int pageNo, int pageSize);

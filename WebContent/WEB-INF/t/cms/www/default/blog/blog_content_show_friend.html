@@ -179,6 +179,35 @@ Cms.siteFlow("${base}", location.href, document.referrer,
 				      [/#if]
 				    </div>
 				       
+				           [#if collection??]
+				      <div class="prev-next-wz clearfix">
+				         [@cms_content_collection id=content.id next='1' userId=usert.id]
+				          [#if tag_bean??]
+                    		<a href="${tag_bean.url}?f=2&utId=${usert.id}" class="prev-pian">
+                            <span>&lt;上一篇</span>
+                            <em>[@text_cut s=tag_bean.title len=20 append='...'/]</em>
+                        	</a>
+	                   	  [#else]
+                    		<a href="#" class="prev-pian">
+                            <em>没有了</em>
+                        	</a>
+	                      [/#if]
+				         [/@cms_content_collection]
+				         [@cms_content_collection id=content.id next='0' userId=usert.id]
+	                    [#if tag_bean??]
+		                     <a href="${tag_bean.url}?f=2&utId=${usert.id}" class="next-pian">
+	                            <em>[@text_cut s=tag_bean.title len=20 append='...'/]</em>
+	                            <span>下一篇&gt;</span>
+	                        </a>
+	                    [#else]
+		                     <a href="#" class="next-pian">
+	                            <em>没有了</em>
+	                        </a>
+	                    [/#if]
+                    [/@cms_content_collection]
+				       </div>
+				      [#else] 
+				       
                     <div class="prev-next-wz clearfix">
                  
 				   [@cms_content id=content.id next='1' channelId=channel.id userId=GroupFlagData columnId=columnIdZ]
@@ -220,6 +249,7 @@ Cms.siteFlow("${base}", location.href, document.referrer,
 	                    [/#if]
                     [/@cms_content]
                     </div>
+                    [/#if]
                <div class="news-comments" style="width:665px;">
 				    [#if channel.commentControl!=2]
                     [#include "../content/inc_comment_input.html"/]
