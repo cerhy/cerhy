@@ -130,9 +130,9 @@
 			      [/#if]
 			    </div>
                     <div class="prev-next-wz clearfix">
-                    [@cms_content id=content.id next='1' channelId=channel.id]
+                    [@cms_content id=content.id next='1' channelId=channel.id topicId=topicId]
                     	[#if tag_bean??]
-                    		<a href="${tag_bean.url}" class="prev-pian">
+                    		<a href="${tag_bean.url}?topicId=${topicId}" class="prev-pian">
                             <span>&lt;上一篇</span>
                             <em>[@text_cut s=tag_bean.title len=20 append='...'/]</em>
                         	</a>
@@ -143,9 +143,9 @@
                         	</a>
                     	[/#if]
                     [/@cms_content]
-                    [@cms_content id=content.id next='0' channelId=channel.id]
+                    [@cms_content id=content.id next='0' channelId=channel.id topicId=topicId]
 	                    [#if tag_bean??]
-	                     <a href="${tag_bean.url}" class="next-pian">
+	                     <a href="${tag_bean.url}?topicId=${topicId}" class="next-pian">
                             <em>[@text_cut s=tag_bean.title len=20 append='...'/]</em>
                             <span>下一篇&gt;</span>
                         </a>

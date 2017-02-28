@@ -405,13 +405,13 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 			f.setParam("siteId", siteId);
 		}
 		if (next) {
-			f.append(" and bean.id>:id");
-			f.setParam("id", id);
-			f.append(" order by bean.id asc");
-		} else {
 			f.append(" and bean.id<:id");
 			f.setParam("id", id);
 			f.append(" order by bean.id desc");
+		} else {
+			f.append(" and bean.id>:id");
+			f.setParam("id", id);
+			f.append(" order by bean.id asc");
 		}
 		Query query = f.createQuery(getSession());
 		query.setCacheable(cacheable).setMaxResults(1);
@@ -419,8 +419,15 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 	}
 	
 	public Content getSide(Integer id, Integer siteId, Integer channelId,
-			boolean next, boolean cacheable,Integer userId,Integer columnId) {
-		Finder f = Finder.create("from Content bean where 1=1");
+			boolean next, boolean cacheable,Integer userId,Integer columnId,Integer topicId) {
+		Finder f;
+		if(null != topicId){
+			channelId =null;
+			f = Finder.create("select bean from Content bean join bean.topics topic where topic.id=:topicId").setParam("topicId", topicId);
+		}else{
+			f = Finder.create("from Content bean where 1=1");
+		}
+		
 		if(null != userId){
 			if(userId != -1){
 				f.append(" and bean.user.id=:userId");
