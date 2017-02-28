@@ -174,7 +174,7 @@ public interface ContentDao {
 	 */
 	
 	public Content getSide(Integer id, Integer siteId, Integer channelId,
-			boolean next, boolean cacheable,Integer userId,Integer columnId);
+			boolean next, boolean cacheable,Integer userId,Integer columnId,Integer topicId);
 	
 	
 	public Content getContentCollection(Integer id, Integer siteId,

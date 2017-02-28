@@ -29,6 +29,10 @@ public class ContentDirective implements TemplateDirectiveModel {
 	/**
 	 * 输入参数，用户ID
 	 */
+	public static final String TOPIC_ID = "topicId";
+	/**
+	 * 输入参数，用户ID
+	 */
 	public static final String PARAM_USER_ID = "userId";
 	/**
 	 * 输入参数，columnId
@@ -54,13 +58,14 @@ public class ContentDirective implements TemplateDirectiveModel {
 		Boolean next = DirectiveUtils.getBool(PRAMA_NEXT, params);
 		Integer userId = getUserId(params);
 		Integer columnId = getColumnId(params);
+		Integer topicId = getTopicId(params);
 		Content content;
 		if (next == null) {
 			content = contentMng.findById(id);
 		} else {
 			CmsSite site = FrontUtils.getSite(env);
 			Integer channelId = DirectiveUtils.getInt(PARAM_CHANNEL_ID, params);
-			content = contentMng.getSide(id, site.getId(), channelId, next,userId,columnId);
+			content = contentMng.getSide(id, site.getId(), channelId, next,userId,columnId,topicId);
 		}
 
 		Map<String, TemplateModel> paramWrap = new HashMap<String, TemplateModel>(
@@ -70,6 +75,12 @@ public class ContentDirective implements TemplateDirectiveModel {
 				.addParamsToVariable(env, paramWrap);
 		body.render(env.getOut());
 		DirectiveUtils.removeParamsFromVariable(env, paramWrap, origMap);
+	}
+	
+	private Integer getTopicId(Map<String, TemplateModel> params)
+			throws TemplateException {
+		Integer id = DirectiveUtils.getInt(TOPIC_ID, params);
+		return id;
 	}
 
 	private Integer getId(Map<String, TemplateModel> params)
