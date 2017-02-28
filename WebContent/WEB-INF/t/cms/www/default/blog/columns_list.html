@@ -26,6 +26,25 @@ $('.user-menu-links li').click(function(){
 .st_tree ul .change :hover{background-color:#e7e7e7 }
 ::-webkit-scrollbar{width:0px}
 .clear{clear:both}
+#tab{position:relative;}
+#tab .tabList ul li{
+	float:left;
+	background:#fefefe;
+	background:-moz-linear-gradient(top, #fefefe, #ededed);	
+	background:-o-linear-gradient(left top,left bottom, from(#fefefe), to(#ededed));
+	background:-webkit-gradient(linear,left top,left bottom, from(#fefefe), to(#ededed));
+	border:1px solid #ccc;
+	padding:5px 0;
+	width:100px;
+	text-align:center;
+	margin-left:-1px;
+	position:relative;
+	cursor:pointer;
+}
+#tab .tabList li.cur{
+	border-bottom:none;
+	background:#fff;
+}
 </style>
 <script type="text/javascript">
 $(function(){
@@ -112,11 +131,21 @@ window.onload=function(event){
              <input type="submit" value="新建" class="sub1" />
          </div>
         </form>
-        
-		<form id="tableForm" action="contribute_list.jspx" method="post">
-          [#if columnsList?size gt 0]
+          
+		<div id="tab">
+		  <div class="tabList">
+			<ul>
+				<li class="cur">栏目</li>
+				<li>已加入的群组</li>
+			</ul>
+		  </div>
+		</div>
+		<br />
+		<br />
+		<form id="tableForm0" action="" method="post">
           <table cellpadding="0" cellspacing="0">
             <tbody>
+          [#if columnsList?size gt 0]
               <tr>
                <td class="tggl-top" style="font-size:14px;min-width: 80px;">栏目序号</td>
                <td class="tggl-top" style="font-size:14px;min-width: 200px;">栏目名称</td>
@@ -131,17 +160,15 @@ window.onload=function(event){
                 <td><a href="${base}/blog/update_tz.jspx?id=${c.columnId}&name=${c.columnName}&orderId=${c.orderId}&uniqueCode=${c.uniqueCode!''}">修改<a> | [#if c.uniqueCode??][#else]<a href="${base}/blog/deteleColumn.jspx?id=${c.columnId}">删除<a>[/#if]</td>
               </tr>
               [/#list]
+            [#else]
+             <tr>
+               <td class="tggl-top" style="font-size:14px;" colspan="4">暂无栏目/组..</td>
+              </tr>
+            [/#if]
             </tbody>
           </table>
-         
-            [#else]
-                <div>暂无栏目</div>
-            [/#if]
           </form>
-          <br />
-          <br />
-          <br />
-		<form id="tableForm" action="" method="post">
+		<form id="tableForm1" action="" method="post" style="display: none;">
           <table cellpadding="0" cellspacing="0">
             <tbody>
               [#if joinGroupList??&&joinGroupList?size gt 0]
@@ -164,7 +191,7 @@ window.onload=function(event){
               [/#list]
               [#else]
               <tr>
-               <td class="tggl-top" style="font-size:14px;min-width: 80px;" colspan="4">暂无加入的群组...</td>
+               <td class="tggl-top" style="font-size:14px;" colspan="4">暂无加入的群组...</td>
               </tr>
               [/#if]
             </tbody>
@@ -202,5 +229,29 @@ function signOut(obj){
 	 }else{ 
 	     return false; 
 	 } 
+}
+</script>
+<script>
+window.onload = function() {
+    var oDiv = document.getElementById("tab");
+    var oLi = oDiv.getElementsByTagName("div")[0].getElementsByTagName("li");
+    var timer = null;
+    for (var i = 0; i < oLi.length; i++) {
+        oLi[i].index = i;
+        oLi[i].onmouseover = function() {
+            show(this.index);
+        }
+    }
+    function show(a) {
+        index = a;
+        var alpha = 0;
+        for (var j = 0; j < oLi.length; j++) {
+            oLi[j].className = "";
+            $("#tableForm"+j).hide();
+        }
+        oLi[index].className = "cur";
+        $("#tableForm"+index).show();
+        clearInterval(timer);
+    }
 }
 </script>
