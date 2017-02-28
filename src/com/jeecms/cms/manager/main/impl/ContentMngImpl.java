@@ -346,16 +346,21 @@ public class ContentMngImpl implements ContentMng, ChannelDeleteChecker {
 		if (attachmentPaths != null && attachmentPaths.length > 0) {
 			for (int i = 0, len = attachmentPaths.length; i < len; i++) {
 				if (!StringUtils.isBlank(attachmentPaths[i])) {
-					String fileRealPath = realPathResolver.get(attachmentPaths[i].substring(attachmentPaths[i].indexOf("/",attachmentPaths[i].indexOf("/")+1) + 1,attachmentPaths[i].length()));
-					String fileName=FileUtils.getFileName(attachmentPaths[i]);
-					String outPdfRealPath = realPathResolver.get(FileUtils.getFilePath(attachmentPaths[i].substring(attachmentPaths[i].indexOf("/",attachmentPaths[i].indexOf("/")+1) + 1,attachmentPaths[i].length())));
-					//String pdfPath=FileUtils.getFilePath(attachmentPaths[i])+fileName+".pdf";
-					if(!fileRealPath.endsWith(OpenOfficeConverter.PDF)){
-						//转换文档成pdf
-						openOfficeConverter.convertToPdf(fileRealPath,outPdfRealPath + "/",fileName);
+					String pdf=null;
+					try {
+						String fileRealPath = realPathResolver.get(attachmentPaths[i].substring(attachmentPaths[i].indexOf("/",attachmentPaths[i].indexOf("/")+1) + 1,attachmentPaths[i].length()));
+						String fileName=FileUtils.getFileName(attachmentPaths[i]);
+						String outPdfRealPath = realPathResolver.get(FileUtils.getFilePath(attachmentPaths[i].substring(attachmentPaths[i].indexOf("/",attachmentPaths[i].indexOf("/")+1) + 1,attachmentPaths[i].length())));
+						//String pdfPath=FileUtils.getFilePath(attachmentPaths[i])+fileName+".pdf";
+						if(!fileRealPath.endsWith(OpenOfficeConverter.PDF)){
+							//转换文档成pdf
+							openOfficeConverter.convertToPdf(fileRealPath,outPdfRealPath + "/",fileName);
+						}
+						int lastIndex = attachmentPaths[i].lastIndexOf(".");
+						pdf=attachmentPaths[i].substring(0, lastIndex)+".pdf";
+					} catch (Exception e) {
+						e.printStackTrace();
 					}
-					int lastIndex = attachmentPaths[i].lastIndexOf(".");
-					String pdf=attachmentPaths[i].substring(0, lastIndex)+".pdf";
 					bean.addToAttachmemtsPdf(attachmentPaths[i],attachmentNames[i], attachmentFilenames[i],pdf);
 				}
 			}
