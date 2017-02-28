@@ -98,8 +98,8 @@
 					                	${comment.createTime?string('yyyy-MM-dd HH:mm:ss')}
 					                [/#if]
 					                </td>
-					                <td style="text-align:left; text-indent:20px;">
-					                ${comment.text!}
+					                <td style="text-align:left; text-indent:20px;" title="${comment.text!}">
+					                [@text_cut s=comment.text?html len='15' append='...'/]
 					                </td>
 					                <td style="text-align:left; text-indent:20px;">
 					                ${comment.commentUser.username!}

@@ -147,6 +147,7 @@ public class BlogAct {
 			//为了删除文章后能跳转回本栏目下
 			if(null != request.getParameter("columnId")){
 				model.addAttribute("columnId", request.getParameter("columnId"));
+				model.addAttribute("columnIdZ", request.getParameter("columnId"));
 				model.addAttribute("submitOn", 1);
 				columnId = Integer.parseInt(request.getParameter("columnId"));
 			}
@@ -580,6 +581,7 @@ public class BlogAct {
 			//为了删除文章后能跳转回本栏目下
 			if(null != request.getParameter("columnId")){
 				model.addAttribute("columnId", request.getParameter("columnId"));
+				model.addAttribute("columnIdZ", request.getParameter("columnId"));
 				model.addAttribute("submitOn", 1);
 				columnId = Integer.parseInt(request.getParameter("columnId"));
 			}
