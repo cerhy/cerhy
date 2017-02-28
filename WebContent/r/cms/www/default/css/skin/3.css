@@ -52,3 +52,16 @@ body, button, input, select, textarea { background: transparent;}
 .tggl table{border-color:#666666;}
 .tggl-top{background:transparent;}
 .st_tree ul li a:hover {color:#0070b8;}
+
+.comments h3 {color:#FFFFFF;}
+
+.xueke-content-detail p  ,.comments-list h1 ,.xueke-acticle h2 {color: #999;}
+
+.comments .comments-text{
+	color: #999;
+	border: 1px solid #666666;
+}
+
+.plcode ,.rig .reply,.rig .reply .reply-text {
+	color: #999;
+border: 1px solid #666666;}
