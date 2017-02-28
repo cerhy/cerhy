@@ -80,12 +80,7 @@ public class ContentDirective implements TemplateDirectiveModel {
 	private Integer getTopicId(Map<String, TemplateModel> params)
 			throws TemplateException {
 		Integer id = DirectiveUtils.getInt(TOPIC_ID, params);
-		if (id != null) {
-			return id;
-		} else {
-			throw new ParamsRequiredException(PARAM_ID);
-			
-		}
+		return id;
 	}
 
 	private Integer getId(Map<String, TemplateModel> params)

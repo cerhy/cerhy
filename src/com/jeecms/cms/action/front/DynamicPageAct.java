@@ -301,9 +301,7 @@ public class DynamicPageAct {
 		model.addAttribute("pic", content.getPictureByNo(pageNo));
 		
 		String topicId = request.getParameter("topicId");
-		if(null != topicId){
-			model.addAttribute("topicId", topicId);
-		}
+		model.addAttribute("topicId", topicId);
 		FrontUtils.frontData(request, model, site);
 		String equipment=(String) request.getAttribute("ua");
 		if(StringUtils.isNotBlank(equipment)&&equipment.equals("mobile")){
