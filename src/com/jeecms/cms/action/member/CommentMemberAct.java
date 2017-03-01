@@ -196,7 +196,8 @@ public class CommentMemberAct {
 		 * pagination);
 		 */
 		// 返回评论列表
-		return FrontUtils.showSuccess(request, model, nextUrl);
+		return "redirect:../member/news_comments.jspx";
+		//return FrontUtils.showSuccess(request, model, nextUrl);
 	}
 	
 	private  boolean canDeleteComment(CmsComment comment,CmsUser user){
