@@ -865,10 +865,10 @@ public class BlogAct {
 			errors.addErrorCode("error.exceptionCaptcha");
 			return errors;
 		}
-		if (errors.ifBlank(title, "title", 150)) {
+		if (errors.ifBlank(title, "title", 50)) {
 			return errors;
 		}
-		if (errors.ifMaxLength(author, "author", 100)) {
+		if (errors.ifMaxLength(author, "author", 6)) {
 			return errors;
 		}
 		if (errors.ifMaxLength(description, "description", 255)) {
