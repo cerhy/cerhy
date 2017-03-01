@@ -40,6 +40,7 @@ import com.jeecms.common.page.Paginable;
 import com.jeecms.common.page.Pagination;
 import com.jeecms.common.page.SimplePage;
 import com.jeecms.common.util.StrUtils;
+import com.jeecms.common.web.session.SessionProvider;
 import com.jeecms.core.entity.CmsConfig;
 import com.jeecms.core.entity.CmsGroup;
 import com.jeecms.core.entity.CmsSite;
@@ -49,6 +50,8 @@ import com.jeecms.core.web.WebErrors;
 import com.jeecms.core.web.util.CmsUtils;
 import com.jeecms.core.web.util.FrontUtils;
 import com.jeecms.core.web.util.URLHelper.PageInfo;
+import com.octo.captcha.service.CaptchaServiceException;
+import com.octo.captcha.service.image.ImageCaptchaService;
 
 public class BlogAct {
 	private static final Logger log = LoggerFactory.getLogger(DynamicPageAct.class);
@@ -200,7 +203,7 @@ public class BlogAct {
 	}
 	
 		
-	public void blog_save(String title, String author, String description,
+	public String blog_save(String title, String author, String description,
 			String txt, String tagStr, Integer channelId,Integer columnId,Integer modelId,ContentDoc doc,
 			String captcha,String mediaPath,String mediaType,
 			String[] attachmentPaths, String[] attachmentNames,
@@ -212,10 +215,15 @@ public class BlogAct {
 				CmsUser user = CmsUtils.getUser(request);
 				FrontUtils.frontData(request, model, site);
 			if (user == null) {
-				FrontUtils.showLogin(request, model, site);
+				return FrontUtils.showLogin(request, model, site);
 			}
 
 		Content c = new Content();
+		WebErrors errors = validateSave(title, author, description, txt,doc,
+				tagStr,site, user, captcha, request, response);
+		if (errors.hasErrors()) {
+			return FrontUtils.showError(request, response, model, errors);
+		}
 		c.setSite(site);
 		CmsModel defaultModel=cmsModelMng.getDefModel();
 		
@@ -227,7 +235,6 @@ public class BlogAct {
 		} else {
 			modelId = 24;//普通博客
 		}
-		
 		CmsModel m=cmsModelMng.findById(modelId);
 		if(m!=null){
 			c.setModel(m);
@@ -258,11 +265,8 @@ public class BlogAct {
 		if(doc!=null){
 			contentDocMng.save(doc, c);
 		}
-		try {
-			response.sendRedirect("../blog/index.jspx");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+			//response.sendRedirect("../blog/index.jspx");
+		return "redirect:../blog/index.jspx";
 	}
 	
 	public String blog_edit(Integer id, String nextUrl,HttpServletRequest request,
@@ -846,6 +850,51 @@ public class BlogAct {
 			return FrontUtils.getTplPath(request, site.getSolutionPath(),TPLDIR_BLOG,"tpl.blogContentShowFriend");
 		}
 
+	private WebErrors validateSave(String title, String author,
+			String description, String txt,ContentDoc doc, String tagStr,
+			CmsSite site, CmsUser user, String captcha,
+			HttpServletRequest request, HttpServletResponse response) {
+		WebErrors errors = WebErrors.create(request);
+		try {
+			if (!imageCaptchaService.validateResponseForID(session
+					.getSessionId(request, response), captcha)) {
+				errors.addErrorCode("error.invalidCaptcha");
+				return errors;
+			}
+		} catch (CaptchaServiceException e) {
+			errors.addErrorCode("error.exceptionCaptcha");
+			return errors;
+		}
+		if (errors.ifBlank(title, "title", 150)) {
+			return errors;
+		}
+		if (errors.ifMaxLength(author, "author", 100)) {
+			return errors;
+		}
+		if (errors.ifMaxLength(description, "description", 255)) {
+			return errors;
+		}
+		if(doc==null){
+			// 内容不能大于1M
+			if (errors.ifBlank(txt, "txt", 1048575)) {
+				return errors;
+			}
+		}else{
+			if(StringUtils.isBlank(doc.getDocPath())){
+				errors.addErrorCode("error.hasNotUploadDoc");
+				return errors;
+			}
+		}
+		
+		if (errors.ifMaxLength(tagStr, "tagStr", 255)) {
+			return errors;
+		}
+		return errors;
+	}
+	@Autowired
+	protected ImageCaptchaService imageCaptchaService;
+	@Autowired
+	protected SessionProvider session;
     @Autowired
     private CmsKeywordMng cmsKeywordMng;
 	@Autowired

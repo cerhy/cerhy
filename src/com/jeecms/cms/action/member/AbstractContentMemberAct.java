@@ -101,7 +101,7 @@ public class AbstractContentMemberAct {
 		}
 	}
 	
-	public void save(String title, String author, String description,
+	public String save(String title, String author, String description,
 			String txt, String tagStr, Integer channelId, Integer modelId,ContentDoc doc,
 			String captcha,String mediaPath,String mediaType,
 			String[] attachmentPaths, String[] attachmentNames,
@@ -115,15 +115,15 @@ public class AbstractContentMemberAct {
 		MemberConfig mcfg = site.getConfig().getMemberConfig();
 		// 没有开启会员功能
 		if (!mcfg.isMemberOn()) {
-			FrontUtils.showMessage(request, model, "member.memberClose");
+			return FrontUtils.showMessage(request, model, "member.memberClose");
 		}
 		if (user == null) {
-			FrontUtils.showLogin(request, model, site);
+			return FrontUtils.showLogin(request, model, site);
 		}
 		WebErrors errors = validateSave(title, author, description, txt,doc,
 				tagStr, channelId, site, user, captcha, request, response);
 		if (errors.hasErrors()) {
-			FrontUtils.showError(request, response, model, errors);
+			return FrontUtils.showError(request, response, model, errors);
 		}
 
 		Content c = new Content();
@@ -163,11 +163,7 @@ public class AbstractContentMemberAct {
 		if(doc!=null){
 			contentDocMng.save(doc, c);
 		}
-		try {
-			response.sendRedirect("../member/contribute_list.jspx");
-		} catch (IOException e) {
-			e.printStackTrace();
-		};
+		return "redirect:../member/contribute_list.jspx";
 	}
 	
 	public String edit(Integer id, String nextUrl,HttpServletRequest request,

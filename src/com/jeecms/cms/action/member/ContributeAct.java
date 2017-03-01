@@ -128,7 +128,7 @@ public class ContributeAct extends AbstractContentMemberAct {
 	 * @return
 	 */
 	@RequestMapping(value = "/member/contribute_save.jspx")
-	public void save(String title, String author, String description,
+	public String save(String title, String author, String description,
 			String txt, String tagStr, Integer channelId,Integer columnId,Integer modelId, 
 			String captcha,String mediaPath,String mediaType,
 			String[] attachmentPaths, String[] attachmentNames,
@@ -149,12 +149,12 @@ public class ContributeAct extends AbstractContentMemberAct {
 			   }
 		   }
 		   if(null != blog ){
-			  blogAct.blog_save(title, author, description, txt, tagStr, channelId,columnId,modelId,
+			return blogAct.blog_save(title, author, description, txt, tagStr, channelId,columnId,modelId,
 						null, captcha,mediaPath,mediaType,attachmentPaths,attachmentNames, attachmentFilenames
 						,picPaths,picDescs,charge,chargeAmount,
 						nextUrl, request, response, model,sta);
 					   }else{
-			   super.save(title, author, description, txt, tagStr, channelId,modelId,
+			 return super.save(title, author, description, txt, tagStr, channelId,modelId,
 						null, captcha,mediaPath,mediaType,attachmentPaths,attachmentNames, attachmentFilenames
 						,picPaths,picDescs,charge,chargeAmount,
 						nextUrl, request, response, model);
