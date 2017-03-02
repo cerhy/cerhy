@@ -81,15 +81,13 @@ function enter(){
 }
 </script>
 <script type="text/javascript">
-window.onload=function(event){
-    var button=document.getElementById("btn");
-    button.onclick=function(event){
+function cp(){
+		alert("==");
         document.getElementById("uniqueCode").select();
         document.execCommand("copy",false,null);
         $("#info").html("复制成功...");
         $("#info").animate({opacity: "hide"},5000);
-    };
-};
+}
 </script>
 [#include "head.html"/]
 <div class="blogBody">
@@ -120,7 +118,7 @@ window.onload=function(event){
         <div style="display: none;" id="sh">
         	<span style="font-size:16px;">群组唯一标识码:</span>
         	<input type="text" style="margin:10px;width: 180px;height: 30px;" id="uniqueCode" name="uniqueCode" readonly="readonly"/>
-        	<span><a onmouseover="this.style.cssText='color:red;cursor: pointer;'" onmouseout="this.style.cssText='color:black'" href="javascript:;" id="btn" >复制</a></span>
+        	<span><a onmouseover="this.style.cssText='color:red;cursor: pointer;'" onmouseout="this.style.cssText='color:black'" href="javascript:;" id="btn" onclick="cp()">复制</a></span>
         	<span id="info" style="color: red;font-size: 2px;"></span>
         </div>
         <div>
