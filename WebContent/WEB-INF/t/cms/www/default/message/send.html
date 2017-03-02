@@ -94,7 +94,7 @@ $(function() {
 					              </tr>
 					              <tr>
 					                <td class="tggl-top">内容</td>
-					                <td><textarea name="msgContent" style="width:550px;height:350px"></textarea></td>
+					                <td><textarea name="msgContent" style="width:550px;height:350px">[#if message??]${message.msgContent!}[/#if]</textarea></td>
 					              </tr>
 					              <tr>
 					                <td class="tggl-top">验证码</td><td><input type="text" name="captcha" maxlength="20" class="member-change" style="float:left; margin-left:15px;" /><img id="messageCaptcha" src="${base}/captcha.svl" onclick="this.src='${base}/captcha.svl?d='+new Date()"/></td>
