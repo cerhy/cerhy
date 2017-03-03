@@ -14,11 +14,11 @@ $(function() {
 <table cellpadding="0" cellspacing="0" width="100%">
             <tbody>
               <tr>
-                <td class="tggl-top" width="40">选择</td><td class="tggl-top">标题</td><td class="tggl-top">收件人</td><td class="tggl-top">发送时间</td>
+                <td class="tggl-top" width="40" style="display: none;">选择</td><td class="tggl-top">标题</td><td class="tggl-top">收件人</td><td class="tggl-top">发送时间</td>
               </tr>
               [#list pagination.list as c]
               <tr id="tr_${c.id!}">
-                <td><input type="checkbox" class="member-check" name="ids" value="${c.id!}" /></td>
+                <td style="display: none;"><input type="checkbox" class="member-check" name="ids" value="${c.id!}" /></td>
                 <td>
                 <a href="${base}/member/message_read.jspx?id=${c.id!}&&box=1">
 		[@text_cut s=c.titleHtml len='15' append='...'/]
