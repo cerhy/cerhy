@@ -171,10 +171,12 @@ $(function() {
 			      [/#if]
 			    </div>
                     <div class="prev-next-wz clearfix">
-                    [@cms_content id=content.id next='1' channelId=channel.id topicId=topicId]
+                    [@cms_content id=content.id next='1' channelId=channel.id topicId=topicId typeIds=typeIds]
                     	[#if tag_bean??]
                     		 [#if topicId??]
 	                     <a href="${tag_bean.url}?topicId=${topicId}" class="prev-pian">
+	                     [#elseif typeIds??]
+	                     <a href="${tag_bean.url}?typeIds=${typeIds}" class="prev-pian">
 	                     [#else]
 	                      <a href="${tag_bean.url}" class="prev-pian">
 	                      [/#if]
@@ -188,10 +190,12 @@ $(function() {
                         	</a>
                     	[/#if]
                     [/@cms_content]
-                    [@cms_content id=content.id next='0' channelId=channel.id topicId=topicId]
+                    [@cms_content id=content.id next='0' channelId=channel.id topicId=topicId typeIds=typeIds]
 	                    [#if tag_bean??]
-	                      [#if topicId??]
+	                     [#if topicId??]
 	                     <a href="${tag_bean.url}?topicId=${topicId}" class="next-pian">
+	                     [#elseif typeIds??]
+	                     <a href="${tag_bean.url}?typeIds=${typeIds}" class="next-pian">
 	                     [#else]
 	                      <a href="${tag_bean.url}" class="next-pian">
 	                      [/#if]

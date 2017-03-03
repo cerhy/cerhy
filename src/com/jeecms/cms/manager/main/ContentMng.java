@@ -83,7 +83,7 @@ public interface ContentMng {
 	public  List<Content> getPigeonholeContents(Date pigeonholeDay);
 
 	public Content getSide(Integer id, Integer siteId, Integer channelId,
-			boolean next,Integer userId,Integer columnId,Integer topicId);
+			boolean next,Integer userId,Integer columnId,Integer topicId,Integer typeIds);
 
 	public Content getContentCollection(Integer id, Integer siteId,
 			boolean next,Integer userId);

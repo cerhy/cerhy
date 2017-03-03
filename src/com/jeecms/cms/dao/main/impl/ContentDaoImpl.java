@@ -419,7 +419,7 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 	}
 	
 	public Content getSide(Integer id, Integer siteId, Integer channelId,
-			boolean next, boolean cacheable,Integer userId,Integer columnId,Integer topicId) {
+			boolean next, boolean cacheable,Integer userId,Integer columnId,Integer topicId,Integer typeIds) {
 		Finder f;
 		if(null != topicId){
 			channelId =null;
@@ -427,6 +427,12 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 		}else{
 			f = Finder.create("from Content bean where 1=1");
 		}
+		
+		if(null!=typeIds){
+			f.append(" and bean.type.id=:typeIds");
+			f.setParam("typeIds", typeIds);
+		}
+		
 		
 		if(null != userId){
 			if(userId != -1){

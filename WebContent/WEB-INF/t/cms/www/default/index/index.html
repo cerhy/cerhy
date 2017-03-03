@@ -416,7 +416,7 @@ function HoverLi(x,y,m,n,counter){
                             	 [@cms_content_list channelId='280' count='3' typeId='5' titLen='14' orderBy='2' channelOption='1']
                             	[#list tag_list as a]
                                 <li>
-                                    <a href="${a.url}">
+                                    <a href="${a.url}?typeIds=5">
                                         <span class="trend"></span>
                                         <div class="con clearfix">
                                         	[#if a.typeImg??]<img src="${a.typeImg!}" width="40" height="40" alt="" class="blog-left-img">[#else]<img src="/${res}/images/blog1.png" width="70" height="70" alt="" class="blog-left-img">[/#if]                                                                    
