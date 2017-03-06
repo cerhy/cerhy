@@ -7,11 +7,13 @@
 		                      [/#if]
 		                 </div>
 		                 <div class="user-name-dt"><a href="#">${usert.username}</a></div>
+		                 	[#if user??]
 		                     [#if usert??]
 		                     <a id="focus" style="cursor: pointer;" class="user-oparetion-btn">关注</a>
 		                    <a id="cancelfocus" style="cursor: pointer;" class="user-oparetion-btn">取消关注</a>
 		                    [#else]
 		                     <a href="${base}/logout.jspx" class="user-oparetion-btn">退出</a>
+		                     [/#if]
 		                     [/#if]
 		                     
 		           </div>
@@ -51,8 +53,11 @@
 		                            	[#if c.uniqueCode??]
 										<li  class="change">
 										<a href="${base}/blog/contribute_list_friend.jspx?columnId=${c.columnId}&user_ids=${userIds}&joinGroupStata=0" title="${c.columnName}" ><em></em>[@text_cut s=c.columnName len=5 append='...'/]</a>
+										[#if user??]
 										[#if c.userId!=user.id]
 										<button type="button" id="${c.uniqueCode}" name="uniqueCode" onclick="join_group(${c.uniqueCode},${usert.id});" class="butt" style="float: right;margin-top: -25px;">&nbsp;&nbsp;&nbsp;&nbsp;加入</button>
+										[/#if]
+										[#else]
 										[/#if]
 										</li>
 								   		[/#if]

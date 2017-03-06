@@ -531,35 +531,33 @@ public class BlogAct {
 	public String friendCenter(String userIds,String q, Integer modelId,Integer queryChannelId,String nextUrl,Integer pageNo,HttpServletRequest request, ModelMap model) {
 		CmsSite site = CmsUtils.getSite(request);
 		CmsUser user = CmsUtils.getUser(request);
+		CmsUser userT=cmsUserMng.findById(Integer.valueOf(userIds.toString()));
+		channelMng.updateBlogVisitNum(userT);
 		if(user!=null){
-			CmsUser userT=cmsUserMng.findById(Integer.valueOf(userIds.toString()));
-			channelMng.updateBlogVisitNum(userT);
 			if(user.getId()!=userT.getId()){
 				channelMng.updateBlogVisitorTime(user,userT);
 			}
-			model = blogCommon.getColumn(request,model,userT);
-			model = blogCommon.getChannel(request,model,userT,site);
-			model = blogCommon.getTotalArticleNum(model,userT);
-			model = blogCommon.getTotalCommentNum(model, userT);
-			model = blogCommon.getStarBlogger(request, model);
-			model = blogCommon.getAlreadyJoinGroup(request, model,userT);
-			FrontUtils.frontData(request, model, site);
-			Pagination p = contentMng.getPageForMember_firendsBlog(Integer.valueOf(userIds),q, queryChannelId,site.getId(), modelId,user.getId(), cpn(pageNo), 20,null);
-			model.addAttribute("pagination", p);
-			model.addAttribute("GroupFlag", 0);
-			model.addAttribute("usert", userT);
-			model.addAttribute("userIds", userIds);
-			if (!StringUtils.isBlank(q)) {
-				model.addAttribute("q", q);
-			}
-			if (modelId != null) {
-				model.addAttribute("modelId", modelId);
-			}
-			model.addAttribute("GroupStata", 0);
-			return FrontUtils.getTplPath(request, site.getSolutionPath(), TPLDIR_BLOG, nextUrl);
-		}else{
-			return FrontUtils.showLogin(request, model, site);
 		}
+		model = blogCommon.getColumn(request,model,userT);
+		model = blogCommon.getChannel(request,model,userT,site);
+		model = blogCommon.getTotalArticleNum(model,userT);
+		model = blogCommon.getTotalCommentNum(model, userT);
+		model = blogCommon.getStarBlogger(request, model);
+		model = blogCommon.getAlreadyJoinGroup(request, model,userT);
+		FrontUtils.frontData(request, model, site);
+		Pagination p = contentMng.getPageForMember_firendsBlog(Integer.valueOf(userIds),q, queryChannelId,site.getId(), modelId,null, cpn(pageNo), 20,null);
+		model.addAttribute("pagination", p);
+		model.addAttribute("GroupFlag", 0);
+		model.addAttribute("usert", userT);
+		model.addAttribute("userIds", userIds);
+		if (!StringUtils.isBlank(q)) {
+			model.addAttribute("q", q);
+		}
+		if (modelId != null) {
+			model.addAttribute("modelId", modelId);
+		}
+		model.addAttribute("GroupStata", 0);
+		return FrontUtils.getTplPath(request, site.getSolutionPath(), TPLDIR_BLOG, nextUrl);
 	}
 
 	public String blog_list_friend(String q, Integer modelId,Integer queryChannelId,String nextUrl,Integer pageNo,HttpServletRequest request, ModelMap model) {
@@ -636,14 +634,13 @@ public class BlogAct {
 	public void blog_focus_check(String focusUserId, HttpServletRequest request, HttpServletResponse response) throws IOException {
 		CmsUser user = CmsUtils.getUser(request);
 		CmsSite site = CmsUtils.getSite(request);
-		if (user == null) {
-			FrontUtils.showLogin(request, null, site);
-		}
-		List<Focus> list= focusMng.find(user.getId(), Integer.parseInt(focusUserId));
-		if(null != list && list.size()>0){
-			response.getWriter().print("1");
-		}else{
-			response.getWriter().print("0");
+		if (user != null) {
+			List<Focus> list= focusMng.find(user.getId(), Integer.parseInt(focusUserId));
+			if(null != list && list.size()>0){
+				response.getWriter().print("1");
+			}else{
+				response.getWriter().print("0");
+			}
 		}
 	}
 	
