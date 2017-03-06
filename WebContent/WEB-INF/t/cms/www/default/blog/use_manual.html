@@ -1,0 +1,192 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="${resSys}/front.css" rel="stylesheet" type="text/css"/>
+<script src="${resSys}/jquery.js" type="text/javascript"></script>
+<script src="${resSys}/front.js" type="text/javascript"></script>
+<link rel="stylesheet" type="text/css" href="/${res}/css/hyindex.css" />
+<link rel="stylesheet" type="text/css" href="/${res}/css/custom.css" />
+<title>好研网博客系统使用手册</title>
+<style type="">
+.zt{font-size: 20px;color: red;}
+.wrap-right span{display: block;}
+.cr{color: red;}
+</style>
+[#include "head.html"/]
+<div class="blogBody">
+<div class="blog-con">
+<div class="blogHead" style="font-size: 30px;">海南省教育研究培训院好研网博客系统使用手册</div>
+   <div class="mb20 clearfix">
+     <div class="wrap-left">
+	    <div class="user-center-left">
+	       <div class="user-menu-links">
+	                <ul>
+		                <li><a href="javascript:;" onclick="manual(this)" id="1" class="cr">发表博客</a></li>
+		                <li><a href="javascript:;" onclick="manual(this)" id="2">栏目-群组(发送)</a></li>
+		                <li><a href="javascript:;" onclick="manual(this)" id="3">批注</a></li>
+		                <li><a href="javascript:;" onclick="manual(this)" id="4">其他</a></li>
+			    	</ul>
+	       </div>
+	    </div>
+	 </div>
+     <div class="wrap-right" id="sd1">
+		<div class="personCenter-userInfo blog_right" >
+			<span class="zt">发表博客：</span>
+			<span>⑴：用户在登陆系统后点击【我的博客】，点击【发表博客】。发表博客主要包含1、标题 2、作者 3、栏目 4、多媒体 5、内容 6、附件 7、验证码 (如图1)</span>
+			<span><img src="/${res}/usemanual/fb1.png" alt=""/></span>
+			<span style="padding-left: 50%;">图1</span>
+			<span class="zt">标题：</span>
+			<span>⑴：*的为必填字段,标题的字数限制为50位，为了更好的显示建议标题不宜过长。</span>
+			<span><img src="/${res}/usemanual/fb2.png" alt=""/></span>
+			<span><img src="/${res}/usemanual/fb22.png" alt=""/></span>
+			<span class="zt">作者：</span>
+			<span>⑴：*的为必填字段,作者的字数限制为6位，作者为撰写这边文章的写作人。</span>
+			<span><img src="/${res}/usemanual/fb3.png" alt=""/></span>
+			<span><img src="/${res}/usemanual/fb33.png" alt=""/></span>
+			<span class="zt">栏目：</span>
+			<span>⑴：*的为必填字段，根据要撰写文章的归类选择对应的栏目。</span>
+			<span><img src="/${res}/usemanual/fb4.png" alt=""/></span>
+			<span><img src="/${res}/usemanual/fb44.png" alt=""/></span>
+			<span>⑴：下拉菜单中灰色部分为不可选选项，如图2，图3中的栏目、群组、市县教研-海口教研等。可选部分为测试栏目、测试群组、定安小教等等。</span>
+			<span>⑵：菜单选项选择必须为最后一级。</span>
+			<span><img src="/${res}/usemanual/fb4_2.png" alt=""/></span>
+			<span><img src="/${res}/usemanual/fb4_1.png" alt=""/></span>
+			<span class="zt">多媒体：</span>
+			<span>⑴：对媒体上传的视频文件格式限制为MP4格式。非必填段</span>
+			<span><img src="/${res}/usemanual/fb5.png" alt=""/></span>
+			<span class="zt">内容：</span>
+			<span>⑴：富文本框撰写内容为文章的正文。为必填字段。可为文章设置多种样式。</span>
+			<span><img src="/${res}/usemanual/fb6.png" alt=""/></span>
+			<span class="zt">附件:</span>
+			<span>⑴：有附件上传时该附件作为文章内容在文章正文下方显示(可下载)</span>
+			<span>⑵：当文件格式为TXT格式时上传大小为1M</span>
+			<span><img src="/${res}/usemanual/fb7.png" alt=""/></span>
+			<span><img src="/${res}/usemanual/fb77.png" alt=""/></span>
+			<span class="zt">验证码：</span>
+			<span>⑴：必填字段</span>
+			<span>⑵：点击验证码即可刷新更换验证码</span>
+			<span><img src="/${res}/usemanual/fb88.png" alt=""/></span>
+			<span><img src="/${res}/usemanual/fb8.png" alt=""/></span>
+      	</div>
+	 </div>
+     <div class="wrap-right" id="sd2" style="display: none;">
+		<div class="personCenter-userInfo blog_right" >
+				<span class="zt">新建栏目：</span>
+				<span>⑴：用户在登陆系统后点击【我的博客】，点击【设置】 如图1，点击【新建栏目】 出现如图2界面</span>
+				<span><img src="/${res}/usemanual/lm2.png" alt=""/></span>
+				<span style="padding-left: 50%;">图1</span>
+				<span><img src="/${res}/usemanual/lm3.png" alt="" width="70%"/></span>
+				<span style="padding-left: 50%;">图2</span>
+				<span>⑵：栏目名称为必填字段，输入栏目名称点击新建即可创建栏目，页面刷新过后即可在博客栏目下面展示如图3、4</span>
+				<span>栏目可以修改/删除。</span>
+				<span><img src="/${res}/usemanual/lm5.png" alt="" width="80%"/></span>
+				<span style="padding-left: 50%;">图3</span>
+				<span><img src="/${res}/usemanual/lm10.png" alt=""/></span>
+				<span style="padding-left: 50%;">图4</span>
+				<span class="zt">新建群组：</span>
+				<span>⑶：栏目名称输入框后面有“是否将该栏目作为群组”。将其勾选，会自动生成一个位数的群组编码(不可编辑更改)如图5。</span>
+				<span>点击新建即可创建群组(创建之后群组不可删除,可编辑修改群组名称)如图6。</span>
+				<span><img src="/${res}/usemanual/lm8.png" alt="" width="80%"/></span>
+				<span style="padding-left: 50%;">图5</span>
+				<span><img src="/${res}/usemanual/lm9.png" alt="" width="80%"/></span>
+				<span style="padding-left: 50%;">图6</span>
+				<span>⑷：如果想把已经创建好的栏目作为群组，点击栏目修改勾选“是否将该栏目作为群组”点击更新即可将栏目作为群组。如图7、8</span>
+				<span><img src="/${res}/usemanual/lm6.png" alt="" width="80%"/></span>
+				<span style="padding-left: 50%;">图7</span>
+				<span><img src="/${res}/usemanual/lm11.png" alt=""/></span>
+				<span style="padding-left: 50%;">图8</span>
+				<span class="zt">加入群组：</span>
+				<span>⑴：加入群组步骤</span>
+				<span>进入创建群组者的博客-点击群组-点击加入</span>
+				<span>刷新自己的博客页面即可在群组菜单中看到已加入的群组，<a style="color: red;">发表博客时即可在栏目一项中选择该群组将文章发表到该群组下。</a></span>
+				<span><img src="/${res}/usemanual/lm12.png" alt=""/></span>
+				<span class="zt">退出群组：</span>
+				<span>⑴：【设置】-【新建栏目】-【已加入的群组】-【退出群组】-确定即可退出该群组</span>
+				<span><img src="/${res}/usemanual/lm13.png" alt=""/></span>
+				<span><img src="/${res}/usemanual/lm14.png" alt=""/></span>
+				
+      	</div>
+	 </div>
+     <div class="wrap-right" id="sd3" style="display: none;">
+		<div class="personCenter-userInfo blog_right" >
+				<span class="zt">批注：</span>
+				<span>⑴：用户在登陆系统后点击【我的博客】， 点击任意文章 点击【批注】进入批注模式如图1所示。</span>
+				<span><img src="/${res}/usemanual/pz1.png" alt="" width="80%"/></span>
+				<span style="padding-left: 50%;">图1</span>
+				<span>⑵：在正文中单击，即可添加批注。如图2所示</span>
+				<span><img src="/${res}/usemanual/pz3.png" alt=""/></span>
+				<span style="padding-left: 50%;">图2</span>
+				<span>⑶：单击批注旗标，可以展开批注内容,鼠标移开即可折叠批注内容</span>
+				<span>⑷：拖动批注旗标，可以改变批注的位置</span>
+				<span><a style="color: red;">⑸：右键单击批注旗标，可以删除自己的批注。</a></span>
+				<span>⑹：点击退出即可退出批注模式如图3所示。</span>
+				<span><img src="/${res}/usemanual/pz2.png" alt="" width="80%"/></span>
+				<span style="padding-left: 50%;">图3</span>
+      	</div>
+	 </div>
+     <div class="wrap-right" id="sd4" style="display: none;">
+		<div class="personCenter-userInfo blog_right" >
+				<span class="zt">好友：</span>
+				<span style="color: red;">⑴：添加好友。</span>
+				<span>①：用户在登陆系统后点击【我的博客】，点击【设置】-【好友管理】如图1所示</span>
+				<span><img src="/${res}/usemanual/hy.png" alt="" width="80%"/></span>
+				<span style="padding-left: 50%;">图1</span>
+				<span>②：在输入框中填写对方的姓名和账号名点击提交即可添加对方为好友。</span>
+				<span style="color: red;"></span>
+				<span style="color: red;">*每行可以输入一个好友，姓名和账号之间用“=”分隔开，最多可设置300个。</span>
+				<span style="color: red;">*例如：ZXGHL=8001</span>
+				<span style="color: red;">*等号之前名字可以任意填写(ZXGHL)</span>
+				<span style="color: red;">*等号之后名字须为好友的用户名(8001)</span>
+				<span style="color: red;">*注:请勿留有空格!</span>
+				<span>③：用户在登陆系统后点击【我的博客】，点击【好友】即可查看添加的好友。</span>
+				<span class="zt">关注：</span>
+				<span>⑴：点击好友，进入好友页面，点击关注即可。</span>
+				<span>⑵：点击访客,进入访客页面,点击关注即可。</span>
+				<span>⑶：点击明星博客,进入明星博客页面,点击关注即可。</span>
+				<span>⑷：点击粉丝,进入粉丝页面,点击关注即可。</span>
+				<span class="zt">粉丝：</span>
+				<span>⑴：用户在登陆系统后点击【我的博客】，点击【粉丝】即可查看自己的粉丝。</span>
+				<span>⑵：*被他人关注即可成为自己博客的粉丝。</span>
+				<span class="zt">访客：</span>
+				<span>⑴：用户在登陆系统后点击【我的博客】，点击【访客】 即可查看访问自己博客的来访者。</span>
+				<span class="zt">明星博客：</span>
+				<span>⑴：用户在登陆系统后点击【我的博客】，点击【明星博客】 显示关注量为前三的博主 点击【更多】 查看关注量为前50的博主。</span>
+				<span class="zt">博客信息：</span>
+				<span>⑴：用户在登陆系统后点击【我的博客】，点击【设置】-【博客信息】 输入标题名和副标题名点击更新即可如图1。标题，副标题显示位置如图2</span>
+				<span><img src="/${res}/usemanual/bkxx.png" alt=""/></span>
+				<span><img src="/${res}/usemanual/bkxx1.png" alt=""/></span>
+				<span class="zt">页面模板：</span>
+				<span>⑴：用户在登陆系统后点击【我的博客】，点击【设置】-【页面模板】。根据自己的喜好来设置博客的主题。</span>
+				<span><img src="/${res}/usemanual/zt.png" alt=""/></span>
+				<span class="zt">访问统计：</span>
+				<span>⑴：用户在登陆系统后点击【我的博客】，点击【访问统计】 即可查看博客的基本信息，文章的总访问人次，总发表文章数，评论他人文章的评论数，自己文章的被阅读数，自己文章被评论数。</span>
+      	</div>
+	 </div>
+    </div>
+</div>
+</div>
+</div>
+<div class="footer_style" style="background-color: #eff8ff;">
+    <div class="wrap">
+        <div class="footer-content">
+            <p style="color: black;">海南省教育研究培训院  地址：海口市琼山区兴丹路26号  邮编：571100</p>
+            <p style="color: black;">&copy; HERSP. 琼ICP备17000512号</p>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+<script type="text/javascript">
+function manual(obj){
+	var did=obj.id;
+	var len=$(".wrap-right").length;
+	for(var i=1;i<=len;i++){
+		$("#sd"+i).hide();
+		$("#"+i).removeClass("cr");
+	}
+	$("#sd"+did).show();
+	$("#"+did).attr("class","cr")
+}
+</script>
