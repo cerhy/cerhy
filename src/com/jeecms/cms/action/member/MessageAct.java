@@ -301,10 +301,13 @@ public class MessageAct {
 		if (user == null) {
 			return FrontUtils.showLogin(request, model, site);
 		}
-		WebErrors errors = validateCaptcha(captcha, request, response);
-		if (errors.hasErrors()) {
-			return FrontUtils.showError(request, response, model, errors);
-		}
+		/*String state=request.getParameter("state");
+		if(state==null){
+			WebErrors errors = validateCaptcha(captcha, request, response);
+			if (errors.hasErrors()) {
+				return FrontUtils.showError(request, response, model, errors);
+			}
+		}*/
 		CmsMessage message = messageMng.findById(id);
 		message.setMsgBox(1);
 		message.setSendTime(new Date());
@@ -473,7 +476,8 @@ public class MessageAct {
 			object.put("result", false);
 		} else {
 			Iterator<CmsReceiverMessage> it;
-			String[] ids=request.getParameterValues("ids[]");
+			//String[] ids=request.getParameterValues("ids[]");
+			String[] ids=request.getParameterValues("ids");
 			Integer id;
 			if(ids!=null&&ids.length>0){
 				for (Integer i = 0; i < ids.length; i++) {
@@ -561,7 +565,8 @@ public class MessageAct {
 		if (user == null) {
 			object.put("result", false);
 		} else {
-			String[] ids=request.getParameterValues("ids[]");
+			//String[] ids=request.getParameterValues("ids[]");
+			String[] ids=request.getParameterValues("ids");
 			for (Integer i = 0; i < ids.length; i++) {
 				// 清空收到的站内信
 				Integer id=Integer.parseInt(ids[i]);
