@@ -11,6 +11,16 @@
 <link href="${resSys}/jqueryUI/jquery.ui.css" rel="stylesheet" type="text/css" />
 <style>
  .actives{color: red;}
+  .local-icon {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    line-height: 14px;
+    color: #999999; }
+.local-icon:before {
+    content: "\e618"; }
+.local-icon:hover:before {
+    content: "\f618"; }
 </style>
 <div class="local">
     <div class="wrap">
@@ -41,6 +51,30 @@
 				      [/@cms_channel_list]
                 </ul>
            </div>
+           [#if channel.id=168]
+           <div class="wrap-right">
+           <span class="local-icon icon-font"></span>
+           [@cms_channel_list parentId=channel.id orderBy='4']
+				        [#list tag_list as b]
+				        [#if b_index=0]
+		                	 [@cms_channel_list parentId=b.id orderBy='4']
+						        [#list tag_list as c]
+						        [#if c_index=0]
+						        [@cms_content_page orderBy='4'  recommend='2' channelId=c.id channelOption='1' count='1']
+										          [#list tag_pagination.list as a]
+										          [#if a_index=0]
+						        					<a href="${base}/blog/find_all_url_friend.jspx?userIds=${a.user.id}" target="_blank" style="cursor: pointer;">${a.ctgName}</a>
+						        					[/#if]
+										          [/#list]
+								[/@cms_content_page]
+						        [/#if]
+						        [/#list]
+						      [/@cms_channel_list]
+					    [/#if]
+				        [/#list]
+			[/@cms_channel_list]
+           </div>
+           [/#if]
            <div class="wrap-right">
            		<div class="article-list-wrap">
 					[@cms_channel_list parentId=channel.id orderBy='4']

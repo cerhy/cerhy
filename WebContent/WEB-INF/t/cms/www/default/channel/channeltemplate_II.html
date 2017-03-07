@@ -55,9 +55,10 @@
 				      [/@cms_channel_list]
                 </ul>
            </div>
+           [#if channel.parent.parent.id=98]
            <div class="wrap-right">
            <span class="local-icon icon-font"></span>
-             [@cms_content_page count='10' recommend='2'  orderBy='4' channelId=channel.id channelOption='1']
+             [@cms_content_page count='1' recommend='2'  orderBy='4' channelId=channel.id channelOption='1']
 						[#list tag_pagination.list as a]
 							[#if a_index=0]
 							<a href="${base}/blog/find_all_url_friend.jspx?userIds=${a.user.id}" target="_blank" style="cursor: pointer;">${a.ctgName}</a>
@@ -65,6 +66,7 @@
 						[/#list]
 			[/@cms_content_page]
            </div>
+			[/#if]
                <div class="wrap-right">
                 <div class="article-list-wrap">
                     <ul class="report-list sm mb20">
