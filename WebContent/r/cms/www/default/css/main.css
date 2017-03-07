@@ -1418,3 +1418,45 @@ a:hover{
     vertical-align: top;
 }
 .personCenter-userInfo .user-info-dtTable th{text-align: right;color: #808080;}
+
+
+/*个人中心*/
+.user-loginTopInfo{position: relative;width: 138px;}
+.user-loginTopInfo.hover{background: white;}
+.user-loginTopInfo:hover .lv2-sel{
+    display: block;
+}
+.lv2-sel:hover{
+    display: block;
+}
+.user-loginTopInfo .userPic-small{float: left;padding-left: 10px;}
+.user-loginTopInfo .userPic-small img{vertical-align: middle;}
+.user-loginTopInfo .top-user-name{float: left;color: #0b91df;width: 80px;padding:0 5px!important;}
+.user-loginTopInfo .arrow{
+    float: left;
+    width: 10px;
+    height:6px;
+    margin-top: 13px;
+
+    background: url(images/sp.png) no-repeat -1px 0;
+}
+.user-loginTopInfo:hover .arrow{
+    background: url(images/sp.png) no-repeat -26px 0;
+}
+.user-loginTopInfo .lv2-sel{
+    display: none;
+    position: absolute;
+    left:0;
+    top:34px;
+    background: white;
+    width: 138px;
+}
+.user-loginTopInfo .lv2-sel a {
+    display: inline-block;
+    width: 114px;
+}
+.user-loginTopInfo .lv2-sel a:hover{
+    color: #fff;
+    background: #0b91df;
+}
+.user-loginTopInfo .lv2-sel a span{display: inline-block;vertical-align: middle;margin-right: 5px;}
