@@ -1430,14 +1430,13 @@ a:hover{
     display: block;
 }
 .user-loginTopInfo .userPic-small{float: left;padding-left: 10px;}
-.user-loginTopInfo .userPic-small img{vertical-align: middle;}
+.user-loginTopInfo .userPic-small img{vertical-align: middle;padding-top: 6px;padding-bottom: 9px;}
 .user-loginTopInfo .top-user-name{float: left;color: #0b91df;width: 80px;padding:0 5px!important;}
 .user-loginTopInfo .arrow{
     float: left;
     width: 10px;
     height:6px;
     margin-top: 13px;
-
     background: url(images/sp.png) no-repeat -1px 0;
 }
 .user-loginTopInfo:hover .arrow{
