@@ -91,8 +91,8 @@ function qkeypress(){
          			[#if user?? && !status??]
          			 <li>
          			 <div class="user-loginTopInfo clearfix">
-                            <span class="userPic-small">[#if user.userImg??]<img src="${user.userImg}">[#else]<img src="/${res}/images/userImg.png">[/#if]</span>
-                            <a href="javascript:;" title="${user.username}" class="top-user-name of">${user.username}</a>
+                            <span class="userPic-small">[#if user.userImg??]<img alt="用户头像" src="${user.userImg}" width="20" height="20">[#else]<img alt="用户头像" src="/${res}/images/userImg.png" width="20" height="20">[/#if]</span>
+                            <a href="javascript:;" title="${user.username}" class="top-user-name of">${user.username}</a> 
                             <b class="arrow"></b>
                             <ul class="lv2-sel">
 			         			<a href="${base}/member/index.jspx">个人中心</a>
