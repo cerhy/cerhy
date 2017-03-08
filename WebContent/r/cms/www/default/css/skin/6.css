@@ -14,28 +14,28 @@
 .tj{
 	padding-bottom:80px;
 }
-.user-center-left .user-menu-links, .personCenter-userInfo, .user-center-left .user-setting {
+.blogBody .user-center-left .user-menu-links, .blogBody .personCenter-userInfo, .blogBody .user-center-left .user-setting {
    background: #E7EBEC;
 } 
 
-.user-center-left .user-menu-links li{
+.blogBody .user-center-left .user-menu-links li{
 	margin-top:-1px;
 	border-bottom: none; 
 }
-.user-center-left .user-menu-links a {
+.blogBody .user-center-left .user-menu-links a {
     border : none; 
     text-decoration:none;
 }
-.user-menu-links li a em {
+.blogBody .user-menu-links li a em {
      background: transparent; 
 }
-.user-menu-links li.on a em {
+.blogBody .user-menu-links li.on a em {
    background: transparent; 
 }
-.user-menu-links li a {
+.blogBody .user-menu-links li a {
 	color: #666666;
 }
-.user-menu-links li a:hover {
+.blogBody .user-menu-links li a:hover {
 	color:#0070b8;
 }
 #_goPs{

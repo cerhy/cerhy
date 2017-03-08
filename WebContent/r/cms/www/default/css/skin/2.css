@@ -1,6 +1,6 @@
 /* view 02 */
 
-.user-center-left .user-menu-links, .personCenter-userInfo, .user-center-left .user-setting {
+.blogBody .user-center-left .user-menu-links, .blogBody .personCenter-userInfo, .blogBody .user-center-left .user-setting {
     background: #222222;
     color: #666666;
 }  
@@ -23,18 +23,18 @@ a:link{color:#666666;}
 .header-top {background: #000;border-bottom:0px;}
 .footer_style {background-image: url(02.gif); }
 
-.user-center-left .user-menu-links li{
+.blogBody .user-center-left .user-menu-links li{
 	margin-top:-1px;
 	border-bottom: none; 
 }
-.user-center-left .user-menu-links a {
+.blogBody .user-center-left .user-menu-links a {
     border : none; 
     text-decoration:none;
 }
-.user-menu-links li a em {background: transparent; }
-.user-menu-links li.on a em {background: transparent; }
-.user-menu-links li a {color: #666666;}
-.user-menu-links li a:hover {color:#0070b8;}
+.blogBody .user-menu-links li a em {background: transparent; }
+.blogBody .user-menu-links li.on a em {background: transparent; }
+.blogBody .user-menu-links li a {color: #666666;}
+.blogBody .user-menu-links li a:hover {color:#0070b8;}
 
 #_goPs{background: transparent;}
 
