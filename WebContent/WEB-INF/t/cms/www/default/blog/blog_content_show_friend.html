@@ -97,6 +97,7 @@ Cms.siteFlow("${base}", location.href, document.referrer,
 			<input style="display: none;" id="no2" value="${user.username}">
 		   	<input style="display: none;" id="no3" value="${content.id}">
 			<input style="display: none;" id="no4" value="${user.id}">
+			<input style="display: none;" id="alt" value="0">
 	 <!-- <div id="fudong" class="fudong" style="border: 0;">
 			<h2 class="title">
 			<button id="pos" name="pos" class="pos" style="width: 50px;height: 30px;" onclick="down(0)">批注</button>
@@ -121,6 +122,17 @@ Cms.siteFlow("${base}", location.href, document.referrer,
 					 </span>&nbsp;
 					 <span id="pos" name="pos" class="pos" style="width: 40px;height: 20px;" onclick="down(0)">批注
 					 </span>
+					 <div id="setDialogs" style="display:none;margin-top:-5px;">
+					 <ul style="padding-left: 10px;">
+						  <li  style="list-style-type: disc;">单击“批注”进入/退出批注模式 </li>
+						  <li  style="list-style-type: disc;">在正文中单击，即可添加批注</li>
+						  <li  style="list-style-type: disc;">单击批注旗标，可以展开/折叠批注内容</li>
+						  <li  style="list-style-type: disc;">拖动批注旗标，可以改变批注的位置</li>
+						  <li  style="list-style-type: disc;color: red;">右键单击批注旗标，可以删除自己的批注</li>
+					</ul>
+					 <div class="themeButton" style="width: 50px;height: 50px;padding-left: 200px;">	
+					 <button type="button" onclick="closeDialogs();" class="submit" style="margin:30px 0px 0 10px;">确定</button></div>
+	        		 </div>
 				</div>
 				<div class="xueke-content-detail" style="margin-top:30px;min-height:170px;"  id="addAttr">
 					[#if preview??] [@text_cut s=txt! len=100 append="..."/]<br />
@@ -282,6 +294,9 @@ Cms.siteFlow("${base}", location.href, document.referrer,
 	    	 $("#addAttrs").attr("id","addAttr");
 	    	 $("#pos").attr("onclick","down(0)"); 
     	 }
+    	 if($("#alt").val()==0){
+	    	 $("#setDialogs").dialog("open");
+    	 }
      }
      function divPos(event){
     	 $("#addAttrs").mousedown(function(e){
@@ -290,6 +305,28 @@ Cms.siteFlow("${base}", location.href, document.referrer,
 	    	$("#no1").val(e.pageY);
     	});
      }
+     $("#setDialogs").dialog({
+			autoOpen: false,
+			modal: false,
+			resizable :false,
+			stack : false,
+			draggable : true,
+			closeOnEscape : false,
+			open:function(event,ui){
+				$(".ui-dialog-titlebar-close").hide();
+				$(".ui-dialog-titlebar").css("background","#ffffff");  
+				$(".ui-widget-header").css("border","0");  
+			},
+			width: 300,
+			height: 230,
+			position: ["right",$("#pos").offsetTop],
+			close: function(event, ui) {
+				$("#alt").val(1)
+			}
+		});
+  function closeDialogs(){
+ 	$("#setDialogs").dialog("close");
+ }
      
 </script>
 <script type="text/javascript">
