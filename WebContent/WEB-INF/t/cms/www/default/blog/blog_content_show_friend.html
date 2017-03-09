@@ -94,9 +94,11 @@ Cms.siteFlow("${base}", location.href, document.referrer,
    <div class="mb20 clearfix">
 			<input style="display: none;" id="no" value="">
 			<input style="display: none;" id="no1" value="">
+			[#if user??]
 			<input style="display: none;" id="no2" value="${user.username}">
-		   	<input style="display: none;" id="no3" value="${content.id}">
 			<input style="display: none;" id="no4" value="${user.id}">
+			[/#if]
+		   	<input style="display: none;" id="no3" value="${content.id}">
 			<input style="display: none;" id="alt" value="0">
 	 <!-- <div id="fudong" class="fudong" style="border: 0;">
 			<h2 class="title">
@@ -120,6 +122,7 @@ Cms.siteFlow("${base}", location.href, document.referrer,
 					 <span class="content-share">分享
 						 [#include "../content/inc_share.html"/]
 					 </span>&nbsp;
+					 [#if user??]
 					 <span id="pos" name="pos" class="pos" style="width: 40px;height: 20px;" onclick="down(0)">批注
 					 </span>
 					 <div id="setDialogs" style="display:none;margin-top:-5px;">
@@ -133,6 +136,18 @@ Cms.siteFlow("${base}", location.href, document.referrer,
 					 <div class="themeButton" style="width: 50px;height: 50px;padding-left: 200px;">	
 					 <button type="button" onclick="closeDialogs();" class="submit" style="margin:30px 0px 0 10px;">确定</button></div>
 	        		 </div>
+	        		 [#else]
+					 <span id="pos" name="pos" class="pos" style="width: 40px;height: 20px;" onclick="downs()">批注
+					 </span>
+					 <div id="setDialogss" style="display:none;margin-top:-5px;">
+					 <ul style="padding-left: 10px;">
+						  <li  style="list-style-type: disc;">还未登陆...请点击<a href="${base}/login.jspx" style="color: red;">登录</a></li>
+					</ul>
+					 <div class="themeButton" style="width: 50px;height: 50px;padding-left: 200px;">	
+					 <button type="button" onclick="closeDialogss();" class="submit" style="margin:30px 0px 0 10px;">确定</button></div>
+	        		 </div>
+	        		 
+	        		 [/#if]
 				</div>
 				<div class="xueke-content-detail" style="margin-top:30px;min-height:170px;"  id="addAttr">
 					[#if preview??] [@text_cut s=txt! len=100 append="..."/]<br />
@@ -266,7 +281,7 @@ Cms.siteFlow("${base}", location.href, document.referrer,
                     [/#if]
                <div class="news-comments" style="width:665px;">
 				    [#if channel.commentControl!=2]
-                    [#include "../content/inc_comment_input.html"/]
+                    [#include "../content/inc_blog_comment_input.html"/]
       				[#include "../content/inc_blog_comment_list.html"/]
     				[/#if]
 				</div>
@@ -298,6 +313,11 @@ Cms.siteFlow("${base}", location.href, document.referrer,
 	    	 $("#setDialogs").dialog("open");
     	 }
      }
+     function downs(){  
+    	 if($("#alt").val()==0){
+	    	 $("#setDialogss").dialog("open");
+    	 }
+     }
      function divPos(event){
     	 $("#addAttrs").mousedown(function(e){
     		$.kw.confirm("提示内容",e.pageX,e.pageY);
@@ -324,6 +344,29 @@ Cms.siteFlow("${base}", location.href, document.referrer,
 				$("#alt").val(1)
 			}
 		});
+     $("#setDialogss").dialog({
+			autoOpen: false,
+			modal: false,
+			resizable :false,
+			stack : false,
+			draggable : true,
+			closeOnEscape : false,
+			open:function(event,ui){
+				$(".ui-dialog-titlebar-close").hide();
+				$(".ui-dialog-titlebar").css("background","#ffffff");  
+				$(".ui-widget-header").css("border","0");  
+			},
+			width: 300,
+			height: 130,
+			position: ["right",$("#pos").offsetTop],
+			close: function(event, ui) {
+				$("#alt").val(1)
+			}
+	});
+     
+  function closeDialogss(){
+ 	$("#setDialogss").dialog("close");
+ }
   function closeDialogs(){
  	$("#setDialogs").dialog("close");
  }
