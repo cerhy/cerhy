@@ -229,12 +229,12 @@ Cms.siteFlow("${base}", location.href, document.referrer,
                     		[#if columnIdZ??]
 	                    		<a href="${tag_bean.url}?f=${usert.id}&GroupFlag=${GroupFlagData}&columnIdZ=${columnIdZ}" class="prev-pian">
 	                            <span>&lt;上一篇</span>
-	                            <em>[@text_cut s=tag_bean.title len=20 append='...'/]</em>
+	                            <em>[@text_cut s=tag_bean.title len=15 append='...'/]</em>
 	                        	</a>
                     		[#else]
 	                    		<a href="${tag_bean.url}?f=${usert.id}&GroupFlag=${GroupFlagData}" class="prev-pian">
 	                            <span>&lt;上一篇</span>
-	                            <em>[@text_cut s=tag_bean.title len=20 append='...'/]</em>
+	                            <em>[@text_cut s=tag_bean.title len=15 append='...'/]</em>
 	                        	</a>
                     		[/#if]
                     	[#else]
@@ -247,12 +247,12 @@ Cms.siteFlow("${base}", location.href, document.referrer,
 	                    [#if tag_bean??]
 	                    [#if columnIdZ??]
 	                     <a href="${tag_bean.url}?f=${usert.id}&GroupFlag=${GroupFlagData}&columnIdZ=${columnIdZ}" class="next-pian">
-                            <em>[@text_cut s=tag_bean.title len=20 append='...'/]</em>
+                            <em>[@text_cut s=tag_bean.title len=15 append='...'/]</em>
                             <span>下一篇&gt;</span>
                         </a>
 	                    [#else]
 	                     <a href="${tag_bean.url}?f=${usert.id}&GroupFlag=${GroupFlagData}" class="next-pian">
-                            <em>[@text_cut s=tag_bean.title len=20 append='...'/]</em>
+                            <em>[@text_cut s=tag_bean.title len=15 append='...'/]</em>
                             <span>下一篇&gt;</span>
                         </a>
 	                    [/#if]
