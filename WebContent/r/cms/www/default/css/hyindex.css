@@ -167,7 +167,7 @@ padding-right:10px;
 .hot-nav h1{color:#1a1a1a; font-weight:normal; position:relative; line-height:40px; display:inline-block;}
 .hot-nav h1 a{color:#1a1a1a; font-weight:normal;}
 .hot-nav h1:after{content:""; height:2px; width:100%; position:absolute; left:0; bottom:-2px; background-color:#ef3838;}
-.item{border-top:1px solid #f2f2f2; padding:27px 0 16px;}
+.item{border-top:1px solid #f2f2f2; padding:27px 0 0px;}
 .item:hover{ background-color:rgba(240,240,240,0.4);}
 .item .img{width:260px; height:160px; float:left; display:block; position:relative; margin-right:20px; overflow:hidden;}
 .item .img img{width:100%; height:100%;}
