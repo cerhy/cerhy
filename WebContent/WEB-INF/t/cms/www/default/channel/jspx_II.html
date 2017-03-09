@@ -47,7 +47,7 @@
 										          [/#if]
 										          <div class="report-text">
 										            <h3>${a.title}</h3>
-										            <p>[#if a.typeImg??][@text_cut s=a.description len=116 append='...'/][#else][@text_cut s=a.description len=176 append='...'/][/#if]</p>
+										            <p>[#if a.typeImg??][@text_cut s=a.description len=30 append='...'/][#else][@text_cut s=a.description len=40 append='...'/][/#if]</p>
 										          	<div class="fl"><span class="ch">${a.ctgName}<em>${a.date?string("yyyy-MM-dd")}</em></span></div>
 										          </div>
 										          <em class="arrowBtn"></em>
