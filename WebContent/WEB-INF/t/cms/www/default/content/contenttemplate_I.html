@@ -106,7 +106,7 @@ $(function() {
 						
 						<span class="pr15">发布时间：${content.releaseDate}</span>
 						 <span class="pr15">
-						 [#if channel.parent.parent.id==98]
+						 [#if channel.parent.parent.id==98 || channel.parent.parent.id==168]
 						 	 <a target="_blank" href="${base}/blog/find_all_url_friend.jspx?userIds=${content.user.id}" class="bz">博主：${content.user.username}</a>
 						 [#else]
 						 	作者：${content.author!'本站编辑'}
