@@ -55,6 +55,9 @@ public class ColumnsMng {
 	public int signOutGroup(String groupId) {
 		return columnsDao.signOutGroup(groupId);
 	}
+	public void updateUFO(CmsUser user) {
+		columnsDao.updateUFO(user);
+	}
 	@Autowired
 	private ColumnsDao columnsDao;
 

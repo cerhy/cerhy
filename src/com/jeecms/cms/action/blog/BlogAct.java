@@ -544,6 +544,7 @@ public class BlogAct {
 		model = blogCommon.getTotalCommentNum(model, userT);
 		model = blogCommon.getStarBlogger(request, model);
 		model = blogCommon.getAlreadyJoinGroup(request, model,userT);
+		model = blogCommon.getAddFriends(request, model,userT,user);
 		FrontUtils.frontData(request, model, site);
 		Pagination p = contentMng.getPageForMember_firendsBlog(Integer.valueOf(userIds),q, queryChannelId,site.getId(), modelId,null, cpn(pageNo), 20,null);
 		model.addAttribute("pagination", p);
@@ -562,6 +563,7 @@ public class BlogAct {
 
 	public String blog_list_friend(String q, Integer modelId,Integer queryChannelId,String nextUrl,Integer pageNo,HttpServletRequest request, ModelMap model) {
 		CmsSite site = CmsUtils.getSite(request);
+		CmsUser u = CmsUtils.getUser(request);
 		String user_ids = request.getParameter("user_ids");
 		CmsUser user=cmsUserMng.findById(Integer.valueOf(user_ids.toString()));
 		String joinGroupStata = request.getParameter("joinGroupStata");
@@ -599,6 +601,7 @@ public class BlogAct {
  		model = blogCommon.getTotalCommentNum(model, user);
  		model = blogCommon.getStarBlogger(request, model);
  		model = blogCommon.getAlreadyJoinGroup(request, model,user);
+ 		model = blogCommon.getAddFriends(request, model,user,u);
 		model.addAttribute("usert", user);
 		model.addAttribute("userIds", user.getId());
 		//model.addAttribute("columnId", columnId);
@@ -699,6 +702,7 @@ public class BlogAct {
 	
 	public String gotoDataShowFriend(int dataFlag, HttpServletRequest request,HttpServletResponse response, ModelMap model,Integer pageNo,String userId) {
 		CmsSite site = CmsUtils.getSite(request);
+		CmsUser user = CmsUtils.getUser(request);
 		CmsUser u =cmsUserMng.findById( Integer.parseInt(userId));
 		model.addAttribute("userIds", userId);
 		model.addAttribute("usert", u);
@@ -726,6 +730,7 @@ public class BlogAct {
  		model = blogCommon.getTotalCommentNum(model, u);
  		model = blogCommon.getStarBlogger(request, model);
  		model = blogCommon.getAlreadyJoinGroup(request, model,u);
+ 		model = blogCommon.getAddFriends(request, model,u,user);
 		FrontUtils.frontData(request, model, site);
 		return FrontUtils.getTplPath(request, site.getSolutionPath(),TPLDIR_BLOG,"tpl.frienddataShow");
 	}
@@ -836,13 +841,14 @@ public class BlogAct {
 					model.addAttribute("GroupFlagData", content.getUser().getId());
 				}
 			}
-			
+			CmsUser u = CmsUtils.getUser(request);
 			model = blogCommon.getAlreadyJoinGroup(request, model,user);
 			model = blogCommon.getChannel(request,model,user,site);
 			model = blogCommon.getColumn(request,model,user);
 			model = blogCommon.getTotalArticleNum(model,user);
 	 		model = blogCommon.getTotalCommentNum(model, user);
 	 		model = blogCommon.getStarBlogger(request, model);
+	 		model = blogCommon.getAddFriends(request, model,user,u);
 			FrontUtils.frontData(request, model, site);
 			return FrontUtils.getTplPath(request, site.getSolutionPath(),TPLDIR_BLOG,"tpl.blogContentShowFriend");
 		}

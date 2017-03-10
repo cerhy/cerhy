@@ -214,6 +214,7 @@ public class CollectionMemberAct {
 			Integer pageNo, HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		CmsSite site = CmsUtils.getSite(request);
+		CmsUser u = CmsUtils.getUser(request);
 		CmsUser userT=cmsUserMng.findById(Integer.valueOf(userIds.toString()));
 		model = blogCommon.getColumn(request,model,userT);
 	    model = blogCommon.getChannel(request,model,userT,site);
@@ -221,6 +222,7 @@ public class CollectionMemberAct {
  		model = blogCommon.getTotalCommentNum(model, userT);
  		model = blogCommon.getStarBlogger(request, model);
  		model = blogCommon.getAlreadyJoinGroup(request, model,userT);
+ 		model = blogCommon.getAddFriends(request, model,userT,u);
 		FrontUtils.frontData(request, model, site);
 		Pagination p = contentMng.getPageForCollection(site.getId(), userT
 				.getId(), cpn(pageNo), CookieUtils.getPageSize(request));

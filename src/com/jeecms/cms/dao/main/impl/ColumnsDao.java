@@ -151,4 +151,10 @@ public class ColumnsDao extends HibernateBaseDao<Columns, Integer>{
 		}
 	}
 
+	public void updateUFO(CmsUser user) {
+		String hql = "update CmsUser bean set bean.Friends=:friends  where bean.id=:userId";
+		Query query = getSession().createQuery(hql).setParameter("friends", user.getFriends()).setParameter("userId", user.getId());
+		query.executeUpdate();
+	}
+
 }
