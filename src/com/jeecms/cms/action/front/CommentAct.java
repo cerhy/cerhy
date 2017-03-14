@@ -327,6 +327,22 @@ public class CommentAct {
 				// 已经评论过，不能重复评论
 				json.put("success", false);
 				json.put("status", 5);
+			}else{
+				boolean checked = false;
+				Integer userId = null;
+				if (user != null) {
+					checked = !user.getGroup().getNeedCheck();
+					userId = user.getId();
+				}
+				ContentDoc doc=content.getContentDoc();
+				if(doc!=null){
+					doc.setAvgScore(getNewAvgScore(content, score));
+					contentDocMng.update(doc,content);
+				}
+				cmsCommentMng.comment(user,score,text, RequestUtils.getIpAddr(request),
+						contentId, site.getId(), userId, checked, false,parentId);
+				json.put("success", true);
+				json.put("status", 0);
 			}
 		}else {
 			boolean checked = false;
