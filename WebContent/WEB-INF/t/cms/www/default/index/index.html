@@ -32,7 +32,7 @@ function HoverLi(x,y,m,n,counter){
         <div class="bd-padding">
             <div class="zj-news clearfix">
              <div class="news-slide">
-             	   <div class="big-img" data-scro="list">
+             	   <div class="big-img">
                          [@cms_content_list typeId='2' recommend='2' channelId='75' orderBy='4' titLen='22' channelOption='1' dateFormat='yyyy-MM-dd']      
          				  <ul class="big-img-ul" >
            				 [#list tag_list as a]
@@ -48,7 +48,7 @@ function HoverLi(x,y,m,n,counter){
                                 <ul class="small-img-ul" data-scro="controler">
                                 	[@cms_content_list typeId='2' recommend='2' channelId='75' orderBy='4' titLen='22' channelOption='1' dateFormat='yyyy-MM-dd']
               						 [#list tag_list as a]
-              						 <li><a href="javascript:;"><span>${a_index+1}</span><em></em></a></li>
+              						 <li><a [#if a_index<1] class='active'[/#if] href="javascript:;"><span>${a_index+1}</span><em></em></a></li>
               						 [/#list]
             						[/@cms_content_list]	                                    
                                 </ul>
