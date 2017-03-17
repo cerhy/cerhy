@@ -353,7 +353,8 @@ public class ContentMngImpl implements ContentMng, ChannelDeleteChecker {
 					String pdf=null;
 					if(fp.toUpperCase().equals("DOC")||fp.toUpperCase().equals("TXT")
 							||fp.toUpperCase().equals("DOCX")||fp.toUpperCase().equals("XLSX")
-							||fp.toUpperCase().equals("XLS")||fp.toUpperCase().equals("PDF")){
+							||fp.toUpperCase().equals("XLS")||fp.toUpperCase().equals("PDF")
+							||fp.toUpperCase().equals("PPT")||fp.toUpperCase().equals("PPTX")){
 						try {
 							CmsSite site=CmsUtils.getSite(request);
 							CmsConfig config=site.getConfig();
@@ -790,7 +791,8 @@ public class ContentMngImpl implements ContentMng, ChannelDeleteChecker {
 					String pdf=null;
 					if(fp.toUpperCase().equals("DOC")||fp.toUpperCase().equals("TXT")
 							||fp.toUpperCase().equals("DOCX")||fp.toUpperCase().equals("XLSX")
-							||fp.toUpperCase().equals("XLS")||fp.toUpperCase().equals("PDF")){
+							||fp.toUpperCase().equals("XLS")||fp.toUpperCase().equals("PDF")
+							||fp.toUpperCase().equals("PPT")||fp.toUpperCase().equals("PPTX")){
 						try {
 							CmsSite site=CmsUtils.getSite(request);
 							CmsConfig config=site.getConfig();
