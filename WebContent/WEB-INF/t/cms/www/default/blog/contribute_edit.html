@@ -442,7 +442,8 @@ function addSrcHtml(obj){
 			var lastname2 = urls.substring(pos2+1,urls.length);
 			var newname=lastname2.toUpperCase();
 			if(newname=="DOC"||newname=="TXT"||newname=="DOCX"
-					||newname=="XLSX"||newname=="XLS"||newname=="PDF"){
+					||newname=="XLSX"||newname=="XLS"||newname=="PDF"
+						||newname=="PPT"||newname="PPTX"){
 				var lt = urls.substring(0,pos2+1);
 				var newUr=lt+"pdf";
 				if(typeof(ck)!=='undefined'){
