@@ -27,6 +27,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+
 import org.springframework.web.multipart.MultipartFile;
 
 import com.jeecms.cms.action.blog.BlogAct;
@@ -540,9 +541,18 @@ public class ContributeAct extends AbstractContentMemberAct {
 	 * @param response
 	 * @param model
 	 */
-	@RequestMapping(value = "/blog/deteleColumn.jspx")
-	public void columns_detele(HttpServletRequest request, HttpServletResponse response,ModelMap model) {
-		blogAct.columns_detele(request, response, model);
+	@RequestMapping(value = "/blog/deleteColumn.jspx")
+	public void columns_delete(HttpServletRequest request, HttpServletResponse response,ModelMap model) {
+		blogAct.columns_delete(request, response, model);
+	}
+	
+	/**
+	 * 查看博客栏目下是否有文章
+	 */
+	
+	@RequestMapping(value = "/blog/queryLanmuColumn.jspx")
+	public void queryLanmuColumn(HttpServletRequest request, HttpServletResponse response,ModelMap model) {
+		  blogAct.columns_query(request, response, model);
 	}
 	
 	/**

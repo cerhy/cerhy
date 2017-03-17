@@ -14,6 +14,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +42,7 @@ import com.jeecms.common.page.Paginable;
 import com.jeecms.common.page.Pagination;
 import com.jeecms.common.page.SimplePage;
 import com.jeecms.common.util.StrUtils;
+import com.jeecms.common.web.ResponseUtils;
 import com.jeecms.common.web.session.SessionProvider;
 import com.jeecms.core.entity.CmsConfig;
 import com.jeecms.core.entity.CmsGroup;
@@ -429,26 +432,49 @@ public class BlogAct {
 		}
 	}
 	
-	public void columns_detele(HttpServletRequest request,HttpServletResponse response, ModelMap model) {
+
+	public void columns_query(HttpServletRequest request, HttpServletResponse response,ModelMap model) {
 		CmsSite site = CmsUtils.getSite(request);
 		CmsUser user = CmsUtils.getUser(request);
 		if (user == null) {
 			FrontUtils.showLogin(request, model, site);
 		}
+		JSONObject json = new JSONObject(); 
 		String columnId = request.getParameter("id");
 		if(null != columnId){
-			List<Content> l = contentMng.countByColumnId(Integer.parseInt(columnId));
-			if(null == l || l.size()<1){
-				columnsMng.deleteColumns(Integer.parseInt(columnId));
+			List<Content> list = contentMng.countByColumnId(Integer.parseInt(columnId));
+			if(null == list || list.size()<1){
+				try {
+					json.put("status", "true");
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+			}else{
+				try {
+					json.put("status", "false");
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}	
 			}
 		}
+		ResponseUtils.renderJson(response, json.toString());
+	}
+	
+	public void columns_delete(HttpServletRequest request,HttpServletResponse response, ModelMap model) {
+		CmsSite site = CmsUtils.getSite(request);
+		CmsUser user = CmsUtils.getUser(request);
+		if (user == null) {
+			FrontUtils.showLogin(request, model, site);
+		}
+		String columnId = request.getParameter("columnId");
+		columnsMng.deleteColumns(Integer.parseInt(columnId));
 		try {
 			request.getRequestDispatcher("/blog/columns_list.jspx").forward(request, response);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-
+	
 	public void columns_update(HttpServletRequest request,HttpServletResponse response, ModelMap model) {
 		CmsSite site = CmsUtils.getSite(request);
 		CmsUser user = CmsUtils.getUser(request);
