@@ -261,7 +261,7 @@ public class BlogAct {
 		c = contentMng.blog_save(c, ext, t,null, null, null, null, tagArr,
 				attachmentPaths,attachmentNames, attachmentFilenames
 				,picPaths,picDescs,channelId,columnId, typeId, null,true,
-				charge,chargeAmount, user, true);
+				charge,chargeAmount, user, true,request);
 		if(doc!=null){
 			contentDocMng.save(doc, c);
 		}
