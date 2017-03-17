@@ -429,6 +429,11 @@ public class ContributeAct extends AbstractContentMemberAct {
 		ResponseUtils.renderJson(response, json.toString());
 	}
 	
+	public String findUserId(String userName){
+		CmsUser id = channelMng.findUserId(userName);
+		return id.getId().toString();
+	}
+	
 	@Autowired
 	private DbFileMng dbFileMng;
 	@Autowired

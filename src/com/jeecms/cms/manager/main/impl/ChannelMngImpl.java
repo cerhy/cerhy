@@ -405,5 +405,10 @@ public class ChannelMngImpl implements ChannelMng {
 		dao.updateBlogVisitorTime(user,userT);
 	}
 
+	@Override
+	public CmsUser findUserId(String userName) {
+		return dao.findUserId(userName);
+	}
+
 
 }
