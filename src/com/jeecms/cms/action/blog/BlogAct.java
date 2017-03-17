@@ -341,7 +341,7 @@ public class BlogAct {
 		contentMng.blog_update(c, ext, t,null, tagArr, null, null, null, 
 				attachmentPaths,attachmentNames, attachmentFilenames
 				,picPaths,picDescs, null, columnId,channelId, null, null, 
-				charge,chargeAmount,user, true);
+				charge,chargeAmount,user, true,request);
 		if(doc!=null){
 			contentDocMng.update(doc, c);
 		}

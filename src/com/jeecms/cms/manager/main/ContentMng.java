@@ -171,7 +171,7 @@ public interface ContentMng {
 			String[] attachmentNames, String[] attachmentFilenames,
 			String[] picPaths, String[] picDescs, Map<String, String> attr,
 			Integer columnId,Integer channelId, Integer typeId, Boolean draft,
-			Short charge,Double chargeAmount,CmsUser user,boolean forMember);
+			Short charge,Double chargeAmount,CmsUser user,boolean forMember,HttpServletRequest request);
 	
 	
 	public Content update(Content bean);
