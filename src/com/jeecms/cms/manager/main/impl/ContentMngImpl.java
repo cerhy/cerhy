@@ -11,6 +11,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -65,6 +67,7 @@ import com.jeecms.common.office.FileUtils;
 import com.jeecms.common.office.OpenOfficeConverter;
 import com.jeecms.common.page.Pagination;
 import com.jeecms.common.web.springmvc.RealPathResolver;
+import com.jeecms.core.entity.CmsConfig;
 import com.jeecms.core.entity.CmsGroup;
 import com.jeecms.core.entity.CmsSite;
 import com.jeecms.core.entity.CmsUser;
@@ -75,6 +78,7 @@ import com.jeecms.core.manager.CmsGroupMng;
 import com.jeecms.core.manager.CmsUserMng;
 import com.jeecms.core.manager.CmsWorkflowEventMng;
 import com.jeecms.core.manager.CmsWorkflowMng;
+import com.jeecms.core.web.util.CmsUtils;
 
 import freemarker.template.TemplateException;
 
@@ -339,27 +343,40 @@ public class ContentMngImpl implements ContentMng, ChannelDeleteChecker {
 			String[] attachmentNames, String[] attachmentFilenames,
 			String[] picPaths, String[] picDescs, Integer channelId,Integer columnId,
 			Integer typeId, Boolean draft,Boolean contribute, 
-			Short charge,Double chargeAmount,CmsUser user, boolean forMember) {
+			Short charge,Double chargeAmount,CmsUser user, boolean forMember, HttpServletRequest request) {
 		saveContent_blog(bean, ext, txt,doc,channelId,columnId, typeId, draft,contribute,user, forMember);
-		
 		// 保存附件
 		if (attachmentPaths != null && attachmentPaths.length > 0) {
 			for (int i = 0, len = attachmentPaths.length; i < len; i++) {
 				if (!StringUtils.isBlank(attachmentPaths[i])) {
+					String fp =attachmentPaths[i].substring(attachmentPaths[i].lastIndexOf(".")+1,attachmentPaths[i].length());
 					String pdf=null;
-					try {
-						String fileRealPath = realPathResolver.get(attachmentPaths[i].substring(attachmentPaths[i].indexOf("/",attachmentPaths[i].indexOf("/")+1) + 1,attachmentPaths[i].length()));
-						String fileName=FileUtils.getFileName(attachmentPaths[i]);
-						String outPdfRealPath = realPathResolver.get(FileUtils.getFilePath(attachmentPaths[i].substring(attachmentPaths[i].indexOf("/",attachmentPaths[i].indexOf("/")+1) + 1,attachmentPaths[i].length())));
-						//String pdfPath=FileUtils.getFilePath(attachmentPaths[i])+fileName+".pdf";
-						if(!fileRealPath.endsWith(OpenOfficeConverter.PDF)){
-							//转换文档成pdf
-							openOfficeConverter.convertToPdf(fileRealPath,outPdfRealPath + "/",fileName);
+					if(fp.toUpperCase().equals("DOC")||fp.toUpperCase().equals("TXT")
+							||fp.toUpperCase().equals("DOCX")||fp.toUpperCase().equals("XLSX")
+							||fp.toUpperCase().equals("XLS")||fp.toUpperCase().equals("PDF")){
+						try {
+							CmsSite site=CmsUtils.getSite(request);
+							CmsConfig config=site.getConfig();
+							String ctx=config.getContextPath();
+							String path=attachmentPaths[i];
+							if(StringUtils.isNotBlank(ctx)&&path.indexOf(ctx)!=-1){
+								path = path.split(ctx)[1];
+							}
+							String fileRealPath = realPathResolver.get(path);
+							String fileName=FileUtils.getFileName(path);
+							String outPdfRealPath = realPathResolver.get(FileUtils.getFilePath(path));
+							//String pdfPath=FileUtils.getFilePath(attachmentPaths[i])+fileName+".pdf";
+							if(!fileRealPath.endsWith(OpenOfficeConverter.PDF)){
+								//转换文档成pdf
+								openOfficeConverter.convertToPdf(fileRealPath,outPdfRealPath + "/",fileName);
+							}
+							pdf=FileUtils.getFilePath(path)+fileName+".pdf";
+							if(StringUtils.isNotBlank(ctx)){
+								pdf=ctx+pdf;
+							}
+						} catch (Exception e) {
+							e.printStackTrace();
 						}
-						int lastIndex = attachmentPaths[i].lastIndexOf(".");
-						pdf=attachmentPaths[i].substring(0, lastIndex)+".pdf";
-					} catch (Exception e) {
-						e.printStackTrace();
 					}
 					bean.addToAttachmemtsPdf(attachmentPaths[i],attachmentNames[i], attachmentFilenames[i],pdf);
 				}
@@ -656,7 +673,7 @@ public class ContentMngImpl implements ContentMng, ChannelDeleteChecker {
 			String[] attachmentNames, String[] attachmentFilenames,
 			String[] picPaths, String[] picDescs, Map<String, String> attr,
 			Integer columnId,Integer channelId, Integer typeId, Boolean draft,
-			Short charge,Double chargeAmount,CmsUser user,boolean forMember) {
+			Short charge,Double chargeAmount,CmsUser user,boolean forMember,HttpServletRequest request) {
 		Content entity = findById(bean.getId());
 		//更新columnId
 		if(bean.getColumnId() != columnId){
@@ -769,8 +786,36 @@ public class ContentMngImpl implements ContentMng, ChannelDeleteChecker {
 		if (attachmentPaths != null && attachmentPaths.length > 0) {
 			for (int i = 0, len = attachmentPaths.length; i < len; i++) {
 				if (!StringUtils.isBlank(attachmentPaths[i])) {
-					bean.addToAttachmemts(attachmentPaths[i],
-							attachmentNames[i], attachmentFilenames[i]);
+					String fp =attachmentPaths[i].substring(attachmentPaths[i].lastIndexOf(".")+1,attachmentPaths[i].length());
+					String pdf=null;
+					if(fp.toUpperCase().equals("DOC")||fp.toUpperCase().equals("TXT")
+							||fp.toUpperCase().equals("DOCX")||fp.toUpperCase().equals("XLSX")
+							||fp.toUpperCase().equals("XLS")||fp.toUpperCase().equals("PDF")){
+						try {
+							CmsSite site=CmsUtils.getSite(request);
+							CmsConfig config=site.getConfig();
+							String ctx=config.getContextPath();
+							String path=attachmentPaths[i];
+							if(StringUtils.isNotBlank(ctx)&&path.indexOf(ctx)!=-1){
+								path = path.split(ctx)[1];
+							}
+							String fileRealPath = realPathResolver.get(path);
+							String fileName=FileUtils.getFileName(path);
+							String outPdfRealPath = realPathResolver.get(FileUtils.getFilePath(path));
+							//String pdfPath=FileUtils.getFilePath(attachmentPaths[i])+fileName+".pdf";
+							if(!fileRealPath.endsWith(OpenOfficeConverter.PDF)){
+								//转换文档成pdf
+								openOfficeConverter.convertToPdf(fileRealPath,outPdfRealPath + "/",fileName);
+							}
+							pdf=FileUtils.getFilePath(path)+fileName+".pdf";
+							if(StringUtils.isNotBlank(ctx)){
+								pdf=ctx+pdf;
+							}
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					}
+					bean.addToAttachmemtsPdf(attachmentPaths[i],attachmentNames[i], attachmentFilenames[i],pdf);
 				}
 			}
 		}

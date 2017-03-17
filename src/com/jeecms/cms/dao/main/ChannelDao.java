@@ -51,5 +51,7 @@ public interface ChannelDao {
 	public void updateBlogVisitNum(CmsUser userT);
 
 	public void updateBlogVisitorTime(CmsUser user,CmsUser userT);
+	
+	public CmsUser findUserId(String userName);
 
 }

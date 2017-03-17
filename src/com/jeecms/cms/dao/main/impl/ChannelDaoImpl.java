@@ -252,6 +252,13 @@ public class ChannelDaoImpl extends HibernateBaseDao<Channel, Integer>
 	}
 
 	@Override
+	public CmsUser findUserId(String userName) {
+		String hql = "from CmsUser bean where bean.username=:userName";
+		Query query = getSession().createQuery(hql).setParameter("userName",userName);
+		return (CmsUser) query.uniqueResult();
+	}
+
+	@Override
 	public void updateBlogVisitNum(CmsUser userT) {
 		String visnum=userT.getBlogVisitNum();
 		if(null==visnum){

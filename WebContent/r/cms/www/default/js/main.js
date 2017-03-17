@@ -107,7 +107,16 @@ var zh ={
 
         function AA(){
             if(index == lenS){
-
+            	 index =0;
+            	 con =0;
+            	 clearInterval(ani);
+                 ani = setInterval(AA,3000);
+                 imgShow(index);
+                 console.log(con,len);
+                 console.log('prev'+con);
+                 $(o.smPrev).addClass('disabled');
+                 $(o.smNext).removeClass('disabled');
+                 $(o.smallPic).animate({left:-(o.smWidth)*con},200);
             }else{
                 imgShow(index);
                 index++;

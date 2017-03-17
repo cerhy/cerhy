@@ -430,6 +430,11 @@ public class ContributeAct extends AbstractContentMemberAct {
 		ResponseUtils.renderJson(response, json.toString());
 	}
 	
+	public String findUserId(String userName){
+		CmsUser id = channelMng.findUserId(userName);
+		return id.getId().toString();
+	}
+	
 	@Autowired
 	private DbFileMng dbFileMng;
 	@Autowired
@@ -834,6 +839,7 @@ public class ContributeAct extends AbstractContentMemberAct {
  		model = blogCommon.getTotalReadNum(model, userT);
  		model = blogCommon.getStarBlogger(request, model);
  		model = blogCommon.getAlreadyJoinGroup(request, model,userT);
+ 		model = blogCommon.getAddFriends(request, model,userT,user);
 		String path = request.getSession().getServletContext().getRealPath("/");
 		List<Focus> list = (new BlogDao()).findMaxFocusCount( path);
 	    List<Focus> l = null;
@@ -880,7 +886,7 @@ public class ContributeAct extends AbstractContentMemberAct {
 		CmsSite site = CmsUtils.getSite(request);
 		CmsUser user = CmsUtils.getUser(request);
 		if(user==null){
-			FrontUtils.showLogin(request, model, site);
+			return	FrontUtils.showLogin(request, model, site);
 		}
 //		model = blogCommon.getLinks(model,user);
 //		model = blogCommon.getFriends(model,user);
@@ -907,7 +913,7 @@ public class ContributeAct extends AbstractContentMemberAct {
 		CmsSite site = CmsUtils.getSite(request);
 		CmsUser user = CmsUtils.getUser(request);
 		if(user==null){
-			FrontUtils.showLogin(request, model, site);
+			return FrontUtils.showLogin(request, model, site);
 		}
 		CmsUser userT=cmsUserMng.findById(Integer.valueOf(userIds.toString()));
 		model = blogCommon.getColumn(request,model,userT);
@@ -922,6 +928,7 @@ public class ContributeAct extends AbstractContentMemberAct {
  		model = blogCommon.getStarBlogger(request, model);
  		model = blogCommon.getAlreadyJoinGroup(request, model,userT);
  		model = blogAct.getAllVisitors(q, modelId, queryChannelId,pageNo, request, model,userT);
+ 		model = blogCommon.getAddFriends(request, model,userT,user);
 		String path = request.getSession().getServletContext().getRealPath("/");
 		List<Focus> list = (new BlogDao()).findMaxFocusCount( path);
 	    List<Focus> l = null;
@@ -1113,5 +1120,66 @@ public class ContributeAct extends AbstractContentMemberAct {
 		return FrontUtils.getTplPath(request, site.getSolutionPath(),TPLDIR_BLOG, "tpl.use_manual");
 	}
 	
-	
+	/**
+	 * 添加/解除好友
+	 */
+	@RequestMapping(value = "/blog/addOrCancelFriends.jspx")
+	public void addOrCancelFriends(String state,String uId,HttpServletRequest request,HttpServletResponse response, ModelMap model)throws UnsupportedEncodingException, JSONException {
+		CmsUser user = CmsUtils.getUser(request);
+		JSONObject json = new JSONObject();
+		if(user!=null){
+			if(Integer.valueOf(state)==0){
+				//添加好友
+				CmsUser userT=cmsUserMng.findById(Integer.valueOf(uId.toString()));
+				String newName=userT.getUsername()+"="+userT.getUsername();
+				String ownFriend=user.getFriends();
+				if(ownFriend!=null&&ownFriend!=""){
+					String newFriend=ownFriend+" "+newName;
+					user.setFriends(newFriend);
+				}else{
+					String newFriend=newName;
+					user.setFriends(newFriend);
+				}
+				try {
+					columnsMng.updateUFO(user);
+					json.put("status",1);
+				} catch (Exception e) {
+					json.put("status",0);
+					e.printStackTrace();
+				}
+			}else if(Integer.valueOf(state)==1){
+				//解除好友
+				CmsUser userT=cmsUserMng.findById(Integer.valueOf(uId.toString()));
+				String uname=userT.getUsername();
+				String oldName=user.getFriends();
+				String[] str=oldName.split(" ");
+				String newFriend="";
+				if(str.length!=1){
+					for(int i=0;i<str.length;i++){
+						if(!str[i].split("=")[1].equals(uname)){
+							newFriend =str[i]+" "+newFriend;
+						}
+					}
+					user.setFriends(newFriend.trim());
+					try {
+						columnsMng.updateUFO(user);
+						json.put("status",1);
+					} catch (Exception e) {
+						json.put("status",0);
+						e.printStackTrace();
+					}
+				}else{
+					user.setFriends(null);
+					try {
+						columnsMng.updateUFO(user);
+						json.put("status",1);
+					} catch (Exception e) {
+						json.put("status",0);
+						e.printStackTrace();
+					}
+				}
+			}
+			ResponseUtils.renderJson(response, json.toString());
+		}
+	}
 }

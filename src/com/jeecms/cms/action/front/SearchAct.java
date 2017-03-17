@@ -22,11 +22,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.jeecms.cms.entity.assist.CmsSearchWords;
 import com.jeecms.cms.manager.assist.CmsSearchWordsMng;
+import com.jeecms.cms.manager.main.ChannelMng;
 import com.jeecms.cms.service.SearchWordsCache;
 import com.jeecms.common.util.StrUtils;
 import com.jeecms.common.web.RequestUtils;
 import com.jeecms.common.web.ResponseUtils;
 import com.jeecms.core.entity.CmsSite;
+import com.jeecms.core.entity.CmsUser;
 import com.jeecms.core.web.util.CmsUtils;
 import com.jeecms.core.web.util.FrontUtils;
 
@@ -46,6 +48,25 @@ public class SearchAct {
 		FrontUtils.frontData(request, model, site);
 		FrontUtils.frontPageData(request, model);
 		String q = RequestUtils.getQueryParam(request, "q");
+		Matcher isNum = Pattern.compile("[0-9]*").matcher(q);
+		if(isNum.matches()){
+			CmsUser id = channelMng.findUserId(q);
+			
+			if(id == null){
+				String tempP=q;
+				String parseQT=parseKeywords(tempP);
+				model.addAttribute("input",tempP);
+				model.addAttribute("q",parseQT);
+				searchWordsCache.cacheWord(q);
+				return FrontUtils.getTplPath(request, site.getSolutionPath(),
+						TPLDIR_SPECIAL, SEARCH_RESULT);
+			}else{
+				int tempId = id.getId();
+				return "redirect:/blog/find_all_url_friend.jspx?userIds="+tempId;
+			}
+			
+		}
+		
 		String channelId = RequestUtils.getQueryParam(request, "channelId");
 		if (StringUtils.isBlank(q) && StringUtils.isBlank(channelId)) {
 			return FrontUtils.getTplPath(request, site.getSolutionPath(),
@@ -150,4 +171,6 @@ public class SearchAct {
 	private CmsSearchWordsMng manager;
 	@Autowired
 	private SearchWordsCache searchWordsCache;
+	@Autowired
+	protected ChannelMng channelMng;
 }

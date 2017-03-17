@@ -305,6 +305,22 @@ public class BlogCommon {
 		model.addAttribute("joinGroupList", joinGroupList);
 		return model;
 	}
+	public ModelMap getAddFriends(HttpServletRequest request, ModelMap model,CmsUser userT, CmsUser user) {
+		if(user!=null){
+			if(user.getFriends()!=null&&user.getFriends()!=""){
+				if(user.getFriends().contains(userT.getUsername())){
+					model.addAttribute("friendCheck", 1);//已添加好友
+				}else{
+					model.addAttribute("friendCheck", 0);//未添加好友
+				}
+			}else{
+				model.addAttribute("friendCheck", 0);//未添加好友
+			}
+		}else{
+			model.addAttribute("friendCheck", null);
+		}
+		return model;
+	}
 	
 	@Autowired
 	protected CmsUserMng cmsUserMng;

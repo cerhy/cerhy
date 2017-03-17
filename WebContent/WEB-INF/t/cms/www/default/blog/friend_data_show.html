@@ -167,3 +167,49 @@ $(function(){
 	}
 });
 </script>
+<script type="text/javascript">
+function addOrCancelFriends(obj,uId){
+	if(obj==0){
+		//0为未添加好友
+		$.ajax({
+			     url: "${base}/blog/addOrCancelFriends.jspx?state="+obj+"&uId="+uId,
+			     type: "POST",
+			     dataType:"json",
+			     data: "",
+			     success: function (data) {
+			        if(data.status>0){
+						//改变显示状态
+						$("#addCancelFriend").html("解除关系");
+						$("#addCancelFriend").attr("onclick","addOrCancelFriends(1,${usert.id})"); 
+			        }else{
+			        	alert("添加失败...!");
+			      }
+			    }
+			})
+	}else if(obj==1){
+		//1是已添加好友
+		var msg = "您确定要和该好友解除关系吗?"; 
+		 if (confirm(msg)==true){ 
+			 $.ajax({
+			        url: "${base}/blog/addOrCancelFriends.jspx?state="+obj+"&uId="+uId,
+			        type: "POST",
+			        dataType:"json",
+			        data: "",
+			        success: function (data) {
+			        	if(data.status>0){
+							 //改变显示状态
+							 $("#addCancelFriend").html("添加好友");
+							 $("#addCancelFriend").attr("onclick","addOrCancelFriends(0,${usert.id})"); 
+			        	}else{
+			        		alert("解除失败...!");
+			        	}
+			        }
+			    });
+		     return true; 
+		 }else{ 
+		     return false; 
+		 }
+	}
+}
+
+</script>

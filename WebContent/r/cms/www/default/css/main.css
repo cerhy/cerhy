@@ -1310,6 +1310,41 @@ a:hover{
     border:1px solid #0b91df;
     color: #fff;
 }
+.user-setting .user-oparetion-btn1{
+    display: inline-block;
+    width: 56px;
+    height:20px;
+    line-height: 20px;
+    background: #FFF;
+    border:1px solid #0b91df;
+    color: #0b91df;
+    border-radius: 10px;
+    vertical-align: middle;
+    text-align: center;
+    margin-left: 40px;
+}
+.user-setting .user-oparetion-btn1:hover{
+    background: #0b91df;
+    border:1px solid #0b91df;
+    color: #fff;
+}
+.user-setting .user-oparetion-btns{
+    display: inline-block;
+    width: 56px;
+    height:20px;
+    line-height: 20px;
+    background: #FFF;
+    border:1px solid #0b91df;
+    color: #0b91df;
+    border-radius: 10px;
+    vertical-align: middle;
+    text-align: center;
+}
+.user-setting .user-oparetion-btns:hover{
+    background: #0b91df;
+    border:1px solid #0b91df;
+    color: #fff;
+}
 .user-center-left .user-menu-links{
     background: #FFF;
 
