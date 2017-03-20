@@ -313,15 +313,15 @@ $(function(){
 					<tr>
 						
 						<td align="center">附件名称</td>
-						<td align="center" style="display: none;">路径</td>
-						<td align="center" style="display: none;">上传</td>
+						<td align="center"style="display:none">路径</td>
+						<td align="center"style="display:none">上传</td>
                         <td align="center">操作</td>
 					</tr>
 					[#list content.attachments as attach]
                                         <tr id="attachTr${attach_index}" style="height:50px;">					
 						<td align="center"><input type="text" id="attachmentNames${attach_index}" name="attachmentNames" value="${attach.name!}"/></td>
-						<td align="center" style="display: none;"><input type="text" id="attachmentPaths${attach_index}" name="attachmentPaths" value="${attach.path!}"/></td>
-						<td align="center" style="display: none;"><span id="afc${attach_index}" style="position:relative;display:block;width:100px;">
+						<td align="center" style="display:none"><input type="text" id="attachmentPaths${attach_index}" name="attachmentPaths" value="${attach.path!}"/></td>
+						<td align="center" style="display:none"><span id="afc${attach_index}" style="position:relative;display:block;width:100px;">
 									<input type='text' id='attachmentText${attach_index}'  style="position:absolute;right:120px;width:180px;top:20px;border:1px solid #c7c7c7;"/>  
 									<input onchange="$('#attachmentText${attach_index}').val(this.value)" size="19" type="file" name="attachmentFile" id="attachmentFile${attach_index}" style="width:180px;height:24px;opacity:0;filter:alpha(opacity=0);position:absolute;right:120px;border:1px solid #c7c7c7;top:0;"/>
 									<input type="button" value="上传" onclick="uploadAttachment(${attach_index});" class="upload-button"/>
@@ -339,8 +339,8 @@ $(function(){
 						<br />
 						<img src="" title="" onclick="addSrcHtml(this)" id="attachmentPathss{0}" name="attachmentPathss" class="member-change" style="width:130px;height:80px;cursor: pointer;"/>
 						</td>
-						<td align="center" style="display: none;"><input type="text" id="attachmentPaths{0}" name="attachmentPaths" class="member-change" style="width:130px;height:24px;"/></td>
-						<td align="center" style="display: none;">
+						<td align="center" style="display:none"><input type="text" id="attachmentPaths{0}" name="attachmentPaths" class="member-change" style="width:130px;height:24px;"/></td>
+						<td align="center" style="display:none">
 							<span id="afc{0}" style="position:relative;display:block;width:200px;">
 							<input type='text' id='attachmentText{0}' class="member-change" style="width:150px;height:24px;" />  
 							<input onchange="$('#attachmentText{0}').val(this.value)" size="19" type="file" name="attachmentFile" id="attachmentFile{0}" style="height:24px;width:200px;opacity:0;filter:alpha(opacity=0);position:absolute;left:0;top:0;"/>
@@ -355,7 +355,7 @@ $(function(){
 					</tr>   
 					</textarea>
 					<script type="text/javascript">
-					var attachIndex = 1;
+					var attachIndex = ${content.attachments?size};
 					var attachTpl = $.format($("#attachTr").val());
 					function addAttachLine() {
 						$('#attachTable').append(attachTpl(attachIndex++));
@@ -443,7 +443,7 @@ function addSrcHtml(obj){
 			var newname=lastname2.toUpperCase();
 			if(newname=="DOC"||newname=="TXT"||newname=="DOCX"
 					||newname=="XLSX"||newname=="XLS"||newname=="PDF"
-						||newname=="PPT"||newname="PPTX"){
+						||newname=="PPT"||newname=="PPTX"){
 				var lt = urls.substring(0,pos2+1);
 				var newUr=lt+"pdf";
 				if(typeof(ck)!=='undefined'){

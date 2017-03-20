@@ -128,13 +128,12 @@ function uploadAttachSuccess(file,data) {
 		var attachName=jsonData.attachName;
 		$("#attachmentPaths"+index).val(attachUrl);
 		$("#attachmentNames"+index).val(attachName);
-		 var pos = attachUrl.lastIndexOf(".");
-		 var lastname = attachUrl.substring(pos+1,attachUrl.length);
+		var pos = attachUrl.lastIndexOf(".");
+		var lastname = attachUrl.substring(pos+1,attachUrl.length);
 		if(lastname.toUpperCase()=="BMP"||lastname.toUpperCase()=="PNG"
 				||lastname.toUpperCase()=="GIF"||lastname.toUpperCase()=="JPG"
 				||lastname.toUpperCase()=="JPEG"){
 			$("#attachmentPathss"+index).attr('src',attachUrl); 
-			
 		}else{	
 			$("#attachmentPathss"+index).attr('src',"/${res}/images/fileDown.png"); 
 			$("#attachmentPathss"+index).attr('url',attachUrl); 
@@ -418,7 +417,7 @@ function addSrcHtml(obj){
 			var newname=lastname2.toUpperCase();
 			if(newname=="DOC"||newname=="TXT"||newname=="DOCX"
 					||newname=="XLSX"||newname=="XLS"||newname=="PDF"
-					||newname=="PPT"||newname="PPTX"){
+					||newname=="PPT"||newname=="PPTX"){
 				var lt = urls.substring(0,pos2+1);
 				var newUr=lt+"pdf";
 				if(typeof(ck)!=='undefined'){
