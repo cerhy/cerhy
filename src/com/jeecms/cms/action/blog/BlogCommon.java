@@ -149,7 +149,9 @@ public class BlogCommon {
 			String[] strs = friends.split(" ");
 			for (int i = 0; i < strs.length; i++) {
 				String[] str = strs[i].split("=");
-				list.add(channelMng.findUserImage(str[1].toString()));
+				if(channelMng.findUserImage(str[1].toString())!=null){
+					list.add(channelMng.findUserImage(str[1].toString()));
+				}
 			}
 			model.addAttribute("friends", friends.replaceAll(" ", "\r\n"));
 			//分页显示好友数据
@@ -200,11 +202,15 @@ public class BlogCommon {
 	    	}
 	    	if(null != l){
 	    		for(Focus f : l){
-	    			u.add(cmsUserMng.findById(f.getFocusUserId()));
+	    			if(cmsUserMng.findById(f.getFocusUserId())!=null){
+	    				u.add(cmsUserMng.findById(f.getFocusUserId()));
+	    			}
 	    		}
 	    	}else{
 	    		for(Focus f : list){
-	    			u.add(cmsUserMng.findById(f.getFocusUserId()));
+	    			if(cmsUserMng.findById(f.getFocusUserId())!=null){
+	    				u.add(cmsUserMng.findById(f.getFocusUserId()));
+	    			}
 	    		}
 	    	}
 	    	model.addAttribute("starBlogger", u);
