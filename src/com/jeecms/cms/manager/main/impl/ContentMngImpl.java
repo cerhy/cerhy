@@ -339,32 +339,32 @@ public class ContentMngImpl implements ContentMng, ChannelDeleteChecker {
 			String[] attachmentNames, String[] attachmentFilenames,
 			String[] picPaths, String[] picDescs, Integer channelId,Integer columnId,
 			Integer typeId, Boolean draft,Boolean contribute, 
-			Short charge,Double chargeAmount,CmsUser user, boolean forMember) {
-		saveContent_blog(bean, ext, txt,doc,channelId,columnId, typeId, draft,contribute,user, forMember);
+			Short charge,Double chargeAmount,CmsUser user, boolean forMember,String password) {
+		saveContent_blog(bean, ext, txt,doc,channelId,columnId, typeId, draft,contribute,user, forMember,password);
 		
 		// 保存附件
-		if (attachmentPaths != null && attachmentPaths.length > 0) {
-			for (int i = 0, len = attachmentPaths.length; i < len; i++) {
-				if (!StringUtils.isBlank(attachmentPaths[i])) {
-					String pdf=null;
-					try {
-						String fileRealPath = realPathResolver.get(attachmentPaths[i].substring(attachmentPaths[i].indexOf("/",attachmentPaths[i].indexOf("/")+1) + 1,attachmentPaths[i].length()));
-						String fileName=FileUtils.getFileName(attachmentPaths[i]);
-						String outPdfRealPath = realPathResolver.get(FileUtils.getFilePath(attachmentPaths[i].substring(attachmentPaths[i].indexOf("/",attachmentPaths[i].indexOf("/")+1) + 1,attachmentPaths[i].length())));
-						//String pdfPath=FileUtils.getFilePath(attachmentPaths[i])+fileName+".pdf";
-						if(!fileRealPath.endsWith(OpenOfficeConverter.PDF)){
-							//转换文档成pdf
-							openOfficeConverter.convertToPdf(fileRealPath,outPdfRealPath + "/",fileName);
-						}
-						int lastIndex = attachmentPaths[i].lastIndexOf(".");
-						pdf=attachmentPaths[i].substring(0, lastIndex)+".pdf";
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-					bean.addToAttachmemtsPdf(attachmentPaths[i],attachmentNames[i], attachmentFilenames[i],pdf);
-				}
-			}
-		}
+//		if (attachmentPaths != null && attachmentPaths.length > 0) {
+//			for (int i = 0, len = attachmentPaths.length; i < len; i++) {
+//				if (!StringUtils.isBlank(attachmentPaths[i])) {
+//					String pdf=null;
+//					try {
+//						String fileRealPath = realPathResolver.get(attachmentPaths[i].substring(attachmentPaths[i].indexOf("/",attachmentPaths[i].indexOf("/")+1) + 1,attachmentPaths[i].length()));
+//						String fileName=FileUtils.getFileName(attachmentPaths[i]);
+//						String outPdfRealPath = realPathResolver.get(FileUtils.getFilePath(attachmentPaths[i].substring(attachmentPaths[i].indexOf("/",attachmentPaths[i].indexOf("/")+1) + 1,attachmentPaths[i].length())));
+//						//String pdfPath=FileUtils.getFilePath(attachmentPaths[i])+fileName+".pdf";
+//						if(!fileRealPath.endsWith(OpenOfficeConverter.PDF)){
+//							//转换文档成pdf
+//							openOfficeConverter.convertToPdf(fileRealPath,outPdfRealPath + "/",fileName);
+//						}
+//						int lastIndex = attachmentPaths[i].lastIndexOf(".");
+//						pdf=attachmentPaths[i].substring(0, lastIndex)+".pdf";
+//					} catch (Exception e) {
+//						e.printStackTrace();
+//					}
+//					bean.addToAttachmemtsPdf(attachmentPaths[i],attachmentNames[i], attachmentFilenames[i],pdf);
+//				}
+//			}
+//		}
 		// 保存图片集
 		if (picPaths != null && picPaths.length > 0) {
 			for (int i = 0, len = picPaths.length; i < len; i++) {
@@ -481,7 +481,7 @@ public class ContentMngImpl implements ContentMng, ChannelDeleteChecker {
 	}
 
 	private Content saveContent_blog(Content bean, ContentExt ext, ContentTxt txt,ContentDoc doc,
-			Integer channelId,Integer columnId,Integer typeId, Boolean draft,Boolean contribute,CmsUser user, boolean forMember){
+			Integer channelId,Integer columnId,Integer typeId, Boolean draft,Boolean contribute,CmsUser user, boolean forMember,String password){
 		Channel channel;
 		if(channelId != null){
 			 channel = channelMng.findById(channelId);
@@ -496,6 +496,7 @@ public class ContentMngImpl implements ContentMng, ChannelDeleteChecker {
 		bean.setType(contentTypeMng.findById(typeId));
 		bean.setUser(user);
      	bean.setStatus(ContentCheck.CHECKED);
+     	bean.setPassword(password);
 		// 是否有标题图
 		bean.setHasTitleImg(!StringUtils.isBlank(ext.getTitleImg()));
 		bean.init();

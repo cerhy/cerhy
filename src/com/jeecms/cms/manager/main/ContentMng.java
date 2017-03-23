@@ -152,7 +152,7 @@ public interface ContentMng {
 			String[] picPaths, String[] picDescs, Integer channelId,Integer columnId,
 			Integer typeId, Boolean draft,Boolean contribute,
 			Short charge,Double chargeAmount,
-			CmsUser user, boolean forMember);
+			CmsUser user, boolean forMember,String password);
 	
 	public Content save(Content bean, ContentExt ext, ContentTxt txt,ContentDoc doc,
 			Integer channelId,Integer typeId, Boolean draft, CmsUser user, boolean forMember);

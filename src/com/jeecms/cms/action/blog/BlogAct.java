@@ -208,7 +208,7 @@ public class BlogAct {
 			String captcha,String mediaPath,String mediaType,
 			String[] attachmentPaths, String[] attachmentNames,
 			String[] attachmentFilenames, String[] picPaths, String[] picDescs,
-			Short charge,Double chargeAmount,
+			Short charge,Double chargeAmount,String password,
 			String nextUrl, HttpServletRequest request,
 			HttpServletResponse response, ModelMap model,Integer sta) {
 				CmsSite site = CmsUtils.getSite(request);
@@ -261,7 +261,7 @@ public class BlogAct {
 		c = contentMng.blog_save(c, ext, t,null, null, null, null, tagArr,
 				attachmentPaths,attachmentNames, attachmentFilenames
 				,picPaths,picDescs,channelId,columnId, typeId, null,true,
-				charge,chargeAmount, user, true);
+				charge,chargeAmount, user, true,password);
 		if(doc!=null){
 			contentDocMng.save(doc, c);
 		}

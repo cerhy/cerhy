@@ -57,6 +57,7 @@ Cms.siteFlow("${base}", location.href, document.referrer,
 });
 </script>
 <script type="text/javascript">
+	
 	jQuery(document).ready(function($) {
 		$('.content-comment').click(function() {
 			$('html,body').animate({
@@ -104,9 +105,10 @@ Cms.siteFlow("${base}", location.href, document.referrer,
 			</h2>
 	</div> -->
      [#include "blog_left.html"/]
-       <div class="wrap-right">
+       <div class="wrap-right" id="maindiv">
            <div class="personCenter-userInfo blog_right xueke-acticle">
                 <div ><h2>${content.title}</h2></div>
+                <input type="text" style="display:none" id="hipw" value="${content.password}" />
                 <div class="gray9 h2dt pt5">
 				    <span class="pr15">发布时间：${content.releaseDate}</span>
 					<span class="pr15">
@@ -268,6 +270,17 @@ Cms.siteFlow("${base}", location.href, document.referrer,
 				</div>
            </div>
        </div>
+       
+       <div class="wrap-right" id="mainpwdiv">
+       		<div class="personCenter-userInfo blog_right xueke-acticle">
+       		<div style="margin-top: 200px;text-align: center">
+		    	<input  type="password" placeholder="请输入阅读密码" id="mima" class="plcode"></input>
+		    	<input  type="button" onclick="jiaoyan()" value="校验密码"style="width: 90px;height: 36px;line-height: 36px; background: #00a8eb;color: #FFF;text-align: center;display: inline-block;" />
+<!-- 		    	<span style="color:#f00; margin-left:10px;">密码类型为数字</span> -->
+		    </div>
+		    </div>
+       </div>
+       
   </div>
  </div>
 </div> 
@@ -276,6 +289,28 @@ Cms.siteFlow("${base}", location.href, document.referrer,
 </body>
 </html>
 <script type="text/javascript">
+	var bool = false;
+	var val = $('#hipw').val();
+	var length = val.length;
+	if(length>=1){
+		bool = true
+	}
+	if(bool){
+		$('#maindiv').hide();
+		$('#mainpwdiv').show();
+	}
+	
+	function jiaoyan(){
+		var userPw = $('#mima').val();
+		if(userPw == val){
+			$('#maindiv').show();
+			$('#mainpwdiv').hide();
+		}else{
+			alert("密码错误，请重新输入");
+		}
+	}
+	
+// $('#maindiv').hide();
      function down(obj){  
     	 if(obj==0){
 	    	 $("#pos").html("退出");
