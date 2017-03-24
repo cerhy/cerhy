@@ -123,7 +123,7 @@ function cp(){
         </div>
         <div>
          <span style="font-size:16px;">栏目序号:</span>
-         <input type="text" name="columnOrder" style="margin:10px;width: 180px;height: 30px;" placeholder="默认 0"/>
+         <input type="text" name="columnOrder" maxlength="9" style="margin:10px;width: 180px;height: 30px;" placeholder="默认 0" />
          </div>
          <div class="s1">
              <input type="submit" value="新建" class="sub1" />
@@ -142,7 +142,7 @@ function cp(){
 		<br />
 		<form id="tableForm0" action="" method="post">
           <table cellpadding="0" cellspacing="0">
-            <tbody>
+            <tbody >
           [#if columnsList?size gt 0]
               <tr>
                <td class="tggl-top" style="font-size:14px;min-width: 80px;">栏目序号</td>
@@ -152,10 +152,10 @@ function cp(){
               </tr>
               [#list columnsList as c]
               <tr>
-              <td>${c.orderId}</td>
+              	<td>${c.orderId}</td>
                 <td>${c.columnName}</td>
                 <td>${c.uniqueCode!""}</td>
-                <td><a href="${base}/blog/update_tz.jspx?id=${c.columnId}&name=${c.columnName}&orderId=${c.orderId}&uniqueCode=${c.uniqueCode!''}">修改<a> | [#if c.uniqueCode??][#else]<a href="${base}/blog/deteleColumn.jspx?id=${c.columnId}">删除<a>[/#if]</td>
+                <td><a href="${base}/blog/update_tz.jspx?id=${c.columnId}&name=${c.columnName}&orderId=${c.orderId}&uniqueCode=${c.uniqueCode!''}">修改</a> | [#if c.uniqueCode??][#else]<a href="#" id="del" onclick="del(${c.columnId});" >删除</a>[/#if]</td>
               </tr>
               [/#list]
             [#else]
@@ -205,6 +205,28 @@ function cp(){
 [#include "../include/footer.html"/]
 </body>
 </html>
+<script type="text/javascript">
+
+function del(columnId){
+		$.ajax({
+			url:"${base}/blog/queryLanmuColumn.jspx?id="+columnId,
+			type:"post",
+			datatype:"json",
+			data: "",
+			success: function(result){
+				if(result.status=="false"){
+					alert("删除失败！请先删除本栏目下的文章！");	
+				}else{
+					var isDel="确定删除吗?";
+					if(confirm(isDel)==true){
+						location.href="${base}/blog/deleteColumn.jspx?columnId="+columnId;
+						alert("删除成功!")
+					}
+				}
+			}
+		});
+}
+</script>
 <script type="text/javascript">
 function signOut(obj){
 	var msg = "您确定要退出该群组吗？"; 

@@ -6,10 +6,8 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -37,7 +35,6 @@ import com.jeecms.cms.entity.assist.CmsComment;
 import com.jeecms.cms.entity.assist.CmsJoinGroup;
 import com.jeecms.cms.entity.assist.CmsPostilInfo;
 import com.jeecms.cms.entity.main.Channel;
-import com.jeecms.cms.entity.main.CmsTopic;
 import com.jeecms.cms.entity.main.Columns;
 import com.jeecms.cms.entity.main.Focus;
 import com.jeecms.cms.manager.assist.CmsFileMng;
@@ -49,8 +46,10 @@ import com.jeecms.core.entity.CmsSite;
 import com.jeecms.core.entity.CmsUser;
 import com.jeecms.core.entity.Ftp;
 import com.jeecms.core.entity.MemberConfig;
+import com.jeecms.core.entity.UnifiedUser;
 import com.jeecms.core.manager.CmsUserMng;
 import com.jeecms.core.manager.DbFileMng;
+import com.jeecms.core.manager.UnifiedUserMng;
 import com.jeecms.core.web.WebErrors;
 import com.jeecms.core.web.util.CmsUtils;
 import com.jeecms.core.web.util.FrontUtils;
@@ -546,9 +545,18 @@ public class ContributeAct extends AbstractContentMemberAct {
 	 * @param response
 	 * @param model
 	 */
-	@RequestMapping(value = "/blog/deteleColumn.jspx")
-	public void columns_detele(HttpServletRequest request, HttpServletResponse response,ModelMap model) {
-		blogAct.columns_detele(request, response, model);
+	@RequestMapping(value = "/blog/deleteColumn.jspx")
+	public void columns_delete(HttpServletRequest request, HttpServletResponse response,ModelMap model) {
+		blogAct.columns_delete(request, response, model);
+	}
+	
+	/**
+	 * 查看博客栏目下是否有文章
+	 */
+	
+	@RequestMapping(value = "/blog/queryLanmuColumn.jspx")
+	public void queryLanmuColumn(HttpServletRequest request, HttpServletResponse response,ModelMap model) {
+		  blogAct.columns_query(request, response, model);
 	}
 	
 	/**
@@ -1172,5 +1180,22 @@ public class ContributeAct extends AbstractContentMemberAct {
 			}
 			ResponseUtils.renderJson(response, json.toString());
 		}
+	}
+	
+	
+	/**
+	 * check密码是否为初始密码123456
+	 */
+	@RequestMapping(value = "/member/checkPwdss.jspx")
+	public void checkPwd(HttpServletRequest request,HttpServletResponse response, ModelMap model)throws UnsupportedEncodingException, JSONException {
+		CmsUser user = CmsUtils.getUser(request);
+		boolean pass = cmsUserMng.isPasswordValid(user.getId(), "123456");
+		JSONObject json = new JSONObject();
+		if(pass){
+			json.put("status","1");
+		}else{
+			json.put("status","0");
+		}
+		ResponseUtils.renderJson(response, json.toString());
 	}
 }

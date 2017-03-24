@@ -128,6 +128,17 @@ function uploadAttachSuccess(file,data) {
 		var attachName=jsonData.attachName;
 		$("#attachmentPaths"+index).val(attachUrl);
 		$("#attachmentNames"+index).val(attachName);
+		//var pos = attachUrl.lastIndexOf(".");
+		//var lastname = attachUrl.substring(pos+1,attachUrl.length);
+		//if(lastname.toUpperCase()=="BMP"||lastname.toUpperCase()=="PNG"
+		//		||lastname.toUpperCase()=="GIF"||lastname.toUpperCase()=="JPG"
+		//		||lastname.toUpperCase()=="JPEG"){
+		//	$("#attachmentPathss"+index).attr('src',attachUrl); 
+		//}else{	
+		//	$("#attachmentPathss"+index).attr('src',"/${res}/images/fileDown.png"); 
+		//	$("#attachmentPathss"+index).attr('url',attachUrl); 
+		//}
+		//$("#attachmentPathss"+index).attr('title',attachName);
 	}
 }
 function changeModel(){
@@ -278,6 +289,10 @@ $(function(){
                  </select>
                 </td>
               </tr>
+              <!-- <tr>
+              	<td>附件展示方式</td>
+              	<td><input type="checkbox" id="showStyle" name="showStyle" value="1"/>若附件可预览时嵌入文章</td>
+              </tr> -->
               <tr>
                 <td class="tggl-top">密码</td><td><input type="password" id="password" name="password" maxlength="100" onblur="valid()" class="member-change"  oninvalid="setCustomValidity('请输入密码');" oninput="setCustomValidity('');"/><span style="color:#f00; margin-left:10px;">密码类型为数字</span></td>
               </tr>
@@ -301,7 +316,9 @@ $(function(){
 					<textarea id="attachTr" style="display:none">
 					<tr id="attachTr{0}">
 						
-						<td align="center"><input type="text" id="attachmentNames{0}" name="attachmentNames" class="member-change" style="width:100px;height:24px;"/></td>
+						<td align="center">
+						<input type="text" id="attachmentNames{0}" name="attachmentNames" class="member-change" style="width:130px;height:24px;"/>
+						</td>
 						<td align="center" style="display: none;"><input type="text" id="attachmentPaths{0}" name="attachmentPaths" class="member-change" style="width:130px;height:24px;"/></td>
 						<td align="center" style="display: none;">
 							<span id="afc{0}" style="position:relative;display:block;width:200px;">
@@ -311,7 +328,10 @@ $(function(){
 							</span>
 							<input type="hidden" id="attachmentFilenames{0}" name="attachmentFilenames"/>
 						</td>
-                                                <td align="center" width="50"><a onclick="$('#attachTr{0}').remove();" href="javascript:void(0);" class="pn-opt">删除</a></td>
+                        <td align="center" width="50">
+                        <a onclick="$('#attachTr{0}').remove();" href="javascript:void(0);" class="pn-opt">删除</a>
+                        <br />
+                        </td>
 					</tr>   
 					</textarea>
 					<script type="text/javascript">
@@ -388,3 +408,38 @@ $(function(){
 [#include "../include/footer.html"/]
 </body>
 </html>
+<script type="text/javascript">
+function addSrcHtml(obj){
+	var oEditor = CKEDITOR.instances.txt;
+	var urls=$("#"+obj.id).attr("url");
+	var tit=$("#"+obj.id).attr("title");
+	var srcs=$("#"+obj.id)[0].src;
+	var ck=$("input[name='showStyle']:checked").val();//1为选中 undefined为没选中
+	if ( oEditor.mode == 'wysiwyg'){
+	    // Insert HTML code.
+	    // http://docs.cksource.com/ckeditor_api/symbols/CKEDITOR.editor.html#insertHtml
+		if(typeof(urls)=='undefined'){
+		    oEditor.insertHtml("<img src='"+srcs+"' data-mce="+srcs+">");
+		}else{
+			var pos2 = urls.lastIndexOf(".");
+			var lastname2 = urls.substring(pos2+1,urls.length);
+			var newname=lastname2.toUpperCase();
+			if(newname=="DOC"||newname=="TXT"||newname=="DOCX"
+					||newname=="XLSX"||newname=="XLS"||newname=="PDF"
+					||newname=="PPT"||newname=="PPTX"){
+				var lt = urls.substring(0,pos2+1);
+				var newUr=lt+"pdf";
+				if(typeof(ck)!=='undefined'){
+				    oEditor.insertHtml("<a href='"+urls+"'>"+tit+"</a><iframe src='${base}/thirdparty/pdfjs/web/viewer.html?file="+newUr+"' id='iframepage' width='100%' height='700px' frameborder='0' scrolling='no'></iframe>");
+				}else{
+				    oEditor.insertHtml("<a href='"+urls+"'>"+tit+"</a>");
+				}
+			}else{
+			    oEditor.insertHtml("<a href='"+urls+"'>"+tit+"</a>");
+			}
+		}
+	}else{
+		alert( 'You must be in WYSIWYG mode!' );//所见即所得模式
+	}
+}
+</script>
