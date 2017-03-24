@@ -30,7 +30,9 @@ public class FocusMng {
 		if(null != list){
 			List<CmsUser> u = new ArrayList<CmsUser>();
 				for(Focus f :list){
-					u.add(cmsUserMng.findById(f.getFocusUserId()));
+					if(cmsUserMng.findById(f.getFocusUserId())!=null){
+						u.add(cmsUserMng.findById(f.getFocusUserId()));
+					}
 				}
 			p.setList(u);
 		}
@@ -44,7 +46,9 @@ public class FocusMng {
 		if(null != list){
 			List<CmsUser> u = new ArrayList<CmsUser>();
 			for(Focus f :list){
-				u.add(cmsUserMng.findById(f.getUserId()));
+				if(cmsUserMng.findById(f.getUserId())!=null){
+					u.add(cmsUserMng.findById(f.getUserId()));
+				}
 			}
 			p.setList(u);
 		}

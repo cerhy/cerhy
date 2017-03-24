@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-<title>好研网-会员登录</title>
+<title>好研网-用户登录</title>
 <script src="${resSys}/jquery.js" type="text/javascript"></script>
 <script src="${resSys}/front.js" type="text/javascript"></script>
 
@@ -18,13 +18,13 @@ $(function() {
    [#if loginSource??]
         <div class="login-source">
    	[#if loginSource=="needPerm"]
-   	 该文章需要会员登录后才能浏览！
+   	 该文章需要用户登录后才能浏览！
    	[#elseif loginSource=="charge"]
    	 该文章是收费文章，需要会员登录付费后才能浏览！
    	[/#if]
          </div>
    [/#if] 
-  <div class="register-nav"><span>会员登录</span><!-- <div class="register-login">没有账号，<a class="tc" href="${base}/register.jspx">立即注册 ></a></div> --></div> 
+  <div class="register-nav"><span>用户登录</span><!-- <div class="register-login">没有账号，<a class="tc" href="${base}/register.jspx">立即注册 ></a></div> --></div> 
   <form id="jvForm" action="${base}/login.jspx" method="post">
       <div class="inf-message">
       [#if message??]

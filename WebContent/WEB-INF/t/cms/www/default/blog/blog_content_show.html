@@ -171,17 +171,17 @@ Cms.siteFlow("${base}", location.href, document.referrer,
 				        [/#if]
 				     </div>
 				    [/#if]
-				       <!--  [#if content.attachments?size gt 0]           
+				       	[#if content.attachments?size gt 0]           
 						<h4>附件:</h4>           
 						<ul>           
 						[#list content.attachments as attach]           
 						<li><a href="${attach.path}" id="attach${attach_index}">${attach.name}</a></li>
-						[#if attach.pdf??]
+						<!-- [#if attach.pdf??]
 						<iframe src="${base}/thirdparty/pdfjs/web/viewer.html?file=${attach.pdf}" id="iframepage" width="100%" height="700px" frameborder="0" scrolling="no"></iframe>           
-						[/#if]
+						[/#if] -->
 						[/#list]           
 						</ul>           
-					[/#if] -->
+					[/#if]
 					 
 					<!-- 分页 -->
 					<div class="pagebar">[#include "../style_page/content.html"/]</div>

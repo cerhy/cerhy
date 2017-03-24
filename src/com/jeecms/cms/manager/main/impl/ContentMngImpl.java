@@ -349,7 +349,7 @@ public class ContentMngImpl implements ContentMng, ChannelDeleteChecker {
 		if (attachmentPaths != null && attachmentPaths.length > 0) {
 			for (int i = 0, len = attachmentPaths.length; i < len; i++) {
 				if (!StringUtils.isBlank(attachmentPaths[i])) {
-					String fp =attachmentPaths[i].substring(attachmentPaths[i].lastIndexOf(".")+1,attachmentPaths[i].length());
+					/*String fp =attachmentPaths[i].substring(attachmentPaths[i].lastIndexOf(".")+1,attachmentPaths[i].length());
 					String pdf=null;
 					if(fp.toUpperCase().equals("DOC")||fp.toUpperCase().equals("TXT")
 							||fp.toUpperCase().equals("DOCX")||fp.toUpperCase().equals("XLSX")
@@ -378,8 +378,9 @@ public class ContentMngImpl implements ContentMng, ChannelDeleteChecker {
 						} catch (Exception e) {
 							e.printStackTrace();
 						}
-					}
-					bean.addToAttachmemtsPdf(attachmentPaths[i],attachmentNames[i], attachmentFilenames[i],pdf);
+					}*/
+					//bean.addToAttachmemtsPdf(attachmentPaths[i],attachmentNames[i], attachmentFilenames[i],pdf);
+					bean.addToAttachmemts(attachmentPaths[i],attachmentNames[i], attachmentFilenames[i]);
 				}
 			}
 		}
@@ -787,7 +788,7 @@ public class ContentMngImpl implements ContentMng, ChannelDeleteChecker {
 		if (attachmentPaths != null && attachmentPaths.length > 0) {
 			for (int i = 0, len = attachmentPaths.length; i < len; i++) {
 				if (!StringUtils.isBlank(attachmentPaths[i])) {
-					String fp =attachmentPaths[i].substring(attachmentPaths[i].lastIndexOf(".")+1,attachmentPaths[i].length());
+					/*String fp =attachmentPaths[i].substring(attachmentPaths[i].lastIndexOf(".")+1,attachmentPaths[i].length());
 					String pdf=null;
 					if(fp.toUpperCase().equals("DOC")||fp.toUpperCase().equals("TXT")
 							||fp.toUpperCase().equals("DOCX")||fp.toUpperCase().equals("XLSX")
@@ -816,8 +817,9 @@ public class ContentMngImpl implements ContentMng, ChannelDeleteChecker {
 						} catch (Exception e) {
 							e.printStackTrace();
 						}
-					}
-					bean.addToAttachmemtsPdf(attachmentPaths[i],attachmentNames[i], attachmentFilenames[i],pdf);
+					}*/
+					//bean.addToAttachmemtsPdf(attachmentPaths[i],attachmentNames[i], attachmentFilenames[i],pdf);
+					bean.addToAttachmemts(attachmentPaths[i],attachmentNames[i], attachmentFilenames[i]);
 				}
 			}
 		}
