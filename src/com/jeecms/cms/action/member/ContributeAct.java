@@ -1188,10 +1188,28 @@ public class ContributeAct extends AbstractContentMemberAct {
 	@RequestMapping(value = "/member/checkPwdss.jspx")
 	public void checkPwd(HttpServletRequest request,HttpServletResponse response, ModelMap model)throws UnsupportedEncodingException, JSONException {
 		CmsUser user = CmsUtils.getUser(request);
-		boolean pass = cmsUserMng.isPasswordValid(user.getId(), "123456");
 		JSONObject json = new JSONObject();
-		if(pass){
-			json.put("status","1");
+		if(user!=null){
+			boolean pass = cmsUserMng.isPasswordValid(user.getId(), "123456");
+			if(pass){
+				json.put("status","1");
+			}else{
+				json.put("status","0");
+			}
+		}else{
+			json.put("status","0");
+		}
+		ResponseUtils.renderJson(response, json.toString());
+	}
+	/**
+	 * 不在提示功能
+	 */
+	@RequestMapping(value = "/member/updateHint.jspx")
+	public void updateHint(HttpServletRequest request,HttpServletResponse response, ModelMap model)throws UnsupportedEncodingException, JSONException {
+		CmsUser user = CmsUtils.getUser(request);
+		JSONObject json = new JSONObject();
+		if(user!=null){
+			channelMng.updateLinkUrl("1",user);
 		}else{
 			json.put("status","0");
 		}

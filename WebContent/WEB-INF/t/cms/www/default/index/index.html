@@ -477,8 +477,66 @@ function HoverLi(x,y,m,n,counter){
     </div>
 </div>
 </div>
+<div id="setDialogs" style="display:none;margin-top:-5px;max-height: 75px;">
+		<ul style="padding-left: 10px;">
+			 <li  style="list-style-type: disc;">您的密码为初始密码,存在安全隐患.点击<a style="cursor: pointer;color: red;" href="${base}/member/pwd.jspx">修改密码</a></li>
+		</ul><br>
+		<input type="checkbox"  id="cpwd" value="1">不在提示...
+		[#if user??]
+		<input id="checkHint" name="checkHint" value="${user.linkUrl!}" style="display: none;"> 
+		[/#if]
+</div>
+<link href="${base}/res/common/css/jquery.ui.css" rel="stylesheet" type="text/css"/>
 [#include "../include/footer.html"/]
-<script src="/${res}/js/jquery-1.9.0.min.js"></script>
-<script src="/${res}/js/main.js"></script>
 </body>
 </html>
+<script type="text/javascript">
+$(function(){
+	$.ajax({
+        url: "${base}/member/checkPwdss.jspx",
+        type: "POST",
+        dataType:"json",
+        data: "",
+        success: function (data) {
+        	if(data.status>0){
+        		if($("#checkHint").val()!=null){
+        		   $("#setDialogs").dialog("open");
+        		}
+        	}
+        }
+    });
+});
+     $("#setDialogs").dialog({
+			autoOpen: false,
+			modal: false,
+			resizable :false,
+			stack : false,
+			draggable : true,
+			closeOnEscape : false,
+			open:function(event,ui){
+				$(".ui-dialog-titlebar").css("background","#ffffff");  
+				$(".ui-widget-header").css("border","0");  
+			},
+			width: 300,
+			height: 180,
+			position: ["right",35],
+			close: function(event, ui) {
+				//不在提示
+				$.ajax({
+			        url: "${base}/member/updateHint.jspx",
+			        type: "POST",
+			        dataType:"json",
+			        data: "",
+			        success: function (data) {
+			        	if(data.status>0){
+			        		
+			        	}
+			        }
+			    });
+			}
+		});
+     function closeDialogs(){
+    	$("#setDialogs").dialog("close");
+    }
+</script>
+<script type="text/javascript">
