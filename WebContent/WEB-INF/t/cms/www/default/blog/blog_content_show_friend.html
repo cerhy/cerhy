@@ -369,6 +369,10 @@ function addOrCancelFriends(obj,uId){
 		$('#mainpwdiv').show();
 	}
 	
+	if(val == ""){
+		$('#mainpwdiv').hide();
+	}
+	
 	function jiaoyan(){
 		var userPw = $('#mima').val();
 		if(userPw == val){
