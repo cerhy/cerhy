@@ -200,7 +200,7 @@ $(function(){
           [#include "media_upload.html"/]
           [#include "image_upload.html"/]
           [#include "attachment_upload.html"/]
-          <form id="jvForm" action="${base}/member/contribute_save.jspx?blog='1'" method="post" > 
+          <form id="jvForm" action="${base}/member/contribute_save.jspx?blog='1'" onsubmit="return valid()" method="post" > 
           <table cellpadding="0" cellspacing="0">
             <tbody>
               <tr class="blog_column">
@@ -294,7 +294,7 @@ $(function(){
               	<td><input type="checkbox" id="showStyle" name="showStyle" value="1"/>若附件可预览时嵌入文章</td>
               </tr> -->
               <tr>
-                <td class="tggl-top">密码</td><td><input type="password" id="password" name="password" maxlength="100" onblur="valid()" class="member-change"  oninvalid="setCustomValidity('请输入密码');" oninput="setCustomValidity('');"/><span style="color:#f00; margin-left:10px;">密码类型为数字</span></td>
+                <td class="tggl-top">密码</td><td><input type="password" id="password" name="password" maxlength="100"  class="member-change"  oninvalid="setCustomValidity('请输入密码');" oninput="setCustomValidity('');"/><span style="color:#f00; margin-left:10px;">密码类型为数字</span></td>
               </tr>
               <tr>
                 <td class="tggl-top">附件</td>
@@ -340,8 +340,12 @@ $(function(){
 						var reg = new RegExp("^[0-9]*$");
 				        var obj = $('#password').val();
 					    if(!reg.test(obj)){
-					        alert("请输入数字!");
-					    }
+							alert("密码的类型为数字!");
+							return false;
+					        
+					    }else{
+							return true;
+						}
 					}
 					var attachIndex = 1;
 					var attachTpl = $.format($("#attachTr").val());

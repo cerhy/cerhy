@@ -300,6 +300,10 @@ Cms.siteFlow("${base}", location.href, document.referrer,
 		$('#mainpwdiv').show();
 	}
 	
+	if(val == ""){
+		$('#mainpwdiv').hide();
+	}
+	
 	function jiaoyan(){
 		var userPw = $('#mima').val();
 		if(userPw == val){
