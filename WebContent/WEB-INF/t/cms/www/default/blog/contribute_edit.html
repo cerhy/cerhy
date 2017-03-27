@@ -301,6 +301,10 @@ $(function(){
               	<td>附件展示方式</td>
               	<td><input type="checkbox" id="showStyle" name="showStyle" value="1"/>若附件可预览时嵌入文章</td>
               </tr> -->
+			   <tr>
+                <td class="tggl-top">密码</td><td><input type="password" id="password" name="password" maxlength="100" onblur="valid()" class="member-change"  oninvalid="setCustomValidity('请输入密码');" oninput="setCustomValidity('');"/><span style="color:#f00; margin-left:10px;">密码类型为数字</span></td>
+              </tr>
+			  
               <tr>
                 <td class="tggl-top">附件</td>
                 <td style="padding:10px 5px;">
@@ -389,6 +393,13 @@ $(function(){
 						</table>
 						</div>
 						<script type="text/javascript">
+						function valid(){
+							var reg = new RegExp("^[0-9]*$");
+							var obj = $('#password').val();
+							if(!reg.test(obj)){
+								alert("请输入数字!");
+							}
+						}
 						var picIndex = 1;
 						var picTpl = $.format($("#picTable").html());
 						function addPicLine() {

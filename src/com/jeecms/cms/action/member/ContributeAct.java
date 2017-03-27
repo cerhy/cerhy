@@ -210,8 +210,10 @@ public class ContributeAct extends AbstractContentMemberAct {
 			String[] attachmentFilenames, String[] picPaths, String[] picDescs,
 			Short charge,Double chargeAmount,
 			String nextUrl, HttpServletRequest request,
-			HttpServletResponse response, ModelMap model) {
+			HttpServletResponse response, ModelMap model,String password) {
 		String blog = request.getParameter("blog");
+		String pw = request.getParameter("password");
+		
 		String channelIds = request.getParameter("channelIds");
 		   if(channelIds!=null&&channelIds!=""){
 			   String[] str=channelIds.split("&");
@@ -226,7 +228,7 @@ public class ContributeAct extends AbstractContentMemberAct {
 					   columnId,channelId, mediaPath,mediaType,attachmentPaths,
 						attachmentNames, attachmentFilenames
 						,picPaths,picDescs,null,charge, chargeAmount,
-						nextUrl, request, response, model);
+						nextUrl, request, response, model,pw);
 		   }else{
 			   super.update(id, title, author, description, txt, tagStr,
 						channelId, mediaPath,mediaType,attachmentPaths,

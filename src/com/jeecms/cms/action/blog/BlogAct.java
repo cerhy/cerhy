@@ -306,7 +306,7 @@ public class BlogAct {
 			String[] attachmentFilenames, String[] picPaths, String[] picDescs,
 			ContentDoc doc,Short charge,Double chargeAmount,
 			String nextUrl, HttpServletRequest request,
-			HttpServletResponse response, ModelMap model) {
+			HttpServletResponse response, ModelMap model,String password) {
 		CmsSite site = CmsUtils.getSite(request);
 		CmsUser user = CmsUtils.getUser(request);
 		FrontUtils.frontData(request, model, site);
@@ -330,6 +330,7 @@ public class BlogAct {
 		Content c = new Content();
 		c.setId(id);
 		c.setSite(site);
+		c.setPassword(password);
 		ContentExt ext = new ContentExt();
 		ext.setId(id);
 		ext.setTitle(title);
@@ -853,6 +854,8 @@ public class BlogAct {
 			model.addAttribute("txt", txt);
 			model.addAttribute("columnIdZ", columnId);
 			model.addAttribute("pic", content.getPictureByNo(pageNo));
+			model.addAttribute("password", content.getPassword());
+			
 				model.addAttribute("who",0);
 				model.addAttribute("userIds", user.getId());
 				model.addAttribute("usert", user);
