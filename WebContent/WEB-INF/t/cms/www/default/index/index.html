@@ -58,50 +58,6 @@ function HoverLi(x,y,m,n,counter){
                     </div>
                       <script type="text/javascript" src="/${res}/js/script.js"></script>
                 </div>
-               <!--  <div class="news-tab-dt">
-                    <div class="tab-wrap">
-                      <div class="tab-head clearfix">
-                      		 [@cms_channel_list parentId='115' orderBy='1' count='4'  channelOption='0']
-        						[#list tag_list as c]
-       						 <a href="${c.url}" target="_blank" onmouseover="HoverLi('tc_','tcn_',1,${c_index+1},${tag_list?size});" [#if c_index<1]class="curr"[#else]class="normaltab"[/#if] id="tc_1${c_index+1}">${c.name}</a>
-        					 [/#list]
-       						 [/@cms_channel_list]      
-       						         						
-                      </div>     
-                      <div class="tab-right">
-                      		 <a href="${base}/dt/index.jhtml" class="hymore" title="更多" target="_blank"></a> 
-                      </div>                    	
-     				 [@cms_channel_list parentId='115' orderBy='1' count='4'  channelOption='0']
-     					[#list tag_list as c]   
-     							[#if c_index>0]  			
-      							<div class="undis" id="tcn_1${c_index+1}">
-      							[#else]
-      							<div class="dis" id="tcn_1${c_index+1}">
-      							[/#if]
-        						
-        						[@cms_content_list orderBy='4' channelId=c.id channelOption='0' count='3']
-       							 <ul>
-         						 [#list tag_list as a]
-         						 <li>
-         						 	<a href="${a.url}" target="_blank">
-         						 	<h3>[@text_cut s=a.title len='15' append='...' /]</h3>  
-         						 	</a>       						 
-         						 	 <p>
-                                      <span class="dt-p of">[@text_cut s=a.description! len='24' append='...' /]</span>
-                                      
-                                       <span class="data">${a.releaseDate?string('yyyy-MM-dd')}</span>
-                                       </p>    
-                                                             
-         						 </li>
-          						[/#list]
-       							 </ul>
-        						[/@cms_content_list]
-     							 </div>
-      							[/#list]
-     					 [/@cms_channel_list]
-                      </div >                      
-                </div>
-            </div> -->
             <!--分类资讯-->
             <div class="type-info">
                 <div class="info-wrap clearfix">
@@ -424,8 +380,6 @@ function HoverLi(x,y,m,n,counter){
                                                 <h4 class="of">【[@text_cut s=a.title len=8 append='...'/]】</h4>
                                                 <p class="small-con of"> [@text_cut s=a.description! len=titLen append='...' /]</p>
                                                 <div class="time-num clearfix" style="width: 190px;">
-                                                    <span class="comments pinglun">评论 <em>${a.commentsCheckedNum!0}</em></span>
-                                                    <span class="time gray9">${a.releaseDate?string('yyyy-MM-dd')}</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -447,21 +401,7 @@ function HoverLi(x,y,m,n,counter){
                         <a href="javascript:;">学校教研</a> -->
                         <a href="javascript:;" class="active">友情链接</a>
                     </div>
-<!--                     <div class="tab-content" style="display: block">
-                    	[@cms_channel_list parentId='168' orderBy='4']
-					        [#list tag_list as b]
-					       		<a href="${b.url}" rel="nofollow" target="_blank">${b.name }</a>
-					        [/#list]
-				        [/@cms_channel_list]
-                    </div>
-                    <div class="tab-content">
-                    	[@cms_channel_list parentId='281' orderBy='4']
-					        [#list tag_list as b]
-					       		<a href="${b.url}" rel="nofollow" target="_blank">${b.name }</a>
-					        [/#list]
-				        [/@cms_channel_list]
-                    </div>
- -->                    <div class="tab-content" style="display: block">
+                <div class="tab-content" style="display: block">
                     <!--友情链接  ctgId='1' 为文字链接,ctgId='2' 图片链接-->
                     	[@cms_friendlink_list ctgId='1' channelId='274']
 							 [#list tag_list as link]
@@ -487,6 +427,7 @@ function HoverLi(x,y,m,n,counter){
 		[/#if]
 </div>
 <link href="${base}/res/common/css/jquery.ui.css" rel="stylesheet" type="text/css"/>
+<script src="/${res}/js/main.js"></script>
 [#include "../include/footer.html"/]
 </body>
 </html>

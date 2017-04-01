@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+  
+
+    
+    <!-- redis连接池的配置 -->
+    	<context:property-placeholder location="/WEB-INF/config/jdbc.properties" />
+    <bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
+      <property name="maxActive" value="${redis.maxActive}"/>
+      <property name="maxIdle" value="${redis.maxIdle}"/>
+      <property name="maxWait" value="${redis.maxWait}"/>
+      <property name="testOnBorrow" value="${redis.testOnBorrow}"/>
+   
+    </bean>
+    
+    <!-- redis的连接池pool，不是必选项：timeout/password  -->
+    <bean id = "jedisPool" class="redis.clients.jedis.JedisPool">
+      <constructor-arg index="0" ref="jedisPoolConfig"/>
+      <constructor-arg index="1" value="${redis.IP}"/>
+      <constructor-arg index="2" value="${redis.port}" type="int"/>
+      <constructor-arg index="3" value="${redis.timeout}" type="int"/> 
+      <constructor-arg index="4" value="${redis.password}"/>
+    </bean>
+    
+  </beans>

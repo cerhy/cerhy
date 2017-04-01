@@ -12,6 +12,7 @@
 			/WEB-INF/config/shiro-context.xml
 			/WEB-INF/config/plug/**/*-context.xml
 			/WEB-INF/config/quartz-task.xml
+			/WEB-INF/config/spring-mvc-redis.xml
 		</param-value>
   </context-param>
   <filter>
