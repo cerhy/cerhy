@@ -211,7 +211,7 @@ public class BlogAct {
 			String captcha,String mediaPath,String mediaType,
 			String[] attachmentPaths, String[] attachmentNames,
 			String[] attachmentFilenames, String[] picPaths, String[] picDescs,
-			Short charge,Double chargeAmount,
+			Short charge,Double chargeAmount,String password,
 			String nextUrl, HttpServletRequest request,
 			HttpServletResponse response, ModelMap model,Integer sta) {
 				CmsSite site = CmsUtils.getSite(request);
@@ -264,7 +264,7 @@ public class BlogAct {
 		c = contentMng.blog_save(c, ext, t,null, null, null, null, tagArr,
 				attachmentPaths,attachmentNames, attachmentFilenames
 				,picPaths,picDescs,channelId,columnId, typeId, null,true,
-				charge,chargeAmount, user, true,request);
+				charge,chargeAmount, user, true,password,request);
 		if(doc!=null){
 			contentDocMng.save(doc, c);
 		}
@@ -306,7 +306,7 @@ public class BlogAct {
 			String[] attachmentFilenames, String[] picPaths, String[] picDescs,
 			ContentDoc doc,Short charge,Double chargeAmount,
 			String nextUrl, HttpServletRequest request,
-			HttpServletResponse response, ModelMap model) {
+			HttpServletResponse response, ModelMap model,String password) {
 		CmsSite site = CmsUtils.getSite(request);
 		CmsUser user = CmsUtils.getUser(request);
 		FrontUtils.frontData(request, model, site);
@@ -330,6 +330,7 @@ public class BlogAct {
 		Content c = new Content();
 		c.setId(id);
 		c.setSite(site);
+		c.setPassword(password);
 		ContentExt ext = new ContentExt();
 		ext.setId(id);
 		ext.setTitle(title);
@@ -853,6 +854,8 @@ public class BlogAct {
 			model.addAttribute("txt", txt);
 			model.addAttribute("columnIdZ", columnId);
 			model.addAttribute("pic", content.getPictureByNo(pageNo));
+			model.addAttribute("password", content.getPassword());
+			
 				model.addAttribute("who",0);
 				model.addAttribute("userIds", user.getId());
 				model.addAttribute("usert", user);

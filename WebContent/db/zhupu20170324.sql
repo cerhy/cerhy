@@ -1,0 +1,1 @@
+alter table `jc_content` add column  `password` varchar(30) DEFAULT NULL COMMENT '密码', 

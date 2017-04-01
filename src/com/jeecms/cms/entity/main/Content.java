@@ -39,6 +39,7 @@ public class Content extends BaseContent implements ContentInterface {
 	private static final long serialVersionUID = 1L;
 
 	private Integer columnId;
+	private String password;
 	
 
 	public Integer getColumnId() {
@@ -48,6 +49,24 @@ public class Content extends BaseContent implements ContentInterface {
 	public void setColumnId(Integer columnId) {
 		this.columnId = columnId;
 	}
+
+	
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	
+
+	public Content(String password) {
+		super();
+		this.password = password;
+	}
+
+
 
 	/**
 	 * 状态

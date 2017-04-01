@@ -137,6 +137,7 @@ public class ContributeAct extends AbstractContentMemberAct {
 			HttpServletResponse response, ModelMap model) {
 		   String blog = request.getParameter("blog");
 		   String channelIds = request.getParameter("channelIds");
+		   String password = request.getParameter("password");
 		   int sta=0;
 		   if(channelIds!=null&&channelIds!=""){
 			   String[] str=channelIds.split("&");
@@ -150,7 +151,7 @@ public class ContributeAct extends AbstractContentMemberAct {
 		   if(null != blog ){
 			return blogAct.blog_save(title, author, description, txt, tagStr, channelId,columnId,modelId,
 						null, captcha,mediaPath,mediaType,attachmentPaths,attachmentNames, attachmentFilenames
-						,picPaths,picDescs,charge,chargeAmount,
+						,picPaths,picDescs,charge,chargeAmount,password,
 						nextUrl, request, response, model,sta);
 					   }else{
 			 return super.save(title, author, description, txt, tagStr, channelId,modelId,
@@ -209,8 +210,10 @@ public class ContributeAct extends AbstractContentMemberAct {
 			String[] attachmentFilenames, String[] picPaths, String[] picDescs,
 			Short charge,Double chargeAmount,
 			String nextUrl, HttpServletRequest request,
-			HttpServletResponse response, ModelMap model) {
+			HttpServletResponse response, ModelMap model,String password) {
 		String blog = request.getParameter("blog");
+		String pw = request.getParameter("password");
+		
 		String channelIds = request.getParameter("channelIds");
 		   if(channelIds!=null&&channelIds!=""){
 			   String[] str=channelIds.split("&");
@@ -225,7 +228,7 @@ public class ContributeAct extends AbstractContentMemberAct {
 					   columnId,channelId, mediaPath,mediaType,attachmentPaths,
 						attachmentNames, attachmentFilenames
 						,picPaths,picDescs,null,charge, chargeAmount,
-						nextUrl, request, response, model);
+						nextUrl, request, response, model,pw);
 		   }else{
 			   super.update(id, title, author, description, txt, tagStr,
 						channelId, mediaPath,mediaType,attachmentPaths,
