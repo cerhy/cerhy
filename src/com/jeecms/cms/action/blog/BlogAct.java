@@ -601,9 +601,11 @@ public class BlogAct {
 				String joinGroupStata=request.getParameter("joinGroupStata");
 				id = columnId;
 				if(joinGroupStata!=null&&joinGroupStata.equals("0")){
-					request.getRequestDispatcher("/blog/contribute_list.jspx?columnId="+id+"&joinGroupStata=0").forward(request, response);
+					response.sendRedirect("../blog/contribute_list.jspx?columnId="+id+"&joinGroupStata=0");
+					//request.getRequestDispatcher("../blog/contribute_list.jspx?columnId="+id+"&joinGroupStata=0").forward(request, response);
 				}else{
-					request.getRequestDispatcher("/blog/contribute_list.jspx?columnId="+id).forward(request, response);
+					response.sendRedirect("../blog/contribute_list.jspx?columnId="+id);
+					//request.getRequestDispatcher("../blog/contribute_list.jspx?columnId="+id).forward(request, response);
 				}
 			}else if(null != channelId){
 				Content bean=contentMng.findById(contentId);
@@ -638,7 +640,8 @@ public class BlogAct {
 				}
 				contentMng.deleteByIdBlog(contentId);
             	id = channelId;
-				request.getRequestDispatcher("/blog/contribute_list.jspx?channelId="+id).forward(request, response);
+            	response.sendRedirect("../blog/contribute_list.jspx?channelId="+id);
+				//request.getRequestDispatcher("../blog/contribute_list.jspx?channelId="+id).forward(request, response);
 			}else{
 				Content bean=contentMng.findById(contentId);
 				List<Content> list=new ArrayList<Content>();
@@ -673,7 +676,8 @@ public class BlogAct {
 					}
 				}
 				contentMng.deleteByIdBlog(contentId);
-				request.getRequestDispatcher("/blog/index.jspx").forward(request, response);
+				response.sendRedirect("../blog/index.jspx");
+				//request.getRequestDispatcher("../blog/index.jspx").forward(request, response);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
