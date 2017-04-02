@@ -354,7 +354,7 @@ a:hover{
 .news-tab-dt .tab-head .more,.info-div-head .more{
     float: right;
     margin-top: 8px;
-    margin-right: 10px;
+    margin-right: 4px;
     width: 19px;
     height:14px;
     background: url(images/more.png) no-repeat;

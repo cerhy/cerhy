@@ -110,9 +110,9 @@ public class ContentListDirective extends AbstractContentDirective {
 		if (ids != null) {
 			return contentMng.getListByIdsForTag(ids, getOrderBy(params));
 		} else {
-			System.out.println("时间st:"+new Date());
+//			System.out.println("时间st:"+new Date());
 			List<Content> list=(List<Content>) super.getData(params, env);
-			System.out.println("时间en:"+new Date());
+//			System.out.println("时间en:"+new Date());
 			return list;
 		}
 	}

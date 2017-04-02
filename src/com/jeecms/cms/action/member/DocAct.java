@@ -4,6 +4,7 @@ import static com.jeecms.cms.Constants.TPLDIR_MEMBER;
 
 import java.io.IOException;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -29,6 +30,9 @@ import com.jeecms.core.manager.CmsUserMng;
 import com.jeecms.core.web.WebErrors;
 import com.jeecms.core.web.util.CmsUtils;
 import com.jeecms.core.web.util.FrontUtils;
+
+import freemarker.core.Environment;
+import freemarker.template.TemplateException;
 
 /**
  * 会员文库Action
@@ -97,13 +101,14 @@ public class DocAct  extends AbstractContentMemberAct{
 	 * @param response
 	 * @param model
 	 * @return
+	 * @throws TemplateException 
 	 */
 	@RequestMapping(value = "/member/doc_save.jspx")
 	public void save(String title, String author, String description,
 			String txt, String tagStr, Integer channelId,Integer modelId,
 			ContentDoc doc,String captcha,Short charge,Double chargeAmount,
 			String nextUrl, HttpServletRequest request,
-			HttpServletResponse response, ModelMap model) {
+			HttpServletResponse response, ModelMap model) throws TemplateException {
 		updateUserUploadDocNum(request, 1);
 		super.save(title, author, description, txt, tagStr, 
 				channelId,modelId, doc, captcha, 

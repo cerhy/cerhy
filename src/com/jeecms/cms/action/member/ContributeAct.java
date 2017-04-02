@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -46,13 +47,14 @@ import com.jeecms.core.entity.CmsSite;
 import com.jeecms.core.entity.CmsUser;
 import com.jeecms.core.entity.Ftp;
 import com.jeecms.core.entity.MemberConfig;
-import com.jeecms.core.entity.UnifiedUser;
 import com.jeecms.core.manager.CmsUserMng;
 import com.jeecms.core.manager.DbFileMng;
-import com.jeecms.core.manager.UnifiedUserMng;
 import com.jeecms.core.web.WebErrors;
 import com.jeecms.core.web.util.CmsUtils;
 import com.jeecms.core.web.util.FrontUtils;
+
+import freemarker.core.Environment;
+import freemarker.template.TemplateException;
 
 /**
  * 会员投稿Action
@@ -125,6 +127,7 @@ public class ContributeAct extends AbstractContentMemberAct {
 	 * @param response
 	 * @param model
 	 * @return
+	 * @throws TemplateException 
 	 */
 	@RequestMapping(value = "/member/contribute_save.jspx")
 	public String save(String title, String author, String description,
@@ -134,7 +137,7 @@ public class ContributeAct extends AbstractContentMemberAct {
 			String[] attachmentFilenames, String[] picPaths, String[] picDescs,
 			Short charge,Double chargeAmount,
 			String nextUrl, HttpServletRequest request,
-			HttpServletResponse response, ModelMap model) {
+			HttpServletResponse response, ModelMap model) throws TemplateException {
 		   String blog = request.getParameter("blog");
 		   String channelIds = request.getParameter("channelIds");
 		   String password = request.getParameter("password");

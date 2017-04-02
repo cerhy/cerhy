@@ -12,9 +12,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
 
+import com.jeecms.cms.action.directive.ContentListDirective;
 import com.jeecms.cms.entity.main.Channel;
 import com.jeecms.cms.entity.main.CmsModel;
 import com.jeecms.cms.entity.main.Content;
@@ -45,7 +47,8 @@ import com.octo.captcha.service.image.ImageCaptchaService;
 /**
  * @author Tom
  */
-public class AbstractContentMemberAct {
+public class AbstractContentMemberAct  extends ContentListDirective{
+	private static final Logger logger = Logger.getLogger(AbstractContentMemberAct.class);
 	protected String list(String q, Integer modelId,Integer queryChannelId,
 			String nextUrl,Integer pageNo,
 			HttpServletRequest request, ModelMap model) {
@@ -108,7 +111,7 @@ public class AbstractContentMemberAct {
 			String[] attachmentFilenames, String[] picPaths, String[] picDescs,
 			Short charge,Double chargeAmount,
 			String nextUrl, HttpServletRequest request,
-			HttpServletResponse response, ModelMap model) {
+			HttpServletResponse response, ModelMap model){
 		CmsSite site = CmsUtils.getSite(request);
 		CmsUser user = CmsUtils.getUser(request);
 		FrontUtils.frontData(request, model, site);

@@ -115,6 +115,41 @@ public final class RedisUtil {
 	}
 	
 	
+	
+	/** 
+     * 移除列表元素，返回移除的元素数量 
+     * @param key 
+     * @param count，标识，表示动作或者查找方向 
+     * <li>当count=0时，移除所有匹配的元素；</li> 
+     * <li>当count为负数时，移除方向是从尾到头；</li> 
+     * <li>当count为正数时，移除方向是从头到尾；</li> 
+     * @param value 匹配的元素 
+     * @return Long 
+     */  
+    public static Long lrem(String key, long count, String cid,List<Content> list){  
+    	Jedis jedis = RedisUtil.getJedis();
+    	Long length=null;
+		try {
+			if(jedis!=null){
+				if(getList(key)!=null&&getList(key).size()>0){
+					for(int i=0;i<getList(key).size();i++){
+						if(!cid.equals(getList(key).get(i).getId().toString())){
+							list.add(getList(key).get(i));
+						}
+					}
+					setList(key, list);
+				}
+			}
+		} catch (Exception e) {
+			logger.error("redis在移除时候抛出异常",e); 
+			returnResource(jedis);
+		} finally {
+			returnResource(jedis);
+		}
+        return length;  
+    }
+	
+	
 	public static void close(Closeable closeable) {  
         if (closeable != null) {  
             try {  

@@ -4,8 +4,10 @@ import static com.jeecms.common.page.SimplePage.cpn;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -35,13 +37,13 @@ import com.jeecms.cms.entity.main.CmsModel;
 import com.jeecms.cms.entity.main.CmsModelItem;
 import com.jeecms.cms.entity.main.CmsTopic;
 import com.jeecms.cms.entity.main.Content;
+import com.jeecms.cms.entity.main.Content.ContentStatus;
 import com.jeecms.cms.entity.main.ContentCheck;
 import com.jeecms.cms.entity.main.ContentDoc;
 import com.jeecms.cms.entity.main.ContentExt;
 import com.jeecms.cms.entity.main.ContentRecord.ContentOperateType;
 import com.jeecms.cms.entity.main.ContentTxt;
 import com.jeecms.cms.entity.main.ContentType;
-import com.jeecms.cms.entity.main.Content.ContentStatus;
 import com.jeecms.cms.manager.assist.CmsFileMng;
 import com.jeecms.cms.manager.main.ChannelMng;
 import com.jeecms.cms.manager.main.CmsModelItemMng;
@@ -61,6 +63,7 @@ import com.jeecms.common.office.OpenOfficeConverter;
 import com.jeecms.common.page.Pagination;
 import com.jeecms.common.upload.FileRepository;
 import com.jeecms.common.upload.UploadUtils;
+import com.jeecms.common.util.RedisUtil;
 import com.jeecms.common.util.StrUtils;
 import com.jeecms.common.web.CookieUtils;
 import com.jeecms.common.web.RequestUtils;
@@ -83,6 +86,8 @@ import com.jeecms.core.tpl.TplManager;
 import com.jeecms.core.web.WebErrors;
 import com.jeecms.core.web.util.CmsUtils;
 import com.jeecms.core.web.util.CoreUtils;
+
+import freemarker.template.SimpleDate;
 
 @Controller
 public class ContentAct{
@@ -496,6 +501,155 @@ public class ContentAct{
 			model.addAttribute("cid", cid);
 		}
 		model.addAttribute("message", "global.success");
+		//往redis存储
+		List<Content> list=new ArrayList<Content>();
+		List<Content> listRedis=new ArrayList<Content>();
+		Integer parentId=null;
+		String parentIds=null;
+		Channel ids = channelMng.findById(channelId);//获取该栏目实体
+		//根据ids.getParentId()判断该栏目是否为只有一级栏目
+		if(null!=ids.getParentId()){
+			parentId=ids.getParentId();//走到这说明该传进来的栏目ID 存在上一级栏目-二级栏目
+			//获取上一级栏目id
+			Channel idss = channelMng.findById(parentId);
+			//再根据上一级栏目ID--parentId 来判读是否存在上上一级栏目--一级栏目(已知只有三级栏目,无序继续往上上上一级判断(4级栏目))
+			if(null!=idss.getParentId()){
+				//获取上上一级栏目id(一级栏目)
+				parentIds=String.valueOf(idss.getParentId().toString());
+			}
+		}
+		//判断parentId是否为null.如果为null则说明传进来的栏目ID 只有一级栏目 且为本身.如果不为null则说明传进来的栏目ID存在上一级栏目
+		if(null!=parentId){
+			//判断parentIds是否为null.如果为null则说明传进来的栏目ID 只有两级栏目.如果不为null则说明传进来的栏目ID存在上三级栏目
+			if(null!=parentIds){
+				//只有三级栏目就把该栏目的上一级栏目ID 作为key 也就是parentId
+				try {
+					list=RedisUtil.getList(String.valueOf(parentId));
+					if(list!=null&&list.size()>0){
+						list.add(bean);
+					}else{
+						List<Content> listCopy=new ArrayList<Content>();
+						listCopy.add(bean);
+						list=listCopy;
+					}
+					if(list!=null&&list.size()>1){
+						Collections.sort(list, new Comparator<Content>(){ 
+							public int compare(Content o1, Content o2) {  
+								//进行降序排列  
+								if(o1.getSortDate().getTime() < o2.getSortDate().getTime()){  
+									return 1;  
+								}
+								if(o1.getSortDate().getTime() == o2.getSortDate().getTime()){  
+									return 0;  
+								}  
+								return -1;  
+								
+							}  
+						}); 
+					} 
+					for(int i=0;i<list.size();i++){
+						if(list.size()>8){
+							if((i+1)<=8){
+								listRedis.add(list.get(i));
+							}else{
+								break;
+							}
+						}else{
+							listRedis.add(list.get(i));
+						}
+					}
+					RedisUtil.setList(String.valueOf(parentId), listRedis);
+				} catch (Exception e) {
+					log.error("redis存储异常....", e);
+				}
+			}else{
+				//只有二级栏目就把该栏目的ID 作为key也就是传进来的栏目id
+				try {
+					list=RedisUtil.getList(String.valueOf(channelId));
+					if(list!=null&&list.size()>0){
+						 list.add(bean);
+					}else{
+						List<Content> listCopy=new ArrayList<Content>();
+						listCopy.add(bean);
+						list=listCopy;
+					}
+					if(list!=null&&list.size()>1){
+						Collections.sort(list, new Comparator<Content>(){ 
+							public int compare(Content o1, Content o2) {  
+								//进行降序排列  
+								if(o1.getSortDate().getTime() < o2.getSortDate().getTime()){  
+									return 1;  
+								}
+								if(o1.getSortDate().getTime() == o2.getSortDate().getTime()){  
+									return 0;  
+								}  
+								return -1;  
+								
+							}  
+						}); 
+					} 
+					for(int i=0;i<list.size();i++){
+						if(list.size()>8){
+							if((i+1)<=8){
+								listRedis.add(list.get(i));
+							}else{
+								break;
+							}
+						}else{
+							listRedis.add(list.get(i));
+						}
+					}
+					RedisUtil.setList(String.valueOf(channelId), listRedis);
+				} catch (Exception e) {
+					log.error("redis存储异常....", e);
+				}
+			}
+		}else{
+			//只有1级栏目就把该栏目的ID 作为key
+			try {
+				list=RedisUtil.getList(String.valueOf(channelId));
+				if(list!=null&&list.size()>0){
+					 list.add(bean);
+				}else{
+					List<Content> listCopy=new ArrayList<Content>();
+					listCopy.add(bean);
+					list=listCopy;
+				}
+				if(list!=null&&list.size()>1){
+					Collections.sort(list, new Comparator<Content>(){ 
+						public int compare(Content o1, Content o2) {  
+							//进行降序排列  
+							if(o1.getSortDate().getTime() < o2.getSortDate().getTime()){  
+								return 1;  
+							}
+							if(o1.getSortDate().getTime() == o2.getSortDate().getTime()){  
+								return 0;  
+							}  
+							return -1;  
+							
+						}  
+					}); 
+				}
+				for(int i=0;i<list.size();i++){
+					if(channelId.toString().equals("75")&&typeId.toString().equals("2")){
+						listRedis.add(list.get(i));
+					}else{
+						if(list.size()>8){
+							if((i+1)<=8){
+								listRedis.add(list.get(i));
+							}else{
+								break;
+							}
+						}else{
+							listRedis.add(list.get(i));
+						}
+					}
+				}
+				RedisUtil.setList(String.valueOf(channelId), listRedis);
+			} catch (Exception e) {
+				log.error("redis存储异常....", e);
+			}
+		}
 		return add(cid,modelId, request, model);
 	}
 
@@ -544,6 +698,79 @@ public class ContentAct{
 		log.info("update Content id={}.", bean.getId());
 		cmsLogMng.operating(request, "content.log.update", "id=" + bean.getId()
 				+ ";title=" + bean.getTitle());
+		//更新redis存储
+		List<Content> list=new ArrayList<Content>();
+		List<Content> listCopy=new ArrayList<Content>();
+		Integer parentId=null;
+		String parentIds=null;
+		Channel ids = channelMng.findById(channelId);//获取该栏目实体
+		//根据ids.getParentId()判断该栏目是否为只有一级栏目
+		if(null!=ids.getParentId()){
+			parentId=ids.getParentId();//走到这说明该传进来的栏目ID 存在上一级栏目-二级栏目
+			//获取上一级栏目id
+			Channel idss = channelMng.findById(parentId);
+			//再根据上一级栏目ID--parentId 来判读是否存在上上一级栏目--一级栏目(已知只有三级栏目,无序继续往上上上一级判断(4级栏目))
+			if(null!=idss.getParentId()){
+				//获取上上一级栏目id(一级栏目)
+				parentIds=String.valueOf(idss.getParentId().toString());
+			}
+		}
+		//判断parentId是否为null.如果为null则说明传进来的栏目ID 只有一级栏目 且为本身.如果不为null则说明传进来的栏目ID存在上一级栏目
+		if(null!=parentId){
+			//判断parentIds是否为null.如果为null则说明传进来的栏目ID 只有两级栏目.如果不为null则说明传进来的栏目ID存在上三级栏目
+			if(null!=parentIds){
+				//只有三级栏目就把该栏目的上一级栏目ID 作为key 也就是parentId
+				try {
+					list=RedisUtil.getList(String.valueOf(parentId));
+					if(list!=null&&list.size()>0){
+						for(int i=0;i<list.size();i++){
+							if(bean.getId().toString().equals(list.get(i).getId().toString())){
+								listCopy.add(bean);
+							}else{
+								listCopy.add(list.get(i));
+							}
+						}
+					}
+					RedisUtil.setList(String.valueOf(parentId), listCopy);
+				} catch (Exception e) {
+					log.error("redis存储异常....", e);
+				}
+			}else{
+				//只有二级栏目就把该栏目的ID 作为key也就是传进来的栏目id
+				try {
+					list=RedisUtil.getList(String.valueOf(channelId));
+					if(list!=null&&list.size()>0){
+						for(int i=0;i<list.size();i++){
+							if(bean.getId().toString().equals(list.get(i).getId().toString())){
+								listCopy.add(bean);
+							}else{
+								listCopy.add(list.get(i));
+							}
+						}
+					}
+					RedisUtil.setList(String.valueOf(channelId), listCopy);
+				} catch (Exception e) {
+					log.error("redis存储异常....", e);
+				}
+			}
+		}else{
+			//只有1级栏目就把该栏目的ID 作为key
+			try {
+				list=RedisUtil.getList(String.valueOf(channelId));
+				if(list!=null&&list.size()>0){
+					for(int i=0;i<list.size();i++){
+						if(bean.getId().toString().equals(list.get(i).getId().toString())){
+							listCopy.add(bean);
+						}else{
+							listCopy.add(list.get(i));
+						}
+					}
+				}
+				RedisUtil.setList(String.valueOf(channelId), listCopy);
+			} catch (Exception e) {
+				log.error("redis存储异常....", e);
+			}
+		}
 		return list(queryStatus, queryTypeId, queryTopLevel, queryRecommend,
 				queryOrderBy, cid, pageNo, request, model);
 	}
@@ -565,6 +792,35 @@ public class ContentAct{
 			manager.deleteShares(ids);
 			beans = manager.cycle(CmsUtils.getUser(request),ids);
 			for (Content bean : beans) {
+				List<Content> list=new ArrayList<Content>();
+				Integer parentId=null;
+				String parentIds=null;
+				Channel idDel = channelMng.findById(bean.getChannel().getId());//获取该栏目实体
+				//根据ids.getParentId()判断该栏目是否为只有一级栏目
+				if(null!=idDel.getParentId()){
+					parentId=idDel.getParentId();//走到这说明该传进来的栏目ID 存在上一级栏目-二级栏目
+					//获取上一级栏目id
+					Channel idss = channelMng.findById(parentId);
+					//再根据上一级栏目ID--parentId 来判读是否存在上上一级栏目--一级栏目(已知只有三级栏目,无序继续往上上上一级判断(4级栏目))
+					if(null!=idss.getParentId()){
+						//获取上上一级栏目id(一级栏目)
+						parentIds=String.valueOf(idss.getParentId().toString());
+					}
+				}
+				//判断parentId是否为null.如果为null则说明传进来的栏目ID 只有一级栏目 切为本身.如果不为null则说明传进来的栏目ID存在上一级栏目
+				if(null!=parentId){
+					//判断parentIds是否为null.如果为null则说明传进来的栏目ID 只有两级栏目.如果不为null则说明传进来的栏目ID存在上三级栏目
+					if(null!=parentIds){
+						//只有三级栏目就把该栏目的上一级栏目ID 作为key 也就是parentId
+						RedisUtil.lrem(parentId.toString(), 0, bean.getId().toString(),list);
+					}else{
+						//只有二级栏目就把该栏目的上一级栏目ID 作为key也就是传进来的栏目id
+						RedisUtil.lrem(bean.getChannel().getId().toString(), 0, bean.getId().toString(),list);
+					}
+				}else{
+					//只有1级栏目就把该栏目的ID 作为key
+					RedisUtil.lrem(bean.getChannel().getId().toString(), 0, bean.getId().toString(),list);
+				}
 				log.info("delete to cycle, Content id={}", bean.getId());
 			}
 		} else {
@@ -580,6 +836,10 @@ public class ContentAct{
 						+ bean.getId() + ";title=" + bean.getTitle());
 			}
 		}
+		
+		
+		
+		
 		return list(queryStatus, queryTypeId, queryTopLevel, queryRecommend,
 				queryOrderBy, cid, pageNo, request, model);
 	}

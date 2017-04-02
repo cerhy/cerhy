@@ -441,7 +441,7 @@ public class ContentMngImpl implements ContentMng, ChannelDeleteChecker {
 				//存在2级栏目
 				if(null!=parentIds){
 					//存在3级栏目
-					if(parentIds.equals("98")){
+					if(parentIds.equals("98")||parentIds.equals("168")){
 						//如果栏目为学科教研(id=98) 则设置为已审核状态-2
 						bean.setStatus(Byte.valueOf("2"));
 					}else{
