@@ -63,6 +63,7 @@ public class ContentListDirective extends AbstractContentDirective {
 		}
 //		System.out.println("开始时间1:"+new Date());
 		if(list==null||list.size()<=0){
+			list = getList(params, env);
 			RedisUtil.setList(key, list);
 		}
 //		System.out.println("结束时间2:"+new Date());
