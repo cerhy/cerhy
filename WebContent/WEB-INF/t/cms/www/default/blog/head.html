@@ -66,6 +66,7 @@ function qkeypress(){
 <div class="header">
     <div class="header-top">
         <div class="wrap clearfix">
+         <input type="reset" style="margin-top: 8px;border: 0px;width: 300px;background-color: #f6fbff;color: red;display: none;" id="maintain">
             <div class="header-right">
                 <div class="search-bar">
                     <form action="${base}/search.jspx" target="_blank" id="searchForm">
@@ -140,5 +141,23 @@ $(window).load(function() {
         	}
         }
     });
+});
+$(function() {
+	var date=new Date();
+	var hour=date.getHours();
+	var minute=date.getMinutes();
+	var s=date.getSeconds();
+	var i=hour*60*60+minute*60+s;
+	var k=29200;
+	if(i>k){
+		$("#maintain").val("数据维护中...给您造成的不便还请谅解,谢谢您的支持.");
+		$("#maintain").show();
+		$("body").click(function(event){  
+			alert("数据维护中...网站暂停使用\r\n给您造成的不便还请谅解,谢谢您的支持.\r\n维护时间:(晚八点-早八点).");
+			event.preventDefault();
+		}); 
+	}else{
+			$("#maintain").hide();
+	}
 });
 </script>
