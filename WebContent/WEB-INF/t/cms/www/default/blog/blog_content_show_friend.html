@@ -486,7 +486,7 @@ $(function () {
         	$.kw.del();   
             var title = sTitle || this.title;  
             var content = sContent || this.content;  
-            var layer = "<div id='alert-layer' name='alert-layer'><div id='alert-container'><div class='alert-top'></div><div class='alert-box'><div id='alert-title'>" + title + "<div id='alert-close' title='关闭'></div></div><textarea id='posInfo' rows='5' cols='39' onkeyup='okp()'></textarea><div align='right' id='words' style='padding-right:13px;'>字数:30</div><div class='alert-button'><button id='alert-button'>" + this.buttonName + "</button><button id='alert-cancel'>" + this.cancel + "</button></div></div><div class='alert-bottom'></div></div></div>";  
+            var layer = "<div id='alert-layer' name='alert-layer'><div id='alert-container'><div class='alert-top'></div><div class='alert-box'><div id='alert-title'>" + title + "<div id='alert-close' title='关闭'></div></div><textarea id='posInfo' rows='5' cols='39' onkeyup='okp()' onpaste='okps()'></textarea><div align='right' id='words' style='padding-right:13px;'>字数:30</div><div class='alert-button'><button id='alert-button'>" + this.buttonName + "</button><button id='alert-cancel'>" + this.cancel + "</button></div></div><div class='alert-bottom'></div></div></div>";  
             $(layer).fadeIn(this.speed).appendTo("body");  
             this.setting(X,Y); 
             $("#alert-button").focus(); //获得焦点  
@@ -907,6 +907,17 @@ function okp(){
 		$("#posInfo").val($("#posInfo").val().substring(0,30));
 		$("#words").text("可写字数:"+0);
 	}
+}
+function okps(){
+	 setTimeout(function() {  
+		 var i=$("#posInfo").val();
+			if(i.length<=30){
+			  $("#words").text("可写字数:"+(30-i.length));
+			}else{
+				$("#posInfo").val($("#posInfo").val().substring(0,30));
+				$("#words").text("可写字数:"+0);
+			} 
+	    },1);
 }
 </script>
 <script type="text/javascript">

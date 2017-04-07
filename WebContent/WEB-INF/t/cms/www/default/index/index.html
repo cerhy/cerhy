@@ -11,9 +11,9 @@
 <link rel="stylesheet" type="text/css" href="/${res}/css/hyindex.css" />
 <link rel="stylesheet" type="text/css" href="/${res}/css/custom.css" />
 <script type="text/javascript">
-$(function() {
+window.onload = function (){ 
 	Cms.siteFlow("${base}", location.href, document.referrer,"${site.config.flowSwitch?string}");
-});
+};
 function g(o){
 	return document.getElementById(o);
 }
@@ -477,34 +477,37 @@ function HoverLi(x,y,m,n,counter){
 </div>
 <div id="setDialogs" style="display:none;margin-top:-5px;max-height: 75px;">
 		<ul style="padding-left: 10px;">
-			 <li  style="list-style-type: disc;">您的密码为初始密码,存在安全隐患.点击<a style="cursor: pointer;color: red;" href="${base}/member/pwd.jspx">修改密码</a></li>
+			 <li  style="list-style-type: disc;">您的密码为初始密码,点击<a style="cursor: pointer;color: red;" href="${base}/member/pwd.jspx">修改密码</a></li>
 		</ul><br>
-		<input type="checkbox"  id="cpwd" value="1">不在提示...
+		<input type="checkbox"  id="cpwd" value="1" style="cursor: pointer;">不再提示...
 		[#if user??]
-		<input id="checkHint" name="checkHint" value="${user.linkUrl!}" style="display: none;"> 
+		<input id="checkHint" name="checkHint" value="${user.linkUrl!}" style="display: none;">
 		[/#if]
 </div>
+[#if user??]<input style="display: none;" value="1" id="ups">[#else]<input style="display: none;" value="0" id="ups">[/#if]
 <link href="${base}/res/common/css/jquery.ui.css" rel="stylesheet" type="text/css"/>
 <script src="/${res}/js/main.js"></script>
 [#include "../include/footer.html"/]
 </body>
 </html>
 <script type="text/javascript">
-$(function(){
-	$.ajax({
-        url: "${base}/member/checkPwdss.jspx",
-        type: "POST",
-        dataType:"json",
-        data: "",
-        success: function (data) {
-        	if(data.status>0){
-        		if($("#checkHint").val()!=null){
-        		   $("#setDialogs").dialog("open");
-        		}
-        	}
-        }
-    });
-});
+window.onload = function (){ 
+	if($("#ups").val()==1){
+		$.ajax({
+	        url: "${base}/member/checkPwdss.jspx",
+	        type: "POST",
+	        dataType:"json",
+	        data: "",
+	        success: function (data) {
+	        	if(data.status>0){
+	        		if($("#checkHint").val()!=null){
+	        		   $("#setDialogs").dialog("open");
+	        		}
+	        	}
+	        }
+	    });
+	}
+}
      $("#setDialogs").dialog({
 			autoOpen: false,
 			modal: false,
@@ -539,3 +542,18 @@ $(function(){
     }
 </script>
 <script type="text/javascript">
+$(function() {
+	var date=new Date();
+	var hour=date.getHours();
+	var minute=date.getMinutes();
+	var s=date.getSeconds();
+	var i=hour*60*60+minute*60+s;
+	var k=79200;
+	if(i>k){
+		$("body").click(function(event){  
+			alert("数据维护中...\r\n给您造成的不便还请谅解,谢谢您的支持.\r\n维护时间:(晚八点-早八点).");
+			event.preventDefault();
+		}); 
+	}
+});
+</script>

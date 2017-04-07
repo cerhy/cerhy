@@ -49,12 +49,12 @@ public class BlogCommon {
 			// 获得本站栏目列表
 			Set<Channel> rights = user.getGroup().getContriChannels();
 			List<Channel> topList = channelMng.getTopList(site.getId(), true);
-			List<Channel> channelList = Channel.getListForSelect(topList, rights, true);
 
 			channelList2 = new ArrayList<Channel>();// 学科教研
 			channelList3 = new ArrayList<Channel>();// 市县教研
 			int groupId = user.getGroup().getId();
 			if (4 == groupId) {
+				List<Channel> channelList = Channel.getListForSelect(topList, rights, true);
 				for (Channel c : channelList) {
 					if (c.getId() == 98) {
 						channelList2.add(c);
@@ -68,6 +68,7 @@ public class BlogCommon {
 					}
 				}
 			} else if (5 == groupId) {
+				List<Channel> channelList = Channel.getListForSelect(topList, rights, true);
 				for (Channel c : channelList) {
 					if (c.getId() == 168) {
 						channelList3.add(c);

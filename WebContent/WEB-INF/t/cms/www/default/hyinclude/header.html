@@ -68,6 +68,7 @@ function qkeypress(){
 <div class="header">
     <div class="header-top">
         <div class="wrap clearfix">
+        <input type="reset" style="margin-top: 8px;border: 0px;width: 300px;background-color: #f6fbff;color: red;display: none;" id="maintain">
             <div class="header-right">
                 <div class="search-bar">
                     <form action="${base}/search.jspx" target="_blank" id="searchForm">
@@ -116,7 +117,7 @@ function qkeypress(){
             <a href="${base}/"><img src="/${res}/images/head.png" width="100%" height="192" alt=""></a>
         </div>
     </div>
-
+[#if user??]<input style="display: none;" value="1" id="ups">[#else]<input style="display: none;" value="0" id="ups">[/#if]
 </div>
 <div class="nav">
     <div class="wrap">
@@ -128,7 +129,8 @@ function qkeypress(){
     </div>
 </div>
 <script type="text/javascript">
-$(function(){
+$(window).load(function() {
+	if($("#ups").val()==1){
 	$.ajax({
         url: "${base}/member/findCommentNu.jspx",
         type: "POST",
@@ -142,5 +144,22 @@ $(function(){
         	}
         }
     });
+	}
+});
+</script>
+<script type="text/javascript">
+$(function() {
+	var date=new Date();
+	var hour=date.getHours();
+	var minute=date.getMinutes();
+	var s=date.getSeconds();
+	var i=hour*60*60+minute*60+s;
+	var k=79200;
+	if(i>k){
+		$("#maintain").show();
+		$("#maintain").val("数据维护中...给您造成的不便还请谅解,谢谢您的支持.");
+	}else{
+		$("#maintain").hide();
+	}
 });
 </script>
