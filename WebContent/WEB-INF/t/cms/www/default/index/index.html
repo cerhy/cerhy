@@ -481,7 +481,7 @@ function HoverLi(x,y,m,n,counter){
 		</ul><br>
 		<input type="checkbox"  id="cpwd" value="1" style="cursor: pointer;">不再提示...
 		[#if user??]
-		<input id="checkHint" name="checkHint" value="${user.linkUrl!}" style="display: none;">
+		<input id="checkHint" name="checkHint" value="${user.linkUrl!0}" style="display: none;">
 		[/#if]
 </div>
 [#if user??]<input style="display: none;" value="1" id="ups">[#else]<input style="display: none;" value="0" id="ups">[/#if]
@@ -500,7 +500,9 @@ window.onload = function (){
 	        data: "",
 	        success: function (data) {
 	        	if(data.status>0){
-	        		if($("#checkHint").val()!=null){
+	        		if($("#checkHint").val()==1){
+	        			
+	        		}else{
 	        		   $("#setDialogs").dialog("open");
 	        		}
 	        	}
@@ -524,17 +526,19 @@ window.onload = function (){
 			position: ["right",35],
 			close: function(event, ui) {
 				//不在提示
-				$.ajax({
-			        url: "${base}/member/updateHint.jspx",
-			        type: "POST",
-			        dataType:"json",
-			        data: "",
-			        success: function (data) {
-			        	if(data.status>0){
-			        		
-			        	}
-			        }
-			    });
+				if ($('#cpwd').is(':checked')) {
+					$.ajax({
+				        url: "${base}/member/updateHint.jspx",
+				        type: "POST",
+				        dataType:"json",
+				        data: "",
+				        success: function (data) {
+				        	if(data.status>0){
+				        		
+				        	}
+				        }
+				    });
+				}
 			}
 		});
      function closeDialogs(){
