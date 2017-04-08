@@ -36,7 +36,7 @@ public final class RedisUtil {
 			jedisPool = (JedisPool) wac.getBean("jedisPool");
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("redis初始化异常...");
 		}
 	}
 
@@ -57,8 +57,7 @@ public final class RedisUtil {
 					return null;
 				}
 			} catch (Exception e) {
-				logger.error(e.getMessage());
-				logger.info("redis连接异常，切换回数据库读取");
+				logger.error("redis连接异常，切换回数据库读取",e);
 				return null;
 			}
 	      
@@ -76,7 +75,7 @@ public final class RedisUtil {
 	}
 
 	/**
-	 * 根据 className,vin得到对应redis实体
+	 * 
 	 * 
 	 * @param jedis
 	 */
@@ -91,7 +90,7 @@ public final class RedisUtil {
 				return list;
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("getList()异常...",e);
 			returnResource(jedis);
 		} finally {
 			returnResource(jedis);
@@ -106,7 +105,7 @@ public final class RedisUtil {
 				jedis.set(key.getBytes(), ListTranscoder.serialize(list));  
 			}
 		} catch (Exception e) {
-			logger.error("在存储时候抛出异常",e); 
+			logger.error("setList()异常",e); 
 			returnResource(jedis);
 		} finally {
 			returnResource(jedis);
@@ -155,7 +154,7 @@ public final class RedisUtil {
             try {  
                 closeable.close();  
             } catch (Exception e) {  
-                logger.info("Unable to close %s",e);  
+                logger.error("Unable to close %s",e);  
             }  
         }  
     }  
