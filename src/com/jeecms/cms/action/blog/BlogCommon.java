@@ -236,11 +236,17 @@ public class BlogCommon {
 			u = new ArrayList<CmsUser>();
 			if(pageNo*24 <= list.size()){
 				for(int i=(pageNo-1)*24;i<pageNo*24;i++){
-					u.add(cmsUserMng.findById(list.get(i).getFocusUserId()));
+					if(cmsUserMng.findById(list.get(i).getFocusUserId())!=null){
+						
+						u.add(cmsUserMng.findById(list.get(i).getFocusUserId()));
+					}
 				}
 			}else{
 				for(int i=(pageNo-1)*24;i<list.size();i++){
-					u.add(cmsUserMng.findById(list.get(i).getFocusUserId()));
+					if(cmsUserMng.findById(list.get(i).getFocusUserId())!=null){
+						
+						u.add(cmsUserMng.findById(list.get(i).getFocusUserId()));
+					}
 				}
 			}
 			p = new Pagination(pageNo, 24, list.size());
