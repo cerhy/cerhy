@@ -62,7 +62,7 @@ public class ContentListDirective extends AbstractContentDirective {
 			logger.error("redis读取异常,切回数据库读取", e);
 		}
 //		System.out.println("开始时间1:"+new Date());
-		if(list==null||list.size()<=0){
+		if(list==null||list.size()==0){
 			list = getList(params, env);
 			RedisUtil.setList(key, list);
 		}

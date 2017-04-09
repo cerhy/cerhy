@@ -13,10 +13,10 @@
 		<property name="display" column="is_display" type="java.lang.Boolean" not-null="true"/>
 		<one-to-one name="channelExt" class="ChannelExt" cascade="delete"/>
 		<one-to-one name="channelCount" class="ChannelCount" cascade="delete"/>
-		<many-to-one name="model" column="model_id" class="CmsModel" not-null="true"></many-to-one>
-		<many-to-one name="parent" column="parent_id" class="Channel" not-null="false"></many-to-one>
-		<many-to-one name="site" column="site_id" class="com.jeecms.core.entity.CmsSite" not-null="true"></many-to-one>
-		<many-to-one name="workflow" column="workflow_id" class="com.jeecms.core.entity.CmsWorkflow" not-null="false"></many-to-one>
+		<many-to-one  lazy="false" fetch="join" name="model" column="model_id" class="CmsModel" not-null="true"></many-to-one>
+		<many-to-one  lazy="false" fetch="join" name="parent" column="parent_id" class="Channel" not-null="false"></many-to-one>
+		<many-to-one  lazy="false" fetch="join" name="site" column="site_id" class="com.jeecms.core.entity.CmsSite" not-null="true"></many-to-one>
+		<many-to-one   lazy="false" fetch="join" name="workflow" column="workflow_id" class="com.jeecms.core.entity.CmsWorkflow" not-null="false"></many-to-one>
 		<set name="child" inverse="true" cascade="delete" sort="com.jeecms.common.hibernate4.PriorityComparator">
 			<cache usage="read-write"/>
 			<key column="parent_id"/>

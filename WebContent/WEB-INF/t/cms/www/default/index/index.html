@@ -65,21 +65,11 @@ function HoverLi(x,y,m,n,counter){
                          <div class="info-div-head clearfix">
                             <h3><span>文件通知</span></h3>
                             <div class="info-tab-head">
-                            	 [@cms_channel_list parentId='101' orderBy='4']
-							        [#list tag_list as b]
-							        	[#if b_index=0]
-							       		 <a href="javascript:;" class="active">${b.name }<em></em></a>
-							       		 [#else]
-									        	[#if b_index=1]
-						                             <a href="javascript:;">${b.name }</a>
-									       		 [/#if]
-							       		 [/#if]
-							        [/#list]
-					        	[/@cms_channel_list]
+							       		 <a href="javascript:;" class="active">通知通报<em></em></a>
+						                             <a href="javascript:;">院外信息</a>
                             </div>
-                            [@cms_channel id='101']
-                            	<a href="${tag_bean.url}" class="more" title="更多" target="_blank"></a>
-					        [/@cms_channel ]
+                            	<a href="http://www.cerhy.com:80/wjtz/index.jhtml" class="more" title="更多" target="_blank"></a>
+
                         </div>
                         <div class="info-div-content">
                             <div class="info-tab-content" style="display: block;">
@@ -98,29 +88,13 @@ function HoverLi(x,y,m,n,counter){
              			<div class="info-div-head clearfix clearfix">
                             <h3><span>学科教研</span></h3>
                             <div class="info-tab-head">
-	                            [@cms_channel_list parentId='98' orderBy='4']
-							        [#list tag_list as b]
-							         [#if b_index<=3]
-							        	[#if b_index=0]
-							       		 <a href="javascript:;" class="active">${b.name }<em></em></a>
-							       		 [#else]
-								        	[#if b_index=1]
-								       		 <a href="javascript:;">${b.name }<em></em></a>
-								       		 [#else]
-									        	[#if b_index=2]
-					                                	<a href="javascript:;">${b.name }<em></em></a>
-					                                [#else]
-						                                <a href="javascript:;">${b.name }</a>
-									       		 [/#if]
-								       		 [/#if]
-							       		 [/#if]
-							       		[/#if]
-							        [/#list]
-					        	[/@cms_channel_list]
+							       		 <a href="javascript:;" class="active">高中<em></em></a>
+								       		 <a href="javascript:;">初中<em></em></a>
+					                                	<a href="javascript:;">小学<em></em></a>
+						                                <a href="javascript:;">幼教</a>
                             </div>
-	                            [@cms_channel id='98']
-                            				<a href="${tag_bean.url}" class="more" title="更多" target="_blank"></a>
-					        	[/@cms_channel ]
+                            				<a href="http://www.cerhy.com/xkjy/index.jhtml" class="more" title="更多" target="_blank"></a>
+
                         </div>
                         <div class="info-div-content">
                             <div class="info-tab-content"  style="display: block;">
@@ -151,21 +125,11 @@ function HoverLi(x,y,m,n,counter){
                                 <span>教育科研</span>
                             </h3>
                             <div class="info-tab-head">
-                            	 [@cms_channel_list parentId='99' orderBy='4']
-							        [#list tag_list as b]
-							        	[#if b_index=0]
-							       		 <a href="javascript:;" class="active">${b.name }<em></em></a>
-							       		 [#else]
-									        	[#if b_index=1]
-						                             <a href="javascript:;">${b.name }</a>
-									       		 [/#if]
-							       		 [/#if]
-							        [/#list]
-					        	[/@cms_channel_list]
+							       		 <a href="javascript:;" class="active">教育研究<em></em></a>
+						                             <a href="javascript:;">重大课题</a>
                             </div>
-                            [@cms_channel id='99']
-                            				<a href="${tag_bean.url}" class="more" title="更多" target="_blank"></a>
-					        [/@cms_channel ]
+                            				<a href="http://www.cerhy.com/jyky/index.jhtml" class="more" title="更多" target="_blank"></a>
+
                         </div>
                          <div class="info-div-content">
                             <div class="info-tab-content"  style="display: block;">
@@ -188,25 +152,11 @@ function HoverLi(x,y,m,n,counter){
                                 <span>教师培训</span>
                             </h3>
                             <div class="info-tab-head">
-                            	 [@cms_channel_list parentId='282' orderBy='4']
-							        [#list tag_list as b]
-							        	[#if b_index=0]
-							       		 <a href="javascript:;" class="active">${b.name }<em></em></a>
-							       		 [#else]
-								        	[#if b_index=1]
-								       		 <a href="javascript:;">${b.name }<em></em></a>
-								       		 [#else]
-									        	[#if b_index=2]
-						                             <a href="javascript:;">${b.name }</a>
-									       		 [/#if]
-								       		 [/#if]
-							       		 [/#if]
-							        [/#list]
-					        	[/@cms_channel_list]
+							       		 <a href="javascript:;" class="active">干训<em></em></a>
+								       		 <a href="javascript:;">师训<em></em></a>
+						                             <a href="javascript:;">培训管理</a>
                             </div>
-                            [@cms_channel id='282']
-                            	<a href="${tag_bean.url}" class="more" title="更多" target="_blank"></a>
-					        [/@cms_channel ]
+                            	<a href="http://www.cerhy.com/jspx/index.jhtml" class="more" title="更多" target="_blank"></a>
                         </div>
                         <div class="info-div-content">
                             <div class="info-tab-content" style="display: block;">
@@ -232,21 +182,9 @@ function HoverLi(x,y,m,n,counter){
                                 <span>市县教研</span>
                             </h3>
                             <div class="info-tab-head">
-                            	 [@cms_channel_list parentId='168' orderBy='4']
-							        [#list tag_list as b]
-							        	[#if b_index=0]
-							       		 <a href="javascript:;" class="active">${b.name }<em></em></a>
-							       		 [#else]
-									        	[#if b_index=1]
-						                             <a href="javascript:;">${b.name }</a>
-									       		 [/#if]
-							       		 [/#if]
-							        [/#list]
-					        	[/@cms_channel_list]
+							       		 <a href="javascript:;" class="active">市县教研<em></em></a>
                             </div>
-                            [@cms_channel id='168']
-                            	<a href="${tag_bean.url}" class="more" title="更多" target="_blank"></a>
-					        [/@cms_channel ]
+                            	<a href="http://www.cerhy.com/sxjy/index.jhtml" class="more" title="更多" target="_blank"></a>
                         </div>
                         <div class="info-div-content">
                             <div class="info-tab-content" style="display: block;">
@@ -266,22 +204,11 @@ function HoverLi(x,y,m,n,counter){
                             <h3>
                                 <span>课程改革</span>
                             </h3>
-                            <div class="info-tab-head">
-                            	 [@cms_channel_list parentId='102' orderBy='4']
-							        [#list tag_list as b]
-							        	[#if b_index=0]
-							       		 <a href="javascript:;" class="active">${b.name }<em></em></a>
-							       		 [#else]
-									        	[#if b_index=1]
-						                             <a href="javascript:;">${b.name }</a>
-									       		 [/#if]
-							       		 [/#if]
-							        [/#list]
-					        	[/@cms_channel_list]
+                             <div class="info-tab-head">
+							       		 <a href="javascript:;" class="active">课改综合信息<em></em></a>
+						                             <a href="javascript:;">综合样本校</a>
                             </div>
-                            [@cms_channel id='102']
-                            	<a href="${tag_bean.url}" class="more" title="更多" target="_blank"></a>
-					        [/@cms_channel ]
+                            <a href="http://www.cerhy.com/kcgg/index.jhtml" class="more" title="更多" target="_blank"></a>
                         </div>
                          <div class="info-div-content">
                             <div class="info-tab-content"  style="display: block;">
@@ -308,9 +235,7 @@ function HoverLi(x,y,m,n,counter){
                             <h3>
                                 <span>政策研究</span>
                             </h3>
-                             [@cms_channel id='177']
-                            	<a href="${tag_bean.url}" class="more" title="更多" target="_blank"></a>
-					        [/@cms_channel ]
+                             <a href="http://www.cerhy.com/zcyj/index.jhtml" class="more" title="更多" target="_blank"></a>
                         </div>
                         <div class="info-div-content">
                              [@cms_content_list  channelId='177' orderBy='4' titLen='14' channelOption='1' count='8']      
@@ -328,19 +253,10 @@ function HoverLi(x,y,m,n,counter){
                                 <span>质量检测</span>
                             </h3>
                              <div class="info-tab-head">
-                            	 [@cms_channel_list parentId='103' orderBy='4']
-							        [#list tag_list as b]
-							        	[#if b_index=0]
-							       		 <a href="javascript:;" class="active">${b.name }<em></em></a>
-							       		 [#else]
-									        	[#if b_index=1]
-						                             <a href="javascript:;">${b.name }</a>
-									       		 [/#if]
-							       		 [/#if]
-							        [/#list]
-					        	[/@cms_channel_list]
+							       		 <a href="javascript:;" class="active">质量监测信息<em></em></a>
+						                 <a href="javascript:;">数据填报</a>
                             </div>
-                            [@cms_channel id='103']<a href="${tag_bean.url}" class="more" title="更多" target="_blank"></a>[/@cms_channel ]
+                            <a href="http://www.cerhy.com/zljc/index.jhtml" class="more" title="更多" target="_blank"></a>
                         </div>
                         <div class="info-div-content">
                             <div class="info-tab-content"  style="display: block;">
@@ -361,21 +277,10 @@ function HoverLi(x,y,m,n,counter){
                                 <span>职业教育</span>
                             </h3>
                             <div class="info-tab-head">
-                            	 [@cms_channel_list parentId='100' orderBy='4']
-							        [#list tag_list as b]
-							        	[#if b_index=0]
-							       		 <a href="javascript:;" class="active">${b.name }<em></em></a>
-							       		 [#else]
-									        	[#if b_index=1]
-						                             <a href="javascript:;">${b.name }</a>
-									       		 [/#if]
-							       		 [/#if]
-							        [/#list]
-					        	[/@cms_channel_list]
+							       		 <a href="javascript:;" class="active">新闻发布<em></em></a>
+						                  <a href="javascript:;">专业工作室</a>
                             </div>
-                            [@cms_channel id='100']
-                            	<a href="${tag_bean.url}" class="more" title="更多" target="_blank"></a>
-					        [/@cms_channel ]
+                           <a href="http://www.cerhy.com/zyjy/index.jhtml" class="more" title="更多" target="_blank"></a>
                         </div>
                         <div class="info-div-content">
                             <div class="info-tab-content" style="display: block;">
@@ -394,10 +299,10 @@ function HoverLi(x,y,m,n,counter){
                 <div class="info-wrap clearfix">
                   <div class="info-div">
                        <div class="info-div-head clearfix">
-                            <h3>
+                             <h3>
                                 <span>党群建设</span>
                             </h3>
-                            [@cms_channel id='260']<a href="${tag_bean.url}" class="more" title="更多" target="_blank"></a>[/@cms_channel ]
+                            <a href="http://www.cerhy.com/dqjs/index.jhtml" class="more" title="更多" target="_blank"></a>
                         </div>
                         <div class="info-div-content">
                             <ul class="has-dot-list">
@@ -410,7 +315,7 @@ function HoverLi(x,y,m,n,counter){
                             <h3>
                                 <span>教育学会</span>
                             </h3>
-                           [@cms_channel id='266']<a href="${tag_bean.url}" class="more" title="更多" target="_blank"></a>[/@cms_channel ]
+                           <a href="http://www.cerhy.com/jyxh/index.jhtml" class="more" title="更多" target="_blank"></a>
                         </div>
                         <div class="info-div-content">
                             <ul class="has-dot-list">
@@ -423,7 +328,7 @@ function HoverLi(x,y,m,n,counter){
                             <h3>
                                 <span>明星博客</span>
                             </h3>
-                            [@cms_channel id='280']<a href="${tag_bean.url}" target="_blank" class="more" title="更多"></a>[/@cms_channel ]
+                            <a href="http://www.cerhy.com/bk/index.jhtml" target="_blank" class="more" title="更多"></a>
                         </div>
                         <div class="info-div-content">
                             <ul class="blog-content-list">
@@ -461,13 +366,19 @@ function HoverLi(x,y,m,n,counter){
                     </div>
                 <div class="tab-content" style="display: block">
                     <!--友情链接  ctgId='1' 为文字链接,ctgId='2' 图片链接-->
-                    	[@cms_friendlink_list ctgId='1' channelId='274']
-							 [#list tag_list as link]
-							   <div style="margin-left:1.5%; float:left;">
-							   	 <a href="${link.domain}" onclick="$.get('${base}/friendlink_view.jspx?id=${link.id}')" target="_blank">${link.name}</a>
-							   </div>
-							   [/#list]
-					     [/@cms_friendlink_list]
+							  <div style="margin-left:1.5%; float:left;">
+							   	 <a href="http://www.moe.edu.cn/"  target="_blank">中华人民共和国教育部</a>
+							   </div>
+							   							   <div style="margin-left:1.5%; float:left;">
+							   	 <a href="http://edu.hainan.gov.cn/"  target="_blank">海南省教育厅</a>
+							   </div>
+							   	<div style="margin-left:1.5%; float:left;">
+							   	 <a href="http://www.ncedr.edu.cn/" target="_blank">教育部教育发展研究中心</a>
+							   </div>
+							   	<div style="margin-left:1.5%; float:left;">
+							   	 <a href="http://baidu.com"  target="_blank">百度</a>
+							   </div>
+
                     </div>
                 </div>
             </div>

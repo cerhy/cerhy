@@ -7,18 +7,21 @@ import static com.jeecms.common.web.freemarker.DirectiveUtils.OUT_LIST;
 import static com.jeecms.core.web.util.FrontUtils.PARAM_STYLE_LIST;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
 
 import com.jeecms.cms.action.directive.abs.AbstractChannelDirective;
 import com.jeecms.cms.entity.main.Channel;
+import com.jeecms.common.util.RedisUtil;
 import com.jeecms.common.web.freemarker.DefaultObjectWrapperBuilderFactory;
 import com.jeecms.common.web.freemarker.DirectiveUtils;
-import com.jeecms.common.web.freemarker.ParamsRequiredException;
 import com.jeecms.common.web.freemarker.DirectiveUtils.InvokeType;
+import com.jeecms.common.web.freemarker.ParamsRequiredException;
 import com.jeecms.core.entity.CmsSite;
 import com.jeecms.core.web.util.FrontUtils;
 
@@ -31,6 +34,7 @@ import freemarker.template.TemplateModel;
  * 栏目列表标签
  */
 public class ChannelListDirective extends AbstractChannelDirective {
+	private static final Logger logger = Logger.getLogger(ChannelListDirective.class);
 	/**
 	 * 模板名称
 	 */
@@ -43,15 +47,25 @@ public class ChannelListDirective extends AbstractChannelDirective {
 		Integer parentId = DirectiveUtils.getInt(PARAM_PARENT_ID, params);
 		Integer siteId = DirectiveUtils.getInt(PARAM_SITE_ID, params);
 		boolean hasContentOnly = getHasContentOnly(params);
-
-		List<Channel> list;
-		if (parentId != null) {
-			list = channelMng.getChildListForTag(parentId, hasContentOnly);
-		} else {
+		List<Channel> list=new ArrayList<Channel>();
+		if(parentId != null){
+			String key = parentId.toString()+"s";
+			try {
+				list=RedisUtil.getListC(key);
+			} catch (Exception e) {
+				list = channelMng.getChildListForTag(parentId, hasContentOnly);
+				logger.error("redis读取异常,切回数据库读取", e);
+			}
+			if(list==null||list.size()==0){
+				list = channelMng.getChildListForTag(parentId, hasContentOnly);
+				RedisUtil.setListC(key, list);
+			}
+		}else{
 			if (siteId == null) {
 				siteId = site.getId();
 			}
 			list = channelMng.getTopListForTag(siteId, hasContentOnly);
+			RedisUtil.setListC(siteId.toString(), list);
 		}
 
 		Map<String, TemplateModel> paramWrap = new HashMap<String, TemplateModel>(

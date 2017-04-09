@@ -16,10 +16,11 @@ import org.apache.log4j.Logger;
 import org.springframework.web.context.ContextLoader;
 import org.springframework.web.context.WebApplicationContext;
 
-import com.jeecms.cms.entity.main.Content;
-
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
+
+import com.jeecms.cms.entity.main.Channel;
+import com.jeecms.cms.entity.main.Content;
 
 public final class RedisUtil {
 	private static final Logger logger = Logger
@@ -98,7 +99,40 @@ public final class RedisUtil {
 
 		return list;
 	}
+	public static List<Channel> getListC(String key) {
+		List<Channel> list = null;
+		Jedis jedis = RedisUtil.getJedis();
+		try {
+			if(jedis!=null){
+				byte[] in = jedis.get(key.getBytes());  
+				list = (List<Channel>)ListTranscoder.deserialize(in);  
+			}else{
+				return list;
+			}
+		} catch (Exception e) {
+			logger.error("getList()异常...",e);
+			returnResource(jedis);
+		} finally {
+			returnResource(jedis);
+		}
+		
+		return list;
+	}
 	public static void setList(String key,List<Content> list) {
+		Jedis jedis = RedisUtil.getJedis();
+		try {
+			if(jedis!=null){
+				jedis.set(key.getBytes(), ListTranscoder.serialize(list));  
+			}
+		} catch (Exception e) {
+			logger.error("setList()异常",e); 
+			returnResource(jedis);
+		} finally {
+			returnResource(jedis);
+		}
+		
+	}
+	public static void setListC(String key,List<Channel> list) {
 		Jedis jedis = RedisUtil.getJedis();
 		try {
 			if(jedis!=null){
