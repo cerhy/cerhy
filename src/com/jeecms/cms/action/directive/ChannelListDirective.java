@@ -48,8 +48,9 @@ public class ChannelListDirective extends AbstractChannelDirective {
 		Integer siteId = DirectiveUtils.getInt(PARAM_SITE_ID, params);
 		boolean hasContentOnly = getHasContentOnly(params);
 		List<Channel> list=new ArrayList<Channel>();
+		String key = null ;
 		if(parentId != null){
-			String key = parentId.toString()+"s";
+			key = parentId.toString()+"s";
 			try {
 				list=RedisUtil.getListC(key);
 			} catch (Exception e) {
@@ -63,9 +64,19 @@ public class ChannelListDirective extends AbstractChannelDirective {
 		}else{
 			if (siteId == null) {
 				siteId = site.getId();
+				key = siteId+"s";
 			}
-			list = channelMng.getTopListForTag(siteId, hasContentOnly);
-			RedisUtil.setListC(siteId.toString(), list);
+			try {
+				list=RedisUtil.getListC(key);
+			} catch (Exception e) {
+				list = channelMng.getChildListForTag(parentId, hasContentOnly);
+				logger.error("redis读取异常,切回数据库读取", e);
+			}
+			if(list==null||list.size()==0){
+				list = channelMng.getTopListForTag(siteId, hasContentOnly);
+				RedisUtil.setListC(key, list);
+			}
+			//RedisUtil.setListC(siteId.toString(), list);
 		}
 
 		Map<String, TemplateModel> paramWrap = new HashMap<String, TemplateModel>(
