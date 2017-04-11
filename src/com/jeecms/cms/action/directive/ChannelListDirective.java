@@ -79,6 +79,7 @@ public class ChannelListDirective extends AbstractChannelDirective {
 			//RedisUtil.setListC(siteId.toString(), list);
 		}
 
+
 		Map<String, TemplateModel> paramWrap = new HashMap<String, TemplateModel>(
 				params);
 		paramWrap.put(OUT_LIST, DefaultObjectWrapperBuilderFactory.getDefaultObjectWrapper().wrap(list));
