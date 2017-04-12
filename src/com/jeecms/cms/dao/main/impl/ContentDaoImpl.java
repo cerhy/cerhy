@@ -1055,7 +1055,7 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 	}
 
 	public int countByChannelId(int channelId) {
-		String hql = "select count(*) from Content bean"
+		String hql = "select count(1) from Content bean"
 				+ " join bean.channel channel,Channel parent"
 				+ " where channel.lft between parent.lft and parent.rgt"
 				+ " and channel.site.id=parent.site.id"
@@ -1203,7 +1203,7 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 
 	@Override
 	public int getTotalArticleNum(CmsUser user) {
-		String hql = "select count(*) from Content bean"
+		String hql = "select count(1) from Content bean"
 				+ " where 1=1"
 				+ " and bean.model.id in (11,21,24)"
 				+ " and bean.user.id="+user.getId()
@@ -1218,7 +1218,7 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 
 	@Override
 	public int getTotalCommentNum(CmsUser user) {
-		String hql = "select count(*) from CmsComment bean"
+		String hql = "select count(1) from CmsComment bean"
 				+ " where 1=1"
 				+ " and bean.content.id is not null "
 				+ " and bean.content.model.id in (11,21,24)"
@@ -1234,7 +1234,7 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 
 	@Override
 	public int getTotalCoverCommentNum(CmsUser user) {
-		String hql = "select count(*) from CmsComment bean"
+		String hql = "select count(1) from CmsComment bean"
 				+ " where 1=1"
 				+ " and bean.content.id is not null "
 				+ " and bean.content.model.id in (11,21,24)"
