@@ -71,12 +71,14 @@ public class BlogAct {
 		}
 		model = blogCommon.getColumn(request,model,user);
 	    model = blogCommon.getChannel(request,model,user,site);
-	    model = blogCommon.getTotalArticleNum(model,user);
+	    int totalCount = blogCommon.getTotalArticleNum(model,user);
+	    model.addAttribute("articleCount", totalCount);
  		model = blogCommon.getTotalCommentNum(model, user);
 	    model = blogCommon.getStarBlogger(request, model);
 	    model = blogCommon.getAlreadyJoinGroup(request, model,user);
 		FrontUtils.frontData(request, model, site);
 		Pagination p = contentMng.getPageForMember_blog(q, queryChannelId,site.getId(), modelId,user.getId(), cpn(pageNo), 20,null,null);
+		p.setTotalCount(totalCount);
 		model.addAttribute("pagination", p);
 		if (!StringUtils.isBlank(q)) {
 			model.addAttribute("q", q);
@@ -125,7 +127,8 @@ public class BlogAct {
 		}
 		model = blogCommon.getColumn(request,model,user);
 	    model = blogCommon.getChannel(request,model,user,site);
-	    model = blogCommon.getTotalArticleNum(model,user);
+	    int totalCount = blogCommon.getTotalArticleNum(model,user);
+	    model.addAttribute("articleCount", totalCount);
  		model = blogCommon.getTotalCommentNum(model, user);
  		model = blogCommon.getStarBlogger(request, model);
  		model = blogCommon.getAlreadyJoinGroup(request, model,user);
@@ -170,7 +173,8 @@ public class BlogAct {
 		}
 		model = blogCommon.getColumn(request,model,user);
 	    model = blogCommon.getChannel(request,model,user,site);
-	    model = blogCommon.getTotalArticleNum(model,user);
+	    int totalCount = blogCommon.getTotalArticleNum(model,user);
+	    model.addAttribute("articleCount", totalCount);
  		model = blogCommon.getTotalCommentNum(model, user);
  		model = blogCommon.getStarBlogger(request, model);
  		model = blogCommon.getAlreadyJoinGroup(request, model,user);
@@ -194,7 +198,8 @@ public class BlogAct {
 		}
 		model = blogCommon.getColumn(request,model,user);
 	    model = blogCommon.getChannel(request,model,user,site);
-	    model = blogCommon.getTotalArticleNum(model,user);
+	    int totalCount = blogCommon.getTotalArticleNum(model,user);
+	    model.addAttribute("articleCount", totalCount);
  		model = blogCommon.getTotalCommentNum(model, user);
  		model = blogCommon.getStarBlogger(request, model);
  		model = blogCommon.getAlreadyJoinGroup(request, model,user);
@@ -439,7 +444,8 @@ public class BlogAct {
 		}
 		model = blogCommon.getColumn(request,model,user);
 	    model = blogCommon.getChannel(request,model,user,site);
-		model = blogCommon.getTotalArticleNum(model,user);
+	    int totalCount = blogCommon.getTotalArticleNum(model,user);
+	    model.addAttribute("articleCount", totalCount);
  		model = blogCommon.getTotalCommentNum(model, user);
  		model = blogCommon.getStarBlogger(request, model);
  		model = blogCommon.getAlreadyJoinGroup(request, model,user);
@@ -694,7 +700,8 @@ public class BlogAct {
 		}
 		model = blogCommon.getChannel(request,model,user,site);
 		model = blogCommon.getColumn(request,model,user);
-		model = blogCommon.getTotalArticleNum(model,user);
+		int totalCount = blogCommon.getTotalArticleNum(model,user);
+		model.addAttribute("articleCount", totalCount);
  		model = blogCommon.getTotalCommentNum(model, user);
  		model = blogCommon.getStarBlogger(request, model);
  		model = blogCommon.getAlreadyJoinGroup(request, model,user);
@@ -816,7 +823,8 @@ public class BlogAct {
 			return FrontUtils.showLogin(request, model, site);
 		}
 		model = blogCommon.getColumn(request,model,user);
-		model = blogCommon.getTotalArticleNum(model,user);
+		int totalCount = blogCommon.getTotalArticleNum(model,user);
+		model.addAttribute("articleCount", totalCount);
  		model = blogCommon.getTotalCommentNum(model, user);
  		model = blogCommon.getStarBlogger(request, model);
  		model = blogCommon.getAlreadyJoinGroup(request, model,user);
@@ -871,7 +879,8 @@ public class BlogAct {
 		}
 		model = blogCommon.getColumn(request,model,userT);
 		model = blogCommon.getChannel(request,model,userT,site);
-		model = blogCommon.getTotalArticleNum(model,userT);
+		int totalCount = blogCommon.getTotalArticleNum(model,user);
+		model.addAttribute("articleCount", totalCount);
 		model = blogCommon.getTotalCommentNum(model, userT);
 		model = blogCommon.getStarBlogger(request, model);
 		model = blogCommon.getAlreadyJoinGroup(request, model,userT);
@@ -928,7 +937,8 @@ public class BlogAct {
 		}
 		model = blogCommon.getColumn(request,model,user);
 		model = blogCommon.getChannel(request,model,user,site);
-		model = blogCommon.getTotalArticleNum(model,user);
+		int totalCount = blogCommon.getTotalArticleNum(model,user);
+		model.addAttribute("articleCount", totalCount);
  		model = blogCommon.getTotalCommentNum(model, user);
  		model = blogCommon.getStarBlogger(request, model);
  		model = blogCommon.getAlreadyJoinGroup(request, model,user);
@@ -1023,7 +1033,8 @@ public class BlogAct {
 		model.addAttribute("checkPageInfo", 0);
 		model = blogCommon.getChannel(request,model,u,site);
 		model = blogCommon.getColumn(request,model,u);
-		model = blogCommon.getTotalArticleNum(model,u);
+		int totalCount = blogCommon.getTotalArticleNum(model,u);
+		model.addAttribute("articleCount", totalCount);
  		model = blogCommon.getTotalCommentNum(model, u);
  		model = blogCommon.getStarBlogger(request, model);
  		model = blogCommon.getAlreadyJoinGroup(request, model,u);
@@ -1057,7 +1068,8 @@ public class BlogAct {
 		model.addAttribute("checkPageInfo", 1);
 		model = blogCommon.getChannel(request,model,u,site);
 		model = blogCommon.getColumn(request,model,u);
-		model = blogCommon.getTotalArticleNum(model,u);
+		int totalCount = blogCommon.getTotalArticleNum(model,u);
+		model.addAttribute("articleCount", totalCount);
  		model = blogCommon.getTotalCommentNum(model, u);
  		model = blogCommon.getStarBlogger(request, model);
  		model = blogCommon.getAlreadyJoinGroup(request, model,u);
@@ -1114,7 +1126,8 @@ public class BlogAct {
 			model = blogCommon.getAlreadyJoinGroup(request, model,u);
 			model = blogCommon.getChannel(request,model,u,site);
 			model = blogCommon.getColumn(request,model,u);
-			model = blogCommon.getTotalArticleNum(model,u);
+			int totalCount = blogCommon.getTotalArticleNum(model,u);
+			model.addAttribute("articleCount", totalCount);
 	 		model = blogCommon.getTotalCommentNum(model, u);
 	 		model = blogCommon.getStarBlogger(request, model);
 			FrontUtils.frontData(request, model, site);
@@ -1178,7 +1191,8 @@ public class BlogAct {
 			model = blogCommon.getAlreadyJoinGroup(request, model,user);
 			model = blogCommon.getChannel(request,model,user,site);
 			model = blogCommon.getColumn(request,model,user);
-			model = blogCommon.getTotalArticleNum(model,user);
+			int totalCount = blogCommon.getTotalArticleNum(model,user);
+			model.addAttribute("articleCount", totalCount);
 	 		model = blogCommon.getTotalCommentNum(model, user);
 	 		model = blogCommon.getStarBlogger(request, model);
 	 		model = blogCommon.getAddFriends(request, model,user,u);

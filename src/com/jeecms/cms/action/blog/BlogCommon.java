@@ -270,10 +270,10 @@ public class BlogCommon {
 	/**
 	 * 获取文章总数
 	 **/
-	public ModelMap getTotalArticleNum(ModelMap model, CmsUser user){
+	public int getTotalArticleNum(ModelMap model, CmsUser user){
 		int articleCount=contentMng.getTotalArticleNum(user);
-		model.addAttribute("articleCount", articleCount);
-		return model;
+		//model.addAttribute("articleCount", articleCount);
+		return articleCount;
 	}
 	
 	/**
