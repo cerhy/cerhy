@@ -173,7 +173,8 @@ public class CollectionMemberAct {
 		}
 		model = blogCommon.getColumn(request,model,user);
 	    model = blogCommon.getChannel(request,model,user,site);
-		model = blogCommon.getTotalArticleNum(model,user);
+	    int totalCount = blogCommon.getTotalArticleNum(model,user);
+	    model.addAttribute("articleCount", totalCount);
  		model = blogCommon.getTotalCommentNum(model, user);
  		model = blogCommon.getAlreadyJoinGroup(request, model,user);
  		model = blogCommon.getStarBlogger(request, model);
@@ -218,7 +219,8 @@ public class CollectionMemberAct {
 		CmsUser userT=cmsUserMng.findById(Integer.valueOf(userIds.toString()));
 		model = blogCommon.getColumn(request,model,userT);
 	    model = blogCommon.getChannel(request,model,userT,site);
-		model = blogCommon.getTotalArticleNum(model,userT);
+	    int totalCount = blogCommon.getTotalArticleNum(model,userT);
+	    model.addAttribute("articleCount", totalCount);
  		model = blogCommon.getTotalCommentNum(model, userT);
  		model = blogCommon.getStarBlogger(request, model);
  		model = blogCommon.getAlreadyJoinGroup(request, model,userT);

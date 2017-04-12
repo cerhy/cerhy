@@ -623,7 +623,8 @@ public class ContributeAct extends AbstractContentMemberAct {
 		}
 		model = blogCommon.getColumn(request,model,user);
 	    model = blogCommon.getChannel(request,model,user,site);
-	    model = blogCommon.getTotalArticleNum(model,user);
+	    int totalCount = blogCommon.getTotalArticleNum(model,user);
+	    model.addAttribute("articleCount", totalCount);
  		model = blogCommon.getTotalCommentNum(model, user);
  		model = blogCommon.getStarBlogger(request, model);
  		model = blogCommon.getAlreadyJoinGroup(request, model,user);
@@ -649,7 +650,8 @@ public class ContributeAct extends AbstractContentMemberAct {
 		model = blogCommon.getColumn(request,model,user);
 	    model = blogCommon.getChannel(request,model,user,site);
 	    model = blogCommon.getFriends(user.getId(), model, 1);
-	    model = blogCommon.getTotalArticleNum(model,user);
+	    int totalCount = blogCommon.getTotalArticleNum(model,user);
+	    model.addAttribute("articleCount", totalCount);
  		model = blogCommon.getTotalCommentNum(model, user);
  		model = blogCommon.getStarBlogger(request, model);
  		model = blogCommon.getAlreadyJoinGroup(request, model,user);
@@ -815,7 +817,8 @@ public class ContributeAct extends AbstractContentMemberAct {
 		}
 		model = blogCommon.getColumn(request,model,user);
 	    model = blogCommon.getChannel(request,model,user,site);
-	    model = blogCommon.getTotalArticleNum(model,user);
+	    int totalCount = blogCommon.getTotalArticleNum(model,user);
+	    model.addAttribute("articleCount", totalCount);
  		model = blogCommon.getTotalCommentNum(model, user);
  		model = blogCommon.getTotalCoverCommentNum(model, user);
  		model = blogCommon.getTotalReadNum(model, user);
@@ -837,7 +840,8 @@ public class ContributeAct extends AbstractContentMemberAct {
 		CmsUser userT=cmsUserMng.findById(Integer.valueOf(userIds.toString()));
 		model = blogCommon.getColumn(request,model,userT);
 	    model = blogCommon.getChannel(request,model,userT,site);
- 		model = blogCommon.getTotalArticleNum(model,userT);
+	    int totalCount = blogCommon.getTotalArticleNum(model,userT);
+	    model.addAttribute("articleCount", totalCount);
  		model = blogCommon.getTotalCommentNum(model, userT);
  		model = blogCommon.getTotalCoverCommentNum(model, userT);
  		model = blogCommon.getTotalReadNum(model, userT);
@@ -897,7 +901,8 @@ public class ContributeAct extends AbstractContentMemberAct {
 //		model = blogCommon.blog_focus_find(null,request,model);
 		model = blogCommon.getColumn(request,model,user);
 	    model = blogCommon.getChannel(request,model,user,site);
-	    model = blogCommon.getTotalArticleNum(model,user);
+	    int totalCount = blogCommon.getTotalArticleNum(model,user);
+	    model.addAttribute("articleCount", totalCount);
  		model = blogCommon.getTotalCommentNum(model, user);
 // 		model = blogCommon.getMaxFocus(request, model);
  		model = blogCommon.getAllVistor(request, model,user);
@@ -925,7 +930,8 @@ public class ContributeAct extends AbstractContentMemberAct {
 //	    model = blogCommon.blog_focus_find(Integer.parseInt(userIds),request,model);
 //	    model = blogCommon.getLinks(model,userT);
 //		model = blogCommon.getFriends(model,userT);
- 		model = blogCommon.getTotalArticleNum(model,userT);
+	    int totalCount = blogCommon.getTotalArticleNum(model,userT);
+	    model.addAttribute("articleCount", totalCount);
  		model = blogCommon.getTotalCommentNum(model, userT);
  		model = blogCommon.getTotalCoverCommentNum(model, userT);
  		model = blogCommon.getTotalReadNum(model, userT);
