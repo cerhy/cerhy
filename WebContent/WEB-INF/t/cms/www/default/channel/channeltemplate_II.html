@@ -77,7 +77,7 @@ body{
 										          <img width="85" height="85" src="${a.typeImg!}" alt="">
 										          [/#if]
 										          <div class="report-text">
-										            <h3>[@text_cut s=a.title len=30 append='...'/]</h3>
+										            <h3 title="${a.title}">[@text_cut s=a.title len=25 append='...'/]</h3>
 										            <p>[#if a.typeImg??][@text_cut s=a.description len=30 append='...'/][#else][@text_cut s=a.description len=40 append='...'/][/#if]</p>
 										          	<div class="fl"><span class="ch">${a.ctgName}<em>${a.date?string("yyyy-MM-dd")}</em></span></div>
 										         	 [#if a_index<1]
