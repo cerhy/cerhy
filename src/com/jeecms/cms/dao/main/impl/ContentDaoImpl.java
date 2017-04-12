@@ -680,14 +680,14 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 			f.append(" and bean.hasTitleImg=:titleImg");
 			f.setParam("titleImg", titleImg);
 		}
-		if (recommend != null) {
-			f.append(" and bean.recommend=:recommend");
-			f.setParam("recommend", recommend);
-		}
-		appendOpen(f, open);
-		appendReleaseDate(f);
+//		if (recommend != null) {
+//			f.append(" and bean.recommend=:recommend");
+//			f.setParam("recommend", recommend);
+//		}
+//		appendOpen(f, open);
+//		appendReleaseDate(f);
 		appendTypeIds(f, typeIds);
-		f.append(" and bean.status=" + ContentCheck.CHECKED);
+//		f.append(" and bean.status=" + ContentCheck.CHECKED);
 		if (!StringUtils.isBlank(title)) {
 			f.append(" and bean.contentExt.title like :title");
 			f.setParam("title", "%" + title + "%");
@@ -958,7 +958,8 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 			break;
 		case 4:
 			// 固顶级别降序、发布时间降序
-			f.append(" order by bean.topLevel desc, bean.sortDate desc");
+//			f.append(" order by bean.topLevel desc, bean.sortDate desc");
+			f.append(" order by bean.sortDate desc");
 			break;
 		case 5:
 			// 固顶级别降序、发布时间升序
