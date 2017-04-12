@@ -15,6 +15,7 @@ import org.apache.commons.lang.StringUtils;
 
 import com.jeecms.cms.action.directive.abs.AbstractContentDirective;
 import com.jeecms.common.page.Pagination;
+import com.jeecms.common.util.RedisUtil;
 import com.jeecms.common.web.freemarker.DefaultObjectWrapperBuilderFactory;
 import com.jeecms.common.web.freemarker.DirectiveUtils;
 import com.jeecms.common.web.freemarker.ParamsRequiredException;
@@ -40,8 +41,14 @@ public class ContentPageDirective extends AbstractContentDirective {
 	public void execute(Environment env, Map params, TemplateModel[] loopVars,
 			TemplateDirectiveBody body) throws TemplateException, IOException {
 		CmsSite site = FrontUtils.getSite(env);
-		Pagination page = (Pagination) super.getData(params, env);
-
+		Pagination page = null ;
+		page = (Pagination) super.getData(params, env);
+//		page = RedisUtil.getPagination("") ;
+//		if(null == page){
+//			page = (Pagination) super.getData(params, env);
+//			RedisUtil.setPagination("", page);
+//		}
+        
 		Map<String, TemplateModel> paramWrap = new HashMap<String, TemplateModel>(
 				params);
 		paramWrap.put(OUT_PAGINATION, DefaultObjectWrapperBuilderFactory.getDefaultObjectWrapper().wrap(page));
