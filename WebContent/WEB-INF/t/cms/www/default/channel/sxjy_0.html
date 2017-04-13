@@ -52,7 +52,7 @@
                 </ul>
            </div>
            [#if channel.id=168]
-           <div class="wrap-right">
+           <div class="wrap-right" id="shd" style="display: none;">
            <span><img style="margin-bottom: -5px;" width="20px;" height="20px;" src="/${res}/usemanual/0309.jpg"></span>
 				<a id="unames" href="${base}/blog/find_all_url_friend.jspx?userIds=" target="_blank" style="cursor: pointer;font-size: 1.2em;"></a>
            </div>
@@ -139,11 +139,12 @@
 window.onload=function(){
 	var bkNames=$("#bkNames").val();
 	var ids=$("#bkIds").val();
-	if(typeof(bkNames)!='undefine'){
+	if(typeof(bkNames)!='undefined'){
 		$("#unames").html(bkNames+"博客中心");
 	}
-	if(typeof(ids)!='undefine'){
+	if(typeof(ids)!='undefined'){
 		$('#unames').attr('href','${base}/blog/find_all_url_friend.jspx?userIds='+ids);
+		$("#shd").show();
 	}
 
 }
