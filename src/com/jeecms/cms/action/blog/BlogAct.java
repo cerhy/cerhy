@@ -879,7 +879,7 @@ public class BlogAct {
 		}
 		model = blogCommon.getColumn(request,model,userT);
 		model = blogCommon.getChannel(request,model,userT,site);
-		int totalCount = blogCommon.getTotalArticleNum(model,user);
+		int totalCount = blogCommon.getTotalArticleNum(model,userT);
 		model.addAttribute("articleCount", totalCount);
 		model = blogCommon.getTotalCommentNum(model, userT);
 		model = blogCommon.getStarBlogger(request, model);
