@@ -80,8 +80,7 @@ public class ChannelListDirective extends AbstractChannelDirective {
 		}
 
 
-		Map<String, TemplateModel> paramWrap = new HashMap<String, TemplateModel>(
-				params);
+		Map<String, TemplateModel> paramWrap = new HashMap<String, TemplateModel>(params);
 		paramWrap.put(OUT_LIST, DefaultObjectWrapperBuilderFactory.getDefaultObjectWrapper().wrap(list));
 		Map<String, TemplateModel> origMap = DirectiveUtils
 				.addParamsToVariable(env, paramWrap);
