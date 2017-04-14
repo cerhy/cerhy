@@ -42,15 +42,15 @@ public class BlogCommon {
 	}
 	
 	public ModelMap getChannel(HttpServletRequest request,ModelMap model,CmsUser user,CmsSite site) {
-		// 学科教研，市县教研专用(暂时无区分)
+		// 学科教研，市县教研专用
 		List<CmsPersonalChannel> channelList=null;
-//		if (null != user.getGroup()) {
-//			int groupId = user.getGroup().getId();
-//			if (4 == groupId||5 == groupId) {
+		if (null != user.getGroup()) {
+			int groupId = user.getGroup().getId();
+			if (4 == groupId||5 == groupId) {
 				channelList = columnsMng.getPersonChannel(user);
-//			}
+			} 
 			model.addAttribute("channelList", channelList);
-//		}
+		}
 		return model;
 	}
 	
