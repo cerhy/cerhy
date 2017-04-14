@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.jeecms.cms.dao.main.impl.ColumnsDao;
 import com.jeecms.cms.entity.assist.CmsJoinGroup;
+import com.jeecms.cms.entity.assist.CmsPersonalChannel;
 import com.jeecms.cms.entity.assist.CmsPostilInfo;
 import com.jeecms.cms.entity.main.Columns;
 import com.jeecms.core.entity.CmsUser;
@@ -57,6 +58,9 @@ public class ColumnsMng {
 	}
 	public void updateUFO(CmsUser user) {
 		columnsDao.updateUFO(user);
+	}
+	public List<CmsPersonalChannel> getPersonChannel(CmsUser user) {
+		return columnsDao.getPersonChannel(user);
 	}
 	@Autowired
 	private ColumnsDao columnsDao;
