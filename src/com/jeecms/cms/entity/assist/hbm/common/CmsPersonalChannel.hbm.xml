@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.jeecms.cms.entity.assist">
+	<class name="CmsPersonalChannel" table="jc_personal_channel">
+		<meta attribute="sync-DAO">false</meta>
+		<cache usage="read-write"/>
+		<id name="id" type="integer" column="id"><generator class="identity"/></id>
+		<property name="channelId" column="channel_id" type="integer" not-null="false" length="19"/>
+		<property name="channelType" column="channel_type" type="integer" not-null="false" length="19"/>
+		<property name="channelName" column="channel_name" type="string" not-null="false" length="50"/>
+		<property name="userName" column="user_name" type="integer" not-null="false" length="50"/>
+	</class>
+</hibernate-mapping>
