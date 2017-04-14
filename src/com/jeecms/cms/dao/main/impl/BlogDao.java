@@ -3,16 +3,15 @@ package com.jeecms.cms.dao.main.impl;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
-
-import org.apache.log4j.Logger;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import com.jeecms.cms.entity.main.Focus;
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
 
 public class BlogDao {
 	public List<Focus> findMaxFocusCount(String path) {
-		Logger log =  (Logger) Logger.getInstance(this.getClass()) ;
+		Logger log = LoggerFactory.getLogger(getClass());
 		Connection con = (Connection) DBConnection.getConnection(path);
 		PreparedStatement ps = null;
 		ResultSet rs = null;
