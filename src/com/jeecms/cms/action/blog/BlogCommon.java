@@ -271,7 +271,10 @@ public class BlogCommon {
 	 * 获取文章总数
 	 **/
 	public int getTotalArticleNum(ModelMap model, CmsUser user){
-		int articleCount=contentMng.getTotalArticleNum(user);
+		int articleCount=0;
+		if(user!=null){
+			articleCount=contentMng.getTotalArticleNum(user);
+		}
 		//model.addAttribute("articleCount", articleCount);
 		return articleCount;
 	}
@@ -280,7 +283,10 @@ public class BlogCommon {
 	 * 获取自己文章下评论总数
 	 **/
 	public ModelMap getTotalCommentNum(ModelMap model, CmsUser user){
-		int commentCount=contentMng.getTotalCommentNum(user);
+		int commentCount=0;
+		if(user!=null){
+			commentCount=contentMng.getTotalCommentNum(user);
+		}
 		model.addAttribute("commentCount", commentCount);
 		return model;
 	}
@@ -288,7 +294,10 @@ public class BlogCommon {
 	 * 获取我评论总数
 	 **/
 	public ModelMap getTotalCoverCommentNum(ModelMap model, CmsUser user){
-		int coverCommentCount=contentMng.getTotalCoverCommentNum(user);
+		int coverCommentCount=0;
+		if(user!=null){
+			coverCommentCount=contentMng.getTotalCoverCommentNum(user);
+		}
 		model.addAttribute("coverCommentCount", coverCommentCount);
 		return model;
 	}
@@ -296,7 +305,10 @@ public class BlogCommon {
 	 * 获取我的博客文章总数
 	 **/
 	public ModelMap getTotalReadNum(ModelMap model, CmsUser user){
-		int readCount=contentMng.getTotalReadNum(user);
+		int readCount=0;
+		if(user!=null){
+			readCount=contentMng.getTotalReadNum(user);
+		}
 		model.addAttribute("readCount", readCount);
 		return model;
 	}
@@ -305,8 +317,12 @@ public class BlogCommon {
 	 * 获取博客访问者/日期
 	 **/
 	public ModelMap getAllVistor(HttpServletRequest request, ModelMap model,CmsUser user) {
-		List<CmsBlogVisitor> visitorList=contentMng.getgetAllVistor(user);
-		model.addAttribute("visitorList", visitorList);
+		if(user!=null){
+			List<CmsBlogVisitor> visitorList=contentMng.getgetAllVistor(user);
+			model.addAttribute("visitorList", visitorList);
+		}else{
+			model.addAttribute("visitorList", "");
+		}
 		return model;
 	}
 	
@@ -314,8 +330,12 @@ public class BlogCommon {
 	 * 查询我已经加入的群组
 	 **/
 	public ModelMap getAlreadyJoinGroup(HttpServletRequest request,ModelMap model, CmsUser user) {
-		List<CmsJoinGroup> joinGroupList=contentMng.getAlreadyJoinGroup(user);
-		model.addAttribute("joinGroupList", joinGroupList);
+		if(user!=null){
+			List<CmsJoinGroup> joinGroupList=contentMng.getAlreadyJoinGroup(user);
+			model.addAttribute("joinGroupList", joinGroupList);
+		}else{
+			model.addAttribute("joinGroupList", "");
+		}
 		return model;
 	}
 	public ModelMap getAddFriends(HttpServletRequest request, ModelMap model,CmsUser userT, CmsUser user) {
