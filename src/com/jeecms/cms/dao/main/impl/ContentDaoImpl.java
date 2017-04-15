@@ -655,14 +655,20 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 			}
 		} else if (option == 1) {
 			// 包含子栏目
+//			f.append("select  bean from Content bean");
+//			f.append(" left join bean.contentShareCheckSet shareCheck left join shareCheck.channel tarChannel ");
+//			appendJoinConentDoc(f, open);
+//			f.append(" join bean.contentExt as ext");
+//			f.append(" join bean.channel node,Channel parent");
+//			f.append(" where ((node.lft between parent.lft and parent.rgt");
+//			f.append(" and bean.site.id=parent.site.id");
+//			f.append(" and parent.id=:channelId ) or (shareCheck.checkStatus<>0 and shareCheck.shareValid=true and  tarChannel.lft between parent.lft and parent.rgt and tarChannel.site.id=parent.site.id and parent.id=:channelId))");
+//			f.setParam("channelId", channelIds[0]);
 			f.append("select  bean from Content bean");
-			f.append(" left join bean.contentShareCheckSet shareCheck left join shareCheck.channel tarChannel ");
-			appendJoinConentDoc(f, open);
-			f.append(" join bean.contentExt as ext");
 			f.append(" join bean.channel node,Channel parent");
-			f.append(" where ((node.lft between parent.lft and parent.rgt");
+			f.append(" where node.lft between parent.lft and parent.rgt");
 			f.append(" and bean.site.id=parent.site.id");
-			f.append(" and parent.id=:channelId ) or (shareCheck.checkStatus<>0 and shareCheck.shareValid=true and  tarChannel.lft between parent.lft and parent.rgt and tarChannel.site.id=parent.site.id and parent.id=:channelId))");
+			f.append(" and parent.id=:channelId");
 			f.setParam("channelId", channelIds[0]);
 		} else if (option == 2) {
 			// 包含副栏目
@@ -686,7 +692,7 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 //		}
 //		appendOpen(f, open);
 //		appendReleaseDate(f);
-		appendTypeIds(f, typeIds);
+//		appendTypeIds(f, typeIds);
 //		f.append(" and bean.status=" + ContentCheck.CHECKED);
 		if (!StringUtils.isBlank(title)) {
 			f.append(" and bean.contentExt.title like :title");
