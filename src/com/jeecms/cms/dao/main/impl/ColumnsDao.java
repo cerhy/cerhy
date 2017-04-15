@@ -158,10 +158,15 @@ public class ColumnsDao extends HibernateBaseDao<Columns, Integer>{
 	}
 
 	public List<CmsPersonalChannel> getPersonChannel(CmsUser user) {
-		Finder f = Finder.create("select bean from CmsPersonalChannel bean");
-		f.append(" where bean.userName=:userName");
-		f.setParam("userName", Integer.valueOf(user.getUsername()));
-		return find(f);
+		String str=user.getUsername();
+		boolean result=str.matches("[0-9]+");
+		if (result == true) { 
+			Finder f = Finder.create("select bean from CmsPersonalChannel bean");
+			f.append(" where bean.userName=:userName");
+			f.setParam("userName", Integer.valueOf(user.getUsername()));
+			return find(f);
+		}
+		return null;
 	}
 
 }
