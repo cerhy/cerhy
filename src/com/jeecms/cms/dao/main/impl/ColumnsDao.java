@@ -5,9 +5,9 @@ import java.util.List;
 import org.hibernate.Query;
 
 import com.jeecms.cms.entity.assist.CmsJoinGroup;
+import com.jeecms.cms.entity.assist.CmsPersonalChannel;
 import com.jeecms.cms.entity.assist.CmsPostilInfo;
 import com.jeecms.cms.entity.main.Columns;
-import com.jeecms.cms.entity.main.ContentCheck;
 import com.jeecms.common.hibernate4.Finder;
 import com.jeecms.common.hibernate4.HibernateBaseDao;
 import com.jeecms.core.entity.CmsUser;
@@ -155,6 +155,18 @@ public class ColumnsDao extends HibernateBaseDao<Columns, Integer>{
 		String hql = "update CmsUser bean set bean.Friends=:friends  where bean.id=:userId";
 		Query query = getSession().createQuery(hql).setParameter("friends", user.getFriends()).setParameter("userId", user.getId());
 		query.executeUpdate();
+	}
+
+	public List<CmsPersonalChannel> getPersonChannel(CmsUser user) {
+		String str=user.getUsername();
+		boolean result=str.matches("[0-9]+");
+		if (result == true) { 
+			Finder f = Finder.create("select bean from CmsPersonalChannel bean");
+			f.append(" where bean.userName=:userName");
+			f.setParam("userName", Integer.valueOf(user.getUsername()));
+			return find(f);
+		}
+		return null;
 	}
 
 }

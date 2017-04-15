@@ -4,7 +4,6 @@ import static com.jeecms.common.page.SimplePage.cpn;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -16,6 +15,7 @@ import org.springframework.ui.ModelMap;
 import com.jeecms.cms.dao.main.impl.BlogDao;
 import com.jeecms.cms.entity.assist.CmsBlogVisitor;
 import com.jeecms.cms.entity.assist.CmsJoinGroup;
+import com.jeecms.cms.entity.assist.CmsPersonalChannel;
 import com.jeecms.cms.entity.main.Channel;
 import com.jeecms.cms.entity.main.Columns;
 import com.jeecms.cms.entity.main.Focus;
@@ -43,56 +43,69 @@ public class BlogCommon {
 	
 	public ModelMap getChannel(HttpServletRequest request,ModelMap model,CmsUser user,CmsSite site) {
 		// 学科教研，市县教研专用
-		List<Channel> channelList2 = null;
-		List<Channel> channelList3 = null;
+		List<CmsPersonalChannel> channelList=null;
 		if (null != user.getGroup()) {
-			// 获得本站栏目列表
-			Set<Channel> rights = user.getGroup().getContriChannels();
-			List<Channel> topList = channelMng.getTopList(site.getId(), true);
-
-			channelList2 = new ArrayList<Channel>();// 学科教研
-			channelList3 = new ArrayList<Channel>();// 市县教研
 			int groupId = user.getGroup().getId();
-			if (4 == groupId) {
-				List<Channel> channelList = Channel.getListForSelect(topList, rights, true);
-				for (Channel c : channelList) {
-					if (c.getId() == 98) {
-						channelList2.add(c);
-					} else if (null != c.getParent()) {
-						if (c.getParent().getId() == 98) {
-							channelList2.add(c);
-						} else if (null != c.getParent().getParent()) {
-							if (c.getParent().getParent().getId() == 98)
-								channelList2.add(c);
-						}
-					}
-				}
-			} else if (5 == groupId) {
-				List<Channel> channelList = Channel.getListForSelect(topList, rights, true);
-				for (Channel c : channelList) {
-					if (c.getId() == 168) {
-						channelList3.add(c);
-					} else if (null != c.getParent()) {
-						if (c.getParent().getId() == 168) {
-							channelList3.add(c);
-						} else if (null != c.getParent().getParent()) {
-							if (c.getParent().getParent().getId() == 168)
-								channelList3.add(c);
-						}
-					}
-				}
-
-			}
-
-			if (null != channelList2 && channelList2.size() > 0) {
-				model.addAttribute("channelList", channelList2);
-			} else if (null != channelList3 && channelList3.size() > 0) {
-				model.addAttribute("channelList", channelList3);
-			}
+			if (4 == groupId||5 == groupId) {
+				channelList = columnsMng.getPersonChannel(user);
+			} 
+			model.addAttribute("channelList", channelList);
 		}
 		return model;
 	}
 	
+//	public ModelMap getChannel(HttpServletRequest request,ModelMap model,CmsUser user,CmsSite site) {
+//		// 学科教研，市县教研专用
+//		List<Channel> channelList2 = null;
+//		List<Channel> channelList3 = null;
+//		if (null != user.getGroup()) {
+//			// 获得本站栏目列表
+//			Set<Channel> rights = user.getGroup().getContriChannels();
+//			List<Channel> topList = channelMng.getTopList(site.getId(), true);
+//			
+//			channelList2 = new ArrayList<Channel>();// 学科教研
+//			channelList3 = new ArrayList<Channel>();// 市县教研
+//			int groupId = user.getGroup().getId();
+//			if (4 == groupId) {
+//				List<Channel> channelList = Channel.getListForSelect(topList, rights, true);
+//				for (Channel c : channelList) {
+//					if (c.getId() == 98) {
+//						channelList2.add(c);
+//					} else if (null != c.getParent()) {
+//						if (c.getParent().getId() == 98) {
+//							channelList2.add(c);
+//						} else if (null != c.getParent().getParent()) {
+//							if (c.getParent().getParent().getId() == 98)
+//								channelList2.add(c);
+//						}
+//					}
+//				}
+//			} else if (5 == groupId) {
+//				List<Channel> channelList = Channel.getListForSelect(topList, rights, true);
+//				for (Channel c : channelList) {
+//					if (c.getId() == 168) {
+//						channelList3.add(c);
+//					} else if (null != c.getParent()) {
+//						if (c.getParent().getId() == 168) {
+//							channelList3.add(c);
+//						} else if (null != c.getParent().getParent()) {
+//							if (c.getParent().getParent().getId() == 168)
+//								channelList3.add(c);
+//						}
+//					}
+//				}
+//				
+//			}
+//			
+//			if (null != channelList2 && channelList2.size() > 0) {
+//				model.addAttribute("channelList", channelList2);
+//			} else if (null != channelList3 && channelList3.size() > 0) {
+//				model.addAttribute("channelList", channelList3);
+//			}
+//		}
+//		return model;
+//	}
+//	
 	/*//获取链接列表
 	public ModelMap getLinks(ModelMap model, CmsUser user) {
 		String linkUrl = user.getLinkUrl();
