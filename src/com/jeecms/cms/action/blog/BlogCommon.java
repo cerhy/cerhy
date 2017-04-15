@@ -9,6 +9,7 @@ import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
 
@@ -16,7 +17,6 @@ import com.jeecms.cms.dao.main.impl.BlogDao;
 import com.jeecms.cms.entity.assist.CmsBlogVisitor;
 import com.jeecms.cms.entity.assist.CmsJoinGroup;
 import com.jeecms.cms.entity.assist.CmsPersonalChannel;
-import com.jeecms.cms.entity.main.Channel;
 import com.jeecms.cms.entity.main.Columns;
 import com.jeecms.cms.entity.main.Focus;
 import com.jeecms.cms.manager.main.ChannelMng;
@@ -29,7 +29,7 @@ import com.jeecms.core.entity.CmsUser;
 import com.jeecms.core.manager.CmsUserMng;
 
 public class BlogCommon {
-	
+	Logger log = (Logger) Logger.getInstance(BlogCommon.class) ;
 	public ModelMap getColumn(HttpServletRequest request,ModelMap model,CmsUser user){
 		/*int groupId = user.getGroup().getId();
 		if (4!=groupId){
@@ -44,12 +44,16 @@ public class BlogCommon {
 	public ModelMap getChannel(HttpServletRequest request,ModelMap model,CmsUser user,CmsSite site) {
 		// 学科教研，市县教研专用
 		List<CmsPersonalChannel> channelList=null;
-		if (null != user.getGroup()) {
-			int groupId = user.getGroup().getId();
-			if (4 == groupId||5 == groupId) {
-				channelList = columnsMng.getPersonChannel(user);
-			} 
-			model.addAttribute("channelList", channelList);
+		try {
+			if (null != user && null != user.getGroup()) {
+				int groupId = user.getGroup().getId();
+				if (4 == groupId||5 == groupId) {
+					channelList = columnsMng.getPersonChannel(user);
+				} 
+				model.addAttribute("channelList", channelList);
+			}
+		} catch (Exception e) {
+			log.error("博客获取栏目出错", e);
 		}
 		return model;
 	}
