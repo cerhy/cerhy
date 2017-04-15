@@ -888,6 +888,7 @@ public class BlogAct {
 		model = blogCommon.getAddFriends(request, model,userT,user);
 		FrontUtils.frontData(request, model, site);
 		Pagination p = contentMng.getPageForMember_firendsBlog(Integer.valueOf(userIds),q, queryChannelId,site.getId(), modelId,null, cpn(pageNo), 20,null);
+		p.setTotalCount(totalCount);
 		model.addAttribute("pagination", p);
 		model.addAttribute("GroupFlag", 0);
 		model.addAttribute("usert", userT);
