@@ -67,9 +67,8 @@ public abstract class HibernateSimpleDao {
 	 * @return
 	 */
 	protected Pagination find(Finder finder, int pageNo, int pageSize) {
-		//int totalCount = countQueryResult(finder);
-		//性能优化，此处先设置一个默认值，后边从redis取 set进去
-		int totalCount = 50;
+		int totalCount = countQueryResult(finder);
+		//int totalCount = 50;
 		Pagination p = new Pagination(pageNo, pageSize, totalCount);
 		if (totalCount < 1) {
 			p.setList(new ArrayList());
