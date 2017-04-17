@@ -33,7 +33,7 @@ function HoverLi(x,y,m,n,counter){
             <div class="zj-news clearfix">
              <div class="news-slide">
              	   <div class="big-img">
-                         [@cms_content_list typeId='2' recommend='2' channelId='75' orderBy='4' titLen='22' channelOption='1' dateFormat='yyyy-MM-dd']      
+                         [@cms_content_list typeId='2' count='20' recommend='2' channelId='75' orderBy='4' titLen='22' channelOption='1' dateFormat='yyyy-MM-dd']      
          				  <ul class="big-img-ul" >
            				 [#list tag_list as a]
            				 <li [#if a_index<1] style="display: block;" [/#if]><a href="${a.url}" target="_blank"><img src="${a.typeImg!}" width="950" height="280"><span>[@text_cut s=a.title len=titLen /]</span></a></li>
@@ -46,7 +46,7 @@ function HoverLi(x,y,m,n,counter){
                            <a href="javascript:;" class="next"></a>
                             <div class="small-img-wrap">
                                 <ul class="small-img-ul" data-scro="controler">
-                                	[@cms_content_list typeId='2' recommend='2' channelId='75' orderBy='4' titLen='22' channelOption='1' dateFormat='yyyy-MM-dd']
+                                	[@cms_content_list typeId='2'  count='20' recommend='2' channelId='75' orderBy='4' titLen='22' channelOption='1' dateFormat='yyyy-MM-dd']
               						 [#list tag_list as a]
               						 <li><a [#if a_index<1] class='active'[/#if] href="javascript:;"><span>${a_index+1}</span><em></em></a></li>
               						 [/#list]
@@ -335,7 +335,7 @@ function HoverLi(x,y,m,n,counter){
                             	 [@cms_content_list channelId='280' count='3' typeId='5' titLen='14' orderBy='2' channelOption='1']
                             	[#list tag_list as a]
                                 <li>
-                                    <a href="${a.url}?typeIds=5">
+                                    <a href="${a.url}?typeIds=5" target="_blank">
                                         <span class="trend"></span>
                                         <div class="con clearfix">
                                         	[#if a.typeImg??]<img src="${a.typeImg!}" width="40" height="40" alt="" class="blog-left-img">[#else]<img src="/${res}/images/blog1.png" width="70" height="70" alt="" class="blog-left-img">[/#if]                                                                    
