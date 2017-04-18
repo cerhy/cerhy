@@ -105,8 +105,9 @@ public class WelcomeAct {
 		//最新10条待审内容
 		@SuppressWarnings("unchecked")
 		List<Content>contents=(List<Content>) contentMng.getPageByRight(null, null, user.getId(), 0, false, false, ContentStatus.prepared, user.getCheckStep(site.getId()), site.getId(), null, user.getId(), 0, 1, 10).getList();
-		@SuppressWarnings("unchecked")
-		List<Content>newcontents=(List<Content>)contentMng.getPageByRight(null, null,  user.getId(), 0, false, false, ContentStatus.checked,  user.getCheckStep(site.getId()), site.getId(), null,user.getId(), 0, 1, 10).getList();
+		//@SuppressWarnings("unchecked")
+		//List<Content>newcontents=(List<Content>)contentMng.getPageByRight(null, null,  user.getId(), 0, false, false, ContentStatus.checked,  user.getCheckStep(site.getId()), site.getId(), null,user.getId(), 0, 1, 10).getList();
+		List<Content>newcontents = new ArrayList() ;
 		model.addAttribute("props", props);
 		model.addAttribute("freeMemoery", freeMemoery);
 		model.addAttribute("totalMemory", totalMemory);
@@ -128,7 +129,7 @@ public class WelcomeAct {
 		Integer siteId=CmsUtils.getSiteId(request);
 		List<Channel>channelList=new ArrayList<Channel>();
 		//顶层栏目
-		channelList=channelMng.getTopList(siteId, false);
+		//channelList=channelMng.getTopList(siteId, false);
 		model.addAttribute("channelList", channelList);
 	}
 	
@@ -160,62 +161,62 @@ public class WelcomeAct {
 		Date now=Calendar.getInstance().getTime();
 		Date dayBegin=DateUtils.getStartDate(now);
 		Date weekBegin=DateUtils.getSpecficWeekStart(now, 0);
-		Date monthBegin=DateUtils.getSpecficMonthStart(now, 0);
+		//Date monthBegin=DateUtils.getSpecficMonthStart(now, 0);
 		TimeRange dayTimeRange=TimeRange.getInstance(dayBegin, now);
 		TimeRange weekTimeRange=TimeRange.getInstance(weekBegin, now);
-		TimeRange monthTimeRange=TimeRange.getInstance(monthBegin, now);
-		TimeRange totalTimeRange=TimeRange.getInstance(null, now);
+		//TimeRange monthTimeRange=TimeRange.getInstance(monthBegin, now);
+		//TimeRange totalTimeRange=TimeRange.getInstance(null, now);
 		long releaseDayCount=cmsStatisticSvc.statistic(CmsStatistic.CONTENT, dayTimeRange, restrictions);
 		long releaseWeekCount=cmsStatisticSvc.statistic(CmsStatistic.CONTENT, weekTimeRange, restrictions);
-		long releaseMonthCount=cmsStatisticSvc.statistic(CmsStatistic.CONTENT, monthTimeRange, restrictions);
-		long releaseTotalCount=cmsStatisticSvc.statistic(CmsStatistic.CONTENT, totalTimeRange, restrictions);
+		//long releaseMonthCount=cmsStatisticSvc.statistic(CmsStatistic.CONTENT, monthTimeRange, restrictions);
+		//long releaseTotalCount=cmsStatisticSvc.statistic(CmsStatistic.CONTENT, totalTimeRange, restrictions);
 		
 		restrictions.put(STATUS, ContentCheck.CHECKING);
-		long checkingDayCount=cmsStatisticSvc.statistic(CmsStatistic.CONTENT, dayTimeRange, restrictions);
-		long checkingWeekCount=cmsStatisticSvc.statistic(CmsStatistic.CONTENT, weekTimeRange, restrictions);
-		long checkingMonthCount=cmsStatisticSvc.statistic(CmsStatistic.CONTENT, monthTimeRange, restrictions);
-		long checkingTotalCount=cmsStatisticSvc.statistic(CmsStatistic.CONTENT, totalTimeRange, restrictions);
+		//long checkingDayCount=cmsStatisticSvc.statistic(CmsStatistic.CONTENT, dayTimeRange, restrictions);
+		//long checkingWeekCount=cmsStatisticSvc.statistic(CmsStatistic.CONTENT, weekTimeRange, restrictions);
+		//long checkingMonthCount=cmsStatisticSvc.statistic(CmsStatistic.CONTENT, monthTimeRange, restrictions);
+		//long checkingTotalCount=cmsStatisticSvc.statistic(CmsStatistic.CONTENT, totalTimeRange, restrictions);
 		
 		long commentDayCount=cmsStatisticSvc.statistic(CmsStatistic.COMMENT, dayTimeRange, restrictions);
 		long commentWeekCount=cmsStatisticSvc.statistic(CmsStatistic.COMMENT, weekTimeRange, restrictions);
-		long commentMonthCount=cmsStatisticSvc.statistic(CmsStatistic.COMMENT, monthTimeRange, restrictions);
-		long commentTotalCount=cmsStatisticSvc.statistic(CmsStatistic.COMMENT, totalTimeRange, restrictions);
+		//long commentMonthCount=cmsStatisticSvc.statistic(CmsStatistic.COMMENT, monthTimeRange, restrictions);
+		//long commentTotalCount=cmsStatisticSvc.statistic(CmsStatistic.COMMENT, totalTimeRange, restrictions);
 		
-		long guestbookDayCount=cmsStatisticSvc.statistic(CmsStatistic.GUESTBOOK, dayTimeRange, restrictions);
-		long guestbookWeekCount=cmsStatisticSvc.statistic(CmsStatistic.GUESTBOOK, weekTimeRange, restrictions);
-		long guestbookMonthCount=cmsStatisticSvc.statistic(CmsStatistic.GUESTBOOK, monthTimeRange, restrictions);
-		long guestbookTotalCount=cmsStatisticSvc.statistic(CmsStatistic.GUESTBOOK, totalTimeRange, restrictions);
+		//long guestbookDayCount=cmsStatisticSvc.statistic(CmsStatistic.GUESTBOOK, dayTimeRange, restrictions);
+		//long guestbookWeekCount=cmsStatisticSvc.statistic(CmsStatistic.GUESTBOOK, weekTimeRange, restrictions);
+		//long guestbookMonthCount=cmsStatisticSvc.statistic(CmsStatistic.GUESTBOOK, monthTimeRange, restrictions);
+		//long guestbookTotalCount=cmsStatisticSvc.statistic(CmsStatistic.GUESTBOOK, totalTimeRange, restrictions);
 		
-		long memberDayCount=cmsStatisticSvc.statistic(CmsStatistic.MEMBER, dayTimeRange, restrictions);
-		long memberWeekCount=cmsStatisticSvc.statistic(CmsStatistic.MEMBER, weekTimeRange, restrictions);
-		long memberMonthCount=cmsStatisticSvc.statistic(CmsStatistic.MEMBER, monthTimeRange, restrictions);
-		long memberTotalCount=cmsStatisticSvc.statistic(CmsStatistic.MEMBER, totalTimeRange, restrictions);
+		//long memberDayCount=cmsStatisticSvc.statistic(CmsStatistic.MEMBER, dayTimeRange, restrictions);
+		//long memberWeekCount=cmsStatisticSvc.statistic(CmsStatistic.MEMBER, weekTimeRange, restrictions);
+		//long memberMonthCount=cmsStatisticSvc.statistic(CmsStatistic.MEMBER, monthTimeRange, restrictions);
+		//long memberTotalCount=cmsStatisticSvc.statistic(CmsStatistic.MEMBER, totalTimeRange, restrictions);
 		
 		
 		model.addAttribute("releaseDayCount", releaseDayCount);
 		model.addAttribute("releaseWeekCount", releaseWeekCount);
-		model.addAttribute("releaseMonthCount", releaseMonthCount);
-		model.addAttribute("releaseTotalCount", releaseTotalCount);
+		//model.addAttribute("releaseMonthCount", releaseMonthCount);
+		//model.addAttribute("releaseTotalCount", releaseTotalCount);
 		
-		model.addAttribute("checkingDayCount", checkingDayCount);
-		model.addAttribute("checkingWeekCount", checkingWeekCount);
-		model.addAttribute("checkingMonthCount", checkingMonthCount);
-		model.addAttribute("checkingTotalCount", checkingTotalCount);
+		//model.addAttribute("checkingDayCount", checkingDayCount);
+		//model.addAttribute("checkingWeekCount", checkingWeekCount);
+		//model.addAttribute("checkingMonthCount", checkingMonthCount);
+		//model.addAttribute("checkingTotalCount", checkingTotalCount);
 		
 		model.addAttribute("commentDayCount", commentDayCount);
 		model.addAttribute("commentWeekCount", commentWeekCount);
-		model.addAttribute("commentMonthCount", commentMonthCount);
-		model.addAttribute("commentTotalCount", commentTotalCount);
+		//model.addAttribute("commentMonthCount", commentMonthCount);
+		//model.addAttribute("commentTotalCount", commentTotalCount);
 		
-		model.addAttribute("guestbookDayCount", guestbookDayCount);
-		model.addAttribute("guestbookWeekCount", guestbookWeekCount);
-		model.addAttribute("guestbookMonthCount", guestbookMonthCount);
-		model.addAttribute("guestbookTotalCount", guestbookTotalCount);
+		//model.addAttribute("guestbookDayCount", guestbookDayCount);
+		//model.addAttribute("guestbookWeekCount", guestbookWeekCount);
+		//model.addAttribute("guestbookMonthCount", guestbookMonthCount);
+		//model.addAttribute("guestbookTotalCount", guestbookTotalCount);
 		
-		model.addAttribute("memberDayCount", memberDayCount);
-		model.addAttribute("memberWeekCount", memberWeekCount);
-		model.addAttribute("memberMonthCount", memberMonthCount);
-		model.addAttribute("memberTotalCount", memberTotalCount);
+		//model.addAttribute("memberDayCount", memberDayCount);
+		//model.addAttribute("memberWeekCount", memberWeekCount);
+		//model.addAttribute("memberMonthCount", memberMonthCount);
+		//model.addAttribute("memberTotalCount", memberTotalCount);
 	}
 	
 	
