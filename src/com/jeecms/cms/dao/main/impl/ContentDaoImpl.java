@@ -692,7 +692,11 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 //		}
 //		appendOpen(f, open);
 //		appendReleaseDate(f);
-//		appendTypeIds(f, typeIds);
+		if(null!=channelIds&&null!=typeIds){
+			if(channelIds[0].toString().equals("280")&&typeIds[0].toString().equals("5")){	
+				appendTypeIds(f, typeIds);
+			}
+		}
 //		f.append(" and bean.status=" + ContentCheck.CHECKED);
 		if (!StringUtils.isBlank(title)) {
 			f.append(" and bean.contentExt.title like :title");
