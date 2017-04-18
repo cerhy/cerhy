@@ -19,6 +19,7 @@ import com.jeecms.common.email.MessageTemplate;
 import com.jeecms.common.web.RequestUtils;
 import com.jeecms.common.web.session.SessionProvider;
 import com.jeecms.core.entity.CmsSite;
+import com.jeecms.core.entity.CmsUser;
 import com.jeecms.core.entity.UnifiedUser;
 import com.jeecms.core.manager.ConfigMng;
 import com.jeecms.core.manager.UnifiedUserMng;
