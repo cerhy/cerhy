@@ -144,13 +144,13 @@ public class WelcomeAct {
 		//本周PV
 		weekPvList=cmsAccessStatisticMng.statistic(weekBegin, now, siteId, STATISTIC_ALL,null);
 		//本月pv
-		monthPvList=cmsAccessStatisticMng.statistic(monthBegin, now, siteId, STATISTIC_ALL,null);
+		//monthPvList=cmsAccessStatisticMng.statistic(monthBegin, now, siteId, STATISTIC_ALL,null);
 		//本年pv
-		yearPvList=cmsAccessStatisticMng.statisticByYear(Calendar.getInstance().get(Calendar.YEAR), siteId,STATISTIC_ALL,null,true,null);
+		//yearPvList=cmsAccessStatisticMng.statisticByYear(Calendar.getInstance().get(Calendar.YEAR), siteId,STATISTIC_ALL,null,true,null);
 		model.addAttribute("dayPvList", dayPvList);
 		model.addAttribute("weekPvList", weekPvList);
-		model.addAttribute("monthPvList", monthPvList);
-		model.addAttribute("yearPvList", yearPvList);
+		//model.addAttribute("monthPvList", monthPvList);
+		//model.addAttribute("yearPvList", yearPvList);
 	}
 	
 	private void getContentStatic(HttpServletRequest request, ModelMap model){
