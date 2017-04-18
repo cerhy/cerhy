@@ -701,6 +701,7 @@ public class ContentAct{
 		//更新redis存储
 		List<Content> list=new ArrayList<Content>();
 		List<Content> listCopy=new ArrayList<Content>();
+		List<Content> listCopyJp=new ArrayList<Content>();
 		Integer parentId=null;
 		String parentIds=null;
 		Channel ids = channelMng.findById(channelId);//获取该栏目实体
@@ -758,12 +759,32 @@ public class ContentAct{
 			try {
 				list=RedisUtil.getList(String.valueOf(channelId));
 				if(list!=null&&list.size()>0){
-					for(int i=0;i<list.size();i++){
-						if(bean.getId().toString().equals(list.get(i).getId().toString())){
-							listCopy.add(bean);
-						}else{
-							listCopy.add(list.get(i));
+					if(channelId==280&&typeId==5){
+						list.add(bean);
+						if(list.size()>2){
+							for(int j=0;j<listCopy.size();j++){
+								if(j<3){
+									listCopy.add(list.get(j));
+								}else{
+									break;
+								}
+							}
 						}
+					}else if(channelId!=280){
+						for(int i=0;i<list.size();i++){
+							if(bean.getId().toString().equals(list.get(i).getId().toString())){
+								listCopy.add(bean);
+							}else{
+								listCopy.add(list.get(i));
+							}
+						}
+					}else if(channelId==280&&typeId!=5){
+						RedisUtil.lrem(bean.getChannel().getId().toString(), 0, bean.getId().toString(),list);
+					}
+				}else{
+					if(channelId==280&&typeId==5){
+						list.add(bean);
+						listCopy=list;
 					}
 				}
 				RedisUtil.setList(String.valueOf(channelId), listCopy);

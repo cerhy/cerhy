@@ -7,7 +7,7 @@ Cms.viewCount = function(base, contentId, viewId, commentId, downloadId, upId,
 	viewId = viewId || "views";
 	commentId = commentId || "comments";
 	downloadId = downloadId || "downloads";
-	upId = upId || "ups";
+	upId = upId || "upss";
 	downId = downId || "downs";
 	$.getJSON(base + "/content_view.jspx", {
 		contentId : contentId
@@ -64,7 +64,7 @@ Cms.siteFlow = function(base,page, referer,flowSwitch,
  * 成功返回true，失败返回false。
  */
 Cms.up = function(base, contentId, origValue, upId) {
-	upId = upId || "ups";
+	upId = upId || "upss";
 	var updown = $.cookie("_cms_updown_" + contentId);
 	if (updown) {
 		return false;

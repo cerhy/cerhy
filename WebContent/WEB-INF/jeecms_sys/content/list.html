@@ -445,14 +445,14 @@ function optUnPigeonhole() {
 <div class="top-t">
 <span><@s.m "content.title"/>: <input type="text" name="queryTitle" value="${queryTitle!}" style="width:130px"/></span>
 <span><@s.m "content.user"/>: <input type="text" name="queryInputUsername" value="${queryInputUsername!}" style="width:70px"/></span>
-<span><label><input type="checkbox" name="queryTopLevel" value="true" <#if queryTopLevel?? && queryTopLevel> checked="checked"</#if>/><@s.m "content.topLevel.query"/></label></span>
-<span><label><input type="checkbox" name="queryRecommend" value="true" <#if queryRecommend?? && queryRecommend> checked="checked"</#if>/><@s.m "content.recommend"/></label></span>
+<span style="display: none;"><label><input type="checkbox" name="queryTopLevel" value="true" <#if queryTopLevel?? && queryTopLevel> checked="checked"</#if>/><@s.m "content.topLevel.query"/></label></span>
+<span style="display: none;"><label><input type="checkbox" name="queryRecommend" value="true" <#if queryRecommend?? && queryRecommend> checked="checked"</#if>/><@s.m "content.recommend"/></label></span>
 <@p.select name="queryTypeId" value=queryTypeId list=typeList listKey="id" listValue="name" headerKey="" headerValue="content.query.allType"/>
 <#--
 <@p.select name="queryStatus" value=queryStatus list={"0":"content.status.0","1":"content.status.1","2":"content.status.2"} headerKey="" headerValue="content.query.allStatus"/>
 -->
-<@p.select name="queryOrderBy" value=queryOrderBy list={"0":"content.orderBy.0","1":"content.orderBy.1","2":"content.orderBy.2","3":"content.orderBy.3","4":"content.orderBy.4","5":"content.orderBy.5","6":"content.orderBy.6","7":"content.orderBy.7","8":"content.orderBy.8","9":"content.orderBy.9","10":"content.orderBy.10","11":"content.orderBy.11","12":"content.orderBy.12","13":"content.orderBy.13","14":"content.orderBy.14","15":"content.orderBy.15","16":"content.orderBy.16","17":"content.orderBy.17","18":"content.orderBy.18","19":"content.orderBy.19","20":"content.orderBy.20","21":"content.orderBy.21","22":"content.orderBy.22","23":"content.orderBy.23"}/>
-<input type="hidden" name="cid" value="${cid!}"/>
+<#--<@p.select name="queryOrderBy" value=queryOrderBy list={"0":"content.orderBy.0","1":"content.orderBy.1","2":"content.orderBy.2","3":"content.orderBy.3","4":"content.orderBy.4","5":"content.orderBy.5","6":"content.orderBy.6","7":"content.orderBy.7","8":"content.orderBy.8","9":"content.orderBy.9","10":"content.orderBy.10","11":"content.orderBy.11","12":"content.orderBy.12","13":"content.orderBy.13","14":"content.orderBy.14","15":"content.orderBy.15","16":"content.orderBy.16","17":"content.orderBy.17","18":"content.orderBy.18","19":"content.orderBy.19","20":"content.orderBy.20","21":"content.orderBy.21","22":"content.orderBy.22","23":"content.orderBy.23"}/>
+--><input type="hidden" name="cid" value="${cid!}"/>
 <input class="query" type="submit" value="<@s.m "global.query"/>" style="border:none;"/>
 </div>
 </form>
@@ -464,13 +464,13 @@ function optUnPigeonhole() {
 <form action="v_list.do" method="post">
 <div class="top-l" style="text-indent:3px;">
 <label><input type="radio" name="queryStatus" value="all" onclick="chgStatus();" <#if !status?? || queryStatus="all"> checked="checked"</#if>/><@s.m "content.status.all"/></label>
-<label><input type="radio" name="queryStatus" value="contribute" onclick="chgStatus();" <#if queryStatus?? && queryStatus=="contribute"> checked="checked"</#if>/><@s.m "content.status.contribute"/></label>
-<label><input type="radio" name="queryStatus" value="draft" onclick="chgStatus();" <#if queryStatus?? && queryStatus=="draft"> checked="checked"</#if>/><@s.m "content.status.draft"/></label>
-<label><input type="radio" name="queryStatus" value="prepared" onclick="chgStatus();" <#if queryStatus?? && queryStatus=="prepared"> checked="checked"</#if>/><@s.m "content.status.prepared"/></label>
-<label><input type="radio" name="queryStatus" value="passed" onclick="chgStatus();" <#if queryStatus?? && queryStatus=="passed"> checked="checked"</#if>/><@s.m "content.status.passed"/></label>
-<label><input type="radio" name="queryStatus" value="checked" onclick="chgStatus();" <#if queryStatus?? && queryStatus=="checked"> checked="checked"</#if>/><@s.m "content.status.checked"/></label>
-<label><input type="radio" name="queryStatus" value="rejected" onclick="chgStatus();" <#if queryStatus?? && queryStatus=="rejected"> checked="checked"</#if>/><@s.m "content.status.rejected"/></label>
-<label><input type="radio" name="queryStatus" value="pigeonhole" onclick="chgStatus();" <#if queryStatus?? && queryStatus=="pigeonhole"> checked="checked"</#if>/><@s.m "content.status.pigeonhole"/></label>
+<label style="display: none;"><input type="radio" name="queryStatus" value="contribute" onclick="chgStatus();" <#if queryStatus?? && queryStatus=="contribute"> checked="checked"</#if>/><@s.m "content.status.contribute"/></label>
+<label style="display: none;"><input type="radio" name="queryStatus" value="draft" onclick="chgStatus();" <#if queryStatus?? && queryStatus=="draft"> checked="checked"</#if>/><@s.m "content.status.draft"/></label>
+<label style="display: none;"><input type="radio" name="queryStatus" value="prepared" onclick="chgStatus();" <#if queryStatus?? && queryStatus=="prepared"> checked="checked"</#if>/><@s.m "content.status.prepared"/></label>
+<label style="display: none;"><input type="radio" name="queryStatus" value="passed" onclick="chgStatus();" <#if queryStatus?? && queryStatus=="passed"> checked="checked"</#if>/><@s.m "content.status.passed"/></label>
+<label style="display: none;"><input type="radio" name="queryStatus" value="checked" onclick="chgStatus();" <#if queryStatus?? && queryStatus=="checked"> checked="checked"</#if>/><@s.m "content.status.checked"/></label>
+<label style="display: none;"><input type="radio" name="queryStatus" value="rejected" onclick="chgStatus();" <#if queryStatus?? && queryStatus=="rejected"> checked="checked"</#if>/><@s.m "content.status.rejected"/></label>
+<label style="display: none;"><input type="radio" name="queryStatus" value="pigeonhole" onclick="chgStatus();" <#if queryStatus?? && queryStatus=="pigeonhole"> checked="checked"</#if>/><@s.m "content.status.pigeonhole"/></label>
 </div>
 </form>
 <form id="tableForm" method="post">
@@ -608,7 +608,7 @@ function optUnPigeonhole() {
 		</@cms_perm><#t/>
 	</@p.column><#t/>
 </@p.table>
-<div class="content-bottom">
+<div class="content-bottom" style="display: none;">
 	<@cms_perm url="/content/v_delete.do">
 	<input type="button" value="<@s.m "global.delete"/>" onclick="optDelete();" class="del-button"/ style="float:left;">
 	</@cms_perm>

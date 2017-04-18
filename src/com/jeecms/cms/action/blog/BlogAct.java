@@ -915,7 +915,7 @@ public class BlogAct {
 		if(joinGroupStata!=null&&joinGroupStata.equals("0")){
 			userId=0;
 			model.addAttribute("GroupFlag", -1);
-			if(null != request.getParameter("columnId")){
+			if(StringUtils.isNotBlank(request.getParameter("columnId"))&&!"null".equals(request.getParameter("columnId"))){
 				model.addAttribute("columnId", request.getParameter("columnId"));
 				model.addAttribute("columnIdZ", request.getParameter("columnId"));
 				model.addAttribute("joinGroupStata", 0);
@@ -925,13 +925,13 @@ public class BlogAct {
 		}else{
 			model.addAttribute("GroupFlag", 0);
 			//为了删除文章后能跳转回本栏目下
-			if(null != request.getParameter("columnId")){
+			if(StringUtils.isNotBlank(request.getParameter("columnId"))&&!"null".equals(request.getParameter("columnId"))){
 				model.addAttribute("columnId", request.getParameter("columnId"));
 				model.addAttribute("columnIdZ", request.getParameter("columnId"));
 				model.addAttribute("submitOn", 1);
 				columnId = Integer.parseInt(request.getParameter("columnId"));
 			}
-			if(null != request.getParameter("channelId")){
+			if(StringUtils.isNotBlank(request.getParameter("channelId"))&&!"null".equals(request.getParameter("channelId"))){
 				model.addAttribute("channelId", request.getParameter("channelId"));
 				model.addAttribute("submitOn", 1);
 				channelId = Integer.parseInt(request.getParameter("channelId"));
