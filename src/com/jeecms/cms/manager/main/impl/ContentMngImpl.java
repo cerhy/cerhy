@@ -678,9 +678,8 @@ public class ContentMngImpl implements ContentMng, ChannelDeleteChecker {
 			Short charge,Double chargeAmount,CmsUser user,boolean forMember,HttpServletRequest request) {
 		Content entity = findById(bean.getId());
 		//更新columnId
-		if(bean.getColumnId() != columnId){
-			bean.setColumnId(columnId);
-		}
+		//if(bean.getColumnId() != columnId){
+		//}
 		// 执行监听器
 		List<Map<String, Object>> mapList = preChange(entity);
 		// 更新主表
@@ -733,7 +732,10 @@ public class ContentMngImpl implements ContentMng, ChannelDeleteChecker {
 		// 更新栏目
 		if (channelId != null && channelId != 280) {
 			bean.setChannel(channelMng.findById(channelId));
+		}else{
+			bean.setChannel(channelMng.findById(channelId));
 		}
+		bean.setColumnId(columnId);
 	/*	// 更新类型
 		if (typeId != null) {
 			bean.setType(contentTypeMng.findById(typeId));

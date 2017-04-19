@@ -234,8 +234,10 @@ $(function(){
 	                	[#if c.uniqueCode??]
                         [#else]
 	                    	[#if content.columnId??]
-	                    <option value="${c.columnId}&colu"[#if content.columnId==c.columnId]selected="selected"[/#if]>${c.columnName}</option>
-	                	[/#if]
+	                    	<option value="${c.columnId}&colu"[#if content.columnId==c.columnId]selected="selected"[/#if]>${c.columnName}</option>
+	                		[#else]
+	                    	<option value="${c.columnId}&colu">${c.columnName}</option>
+	                		[/#if]
 	                    [/#if]
 	                [/#list]
 	                [/#if]
@@ -244,8 +246,10 @@ $(function(){
 	                [#list columnsList as c]
 	                	[#if c.uniqueCode??]
 	                    	[#if content.columnId??]
-	                    <option value="${c.columnId}&colu"[#if content.columnId==c.columnId]selected="selected"[/#if]>${c.columnName}</option>
-	                	[/#if]
+		                    <option value="${c.columnId}&colu"[#if content.columnId==c.columnId]selected="selected"[/#if]>${c.columnName}</option>
+		                	[#else]
+		                    <option value="${c.columnId}&colu">${c.columnName}</option>
+		                	[/#if]
 	                    [/#if]
 	                [/#list]
 	                [/#if]
