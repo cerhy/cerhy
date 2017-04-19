@@ -224,7 +224,7 @@ $(function(){
 					             <option value="" class="sel-disabled">市县教研</option>
 					             [/#if]
 				             [/#if]
-				             <option value="${c.channelId}&chan">&nbsp;&nbsp;>${c.channelName}</option>
+				             <option value="${c.channelId}&chan" [#if content.channel.id==c.channelId]selected="selected"[/#if]>&nbsp;&nbsp;>${c.channelName}</option>
 				             [/#list]
 				             [/#if]
 	                
@@ -264,11 +264,11 @@ $(function(){
 	                <span style="color:#f00; margin-left:10px;">*</span>
                 </td>
               </tr>
-              <tr>
+               <tr>
                 <td class="tggl-top">多媒体</td>
                 <td style="padding:10px 5px;">
                   <div>
-						<input type="text" id="mediaPath" name="mediaPath" class="member-change" style="width:303px"/>
+						<input type="text" id="mediaPath" name="mediaPath" value="${content.mediaPath!}" class="member-change" style="width:303px"/>
 					</div>
 					<div>
 						<span id="mfc" style="position:relative;display:block;line-height:28px;margin-top:4px;">
@@ -276,9 +276,9 @@ $(function(){
 						<input class="change-Btn" type='button' value='浏览' style="float:left;margin-left:4px;" />
 						<input onchange="$('#mediaFileText').val(this.value)" size="19" type="file" name="mediaFile" id="mediaFile" style="height:28px;width:246px;opacity:0;filter:alpha(opacity=0);position:absolute;left:15px;top:0;"/>
 						<input type="button" value="上传" onclick="uploadMedia();" class="change-Btn"  style="float:left;"/>
-						</span> 
+						</span>
+						<span style="color:#f00; margin-left:10px;">*上传的视频文件须为MP4格式!</span> 
 					</div>
-					<span style="color:#f00; margin-left:10px;">*上传的视频文件须为MP4格式!</span>
                 </td>
               </tr>
               <tr style="display: none;">
