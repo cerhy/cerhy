@@ -680,6 +680,7 @@ public class ContentMngImpl implements ContentMng, ChannelDeleteChecker {
 		//更新columnId
 		//if(bean.getColumnId() != columnId){
 		//}
+		
 		// 执行监听器
 		List<Map<String, Object>> mapList = preChange(entity);
 		// 更新主表
