@@ -235,6 +235,13 @@ padding-top: 32px;
 .tj{font-size: 15px ;padding:10px 0 20px 0;}
 
 .footer_style{
+	padding:0 320px;
+	margin:0 -220px;
+    background-color: #0b91df;
+    height: 117px;
+    }
+.footer_styles{
+	margin:0 -20px;
     background-color: #0b91df;
     height: 117px;
     }
