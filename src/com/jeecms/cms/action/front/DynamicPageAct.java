@@ -209,9 +209,9 @@ public class DynamicPageAct {
 		FrontUtils.frontData(request, model, site);
 		FrontUtils.frontPageData(request, model);
 		String equipment=(String) request.getAttribute("ua");
-		if(StringUtils.isNotBlank(equipment)&&equipment.equals("mobile")){
+		/*if(StringUtils.isNotBlank(equipment)&&equipment.equals("mobile")){
 			return channel.getMobileTplChannelOrDef();
-		}
+		}*/
 		return channel.getTplChannelOrDef();
 	}
 
@@ -338,11 +338,11 @@ public class DynamicPageAct {
 			}
 			if(site.getIndexToRoot()){
 				
-				if(StringUtils.isNotBlank(equipment)&&equipment.equals("mobile")){
+				/*if(StringUtils.isNotBlank(equipment)&&equipment.equals("mobile")){
 					response.sendRedirect(ctx+INDEX_HTML_MOBILE);
-				}else{
+				}else{*/
 					response.sendRedirect(ctx+INDEX_HTML);
-				}
+				/*}*/
 			}else{
 				response.sendRedirect(ctx+site.getStaticDir()+INDEX_HTML);
 			}
