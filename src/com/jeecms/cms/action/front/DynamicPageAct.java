@@ -306,9 +306,9 @@ public class DynamicPageAct {
 		model.addAttribute("typeIds", typeIds);
 		FrontUtils.frontData(request, model, site);
 		String equipment=(String) request.getAttribute("ua");
-		if(StringUtils.isNotBlank(equipment)&&equipment.equals("mobile")){
+		/*if(StringUtils.isNotBlank(equipment)&&equipment.equals("mobile")){
 			return content.getMobileTplContentOrDef(content.getModel());
-		}
+		}*/
 		return content.getTplContentOrDef(content.getModel());
 	}
 	
