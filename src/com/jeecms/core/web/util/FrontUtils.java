@@ -155,9 +155,9 @@ public class FrontUtils {
 			String solution, String dir, String name) {
 		String equipment=(String) request.getAttribute("ua");
 		CmsSite site=CmsUtils.getSite(request);
-		if(StringUtils.isNotBlank(equipment)&&equipment.equals("mobile")){
-			solution=site.getMobileSolutionPath();
-		}
+//		if(StringUtils.isNotBlank(equipment)&&equipment.equals("mobile")){
+//			solution=site.getMobileSolutionPath();
+//		}
 		return solution + "/" + dir + "/"
 				+ MessageResolver.getMessage(request, name) + TPL_SUFFIX;
 	}
