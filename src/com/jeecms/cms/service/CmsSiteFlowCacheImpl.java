@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import static com.jeecms.common.util.ParseURLKeyword.getKeyword;
+import net.sf.ehcache.CacheException;
 import net.sf.ehcache.Ehcache;
 import net.sf.ehcache.Element;
 
@@ -45,7 +46,6 @@ import static com.jeecms.cms.entity.assist.CmsSiteAccess.ENGINE_BING;
 import static com.jeecms.cms.entity.assist.CmsSiteAccess.ENGINE_SOGOU;
 import static com.jeecms.cms.entity.assist.CmsSiteAccess.ENGINE_SOSO;
 import static com.jeecms.cms.entity.assist.CmsSiteAccess.ENGINE_SO;
-
 import static com.jeecms.cms.entity.assist.CmsSiteAccessStatistic.STATISTIC_ALL;
 import static com.jeecms.cms.entity.assist.CmsSiteAccessStatistic.STATISTIC_SOURCE;
 import static com.jeecms.cms.entity.assist.CmsSiteAccessStatistic.STATISTIC_ENGINE;
@@ -390,21 +390,27 @@ public class CmsSiteFlowCacheImpl implements CmsSiteFlowCache, DisposableBean {
 	
 	private int freshAccessPagesCacheToDB(Ehcache cache){
 		int count = 0;
-		List<String> list = cache.getKeys();
-		for (String key : list) {
-			Element element = cache.get(key);
-			if (element == null) {
-				return count;
+		try {
+			List<String> list = cache.getKeys();
+			for (String key : list) {
+				Element element = cache.get(key);
+				if (element == null) {
+					return count;
+				}
+				CmsSiteAccessPages page = (CmsSiteAccessPages) element.getObjectValue();
+				if (page.getId() == null&& page.getSessionId() != null) {
+					//if(page.getAccessDate()==null){
+						page.setAccessDate(Calendar.getInstance().getTime());
+					//}
+					cmsSiteAccessPagesMng.save(page);
+				}else{
+					cmsSiteAccessPagesMng.update(page);
+				}
 			}
-			CmsSiteAccessPages page = (CmsSiteAccessPages) element.getObjectValue();
-			if (page.getId() == null&& page.getSessionId() != null) {
-				//if(page.getAccessDate()==null){
-					page.setAccessDate(Calendar.getInstance().getTime());
-				//}
-				cmsSiteAccessPagesMng.save(page);
-			}else{
-				cmsSiteAccessPagesMng.update(page);
-			}
+		} catch (IllegalStateException e) {
+			log.error("freshAccessPagesCacheToDB Illegal",e);
+		} catch (CacheException e) {
+			log.error("freshAccessPagesCacheToDB CacheException",e);
 		}
 		return count;
 	}
