@@ -136,6 +136,7 @@ public class MemberAct {
 		CmsUser user = CmsUtils.getUser(request);
 		FrontUtils.frontData(request, model, site);
 		MemberConfig mcfg = site.getConfig().getMemberConfig();
+		String email=request.getParameter("email");
 		// 没有开启会员功能
 		if (!mcfg.isMemberOn()) {
 			FrontUtils.showMessage(request, model, "member.memberClose");
@@ -144,6 +145,8 @@ public class MemberAct {
 			FrontUtils.showLogin(request, model, site);
 		}
 		ext.setId(user.getId());
+		user.setEmail(email);
+		cmsUserMng.updatePwdEmail(user.getId(),null, email);
 		cmsUserExtMng.update(ext, user);
 		log.info("update CmsUserExt success. id={}", user.getId());
 		try {

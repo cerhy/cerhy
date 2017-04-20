@@ -124,10 +124,10 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 		}
 		if(modelId!=null){
 			f.append(" and bean.model.id=:modelId").setParam("modelId", modelId);
+			//f.append(" and bean.model.id in (11,21,24)");
+		}/*else{
 			f.append(" and bean.model.id in (11,21,24)");
-		}else{
-			f.append(" and bean.model.id in (11,21,24)");
-		}
+		}*/
 		appendQuery_blog(f, title, typeId, userId,status, topLevel, recommend,columnId);
 		appendOrder(f, orderBy);
 		return find(f, pageNo, pageSize);
@@ -1179,10 +1179,10 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 		}
 		if(modelId!=null){
 			f.append(" and bean.model.id=:modelId").setParam("modelId", modelId);
+			/*f.append(" and bean.model.id in (11,21,24)");*/
+		}/*else{
 			f.append(" and bean.model.id in (11,21,24)");
-		}else{
-			f.append(" and bean.model.id in (11,21,24)");
-		}
+		}*/
 		inputUserId=ids;
 		appendQuery_blog(f, title, typeId, inputUserId, status, topLevel, recommend,null);
 		appendOrder(f, orderBy);
@@ -1216,7 +1216,6 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 	public int getTotalArticleNum(CmsUser user) {
 		String hql = "select count(1) from Content bean"
 				+ " where 1=1"
-				+ " and bean.model.id in (11,21,24)"
 				+ " and bean.user.id="+user.getId()
 		        + " and bean.status<>"+ContentCheck.RECYCLE;
 		Query query = getSession().createQuery(hql);
@@ -1225,6 +1224,7 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 		}else{
 			return 0 ;
 		}
+		//+ " and bean.model.id in (11,21,24)"
 	}
 
 	@Override
@@ -1232,7 +1232,6 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 		String hql = "select count(1) from CmsComment bean"
 				+ " where 1=1"
 				+ " and bean.content.id is not null "
-				+ " and bean.content.model.id in (11,21,24)"
 				+ " and bean.content.user.id="+user.getId()
 		        + " and bean.content.status<>"+ContentCheck.RECYCLE;
 		Query query = getSession().createQuery(hql);
@@ -1241,6 +1240,7 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 		}else{
 			return 0 ;
 		}
+		//+ " and bean.content.model.id in (11,21,24)"
 	}
 
 	@Override
@@ -1248,7 +1248,6 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 		String hql = "select count(1) from CmsComment bean"
 				+ " where 1=1"
 				+ " and bean.content.id is not null "
-				+ " and bean.content.model.id in (11,21,24)"
 				+ " and bean.commentUser.id="+user.getId()
 				+ " and bean.content.status<>"+ContentCheck.RECYCLE;
 		Query query = getSession().createQuery(hql);
@@ -1257,13 +1256,13 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 		}else{
 			return 0 ;
 		}
+		//+ " and bean.content.model.id in (11,21,24)"
 	}
 
 	@Override
 	public int getTotalReadNum(CmsUser user) {
 		String hql = "select sum(bean.contentCount.views) from Content bean"
 				+ " where 1=1"
-				+ " and bean.model.id in (11,21,24)"
 				+ " and bean.user.id="+user.getId()
 				+ " and bean.status<>"+ContentCheck.RECYCLE;
 		Query query = getSession().createQuery(hql);
@@ -1272,7 +1271,7 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 		}else{
 			return 0 ;
 		}
-		
+		//+ " and bean.model.id in (11,21,24)"
 	}
 
 	@SuppressWarnings("unchecked")

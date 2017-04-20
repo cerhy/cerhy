@@ -224,6 +224,8 @@ public class ContributeAct extends AbstractContentMemberAct {
 				   channelId=Integer.valueOf(str[0]);
 			   }else if(str[1].equals("colu")){
 				   columnId=Integer.valueOf(str[0]);
+			   }else if(str[1].equals("chan")){
+				   channelId=Integer.valueOf(str[0]);
 			   }
 		   }
 		   if(null != blog ){
@@ -623,6 +625,7 @@ public class ContributeAct extends AbstractContentMemberAct {
 		}
 		model = blogCommon.getColumn(request,model,user);
 	    model = blogCommon.getChannel(request,model,user,site);
+	    model = blogCommon.getFriends(user.getId(), model, 1);
 	    int totalCount = blogCommon.getTotalArticleNum(model,user);
 	    model.addAttribute("articleCount", totalCount);
  		model = blogCommon.getTotalCommentNum(model, user);
