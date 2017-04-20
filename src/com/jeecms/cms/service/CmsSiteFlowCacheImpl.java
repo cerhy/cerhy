@@ -398,9 +398,9 @@ public class CmsSiteFlowCacheImpl implements CmsSiteFlowCache, DisposableBean {
 			}
 			CmsSiteAccessPages page = (CmsSiteAccessPages) element.getObjectValue();
 			if (page.getId() == null&& page.getSessionId() != null) {
-				if(page.getAccessDate()==null){
+				//if(page.getAccessDate()==null){
 					page.setAccessDate(Calendar.getInstance().getTime());
-				}
+				//}
 				cmsSiteAccessPagesMng.save(page);
 			}else{
 				cmsSiteAccessPagesMng.update(page);
