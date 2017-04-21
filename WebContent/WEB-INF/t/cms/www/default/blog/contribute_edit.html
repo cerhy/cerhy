@@ -311,7 +311,17 @@ $(function(){
               	<td><input type="checkbox" id="showStyle" name="showStyle" value="1"/>若附件可预览时嵌入文章</td>
               </tr> -->
 			   <tr>
-                <td class="tggl-top">密码</td><td><input type="text" id="password" name="password" maxlength="100"  class="member-change"  oninvalid="setCustomValidity('请输入密码');" oninput="setCustomValidity('');"/><span style="color:#f00; margin-left:10px;">密码类型为数字</span></td>
+                <td class="tggl-top">阅读密码</td>
+                <td>
+	                [#if content.password!=""]
+	                <input type="text" onfocus="this.type='password';" value="${content.password!}" id="password" name="password" maxlength="100"  class="member-change"  oninvalid="setCustomValidity('请输入密码');" oninput="setCustomValidity('');"/>
+	                <span style="color:#f00; margin-left:10px;">密码为数字类型(留空则不设置密码)</span>
+                	[#else]
+	                <input  type="checkbox" id="pd" name="pd" value="0" onclick="addPd(this)"/>设置密码
+	                <input type="text" style="display: none;" onfocus="this.type='password';" id="password" name="password" maxlength="100"  class="member-change"  oninvalid="setCustomValidity('请输入密码');" oninput="setCustomValidity('');"/>
+	                <span id="tick" style="color:#f00; margin-left:10px;display: none;">密码为数字类型(留空则不设置密码)</span>
+                	[/#if]
+                </td>
               </tr>
 			  
               <tr>
@@ -479,6 +489,17 @@ function addSrcHtml(obj){
 		}
 	}else{
 		alert( 'You must be in WYSIWYG mode!' );//所见即所得模式
+	}
+}
+</script>
+<script type="text/javascript">
+function addPd(obj){
+	if($('input[name="pd"]').prop("checked")){
+		$("#password").show();
+		$("#tick").show()
+	}else{
+		$("#password").hide();
+		$("#tick").hide();
 	}
 }
 </script>
