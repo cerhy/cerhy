@@ -19,10 +19,11 @@ import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.SimpleFSDirectory;
 import org.apache.lucene.util.Version;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import com.jeecms.cms.Constants;
 import com.jeecms.cms.entity.main.Content;
 import com.jeecms.cms.manager.main.ContentMng;
@@ -32,6 +33,7 @@ import com.jeecms.common.web.springmvc.RealPathResolver;
 @Service
 @Transactional
 public class LuceneContentSvcImpl implements LuceneContentSvc {
+	private static final Logger log = LoggerFactory.getLogger(LuceneContentSvcImpl.class);
 	@Transactional(readOnly = true)
 	public Integer createIndex(Integer siteId, Integer channelId,
 			Date startDate, Date endDate, Integer startId, Integer max)
@@ -142,13 +144,15 @@ public class LuceneContentSvcImpl implements LuceneContentSvc {
 			Integer siteId, Integer channelId, Date startDate, Date endDate,
 			int pageNo, int pageSize) throws CorruptIndexException,
 			IOException, ParseException {
-		Searcher searcher = new IndexSearcher(dir);
+		Searcher searcher = null ;
+		Pagination p = null ;
 		try {
+			searcher = new IndexSearcher(dir);
 			Analyzer analyzer = new StandardAnalyzer(Version.LUCENE_30);
 			Query query = LuceneContent.createQuery(queryString,category,workplace, siteId,
 					channelId, startDate, endDate, analyzer);
 			TopDocs docs = searcher.search(query, pageNo * pageSize);
-			Pagination p = LuceneContent.getResultPage(searcher, docs, pageNo,
+			p = LuceneContent.getResultPage(searcher, docs, pageNo,
 					pageSize);
 			List<?> ids = p.getList();
 			List<Content> contents = new ArrayList<Content>(ids.size());
@@ -157,7 +161,11 @@ public class LuceneContentSvcImpl implements LuceneContentSvc {
 			}
 			p.setList(contents);
 			return p;
-		} finally {
+		} catch (Exception e) {
+			log.error("lucene searchPage error", e);
+			searcher.close();
+			return p ;
+		}finally {
 			searcher.close();
 		}
 	}
