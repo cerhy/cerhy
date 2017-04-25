@@ -146,6 +146,50 @@ public class ContributeAct extends AbstractContentMemberAct {
 			   String[] str=channelIds.split("&");
 			   if(str[1].equals("chan")){
 				   channelId=Integer.valueOf(str[0]);
+				   //高中、初中、小学美术
+				   if(channelId.toString().equals("316")||channelId.toString().equals("323")){
+					   channelId=305;
+				   }
+				   //高中、初中、小学音乐
+				   if(channelId.toString().equals("315")||channelId.toString().equals("322")){
+					   channelId=304;
+				   }
+				   //高中、初中、小学体育
+				   if(channelId.toString().equals("314")||channelId.toString().equals("321")){
+					   channelId=303;
+				   }
+				   //高中、初中、小学综合实践
+				   if(channelId.toString().equals("417")||channelId.toString().equals("418")){
+					   channelId=416;
+				   }
+				   //高中、初中地理
+				   if(channelId.toString().equals("311")){
+					   channelId=300;
+				   }
+				   //高中、初中历史
+				   if(channelId.toString().equals("310")){
+					   channelId=299;
+				   }
+				   //初中、小学信息技术
+				   if(channelId.toString().equals("319")){
+					   channelId=312;
+				   }
+				   //初中、小学政治
+				   if(channelId.toString().equals("317")){
+					   channelId=309;
+				   }
+				   //高中、初中化学
+				   if(channelId.toString().equals("307")){
+					   channelId=296;
+				   }
+				   //高中、初中物理
+				   if(channelId.toString().equals("306")){
+					   channelId=295;
+				   }
+				   //高中、初中生物
+				   if(channelId.toString().equals("308")){
+					   channelId=297;
+					}
 			   }else if(str[1].equals("colu")){
 				   columnId=Integer.valueOf(str[0]);
 				   sta=1;
@@ -990,19 +1034,20 @@ public class ContributeAct extends AbstractContentMemberAct {
 		CmsUser user = CmsUtils.getUser(request);
 		if(user==null){
 			FrontUtils.showLogin(request, model, site);
+		}else{
+			CmsUser userT=cmsUserMng.findById(Integer.valueOf(createUserId.toString()));
+			Columns cu=columnsMng.findInfoByCode(code);
+			JSONObject json = new JSONObject();
+			CmsJoinGroup cjg=new CmsJoinGroup();
+			cjg.setCreateUserId(userT);
+			cjg.setJoinUserId(user);
+			cjg.setJoinCode(code);
+			cjg.setJoinTime(new Date());
+			cjg.setColumnsId(cu);
+			int joinStatus=columnsMng.saveJoinGroup(cjg);
+			json.put("status",joinStatus);
+			ResponseUtils.renderJson(response, json.toString());
 		}
-		CmsUser userT=cmsUserMng.findById(Integer.valueOf(createUserId.toString()));
-		Columns cu=columnsMng.findInfoByCode(code);
-		JSONObject json = new JSONObject();
-		CmsJoinGroup cjg=new CmsJoinGroup();
-		cjg.setCreateUserId(userT);
-		cjg.setJoinUserId(user);
-		cjg.setJoinCode(code);
-		cjg.setJoinTime(new Date());
-		cjg.setColumnsId(cu);
-		int joinStatus=columnsMng.saveJoinGroup(cjg);
-		json.put("status",joinStatus);
-		ResponseUtils.renderJson(response, json.toString());
 	}
 	/**
 	 * 检查是否加入群组-页面现在用
@@ -1075,17 +1120,18 @@ public class ContributeAct extends AbstractContentMemberAct {
 	public void updateDragCoordinate(String leftX,String topY,String postilId,HttpServletRequest request,HttpServletResponse response, ModelMap model)throws UnsupportedEncodingException, JSONException {
 		CmsSite site = CmsUtils.getSite(request);
 		CmsUser user = CmsUtils.getUser(request);
+		JSONObject json = new JSONObject();
 		if(user==null){
 			FrontUtils.showLogin(request, model, site);
+		}else{
+			String tbHtml= "<div class='"+postilId+"' id='"+postilId+"'"
+					+ " style='display: block; top: "+topY+"px; left: "+leftX+"px; position: absolute; margin: 0px;"
+					+ "border: 0px solid rgb(255, 102, 0); width: 25px; height: 25px;'>"
+					+ "<h2 class='t"+postilId+"' style='cursor: move; width: 25px; height: 25px; padding-left: 25px;'>"
+					+ "</h2></div>";
+			int joinStatus=columnsMng.updateDragCoordinate(leftX,topY,postilId,tbHtml);
+			json.put("status",joinStatus);
 		}
-		String tbHtml= "<div class='"+postilId+"' id='"+postilId+"'"
-			         + " style='display: block; top: "+topY+"px; left: "+leftX+"px; position: absolute; margin: 0px;"
-			         + "border: 0px solid rgb(255, 102, 0); width: 25px; height: 25px;'>"
-			         + "<h2 class='t"+postilId+"' style='cursor: move; width: 25px; height: 25px; padding-left: 25px;'>"
-			         + "</h2></div>";
-		int joinStatus=columnsMng.updateDragCoordinate(leftX,topY,postilId,tbHtml);
-		JSONObject json = new JSONObject();
-		json.put("status",joinStatus);
 		ResponseUtils.renderJson(response, json.toString());
 	}
 	/**
@@ -1140,10 +1186,10 @@ public class ContributeAct extends AbstractContentMemberAct {
 	public void addOrCancelFriends(String state,String uId,HttpServletRequest request,HttpServletResponse response, ModelMap model)throws UnsupportedEncodingException, JSONException {
 		CmsUser user = CmsUtils.getUser(request);
 		JSONObject json = new JSONObject();
+		CmsUser userT=cmsUserMng.findById(Integer.valueOf(uId.toString()));
 		if(user!=null){
 			if(Integer.valueOf(state)==0){
 				//添加好友
-				CmsUser userT=cmsUserMng.findById(Integer.valueOf(uId.toString()));
 				String newName=userT.getUsername()+"="+userT.getUsername();
 				String ownFriend=user.getFriends();
 				if(ownFriend!=null&&ownFriend!=""){
@@ -1162,7 +1208,6 @@ public class ContributeAct extends AbstractContentMemberAct {
 				}
 			}else if(Integer.valueOf(state)==1){
 				//解除好友
-				CmsUser userT=cmsUserMng.findById(Integer.valueOf(uId.toString()));
 				String uname=userT.getUsername();
 				String oldName=user.getFriends();
 				String[] str=oldName.split(" ");

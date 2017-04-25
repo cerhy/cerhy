@@ -79,9 +79,61 @@ body{
 										          <div class="report-text">
 										            <h3 title="${a.title}">[@text_cut s=a.title len=25 append='...'/]</h3>
 										            <p>[#if a.typeImg??][@text_cut s=a.description len=30 append='...'/][#else][@text_cut s=a.description len=40 append='...'/][/#if]</p>
-										          	<div class="fl"><span class="ch">${a.ctgName}<em>${a.date?string("yyyy-MM-dd")}</em></span></div>
+										          	[#if channel.id=305||channel.id=316||channel.id=323]
+										          		<div class="fl"><span class="ch">美术<em>${a.date?string("yyyy-MM-dd")}</em></span></div>
+										         	[#elseif channel.id=304||channel.id=315||channel.id=322]
+										          		<div class="fl"><span class="ch">音乐<em>${a.date?string("yyyy-MM-dd")}</em></span></div>
+										         	[#elseif channel.id=303||channel.id=314||channel.id=321]
+										          		<div class="fl"><span class="ch">体育<em>${a.date?string("yyyy-MM-dd")}</em></span></div>
+										         	[#elseif channel.id=416||channel.id=417||channel.id=418]
+										          		<div class="fl"><span class="ch">综合实践<em>${a.date?string("yyyy-MM-dd")}</em></span></div>
+										         	[#elseif channel.id=300||channel.id=311]
+										          		<div class="fl"><span class="ch">地理<em>${a.date?string("yyyy-MM-dd")}</em></span></div>
+										         	[#elseif channel.id=299||channel.id=310]
+										          		<div class="fl"><span class="ch">历史<em>${a.date?string("yyyy-MM-dd")}</em></span></div>
+										         	[#elseif channel.id=312||channel.id=319]
+										          		<div class="fl"><span class="ch">信息技术<em>${a.date?string("yyyy-MM-dd")}</em></span></div>
+										         	[#elseif channel.id=309||channel.id=317]
+										          		<div class="fl"><span class="ch">政治<em>${a.date?string("yyyy-MM-dd")}</em></span></div>
+										         	[#elseif channel.id=296||channel.id=307]
+										          		<div class="fl"><span class="ch">化学<em>${a.date?string("yyyy-MM-dd")}</em></span></div>
+										         	[#elseif channel.id=295||channel.id=306]
+										          		<div class="fl"><span class="ch">物理<em>${a.date?string("yyyy-MM-dd")}</em></span></div>
+										         	[#elseif channel.id=297||channel.id=308]
+										          		<div class="fl"><span class="ch">生物<em>${a.date?string("yyyy-MM-dd")}</em></span></div>
+										         	[#elseif channel.id=140||channel.id=142]
+										          		<div class="fl"><span class="ch">语文<em>${a.date?string("yyyy-MM-dd")}</em></span></div>
+										         	[#else]
+											          	<div class="fl"><span class="ch">${a.ctgName}<em>${a.date?string("yyyy-MM-dd")}</em></span></div>
+										         	[/#if]
 										         	 [#if a_index<1]
-													          <input style="display: none;" id="bkNames" value="${a.ctgName}">
+												         	[#if channel.id=305||channel.id=316||channel.id=323]
+												          		<input style="display: none;" id="bkNames" value="高中、初中、小学美术">
+												         	[#elseif channel.id=304||channel.id=315||channel.id=322]
+												          		<input style="display: none;" id="bkNames" value="高中、初中、小学音乐">
+												         	[#elseif channel.id=303||channel.id=314||channel.id=321]
+												          		<input style="display: none;" id="bkNames" value="高中、初中、小学体育">
+												         	[#elseif channel.id=416||channel.id=417||channel.id=418]
+												          		<input style="display: none;" id="bkNames" value="高中、初中、小学综合实践">
+												         	[#elseif channel.id=300||channel.id=311]
+												          		<input style="display: none;" id="bkNames" value="高中、初中地理">
+												         	[#elseif channel.id=299||channel.id=310]
+												          		<input style="display: none;" id="bkNames" value="高中、初中历史">
+												         	[#elseif channel.id=312||channel.id=319]
+												          		<input style="display: none;" id="bkNames" value="初中、小学信息技术">
+												         	[#elseif channel.id=309||channel.id=317]
+												          		<input style="display: none;" id="bkNames" value="初中、小学政治">
+												         	[#elseif channel.id=296||channel.id=307]
+												          		<input style="display: none;" id="bkNames" value="高中、初中化学">
+												         	[#elseif channel.id=295||channel.id=306]
+												          		<input style="display: none;" id="bkNames" value="高中、初中物理">
+												         	[#elseif channel.id=297||channel.id=308]
+												          		<input style="display: none;" id="bkNames" value="高中、初中生物">
+												         	[#elseif channel.id=140||channel.id=142]
+												          		<input style="display: none;" id="bkNames" value="高中、初中语文">
+												         	[#else]
+													          	<input style="display: none;" id="bkNames" value="${a.ctgName}">
+												         	[/#if]
 													          <input style="display: none;" id="bkIds" value="${a.user.id}">
 													 [/#if]
 										          </div>

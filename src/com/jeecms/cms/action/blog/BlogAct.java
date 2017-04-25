@@ -1014,7 +1014,7 @@ public class BlogAct {
 		CmsUser u = CmsUtils.getUser(request);
 		CmsSite site = CmsUtils.getSite(request);
 		if(u==null){
-			FrontUtils.showLogin(request, model, site);
+			return FrontUtils.showLogin(request, model, site);
 		}
 		//好友
 		if(1 == dataFlag){
@@ -1042,7 +1042,7 @@ public class BlogAct {
  		model = blogCommon.getStarBlogger(request, model);
  		model = blogCommon.getAlreadyJoinGroup(request, model,u);
 		FrontUtils.frontData(request, model, site);
-		    return FrontUtils.getTplPath(request, site.getSolutionPath(),TPLDIR_BLOG,"tpl.dataShow");
+		return FrontUtils.getTplPath(request, site.getSolutionPath(),TPLDIR_BLOG,"tpl.dataShow");
 	}
 	
 	public String gotoDataShowFriend(int dataFlag, HttpServletRequest request,HttpServletResponse response, ModelMap model,Integer pageNo,String userId) {
