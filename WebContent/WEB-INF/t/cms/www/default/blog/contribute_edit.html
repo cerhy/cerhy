@@ -223,10 +223,59 @@ $(function(){
 					             <option value="" class="sel-disabled">市县教研</option>
 					             [/#if]
 				             [/#if]
+				             [#if user.username=='9027']
+						          [#if c_index==0]
+					             	<option value="${c.channelId}&chan" [#if content.channel.id==c.channelId]selected="selected"[/#if]>&nbsp;&nbsp;>高中、初中语文</option>
+					              [/#if]
+					         [#elseif user.username=='9011']
+					         	  [#if c_index==0]
+					             	<option value="${c.channelId}&chan" [#if content.channel.id==c.channelId]selected="selected"[/#if]>&nbsp;&nbsp;>高中、初中、小学美术</option>
+					              [/#if]
+					         [#elseif user.username=='9019']
+					         	  [#if c_index==0]
+					             	<option value="${c.channelId}&chan" [#if content.channel.id==c.channelId]selected="selected"[/#if]>&nbsp;&nbsp;>高中、初中、小学音乐</option>
+					              [/#if]
+					         [#elseif user.username=='9005']
+					         	  [#if c_index==0]
+					             	<option value="${c.channelId}&chan" [#if content.channel.id==c.channelId]selected="selected"[/#if]>&nbsp;&nbsp;>高中、初中、小学体育</option>
+					              [/#if]
+					         [#elseif user.username=='9031']
+					         	  [#if c_index==0]
+					             	<option value="${c.channelId}&chan" [#if content.channel.id==c.channelId]selected="selected"[/#if]>&nbsp;&nbsp;>综合实践</option>
+					              [/#if]
+					         [#elseif user.username=='9006']
+					         	  [#if c_index==0]
+					             	<option value="${c.channelId}&chan" [#if content.channel.id==c.channelId]selected="selected"[/#if]>&nbsp;&nbsp;>高中、初中地理</option>
+					              [/#if]
+					         [#elseif user.username=='9009']
+					         	  [#if c_index==0]
+					             	<option value="${c.channelId}&chan" [#if content.channel.id==c.channelId]selected="selected"[/#if]>&nbsp;&nbsp;>高中、初中历史</option>
+					              [/#if]
+					         [#elseif user.username=='9092']
+					         	  [#if c_index==0]
+					             	<option value="${c.channelId}&chan" [#if content.channel.id==c.channelId]selected="selected"[/#if]>&nbsp;&nbsp;>初中、小学信息技术</option>
+					              [/#if]
+					         [#elseif user.username=='9033']
+					         	  [#if c_index==0]
+					             	<option value="${c.channelId}&chan" [#if content.channel.id==c.channelId]selected="selected"[/#if]>&nbsp;&nbsp;>初中、小学品德</option>
+					              [/#if]
+					         [#elseif user.username=='9089']
+					         	  [#if c_index==0]
+					             	<option value="${c.channelId}&chan" [#if content.channel.id==c.channelId]selected="selected"[/#if]>&nbsp;&nbsp;>高中、初中化学</option>
+					              [/#if]
+					         [#elseif user.username=='9006']
+					         	  [#if c_index==0]
+					             	<option value="${c.channelId}&chan" [#if content.channel.id==c.channelId]selected="selected"[/#if]>&nbsp;&nbsp;>高中、初中物理</option>
+					              [/#if]
+					         [#elseif user.username=='9017']
+					         	  [#if c_index==0]
+					             	<option value="${c.channelId}&chan" [#if content.channel.id==c.channelId]selected="selected"[/#if]>&nbsp;&nbsp;>高中、初中生物</option>
+					              [/#if]
+					         [#else]
 				             <option value="${c.channelId}&chan" [#if content.channel.id==c.channelId]selected="selected"[/#if]>&nbsp;&nbsp;>${c.channelName}</option>
-				             [/#list]
 				             [/#if]
-	                
+				             [/#list]
+				      [/#if]
 	                [#if columnsList?size gt 0]
 	                <option value="" class="sel-disabled">栏目</option>
 	                [#list columnsList as c]
@@ -313,6 +362,7 @@ $(function(){
 			   <tr>
                 <td class="tggl-top">阅读密码</td>
                 <td>
+                 [#if content.password??]
 	                [#if content.password!=""]
 	                <input type="text" onfocus="this.type='password';" value="${content.password!}" id="password" name="password" maxlength="100"  class="member-change"  oninvalid="setCustomValidity('请输入密码');" oninput="setCustomValidity('');"/>
 	                <span style="color:#f00; margin-left:10px;">密码为数字类型(留空则不设置密码)</span>
@@ -321,6 +371,11 @@ $(function(){
 	                <input type="text" style="display: none;" onfocus="this.type='password';" id="password" name="password" maxlength="100"  class="member-change"  oninvalid="setCustomValidity('请输入密码');" oninput="setCustomValidity('');"/>
 	                <span id="tick" style="color:#f00; margin-left:10px;display: none;">密码为数字类型(留空则不设置密码)</span>
                 	[/#if]
+                [#else]
+	                <input  type="checkbox" id="pd" name="pd" value="0" onclick="addPd(this)"/>设置密码
+	                <input type="text" style="display: none;" onfocus="this.type='password';" id="password" name="password" maxlength="100"  class="member-change"  oninvalid="setCustomValidity('请输入密码');" oninput="setCustomValidity('');"/>
+	                <span id="tick" style="color:#f00; margin-left:10px;display: none;">密码为数字类型(留空则不设置密码)</span>
+                [/#if]
                 </td>
               </tr>
 			  

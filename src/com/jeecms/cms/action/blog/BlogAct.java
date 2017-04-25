@@ -1221,7 +1221,7 @@ public class BlogAct {
 		if (errors.ifBlank(title, "title", 50)) {
 			return errors;
 		}
-		if (errors.ifMaxLength(author, "author", 6)) {
+		if (errors.ifMaxLength(author, "author", 60)) {
 			return errors;
 		}
 		if (errors.ifMaxLength(description, "description", 255)) {

@@ -190,6 +190,10 @@ public class ContributeAct extends AbstractContentMemberAct {
 				   if(channelId.toString().equals("308")){
 					   channelId=297;
 					}
+				   //高中、初中语文
+					if(channelId.toString().equals("142")){
+						channelId=140;
+					}
 			   }else if(str[1].equals("colu")){
 				   columnId=Integer.valueOf(str[0]);
 				   sta=1;
@@ -266,10 +270,106 @@ public class ContributeAct extends AbstractContentMemberAct {
 			   String[] str=channelIds.split("&");
 			   if(str[1]==null){
 				   channelId=Integer.valueOf(str[0]);
+				 //高中、初中、小学美术
+				   if(channelId.toString().equals("316")||channelId.toString().equals("323")){
+					   channelId=305;
+				   }
+				   //高中、初中、小学音乐
+				   if(channelId.toString().equals("315")||channelId.toString().equals("322")){
+					   channelId=304;
+				   }
+				   //高中、初中、小学体育
+				   if(channelId.toString().equals("314")||channelId.toString().equals("321")){
+					   channelId=303;
+				   }
+				   //高中、初中、小学综合实践
+				   if(channelId.toString().equals("417")||channelId.toString().equals("418")){
+					   channelId=416;
+				   }
+				   //高中、初中地理
+				   if(channelId.toString().equals("311")){
+					   channelId=300;
+				   }
+				   //高中、初中历史
+				   if(channelId.toString().equals("310")){
+					   channelId=299;
+				   }
+				   //初中、小学信息技术
+				   if(channelId.toString().equals("319")){
+					   channelId=312;
+				   }
+				   //初中、小学政治
+				   if(channelId.toString().equals("317")){
+					   channelId=309;
+				   }
+				   //高中、初中化学
+				   if(channelId.toString().equals("307")){
+					   channelId=296;
+				   }
+				   //高中、初中物理
+				   if(channelId.toString().equals("306")){
+					   channelId=295;
+				   }
+				   //高中、初中生物
+				   if(channelId.toString().equals("308")){
+					   channelId=297;
+					}
+				   //高中、初中语文
+					if(channelId.toString().equals("142")){
+						channelId=140;
+					}
 			   }else if(str[1].equals("colu")){
 				   columnId=Integer.valueOf(str[0]);
 			   }else if(str[1].equals("chan")){
 				   channelId=Integer.valueOf(str[0]);
+				   //高中、初中、小学美术
+				   if(channelId.toString().equals("316")||channelId.toString().equals("323")){
+					   channelId=305;
+				   }
+				   //高中、初中、小学音乐
+				   if(channelId.toString().equals("315")||channelId.toString().equals("322")){
+					   channelId=304;
+				   }
+				   //高中、初中、小学体育
+				   if(channelId.toString().equals("314")||channelId.toString().equals("321")){
+					   channelId=303;
+				   }
+				   //高中、初中、小学综合实践
+				   if(channelId.toString().equals("417")||channelId.toString().equals("418")){
+					   channelId=416;
+				   }
+				   //高中、初中地理
+				   if(channelId.toString().equals("311")){
+					   channelId=300;
+				   }
+				   //高中、初中历史
+				   if(channelId.toString().equals("310")){
+					   channelId=299;
+				   }
+				   //初中、小学信息技术
+				   if(channelId.toString().equals("319")){
+					   channelId=312;
+				   }
+				   //初中、小学政治
+				   if(channelId.toString().equals("317")){
+					   channelId=309;
+				   }
+				   //高中、初中化学
+				   if(channelId.toString().equals("307")){
+					   channelId=296;
+				   }
+				   //高中、初中物理
+				   if(channelId.toString().equals("306")){
+					   channelId=295;
+				   }
+				   //高中、初中生物
+				   if(channelId.toString().equals("308")){
+					   channelId=297;
+					}
+				   //高中、初中语文
+					if(channelId.toString().equals("142")){
+						channelId=140;
+					}
 			   }
 		   }
 		   if(null != blog ){

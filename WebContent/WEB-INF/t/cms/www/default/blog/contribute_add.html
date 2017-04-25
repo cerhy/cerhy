@@ -215,16 +215,67 @@ $(function(){
 	                <option value="" class="sel-disabled">--请选择--</option>
 	                [#if channelList??]
 				             [#list channelList as c]
-				             [#if c_index==0]
-					             [#if c.channelType==1]
-					             <option value="" class="sel-disabled">学科教研</option>
-					             [#else]
-					             <option value="" class="sel-disabled">市县教研</option>
+					             [#if c_index==0]
+						             [#if c.channelType==1]
+						             <option value="" class="sel-disabled">学科教研</option>
+						             [#else]
+						             <option value="" class="sel-disabled">市县教研</option>
+						             [/#if]
 					             [/#if]
+					         [#if user.username=='9027']
+						          [#if c_index==0]
+					             	<option value="${c.channelId}&chan">&nbsp;&nbsp;>高中、初中语文</option>
+					              [/#if]
+					         [#elseif user.username=='9011']
+					         	  [#if c_index==0]
+					             	<option value="${c.channelId}&chan">&nbsp;&nbsp;>高中、初中、小学美术</option>
+					              [/#if]
+					         [#elseif user.username=='9019']
+					         	  [#if c_index==0]
+					             	<option value="${c.channelId}&chan">&nbsp;&nbsp;>高中、初中、小学音乐</option>
+					              [/#if]
+					         [#elseif user.username=='9005']
+					         	  [#if c_index==0]
+					             	<option value="${c.channelId}&chan">&nbsp;&nbsp;>高中、初中、小学体育</option>
+					              [/#if]
+					         [#elseif user.username=='9031']
+					         	  [#if c_index==0]
+					             	<option value="${c.channelId}&chan">&nbsp;&nbsp;>综合实践</option>
+					              [/#if]
+					         [#elseif user.username=='9006']
+					         	  [#if c_index==0]
+					             	<option value="${c.channelId}&chan">&nbsp;&nbsp;>高中、初中地理</option>
+					              [/#if]
+					         [#elseif user.username=='9009']
+					         	  [#if c_index==0]
+					             	<option value="${c.channelId}&chan">&nbsp;&nbsp;>高中、初中历史</option>
+					              [/#if]
+					         [#elseif user.username=='9092']
+					         	  [#if c_index==0]
+					             	<option value="${c.channelId}&chan">&nbsp;&nbsp;>初中、小学信息技术</option>
+					              [/#if]
+					         [#elseif user.username=='9033']
+					         	  [#if c_index==0]
+					             	<option value="${c.channelId}&chan">&nbsp;&nbsp;>初中、小学品德</option>
+					              [/#if]
+					         [#elseif user.username=='9089']
+					         	  [#if c_index==0]
+					             	<option value="${c.channelId}&chan">&nbsp;&nbsp;>高中、初中化学</option>
+					              [/#if]
+					         [#elseif user.username=='9006']
+					         	  [#if c_index==0]
+					             	<option value="${c.channelId}&chan">&nbsp;&nbsp;>高中、初中物理</option>
+					              [/#if]
+					         [#elseif user.username=='9017']
+					         	  [#if c_index==0]
+					             	<option value="${c.channelId}&chan">&nbsp;&nbsp;>高中、初中生物</option>
+					              [/#if]
+					         [#else]
+					              <option value="${c.channelId}&chan">&nbsp;&nbsp;>${c.channelName}</option>
 				             [/#if]
-				             <option value="${c.channelId}&chan">&nbsp;&nbsp;>${c.channelName}</option>
-				             [/#list]
-				             [/#if]
+				             
+				     [/#list]
+				    [/#if]
 	                [#if columnsList?size gt 0]
 	                <option value="" class="sel-disabled">栏目</option>
 	                [#list columnsList as c]
