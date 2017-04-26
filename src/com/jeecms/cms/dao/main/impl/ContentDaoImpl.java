@@ -107,6 +107,53 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 			f.append("  join bean.eventSet event  ");
 		}
 		if (channelId != null) {
+			if(channelId.toString().equals("316")||channelId.toString().equals("323")){
+				   channelId=305;
+			   }
+			   //高中、初中、小学音乐
+			   if(channelId.toString().equals("315")||channelId.toString().equals("322")){
+				   channelId=304;
+			   }
+			   //高中、初中、小学体育
+			   if(channelId.toString().equals("314")||channelId.toString().equals("321")){
+				   channelId=303;
+			   }
+			   //高中、初中、小学综合实践
+			   if(channelId.toString().equals("417")||channelId.toString().equals("418")){
+				   channelId=416;
+			   }
+			   //高中、初中地理
+			   if(channelId.toString().equals("311")){
+				   channelId=300;
+			   }
+			   //高中、初中历史
+			   if(channelId.toString().equals("310")){
+				   channelId=299;
+			   }
+			   //初中、小学信息技术
+			   if(channelId.toString().equals("319")){
+				   channelId=312;
+			   }
+			   //初中、小学政治
+			   if(channelId.toString().equals("317")){
+				   channelId=309;
+			   }
+			   //高中、初中化学
+			   if(channelId.toString().equals("307")){
+				   channelId=296;
+			   }
+			   //高中、初中物理
+			   if(channelId.toString().equals("306")){
+				   channelId=295;
+			   }
+			   //高中、初中生物
+			   if(channelId.toString().equals("308")){
+				   channelId=297;
+				}
+			   //高中、初中语文
+				if(channelId.toString().equals("142")){
+					channelId=140;
+				}
 			f.append(" join bean.channel channel,Channel parent");
 			f.append(" where ((channel.lft between parent.lft and parent.rgt");
 			f.append(" and channel.site.id=parent.site.id");
