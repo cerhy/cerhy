@@ -207,7 +207,7 @@ $(function(){
                 <td class="tggl-top">标题</td><td><input type="text" name="title" value="${content.title!?html}" maxlength="50" class="member-change" style="width:300px;" required="required" oninvalid="setCustomValidity('请输入标题');" oninput="setCustomValidity('');" /><span style="color:#f00; margin-left:10px;">*</span></td>
               </tr>
               <tr>
-                <td class="tggl-top">作者</td><td><input type="text" name="author"value="${content.author!?html}" maxlength="6" class="member-change" required="required" oninvalid="setCustomValidity('请输入作者');" oninput="setCustomValidity('');"/><span style="color:#f00; margin-left:10px;">*</span></td>
+                <td class="tggl-top">作者</td><td><input type="text" name="author"value="${content.author!?html}" maxlength="50" class="member-change" required="required" oninvalid="setCustomValidity('请输入作者');" oninput="setCustomValidity('');"/><span style="color:#f00; margin-left:10px;">*</span></td>
               </tr>
               <tr class="blog_column">
                 <td class="tggl-top">栏目</td>
