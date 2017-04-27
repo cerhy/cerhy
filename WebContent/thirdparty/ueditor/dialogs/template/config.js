@@ -7,13 +7,68 @@
  */
 var templates = [
     {
-        "pre":"pre0.png",
+        "pre":"pre1.png",
         'title':lang.blank,
-        'preHtml':'文件模板',
+        'preHtml':'琼教研训文件模板',
         "html":'<div style="padding: 6px 0px; text-align: center; border-bottom-color: #ff0000; border-bottom-width: 3px; border-bottom-style: solid;"><div style="padding: 30px 0px; color: #ff0000; font-family: 宋体; font-size: 38px; font-weight: bold;">海南省教育研究培训院文件</div><div style="text-align: center; line-height: 180%; font-family: 仿宋_GB2312, 仿宋; font-size: 18px;">琼教研训〔xxxx〕xx号</div></div><div style="padding: 32px 0px; text-align: center; line-height: 180%; font-family: 黑体; font-size: 26px;">海南省教育研究培训院 <br />关于xxxxx的通知</div><div style="text-align: justify; line-height: 180%; font-family: 仿宋_GB2312, 仿宋; font-size: 18px;"><p style="margin: 0px; text-indent: 0px;">正文</p><div style="background: url(http://www.cerhy.com/r/cms/www/default/images/smp_jp.gif) no-repeat center; padding: 60px; text-align: center; float: right;">海南省教育研究培训院<div>xxxx年xx月xx日</div></div></div><br /><br /><br /><br /><br />'
 
     },{
-        "pre":"pre0.png",
+    	"pre":"pre1.png",
+        'title':lang.blank,
+        'preHtml': '琼教学会文件模板',
+		"html" : '<div style="padding: 6px 0px; text-align: center; border-bottom-color: #ff0000; border-bottom-width: 3px; border-bottom-style: solid;"><div style="padding: 30px 0px; color: #ff0000; font-family: 宋体; font-size: 38px; font-weight: bold;">海 南 省 教 育 学 会 文 件</div><div style="text-align: center; line-height: 180%; font-family: 仿宋_GB2312, 仿宋; font-size: 18px;">琼教学会〔xxxx〕xx号</div></div><div style="padding: 32px 0px; text-align: center; line-height: 180%; font-family: 黑体; font-size: 26px;">标题 <br />关于xxx的通知</div><div style="text-align: justify; line-height: 180%; font-family: 仿宋_GB2312, 仿宋; font-size: 18px;"><p style="margin: 0px; text-indent: 0px;">正文</p><div style="background: url(http://www.cerhy.com/r/cms/www/default/images/smp_xh.gif) no-repeat center; padding: 60px; text-align: center; float: right;">海南省教育学会<div>xxxx年xx月xx日</div></div></div><br /><br /><br /><br /><br />'
+	},{
+		"pre":"pre1.png",
+        'title':lang.blank,
+        'preHtml': '琼教科研文件模板',
+        "html" : '<div style="padding: 6px 0px; text-align: center; border-bottom-color: #ff0000; border-bottom-width: 3px; border-bottom-style: solid;"><div style="padding: 30px 0px; color: #ff0000; font-family: 宋体; font-size: 38px; font-weight: bold;">海南省教育科学规划领导小组办公室</div><div style="text-align: center; line-height: 180%; font-family: 仿宋_GB2312, 仿宋; font-size: 18px;">琼教科研〔xxxx〕xx号</div></div><div style="padding: 32px 0px; text-align: center; line-height: 180%; font-family: 黑体; font-size: 26px;">标题 <br />关于xxx的通知</div><div style="text-align: justify; line-height: 180%; font-family: 仿宋_GB2312, 仿宋; font-size: 18px;"><p style="margin: 0px; text-indent: 0px;">正文</p><div style="background: url(http://www.cerhy.com/r/cms/www/default/images/smp_gh.gif) no-repeat center; padding: 60px; text-align: center; float: right;">海南省教育科学规划领导小组办公室<div>xxxx年xx月xx日</div></div></div><br /><br /><br /><br /><br />'
+	},{
+		"pre":"pre1.png",
+        'title':lang.blank,
+        'preHtml' : '教育学会、教培院联名文件模板',
+        "html" : '<div style="padding: 6px 0; border-bottom: 3px solid #f00; text-align: center;">' +
+		       '<div style="padding: 30px 0; font-family: 宋体; font-size: 38px; font-weight: bold; line-height: 58px; color: #f00;">' +
+		       '<div style="margin-left: 40px; float: left">海 南 省 教 育 学 会<br />海南省教育研究培训院</div>' +
+		       '<span style="margin: 30px 40px 0 0; float: right;">文件</span>' +
+			   '<div style="clear: both; line-height: 0; height: 0;">&nbsp;</div>' +
+		       '</div>' +
+		       '<div style="font-family: 仿宋_GB2312,仿宋; font-size: 18px; text-align: center; line-height: 180%;">教育学会、教培院联名〔xxxx〕xx号</div>' +
+	           '</div>' +
+	           '<div style="font-family: 黑体; font-size: 26px; text-align: center; line-height: 180%; padding: 32px 0;">标题 <br />关于xxx的通知</div>' +
+	           '<div style="font-family: 仿宋_GB2312,仿宋; font-size: 18px; text-align: justify; line-height: 180%;">正文' +
+	           '<div style="background: url(http://www.cerhy.com/r/cms/www/default/images/smp_jp.gif) no-repeat center center; text-align: center; padding: 60px 20px; float: right;">海南省教育研究培训院<div>xxxx年xx月xx日</div></div>' +
+	           '<div style="background: url(http://www.cerhy.com/r/cms/www/default/images/smp_xh.gif) no-repeat center center; text-align: center; padding: 60px 20px; float: right;">海南省教育学会<div>xxxx年xx月xx日</div></div>' +
+	           '<div style="clear: both; line-height: 0; height: 0;">&nbsp;</div>' +
+	           '<p>&nbsp;</p>' +
+	           '</div><br /><br /><br /><br /><br />'
+	},{
+		"pre":"pre1.png",
+        'title':lang.blank,
+        'preHtml': '教培院函件文件模板',
+		"html" : '<div style="padding: 6px 0 2px 0; border-bottom: 1px solid #f00; text-align: center;">' +
+		       '<div style="padding: 30px 0; border-bottom: 4px solid #f00; font-family: 华文中宋,宋体; font-size: 38px; font-weight: bold; color: #f00;">海 南 省 教 育 研 究 培 训 院</div>' +
+			   '</div>' +
+			   '<div style="font-family: 黑体; font-size: 26px; text-align: center; line-height: 180%; padding: 32px 0;">标题 <br />关于xxx的通知</div>' +
+			   '<div style="font-family: 仿宋_GB2312,仿宋; font-size: 18px; text-align: justify; line-height: 180%;">正文' +
+			   '<div style="background: url(http://www.cerhy.com/r/cms/www/default/images/smp_jp.gif) no-repeat center center; text-align: center; padding: 60px; float: right;">海南省教育研究培训院<div>xxxx年xx月xx日</div></div>' +
+			   '<div style="clear: both; line-height: 0; height: 0;">&nbsp;</div>' +
+			   '<p>&nbsp;</p>' +
+			   '</div><br /><br /><br /><br /><br />'
+	},{
+		"pre":"pre1.png",
+        'title':lang.blank,
+        'preHtml': '教育学会函件文件模板',
+		"html" : '<div style="padding: 6px 0 2px 0; border-bottom: 1px solid #f00; text-align: center;">' +
+			   '<div style="padding: 30px 0; border-bottom: 4px solid #f00; font-family: 华文中宋,宋体; font-size: 38px; font-weight: bold; color: #f00;">海　南　省　教　育　学　会</div>' +
+			   '</div>' +
+			   '<div style="font-family: 黑体; font-size: 26px; text-align: center; line-height: 180%; padding: 32px 0;">标题 <br />关于xxx的通知</div>' +
+			   '<div style="font-family: 仿宋_GB2312,仿宋; font-size: 18px; text-align: justify; line-height: 180%;">正文' +
+			   '<div style="background: url(http://www.cerhy.com/r/cms/www/default/images/smp_xh.gif) no-repeat center center; text-align: center; padding: 60px; float: right;">海南省教育学会<div>xxxx年xx月xx日</div></div>' +
+			   '<div style="clear: both; line-height: 0; height: 0;">&nbsp;</div>' +
+			   '<p>&nbsp;</p>' +
+			   '</div><br /><br /><br /><br /><br />'
+	},{
+        "pre":"pre1.png",
         'title':lang.blank,
         'preHtml':'叙述式教学设计',
         "html":'<h2 style="text-align: center;">课题名称</h2><h3 style="text-align: center;">作者</h3><p><strong>一、概述</strong></p><p>说明学科（数学、语言艺术等）和年级（中学、小学、学前等）;简要描述课题来源和所需课时；概述学习内容；概述这节课的价值以及学习内容的重要性。</p><p><strong>二、教学目标分析</strong></p><p>从知识与技能、过程与方法、情感态度与价值观三个维度对该课题预计达到的教学目标作出一个整体描述。</p><p><strong>三、学习者特征分析</strong></p><p>说明学习者在知识与技能、过程与方法、情感态度等三个方面的学习准备（学习起点），以及学生的学习风格。要注意结合特定的情景，切忌空泛。并说明教师是以何种方式进行的学习者特征分析，比如说是通过平时的观察、了解；或是通过预测题目的编制使用等。</p><p><strong>四、教学策略选择与设计</strong></p><p>说明本课题设计的基本理念，以及主要采用的教学与活动策略，以及这些策略实施过程中的关键问题。</p><p><strong>五、教学资源与工具设计</strong></p><p>一是为支持教师教的资源；二是支持学生学习的资源和工具，包括学习的环境、多媒体教学资源、特定的参考资料、参考网址、认知工具以及其它需要特别说明的传统媒体。如果是其它专题性学习、研究性学习方面的课程，可能还需要描述需要的人力支持及可获得情况。</p><p><strong>六、教学过程</strong></p><p>这一部分是该教学设计方案的关键所在。在这一部分，要说明教学的环节及所需的资源支持、具体的活动及其设计意图以及那些需要特别说明的教师引导语。最后，画出教学过程流程图。同时，流程图中需要清楚标注每一个阶段的教学目标、媒体和相应的评价方式。</p><p><strong>七、教学评价设计</strong></p><p>创建量规，向学生展示他们将如何被评价（来自教师和小组其他成员的评价）。另外，可以创建一个自我评价表，这样学生可以用它对自己的学习进行评价。</p><p><strong>八、帮助和总结</strong></p><p>说明教师以何种方式向学生提供帮助和指导，可以针对不同的学习阶段设计相应的不同帮助和指导，针对不同的学生提出不同水平的要求，给予不同的帮助。在学习结束后，对学生的学习做出简要总结。可以布置一些思考或练习题以强化学习效果，也可以提出一些问题或补充的链接鼓励学生超越这门课把思路拓展到其他内容领域。</p>'
