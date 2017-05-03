@@ -1128,7 +1128,11 @@ public class BlogAct {
 					}
 				}
 				model = blogCommon.getAlreadyJoinGroup(request, model,u);
-				model = blogCommon.getChannel(request,model,u,site);
+				try {
+					model = blogCommon.getChannel(request,model,u,site);
+				} catch (Exception e) {
+					log.error("blogContentShow.getChannel error", e);
+				}
 				model = blogCommon.getColumn(request,model,u);
 				int totalCount = blogCommon.getTotalArticleNum(model,u);
 				model.addAttribute("articleCount", totalCount);
