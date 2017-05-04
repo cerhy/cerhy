@@ -178,7 +178,7 @@ public abstract class BaseCmsPostilInfo implements Serializable{
 	
 	public boolean equals (Object obj) {
 		if (null == obj) return false;
-		if (!(obj instanceof com.jeecms.cms.entity.assist.CmsBlogVisitor)) return false;
+		if (!(obj instanceof com.jeecms.cms.entity.assist.CmsPostilInfo)) return false;
 		else {
 			com.jeecms.cms.entity.assist.CmsPostilInfo cmsPostil = (com.jeecms.cms.entity.assist.CmsPostilInfo) obj;
 			if (null == this.getId() || null == cmsPostil.getId()) return false;

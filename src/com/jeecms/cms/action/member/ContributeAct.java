@@ -592,8 +592,6 @@ public class ContributeAct extends AbstractContentMemberAct {
 	@Autowired
 	private CmsFileMng fileMng;
 	@Autowired
-	protected ChannelMng channelMng;
-	@Autowired
 	private ContentMng contentMng;
 	@Autowired
 	protected BlogAct blogAct;
@@ -808,7 +806,7 @@ public class ContributeAct extends AbstractContentMemberAct {
 
 	@RequestMapping(value = "/blog/add_friends.jspx")
 	public void friends(String friends,String nextUrl,HttpServletRequest request,HttpServletResponse response, ModelMap model) {
-		if(friends==""){
+		if(StringUtils.isEmpty(friends)){
 			blogAct.friends_save(null,nextUrl,request, response, model);
 		}else{
 			blogAct.friends_save(friends.replaceAll("\r\n", " "),nextUrl,request, response, model);
@@ -923,7 +921,7 @@ public class ContributeAct extends AbstractContentMemberAct {
 				if(null==u){
 					no+=strs[i].split("=")[1].toString()+",";
 				}else{
-					if(user.getId()==u.getId()){
+					if(user.getId().equals(u.getId())){
 						no="repeatName";
 						break;
 					}

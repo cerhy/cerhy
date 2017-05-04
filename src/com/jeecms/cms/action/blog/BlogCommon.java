@@ -9,6 +9,7 @@ import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
@@ -34,8 +35,12 @@ public class BlogCommon {
 		/*int groupId = user.getGroup().getId();
 		if (4!=groupId){
 			if(5 != groupId){*/
-				List<Columns> columnsList = columnsMng.getColumnsByUserId(user.getId());
-				model.addAttribute("columnsList", columnsList);
+		if(user!=null){
+			List<Columns> columnsList = columnsMng.getColumnsByUserId(user.getId());
+			model.addAttribute("columnsList", columnsList);
+		}else{
+			return model.addAttribute("columnsList", null);
+		}
 		/*	}
 		}*/
 		return model;
@@ -357,7 +362,7 @@ public class BlogCommon {
 	}
 	public ModelMap getAddFriends(HttpServletRequest request, ModelMap model,CmsUser userT, CmsUser user) {
 		if(user!=null){
-			if(user.getFriends()!=null&&user.getFriends()!=""){
+			if(StringUtils.isNotEmpty(user.getFriends())){
 				if(user.getFriends().contains(userT.getUsername())){
 					model.addAttribute("friendCheck", 1);//已添加好友
 				}else{

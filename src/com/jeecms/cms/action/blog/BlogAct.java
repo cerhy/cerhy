@@ -99,13 +99,13 @@ public class BlogAct {
 			String blogTitle = request.getParameter("blogTitle");
 			String blogTitle2 = request.getParameter("blogTitle2");
 			String blogNotice = request.getParameter("blogNotice");
-			if (null != blogTitle || "" != blogTitle) {
+			if (StringUtils.isNotEmpty(blogTitle)) {
 				user.setBlogTitle(blogTitle);
 			}
-			if (null != blogTitle2 || "" != blogTitle2) {
+			if (StringUtils.isNotEmpty(blogTitle2)) {
 				user.setBlogTitle2(blogTitle2);
 			}
-			if (null != blogNotice || "" != blogNotice) {
+			if (StringUtils.isNotEmpty(blogNotice)) {
 				user.setBlogNotice(blogNotice);
 			}
 			CmsUser u = cmsUserMng.updateBlog(user);
@@ -727,7 +727,7 @@ public class BlogAct {
 		String name = request.getParameter("columnInput");
 		String order = request.getParameter("columnOrder");
 		String uniqueCode = request.getParameter("uniqueCode");
-		if(uniqueCode==""){
+		if(StringUtils.isEmpty(uniqueCode)){
 			uniqueCode=null;
 		}
 		Integer i = 0;
@@ -798,7 +798,7 @@ public class BlogAct {
 		String name = request.getParameter("updateName");
 		String orderId = request.getParameter("updateOrderId");
 		String uniqueCode = request.getParameter("uniqueCode");
-		if(uniqueCode==""){
+		if(StringUtils.isEmpty(uniqueCode)){
 			uniqueCode=null;
 		}
 		Integer i = 0;
@@ -830,7 +830,7 @@ public class BlogAct {
  		model = blogCommon.getStarBlogger(request, model);
  		model = blogCommon.getAlreadyJoinGroup(request, model,user);
 		Columns column = new Columns(Integer.parseInt(id),user.getId(),request.getParameter("name"),Integer.parseInt(orderId),request.getParameter("uniqueCode"));
-		if(column.getUniqueCode()==""){
+		if(StringUtils.isEmpty(column.getUniqueCode())){
 			column.setUniqueCode(null);
 		}
 		model.addAttribute("column", column);
@@ -874,7 +874,7 @@ public class BlogAct {
 		CmsUser userT=cmsUserMng.findById(Integer.valueOf(userIds.toString()));
 		channelMng.updateBlogVisitNum(userT);
 		if(user!=null){
-			if(user.getId()!=userT.getId()){
+			if(!user.getId().equals(userT.getId())){
 				channelMng.updateBlogVisitorTime(user,userT);
 			}
 		}
@@ -966,9 +966,8 @@ public class BlogAct {
 		DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		String focusTime = format.format(date);
 		CmsUser user = CmsUtils.getUser(request);
-		CmsSite site = CmsUtils.getSite(request);
 		if (user == null) {
-			FrontUtils.showLogin(request, null, site);
+			return;
 		}
 		Focus f = focusMng.add(user.getId(),user.getUsername(), Integer.parseInt(focusUserId), focusUserName, focusTime);
 		if(null != f){
@@ -980,7 +979,6 @@ public class BlogAct {
 	
 	public void blog_focus_check(String focusUserId, HttpServletRequest request, HttpServletResponse response) throws IOException {
 		CmsUser user = CmsUtils.getUser(request);
-		CmsSite site = CmsUtils.getSite(request);
 		if (user != null) {
 			List<Focus> list= focusMng.find(user.getId(), Integer.parseInt(focusUserId));
 			if(null != list && list.size()>0){
@@ -994,6 +992,9 @@ public class BlogAct {
 	
 	public void blog_cancel_focus(String focusUserId, HttpServletRequest request, HttpServletResponse response) throws IOException {
 		CmsUser user = CmsUtils.getUser(request);
+		if (user == null) {
+			return;
+		}
 		Focus f = focusMng.delete(user.getId(), Integer.parseInt(focusUserId));
 		if(null != f ){
 			response.getWriter().print("1");
@@ -1005,8 +1006,12 @@ public class BlogAct {
 	public ModelMap getAllVisitors(String q, Integer modelId,
 			Integer queryChannelId, Integer pageNo, HttpServletRequest request,
 			ModelMap model, CmsUser user) {
-		Pagination visitorList = contentMng.getPageForMember_visitor(cpn(pageNo), 24,user);
-		model.addAttribute("pagination", visitorList);
+		if(user!=null){
+			Pagination visitorList = contentMng.getPageForMember_visitor(cpn(pageNo), 24,user);
+			model.addAttribute("pagination", visitorList);
+		}else{
+			model.addAttribute("pagination", "");
+		}
 		return model;
 	}
 	

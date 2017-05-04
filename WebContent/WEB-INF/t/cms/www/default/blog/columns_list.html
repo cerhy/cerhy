@@ -154,7 +154,7 @@ function cp(){
               	<td>${c.orderId}</td>
                 <td>${c.columnName}</td>
                 <td>${c.uniqueCode!""}</td>
-                <td><a href="${base}/blog/update_tz.jspx?id=${c.columnId}&name=${c.columnName}&orderId=${c.orderId}&uniqueCode=${c.uniqueCode!''}">修改</a> | [#if c.uniqueCode??][#else]<a href="#" id="del" onclick="del(${c.columnId});" >删除</a>[/#if]</td>
+                <td><a href="${base}/blog/update_tz.jspx?id=${c.columnId}&name=${c.columnName}&orderId=${c.orderId}&uniqueCode=${c.uniqueCode!''}">修改</a> | [#if c.uniqueCode??]<a href="javascript:;" id="delGroup" onclick="delGroup(${c.columnId});" >删除</a>[#else]<a href="javascript:;" id="del" onclick="del(${c.columnId});" >删除</a>[/#if]</td>
               </tr>
               [/#list]
             [#else]
@@ -249,6 +249,31 @@ function signOut(obj){
 	     return false; 
 	 } 
 }
+
+function delGroup(obj){
+	var msg = "您确定要退出该群组吗？"; 
+	 if (confirm(msg)==true){ 
+		 $.ajax({
+		        url: "${base}/blog/signOutGroup.jspx?groupId="+obj,
+		        type: "POST",
+		        dataType:"json",
+		        data: "",
+		        success: function (data) {
+		        	if(data.status>0){
+						 $("#signOut"+obj).fadeOut();
+						 location.reload(); 
+		        	}else{
+		        		alert("群组退出失败!");
+		        	}
+		        }
+		    });
+	     return true; 
+	 }else{ 
+	     return false; 
+	 } 
+}
+
+
 </script>
 <script>
 window.onload = function() {
