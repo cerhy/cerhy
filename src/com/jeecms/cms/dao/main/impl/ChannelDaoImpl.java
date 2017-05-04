@@ -231,9 +231,9 @@ public class ChannelDaoImpl extends HibernateBaseDao<Channel, Integer>
 	}
 
 	
-	public void saveLink(String linkUrl,CmsUser user) {
-		String hql = "update CmsUser bean set bean.linkUrl=:linkUrl  where bean.id=:userId";
-		Query query = getSession().createQuery(hql).setParameter("linkUrl", linkUrl).setParameter("userId", user.getId());
+	public void saveLink(String hyperlink,CmsUser user) {
+		String hql = "update CmsUser bean set bean.hyperlink=:hyperlink  where bean.id=:userId";
+		Query query = getSession().createQuery(hql).setParameter("hyperlink", hyperlink).setParameter("userId", user.getId());
 		query.executeUpdate();
 	}
 

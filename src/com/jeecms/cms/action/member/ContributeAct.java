@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -39,7 +40,6 @@ import com.jeecms.cms.entity.main.Channel;
 import com.jeecms.cms.entity.main.Columns;
 import com.jeecms.cms.entity.main.Focus;
 import com.jeecms.cms.manager.assist.CmsFileMng;
-import com.jeecms.cms.manager.main.ChannelMng;
 import com.jeecms.cms.manager.main.ContentMng;
 import com.jeecms.cms.manager.main.impl.ColumnsMng;
 import com.jeecms.common.web.ResponseUtils;
@@ -53,7 +53,6 @@ import com.jeecms.core.web.WebErrors;
 import com.jeecms.core.web.util.CmsUtils;
 import com.jeecms.core.web.util.FrontUtils;
 
-import freemarker.core.Environment;
 import freemarker.template.TemplateException;
 
 /**
@@ -765,6 +764,7 @@ public class ContributeAct extends AbstractContentMemberAct {
 		if (user == null) {
 			return FrontUtils.showLogin(request, model, site);
 		}
+		model =blogCommon.getHyperlink(request,model,user);
 		model = blogCommon.getColumn(request,model,user);
 	    model = blogCommon.getChannel(request,model,user,site);
 	    model = blogCommon.getFriends(user.getId(), model, 1);
@@ -778,8 +778,8 @@ public class ContributeAct extends AbstractContentMemberAct {
 	}
 	
 	@RequestMapping(value = "/blog/add_link.jspx")
-	public String custom(String linkUrl,String nextUrl,HttpServletRequest request,HttpServletResponse response, ModelMap model) {
-		return blogAct.link_save(linkUrl.replaceAll("\r\n", " "),nextUrl,request, response, model);
+	public String custom(String hyperlink,String nextUrl,HttpServletRequest request,HttpServletResponse response, ModelMap model) {
+		return blogAct.link_save(hyperlink.replaceAll("\r\n", " "),nextUrl,request, response, model);
 	}
 	
 	/**
@@ -792,6 +792,7 @@ public class ContributeAct extends AbstractContentMemberAct {
 		if (user == null) {
 			return FrontUtils.showLogin(request, model, site);
 		}
+		model =blogCommon.getHyperlink(request,model,user);
 		model = blogCommon.getColumn(request,model,user);
 	    model = blogCommon.getChannel(request,model,user,site);
 	    model = blogCommon.getFriends(user.getId(), model, 1);
@@ -958,8 +959,9 @@ public class ContributeAct extends AbstractContentMemberAct {
 		CmsSite site = CmsUtils.getSite(request);
 		CmsUser user = CmsUtils.getUser(request);
 		if(user==null){
-			FrontUtils.showLogin(request, model, site);
+			return FrontUtils.showLogin(request, model, site);
 		}
+		model =blogCommon.getHyperlink(request,model,user);
 		model = blogCommon.getColumn(request,model,user);
 	    model = blogCommon.getChannel(request,model,user,site);
 	    int totalCount = blogCommon.getTotalArticleNum(model,user);
@@ -979,10 +981,8 @@ public class ContributeAct extends AbstractContentMemberAct {
 	public String friendDataStatistics(String userIds,String q,HttpServletRequest request,HttpServletResponse response, ModelMap model) {
 		CmsSite site = CmsUtils.getSite(request);
 		CmsUser user = CmsUtils.getUser(request);
-		if(user==null){
-			FrontUtils.showLogin(request, model, site);
-		}
 		CmsUser userT=cmsUserMng.findById(Integer.valueOf(userIds.toString()));
+		model =blogCommon.getHyperlink(request,model,userT);
 		model = blogCommon.getColumn(request,model,userT);
 	    model = blogCommon.getChannel(request,model,userT,site);
 	    int totalCount = blogCommon.getTotalArticleNum(model,userT);
@@ -1044,6 +1044,7 @@ public class ContributeAct extends AbstractContentMemberAct {
 //		model = blogCommon.getLinks(model,user);
 //		model = blogCommon.getFriends(model,user);
 //		model = blogCommon.blog_focus_find(null,request,model);
+		model =blogCommon.getHyperlink(request,model,user);
 		model = blogCommon.getColumn(request,model,user);
 	    model = blogCommon.getChannel(request,model,user,site);
 	    int totalCount = blogCommon.getTotalArticleNum(model,user);
@@ -1070,6 +1071,7 @@ public class ContributeAct extends AbstractContentMemberAct {
 			return FrontUtils.showLogin(request, model, site);
 		}
 		CmsUser userT=cmsUserMng.findById(Integer.valueOf(userIds.toString()));
+		model =blogCommon.getHyperlink(request,model,userT);
 		model = blogCommon.getColumn(request,model,userT);
 	    model = blogCommon.getChannel(request,model,userT,site);
 //	    model = blogCommon.blog_focus_find(Integer.parseInt(userIds),request,model);
@@ -1155,11 +1157,15 @@ public class ContributeAct extends AbstractContentMemberAct {
 		CmsSite site = CmsUtils.getSite(request);
 		CmsUser user = CmsUtils.getUser(request);
 		if(user==null){
-			FrontUtils.showLogin(request, model, site);
+			return;
 		}
 		JSONObject json = new JSONObject();
-		int joinStatus=columnsMng.checkJoinState(joinState,user);
-		json.put("status",joinStatus);
+		try {
+			int joinStatus = columnsMng.checkJoinState(joinState,user);
+			json.put("status",joinStatus);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		ResponseUtils.renderJson(response, json.toString());
 	}
 	/**
@@ -1167,26 +1173,29 @@ public class ContributeAct extends AbstractContentMemberAct {
 	 */
 	@RequestMapping(value = "/blog/addTpHtml.jspx")
 	public void saveAddTpHtml(String X,String Y,String contentId,String userId,String inputInfo,String idss,HttpServletRequest request,HttpServletResponse response, ModelMap model)throws UnsupportedEncodingException, JSONException {
-		CmsSite site = CmsUtils.getSite(request);
 		CmsUser user = CmsUtils.getUser(request);
 		if(user==null){
-			FrontUtils.showLogin(request, model, site);
+			return;
 		}
-		String tbHtml= "<div class='"+idss+"' id='"+idss+"'"
-				     + " style='display: block; top: "+Y+"px; left: "+X+"px; position: absolute; margin: 0px;"
-				     + "border: 0px solid rgb(255, 102, 0); width: 25px; height: 25px;'>"
-				     + "<h2 class='t"+idss+"' style='cursor: move; width: 25px; height: 25px; padding-left: 25px;'>"
-				     + "</h2></div>";
-		CmsPostilInfo cpi=new CmsPostilInfo();
-		cpi.setAddHtml(tbHtml);
-		cpi.setContentId(Integer.valueOf(contentId));
-		cpi.setInputContent(inputInfo);
-		cpi.setPostilUserId(user);
-		cpi.setCreateTime(new Date());
-		cpi.setDivId(idss);
-		int joinStatus=columnsMng.saveAddTpHtml(cpi);
 		JSONObject json = new JSONObject();
-		json.put("status",joinStatus);
+		try {
+			String tbHtml= "<div class='"+idss+"' id='"+idss+"'"
+					     + " style='display: block; top: "+Y+"px; left: "+X+"px; position: absolute; margin: 0px;"
+					     + "border: 0px solid rgb(255, 102, 0); width: 25px; height: 25px;'>"
+					     + "<h2 class='t"+idss+"' style='cursor: move; width: 25px; height: 25px; padding-left: 25px;'>"
+					     + "</h2></div>";
+			CmsPostilInfo cpi=new CmsPostilInfo();
+			cpi.setAddHtml(tbHtml);
+			cpi.setContentId(Integer.valueOf(contentId));
+			cpi.setInputContent(inputInfo);
+			cpi.setPostilUserId(user);
+			cpi.setCreateTime(new Date());
+			cpi.setDivId(idss);
+			int joinStatus=columnsMng.saveAddTpHtml(cpi);
+			json.put("status",joinStatus);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		ResponseUtils.renderJson(response, json.toString());
 	}
 	
@@ -1216,11 +1225,10 @@ public class ContributeAct extends AbstractContentMemberAct {
 	 */
 	@RequestMapping(value = "/blog/updateDragCoordinate.jspx")
 	public void updateDragCoordinate(String leftX,String topY,String postilId,HttpServletRequest request,HttpServletResponse response, ModelMap model)throws UnsupportedEncodingException, JSONException {
-		CmsSite site = CmsUtils.getSite(request);
 		CmsUser user = CmsUtils.getUser(request);
 		JSONObject json = new JSONObject();
 		if(user==null){
-			FrontUtils.showLogin(request, model, site);
+			return;
 		}else{
 			String tbHtml= "<div class='"+postilId+"' id='"+postilId+"'"
 					+ " style='display: block; top: "+topY+"px; left: "+leftX+"px; position: absolute; margin: 0px;"

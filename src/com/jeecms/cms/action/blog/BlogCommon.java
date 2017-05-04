@@ -3,7 +3,9 @@ package com.jeecms.cms.action.blog;
 import static com.jeecms.common.page.SimplePage.cpn;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -360,6 +362,10 @@ public class BlogCommon {
 		}
 		return model;
 	}
+	
+	/**
+	 * 查询是否已经添加好友
+	 **/
 	public ModelMap getAddFriends(HttpServletRequest request, ModelMap model,CmsUser userT, CmsUser user) {
 		if(user!=null){
 			if(StringUtils.isNotEmpty(user.getFriends())){
@@ -374,6 +380,57 @@ public class BlogCommon {
 		}else{
 			model.addAttribute("friendCheck", null);
 		}
+		return model;
+	}
+	
+	/**
+	 * 获取用户添加的链接
+	 **/
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	public ModelMap getHyperlink(HttpServletRequest request, ModelMap model,CmsUser user) {
+		String linkUrl=user.getHyperlink();
+		List list=null;
+		if(StringUtils.isNotEmpty(linkUrl)){
+			String[] strs=linkUrl.split(" ");
+			list=new ArrayList();
+			String newUrl="";
+			for(int i=0;i<strs.length;i++){
+				if(i!=strs.length-1){
+					if(!strs[i].contains("http")&&strs[i+1].contains("http")){
+						newUrl+="~"+strs[i]+" ";
+					}else{
+						newUrl+=strs[i]+" ";
+					}
+				}else{
+					if(!strs[i].contains("http")){
+						newUrl+="~"+strs[i]+" ";
+					}else{
+						newUrl+=strs[i]+" ";
+					}
+				}
+			}
+			String[] str=newUrl.split("~");
+			for(int j=0;j<str.length;j++){
+				Map<String,Object> map=new HashMap<String,Object>();
+				String[] st=str[j].toString().split(" ");
+				List lists=new ArrayList();
+				String newName="";
+				for(int k=0;k<st.length;k++){
+					if(st[0].contains("http")){
+						newName="";
+					}else{
+						newName=st[0];
+					}
+					lists.add(st[k]);
+				}
+				map.put(newName, lists);
+				list.add(map);
+			}
+			model.addAttribute("linkUrls", linkUrl.replaceAll(" ", "\r\n"));
+		}else{
+			model.addAttribute("linkUrls", "");
+		}
+		model.addAttribute("urlList", list);
 		return model;
 	}
 	

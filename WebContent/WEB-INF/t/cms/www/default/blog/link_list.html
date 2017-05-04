@@ -49,32 +49,27 @@ $('.user-menu-links li').click(function(){
             <div class="wrap-right">
             <div class="personCenter-userInfo blog_right" >
 	          <form id="jvForm" action="add_link.jspx" method="post" style="height: 400px;">
-	         	<textarea id="linkUrl" name="linkUrl" rows="18" cols="100">${linkUrls }</textarea>
+	         	<textarea id="hyperlink" name="hyperlink" rows="18" cols="100">${linkUrls }</textarea>
 	         	<br />
 	          	<span class="fl">
-					<p>每行可以输入一个链接，标题和网址之间用“=”分隔开，最多可设置300个。</p>
+					<p>每行可以输入一个链接，标题和网址之间用“=”分隔开，最多可设置100个。</p>
 					<p>链接可以分组，不包含“=”号的行就是分组标题。</p>
 					<p>例如：</p>
 					<p>海南教育研究新浪微博=http://t.sina.com.cn/hainanvae</p>
 					<p>教育行政部门</p>
 					<p>中国教育部=http://www.moe.edu.cn</p>
 					<p>海南教育厅=http://edu.hainan.gov.cn</p>
-					<p>*注:请勿留有空格!</p>
+					<p>*注:请勿留有空格!避免在分组名(如:教育行=政部门)/备注名(如:海南=教育厅)中填写等号(=)</p>
 		          	<input style="display: none;" name="nextUrl" value="link_list.jspx" /><br />
 		          	 <input type="submit" value="提交" class="submit">
 				</span>
 	          </form> 
             </div>
             </div>
-            <div class="gonggao">
-            <p style="color:red;font-size:16px;text-align:center;">公告</p>
-             [#if user.blogNotice??]${user.blogNotice}[/#if]
-             </div>
         </div>
 
   </div>
   </div>
-  
 [#include "model.html"/]
 [#include "../include/footers.html"/]
 </body>

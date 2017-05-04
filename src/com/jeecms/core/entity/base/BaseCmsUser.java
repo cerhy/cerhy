@@ -38,6 +38,8 @@ public abstract class BaseCmsUser  implements Serializable {
 	public static String PROP_THEME = "theme";
 	public static String PROP_FRIENDS = "Friends";
 	public static String PROP_BLOGVISITNUM = "blogVisitNum";
+	public static String PROP_HYPERLINK = "hyperlink";
+	
 	// constructors
 	public BaseCmsUser () {
 		initialize();
@@ -100,7 +102,11 @@ public abstract class BaseCmsUser  implements Serializable {
 			java.lang.Boolean admin,
 			java.lang.Boolean viewonlyAdmin,
 			java.lang.Boolean selfAdmin,
-			java.lang.Boolean disabled,java.lang.String linkUrl,java.lang.String Friends,java.lang.String blogVisitNum) {
+			java.lang.Boolean disabled,
+			java.lang.String linkUrl,
+			java.lang.String Friends,
+			java.lang.String blogVisitNum,
+			java.lang.String hyperlink) {
 		
 		this.setId(id);
 		this.setGroup(group);
@@ -118,6 +124,7 @@ public abstract class BaseCmsUser  implements Serializable {
 		this.setLinkUrl(linkUrl);
 		this.setFriends(Friends);
 		this.setBlogVisitNum(blogVisitNum);
+		this.setHyperlink(hyperlink);
 		initialize();
 	}
 
@@ -154,10 +161,21 @@ public abstract class BaseCmsUser  implements Serializable {
 	private java.lang.String theme;
 	private java.lang.String Friends;
 	private java.lang.String blogVisitNum;
+	private java.lang.String hyperlink;
 	
 	
 	
-	
+	/**
+	 * Return the value associated with the column: hyperlink
+	 */
+	public java.lang.String getHyperlink() {
+		return hyperlink;
+	}
+
+	public void setHyperlink(java.lang.String hyperlink) {
+		this.hyperlink = hyperlink;
+	}
+
 	/**
 	 * Return the value associated with the column: blogVisitNum
 	 */

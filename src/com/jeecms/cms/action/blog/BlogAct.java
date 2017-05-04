@@ -69,6 +69,7 @@ public class BlogAct {
 		if (user == null) {
 			return FrontUtils.showLogin(request, model, site);
 		}
+		model =blogCommon.getHyperlink(request,model,user);
 		model = blogCommon.getColumn(request,model,user);
 	    model = blogCommon.getChannel(request,model,user,site);
 	    int totalCount = blogCommon.getTotalArticleNum(model,user);
@@ -125,6 +126,7 @@ public class BlogAct {
 		if (user == null) {
 			return FrontUtils.showLogin(request, model, site);
 		}
+		model =blogCommon.getHyperlink(request,model,user);
 		model = blogCommon.getColumn(request,model,user);
 	    model = blogCommon.getChannel(request,model,user,site);
 	    int totalCount = blogCommon.getTotalArticleNum(model,user);
@@ -171,6 +173,7 @@ public class BlogAct {
 				channelId = Integer.parseInt(request.getParameter("channelId"));
 			}
 		}
+		model =blogCommon.getHyperlink(request,model,user);
 		model = blogCommon.getColumn(request,model,user);
 	    model = blogCommon.getChannel(request,model,user,site);
 	    int totalCount = blogCommon.getTotalArticleNum(model,user);
@@ -197,6 +200,7 @@ public class BlogAct {
 		if (user == null) {
 			return FrontUtils.showLogin(request, model, site);
 		}
+		model =blogCommon.getHyperlink(request,model,user);
 		model = blogCommon.getColumn(request,model,user);
 	    model = blogCommon.getChannel(request,model,user,site);
 	    int totalCount = blogCommon.getTotalArticleNum(model,user);
@@ -443,6 +447,7 @@ public class BlogAct {
 		if (user == null) {
 			return FrontUtils.showLogin(request, model, site);
 		}
+		model =blogCommon.getHyperlink(request,model,user);
 		model = blogCommon.getColumn(request,model,user);
 	    model = blogCommon.getChannel(request,model,user,site);
 	    int totalCount = blogCommon.getTotalArticleNum(model,user);
@@ -699,6 +704,7 @@ public class BlogAct {
 		if (user == null) {
 			return FrontUtils.showLogin(request, model, site);
 		}
+		model =blogCommon.getHyperlink(request,model,user);
 		model = blogCommon.getChannel(request,model,user,site);
 		model = blogCommon.getColumn(request,model,user);
 		int totalCount = blogCommon.getTotalArticleNum(model,user);
@@ -823,6 +829,7 @@ public class BlogAct {
 		if (user == null) {
 			return FrontUtils.showLogin(request, model, site);
 		}
+		model =blogCommon.getHyperlink(request,model,user);
 		model = blogCommon.getColumn(request,model,user);
 		int totalCount = blogCommon.getTotalArticleNum(model,user);
 		model.addAttribute("articleCount", totalCount);
@@ -838,7 +845,7 @@ public class BlogAct {
 		return FrontUtils.getTplPath(request, site.getSolutionPath(),TPLDIR_BLOG,"tpl.columnsUpdate");
 	}
 
-	public String link_save(String linkUrl,String nextUrl,
+	public String link_save(String hyperlink,String nextUrl,
 			HttpServletRequest request, HttpServletResponse response,
 			ModelMap model) {
 		CmsSite site = CmsUtils.getSite(request);
@@ -847,8 +854,8 @@ public class BlogAct {
 		if (user == null) {
 			return FrontUtils.showLogin(request, model, site);
 		}
-		channelMng.updateLinkUrl(linkUrl,user);
-		return FrontUtils.showSuccess(request, model, nextUrl);
+		channelMng.updateLinkUrl(hyperlink,user);
+		return "redirect:../blog/index.jspx";
 	}
 
 	public void friends_save(String friends, String nextUrl,
@@ -878,6 +885,7 @@ public class BlogAct {
 				channelMng.updateBlogVisitorTime(user,userT);
 			}
 		}
+		model =blogCommon.getHyperlink(request,model,userT);
 		model = blogCommon.getColumn(request,model,userT);
 		model = blogCommon.getChannel(request,model,userT,site);
 		int totalCount = blogCommon.getTotalArticleNum(model,userT);
@@ -937,6 +945,7 @@ public class BlogAct {
 				channelId = Integer.parseInt(request.getParameter("channelId"));
 			}
 		}
+		model =blogCommon.getHyperlink(request,model,user);
 		model = blogCommon.getColumn(request,model,user);
 		model = blogCommon.getChannel(request,model,user,site);
 		int totalCount = blogCommon.getTotalArticleNum(model,user);
@@ -1039,6 +1048,7 @@ public class BlogAct {
 			model.addAttribute("dataFlag", 4);
 		}
 		model.addAttribute("checkPageInfo", 0);
+		model =blogCommon.getHyperlink(request,model,u);
 		model = blogCommon.getChannel(request,model,u,site);
 		model = blogCommon.getColumn(request,model,u);
 		int totalCount = blogCommon.getTotalArticleNum(model,u);
@@ -1074,6 +1084,7 @@ public class BlogAct {
 			model.addAttribute("dataFlag", 4);
 		}
 		model.addAttribute("checkPageInfo", 1);
+		model =blogCommon.getHyperlink(request,model,u);
 		model = blogCommon.getChannel(request,model,u,site);
 		model = blogCommon.getColumn(request,model,u);
 		int totalCount = blogCommon.getTotalArticleNum(model,u);
@@ -1138,6 +1149,7 @@ public class BlogAct {
 				} catch (Exception e) {
 					log.error("blogContentShow.getChannel error", e);
 				}
+				model =blogCommon.getHyperlink(request,model,u);
 				model = blogCommon.getColumn(request,model,u);
 				int totalCount = blogCommon.getTotalArticleNum(model,u);
 				model.addAttribute("articleCount", totalCount);
@@ -1204,6 +1216,7 @@ public class BlogAct {
 				}
 			}
 			CmsUser u = CmsUtils.getUser(request);
+			model =blogCommon.getHyperlink(request,model,user);
 			model = blogCommon.getAlreadyJoinGroup(request, model,user);
 			model = blogCommon.getChannel(request,model,user,site);
 			model = blogCommon.getColumn(request,model,user);
