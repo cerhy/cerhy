@@ -1104,41 +1104,49 @@ public class BlogAct {
 			CmsUser u = CmsUtils.getUser(request);
 			CmsSite site = content.getSite();
 			Set<CmsGroup> groups = content.getViewGroupsExt();
-			groups.size();
+			//groups.size();
 			
 			String txt = content.getTxtByNo(pageNo);
 			// 内容加上关键字
-			txt = cmsKeywordMng.attachKeyword(site.getId(), txt);
-			Paginable pagination = new SimplePage(pageNo, 1, content.getPageCount());
-			model.addAttribute("pagination", pagination);
-			FrontUtils.frontPageData(request, model);
-			model.addAttribute("content", content);
-			model.addAttribute("channel", content.getChannel());
-			model.addAttribute("title", content.getTitleByNo(pageNo));
-			model.addAttribute("txt", txt);
-			model.addAttribute("columnIdZ", columnId);
-			model.addAttribute("pic", content.getPictureByNo(pageNo));
-			String collection = request.getParameter("collection");
-			String d = request.getParameter("d");
-			if(null != collection || "2".equals(d)){//转载文章显示
-				model.addAttribute("collection", 1);
-				model.addAttribute("uId", u.getId());
-			}else{
-				String GroupFlag = request.getParameter("GroupFlag");
-				if("-1".equals(GroupFlag)){
-					model.addAttribute("GroupFlagData", -1);
+			try {
+				txt = cmsKeywordMng.attachKeyword(site.getId(), txt);
+				Paginable pagination = new SimplePage(pageNo, 1, content.getPageCount());
+				model.addAttribute("pagination", pagination);
+				FrontUtils.frontPageData(request, model);
+				model.addAttribute("content", content);
+				model.addAttribute("channel", content.getChannel());
+				model.addAttribute("title", content.getTitleByNo(pageNo));
+				model.addAttribute("txt", txt);
+				model.addAttribute("columnIdZ", columnId);
+				model.addAttribute("pic", content.getPictureByNo(pageNo));
+				String collection = request.getParameter("collection");
+				String d = request.getParameter("d");
+				if(null != collection || "2".equals(d)){//转载文章显示
+					model.addAttribute("collection", 1);
+					model.addAttribute("uId", u.getId());
 				}else{
-					model.addAttribute("GroupFlagData", content.getUser().getId());
+					String GroupFlag = request.getParameter("GroupFlag");
+					if("-1".equals(GroupFlag)){
+						model.addAttribute("GroupFlagData", -1);
+					}else{
+						model.addAttribute("GroupFlagData", content.getUser().getId());
+					}
 				}
+				model = blogCommon.getAlreadyJoinGroup(request, model,u);
+				try {
+					model = blogCommon.getChannel(request,model,u,site);
+				} catch (Exception e) {
+					log.error("blogContentShow.getChannel error", e);
+				}
+				model = blogCommon.getColumn(request,model,u);
+				int totalCount = blogCommon.getTotalArticleNum(model,u);
+				model.addAttribute("articleCount", totalCount);
+				model = blogCommon.getTotalCommentNum(model, u);
+				model = blogCommon.getStarBlogger(request, model);
+				FrontUtils.frontData(request, model, site);
+			} catch (Exception e) {
+				log.error("blogContentShow error", e);
 			}
-			model = blogCommon.getAlreadyJoinGroup(request, model,u);
-			model = blogCommon.getChannel(request,model,u,site);
-			model = blogCommon.getColumn(request,model,u);
-			int totalCount = blogCommon.getTotalArticleNum(model,u);
-			model.addAttribute("articleCount", totalCount);
-	 		model = blogCommon.getTotalCommentNum(model, u);
-	 		model = blogCommon.getStarBlogger(request, model);
-			FrontUtils.frontData(request, model, site);
 			return FrontUtils.getTplPath(request, site.getSolutionPath(),TPLDIR_BLOG,"tpl.blogContentShow");
 		}
 	
