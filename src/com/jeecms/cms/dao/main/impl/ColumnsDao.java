@@ -169,4 +169,14 @@ public class ColumnsDao extends HibernateBaseDao<Columns, Integer>{
 		return null;
 	}
 
+	public int delGroup(String groupId, CmsUser user) {
+		String hql = "select count(*) from CmsJoinGroup bean where bean.columnsId.id='"+Integer.valueOf(groupId)+"'";
+		Query query = getSession().createQuery(hql);
+		if(((Number) (query.iterate().next())).intValue()>0){
+			return 0;
+		}else{
+			return 1;
+		}
+	}
+
 }

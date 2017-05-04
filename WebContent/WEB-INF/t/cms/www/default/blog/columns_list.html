@@ -225,6 +225,22 @@ function del(columnId){
 			}
 		});
 }
+function delCheck(columnId){
+		$.ajax({
+			url:"${base}/blog/queryLanmuColumn.jspx?id="+columnId,
+			type:"post",
+			datatype:"json",
+			data: "",
+			success: function(result){
+				if(result.status=="false"){
+					alert("删除失败！请先删除本群组下的文章！");	
+				}else{
+					location.href="${base}/blog/deleteColumn.jspx?columnId="+columnId;
+					alert("删除成功!")
+				}
+			}
+		});
+}
 </script>
 <script type="text/javascript">
 function signOut(obj){
@@ -251,19 +267,18 @@ function signOut(obj){
 }
 
 function delGroup(obj){
-	var msg = "您确定要退出该群组吗？"; 
+	var msg = "您确定要删除该群组吗？"; 
 	 if (confirm(msg)==true){ 
 		 $.ajax({
-		        url: "${base}/blog/signOutGroup.jspx?groupId="+obj,
+		        url: "${base}/blog/delGroup.jspx?groupId="+obj,
 		        type: "POST",
 		        dataType:"json",
 		        data: "",
 		        success: function (data) {
 		        	if(data.status>0){
-						 $("#signOut"+obj).fadeOut();
-						 location.reload(); 
+		        		delCheck(obj);
 		        	}else{
-		        		alert("群组退出失败!");
+		        		alert("群组删除失败!已有用户加入该群组");
 		        	}
 		        }
 		    });

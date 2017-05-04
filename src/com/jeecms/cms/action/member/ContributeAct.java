@@ -1130,10 +1130,9 @@ public class ContributeAct extends AbstractContentMemberAct {
 	 */
 	@RequestMapping(value = "/blog/joinGroup.jspx")
 	public void joinGroup(String code,String createUserId,HttpServletRequest request,HttpServletResponse response, ModelMap model)throws UnsupportedEncodingException, JSONException {
-		CmsSite site = CmsUtils.getSite(request);
 		CmsUser user = CmsUtils.getUser(request);
 		if(user==null){
-			FrontUtils.showLogin(request, model, site);
+			return;
 		}else{
 			CmsUser userT=cmsUserMng.findById(Integer.valueOf(createUserId.toString()));
 			Columns cu=columnsMng.findInfoByCode(code);
@@ -1154,7 +1153,6 @@ public class ContributeAct extends AbstractContentMemberAct {
 	 */
 	@RequestMapping(value = "/blog/checkJoinState.jspx")
 	public void checkJoinState(String joinState,HttpServletRequest request,HttpServletResponse response, ModelMap model)throws UnsupportedEncodingException, JSONException {
-		CmsSite site = CmsUtils.getSite(request);
 		CmsUser user = CmsUtils.getUser(request);
 		if(user==null){
 			return;
@@ -1168,6 +1166,8 @@ public class ContributeAct extends AbstractContentMemberAct {
 		}
 		ResponseUtils.renderJson(response, json.toString());
 	}
+	
+	
 	/**
 	 * 保存批注
 	 */
@@ -1260,16 +1260,35 @@ public class ContributeAct extends AbstractContentMemberAct {
 	 */
 	@RequestMapping(value = "/blog/signOutGroup.jspx")
 	public void signOutGroup(String groupId,HttpServletRequest request,HttpServletResponse response, ModelMap model)throws UnsupportedEncodingException, JSONException {
-		CmsSite site = CmsUtils.getSite(request);
 		CmsUser user = CmsUtils.getUser(request);
 		if(user==null){
-			FrontUtils.showLogin(request, model, site);
+			return;
 		}
 		int joinStatus=columnsMng.signOutGroup(groupId);
 		JSONObject json = new JSONObject();
 		json.put("status",joinStatus);
 		ResponseUtils.renderJson(response, json.toString());
 	}
+	
+	/**
+	 * 删除群组
+	 */
+	@RequestMapping(value = "/blog/delGroup.jspx")
+	public void delGroup(String groupId,HttpServletRequest request,HttpServletResponse response, ModelMap model)throws UnsupportedEncodingException, JSONException {
+		CmsUser user = CmsUtils.getUser(request);
+		if(user==null){
+			return;
+		}
+		JSONObject json = new JSONObject();
+		try {
+			int joinStatus = columnsMng.delGroup(groupId,user);
+			json.put("status",joinStatus);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		ResponseUtils.renderJson(response, json.toString());
+	}
+	
 
 	/**
 	 *使用手册

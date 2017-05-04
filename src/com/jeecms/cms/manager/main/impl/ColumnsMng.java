@@ -62,6 +62,9 @@ public class ColumnsMng {
 	public List<CmsPersonalChannel> getPersonChannel(CmsUser user) {
 		return columnsDao.getPersonChannel(user);
 	}
+	public int delGroup(String groupId, CmsUser user) {
+		return columnsDao.delGroup(groupId,user);
+	}
 	@Autowired
 	private ColumnsDao columnsDao;
 
