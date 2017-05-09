@@ -81,6 +81,12 @@ Cms.siteFlow("${base}", location.href, document.referrer,
 [#include "head.html"/]
 <style type="text/css">
 table th,table td{word-break:break-all;white-space:normal;overflow:hidden;}
+.backto:hover {
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 30px 0 rgba(0,0,0,0.19);
+    -moz-border-radius: 2px; 
+    -webkit-border-radius: 2px;
+    border-radius:2px;   
+}
 </style>
 <div class="blogBody">
 <div class="blog-con">
@@ -101,7 +107,7 @@ table th,table td{word-break:break-all;white-space:normal;overflow:hidden;}
 		    <input style="display: none;" id="no3" value="${content.id}">
 			<input style="display: none;" id="no4" value="${user.id}">
 			<input style="display: none;" id="alt" value="0">
-	<!--  <div id="fudong" class="fudong" style="border: 0;">
+	<!-- <div id="fudong" class="fudong" style="border: 0;">
 			<h2 class="title">
 			<button id="pos" name="pos" class="pos" style="width: 50px;height: 30px;" onclick="down(0)">批注</button>
 			</h2>
@@ -112,6 +118,7 @@ table th,table td{word-break:break-all;white-space:normal;overflow:hidden;}
                 <div ><h2>${content.title}</h2></div>
                 <input type="text" style="display:none" id="hipw" value="${content.password!}" />
                 <div class="gray9 h2dt pt5">
+                	<span class="pr15" id="backto" title="返回"><img style="width: 23px;height: 23px;margin: -2px 0;cursor: pointer;" src="/${res}/images/back.png" alt="" class="backto" onclick="javascpipt:history.go(-1);"/></span>
 				    <span class="pr15">发布时间：${content.releaseDate}</span>
 					<span class="pr15">
 					   <a target="_blank" href="${base}/blog/find_all_url_friend.jspx?userIds=${content.user.id}" class="bz">博主：${content.user.username}</a>
@@ -689,7 +696,7 @@ Drag.prototype = {
 	}
 };
 //应用
-/* window.onload = function ()
+ window.onload = function ()
 {
 	var oBox = document.getElementById("fudong");
 	var padLe=$(".bd-padding").offset().left+865;
@@ -699,15 +706,15 @@ Drag.prototype = {
 	var oTitle = oBox.getElementsByTagName("h2")[0];
 	var oDrag = new Drag(oBox, {handle:oTitle, limit:false});
 	oDrag.lock = !oDrag.lock;
-}; */
+};
 
 
-/* window.onresize=function(){  
+ window.onresize=function(){  
 	var padLe=$(".xueke-acticle").offset().left+735;
 	$("#fudong").css({
 		"left":padLe
 	});
-} */
+}
 </script>
 <script type="text/javascript">
 	$(function() {
