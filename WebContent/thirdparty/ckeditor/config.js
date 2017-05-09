@@ -6,7 +6,7 @@
 CKEDITOR.editorConfig = function( config ) {
 	    config.language = 'zh-cn'; // 配置语言  
 	    config.width = 'auto'; // 宽度  
-	    config.height = '300px'; // 高度  
+	    config.height = '600px'; // 高度  
 	    config.skin = 'kama';// 界面v2,kama,office2003  
 	    config.toolbar = 'MyToolbar';// 工具栏风格（基础'Basic'、全能'Full'、自定义）
 	    //自定义的工具栏      
