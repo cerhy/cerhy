@@ -78,6 +78,38 @@ Cms.siteFlow("${base}", location.href, document.referrer,
 		;
 	});
 </script>
+<script type="text/javascript">
+$(function () {  
+    var printAreaCount = 0;  
+    $.fn.printArea = function () {  
+        var ele = $(this); 
+        var idPrefix = "printArea_";  
+        removePrintArea(idPrefix + printAreaCount);  
+        printAreaCount++;  
+        var iframeId = idPrefix + printAreaCount;  
+        var iframeStyle = 'position:absolute;width:0px;height:0px;left:-500px;top:-500px;';  
+        iframe = document.createElement('IFRAME');  
+        $(iframe).attr({  
+            style: iframeStyle,  
+            id: iframeId  
+        });  
+        document.body.appendChild(iframe);  
+        var doc = iframe.contentWindow.document;  
+        doc.write('<div class="' + $(ele).attr("class") + '">' + $(ele).html()+ '</div>');  
+        doc.close();  
+        var frameWindow = iframe.contentWindow;  
+        frameWindow.close();  
+        frameWindow.focus();  
+        frameWindow.print(); 
+    }  
+    var removePrintArea = function (id) {  
+        $("iframe#" + id).remove();  
+    };  
+});
+function btnPrints(){
+      $("#xueke-content-detail").printArea();
+}
+</script> 
 [#include "head.html"/]
 <style type="text/css">
 table th,table td{word-break:break-all;white-space:normal;overflow:hidden;}
@@ -109,7 +141,7 @@ table th,table td{word-break:break-all;white-space:normal;overflow:hidden;}
 			<input style="display: none;" id="alt" value="0">
 	<!-- <div id="fudong" class="fudong" style="border: 0;">
 			<h2 class="title">
-			<button id="pos" name="pos" class="pos" style="width: 50px;height: 30px;" onclick="down(0)">批注</button>
+			<button id="btnPrint" name="pos" class="pos" style="width: 50px;height: 30px;">打印</button>
 			</h2>
 	</div> -->
      [#include "blog_left.html"/]
@@ -143,8 +175,9 @@ table th,table td{word-break:break-all;white-space:normal;overflow:hidden;}
 					 <div class="themeButton" style="width: 50px;height: 50px;padding-left: 200px;">	
 					 <button type="button" onclick="closeDialogs();" class="submit" style="margin:30px 0px 0 10px;">确定</button></div>
 	        		 </div>
+	        		 <span class="pr15" title="打印" id="btnPrints" onclick="btnPrints()"><img id="btnPrint" style="width: 23px;height: 23px;margin: -4px 0;cursor: pointer;" src="/${res}/images/printer.png" class="backto" /></span>
 				</div>
-				<div class="xueke-content-detail" style="margin-top:30px;min-height:170px;"  id="addAttr">
+				<div class="xueke-content-detail" id="xueke-content-detail" style="margin-top:30px;min-height:170px;"  id="addAttr">
 					[#if preview??] [@text_cut s=txt! len=100 append="..."/]<br />
 					您需要更高的权限浏览全部内容!<br />以下会员组可浏览全部内容: [#list groups as g]
 					${g.name!}[#if g_has_next],[/#if] [/#list] [#else] ${txt!} [/#if]
