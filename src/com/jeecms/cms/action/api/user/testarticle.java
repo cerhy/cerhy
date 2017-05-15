@@ -27,11 +27,11 @@ public class testarticle {
             httppost.addHeader("Content-Type", "application/json;charset=UTF-8");   
             httppost.addHeader("User-Agent", "imgfornote");    
             JSONObject obj = new JSONObject();
-            obj.put("category", "260");
-            obj.put("id", "5054493");   
-            obj.put("count", "1000");   
+            obj.put("category", "280");
+            obj.put("id", "60001715");   
+            obj.put("count", "10");   
             obj.put("userid", "");   
-            obj.put("type", "1"); 
+            obj.put("type", "3"); 
             StringEntity se = new StringEntity(obj.toString(),"UTF-8");   
             se.setContentEncoding(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));   
             httppost.setEntity(se);  

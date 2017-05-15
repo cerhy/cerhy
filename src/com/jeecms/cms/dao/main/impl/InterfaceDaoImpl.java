@@ -483,13 +483,13 @@ public class InterfaceDaoImpl  extends HibernateBaseDao<Content, Integer> implem
 				if(userid!=null){
 					f.append(" and bean.user.id="+userid);
 				}
-				f.append("and bean.id>="+contentid);
+				f.append(" and bean.id>"+contentid);
 				f.append(" order by bean.id desc");
 			}else if(type==3){
 				if(userid!=null){
 					f.append(" and bean.user.id="+userid);
 				}
-				f.append("and bean.id<="+contentid);
+				f.append(" and bean.id<"+contentid);
 				f.append(" order by bean.id desc");
 			}
 		}else {
