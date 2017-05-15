@@ -287,7 +287,7 @@ public class InterfaceDaoImpl  extends HibernateBaseDao<Content, Integer> implem
 					String author=list.get(i).getContentExt().getAuthor()==null?"":list.get(i).getContentExt().getAuthor();
 					String title=list.get(i).getContentExt().getTitle();
 					String content=list.get(i).getContentTxt().getTxt()==null?"":list.get(i).getContentTxt().getTxt();
-					String url="http://221.226.106.154:6680/cerhy/"+list.get(i).getChannel().getPath()+"/"+list.get(i).getId()+".jhtml";
+					String url="http://www.cerhy.com/"+list.get(i).getChannel().getPath()+"/"+list.get(i).getId()+".jhtml";
 					String time=DateUtils.date2Str(list.get(i).getSortDate(),new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"));
 					String videourl=list.get(i).getContentExt().getMediaPath();
 					String cu=content;
@@ -325,7 +325,7 @@ public class InterfaceDaoImpl  extends HibernateBaseDao<Content, Integer> implem
 						int sizeA=attachments.size();
 						for(int j=0;j<sizeA;j++){
 							ja.put("name", attachments.get(j).getName());
-							ja.put("url", "http://221.226.106.154:6680/"+attachments.get(j).getPath());
+							ja.put("url", "http://www.cerhy.com"+attachments.get(j).getPath());
 							listA.add(ja);
 						}
 						jb.put("attachments", listA);
