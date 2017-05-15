@@ -29,6 +29,7 @@ default-lazy-init="true">
 	<bean id="propertyUtils" class="com.jeecms.common.util.PropertyUtils">
 		<property name="properties" ref="properties"/>
 	</bean>
+	<bean name="/api/user/register" class="com.jeecms.cms.action.api.user.UnifiedCallInterface"></bean>
 	
 	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
 		<property name="driverClass" value="${jdbc.driverClassName}" />

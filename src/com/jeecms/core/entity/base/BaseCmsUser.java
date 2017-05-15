@@ -39,6 +39,9 @@ public abstract class BaseCmsUser  implements Serializable {
 	public static String PROP_FRIENDS = "Friends";
 	public static String PROP_BLOGVISITNUM = "blogVisitNum";
 	public static String PROP_HYPERLINK = "hyperlink";
+	public static String PROP_AREACODE = "areacode";
+	public static String PROP_TYPE = "type";
+	public static String PROP_NICKNAME = "nickname";
 	
 	// constructors
 	public BaseCmsUser () {
@@ -106,7 +109,10 @@ public abstract class BaseCmsUser  implements Serializable {
 			java.lang.String linkUrl,
 			java.lang.String Friends,
 			java.lang.String blogVisitNum,
-			java.lang.String hyperlink) {
+			java.lang.String hyperlink,
+			java.lang.String areacode,
+			java.lang.Integer type,
+			java.lang.String nickname) {
 		
 		this.setId(id);
 		this.setGroup(group);
@@ -125,6 +131,9 @@ public abstract class BaseCmsUser  implements Serializable {
 		this.setFriends(Friends);
 		this.setBlogVisitNum(blogVisitNum);
 		this.setHyperlink(hyperlink);
+		this.setAreacode(areacode);
+		this.setType(type);
+		this.setNickname(nickname);
 		initialize();
 	}
 
@@ -163,8 +172,47 @@ public abstract class BaseCmsUser  implements Serializable {
 	private java.lang.String blogVisitNum;
 	private java.lang.String hyperlink;
 	
+	private java.lang.String areacode;
+	private java.lang.Integer type;
+	private java.lang.String nickname;
 	
 	
+	
+	/**
+	 * Return the value associated with the column: nickname
+	 */
+	public java.lang.String getNickname() {
+		return nickname;
+	}
+	
+	public void setNickname(java.lang.String nickname) {
+		this.nickname = nickname;
+	}
+
+
+	/**
+	 * Return the value associated with the column: areacode
+	 */
+	public java.lang.String getAreacode() {
+		return areacode;
+	}
+
+	public void setAreacode(java.lang.String areacode) {
+		this.areacode = areacode;
+	}
+	
+
+	/**
+	 * Return the value associated with the column: type
+	 */
+	public java.lang.Integer getType() {
+		return type;
+	}
+
+	public void setType(java.lang.Integer type) {
+		this.type = type;
+	}
+
 	/**
 	 * Return the value associated with the column: hyperlink
 	 */

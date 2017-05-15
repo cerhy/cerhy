@@ -208,6 +208,30 @@
     <servlet-name>JeeCmsFront</servlet-name>
     <url-pattern>*.htm</url-pattern>
   </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>JeeCmsFront</servlet-name>
+    <url-pattern>/api/user/register</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>JeeCmsFront</servlet-name>
+    <url-pattern>/api/user/login</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>JeeCmsFront</servlet-name>
+    <url-pattern>/api/user/changepassword</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>JeeCmsFront</servlet-name>
+    <url-pattern>/api/user/resetpassword</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>JeeCmsFront</servlet-name>
+    <url-pattern>/api/user/editprofile</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>JeeCmsFront</servlet-name>
+    <url-pattern>/api/article</url-pattern>
+  </servlet-mapping>
   <listener>
     <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
   </listener>

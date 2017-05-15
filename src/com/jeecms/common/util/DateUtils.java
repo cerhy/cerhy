@@ -18,7 +18,7 @@ public class DateUtils {
 	public static SimpleDateFormat common_format = new SimpleDateFormat(
 			"yyyy-MM-dd HH:mm:ss");
 
-	public String getNowString() {
+	public  String getNowString() {
 		Calendar calendar = getCalendar();
 		buffer.delete(0, buffer.capacity());
 		buffer.append(getYear(calendar));

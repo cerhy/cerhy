@@ -279,4 +279,6 @@
 	<bean id="focusDao" class="com.jeecms.cms.dao.main.impl.FocusDao"/>
 	<bean id="columnsMng" class="com.jeecms.cms.manager.main.impl.ColumnsMng"/>
 	<bean id="columnsDao" class="com.jeecms.cms.dao.main.impl.ColumnsDao"/>
+	<bean id="interfaceMng" class="com.jeecms.cms.manager.main.impl.InterfaceMngImpl"/>
+	<bean id="interfaceDao" class="com.jeecms.cms.dao.main.impl.InterfaceDaoImpl"/>
 </beans>

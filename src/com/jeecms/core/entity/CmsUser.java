@@ -592,11 +592,11 @@ public class CmsUser extends BaseCmsUser implements PriorityInterface {
 			java.lang.Integer uploadSize, java.lang.Boolean admin,
 			java.lang.Boolean viewonlyAdmin, java.lang.Boolean selfAdmin,
 			java.lang.Boolean disabled,String linkUrl,String Friends,java.lang.String blogVisitNum
-			,java.lang.String hyperlink) {
+			,java.lang.String hyperlink,java.lang.String areacode,java.lang.Integer type,java.lang.String nickname) {
 
 		super(id, group, username, registerTime, registerIp, loginCount, rank,
 				uploadTotal, uploadSize, admin, viewonlyAdmin, selfAdmin,
-				disabled,linkUrl,Friends,blogVisitNum,hyperlink);
+				disabled,linkUrl,Friends,blogVisitNum,hyperlink,areacode,type,nickname);
 	}
 
 	/* [CONSTRUCTOR MARKER END] */

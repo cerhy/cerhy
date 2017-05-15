@@ -53,4 +53,6 @@
 	<bean id="weiXinAuthAct" class="com.jeecms.cms.action.member.WeiXinAuthAct"/>
 	<bean id="userContentBuyAct" class="com.jeecms.cms.action.member.UserContentBuyAct"/>
 	
+	<bean id="unifiedCallInterface" class="com.jeecms.cms.action.api.user.UnifiedCallInterface"/>
+	
 </beans>

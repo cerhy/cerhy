@@ -1400,4 +1400,19 @@ public class ContributeAct extends AbstractContentMemberAct {
 		}
 		ResponseUtils.renderJson(response, json.toString());
 	}
+	
+	
+	/**
+	 *使用手册
+	 */
+	@RequestMapping(value = "/blog/testme.jspx")
+	public String testme(String userIds,String q,Integer modelId,Integer queryChannelId, Integer pageNo,HttpServletRequest request,HttpServletResponse response, ModelMap model) {
+		CmsSite site = CmsUtils.getSite(request);
+		CmsUser user = CmsUtils.getUser(request);
+		if(user==null){
+			return FrontUtils.showLogin(request, model, site);
+		}
+	    FrontUtils.frontData(request, model, site);
+		return FrontUtils.getTplPath(request, site.getSolutionPath(),TPLDIR_BLOG, "tpl.testme");
+	}
 }

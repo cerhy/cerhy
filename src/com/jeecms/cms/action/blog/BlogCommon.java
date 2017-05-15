@@ -34,17 +34,12 @@ import com.jeecms.core.manager.CmsUserMng;
 public class BlogCommon {
 	Logger log = (Logger) Logger.getInstance(BlogCommon.class) ;
 	public ModelMap getColumn(HttpServletRequest request,ModelMap model,CmsUser user){
-		/*int groupId = user.getGroup().getId();
-		if (4!=groupId){
-			if(5 != groupId){*/
 		if(user!=null){
 			List<Columns> columnsList = columnsMng.getColumnsByUserId(user.getId());
 			model.addAttribute("columnsList", columnsList);
 		}else{
 			return model.addAttribute("columnsList", null);
 		}
-		/*	}
-		}*/
 		return model;
 	}
 	

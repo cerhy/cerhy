@@ -31,6 +31,9 @@
 		<property name="Friends" column="Friends" type="string" not-null="false" length="2000"/>
 		<property name="blogVisitNum" column="blogVisitNum" type="string"  not-null="false" length="50"/>
 		<property name="hyperlink" column="hyperlink" type="string"  not-null="false" length="2000"/>
+		<property name="areacode" column="areacode" type="string"  not-null="false" length="50"/>
+		<property name="type" column="type" type="integer"  not-null="false" length="2"/>
+		<property name="nickname" column="nickname" type="string"  not-null="false" length="255"/>
 		<many-to-one name="group" column="group_id" class="CmsGroup" not-null="true"></many-to-one>
 		<many-to-one name="department" column="depart_id" class="CmsDepartment" not-null="false"></many-to-one>
 		<map name="attr" table="jc_user_attr" cascade="all-delete-orphan">

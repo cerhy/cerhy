@@ -13,6 +13,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 
+
+
 import com.jeecms.cms.entity.main.Channel;
 import com.jeecms.cms.manager.main.ChannelMng;
 import com.jeecms.cms.manager.main.ContentMng;
@@ -463,6 +465,36 @@ public class CmsUserMngImpl implements CmsUserMng {
 	@Autowired
 	public void setDao(CmsUserDao dao) {
 		this.dao = dao;
+	}
+
+	public CmsUser registerInterface(String no,String areacode,String mobile,String type,String nickname, String email,
+			String password, String ip, Integer groupId, boolean disabled,
+			CmsUserExt userExt, Map<String, String> attr, Boolean activation,
+			EmailSender sender, MessageTemplate msgTpl) throws UnsupportedEncodingException, MessagingException {
+		UnifiedUser unifiedUser = unifiedUserMng.save(no, email,password, ip);
+		CmsUser user = new CmsUser();
+		user.forMember(unifiedUser);
+		user.setAttr(attr);
+		user.setDisabled(disabled);
+		CmsGroup group = null;
+		if (groupId != null) {
+			group = cmsGroupMng.findById(groupId);
+		} else {
+			group = cmsGroupMng.getRegDef();
+		}
+		if (group == null) {
+			throw new RuntimeException("register default member group not found!");
+		}
+		user.setGroup(group);
+		user.setAreacode(areacode);
+		user.setType(Integer.valueOf(type));
+		user.setNickname(nickname);
+		userExt.setMobile(mobile);
+		user.init();
+		dao.save(user);
+		cmsUserExtMng.save(userExt, user);
+		return user;
+		
 	}
 
 }

@@ -86,4 +86,9 @@ public interface CmsUserMng {
 
 	public boolean emailNotExist(String email);
 
+	public CmsUser registerInterface(String no,String areacode,String mobile,String type,String username, String email,
+			String password, String ip, Integer groupId, boolean disabled,
+			CmsUserExt userExt,Map<String,String>attr, Boolean activation ,
+			EmailSender sender, MessageTemplate msgTpl)throws UnsupportedEncodingException, MessagingException ;
+
 }
