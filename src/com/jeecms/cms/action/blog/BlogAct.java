@@ -197,6 +197,7 @@ public class BlogAct {
 	public String blog_add(boolean hasPermission,String nextUrl,HttpServletRequest request,HttpServletResponse response, ModelMap model) {
 		CmsSite site = CmsUtils.getSite(request);
 		CmsUser user = CmsUtils.getUser(request);
+		FrontUtils.frontData(request, model, site);
 		if (user == null) {
 			return FrontUtils.showLogin(request, model, site);
 		}
@@ -209,7 +210,6 @@ public class BlogAct {
  		model = blogCommon.getStarBlogger(request, model);
  		model = blogCommon.getAlreadyJoinGroup(request, model,user);
 		if(hasPermission){
-			FrontUtils.frontData(request, model, site);
 			model.addAttribute("site", site);
 			model.addAttribute("sessionId",request.getSession().getId());
 			return FrontUtils.getTplPath(request, site.getSolutionPath(),TPLDIR_BLOG, nextUrl);
@@ -726,6 +726,7 @@ public class BlogAct {
 	
 	public void columns_add(HttpServletRequest request,HttpServletResponse response, ModelMap model) {
 		CmsSite site = CmsUtils.getSite(request);
+		FrontUtils.frontData(request, model, site);
 		CmsUser user = CmsUtils.getUser(request);
 		if (user == null) {
 			FrontUtils.showLogin(request, model, site);
@@ -754,6 +755,7 @@ public class BlogAct {
 
 	public void columns_query(HttpServletRequest request, HttpServletResponse response,ModelMap model) {
 		CmsSite site = CmsUtils.getSite(request);
+		FrontUtils.frontData(request, model, site);
 		CmsUser user = CmsUtils.getUser(request);
 		if (user == null) {
 			FrontUtils.showLogin(request, model, site);
@@ -781,6 +783,7 @@ public class BlogAct {
 	
 	public void columns_delete(HttpServletRequest request,HttpServletResponse response, ModelMap model) {
 		CmsSite site = CmsUtils.getSite(request);
+		FrontUtils.frontData(request, model, site);
 		CmsUser user = CmsUtils.getUser(request);
 		if (user == null) {
 			FrontUtils.showLogin(request, model, site);
@@ -804,6 +807,7 @@ public class BlogAct {
 		String name = request.getParameter("updateName");
 		String orderId = request.getParameter("updateOrderId");
 		String uniqueCode = request.getParameter("uniqueCode");
+		FrontUtils.frontData(request, model, site);
 		if(StringUtils.isEmpty(uniqueCode)){
 			uniqueCode=null;
 		}
@@ -855,6 +859,7 @@ public class BlogAct {
 			return FrontUtils.showLogin(request, model, site);
 		}
 		channelMng.updateLinkUrl(hyperlink,user);
+		FrontUtils.frontData(request, model, site);
 		return "redirect:../blog/index.jspx";
 	}
 
@@ -1155,10 +1160,10 @@ public class BlogAct {
 				model.addAttribute("articleCount", totalCount);
 				model = blogCommon.getTotalCommentNum(model, u);
 				model = blogCommon.getStarBlogger(request, model);
-				FrontUtils.frontData(request, model, site);
 			} catch (Exception e) {
 				log.error("blogContentShow error", e);
 			}
+			FrontUtils.frontData(request, model, site);
 			return FrontUtils.getTplPath(request, site.getSolutionPath(),TPLDIR_BLOG,"tpl.blogContentShow");
 		}
 	
