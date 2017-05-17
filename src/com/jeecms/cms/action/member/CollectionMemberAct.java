@@ -169,7 +169,11 @@ public class CollectionMemberAct {
 		if(null != userId){
 			id = Integer.parseInt(userId);
 		}else{
-			id = user.getId();
+			if(user!=null){
+				id = user.getId();
+			}else{
+				return FrontUtils.showLogin(request, model, site);
+			}
 		}
 		model = blogCommon.getColumn(request,model,user);
 	    model = blogCommon.getChannel(request,model,user,site);

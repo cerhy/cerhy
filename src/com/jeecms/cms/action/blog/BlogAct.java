@@ -883,7 +883,18 @@ public class BlogAct {
 	public String friendCenter(String userIds,String q, Integer modelId,Integer queryChannelId,String nextUrl,Integer pageNo,HttpServletRequest request, ModelMap model) {
 		CmsSite site = CmsUtils.getSite(request);
 		CmsUser user = CmsUtils.getUser(request);
-		CmsUser userT=cmsUserMng.findById(Integer.valueOf(userIds.toString()));
+		CmsUser userT=null;
+		if(request.getParameter("name")!=null){
+			String username=request.getParameter("name").substring(1, request.getParameter("name").length());
+			CmsUser uname=cmsUserMng.findByUsername(username);
+			if(uname!=null){
+				userT=cmsUserMng.findById(uname.getId());
+			}else{
+				return FrontUtils.showMessage(request, model, "该账号暂未开通博客,或者请检查输入的账号是否正确!"); 
+			}
+		}else{
+			userT=cmsUserMng.findById(Integer.valueOf(userIds.toString()));
+		}
 		channelMng.updateBlogVisitNum(userT);
 		if(user!=null){
 			if(!user.getId().equals(userT.getId())){
@@ -900,12 +911,12 @@ public class BlogAct {
 		model = blogCommon.getAlreadyJoinGroup(request, model,userT);
 		model = blogCommon.getAddFriends(request, model,userT,user);
 		FrontUtils.frontData(request, model, site);
-		Pagination p = contentMng.getPageForMember_firendsBlog(Integer.valueOf(userIds),q, queryChannelId,site.getId(), modelId,null, cpn(pageNo), 20,null);
+		Pagination p = contentMng.getPageForMember_firendsBlog(Integer.valueOf(userT.getId()),q, queryChannelId,site.getId(), modelId,null, cpn(pageNo), 20,null);
 		p.setTotalCount(totalCount);
 		model.addAttribute("pagination", p);
 		model.addAttribute("GroupFlag", 0);
 		model.addAttribute("usert", userT);
-		model.addAttribute("userIds", userIds);
+		model.addAttribute("userIds", userT.getId());
 		if (!StringUtils.isBlank(q)) {
 			model.addAttribute("q", q);
 		}

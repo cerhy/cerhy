@@ -181,6 +181,14 @@
     <url-pattern>/dbfile.svl</url-pattern>
   </servlet-mapping>
   <servlet>
+    <servlet-name>restUrlTest</servlet-name>
+    <servlet-class>com.jeecms.cms.action.api.user.RestUrlTest</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>restUrlTest</servlet-name>
+    <url-pattern>/blog/user/*</url-pattern>
+  </servlet-mapping>
+  <servlet>
     <servlet-name>SnapScreen</servlet-name>
     <servlet-class>com.jeecms.core.action.front.SnapScreenServlet</servlet-class>
   </servlet>
