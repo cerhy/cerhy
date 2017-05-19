@@ -25,7 +25,7 @@
 </style>
 <script type="text/javascript">
 $(function(){
-	$.ajax({
+	/* $.ajax({
 		type:"post",
 		url:"${base}/blog/focuscheck.jspx",
 		dateType:'json',
@@ -42,7 +42,7 @@ $(function(){
 		}
 		}
 		
-	});	
+	}); */	
 	
 	$('#focus').click(function(){
 		$.ajax({
@@ -55,8 +55,9 @@ $(function(){
 			},
 			success:function(data){
 			if(1 == data){
-				$('#focus').hide();
-				$('#cancelfocus').show();
+				$('#focus').attr("id","cancelfocus");
+				$('#cancelfocus').html("取消关注");
+				//$('#cancelfocus').show();
 			}
 			}
 			
@@ -73,8 +74,9 @@ $(function(){
 			},
 			success:function(data){
 			if(1 == data){
-				$('#focus').show();
-				$('#cancelfocus').hide();
+				//$('#focus').show();
+				$('#cancelfocus').attr("id","focus");
+				$('#focus').html("关注");
 			}
 			}
 			
@@ -84,7 +86,6 @@ $(function(){
 	$('.user-menu-links li').click(function(){
 	    $(this).toggleClass('on');
 	});
-	
 	$(".st_tree").SimpleTree({
 		click:function(a){
 			if(!$(a).attr("hasChild"))

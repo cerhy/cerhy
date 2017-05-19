@@ -429,6 +429,23 @@ public class BlogCommon {
 		return model;
 	}
 	
+	public ModelMap getFouces(HttpServletRequest request, ModelMap model,
+			CmsUser userT, CmsUser user) {
+		if (user != null) {
+			List<Focus> list= focusMng.find(user.getId(), userT.getId());
+			if(null != list && list.size()>0){
+				model.addAttribute("fouceCheck",1);//已关注
+			}else{
+				model.addAttribute("fouceCheck",0);//未关注
+			}
+		}else{
+			model.addAttribute("fouceCheck",null);
+		}
+		return model;
+	}
+	
+	
+	
 	@Autowired
 	protected CmsUserMng cmsUserMng;
 	@Autowired
@@ -439,6 +456,7 @@ public class BlogCommon {
 	protected ChannelMng channelMng;
 	@Autowired
 	private ContentMng contentMng;
+
 	
 
 	

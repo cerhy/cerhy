@@ -994,6 +994,7 @@ public class ContributeAct extends AbstractContentMemberAct {
  		model = blogCommon.getStarBlogger(request, model);
  		model = blogCommon.getAlreadyJoinGroup(request, model,userT);
  		model = blogCommon.getAddFriends(request, model,userT,user);
+ 		model = blogCommon.getFouces(request, model,userT,user);
 		String path = request.getSession().getServletContext().getRealPath("/");
 		List<Focus> list = (new BlogDao()).findMaxFocusCount( path);
 	    List<Focus> l = null;
@@ -1087,6 +1088,7 @@ public class ContributeAct extends AbstractContentMemberAct {
  		model = blogCommon.getAlreadyJoinGroup(request, model,userT);
  		model = blogAct.getAllVisitors(q, modelId, queryChannelId,pageNo, request, model,userT);
  		model = blogCommon.getAddFriends(request, model,userT,user);
+ 		model = blogCommon.getFouces(request, model,userT,user);
 		String path = request.getSession().getServletContext().getRealPath("/");
 		List<Focus> list = (new BlogDao()).findMaxFocusCount( path);
 	    List<Focus> l = null;

@@ -910,6 +910,7 @@ public class BlogAct {
 		model = blogCommon.getStarBlogger(request, model);
 		model = blogCommon.getAlreadyJoinGroup(request, model,userT);
 		model = blogCommon.getAddFriends(request, model,userT,user);
+		model = blogCommon.getFouces(request, model,userT,user);
 		FrontUtils.frontData(request, model, site);
 		Pagination p = contentMng.getPageForMember_firendsBlog(Integer.valueOf(userT.getId()),q, queryChannelId,site.getId(), modelId,null, cpn(pageNo), 20,null);
 		p.setTotalCount(totalCount);
@@ -970,6 +971,7 @@ public class BlogAct {
  		model = blogCommon.getStarBlogger(request, model);
  		model = blogCommon.getAlreadyJoinGroup(request, model,user);
  		model = blogCommon.getAddFriends(request, model,user,u);
+ 		model = blogCommon.getFouces(request, model,user,u);
 		model.addAttribute("usert", user);
 		model.addAttribute("userIds", user.getId());
 		//model.addAttribute("columnId", columnId);
@@ -1109,6 +1111,7 @@ public class BlogAct {
  		model = blogCommon.getStarBlogger(request, model);
  		model = blogCommon.getAlreadyJoinGroup(request, model,u);
  		model = blogCommon.getAddFriends(request, model,u,user);
+ 		model = blogCommon.getFouces(request, model,u,user);
 		FrontUtils.frontData(request, model, site);
 		return FrontUtils.getTplPath(request, site.getSolutionPath(),TPLDIR_BLOG,"tpl.frienddataShow");
 	}
@@ -1241,6 +1244,7 @@ public class BlogAct {
 	 		model = blogCommon.getTotalCommentNum(model, user);
 	 		model = blogCommon.getStarBlogger(request, model);
 	 		model = blogCommon.getAddFriends(request, model,user,u);
+	 		model = blogCommon.getFouces(request, model,user,u);
 			FrontUtils.frontData(request, model, site);
 			return FrontUtils.getTplPath(request, site.getSolutionPath(),TPLDIR_BLOG,"tpl.blogContentShowFriend");
 		}

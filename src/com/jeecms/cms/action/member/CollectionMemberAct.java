@@ -230,6 +230,7 @@ public class CollectionMemberAct {
  		model = blogCommon.getStarBlogger(request, model);
  		model = blogCommon.getAlreadyJoinGroup(request, model,userT);
  		model = blogCommon.getAddFriends(request, model,userT,u);
+ 		model = blogCommon.getFouces(request, model,userT,u);
 		FrontUtils.frontData(request, model, site);
 		Pagination p = contentMng.getPageForCollection(site.getId(), userT
 				.getId(), cpn(pageNo), CookieUtils.getPageSize(request));
