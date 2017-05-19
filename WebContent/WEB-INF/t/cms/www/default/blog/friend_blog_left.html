@@ -109,10 +109,10 @@
 						          		 [#if k=='']
 								            [#list map[k] as v]
 								            	[#if v?index_of("=")!=-1]
-								         			<li  class="change"><a style="font-size: 12px;" target="_blank" href="${v?split("=")[1]}">${v?split("=")[0]}</a></li>
+								         			<li  class="change"><a style="font-size: 12px;" target="_blank" href="${v?split("=")[1]}" title="${v?split("=")[0]}">[@text_cut s=v?split("=")[0] len=10 append='...'/]</a></li>
 								         		[/#if]
 								         		[#if v?index_of("|")!=-1]
-								         			<li  class="change"><a style="font-size: 12px;" target="_blank" href="${v?split("|")[1]}">${v?split("|")[0]}</a></li>
+								         			<li  class="change"><a style="font-size: 12px;" target="_blank" href="${v?split("|")[1]}" title="${v?split("|")[0]}">[@text_cut s=v?split("|")[0] len=10 append='...'/]</a></li>
 								         		[/#if]
 								            [/#list]
 								         [#else]
@@ -121,10 +121,10 @@
 								            [#list map[k] as v]
 								            	[#if v?index_of("http:")!=-1]
 									            	[#if v?index_of("=")!=-1]
-									         			<li class="change"><a style="font-size: 12px;" target="_blank" href="${v?split("=")[1]}">${v?split("=")[0]}</a></li>
+									         			<li class="change"><a style="font-size: 12px;" target="_blank" href="${v?split("=")[1]}" title="${v?split("=")[0]}">[@text_cut s=v?split("=")[0] len=9 append='...'/]</a></li>
 									         		[/#if]
 									         		[#if v?index_of("|")!=-1]
-									         			<li class="change"><a style="font-size: 12px;" target="_blank" href="${v?split("|")[1]}">${v?split("|")[0]}</a></li>
+									         			<li class="change"><a style="font-size: 12px;" target="_blank" href="${v?split("|")[1]}" title="${v?split("|")[0]}">[@text_cut s=v?split("|")[0] len=9 append='...'/]</a></li>
 									         		[/#if]
 								            	[/#if]
 								            [/#list]
