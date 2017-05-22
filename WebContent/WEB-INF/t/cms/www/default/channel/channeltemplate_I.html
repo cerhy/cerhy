@@ -81,31 +81,31 @@ body{
 													            <h3 title="${a.title}">[@text_cut s=a.title len=25 append='...'/]</h3>
 													            <p>[#if a.typeImg??][@text_cut s=a.description len=30 append='...'/][#else][@text_cut s=a.description len=40 append='...'/][/#if]</p>
 													         [#if c.id=305||c.id=316||c.id=323]
-												          		<div class="fl"><span class="ch">美术<em>${a.date?string("yyyy-MM-dd")}</em></span></div>
+												          		<div class="fl"><span class="ch">美术<em>${a.date?string("yyyy-MM-dd")}&nbsp;&nbsp;&nbsp;作者:&nbsp;${a.author!a.user.username}&nbsp;&nbsp;&nbsp;阅读:&nbsp;${a.views!}&nbsp;&nbsp;&nbsp;评论:&nbsp;${a.commentsCheckedNum!}</em></span></div>
 												         	[#elseif c.id=304||c.id=315||c.id=322]
-												          		<div class="fl"><span class="ch">音乐<em>${a.date?string("yyyy-MM-dd")}</em></span></div>
+												          		<div class="fl"><span class="ch">音乐<em>${a.date?string("yyyy-MM-dd")}&nbsp;&nbsp;&nbsp;作者:&nbsp;${a.author!a.user.username}&nbsp;&nbsp;&nbsp;阅读:&nbsp;${a.views!}&nbsp;&nbsp;&nbsp;评论:&nbsp;${a.commentsCheckedNum!}</em></span></div>
 												         	[#elseif c.id=303||c.id=314||c.id=321]
-												          		<div class="fl"><span class="ch">体育<em>${a.date?string("yyyy-MM-dd")}</em></span></div>
+												          		<div class="fl"><span class="ch">体育<em>${a.date?string("yyyy-MM-dd")}&nbsp;&nbsp;&nbsp;作者:&nbsp;${a.author!a.user.username}&nbsp;&nbsp;&nbsp;阅读:&nbsp;${a.views!}&nbsp;&nbsp;&nbsp;评论:&nbsp;${a.commentsCheckedNum!}</em></span></div>
 												         	[#elseif c.id=416||c.id=417||c.id=418]
-												          		<div class="fl"><span class="ch">综合实践<em>${a.date?string("yyyy-MM-dd")}</em></span></div>
+												          		<div class="fl"><span class="ch">综合实践<em>${a.date?string("yyyy-MM-dd")}&nbsp;&nbsp;&nbsp;作者:&nbsp;${a.author!a.user.username}&nbsp;&nbsp;&nbsp;阅读:&nbsp;${a.views!}&nbsp;&nbsp;&nbsp;评论:&nbsp;${a.commentsCheckedNum!}</em></span></div>
 												         	[#elseif c.id=300||c.id=311]
-												          		<div class="fl"><span class="ch">地理<em>${a.date?string("yyyy-MM-dd")}</em></span></div>
+												          		<div class="fl"><span class="ch">地理<em>${a.date?string("yyyy-MM-dd")}&nbsp;&nbsp;&nbsp;作者:&nbsp;${a.author!a.user.username}&nbsp;&nbsp;&nbsp;阅读:&nbsp;${a.views!}&nbsp;&nbsp;&nbsp;评论:&nbsp;${a.commentsCheckedNum!}</em></span></div>
 												         	[#elseif c.id=299||c.id=310]
-												          		<div class="fl"><span class="ch">历史<em>${a.date?string("yyyy-MM-dd")}</em></span></div>
+												          		<div class="fl"><span class="ch">历史<em>${a.date?string("yyyy-MM-dd")}&nbsp;&nbsp;&nbsp;作者:&nbsp;${a.author!a.user.username}&nbsp;&nbsp;&nbsp;阅读:&nbsp;${a.views!}&nbsp;&nbsp;&nbsp;评论:&nbsp;${a.commentsCheckedNum!}</em></span></div>
 												         	[#elseif c.id=312||c.id=319]
-												          		<div class="fl"><span class="ch">信息技术<em>${a.date?string("yyyy-MM-dd")}</em></span></div>
+												          		<div class="fl"><span class="ch">信息技术<em>${a.date?string("yyyy-MM-dd")}&nbsp;&nbsp;&nbsp;作者:&nbsp;${a.author!a.user.username}&nbsp;&nbsp;&nbsp;阅读:&nbsp;${a.views!}&nbsp;&nbsp;&nbsp;评论:&nbsp;${a.commentsCheckedNum!}</em></span></div>
 												         	[#elseif c.id=309||c.id=317]
-												          		<div class="fl"><span class="ch">政治<em>${a.date?string("yyyy-MM-dd")}</em></span></div>
+												          		<div class="fl"><span class="ch">政治<em>${a.date?string("yyyy-MM-dd")}&nbsp;&nbsp;&nbsp;作者:&nbsp;${a.author!a.user.username}&nbsp;&nbsp;&nbsp;阅读:&nbsp;${a.views!}&nbsp;&nbsp;&nbsp;评论:&nbsp;${a.commentsCheckedNum!}</em></span></div>
 												         	[#elseif c.id=296||c.id=307]
-												          		<div class="fl"><span class="ch">化学<em>${a.date?string("yyyy-MM-dd")}</em></span></div>
+												          		<div class="fl"><span class="ch">化学<em>${a.date?string("yyyy-MM-dd")}&nbsp;&nbsp;&nbsp;作者:&nbsp;${a.author!a.user.username}&nbsp;&nbsp;&nbsp;阅读:&nbsp;${a.views!}&nbsp;&nbsp;&nbsp;评论:&nbsp;${a.commentsCheckedNum!}</em></span></div>
 												         	[#elseif c.id=295||c.id=306]
-												          		<div class="fl"><span class="ch">物理<em>${a.date?string("yyyy-MM-dd")}</em></span></div>
+												          		<div class="fl"><span class="ch">物理<em>${a.date?string("yyyy-MM-dd")}&nbsp;&nbsp;&nbsp;作者:&nbsp;${a.author!a.user.username}&nbsp;&nbsp;&nbsp;阅读:&nbsp;${a.views!}&nbsp;&nbsp;&nbsp;评论:&nbsp;${a.commentsCheckedNum!}</em></span></div>
 												         	[#elseif c.id=297||c.id=308]
-												          		<div class="fl"><span class="ch">生物<em>${a.date?string("yyyy-MM-dd")}</em></span></div>
+												          		<div class="fl"><span class="ch">生物<em>${a.date?string("yyyy-MM-dd")}&nbsp;&nbsp;&nbsp;作者:&nbsp;${a.author!a.user.username}&nbsp;&nbsp;&nbsp;阅读:&nbsp;${a.views!}&nbsp;&nbsp;&nbsp;评论:&nbsp;${a.commentsCheckedNum!}</em></span></div>
 												         	[#elseif c.id=140||c.id=142]
-												          		<div class="fl"><span class="ch">语文<em>${a.date?string("yyyy-MM-dd")}</em></span></div>
+												          		<div class="fl"><span class="ch">语文<em>${a.date?string("yyyy-MM-dd")}&nbsp;&nbsp;&nbsp;作者:&nbsp;${a.author!a.user.username}&nbsp;&nbsp;&nbsp;阅读:&nbsp;${a.views!}&nbsp;&nbsp;&nbsp;评论:&nbsp;${a.commentsCheckedNum!}</em></span></div>
 												         	[#else]
-													          	<div class="fl"><span class="ch">${a.ctgName}<em>${a.date?string("yyyy-MM-dd")}</em></span></div>
+													          	<div class="fl"><span class="ch">${a.ctgName}<em>${a.date?string("yyyy-MM-dd")}&nbsp;&nbsp;&nbsp;作者:&nbsp;${a.author!a.user.username}&nbsp;&nbsp;&nbsp;阅读:&nbsp;${a.views!}&nbsp;&nbsp;&nbsp;评论:&nbsp;${a.commentsCheckedNum!}</em></span></div>
 												         	[/#if]
 													          [#if a_index<1]
 													          [#if c.id=305||c.id=316||c.id=323]
