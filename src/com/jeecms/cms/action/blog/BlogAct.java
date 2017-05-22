@@ -883,6 +883,9 @@ public class BlogAct {
 	public String friendCenter(String userIds,String q, Integer modelId,Integer queryChannelId,String nextUrl,Integer pageNo,HttpServletRequest request, ModelMap model) {
 		CmsSite site = CmsUtils.getSite(request);
 		CmsUser user = CmsUtils.getUser(request);
+		/*if(user==null){
+			return FrontUtils.showLogin(request, model, site);
+		}*/
 		CmsUser userT=null;
 		if(request.getParameter("name")!=null){
 			String username=request.getParameter("name").substring(1, request.getParameter("name").length());
@@ -1119,67 +1122,71 @@ public class BlogAct {
 	public String blogContentShow(String[] paths,String[] params,
 			PageInfo info,Integer pageNo,HttpServletRequest request,
 			HttpServletResponse response, ModelMap model,String columnId){
-			Content content = contentMng.findById(Integer.parseInt(paths[1]));
-			if (content == null) {
-				log.debug("Content id not found: {}", paths[1]);
-				return FrontUtils.pageNotFound(request, response, model);
-			}
-			Integer pageCount=content.getPageCount();
-			if(pageNo>pageCount||pageNo<0){
-				return FrontUtils.pageNotFound(request, response, model);
-			}
-			//非终审文章
-			CmsConfig config=CmsUtils.getSite(request).getConfig();
-			config.getConfigAttr().getPreview();
-			CmsUser u = CmsUtils.getUser(request);
-			CmsSite site = content.getSite();
-			Set<CmsGroup> groups = content.getViewGroupsExt();
-			//groups.size();
-			
-			String txt = content.getTxtByNo(pageNo);
-			// 内容加上关键字
-			try {
-				txt = cmsKeywordMng.attachKeyword(site.getId(), txt);
-				Paginable pagination = new SimplePage(pageNo, 1, content.getPageCount());
-				model.addAttribute("pagination", pagination);
-				FrontUtils.frontPageData(request, model);
-				model.addAttribute("content", content);
-				model.addAttribute("channel", content.getChannel());
-				model.addAttribute("title", content.getTitleByNo(pageNo));
-				model.addAttribute("txt", txt);
-				model.addAttribute("columnIdZ", columnId);
-				model.addAttribute("pic", content.getPictureByNo(pageNo));
-				String collection = request.getParameter("collection");
-				String d = request.getParameter("d");
-				if(null != collection || "2".equals(d)){//转载文章显示
-					model.addAttribute("collection", 1);
-					model.addAttribute("uId", u.getId());
-				}else{
-					String GroupFlag = request.getParameter("GroupFlag");
-					if("-1".equals(GroupFlag)){
-						model.addAttribute("GroupFlagData", -1);
-					}else{
-						model.addAttribute("GroupFlagData", content.getUser().getId());
-					}
-				}
-				model = blogCommon.getAlreadyJoinGroup(request, model,u);
-				try {
-					model = blogCommon.getChannel(request,model,u,site);
-				} catch (Exception e) {
-					log.error("blogContentShow.getChannel error", e);
-				}
-				model =blogCommon.getHyperlink(request,model,u);
-				model = blogCommon.getColumn(request,model,u);
-				int totalCount = blogCommon.getTotalArticleNum(model,u);
-				model.addAttribute("articleCount", totalCount);
-				model = blogCommon.getTotalCommentNum(model, u);
-				model = blogCommon.getStarBlogger(request, model);
-			} catch (Exception e) {
-				log.error("blogContentShow error", e);
-			}
-			FrontUtils.frontData(request, model, site);
-			return FrontUtils.getTplPath(request, site.getSolutionPath(),TPLDIR_BLOG,"tpl.blogContentShow");
+		CmsUser u = CmsUtils.getUser(request);
+		CmsSite sites = CmsUtils.getSite(request);
+		if(u==null){
+			return FrontUtils.showLogin(request, model, sites);
 		}
+		Content content = contentMng.findById(Integer.parseInt(paths[1]));
+		if (content == null) {
+			log.debug("Content id not found: {}", paths[1]);
+			return FrontUtils.pageNotFound(request, response, model);
+		}
+		Integer pageCount=content.getPageCount();
+		if(pageNo>pageCount||pageNo<0){
+			return FrontUtils.pageNotFound(request, response, model);
+		}
+		//非终审文章
+		CmsConfig config=CmsUtils.getSite(request).getConfig();
+		config.getConfigAttr().getPreview();
+		CmsSite site = content.getSite();
+		Set<CmsGroup> groups = content.getViewGroupsExt();
+		//groups.size();
+		
+		String txt = content.getTxtByNo(pageNo);
+		// 内容加上关键字
+		try {
+			txt = cmsKeywordMng.attachKeyword(site.getId(), txt);
+			Paginable pagination = new SimplePage(pageNo, 1, content.getPageCount());
+			model.addAttribute("pagination", pagination);
+			FrontUtils.frontPageData(request, model);
+			model.addAttribute("content", content);
+			model.addAttribute("channel", content.getChannel());
+			model.addAttribute("title", content.getTitleByNo(pageNo));
+			model.addAttribute("txt", txt);
+			model.addAttribute("columnIdZ", columnId);
+			model.addAttribute("pic", content.getPictureByNo(pageNo));
+			String collection = request.getParameter("collection");
+			String d = request.getParameter("d");
+			if(null != collection || "2".equals(d)){//转载文章显示
+				model.addAttribute("collection", 1);
+				model.addAttribute("uId", u.getId());
+			}else{
+				String GroupFlag = request.getParameter("GroupFlag");
+				if("-1".equals(GroupFlag)){
+					model.addAttribute("GroupFlagData", -1);
+				}else{
+					model.addAttribute("GroupFlagData", content.getUser().getId());
+				}
+			}
+			model = blogCommon.getAlreadyJoinGroup(request, model,u);
+			try {
+				model = blogCommon.getChannel(request,model,u,site);
+			} catch (Exception e) {
+				log.error("blogContentShow.getChannel error", e);
+			}
+			model =blogCommon.getHyperlink(request,model,u);
+			model = blogCommon.getColumn(request,model,u);
+			int totalCount = blogCommon.getTotalArticleNum(model,u);
+			model.addAttribute("articleCount", totalCount);
+			model = blogCommon.getTotalCommentNum(model, u);
+			model = blogCommon.getStarBlogger(request, model);
+		} catch (Exception e) {
+			log.error("blogContentShow error", e);
+		}
+		FrontUtils.frontData(request, model, site);
+		return FrontUtils.getTplPath(request, site.getSolutionPath(),TPLDIR_BLOG,"tpl.blogContentShow");
+	}
 	
 	public String blogContentShowFriend(String[] paths,String[] params,
 			PageInfo info,Integer pageNo,HttpServletRequest request,
