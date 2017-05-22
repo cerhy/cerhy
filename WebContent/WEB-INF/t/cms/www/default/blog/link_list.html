@@ -52,7 +52,7 @@ $('.user-menu-links li').click(function(){
 	         	<textarea id="hyperlink" name="hyperlink" rows="18" cols="100">${linkUrls }</textarea>
 	         	<br />
 	          	<span class="fl">
-					<p>每行可以输入一个链接，标题和网址之间用“=”分隔开，最多可设置100个。</p>
+					<p>每行可以输入一个链接，标题和网址之间用“=”分隔开，最多可设置15个。</p>
 					<p>链接可以分组，不包含“=”号的行就是分组标题。</p>
 					<p>例如：</p>
 					<p>海南教育研究新浪微博=http://t.sina.com.cn/hainanvae</p>
@@ -74,3 +74,28 @@ $('.user-menu-links li').click(function(){
 [#include "../include/footers.html"/]
 </body>
 </html>
+<script type="text/javascript">
+(function($){
+    $(document).ready(function(){
+        $(".submit").click(function() {
+        	var hyperlink=$("#hyperlink").val();
+    		var hyperlinks = hyperlink.replace(new RegExp( "\\n", "g" ),"~");
+    		var str =hyperlinks.split("~");
+			var num=0;
+    		for(var i=0;i<str.length;i++){
+				if(str[i].indexOf("=")!=-1){
+					num++;
+				}
+			}
+		if(num>15){
+			 alert("链接添加超过显示限制个数!");
+             return false;
+		}
+    	var obj = $(this);
+    	obj.parents('form').submit(); //验证码正确提交表单
+        return true;
+
+        })
+    });
+})(jQuery);
+</script>
