@@ -10,7 +10,7 @@
 		                 	[#if user??]
 		                     [#if usert??]
 		                     [#if fouceCheck??]
-		                     <a [#if fouceCheck=0]id="focus"[#else]id="cancelfocus"[/#if] style="cursor: pointer;" class="user-oparetion-btn1">[#if fouceCheck=0]关注[#else]取消关注[/#if]</a>
+		                     <a id="focus"[#if fouceCheck==0] onclick="focuss()"[#else]onclick="cancelfocus()"[/#if] style="cursor: pointer;" class="user-oparetion-btn1">[#if fouceCheck=0]关注[#else]取消关注[/#if]</a>
 		                     [/#if]
 		                     <!-- <a id="focus" style="cursor: pointer;" class="user-oparetion-btn1">关注</a>
 		                     <a id="cancelfocus" style="cursor: pointer;" class="user-oparetion-btn1">取消关注</a> -->

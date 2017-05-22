@@ -23,7 +23,7 @@
 }
 </style>
 <script type="text/javascript">
-$(function(){
+
 	/* $.ajax({
 		type:"post",
 		url:"${base}/blog/focuscheck.jspx",
@@ -43,7 +43,7 @@ $(function(){
 		
 	}); */	
 	
-	$('#focus').click(function(){
+	function focuss(){
 		$.ajax({
 			type:"post",
 			url:"${base}/blog/focus.jspx",
@@ -54,16 +54,17 @@ $(function(){
 			},
 			success:function(data){
 			if(1 == data){
-				$('#focus').attr("id","cancelfocus");
-				$('#cancelfocus').html("取消关注");
+				$('#focus').attr("onclick","cancelfocus()");
+				//$('#focus').attr("id","cancelfocus");
+				$('#focus').html("取消关注");
 				//$('#cancelfocus').show();
 			}
 			}
 			
 		});	
-	});
+	}
 	
-	$('#cancelfocus').click(function(){
+	function cancelfocus(){
 		$.ajax({
 			type:"post",
 			url:"${base}/blog/cancelfocus.jspx",
@@ -74,14 +75,15 @@ $(function(){
 			success:function(data){
 			if(1 == data){
 				//$('#focus').show();
-				$('#cancelfocus').attr("id","focus");
+				$('#focus').attr("onclick","focuss()");
+				//$('#cancelfocus').attr("id","focus");
 				$('#focus').html("关注");
 			}
 			}
 			
 		});	
-	});
-	
+	}
+$(function(){	
 	$('.user-menu-links li').click(function(){
 	    $(this).toggleClass('on');
 	});
