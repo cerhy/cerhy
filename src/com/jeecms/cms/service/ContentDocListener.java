@@ -34,6 +34,13 @@ public class ContentDocListener extends ContentListenerAbstract {
 			contentDocMng.createPdfFile(content.getContentDoc());
 		}
 	}
+	
+	@Override
+	public void afterSaves(Content content, ContentDoc doc,int i) {
+		if (content.isChecked()) {
+			contentDocMng.createPdfFiles(content,doc,i);
+		}
+	}
 
 	@Override
 	public Map<String, Object> preChange(Content content) {

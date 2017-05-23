@@ -127,18 +127,18 @@ function uploadAttachSuccess(file,data) {
 		var attachName=jsonData.attachName;
 		$("#attachmentPaths"+index).val(attachUrl);
 		$("#attachmentNames"+index).val(attachName);
-		//var pos = attachUrl.lastIndexOf(".");
-		//var lastname = attachUrl.substring(pos+1,attachUrl.length);
-		//if(lastname.toUpperCase()=="BMP"||lastname.toUpperCase()=="PNG"
-		//		||lastname.toUpperCase()=="GIF"||lastname.toUpperCase()=="JPG"
-		//		||lastname.toUpperCase()=="JPEG"){
-		//	$("#attachmentPathss"+index).attr('src',attachUrl); 
-		//	
-		//}else{	
-		//	$("#attachmentPathss"+index).attr('src',"/${res}/images/fileDown.png"); 
-		//	$("#attachmentPathss"+index).attr('url',attachUrl); 
-		//}
-		//$("#attachmentPathss"+index).attr('title',attachName);
+		var pos = attachUrl.lastIndexOf(".");
+		var lastname = attachUrl.substring(pos+1,attachUrl.length);
+		if(lastname.toUpperCase()=="BMP"||lastname.toUpperCase()=="PNG"
+				||lastname.toUpperCase()=="GIF"||lastname.toUpperCase()=="JPG"
+				||lastname.toUpperCase()=="JPEG"){
+			$("#attachmentPathss"+index).attr('src',attachUrl); 
+			
+		}else{	
+			$("#attachmentPathss"+index).attr('src',"/${res}/images/fileDown.png"); 
+			$("#attachmentPathss"+index).attr('url',attachUrl); 
+		}
+		$("#attachmentPathss"+index).attr('title',attachName);
 	}
 }
 function changeModel(){
@@ -354,10 +354,6 @@ $(function(){
                  </select>
                 </td>
               </tr>
-              <!-- <tr>
-              	<td>附件展示方式</td>
-              	<td><input type="checkbox" id="showStyle" name="showStyle" value="1"/>若附件可预览时嵌入文章</td>
-              </tr> -->
 			   <tr>
                 <td class="tggl-top">阅读密码</td>
                 <td>
@@ -377,7 +373,10 @@ $(function(){
                 [/#if]
                 </td>
               </tr>
-			  
+			  <tr>
+              	<td>附件展示方式</td>
+              	<td><input type="checkbox" id="showStyle" name="showStyle" value="1"/>若附件可预览时嵌入文章</td>
+              </tr>
               <tr>
                 <td class="tggl-top">附件</td>
                 <td style="padding:10px 5px;">
@@ -413,6 +412,8 @@ $(function(){
 						
 						<td align="center">
 						<input type="text" id="attachmentNames{0}" name="attachmentNames" class="member-change" style="width:130px;height:24px;"/>
+						<br />
+						<img src="" title="" onclick="addSrcHtml(this)" id="attachmentPathss{0}" name="attachmentPathss" class="member-change" style="width:130px;height:80px;cursor: pointer;"/>
 						</td>
 						<td align="center" style="display:none"><input type="text" id="attachmentPaths{0}" name="attachmentPaths" class="member-change" style="width:130px;height:24px;"/></td>
 						<td align="center" style="display:none">

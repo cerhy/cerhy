@@ -146,6 +146,33 @@ public class ContentDocMngImpl implements ContentDocMng {
 		doc=update(doc,doc.getContent());
 		return doc;
 	}
+	
+	
+	public void createPdfFiles(Content content,ContentDoc doc,int i){
+		CmsSite site=content.getSite();
+		CmsConfig config=site.getConfig();
+		String ctx=config.getContextPath();
+		String path = doc.getDocPath();
+		if(StringUtils.isNotBlank(ctx)&&path.indexOf(ctx)!=-1){
+			path = path.split(ctx)[1];
+		}
+		//获取文件真实路径
+		String fileRealPath = realPathResolver.get(path);
+		String fileName=FileUtils.getFileName(path);
+		String outPdfRealPath = realPathResolver.get(FileUtils.getFilePath(path));
+		String pdfPath=FileUtils.getFilePath(path)+fileName+".pdf";
+		if(!fileRealPath.endsWith(OpenOfficeConverter.PDF)){
+			//转换文档成pdf
+			openOfficeConverter.convertToPdf(fileRealPath,outPdfRealPath + "/",fileName);
+		}
+		if(StringUtils.isNotBlank(ctx)){
+			pdfPath=ctx+pdfPath;
+		}
+		content.getAttachments().get(i).setPdf(pdfPath);
+		//doc.setPdfPath(pdfPath);
+		//doc=update(doc,doc.getContent());
+
+	}
 
 	private ContentDocDao dao;
 	@Autowired

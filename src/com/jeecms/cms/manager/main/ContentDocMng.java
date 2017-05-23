@@ -13,4 +13,6 @@ public interface ContentDocMng {
 	public ContentDoc createSwfFile(ContentDoc doc);
 	
 	public ContentDoc createPdfFile(ContentDoc doc);
+
+	public void createPdfFiles(Content content, ContentDoc contentDoc,int i);
 }

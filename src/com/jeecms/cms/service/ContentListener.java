@@ -3,6 +3,7 @@ package com.jeecms.cms.service;
 import java.util.Map;
 
 import com.jeecms.cms.entity.main.Content;
+import com.jeecms.cms.entity.main.ContentDoc;
 
 /**
  * 内容修改监听器
@@ -21,6 +22,15 @@ public interface ContentListener {
 	 * @param content
 	 */
 	public void afterSave(Content content);
+	
+	/**
+	 * 保存之后执行
+	 * 
+	 * @param content
+	 * @param doc 
+	 * @param i 
+	 */
+	public void afterSaves(Content content, ContentDoc doc, int i);
 
 	/**
 	 * 修改之前执行

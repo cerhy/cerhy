@@ -3,6 +3,7 @@ package com.jeecms.cms.service;
 import java.util.Map;
 
 import com.jeecms.cms.entity.main.Content;
+import com.jeecms.cms.entity.main.ContentDoc;
 
 /**
  * ContentListener的抽象实现
@@ -25,5 +26,9 @@ public class ContentListenerAbstract implements ContentListener {
 	}
 
 	public void preSave(Content content) {
+	}
+
+	public void afterSaves(Content content,ContentDoc doc,int i) {
+		
 	}
 }

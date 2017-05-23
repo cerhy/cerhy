@@ -394,8 +394,22 @@ public class ContentMngImpl implements ContentMng, ChannelDeleteChecker {
 		//文章操作记录
 		contentRecordMng.record(bean, user, ContentOperateType.add);
 		
-		// 执行监听器
-		afterSave(bean);
+		
+		if (attachmentPaths != null && attachmentPaths.length > 0) {
+			doc=new ContentDoc();
+			for (int i = 0, len = attachmentPaths.length; i < len; i++) {
+				if (!StringUtils.isBlank(attachmentPaths[i])) {
+					// 执行监听器
+					doc.setIsOpen(true);
+					doc.setDocPath(attachmentPaths[i]);
+					doc.setFileSuffix(String.valueOf(attachmentPaths[i].toString().lastIndexOf(".")));
+					afterSaves(bean,doc,i);
+				}
+			}
+		}else{
+			// 执行监听器
+			afterSave(bean);
+		}
 		return bean;
 	}
 	
@@ -1232,6 +1246,13 @@ public class ContentMngImpl implements ContentMng, ChannelDeleteChecker {
 		if (listenerList != null) {
 			for (ContentListener listener : listenerList) {
 				listener.afterSave(content);
+			}
+		}
+	}
+	private void afterSaves(Content content,ContentDoc doc,int i) {
+		if (listenerList != null) {
+			for (ContentListener listener : listenerList) {
+				listener.afterSaves(content,doc,i);
 			}
 		}
 	}
