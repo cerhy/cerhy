@@ -302,6 +302,7 @@ public class InterfaceDaoImpl  extends HibernateBaseDao<Content, Integer> implem
 					int contentid=list.get(i).getId();
 					int userid=list.get(i).getUser().getId();
 					String author=list.get(i).getContentExt().getAuthor()==null?"":list.get(i).getContentExt().getAuthor();
+					int category=list.get(i).getChannel().getId();
 					String title=list.get(i).getContentExt().getTitle();
 					String description=list.get(i).getContentExt().getDescription()==null?"":list.get(i).getContentExt().getDescription();
 					String content=list.get(i).getContentTxt().getTxt()==null?"":list.get(i).getContentTxt().getTxt();
@@ -331,6 +332,7 @@ public class InterfaceDaoImpl  extends HibernateBaseDao<Content, Integer> implem
 					jb.put("id", contentid);
 					jb.put("pubid", userid);
 					jb.put("author", author);
+					jb.put("category", category);
 					jb.put("title", title);
 					jb.put("abstract", description);
 					jb.put("content", cu);
@@ -556,6 +558,7 @@ public class InterfaceDaoImpl  extends HibernateBaseDao<Content, Integer> implem
 							num=num+1;
 							int contentid=list.get(i).getId();
 							String author=list.get(i).getContentExt().getAuthor()==null?"":list.get(i).getContentExt().getAuthor();
+							int category=list.get(i).getChannel().getId();
 							String title=list.get(i).getContentExt().getTitle();
 							String description=list.get(i).getContentExt().getDescription()==null?"":list.get(i).getContentExt().getDescription();
 							String content=list.get(i).getContentTxt().getTxt()==null?"":list.get(i).getContentTxt().getTxt();
@@ -585,6 +588,7 @@ public class InterfaceDaoImpl  extends HibernateBaseDao<Content, Integer> implem
 							jb.put("id", contentid);
 							jb.put("pubid", userid);
 							jb.put("author", author);
+							jb.put("category", category);
 							jb.put("title", title);
 							jb.put("abstract", description);
 							jb.put("content", cu);
@@ -611,6 +615,7 @@ public class InterfaceDaoImpl  extends HibernateBaseDao<Content, Integer> implem
 						num=page.getTotalCount();
 						int contentid=list.get(i).getId();
 						String author=list.get(i).getContentExt().getAuthor()==null?"":list.get(i).getContentExt().getAuthor();
+						int category=list.get(i).getChannel().getId();
 						String title=list.get(i).getContentExt().getTitle();
 						String description=list.get(i).getContentExt().getDescription()==null?"":list.get(i).getContentExt().getDescription();
 						String content=list.get(i).getContentTxt().getTxt()==null?"":list.get(i).getContentTxt().getTxt();
@@ -640,6 +645,7 @@ public class InterfaceDaoImpl  extends HibernateBaseDao<Content, Integer> implem
 						jb.put("id", contentid);
 						jb.put("pubid", userid);
 						jb.put("author", author);
+						jb.put("category", category);
 						jb.put("title", title);
 						jb.put("abstract", description);
 						jb.put("content", cu);
