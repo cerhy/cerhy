@@ -48,7 +48,7 @@
 										          <div class="report-text">
 										            <h3 title="${a.title}">[@text_cut s=a.title len=25 append='...'/]</h3>
 										            <p>[#if a.typeImg??][@text_cut s=a.description len=30 append='...'/][#else][@text_cut s=a.description len=40 append='...'/][/#if]</p>
-										          	<div class="fl"><span class="ch">${a.ctgName}<em>${a.date?string("yyyy-MM-dd")}&nbsp;&nbsp;&nbsp;作者:&nbsp;${a.author!a.user.username}&nbsp;&nbsp;&nbsp;阅读:&nbsp;${a.views!}&nbsp;&nbsp;&nbsp;评论:&nbsp;${a.commentsCheckedNum!}</em></span></div>
+										          	<div class="fl"><span class="ch">${a.ctgName}<em>${a.date?string("yyyy-MM-dd")}&nbsp;&nbsp;&nbsp;作者:&nbsp;${a.author!a.user.username}&nbsp;&nbsp;&nbsp;阅读:&nbsp;${a.contentCount.views!}&nbsp;&nbsp;&nbsp;评论:&nbsp;${a.contentCount.comments!}</em></span></div>
 										          </div>
 										          <em class="arrowBtn"></em>
 										      </div>
