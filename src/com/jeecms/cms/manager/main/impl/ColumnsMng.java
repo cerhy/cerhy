@@ -8,6 +8,7 @@ import com.jeecms.cms.dao.main.impl.ColumnsDao;
 import com.jeecms.cms.entity.assist.CmsJoinGroup;
 import com.jeecms.cms.entity.assist.CmsPersonalChannel;
 import com.jeecms.cms.entity.assist.CmsPostilInfo;
+import com.jeecms.cms.entity.assist.CmsReportDoc;
 import com.jeecms.cms.entity.main.Columns;
 import com.jeecms.core.entity.CmsUser;
 
@@ -65,8 +66,14 @@ public class ColumnsMng {
 	public int delGroup(String groupId, CmsUser user) {
 		return columnsDao.delGroup(groupId,user);
 	}
+	
+	public int saveReportDoc(CmsReportDoc crd) {
+		return columnsDao.saveReportDoc(crd);
+	}
+	
 	@Autowired
 	private ColumnsDao columnsDao;
+	
 
 
 }

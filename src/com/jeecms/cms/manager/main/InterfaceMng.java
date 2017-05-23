@@ -20,4 +20,10 @@ public interface InterfaceMng {
 
 	Object articleinfo(InterfaceParam param);
 
+	Object downloadFile(InterfaceParam param,HttpServletRequest request);
+
+	Object searchinfo(InterfaceParam param);
+	
+	Object getResponseDataSearch(Object status, Object object, Integer search);
+
 }

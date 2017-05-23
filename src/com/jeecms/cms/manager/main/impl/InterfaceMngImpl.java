@@ -44,6 +44,21 @@ public class InterfaceMngImpl implements InterfaceMng {
 	public Object articleinfo(InterfaceParam param) {
 		return interfaceDao.articleinfo(param);
 	}
+
+	@Override
+	public Object downloadFile(InterfaceParam param,HttpServletRequest request) {
+		return interfaceDao.downloadFile(param,request);
+	}
+
+	@Override
+	public Object searchinfo(InterfaceParam param) {
+		return interfaceDao.searchinfo(param);
+	}
+
+	@Override
+	public Object getResponseDataSearch(Object status, Object object, Integer search) {
+		return interfaceDao.getResponseDataSearch(status,object,search);
+	}
 	
 	
 	

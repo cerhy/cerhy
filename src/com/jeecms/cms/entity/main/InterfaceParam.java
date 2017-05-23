@@ -25,6 +25,16 @@ public class InterfaceParam implements Serializable{
     private String count;//数量
     private String userid;//指定用户下的文章
     private String name;//姓名
+    
+    private String reportname;//报告名称
+    private String reporturl;//报告链接地址
+    private String reporttime;//报告时间
+    
+    private String keyword;//关键字
+    private String page;//请求的页数，从1开始
+    
+    
+    
 	public String getAreacode() {
 		return areacode;
 	}
@@ -132,6 +142,36 @@ public class InterfaceParam implements Serializable{
 	}
 	public void setName(String name) {
 		this.name = name;
+	}
+	public String getReportname() {
+		return reportname;
+	}
+	public void setReportname(String reportname) {
+		this.reportname = reportname;
+	}
+	public String getReporturl() {
+		return reporturl;
+	}
+	public void setReporturl(String reporturl) {
+		this.reporturl = reporturl;
+	}
+	public String getReporttime() {
+		return reporttime;
+	}
+	public void setReporttime(String reporttime) {
+		this.reporttime = reporttime;
+	}
+	public String getKeyword() {
+		return keyword;
+	}
+	public void setKeyword(String keyword) {
+		this.keyword = keyword;
+	}
+	public String getPage() {
+		return page;
+	}
+	public void setPage(String page) {
+		this.page = page;
 	}
 	
 	

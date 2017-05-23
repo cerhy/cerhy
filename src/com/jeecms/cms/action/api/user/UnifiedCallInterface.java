@@ -24,8 +24,8 @@ import com.jeecms.cms.manager.main.InterfaceMng;
 import com.jeecms.core.web.util.DateUtils;
 
 /**
- * 统一调用接口
- * 
+ * 盯牛手机APP统一调用接口
+ * @aothor zph
  */
 @Controller
 public class UnifiedCallInterface {
@@ -68,7 +68,7 @@ public class UnifiedCallInterface {
         }
 		// 通过流写给客户端
 		jsonWrite(jsonStr, response);
-		System.out.println("jsonStr="+jsonStr);
+		//System.out.println("jsonStr="+jsonStr);
 		logger.info("register interface return client json data is " + jsonStr);
 		logger.info("register interface call end ，结束时间   ： " + DateUtils.getCurrentDate());
 		return null;
@@ -105,7 +105,7 @@ public class UnifiedCallInterface {
         }
 		// 通过流写给客户端
 		jsonWrite(jsonStr, response);
-		System.out.println("jsonStr="+jsonStr);
+		//System.out.println("jsonStr="+jsonStr);
 		logger.info("login interface return client json data is " + jsonStr);
 		logger.info("login interface call end ，结束时间   ： " + DateUtils.getCurrentDate());
 		return null;
@@ -143,7 +143,7 @@ public class UnifiedCallInterface {
         }
 		// 通过流写给客户端
 		jsonWrite(jsonStr, response);
-		System.out.println("jsonStr="+jsonStr);
+		//System.out.println("jsonStr="+jsonStr);
 		logger.info("changepassword interface return client json data is " + jsonStr);
 		logger.info("changepassword interface call end ，结束时间   ： " + DateUtils.getCurrentDate());
 		return null;
@@ -178,7 +178,7 @@ public class UnifiedCallInterface {
 		}
 		// 通过流写给客户端
 		jsonWrite(jsonStr, response);
-		System.out.println("jsonStr="+jsonStr);
+		//System.out.println("jsonStr="+jsonStr);
 		logger.info("resetpassword interface return client json data is " + jsonStr);
 		logger.info("resetpassword interface call end ，结束时间   ： " + DateUtils.getCurrentDate());
 		return null;
@@ -231,7 +231,7 @@ public class UnifiedCallInterface {
         }
 		// 通过流写给客户端
 		jsonWrite(jsonStr, response);
-		System.out.println("jsonStr="+jsonStr);
+		//System.out.println("jsonStr="+jsonStr);
 		logger.info("editprofile interface return client json data is " + jsonStr);
 		logger.info("editprofile interface call end ，结束时间   ： " + DateUtils.getCurrentDate());
 		return null;
@@ -275,13 +275,92 @@ public class UnifiedCallInterface {
 		}
 		// 通过流写给客户端
 		jsonWrite(jsonStr, response);
-		System.out.println("jsonStr="+jsonStr);
+		//System.out.println("jsonStr="+jsonStr);
 		logger.info("article interface return client json data is " + jsonStr);
 		logger.info("article interface call end ，结束时间   ： " + DateUtils.getCurrentDate());
 		return null;
 	}
-
 	
+	
+	@RequestMapping(value="/api/article/search")
+	public Object getSearchInfo(HttpServletRequest request,HttpServletResponse response) {
+		logger.info("search interface call start,startDate is ："+ DateUtils.getCurrentDate());
+		InterfaceParam param = new InterfaceParam();
+		JSONObject obj=null;
+		Object jsonStr = null;
+		try {  
+			InputStream is = request.getInputStream();
+			String json = NetUtils.readString(is);
+			if(StringUtils.isNotEmpty(json)){
+				obj= JSONObject.fromObject(json);
+			}
+		}catch (Exception ex) { 
+			ex.printStackTrace();  
+			logger.info("search interface Exception is ：",ex);
+		}
+		if(obj!=null){
+			if(obj.get("keyword")!=null&&StringUtils.isNotEmpty(obj.get("keyword").toString())){
+				param.setKeyword(obj.get("keyword").toString());
+			}
+			if(obj.get("page")!=null&&StringUtils.isNotEmpty(obj.get("page").toString())){
+				param.setPage(obj.get("page").toString());
+			}
+			if(obj.get("count")!=null&&StringUtils.isNotEmpty(obj.get("count").toString())){
+				param.setCount(obj.get("count").toString());
+			}
+			if(obj.get("userid")!=null&&StringUtils.isNotEmpty(obj.get("userid").toString())){
+				param.setUserid(obj.get("userid").toString());
+			}
+			
+			jsonStr = handle(param,"search",request, response);
+		}else{
+			jsonStr = handleMessage(request, response);
+		}
+		// 通过流写给客户端
+		jsonWrite(jsonStr, response);
+		//System.out.println("jsonStr="+jsonStr);
+		logger.info("search interface return client json data is " + jsonStr);
+		logger.info("search interface call end ，结束时间   ： " + DateUtils.getCurrentDate());
+		return null;
+	}
+
+	@RequestMapping(value="/api/haoyan/report")
+	public Object File(HttpServletRequest request,HttpServletResponse response) {
+		logger.info("downloadFile interface call start,startDate is ："+ DateUtils.getCurrentDate());
+		InterfaceParam param = new InterfaceParam();
+		JSONObject obj=null;
+		Object jsonStr = null;
+		try {  
+			InputStream is = request.getInputStream();
+			String json = NetUtils.readString(is);
+			if(StringUtils.isNotEmpty(json)){
+				obj= JSONObject.fromObject(json);
+			}
+		}catch (Exception ex) { 
+			ex.printStackTrace();  
+			logger.info("downloadFile interface Exception is ：",ex);
+		}
+		if(obj!=null){
+			if(obj.get("reportname")!=null&&StringUtils.isNotEmpty(obj.get("reportname").toString())){
+				param.setReportname(obj.get("reportname").toString());
+			}
+			if(obj.get("reporturl")!=null&&StringUtils.isNotEmpty(obj.get("reporturl").toString())){
+				param.setReporturl(obj.get("reporturl").toString());
+			}
+			if(obj.get("reporttime")!=null&&StringUtils.isNotEmpty(obj.get("reporttime").toString())){
+				param.setReporttime(obj.get("reporttime").toString());
+			}
+			jsonStr = handle(param,"downloadFile",request, response);
+		}else{
+			jsonStr = handleMessage(request, response);
+		}
+		// 通过流写给客户端
+		jsonWrite(jsonStr, response);
+		//System.out.println("jsonStr="+jsonStr);
+		logger.info("downloadFile interface return client json data is " + jsonStr);
+		logger.info("downloadFile interface call end ，结束时间   ： " + DateUtils.getCurrentDate());
+		return null;
+	}
 	
 
 	private Object handle(InterfaceParam param,String method,HttpServletRequest request,HttpServletResponse response) {
@@ -327,6 +406,22 @@ public class UnifiedCallInterface {
 			logger.info("获取文章信息结束标识:" + article);
 			return article;
 		}
+		
+		if("search".equalsIgnoreCase(method)){
+			logger.info("搜索文章信息开始时间：" + new Date());
+			Object search = null;
+			search = interfaceMng.searchinfo(param);
+			logger.info("搜索文章信息结束标识:" + search);
+			return search;
+		}
+		
+		if("downloadFile".equalsIgnoreCase(method)){
+			logger.info("下载文档开始时间：" + new Date());
+			Object downloadFile = null;
+			downloadFile = interfaceMng.downloadFile(param,request);
+			logger.info("下载文档结束标识:" + downloadFile);
+			return downloadFile;
+		}
 		return null;
 	}
 	
@@ -369,8 +464,6 @@ public class UnifiedCallInterface {
     		return new String(readBytes(is));
     	}
     }
-    
-    
     
 }
 

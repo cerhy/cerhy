@@ -7,6 +7,7 @@ import org.hibernate.Query;
 import com.jeecms.cms.entity.assist.CmsJoinGroup;
 import com.jeecms.cms.entity.assist.CmsPersonalChannel;
 import com.jeecms.cms.entity.assist.CmsPostilInfo;
+import com.jeecms.cms.entity.assist.CmsReportDoc;
 import com.jeecms.cms.entity.main.Columns;
 import com.jeecms.common.hibernate4.Finder;
 import com.jeecms.common.hibernate4.HibernateBaseDao;
@@ -176,6 +177,16 @@ public class ColumnsDao extends HibernateBaseDao<Columns, Integer>{
 			return 0;
 		}else{
 			return 1;
+		}
+	}
+
+	public int saveReportDoc(CmsReportDoc crd) {
+		try {
+			getSession().save(crd);
+			return 2;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return 0;
 		}
 	}
 
