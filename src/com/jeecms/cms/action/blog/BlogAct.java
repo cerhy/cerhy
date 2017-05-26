@@ -276,14 +276,19 @@ public class BlogAct {
 		if(c.getRecommendLevel()==null){
 			c.setRecommendLevel((byte) 0);
 		}
-		c = contentMng.blog_save(c, ext, t,null, null, null, null, tagArr,
-				attachmentPaths,attachmentNames, attachmentFilenames
-				,picPaths,picDescs,channelId,columnId, typeId, null,true,
-				charge,chargeAmount, user, true,password,request,showStyle);
+		try {
+			c = contentMng.blog_save(c, ext, t,null, null, null, null, tagArr,
+					attachmentPaths,attachmentNames, attachmentFilenames
+					,picPaths,picDescs,channelId,columnId, typeId, null,true,
+					charge,chargeAmount, user, true,password,request,showStyle);
+		} catch (Exception e) {
+			log.error("**********************blogsave  error", e);
+			e.printStackTrace();
+		}
 		if(doc!=null){
 			contentDocMng.save(doc, c);
 		}
-		if(channelId!=null){
+		if(c!=null&&channelId!=null){
 			//往redis存储
 			List<Content> list=new ArrayList<Content>();
 			List<Content> listRedis=new ArrayList<Content>();
