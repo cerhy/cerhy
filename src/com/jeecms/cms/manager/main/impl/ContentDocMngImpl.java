@@ -4,10 +4,13 @@ import java.io.File;
 import java.io.IOException;
 
 import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.jeecms.cms.action.member.ContributeAct;
 import com.jeecms.cms.dao.main.ContentDocDao;
 import com.jeecms.cms.entity.main.Content;
 import com.jeecms.cms.entity.main.ContentDoc;
@@ -26,6 +29,7 @@ import com.jeecms.core.manager.CmsUserMng;
 @Service
 @Transactional
 public class ContentDocMngImpl implements ContentDocMng {
+	private static final Logger log = LoggerFactory.getLogger(ContentDocMngImpl.class);
 	public ContentDoc save(ContentDoc doc, Content content) {
 		if (StringUtils.isBlank(doc.getDocPath())) {
 			return null;
@@ -163,7 +167,12 @@ public class ContentDocMngImpl implements ContentDocMng {
 		String pdfPath=FileUtils.getFilePath(path)+fileName+".pdf";
 		if(!fileRealPath.endsWith(OpenOfficeConverter.PDF)){
 			//转换文档成pdf
-			openOfficeConverter.convertToPdf(fileRealPath,outPdfRealPath + "/",fileName);
+			try {
+				openOfficeConverter.convertToPdf(fileRealPath,outPdfRealPath + "/",fileName);
+			} catch (Exception e) {
+				log.error("openoffice Transformation error", e);
+				e.printStackTrace();
+			}
 		}
 		if(StringUtils.isNotBlank(ctx)){
 			pdfPath=ctx+pdfPath;

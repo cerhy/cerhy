@@ -14,11 +14,14 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
+import com.jeecms.cms.action.member.ContributeAct;
 import com.jeecms.cms.dao.main.ContentDao;
 import com.jeecms.cms.entity.assist.CmsBlogVisitor;
 import com.jeecms.cms.entity.assist.CmsComment;
@@ -85,6 +88,7 @@ import freemarker.template.TemplateException;
 @Service
 @Transactional
 public class ContentMngImpl implements ContentMng, ChannelDeleteChecker {
+	private static final Logger log = LoggerFactory.getLogger(ContentMngImpl.class);
 	@Transactional(readOnly = true)
 	public Pagination getPageByRight(String title, Integer typeId,Integer currUserId,
 			Integer inputUserId, boolean topLevel, boolean recommend,
@@ -342,7 +346,7 @@ public class ContentMngImpl implements ContentMng, ChannelDeleteChecker {
 			String[] tagArr, String[] attachmentPaths,
 			String[] attachmentNames, String[] attachmentFilenames,
 			String[] picPaths, String[] picDescs, Integer channelId,Integer columnId,
-			Integer typeId, Boolean draft,Boolean contribute,Short charge,Double chargeAmount,CmsUser user, boolean forMember,String password, HttpServletRequest request) {
+			Integer typeId, Boolean draft,Boolean contribute,Short charge,Double chargeAmount,CmsUser user, boolean forMember,String password, HttpServletRequest request,String showStyle) {
 		saveContent_blog(bean, ext, txt,doc,channelId,columnId, typeId, draft,contribute,user, forMember,password);
 		// 保存附件
 		if (attachmentPaths != null && attachmentPaths.length > 0) {
@@ -394,20 +398,36 @@ public class ContentMngImpl implements ContentMng, ChannelDeleteChecker {
 		//文章操作记录
 		contentRecordMng.record(bean, user, ContentOperateType.add);
 		
-		
-		if (attachmentPaths != null && attachmentPaths.length > 0) {
-			doc=new ContentDoc();
-			for (int i = 0, len = attachmentPaths.length; i < len; i++) {
-				if (!StringUtils.isBlank(attachmentPaths[i])) {
-					// 执行监听器
-					doc.setIsOpen(true);
-					doc.setDocPath(attachmentPaths[i]);
-					doc.setFileSuffix(String.valueOf(attachmentPaths[i].toString().lastIndexOf(".")));
-					afterSaves(bean,doc,i);
+		if(StringUtils.isNotEmpty(showStyle)){
+			if (attachmentPaths != null && attachmentPaths.length > 0) {
+				doc=new ContentDoc();
+				for (int i = 0, len = attachmentPaths.length; i < len; i++) {
+					if (StringUtils.isNotEmpty(attachmentPaths[i])) {
+						// 执行监听器
+						String fp =attachmentPaths[i].substring(attachmentPaths[i].lastIndexOf(".")+1,attachmentPaths[i].length());
+						if(fp.toUpperCase().equals("DOC")||fp.toUpperCase().equals("TXT")
+								||fp.toUpperCase().equals("DOCX")||fp.toUpperCase().equals("XLSX")
+								||fp.toUpperCase().equals("XLS")||fp.toUpperCase().equals("PDF")
+								||fp.toUpperCase().equals("PPT")||fp.toUpperCase().equals("PPTX")){
+							doc.setIsOpen(true);
+							doc.setDocPath(attachmentPaths[i]);
+							doc.setFileSuffix(String.valueOf(attachmentPaths[i].toString().lastIndexOf(".")));
+							try {
+								afterSaves(bean,doc,i);
+							} catch (Exception e) {
+								log.error("openoffice Transformation error", e);
+								e.printStackTrace();
+							}
+						}else{
+							afterSave(bean);
+						}
+					}
 				}
+			}else{
+				// 执行监听器
+				afterSave(bean);
 			}
 		}else{
-			// 执行监听器
 			afterSave(bean);
 		}
 		return bean;
@@ -689,7 +709,7 @@ public class ContentMngImpl implements ContentMng, ChannelDeleteChecker {
 			String[] attachmentNames, String[] attachmentFilenames,
 			String[] picPaths, String[] picDescs, Map<String, String> attr,
 			Integer columnId,Integer channelId, Integer typeId, Boolean draft,
-			Short charge,Double chargeAmount,CmsUser user,boolean forMember,HttpServletRequest request) {
+			Short charge,Double chargeAmount,CmsUser user,boolean forMember,HttpServletRequest request,String showStyle) {
 		Content entity = findById(bean.getId());
 		//更新columnId
 		//if(bean.getColumnId() != columnId){

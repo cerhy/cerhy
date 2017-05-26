@@ -228,7 +228,7 @@ public class BlogAct {
 			String[] attachmentFilenames, String[] picPaths, String[] picDescs,
 			Short charge,Double chargeAmount,String password,
 			String nextUrl, HttpServletRequest request,
-			HttpServletResponse response, ModelMap model,Integer sta) {
+			HttpServletResponse response, ModelMap model,Integer sta,String showStyle) {
 				CmsSite site = CmsUtils.getSite(request);
 				CmsUser user = CmsUtils.getUser(request);
 				FrontUtils.frontData(request, model, site);
@@ -279,7 +279,7 @@ public class BlogAct {
 		c = contentMng.blog_save(c, ext, t,null, null, null, null, tagArr,
 				attachmentPaths,attachmentNames, attachmentFilenames
 				,picPaths,picDescs,channelId,columnId, typeId, null,true,
-				charge,chargeAmount, user, true,password,request);
+				charge,chargeAmount, user, true,password,request,showStyle);
 		if(doc!=null){
 			contentDocMng.save(doc, c);
 		}
@@ -474,7 +474,7 @@ public class BlogAct {
 			String[] attachmentFilenames, String[] picPaths, String[] picDescs,
 			ContentDoc doc,Short charge,Double chargeAmount,
 			String nextUrl, HttpServletRequest request,
-			HttpServletResponse response, ModelMap model,String password) {
+			HttpServletResponse response, ModelMap model,String password,String showStyle) {
 		CmsSite site = CmsUtils.getSite(request);
 		CmsUser user = CmsUtils.getUser(request);
 		FrontUtils.frontData(request, model, site);
@@ -513,7 +513,7 @@ public class BlogAct {
 		c=contentMng.blog_update(c, ext, t,null, tagArr, null, null, null, 
 				attachmentPaths,attachmentNames, attachmentFilenames
 				,picPaths,picDescs, null, columnId,channelId, null, null, 
-				charge,chargeAmount,user, true,request);
+				charge,chargeAmount,user, true,request,showStyle);
 		if(doc!=null){
 			contentDocMng.update(doc, c);
 		}

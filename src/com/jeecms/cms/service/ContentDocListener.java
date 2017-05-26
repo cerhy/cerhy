@@ -37,7 +37,7 @@ public class ContentDocListener extends ContentListenerAbstract {
 	
 	@Override
 	public void afterSaves(Content content, ContentDoc doc,int i) {
-		if (content.isChecked()) {
+		if (content!=null&&content.isChecked()) {
 			contentDocMng.createPdfFiles(content,doc,i);
 		}
 	}
