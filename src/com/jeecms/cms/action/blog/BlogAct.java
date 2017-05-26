@@ -62,7 +62,7 @@ import com.octo.captcha.service.CaptchaServiceException;
 import com.octo.captcha.service.image.ImageCaptchaService;
 
 public class BlogAct {
-	private static final Logger log = LoggerFactory.getLogger(DynamicPageAct.class);
+	private static final Logger log = LoggerFactory.getLogger(BlogAct.class);
 	public String blog_index(String q, Integer modelId,Integer queryChannelId,String nextUrl,Integer pageNo,HttpServletRequest request, ModelMap model) {
 		CmsSite site = CmsUtils.getSite(request);
 		CmsUser user = CmsUtils.getUser(request);

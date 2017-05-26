@@ -397,39 +397,7 @@ public class ContentMngImpl implements ContentMng, ChannelDeleteChecker {
 		}
 		//文章操作记录
 		contentRecordMng.record(bean, user, ContentOperateType.add);
-		
-		if(StringUtils.isNotEmpty(showStyle)){
-			if (attachmentPaths != null && attachmentPaths.length > 0) {
-				doc=new ContentDoc();
-				for (int i = 0, len = attachmentPaths.length; i < len; i++) {
-					if (StringUtils.isNotEmpty(attachmentPaths[i])) {
-						// 执行监听器
-						String fp =attachmentPaths[i].substring(attachmentPaths[i].lastIndexOf(".")+1,attachmentPaths[i].length());
-						if(fp.toUpperCase().equals("DOC")||fp.toUpperCase().equals("TXT")
-								||fp.toUpperCase().equals("DOCX")||fp.toUpperCase().equals("XLSX")
-								||fp.toUpperCase().equals("XLS")||fp.toUpperCase().equals("PDF")
-								||fp.toUpperCase().equals("PPT")||fp.toUpperCase().equals("PPTX")){
-							doc.setIsOpen(true);
-							doc.setDocPath(attachmentPaths[i]);
-							doc.setFileSuffix(String.valueOf(attachmentPaths[i].toString().lastIndexOf(".")));
-							try {
-								afterSaves(bean,doc,i);
-							} catch (Exception e) {
-								log.error("openoffice Transformation error", e);
-								e.printStackTrace();
-							}
-						}else{
-							afterSave(bean);
-						}
-					}
-				}
-			}else{
-				// 执行监听器
-				afterSave(bean);
-			}
-		}else{
-			afterSave(bean);
-		}
+		afterSave(bean);
 		return bean;
 	}
 	
