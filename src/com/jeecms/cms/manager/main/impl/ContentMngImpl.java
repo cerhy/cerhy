@@ -352,38 +352,50 @@ public class ContentMngImpl implements ContentMng, ChannelDeleteChecker {
 		if (attachmentPaths != null && attachmentPaths.length > 0) {
 			for (int i = 0, len = attachmentPaths.length; i < len; i++) {
 				if (!StringUtils.isBlank(attachmentPaths[i])) {
-					/*String fp =attachmentPaths[i].substring(attachmentPaths[i].lastIndexOf(".")+1,attachmentPaths[i].length());
-					String pdf=null;
-					if(fp.toUpperCase().equals("DOC")||fp.toUpperCase().equals("TXT")
-							||fp.toUpperCase().equals("DOCX")||fp.toUpperCase().equals("XLSX")
-							||fp.toUpperCase().equals("XLS")||fp.toUpperCase().equals("PDF")
-							||fp.toUpperCase().equals("PPT")||fp.toUpperCase().equals("PPTX")){
-						try {
-							CmsSite site=CmsUtils.getSite(request);
-							CmsConfig config=site.getConfig();
-							String ctx=config.getContextPath();
-							String path=attachmentPaths[i];
-							if(StringUtils.isNotBlank(ctx)&&path.indexOf(ctx)!=-1){
-								path = path.split(ctx)[1];
+					if(StringUtils.isNotEmpty(showStyle)){
+						doc=new ContentDoc();
+						doc.setIsOpen(true);
+						doc.setDocPath(attachmentPaths[i]);
+						doc.setFileSuffix(String.valueOf(attachmentPaths[i].toString().lastIndexOf(".")));
+						String fp =attachmentPaths[i].substring(attachmentPaths[i].lastIndexOf(".")+1,attachmentPaths[i].length());
+						String pdfPath=null;
+						if(fp.toUpperCase().equals("DOC")||fp.toUpperCase().equals("TXT")
+								||fp.toUpperCase().equals("DOCX")||fp.toUpperCase().equals("XLSX")
+								||fp.toUpperCase().equals("XLS")||fp.toUpperCase().equals("PDF")
+								||fp.toUpperCase().equals("PPT")||fp.toUpperCase().equals("PPTX")){
+							try {
+								CmsSite site=CmsUtils.getSite(request);
+								CmsConfig config=site.getConfig();
+								String ctx=config.getContextPath();
+								String path = doc.getDocPath();
+								if(StringUtils.isNotBlank(ctx)&&path.indexOf(ctx)!=-1){
+									path = path.split(ctx)[1];
+								}
+								//获取文件真实路径
+								String fileRealPath = realPathResolver.get(path);
+								String fileName=FileUtils.getFileName(path);
+								String outPdfRealPath = realPathResolver.get(FileUtils.getFilePath(path));
+								pdfPath=FileUtils.getFilePath(path)+fileName+".pdf";
+								if(!fileRealPath.endsWith(OpenOfficeConverter.PDF)){
+									//转换文档成pdf
+									try {
+										openOfficeConverter.convertToPdf(fileRealPath,outPdfRealPath + "/",fileName);
+									} catch (Exception e) {
+										log.error("openoffice Transformation error", e);
+										e.printStackTrace();
+									}
+								}
+								if(StringUtils.isNotBlank(ctx)){
+									pdfPath=ctx+pdfPath;
+								}
+							} catch (Exception e) {
+								e.printStackTrace();
 							}
-							String fileRealPath = realPathResolver.get(path);
-							String fileName=FileUtils.getFileName(path);
-							String outPdfRealPath = realPathResolver.get(FileUtils.getFilePath(path));
-							//String pdfPath=FileUtils.getFilePath(attachmentPaths[i])+fileName+".pdf";
-							if(!fileRealPath.endsWith(OpenOfficeConverter.PDF)){
-								//转换文档成pdf
-								openOfficeConverter.convertToPdf(fileRealPath,outPdfRealPath + "/",fileName);
-							}
-							pdf=FileUtils.getFilePath(path)+fileName+".pdf";
-							if(StringUtils.isNotBlank(ctx)){
-								pdf=ctx+pdf;
-							}
-						} catch (Exception e) {
-							e.printStackTrace();
 						}
-					}*/
-					//bean.addToAttachmemtsPdf(attachmentPaths[i],attachmentNames[i], attachmentFilenames[i],pdf);
-					bean.addToAttachmemts(attachmentPaths[i],attachmentNames[i], attachmentFilenames[i]);
+						bean.addToAttachmemtsPdf(attachmentPaths[i],attachmentNames[i], attachmentFilenames[i],pdfPath);
+					}else{
+						bean.addToAttachmemts(attachmentPaths[i],attachmentNames[i], attachmentFilenames[i]);
+					}
 				}
 			}
 		}
@@ -398,7 +410,7 @@ public class ContentMngImpl implements ContentMng, ChannelDeleteChecker {
 		//文章操作记录
 		contentRecordMng.record(bean, user, ContentOperateType.add);
 		
-		if(StringUtils.isNotEmpty(showStyle)){
+		/*if(StringUtils.isNotEmpty(showStyle)){
 			if (attachmentPaths != null && attachmentPaths.length > 0) {
 				doc=new ContentDoc();
 				for (int i = 0, len = attachmentPaths.length; i < len; i++) {
@@ -427,9 +439,9 @@ public class ContentMngImpl implements ContentMng, ChannelDeleteChecker {
 				// 执行监听器
 				afterSave(bean);
 			}
-		}else{
+		}else{*/
 			afterSave(bean);
-		}
+//		}
 		return bean;
 	}
 	
@@ -1269,13 +1281,13 @@ public class ContentMngImpl implements ContentMng, ChannelDeleteChecker {
 			}
 		}
 	}
-	private void afterSaves(Content content,ContentDoc doc,int i) {
+	/*private void afterSaves(Content content,ContentDoc doc,int i) {
 		if (listenerList != null) {
 			for (ContentListener listener : listenerList) {
 				listener.afterSaves(content,doc,i);
 			}
 		}
-	}
+	}*/
 
 	private List<Map<String, Object>> preChange(Content content) {
 		if (listenerList != null) {

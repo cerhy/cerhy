@@ -30,7 +30,7 @@ public interface ContentListener {
 	 * @param doc 
 	 * @param i 
 	 */
-	public void afterSaves(Content content, ContentDoc doc, int i);
+	/*public void afterSaves(Content content, ContentDoc doc, int i);*/
 
 	/**
 	 * 修改之前执行

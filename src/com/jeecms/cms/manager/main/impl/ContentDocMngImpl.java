@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.jeecms.cms.action.member.ContributeAct;
 import com.jeecms.cms.dao.main.ContentDocDao;
 import com.jeecms.cms.entity.main.Content;
 import com.jeecms.cms.entity.main.ContentDoc;
@@ -29,6 +28,7 @@ import com.jeecms.core.manager.CmsUserMng;
 @Service
 @Transactional
 public class ContentDocMngImpl implements ContentDocMng {
+	@SuppressWarnings("unused")
 	private static final Logger log = LoggerFactory.getLogger(ContentDocMngImpl.class);
 	public ContentDoc save(ContentDoc doc, Content content) {
 		if (StringUtils.isBlank(doc.getDocPath())) {
@@ -152,7 +152,7 @@ public class ContentDocMngImpl implements ContentDocMng {
 	}
 	
 	
-	public void createPdfFiles(Content content,ContentDoc doc,int i){
+	/*public void createPdfFiles(Content content,ContentDoc doc,int i){
 		CmsSite site=content.getSite();
 		CmsConfig config=site.getConfig();
 		String ctx=config.getContextPath();
@@ -181,7 +181,7 @@ public class ContentDocMngImpl implements ContentDocMng {
 		//doc.setPdfPath(pdfPath);
 		//doc=update(doc,doc.getContent());
 
-	}
+	}*/
 
 	private ContentDocDao dao;
 	@Autowired

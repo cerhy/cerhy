@@ -13,7 +13,6 @@ import org.springframework.stereotype.Component;
 import com.jeecms.cms.entity.main.Content;
 import com.jeecms.cms.entity.main.ContentDoc;
 import com.jeecms.cms.manager.main.ContentDocMng;
-import com.jeecms.cms.service.ContentListenerAbstract;
 import com.jeecms.common.web.springmvc.RealPathResolver;
 
 @Component
@@ -35,12 +34,12 @@ public class ContentDocListener extends ContentListenerAbstract {
 		}
 	}
 	
-	@Override
+	/*@Override
 	public void afterSaves(Content content, ContentDoc doc,int i) {
 		if (content!=null&&content.isChecked()) {
 			contentDocMng.createPdfFiles(content,doc,i);
 		}
-	}
+	}*/
 
 	@Override
 	public Map<String, Object> preChange(Content content) {

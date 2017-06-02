@@ -14,5 +14,5 @@ public interface ContentDocMng {
 	
 	public ContentDoc createPdfFile(ContentDoc doc);
 
-	public void createPdfFiles(Content content, ContentDoc contentDoc,int i);
+	/*public void createPdfFiles(Content content, ContentDoc contentDoc,int i);*/
 }
