@@ -28,7 +28,7 @@
 		<property name="cronExpression" value="0 0 0 * * ?" />
 	</bean>
 	<!-- 调度器 -->
-    <bean name="scheduler" class="org.springframework.scheduling.quartz.SchedulerFactoryBean"> 
+    <bean name="scheduler" class="com.jeecms.cms.task.job.SchedulerFactoryBeanWithShutdownDelay"> 
        <!-- 通过applicationContextSchedulerContextKey属性配置spring上下文 -->    
         <property name="applicationContextSchedulerContextKey">    
             <value>applicationContext</value>    
