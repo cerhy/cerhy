@@ -202,7 +202,7 @@ public class InterfaceDaoImpl  extends HibernateBaseDao<Content, Integer> implem
 			CmsUser cu=cmsUserMng.findById(Integer.valueOf(param.getId()));
 			try {
 				if(cu!=null){
-					cmsUserMng.updatePwdEmail(Integer.valueOf(param.getId()), param.getNewpassword(), cu.getEmail());
+					cmsUserMng.updatePwdEmail(Integer.valueOf(param.getId()), param.getPassword(), cu.getEmail());
 					jStatus.put("code", 0);
 					jStatus.put("msg", "密码重置成功!");
 					return this.getResponseData("resetpassword",jStatus, null);
