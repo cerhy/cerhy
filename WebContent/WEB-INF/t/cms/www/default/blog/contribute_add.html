@@ -501,7 +501,7 @@ function addSrcHtml(obj){
 				var lt = urls.substring(0,pos2+1);
 				var newUr=lt+"pdf";
 				if(typeof(ck)!=='undefined'){
-				    oEditor.insertHtml("<a href='"+u+"${base}"+urls+"'>"+tit+"</a><iframe src='${base}/thirdparty/pdfjs/web/viewer.html?file="+u+"${base}"+urls+"' id='iframepage' width='100%' height='700px' frameborder='0' scrolling='no'></iframe>");
+				    oEditor.insertHtml("<a href='"+u+"${base}"+urls+"'>"+tit+"</a><iframe src='${base}/thirdparty/pdfjs/web/viewer.html?file="+u+"${base}"+newUr+"' id='iframepage' width='100%' height='700px' frameborder='0' scrolling='no'></iframe>");
 				}else{
 				    oEditor.insertHtml("<a href='"+u+"${base}"+urls+"'>"+tit+"</a>");
 				}
