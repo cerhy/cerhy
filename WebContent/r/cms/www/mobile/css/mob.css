@@ -226,7 +226,7 @@ input::-webkit-input-placeholder,textarea::-webkit-input-placeholder{color:#ccc}
 
 /*******新闻内容页*******/
 .new-content{padding:16px 10px 10px 10px; background:none;}
-.content-title{font-size:16px; line-height:20px;}
+.content-title{font-size:16px; line-height:30px;}
 .content-inf{font-size:12px; line-height:18px; margin-top:4px;}
 .content-txt{font-size:14px; line-height:24px; padding:14px 0;}
 .content-txt img{max-width:100%;}
