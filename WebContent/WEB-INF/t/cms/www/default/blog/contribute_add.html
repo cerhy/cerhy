@@ -353,7 +353,7 @@ $(function(){
                 </td>
               </tr>
               <tr>
-              	<td>附件展示方式</td>
+              	<td class="tggl-top">附件展示方式</td>
               	<td><input type="checkbox" id="showStyle" name="showStyle" value="1"/>若附件可预览时嵌入文章</td>
               </tr>
               <tr>
@@ -476,6 +476,11 @@ $(function(){
 </html>
 <script type="text/javascript">
 function addSrcHtml(obj){
+	var k = parseInt(document.location.port);
+    var u = document.location.protocol + '//' + document.location.hostname;
+    if (k != 80 && k) {
+        u += ':' + k;
+    }
 	var oEditor = CKEDITOR.instances.txt;
 	var urls=$("#"+obj.id).attr("url");
 	var tit=$("#"+obj.id).attr("title");
@@ -496,12 +501,12 @@ function addSrcHtml(obj){
 				var lt = urls.substring(0,pos2+1);
 				var newUr=lt+"pdf";
 				if(typeof(ck)!=='undefined'){
-				    oEditor.insertHtml("<a href='"+urls+"'>"+tit+"</a><iframe src='${base}/thirdparty/pdfjs/web/viewer.html?file="+newUr+"' id='iframepage' width='100%' height='700px' frameborder='0' scrolling='no'></iframe>");
+				    oEditor.insertHtml("<a href='"+u+"${base}"+urls+"'>"+tit+"</a><iframe src='${base}/thirdparty/pdfjs/web/viewer.html?file="+u+"${base}"+urls+"' id='iframepage' width='100%' height='700px' frameborder='0' scrolling='no'></iframe>");
 				}else{
-				    oEditor.insertHtml("<a href='"+urls+"'>"+tit+"</a>");
+				    oEditor.insertHtml("<a href='"+u+"${base}"+urls+"'>"+tit+"</a>");
 				}
 			}else{
-			    oEditor.insertHtml("<a href='"+urls+"'>"+tit+"</a>");
+			    oEditor.insertHtml("<a href='"+u+"${base}"+urls+"'>"+tit+"</a>");
 			}
 		}
 	}else{
