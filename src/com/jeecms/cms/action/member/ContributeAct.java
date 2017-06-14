@@ -140,7 +140,7 @@ public class ContributeAct extends AbstractContentMemberAct {
 		   String blog = request.getParameter("blog");
 		   String channelIds = request.getParameter("channelIds");
 		   String password = request.getParameter("password");
-		   String showStyle= request.getParameter("showStyle");
+		   //String showStyle= request.getParameter("showStyle");
 		   int sta=0;
 		   if(channelIds!=null&&channelIds!=""){
 			   String[] str=channelIds.split("&");
