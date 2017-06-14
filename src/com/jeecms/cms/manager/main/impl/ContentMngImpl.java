@@ -353,7 +353,7 @@ public class ContentMngImpl implements ContentMng, ChannelDeleteChecker {
 			for (int i = 0, len = attachmentPaths.length; i < len; i++) {
 				if (!StringUtils.isBlank(attachmentPaths[i])) {
 					//if(StringUtils.isNotEmpty(showStyle)){
-						doc=new ContentDoc();
+						/*doc=new ContentDoc();
 						doc.setIsOpen(true);
 						doc.setDocPath(attachmentPaths[i]);
 						doc.setFileSuffix(String.valueOf(attachmentPaths[i].toString().lastIndexOf(".")));
@@ -390,12 +390,12 @@ public class ContentMngImpl implements ContentMng, ChannelDeleteChecker {
 								}
 							} catch (Exception e) {
 								e.printStackTrace();
-							}
+							}*/
 						//}
-						bean.addToAttachmemtsPdf(attachmentPaths[i],attachmentNames[i], attachmentFilenames[i],pdfPath);
-					}else{
+						//bean.addToAttachmemtsPdf(attachmentPaths[i],attachmentNames[i], attachmentFilenames[i],pdfPath);
+					//}else{
 						bean.addToAttachmemts(attachmentPaths[i],attachmentNames[i], attachmentFilenames[i]);
-					}
+					//}
 				}
 			}
 		}
