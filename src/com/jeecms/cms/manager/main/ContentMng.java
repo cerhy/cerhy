@@ -152,7 +152,7 @@ public interface ContentMng {
 			String[] picPaths, String[] picDescs, Integer channelId,Integer columnId,
 			Integer typeId, Boolean draft,Boolean contribute,
 			Short charge,Double chargeAmount,
-			CmsUser user, boolean forMember,String password, HttpServletRequest request,String showStyle);
+			CmsUser user, boolean forMember,String password, HttpServletRequest request);
 	
 	public Content save(Content bean, ContentExt ext, ContentTxt txt,ContentDoc doc,
 			Integer channelId,Integer typeId, Boolean draft, CmsUser user, boolean forMember);
@@ -171,7 +171,7 @@ public interface ContentMng {
 			String[] attachmentNames, String[] attachmentFilenames,
 			String[] picPaths, String[] picDescs, Map<String, String> attr,
 			Integer columnId,Integer channelId, Integer typeId, Boolean draft,
-			Short charge,Double chargeAmount,CmsUser user,boolean forMember,HttpServletRequest request,String showStyle);
+			Short charge,Double chargeAmount,CmsUser user,boolean forMember,HttpServletRequest request);
 	
 	
 	public Content update(Content bean);

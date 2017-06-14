@@ -346,13 +346,13 @@ public class ContentMngImpl implements ContentMng, ChannelDeleteChecker {
 			String[] tagArr, String[] attachmentPaths,
 			String[] attachmentNames, String[] attachmentFilenames,
 			String[] picPaths, String[] picDescs, Integer channelId,Integer columnId,
-			Integer typeId, Boolean draft,Boolean contribute,Short charge,Double chargeAmount,CmsUser user, boolean forMember,String password, HttpServletRequest request,String showStyle) {
+			Integer typeId, Boolean draft,Boolean contribute,Short charge,Double chargeAmount,CmsUser user, boolean forMember,String password, HttpServletRequest request) {
 		saveContent_blog(bean, ext, txt,doc,channelId,columnId, typeId, draft,contribute,user, forMember,password);
 		// 保存附件
 		if (attachmentPaths != null && attachmentPaths.length > 0) {
 			for (int i = 0, len = attachmentPaths.length; i < len; i++) {
 				if (!StringUtils.isBlank(attachmentPaths[i])) {
-					if(StringUtils.isNotEmpty(showStyle)){
+					//if(StringUtils.isNotEmpty(showStyle)){
 						doc=new ContentDoc();
 						doc.setIsOpen(true);
 						doc.setDocPath(attachmentPaths[i]);
@@ -391,7 +391,7 @@ public class ContentMngImpl implements ContentMng, ChannelDeleteChecker {
 							} catch (Exception e) {
 								e.printStackTrace();
 							}
-						}
+						//}
 						bean.addToAttachmemtsPdf(attachmentPaths[i],attachmentNames[i], attachmentFilenames[i],pdfPath);
 					}else{
 						bean.addToAttachmemts(attachmentPaths[i],attachmentNames[i], attachmentFilenames[i]);
@@ -721,7 +721,7 @@ public class ContentMngImpl implements ContentMng, ChannelDeleteChecker {
 			String[] attachmentNames, String[] attachmentFilenames,
 			String[] picPaths, String[] picDescs, Map<String, String> attr,
 			Integer columnId,Integer channelId, Integer typeId, Boolean draft,
-			Short charge,Double chargeAmount,CmsUser user,boolean forMember,HttpServletRequest request,String showStyle) {
+			Short charge,Double chargeAmount,CmsUser user,boolean forMember,HttpServletRequest request) {
 		Content entity = findById(bean.getId());
 		//更新columnId
 		//if(bean.getColumnId() != columnId){

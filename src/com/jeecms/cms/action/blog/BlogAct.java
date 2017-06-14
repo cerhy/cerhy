@@ -228,7 +228,7 @@ public class BlogAct {
 			String[] attachmentFilenames, String[] picPaths, String[] picDescs,
 			Short charge,Double chargeAmount,String password,
 			String nextUrl, HttpServletRequest request,
-			HttpServletResponse response, ModelMap model,Integer sta,String showStyle) {
+			HttpServletResponse response, ModelMap model,Integer sta) {
 				CmsSite site = CmsUtils.getSite(request);
 				CmsUser user = CmsUtils.getUser(request);
 				FrontUtils.frontData(request, model, site);
@@ -280,7 +280,7 @@ public class BlogAct {
 			c = contentMng.blog_save(c, ext, t,null, null, null, null, tagArr,
 					attachmentPaths,attachmentNames, attachmentFilenames
 					,picPaths,picDescs,channelId,columnId, typeId, null,true,
-					charge,chargeAmount, user, true,password,request,showStyle);
+					charge,chargeAmount, user, true,password,request);
 		} catch (Exception e) {
 			log.error("**********************blogsave  error", e);
 			e.printStackTrace();
@@ -479,7 +479,7 @@ public class BlogAct {
 			String[] attachmentFilenames, String[] picPaths, String[] picDescs,
 			ContentDoc doc,Short charge,Double chargeAmount,
 			String nextUrl, HttpServletRequest request,
-			HttpServletResponse response, ModelMap model,String password,String showStyle) {
+			HttpServletResponse response, ModelMap model,String password) {
 		CmsSite site = CmsUtils.getSite(request);
 		CmsUser user = CmsUtils.getUser(request);
 		FrontUtils.frontData(request, model, site);
@@ -518,7 +518,7 @@ public class BlogAct {
 		c=contentMng.blog_update(c, ext, t,null, tagArr, null, null, null, 
 				attachmentPaths,attachmentNames, attachmentFilenames
 				,picPaths,picDescs, null, columnId,channelId, null, null, 
-				charge,chargeAmount,user, true,request,showStyle);
+				charge,chargeAmount,user, true,request);
 		if(doc!=null){
 			contentDocMng.update(doc, c);
 		}
@@ -1266,7 +1266,7 @@ public class BlogAct {
 			CmsSite site, CmsUser user, String captcha,
 			HttpServletRequest request, HttpServletResponse response) {
 		WebErrors errors = WebErrors.create(request);
-		try {
+		/*try {
 			if (!imageCaptchaService.validateResponseForID(session
 					.getSessionId(request, response), captcha)) {
 				errors.addErrorCode("error.invalidCaptcha");
@@ -1275,7 +1275,7 @@ public class BlogAct {
 		} catch (CaptchaServiceException e) {
 			errors.addErrorCode("error.exceptionCaptcha");
 			return errors;
-		}
+		}*/
 		if (errors.ifBlank(title, "title", 50)) {
 			return errors;
 		}
