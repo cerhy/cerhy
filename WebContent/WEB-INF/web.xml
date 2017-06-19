@@ -306,10 +306,6 @@
     <mime-type>application/zip</mime-type>
   </mime-mapping>
   <mime-mapping>
-    <extension>doc</extension>
-    <mime-type>application/zip</mime-type>
-  </mime-mapping>
-  <mime-mapping>
     <extension>wps</extension>
     <mime-type>application/zip</mime-type>
   </mime-mapping>
