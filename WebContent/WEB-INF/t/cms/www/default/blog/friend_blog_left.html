@@ -64,10 +64,10 @@
 								        [#list columnsList as c]
 		                            	[#if c.uniqueCode??]
 										<li  class="change">
-										<a href="${base}/blog/contribute_list_friend.jspx?columnId=${c.columnId}&user_ids=${userIds}&joinGroupStata=0" title="${c.columnName}" ><em></em>[@text_cut s=c.columnName len=5 append='...'/]</a>
+										<a href="${base}/blog/contribute_list_friend.jspx?columnId=${c.columnId}&user_ids=${userIds}&joinGroupStata=0" title="${c.columnName}" style="max-width: 100px;"><em></em>[@text_cut s=c.columnName len=5 append='...'/]</a>
 										[#if user??]
 										[#if c.userId!=user.id]
-										<button type="button" id="${c.uniqueCode}" name="uniqueCode" onclick="join_group(${c.uniqueCode},${usert.id});" class="butt" style="float: right;margin-top: -25px;">&nbsp;&nbsp;&nbsp;&nbsp;加入</button>
+										<a  id="${c.uniqueCode}" name="uniqueCode" onclick="join_group(${c.uniqueCode},${usert.id});" class="butt" style="float: right;margin-top: -30px;text-decoration:underline;">&nbsp;&nbsp;&nbsp;&nbsp;加入</a>
 										[/#if]
 										[#else]
 										[/#if]
