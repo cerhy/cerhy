@@ -237,8 +237,8 @@ public class BlogAct {
 			}
 
 		Content c = new Content();
-		WebErrors errors = validateSave(title, author, description, txt,doc,
-				tagStr,site, user, captcha, request, response);
+		WebErrors errors = validateSaves(title, author, description, txt,doc,
+				tagStr,site, user, captcha, request, response,mediaPath,attachmentPaths);
 		if (errors.hasErrors()) {
 			return FrontUtils.showError(request, response, model, errors);
 		}
@@ -1127,15 +1127,17 @@ public class BlogAct {
 	public String blogContentShow(String[] paths,String[] params,
 			PageInfo info,Integer pageNo,HttpServletRequest request,
 			HttpServletResponse response, ModelMap model,String columnId){
-		CmsUser u = CmsUtils.getUser(request);
-		CmsSite sites = CmsUtils.getSite(request);
-		if(u==null){
-			return FrontUtils.showLogin(request, model, sites);
-		}
 		Content content = contentMng.findById(Integer.parseInt(paths[1]));
 		if (content == null) {
 			log.debug("Content id not found: {}", paths[1]);
 			return FrontUtils.pageNotFound(request, response, model);
+		}
+		CmsSite site = content.getSite();
+		CmsUser u = CmsUtils.getUser(request);
+		if(u==null){
+			return FrontUtils.showLogin(request, model, site);
+			/*u=cmsUserMng.findById(content.getUser().getId());
+			model.addAttribute("usert", u);*/
 		}
 		Integer pageCount=content.getPageCount();
 		if(pageNo>pageCount||pageNo<0){
@@ -1144,7 +1146,6 @@ public class BlogAct {
 		//非终审文章
 		CmsConfig config=CmsUtils.getSite(request).getConfig();
 		config.getConfigAttr().getPreview();
-		CmsSite site = content.getSite();
 		Set<CmsGroup> groups = content.getViewGroupsExt();
 		//groups.size();
 		
@@ -1261,6 +1262,7 @@ public class BlogAct {
 			return FrontUtils.getTplPath(request, site.getSolutionPath(),TPLDIR_BLOG,"tpl.blogContentShowFriend");
 		}
 
+	@SuppressWarnings("unused")
 	private WebErrors validateSave(String title, String author,
 			String description, String txt,ContentDoc doc, String tagStr,
 			CmsSite site, CmsUser user, String captcha,
@@ -1287,8 +1289,41 @@ public class BlogAct {
 		}
 		if(doc==null){
 			// 内容不能大于1M
-			if (errors.ifBlank(txt, "txt", 1048575)) {
+			if (errors.ifBlank(txt, "文章内容", 4194304)) {
 				return errors;
+			}
+		}else{
+			if(StringUtils.isBlank(doc.getDocPath())){
+				errors.addErrorCode("error.hasNotUploadDoc");
+				return errors;
+			}
+		}
+		
+		if (errors.ifMaxLength(tagStr, "tagStr", 255)) {
+			return errors;
+		}
+		return errors;
+	}
+	private WebErrors validateSaves(String title, String author,
+			String description, String txt,ContentDoc doc, String tagStr,
+			CmsSite site, CmsUser user, String captcha,
+			HttpServletRequest request, HttpServletResponse response,String mediaPath,String[] attachmentPaths) {
+		WebErrors errors = WebErrors.create(request);
+		if (errors.ifBlank(title, "title", 50)) {
+			return errors;
+		}
+		if (errors.ifMaxLength(author, "author", 60)) {
+			return errors;
+		}
+		if (errors.ifMaxLength(description, "description", 255)) {
+			return errors;
+		}
+		if(doc==null){
+			// 内容不能大于4M
+			if(StringUtils.isEmpty(mediaPath)&&attachmentPaths==null){
+				if (errors.ifBlank(txt, "文章内容", 4194304)) {
+					return errors;
+				}
 			}
 		}else{
 			if(StringUtils.isBlank(doc.getDocPath())){
