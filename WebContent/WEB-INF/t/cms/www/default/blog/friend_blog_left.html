@@ -43,7 +43,6 @@
 				             <li><a href="${base}/blog/contribute_list_friend.jspx?channelId=${c.channelId}&user_ids=${userIds}" >&nbsp;&nbsp;>&nbsp;${c.channelName}</a></li> 
 				             [/#list]
 				             [/#if]
-				             <li><a href="${base}/blog/friend_collection_list.jspx?userIds=${usert.id}"><em></em>转载</a></li>
 				        	[#if columnsList??]
                             [#list columnsList as c]
                             [#if c.uniqueCode??]
@@ -52,6 +51,7 @@
 		                    [/#if]
 		                    [/#list]
 		                    [/#if]
+				             <li><a href="${base}/blog/friend_collection_list.jspx?userIds=${usert.id}"><em></em>转载</a></li>
                            </ul>
 		                </li>
 						    [#if submitOn1??] 

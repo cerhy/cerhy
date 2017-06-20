@@ -9,21 +9,23 @@ function del(){
 </script>
 <div class="wrap-left">
      <div class="user-center-left">
+                 		 [#if user??]
            <div class="user-setting">
                  <div class="pic-dt">
                       [#if user.userImg??]<img src="${user.userImg}" width="120" height="120" >
                       [#else]<img src="/${res}/images/userImg-large.png" width="120" height="120">
                       [/#if]
                  </div>
+                  [#if user??]
                  <div class="user-name-dt"><a href="${base}/blog/index.jspx">${user.username}</a></div>
+                 [/#if]
                      [#if usert??]
-                     <a id="focus" class="user-oparetion-btn">关注</a>
-                    <a id="cancelfocus" class="user-oparetion-btn">取消关注</a>
                     [#else]
                      <a href="${base}/logout.jspx" style="cursor: pointer;" class="user-oparetion-btn">退出</a>
                      [/#if]
                      
            </div>
+                      [/#if]
            <div class="user-menu-links">
                 <ul>
 				    <li><a href="${base}/blog/contribute_add.jspx">发表博客</a></li>
@@ -45,7 +47,6 @@ function del(){
 				             <li><a href="${base}/blog/contribute_list.jspx?channelId=${c.channelId}" >&nbsp;&nbsp;>&nbsp;${c.channelName}</a></li> 
 				             [/#list]
 				             [/#if]
-				             <li><a href="${base}/blog/collection_list.jspx">转载</a></li>
 				        	[#if columnsList??]
                             [#list columnsList as c]
                             [#if c.uniqueCode??]
@@ -54,6 +55,7 @@ function del(){
 		                    [/#if]
 		                    [/#list]
 		                    [/#if]
+				             <li><a href="${base}/blog/collection_list.jspx">转载</a></li>
                          </ul>
                     </li>
                     	[#if submitOn1??] 
