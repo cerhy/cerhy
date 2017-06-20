@@ -11,7 +11,7 @@
 	                        [#else]
 	                        <img src="/${res}/images/userImg-large.png" width="47" height="47">
 	                        [/#if]
-                            <span>${user.username}</span>
+                            <span title="[#if user.realname??]${user.realname}[#else]${user.username}[/#if]">[#if user.realname??][@text_cut s=user.realname len=5 append='...'/][#else]${user.username}[/#if]</span>
                             </a>
 	                  </div>
 				   [/#list]
