@@ -52,7 +52,7 @@ $('.user-menu-links li').click(function(){
 	         	<textarea id="hyperlink" name="hyperlink" rows="18" cols="100">${linkUrls }</textarea>
 	         	<br />
 	          	<span class="fl">
-					<p>每行可以输入一个链接，标题和网址之间用“=”分隔开，最多可设置15个。</p>
+					<p>每行可以输入一个链接，标题和网址之间用“=”分隔开，最多可设置350个。</p>
 					<p>链接可以分组，不包含“=”号的行就是分组标题。</p>
 					<p>例如：</p>
 					<p>海南教育研究新浪微博=http://t.sina.com.cn/hainanvae</p>
@@ -87,7 +87,7 @@ $('.user-menu-links li').click(function(){
 					num++;
 				}
 			}
-		if(num>15){
+		if(num>350){
 			 alert("链接添加超过显示限制个数!");
              return false;
 		}
