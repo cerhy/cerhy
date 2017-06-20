@@ -94,7 +94,13 @@ function uploadProgress(file, bytesLoaded, bytesTotal) {
 
 		var progress = new FileProgress(file, this.customSettings.progressTarget);
 		progress.setProgress(percent);
-		progress.setStatus("Uploading...");
+		if (percent === 100) {
+			progress.setStatus("&nbsp;&nbsp;&nbsp;&nbsp;文件上传成功");
+			progress.toggleCancel(false, this);
+			} else {
+			progress.setStatus("&nbsp;&nbsp;&nbsp;&nbsp;正在上传("+percent+" %)请稍后...");
+			progress.toggleCancel(true, this);
+			}
 	} catch (ex) {
 		this.debug(ex);
 	}

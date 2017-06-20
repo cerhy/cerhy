@@ -30,14 +30,14 @@ function FileProgress(file, targetID) {
 		progressCancel.style.visibility = "hidden";
 		progressCancel.appendChild(document.createTextNode(" "));
 
-		var progressText = document.createElement("div");
+		var progressText = document.createElement("a");
 		progressText.className = "progressName";
 		progressText.appendChild(document.createTextNode(file.name));
 
 		var progressBar = document.createElement("div");
 		progressBar.className = "progressBarInProgress";
 
-		var progressStatus = document.createElement("div");
+		var progressStatus = document.createElement("a");
 		progressStatus.className = "progressBarStatus";
 		progressStatus.innerHTML = "&nbsp;";
 
@@ -83,7 +83,6 @@ FileProgress.prototype.setProgress = function (percentage) {
 	this.fileProgressElement.className = "progressContainer green";
 	this.fileProgressElement.childNodes[3].className = "progressBarInProgress";
 	this.fileProgressElement.childNodes[3].style.width = percentage + "%";
-
 	this.appear();	
 };
 FileProgress.prototype.setComplete = function () {
