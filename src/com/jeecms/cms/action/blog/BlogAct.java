@@ -2,6 +2,7 @@ package com.jeecms.cms.action.blog;
 
 import static com.jeecms.cms.Constants.TPLDIR_BLOG;
 import static com.jeecms.common.page.SimplePage.cpn;
+import static com.jeecms.core.action.front.LoginAct.PROCESS_URL;
 
 import java.io.IOException;
 import java.text.DateFormat;
@@ -13,6 +14,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -47,6 +49,7 @@ import com.jeecms.common.page.Pagination;
 import com.jeecms.common.page.SimplePage;
 import com.jeecms.common.util.RedisUtil;
 import com.jeecms.common.util.StrUtils;
+import com.jeecms.common.web.RequestUtils;
 import com.jeecms.common.web.ResponseUtils;
 import com.jeecms.common.web.session.SessionProvider;
 import com.jeecms.core.entity.CmsConfig;
@@ -482,6 +485,16 @@ public class BlogAct {
 			HttpServletResponse response, ModelMap model,String password) {
 		CmsSite site = CmsUtils.getSite(request);
 		CmsUser user = CmsUtils.getUser(request);
+		if (user == null) {
+			try {
+				request.getRequestDispatcher("/login.jspx").forward(request, response);
+				return;
+			} catch (ServletException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 		FrontUtils.frontData(request, model, site);
 		if(null != columnId){
 			channelId = 280;
@@ -612,6 +625,17 @@ public class BlogAct {
 	public void blog_delete(Integer contentId,Integer columnId,Integer channelId, HttpServletRequest request,
 			  HttpServletResponse response, ModelMap model) {
 			int id;
+			CmsUser user = CmsUtils.getUser(request);
+			if (user == null) {
+				try {
+					request.getRequestDispatcher("/login.jspx").forward(request, response);
+					return;
+				} catch (ServletException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
 		try {
 			if(null != columnId){
 				contentMng.deleteByIdBlog(contentId);
@@ -763,7 +787,14 @@ public class BlogAct {
 		FrontUtils.frontData(request, model, site);
 		CmsUser user = CmsUtils.getUser(request);
 		if (user == null) {
-			FrontUtils.showLogin(request, model, site);
+			try {
+				request.getRequestDispatcher("/login.jspx").forward(request, response);
+				return;
+			} catch (ServletException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 		JSONObject json = new JSONObject(); 
 		String columnId = request.getParameter("id");
@@ -791,7 +822,14 @@ public class BlogAct {
 		FrontUtils.frontData(request, model, site);
 		CmsUser user = CmsUtils.getUser(request);
 		if (user == null) {
-			FrontUtils.showLogin(request, model, site);
+			try {
+				request.getRequestDispatcher("/login.jspx").forward(request, response);
+				return;
+			} catch (ServletException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 		String columnId = request.getParameter("columnId");
 		columnsMng.deleteColumns(Integer.parseInt(columnId));
@@ -806,7 +844,14 @@ public class BlogAct {
 		CmsSite site = CmsUtils.getSite(request);
 		CmsUser user = CmsUtils.getUser(request);
 		if (user == null) {
-			FrontUtils.showLogin(request, model, site);
+			try {
+				request.getRequestDispatcher("/login.jspx").forward(request, response);
+				return;
+			} catch (ServletException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 		String columnId = request.getParameter("id");
 		String name = request.getParameter("updateName");
@@ -873,9 +918,15 @@ public class BlogAct {
 			ModelMap model) {
 		CmsSite site = CmsUtils.getSite(request);
 		CmsUser user = CmsUtils.getUser(request);
-		FrontUtils.frontData(request, model, site);
 		if (user == null) {
-			FrontUtils.showLogin(request, model, site);
+			try {
+				request.getRequestDispatcher("/login.jspx").forward(request, response);
+				return;
+			} catch (ServletException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 		channelMng.updateFriends(friends,user);
 		try {
@@ -1002,7 +1053,14 @@ public class BlogAct {
 		String focusTime = format.format(date);
 		CmsUser user = CmsUtils.getUser(request);
 		if (user == null) {
-			return;
+			try {
+				request.getRequestDispatcher("/login.jspx").forward(request, response);
+				return;
+			} catch (ServletException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 		Focus f = focusMng.add(user.getId(),user.getUsername(), Integer.parseInt(focusUserId), focusUserName, focusTime);
 		if(null != f){
