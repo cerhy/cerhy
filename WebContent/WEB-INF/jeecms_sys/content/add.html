@@ -169,39 +169,6 @@ window.onload=function() {
 		uploadPicsUrl += ";jsessionid="+jsessionid;
 		uploadAttachsUrl += ";jsessionid="+jsessionid;
 	}
-	<#if model.modelItems?seq_contains("pictures")>
-	swfu=new SWFUpload({
-		upload_url : uploadPicsUrl,
-		flash_url : "${base}/thirdparty/swfupload/swfupload.swf",
-		file_size_limit : "20 MB",
-		file_types : "*.jpg;*.gif;*.png;*.bmp",
-		file_types_description : "<@s.m 'content.picture'/>",
-		file_queue_limit : 0,
-		custom_settings : {
-			progressTarget : "fsUploadProgress",
-			cancelButtonId : "btnCancel"
-		},
-		debug: false,
-		
-		button_image_url : "${base}/res/common/img/theme/menu_search.jpg",
-		button_placeholder_id : "spanButtonPlaceHolder",
-		button_text: "<span class='btnText'><@s.m "content.pictures.upload"/></span>",
-		button_width: 52,
-		button_height: 19,
-		button_text_top_padding: 2,
-		button_text_left_padding: 0,
-		button_text_style: '.btnText{color:#666666;}',
-		
-		file_queued_handler : fileQueued,
-		file_queue_error_handler : fileQueueError,
-		file_dialog_complete_handler : fileDialogComplete,
-		upload_progress_handler : uploadProgress,
-		upload_error_handler : uploadError,
-		upload_success_handler : uploadPicsSuccess,
-		upload_complete_handler : uploadComplete,
-		queue_complete_handler : queueComplete
-	});
-	</#if>
 	<#if model.modelItems?seq_contains("attachments")>
 	swfau=new SWFUpload({
 		upload_url : uploadAttachsUrl,
@@ -235,6 +202,40 @@ window.onload=function() {
 		queue_complete_handler : queueComplete
 	});
 	</#if>
+	<#if model.modelItems?seq_contains("pictures")>
+	swfu=new SWFUpload({
+		upload_url : uploadPicsUrl,
+		flash_url : "${base}/thirdparty/swfupload/swfupload.swf",
+		file_size_limit : "20 MB",
+		file_types : "*.jpg;*.gif;*.png;*.bmp",
+		file_types_description : "<@s.m 'content.picture'/>",
+		file_queue_limit : 0,
+		custom_settings : {
+			progressTarget : "fsUploadProgress",
+			cancelButtonId : "btnCancel"
+		},
+		debug: false,
+		
+		button_image_url : "${base}/res/common/img/theme/menu_search.jpg",
+		button_placeholder_id : "spanButtonPlaceHolder",
+		button_text: "<span class='btnText'><@s.m "content.pictures.upload"/></span>",
+		button_width: 52,
+		button_height: 19,
+		button_text_top_padding: 2,
+		button_text_left_padding: 0,
+		button_text_style: '.btnText{color:#666666;}',
+		
+		file_queued_handler : fileQueued,
+		file_queue_error_handler : fileQueueError,
+		file_dialog_complete_handler : fileDialogComplete,
+		upload_progress_handler : uploadProgress,
+		upload_error_handler : uploadError,
+		upload_success_handler : uploadPicsSuccess,
+		upload_complete_handler : uploadComplete,
+		queue_complete_handler : queueComplete
+	});
+	</#if>
+	
 };
 function uploadPicsSuccess(file,data) {
 	var jsonData=eval("("+data+")");//转换为json对象 
