@@ -780,7 +780,13 @@ public class ContributeAct extends AbstractContentMemberAct {
 	
 	@RequestMapping(value = "/blog/add_link.jspx")
 	public String custom(String hyperlink,String nextUrl,HttpServletRequest request,HttpServletResponse response, ModelMap model) {
-		return blogAct.link_save(hyperlink.replaceAll("\r\n", " "),nextUrl,request, response, model);
+		if(StringUtils.isEmpty(hyperlink)){
+			return blogAct.link_save(null,nextUrl,request, response, model);
+		}else{
+			hyperlink=hyperlink.replaceAll(" ", "");//强制去空格
+			return blogAct.link_save(hyperlink.replaceAll("\r\n", " "),nextUrl,request, response, model);
+		}
+		
 	}
 	
 	/**
@@ -811,6 +817,7 @@ public class ContributeAct extends AbstractContentMemberAct {
 		if(StringUtils.isEmpty(friends)){
 			blogAct.friends_save(null,nextUrl,request, response, model);
 		}else{
+			friends=friends.replaceAll(" ", "");//强制去空格
 			blogAct.friends_save(friends.replaceAll("\r\n", " "),nextUrl,request, response, model);
 		}
 		
