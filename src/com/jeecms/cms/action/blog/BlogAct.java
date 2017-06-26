@@ -145,7 +145,13 @@ public class BlogAct {
 		CmsSite site = CmsUtils.getSite(request);
 		CmsUser user = CmsUtils.getUser(request);
 		if (user == null) {
-			return FrontUtils.showLogin(request, model, site);
+			String uid=request.getParameter("uid");
+			if(StringUtils.isNotEmpty(uid)){
+				user=cmsUserMng.findById(Integer.parseInt(uid));
+				model.addAttribute("usert", user);
+			}else{
+				return FrontUtils.showLogin(request, model, site);
+			}
 		}
 		int userId=user.getId();
 		String joinGroupStata=request.getParameter("joinGroupStata");
@@ -1112,7 +1118,13 @@ public class BlogAct {
 		CmsUser u = CmsUtils.getUser(request);
 		CmsSite site = CmsUtils.getSite(request);
 		if(u==null){
-			return FrontUtils.showLogin(request, model, site);
+			String uid=request.getParameter("uid");
+			if(StringUtils.isNotEmpty(uid)){
+				u=cmsUserMng.findById(Integer.parseInt(uid));
+				model.addAttribute("usert", u);
+			}else{
+				return FrontUtils.showLogin(request, model, site);
+			}
 		}
 		//好友
 		if(1 == dataFlag){
@@ -1193,9 +1205,9 @@ public class BlogAct {
 		CmsSite site = content.getSite();
 		CmsUser u = CmsUtils.getUser(request);
 		if(u==null){
-			return FrontUtils.showLogin(request, model, site);
-			/*u=cmsUserMng.findById(content.getUser().getId());
-			model.addAttribute("usert", u);*/
+			//return FrontUtils.showLogin(request, model, site);
+			u=cmsUserMng.findById(content.getUser().getId());
+			model.addAttribute("usert", u);
 		}
 		Integer pageCount=content.getPageCount();
 		if(pageNo>pageCount||pageNo<0){

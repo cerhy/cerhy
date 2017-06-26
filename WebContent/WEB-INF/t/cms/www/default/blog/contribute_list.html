@@ -43,12 +43,20 @@ $(function(){
 <div class="blogBody">
 <div class="blog-con">
 <div class="blogHead">
-<div class="title1"><a href="${base}/blog/index.jspx"><span id="title1">[#if user.blogTitle??]${user.blogTitle}[#else]标题[/#if]</span></a></div>
-	  <div style="font-size:15px;margin:5px auto 15px;">[#if user.blogTitle2??]${user.blogTitle2}[#else]副标题[/#if]</div>
-   </div>
+		 <div class="title1"><a [#if user??]href="${base}/blog/index.jspx"[#else]href="${base}/blog/index.jspx?uid=${usert.id}"[/#if]><span id="title1">[#if user??][#if user.blogTitle??]${user.blogTitle}[#else]标题[/#if][#else][#if usert.blogTitle??]${usert.blogTitle}[#else]标题[/#if][/#if]</span></a></div>
+	  <div style="font-size:15px;margin:5px auto 15px;">[#if user??][#if user.blogTitle2??]${user.blogTitle2}[#else]副标题[/#if][#else][#if usert.blogTitle2??]${usert.blogTitle2}[#else]副标题[/#if][/#if]</div>
+  </div>
    <div>
       	<div class="tj">
-     	 	文章数:${articleCount}&nbsp;&nbsp;评论:${commentCount}&nbsp;&nbsp;访问:${user.blogVisitNum!'0'}&nbsp;&nbsp;最后登录:${user.lastLoginTime?string('yyyy-MM-dd HH:mm:ss')}
+     	 	文章数:${articleCount}&nbsp;&nbsp;
+     	 	评论:${commentCount}&nbsp;&nbsp;
+     	 	[#if user??]
+			  访问:${user.blogVisitNum!'0'}&nbsp;&nbsp;
+			  最后登录:${user.lastLoginTime?string('yyyy-MM-dd HH:mm:ss')}&nbsp;&nbsp;
+			[#else]
+			  访问:${usert.blogVisitNum!'0'}&nbsp;&nbsp;
+			  最后登录:${usert.lastLoginTime?string('yyyy-MM-dd HH:mm:ss')}&nbsp;&nbsp;
+			[/#if]
       	</div>
       </div>
    <div class="mb20 clearfix">
@@ -84,6 +92,7 @@ $(function(){
 							   </a>
 						   </div>
 						   [/#if]
+						   [#if user??]
 						    [#if c.user.id=user.id]
 				            <a href="contribute_edit.jspx?id=${c.id}&nextUrl=contribute_list.jspx" class="f3"><em style="color:#b7b7b7;">修改</em></a>&nbsp;|&nbsp;
 			                [#else]
@@ -102,7 +111,10 @@ $(function(){
 			                [#else]
 			                  <a href="contribute_delete.jspx?ids=${c.id}&channelId=${channelId}" onclick="javascript:return del();" class="f3"><em style="color:#b7b7b7;">删除</em></a> 
 			                [/#if]
-				           <div class="f2"><span style="padding-right:10px;"><em>博主:&nbsp;${c.user.username}&nbsp;&nbsp;&nbsp;${c.releaseDate?string('yyyy-MM-dd')}&nbsp;&nbsp;&nbsp;作者:&nbsp;${c.author!c.user.username}&nbsp;&nbsp;&nbsp;阅读:&nbsp;${c.contentCount.views!}&nbsp;&nbsp;&nbsp;评论:&nbsp;${c.contentCount.comments!}</em></span></div>
+				           	<div class="f2"><span style="padding-right:10px;"><em>博主:&nbsp;${c.user.username}&nbsp;&nbsp;&nbsp;${c.releaseDate?string('yyyy-MM-dd')}&nbsp;&nbsp;&nbsp;作者:&nbsp;${c.author!c.user.username}&nbsp;&nbsp;&nbsp;阅读:&nbsp;${c.contentCount.views!}&nbsp;&nbsp;&nbsp;评论:&nbsp;${c.contentCount.comments!}</em></span></div>
+			                [#else]
+			                 <a class="f3"><em style="color:#b7b7b7;">博主:&nbsp;${c.user.username}&nbsp;&nbsp;&nbsp;${c.releaseDate?string('yyyy-MM-dd')}&nbsp;&nbsp;&nbsp;作者:&nbsp;${c.author!c.user.username}&nbsp;&nbsp;&nbsp;阅读:&nbsp;${c.contentCount.views!}&nbsp;&nbsp;&nbsp;评论:&nbsp;${c.contentCount.comments!}</em></a>
+			                [/#if]
 			             </li>
 			              [/#list]
 			          </ul>
@@ -110,6 +122,9 @@ $(function(){
           <input type="hidden" name="pageNo"/>
           <input style="display: none;" id="ud" name="ud" value="${columnId!''}"/>
 		  <input style="display: none;" id="jg" name="jg" value="${joinGroupStata!''}"/>
+		  [#if usert??]
+		  <input style="display: none;" id="hy" name="hy" value="${usert.id}"/>
+		  [/#if]
          <table style="margin:20px 0 0 40px;border:0px"><tr><td style="border:0px;">
 			                共 ${pagination.totalCount} 条&nbsp;
 			                每页 ${pagination.pageSize} 条&nbsp;
@@ -128,12 +143,23 @@ $(function(){
                     var tableForm = document.getElementById("tableForm");
                     $("input[name=pageNo]").val(pageNo);
                     if($("#ud").val()!=''&&$("#jg").val()!=''){
-                     tableForm.action="${base}/blog/contribute_list.jspx?columnId=${columnId!'null'}&joinGroupStata=${joinGroupStata!'null'}";
+                    	if(typeof($("#hy").val())=='undefined'){
+	                     	tableForm.action="${base}/blog/contribute_list.jspx?columnId=${columnId!'null'}&joinGroupStata=${joinGroupStata!'null'}";
+                    	}else{
+	                     tableForm.action="${base}/blog/contribute_list.jspx?columnId=${columnId!'null'}&joinGroupStata=${joinGroupStata!'null'}&uid="+$("#hy").val();
+                    	}	
 					}else if($("#ud").val()!=''&&$("#jg").val()==''){
-                     tableForm.action="${base}/blog/contribute_list.jspx?columnId=${columnId!'null'}";
+						if(typeof($("#hy").val())=='undefined'){
+                     		tableForm.action="${base}/blog/contribute_list.jspx?columnId=${columnId!'null'}";
+						}else{
+                     		tableForm.action="${base}/blog/contribute_list.jspx?columnId=${columnId!'null'}&uid="+$("#hy").val();
+						}
 					}else{
-                     tableForm.action="${base}/blog/contribute_list.jspx?channelId=${channelId!'null'}";
-						
+						if(typeof($("#hy").val())=='undefined'){
+                     		tableForm.action="${base}/blog/contribute_list.jspx?channelId=${channelId!'null'}";
+						}else{
+                     		tableForm.action="${base}/blog/contribute_list.jspx?channelId=${channelId!'null'}&uid="+$("#hy").val();
+						}
 					}
                     tableForm.onsubmit=null;
                     tableForm.submit();
@@ -154,7 +180,11 @@ $(function(){
    </div>
    </div>
    </div>
-[#include "model.html"/]
+[#if user??] 
+[#include "model.html"]
+[#else]
+[#include "model_friend.html"]
+[/#if]
 [#include "../include/footers.html"/]
 </body>
 </html>

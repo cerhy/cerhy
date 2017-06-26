@@ -968,7 +968,13 @@ public class ContributeAct extends AbstractContentMemberAct {
 		CmsSite site = CmsUtils.getSite(request);
 		CmsUser user = CmsUtils.getUser(request);
 		if(user==null){
-			return FrontUtils.showLogin(request, model, site);
+			String uid=request.getParameter("uid");
+			if(StringUtils.isNotEmpty(uid)){
+				user=cmsUserMng.findById(Integer.parseInt(uid));
+				model.addAttribute("usert", user);
+			}else{
+				return FrontUtils.showLogin(request, model, site);
+			}
 		}
 		model =blogCommon.getHyperlink(request,model,user);
 		model = blogCommon.getColumn(request,model,user);
@@ -1049,7 +1055,13 @@ public class ContributeAct extends AbstractContentMemberAct {
 		CmsSite site = CmsUtils.getSite(request);
 		CmsUser user = CmsUtils.getUser(request);
 		if(user==null){
-			return	FrontUtils.showLogin(request, model, site);
+			String uid=request.getParameter("uid");
+			if(StringUtils.isNotEmpty(uid)){
+				user=cmsUserMng.findById(Integer.parseInt(uid));
+				model.addAttribute("usert", user);
+			}else{
+				return FrontUtils.showLogin(request, model, site);
+			}
 		}
 //		model = blogCommon.getLinks(model,user);
 //		model = blogCommon.getFriends(model,user);
