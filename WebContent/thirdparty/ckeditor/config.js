@@ -8,7 +8,7 @@ CKEDITOR.editorConfig = function( config ) {
 	    config.width = 'auto'; // 宽度  
 	    config.height = '600px'; // 高度  
 	    config.skin = 'kama';// 界面v2,kama,office2003  
-	    config.toolbar = 'MyToolbar';// 工具栏风格（基础'Basic'、全能'Full'、自定义）
+	    config.toolbar = 'Full';// 工具栏风格（基础'Basic'、全能'Full'、自定义）
 	    //自定义的工具栏      
 	    config.toolbar_MyToolbar =  
 	    [  
@@ -36,7 +36,7 @@ CKEDITOR.editorConfig = function( config ) {
       		{ name: 'links', items : [ 'Link','Unlink','Anchor' ] },
       		{ name: 'insert', items : [ 'Image','Flash','Table','HorizontalRule','Smiley','SpecialChar','PageBreak','Iframe' ] },
       		'/',
-      		{ name: 'styles', items : [ 'Styles','Format','Font','FontSize' ] },
+      		{ name: 'styles', items : [ 'Styles','Format','Font','FontSize','lineheight' ] },
       		{ name: 'colors', items : [ 'TextColor','BGColor' ] },
       		{ name: 'tools', items : [ 'Maximize', 'ShowBlocks','-','About' ] }
       	];	
@@ -44,11 +44,14 @@ CKEDITOR.editorConfig = function( config ) {
       		['Bold', 'Italic', '-', 'NumberedList', 'BulletedList', '-', 'Link', 'Unlink','-','About']
       	];
 	    config.extraPlugins = 'autoformat,page';
+	    config.extraPlugins += (config.extraPlugins ? ',lineheight' : 'lineheight');
 	    config.font_names = '隶书/隶书;宋体/SimSun;新宋体/NSimSun;黑体/SimHei;楷体/KaiTi;微软雅黑/Microsoft YaHei;'+  
         '楷体_GB2312/KaiTi_GB2312;仿宋/FangSong;仿宋_GB2312/FangSong_GB2312;华文细黑/STXihei;华文楷体/STKaiti;华文宋体/STSong;华文中宋/STZhongsong;'+  
         '华文仿宋/STFangsong;华文彩云/STCaiyun;华文琥珀/STHupo;华文隶书/STLiti;华文行楷/STXingkai;华文新魏/STXinwei;'+  
         '方正舒体/FZShuTi;方正姚体/FZYaoti;细明体/MingLiU;新细明体/PMingLiU;微软正黑/Microsoft JhengHei;'+  
         'Arial Black/Arial Black;'+ config.font_names;
+	    config.pasteFromWordRemoveFontStyles = false;
+	    config.pasteFromWordRemoveStyles = false;
 };
 
 CKEDITOR.on( 'instanceReady', function( ev ) { with (ev.editor.dataProcessor.writer) {

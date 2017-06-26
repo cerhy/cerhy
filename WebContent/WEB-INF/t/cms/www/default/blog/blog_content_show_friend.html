@@ -238,7 +238,7 @@ table th,table td{word-break:break-all;white-space:normal;overflow:hidden;}
 	        		 [/#if]
 	        		 <span class="pr15" title="打印" id="btnPrints" onclick="btnPrints()"><img id="btnPrint" style="width: 23px;height: 23px;margin: -4px 0;cursor: pointer;" src="/${res}/images/printer.png" class="backto" /></span>
 				</div>
-				<div class="xueke-content-detail" style="margin-top:30px;min-height:170px;"  id="addAttr">
+				<div class="xueke-content-detail" style="margin-top:30px;min-height:170px;text-indent:2em;"  id="addAttr">
 					[#if preview??] [@text_cut s=txt! len=100 append="..."/]<br />
 					您需要更高的权限浏览全部内容!<br />以下会员组可浏览全部内容: [#list groups as g]
 					${g.name!}[#if g_has_next],[/#if] [/#list] [#else] ${txt!} [/#if]

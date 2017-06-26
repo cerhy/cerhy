@@ -156,12 +156,14 @@ table th,table td{word-break:break-all;white-space:normal;overflow:hidden;}
            <div class="personCenter-userInfo blog_right xueke-acticle">
                 <div ><h2>${content.title}</h2></div>
                 <input type="text" style="display:none" id="hipw" value="${content.password!}" />
-                <div class="gray9 h2dt pt5">
-                	<span class="pr15" id="backto" title="返回"><img style="width: 23px;height: 23px;margin: -4px -10px;cursor: pointer;" src="/${res}/images/back.png" alt="" class="backto" onclick="javascpipt:history.go(-1);"/></span>
+                <div class="gray9 h2dt pt5" style="margin-bottom: 2px;">
 				    <span class="pr15">发布时间：${content.releaseDate}</span>
 					<span class="pr15">
 					   <a target="_blank" href="${base}/blog/find_all_url_friend.jspx?userIds=${content.user.id}" class="bz">作者：${content.author!content.user.username}</a>
 					 </span>
+                </div>
+                <div class="gray9 h2dt pt5">
+                	<span class="pr15" id="backto" title="返回"><img style="width: 20px;height: 20px;margin: -6px 0px;cursor: pointer;" src="/${res}/images/back_1.png" alt="" class="backto" onclick="javascpipt:history.go(-1);"/></span>
 					 <span class="pr15 yuedu">浏览次数：<span id="views"></span></span> 
 					 <span class="pr15 pinglun">评论：${content.commentsCheckedNum!} </span>
 				     <span id="comfirmSpan" style="display:none;cursor: pointer;">转载</span>
@@ -196,7 +198,7 @@ table th,table td{word-break:break-all;white-space:normal;overflow:hidden;}
 	        		 [/#if]
 	        		 <span class="pr15" title="打印" id="btnPrints" onclick="btnPrints()"><img id="btnPrint" style="width: 23px;height: 23px;margin: -4px 0;cursor: pointer;" src="/${res}/images/printer.png" class="backto" /></span>
 				</div>
-				<div class="xueke-content-detail"  style="margin-top:30px;min-height:170px;"  id="addAttr">
+				<div class="xueke-content-detail"  style="margin-top:30px;min-height:170px;text-indent:2em;"  id="addAttr">
 					[#if preview??] [@text_cut s=txt! len=100 append="..."/]<br />
 					您需要更高的权限浏览全部内容!<br />以下会员组可浏览全部内容: [#list groups as g]
 					${g.name!}[#if g_has_next],[/#if] [/#list] [#else] ${txt!} [/#if]
