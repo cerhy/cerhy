@@ -193,7 +193,7 @@ public class CollectionMemberAct {
  		model.addAttribute("submitOn", 1);
 		FrontUtils.frontData(request, model, site);
 		Pagination p = contentMng.getPageForCollection(site.getId(), id, cpn(pageNo), CookieUtils.getPageSize(request));
-		p.setTotalCount(totalCount);
+		//p.setTotalCount(totalCount);
 		model.addAttribute("pagination", p);
 		if (!StringUtils.isBlank(queryTitle)) {
 			model.addAttribute("queryTitle", queryTitle);
@@ -242,7 +242,7 @@ public class CollectionMemberAct {
 		FrontUtils.frontData(request, model, site);
 		Pagination p = contentMng.getPageForCollection(site.getId(), userT
 				.getId(), cpn(pageNo), CookieUtils.getPageSize(request));
-		p.setTotalCount(totalCount);
+		//p.setTotalCount(totalCount);
 		model.addAttribute("pagination", p);
 		if (!StringUtils.isBlank(queryTitle)) {
 			model.addAttribute("queryTitle", queryTitle);

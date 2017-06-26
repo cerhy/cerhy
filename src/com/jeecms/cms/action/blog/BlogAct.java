@@ -70,7 +70,13 @@ public class BlogAct {
 		CmsSite site = CmsUtils.getSite(request);
 		CmsUser user = CmsUtils.getUser(request);
 		if (user == null) {
-			return FrontUtils.showLogin(request, model, site);
+			String uid=request.getParameter("uid");
+			if(StringUtils.isNotEmpty(uid)){
+				user=cmsUserMng.findById(Integer.parseInt(uid));
+				model.addAttribute("usert", user);
+			}else{
+				return FrontUtils.showLogin(request, model, site);
+			}
 		}
 		model =blogCommon.getHyperlink(request,model,user);
 		model = blogCommon.getColumn(request,model,user);
@@ -82,7 +88,7 @@ public class BlogAct {
 	    model = blogCommon.getAlreadyJoinGroup(request, model,user);
 		FrontUtils.frontData(request, model, site);
 		Pagination p = contentMng.getPageForMember_blog(q, queryChannelId,site.getId(), modelId,user.getId(), cpn(pageNo), 20,null,null);
-		p.setTotalCount(totalCount);
+		//p.setTotalCount(totalCount);
 		model.addAttribute("pagination", p);
 		if (!StringUtils.isBlank(q)) {
 			model.addAttribute("q", q);
@@ -192,7 +198,7 @@ public class BlogAct {
  		model = blogCommon.getAlreadyJoinGroup(request, model,user);
 		FrontUtils.frontData(request, model, site);
 		Pagination p = contentMng.getPageForMember_blog(q, queryChannelId,site.getId(), modelId,userId, cpn(pageNo), 20,columnId,channelId);
-		p.setTotalCount(totalCount);
+		//p.setTotalCount(totalCount);
 		model.addAttribute("pagination", p);
 		if (!StringUtils.isBlank(q)) {
 			model.addAttribute("q", q);
@@ -978,7 +984,7 @@ public class BlogAct {
 		model = blogCommon.getFouces(request, model,userT,user);
 		FrontUtils.frontData(request, model, site);
 		Pagination p = contentMng.getPageForMember_firendsBlog(Integer.valueOf(userT.getId()),q, queryChannelId,site.getId(), modelId,null, cpn(pageNo), 20,null);
-		p.setTotalCount(totalCount);
+		//p.setTotalCount(totalCount);
 		model.addAttribute("pagination", p);
 		model.addAttribute("GroupFlag", 0);
 		model.addAttribute("usert", userT);
@@ -1042,7 +1048,7 @@ public class BlogAct {
 		//model.addAttribute("columnId", columnId);
 		FrontUtils.frontData(request, model, site);
 		Pagination p = contentMng.getPageForMember_blog(q, queryChannelId,site.getId(), modelId,userId, cpn(pageNo), 20,columnId,channelId);
-		p.setTotalCount(totalCount);
+		//p.setTotalCount(totalCount);
 		model.addAttribute("pagination", p);
 		if (!StringUtils.isBlank(q)) {
 			model.addAttribute("q", q);
