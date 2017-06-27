@@ -10,14 +10,22 @@
 <script src="${resSys}/ckplayer/ckplayer.js" type="text/javascript"></script>
 <script src="${resSys}/ckplayer/offlights.js" type="text/javascript"></script>
 <script src="/${res}/js/SimpleTree.js"></script>
-<style type="text/css">
-img {
-	width: 660px;
-}
-</style>
 <script type="text/javascript">
 
 $(function() {
+	
+	///设置图片上传的大小
+	var width = $(".xueke-content-detail p img").width();
+	var height = $(".xueke-content-detail p img").height();
+	if(width>600){
+		if(width>=height){
+			var shang =  (width/height).toFixed(2);
+			var newHeight = parseInt(600/shang);
+			$(".xueke-content-detail p img").css("width","600px");
+			$(".xueke-content-detail p img").css("height",newHeight+"px");
+		}	
+	}
+	
 	$('.user-menu-links li').click(function(){
 	    $(this).toggleClass('on');
 	});
