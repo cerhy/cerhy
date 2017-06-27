@@ -6,7 +6,7 @@
 		                      [#else]<img src="/${res}/images/userImg-large.png" width="120" height="120">
 		                      [/#if]
 		                 </div>
-		                 <div class="user-name-dt"><a href="#">${usert.username}</a></div>
+		                 <div class="user-name-dt"><a href="#" title="[#if usert.realname??]${usert.realname}[#else]${usert.username}[/#if]">[#if usert.realname??][@text_cut s=usert.realname len=5 append=''/][#else]${usert.username}[/#if]</a></div>
 		                 	[#if user??]
 		                     [#if usert??]
 		                     <!-- [#if fouceCheck??]
@@ -94,7 +94,7 @@
 				                      [#if c.userImg??]<img src="${c.userImg}" width="40" height="40" alt="" style="float: left;padding: 5px 15px 0 23px">
 				                      [#else]<img src="/${res}/images/userImg-large.png" width="40" height="40" alt="" style="float: left;padding: 5px 15px 0 23px">
 				                      [/#if]
-				                      <a href="${base}/blog/find_all_url_friend.jspx?userIds=${c.id}" target="_blank">${c.username}</a>
+				                      <a href="${base}/blog/find_all_url_friend.jspx?userIds=${c.id}" target="_blank" title="[#if c.realname??]${c.realname}[#else]${c.username}[/#if]">[#if c.realname??][@text_cut s=c.realname len=5 append=''/][#else]${c.username}[/#if]</a>
 				                [/#list]
 		                        [#if moreStarBloggerExist??]
 				                 <a href="${base}/blog/gotoDataShowFriend.jspx?dataFlag=4&userId=${usert.id}">更多 &nbsp;>></a>
