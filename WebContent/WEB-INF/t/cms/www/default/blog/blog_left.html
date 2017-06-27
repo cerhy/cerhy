@@ -19,8 +19,7 @@ function del(){
                   [#if user??]
                  <div class="user-name-dt"><a href="${base}/blog/index.jspx">${user.username}</a></div>
                  [/#if]
-                     [#if usert??]
-                    [#else]
+                     [#if user??]
                      <a href="${base}/logout.jspx" style="cursor: pointer;" class="user-oparetion-btn">退出</a>
                      [/#if]
                      
@@ -28,7 +27,7 @@ function del(){
                       [/#if]
            <div class="user-menu-links">
                 <ul>
-				    <li><a href="${base}/blog/contribute_add.jspx">发表博客</a></li>
+				    [#if user??]<li><a href="${base}/blog/contribute_add.jspx">发表博客</a></li>[/#if]
 					    [#if submitOn??] 
 					    <li class="on"><a style="cursor: pointer;"><em></em>博客栏目</a>
 					    [#else] 
@@ -44,18 +43,39 @@ function del(){
 					             <li><a href="javascript:;">市县教研</a></li>
 					             [/#if]
 				             [/#if]
-				             <li><a href="${base}/blog/contribute_list.jspx?channelId=${c.channelId}" >&nbsp;&nbsp;>&nbsp;${c.channelName}</a></li> 
+				             <li>
+				             [#if user??]
+				             <a href="${base}/blog/contribute_list.jspx?channelId=${c.channelId}" >&nbsp;&nbsp;>&nbsp;${c.channelName}</a>
+				             [/#if]
+				             [#if usert??]
+				             <a href="${base}/blog/contribute_list.jspx?channelId=${c.channelId}&uid=${usert.id}" >&nbsp;&nbsp;>&nbsp;${c.channelName}</a>
+				             [/#if]
+				             </li> 
 				             [/#list]
 				             [/#if]
 				        	[#if columnsList??]
                             [#list columnsList as c]
                             [#if c.uniqueCode??]
                             [#else]
-		                    <li><a href="${base}/blog/contribute_list.jspx?columnId=${c.columnId}" ><em></em>[@text_cut s=c.columnName?html len='10' append='...'/]</a></li>
+		                    <li>
+		                    [#if user??]
+		                    <a href="${base}/blog/contribute_list.jspx?columnId=${c.columnId}" ><em></em>[@text_cut s=c.columnName?html len='10' append='...'/]</a>
+		                    [/#if]
+				            [#if usert??]
+			                <a href="${base}/blog/contribute_list.jspx?columnId=${c.columnId}&uid=${usert.id}" ><em></em>[@text_cut s=c.columnName?html len='10' append='...'/]</a>
+				            [/#if]
+		                    </li>
 		                    [/#if]
 		                    [/#list]
 		                    [/#if]
-				             <li><a href="${base}/blog/collection_list.jspx">转载</a></li>
+				             <li>
+				             [#if user??]
+				             <a href="${base}/blog/collection_list.jspx">转载</a>
+				             [/#if]
+				            [#if usert??]
+				             <a href="${base}/blog/collection_list.jspx?uid=${usert.id}">转载</a>
+				             [/#if]
+				             </li>
                          </ul>
                     </li>
                     	[#if submitOn1??] 
@@ -67,22 +87,46 @@ function del(){
 					        [#if columnsList??]
                             [#list columnsList as c]
                             [#if c.uniqueCode??]
-		                    <li><a href="${base}/blog/contribute_list.jspx?columnId=${c.columnId}&joinGroupStata=0" title="${c.columnName}" ><em></em>[@text_cut s=c.columnName len=5 append='...'/]</a></li>
+		                    <li>
+                            [#if user??]
+		                    <a href="${base}/blog/contribute_list.jspx?columnId=${c.columnId}&joinGroupStata=0" title="${c.columnName}" ><em></em>[@text_cut s=c.columnName len=5 append='...'/]</a>
+		                    [/#if]
+		                    [#if usert??]
+		                    <a href="${base}/blog/contribute_list.jspx?columnId=${c.columnId}&joinGroupStata=0&uid=${usert.id}" title="${c.columnName}" ><em></em>[@text_cut s=c.columnName len=5 append='...'/]</a>
+		                    [/#if]
+		                    </li>
 		                    [/#if]
 		                    [/#list]
                          	[/#if]
 					        [#if joinGroupList?size gt 0]
                             [#list joinGroupList as j]
-		                    <li><a href="${base}/blog/contribute_list.jspx?columnId=${j.columnsId.columnId}&joinGroupStata=0" title="${j.columnsId.columnName}" ><em></em>[@text_cut s=j.columnsId.columnName len=5 append='...'/]</a></li>
+		                    <li>
+		                    [#if user??]
+		                    <a href="${base}/blog/contribute_list.jspx?columnId=${j.columnsId.columnId}&joinGroupStata=0" title="${j.columnsId.columnName}" ><em></em>[@text_cut s=j.columnsId.columnName len=5 append='...'/]</a>
+		                    [/#if]
+		                    [#if usert??]
+		                    <a href="${base}/blog/contribute_list.jspx?columnId=${j.columnsId.columnId}&joinGroupStata=0&uid=${usert.id}" title="${j.columnsId.columnName}" ><em></em>[@text_cut s=j.columnsId.columnName len=5 append='...'/]</a>
+		                    [/#if]
+		                    </li>
 		                    [/#list]
 	                        [/#if]
                           </ul>
                     </li>
+                    [#if user??]
 	                <li><a  href="${base}/blog/gotoDataShow.jspx?dataFlag=1" >好友</a></li>
-	                <li><a  href="${base}/blog/gotoDataShow.jspx?dataFlag=2" >关注</a></li>
-	                <li><a  href="${base}/blog/gotoDataShow.jspx?dataFlag=3" >粉丝</a></li>
+	                <!-- <li><a  href="${base}/blog/gotoDataShow.jspx?dataFlag=2" >关注</a></li>
+	                <li><a  href="${base}/blog/gotoDataShow.jspx?dataFlag=3" >粉丝</a></li> -->
 	                <li><a  href="${base}/blog/visitor.jspx" >访客</a></li> 
 	             	<li><a  href="${base}/blog/dataStatistics.jspx" >访问统计</a></li>
+	             	[/#if]
+                    [#if usert??]
+	                <li><a  href="${base}/blog/gotoDataShow.jspx?dataFlag=1&uid=${usert.id}" >好友</a></li>
+	               <!--  <li><a  href="${base}/blog/gotoDataShow.jspx?dataFlag=2&uid=${usert.id}" >关注</a></li>
+	                <li><a  href="${base}/blog/gotoDataShow.jspx?dataFlag=3&uid=${usert.id}" >粉丝</a></li> -->
+	                <li><a  href="${base}/blog/visitor.jspx?uid=${usert.id}" >访客</a></li> 
+	             	<li><a  href="${base}/blog/dataStatistics.jspx?uid=${usert.id}" >访问统计</a></li>
+	             	[/#if]
+	             	[#if user??]
 			 		<li style="cursor: pointer;"><a><em></em>设置</a>
                        <ul>
                        <!-- [#if columnsList??] -->
@@ -94,7 +138,8 @@ function del(){
                        <li><a  href="${base}/blog/friends.jspx" ><em></em>好友管理</a></li>
                        <li><a target="_blank" href="${base}/blog/useManual.jspx" ><em></em>使用手册</a></li>
                        </ul>
-                </li> 
+                </li>
+                [/#if] 
                 <li style="cursor: pointer;"><a><em></em> 明星博主</a>
                    <ul>
                        [#if starBlogger?? ]
@@ -105,7 +150,12 @@ function del(){
 		                      <a href="${base}/blog/find_all_url_friend.jspx?userIds=${c.id}" target="_blank">${c.username}</a>
 		                [/#list]
                         [#if moreStarBloggerExist??]
+                        [#if user??]
 		                 <a href="${base}/blog/gotoDataShow.jspx?dataFlag=4">更多 &nbsp;>></a>
+                        [/#if]
+                        [#if usert??]
+		                 <a href="${base}/blog/gotoDataShow.jspx?dataFlag=4&uid=${usert.id}">更多 &nbsp;>></a>
+                        [/#if]
                         [/#if]
 		                [/#if]
                    </ul>

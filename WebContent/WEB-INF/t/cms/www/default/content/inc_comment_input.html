@@ -56,9 +56,9 @@
     </script>
     [#elseif content.channel.commentControl!=2 && !user??]
     [#--登录评论，且未登录--]
-    <div class="down clearfix">
-    <img src="/${res}/images/userImg.png" class="userImg"><span>
-    <a href="${base}/login.jspx?returnUrl=/">登录</a>之后才能发表评论</span>
+    <div class="clearfix" style="padding-left: 500px;">
+    <img style="margin-bottom: -10px;" src="/${res}/images/userImg.png" class="userImg"><span>
+    <a href="${base}/login.jspx?returnUrl=/" style="color: red;">登录</a>之后才能发表评论</span>
     </div>
     [#else]
     [#--不允许评论--]

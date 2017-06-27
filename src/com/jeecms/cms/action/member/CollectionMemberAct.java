@@ -5,6 +5,7 @@ import static com.jeecms.cms.Constants.TPLDIR_MEMBER;
 import static com.jeecms.common.page.SimplePage.cpn;
 
 import java.io.IOException;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -172,7 +173,14 @@ public class CollectionMemberAct {
 			if(user!=null){
 				id = user.getId();
 			}else{
-				return FrontUtils.showLogin(request, model, site);
+				String uid=request.getParameter("uid");
+				if(StringUtils.isNotEmpty(uid)){
+					id=Integer.valueOf(uid);
+					user=cmsUserMng.findById(Integer.parseInt(uid));
+					model.addAttribute("usert", user);
+				}else{
+					return FrontUtils.showLogin(request, model, site);
+				}
 			}
 		}
 		model = blogCommon.getColumn(request,model,user);
@@ -185,7 +193,7 @@ public class CollectionMemberAct {
  		model.addAttribute("submitOn", 1);
 		FrontUtils.frontData(request, model, site);
 		Pagination p = contentMng.getPageForCollection(site.getId(), id, cpn(pageNo), CookieUtils.getPageSize(request));
-		p.setTotalCount(totalCount);
+		//p.setTotalCount(totalCount);
 		model.addAttribute("pagination", p);
 		if (!StringUtils.isBlank(queryTitle)) {
 			model.addAttribute("queryTitle", queryTitle);
@@ -234,7 +242,7 @@ public class CollectionMemberAct {
 		FrontUtils.frontData(request, model, site);
 		Pagination p = contentMng.getPageForCollection(site.getId(), userT
 				.getId(), cpn(pageNo), CookieUtils.getPageSize(request));
-		p.setTotalCount(totalCount);
+		//p.setTotalCount(totalCount);
 		model.addAttribute("pagination", p);
 		if (!StringUtils.isBlank(queryTitle)) {
 			model.addAttribute("queryTitle", queryTitle);

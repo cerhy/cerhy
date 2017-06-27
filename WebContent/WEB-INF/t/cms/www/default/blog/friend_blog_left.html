@@ -9,13 +9,13 @@
 		                 <div class="user-name-dt"><a href="#">${usert.username}</a></div>
 		                 	[#if user??]
 		                     [#if usert??]
-		                     [#if fouceCheck??]
+		                     <!-- [#if fouceCheck??]
 		                     <a id="focus"[#if fouceCheck==0] onclick="focuss()"[#else]onclick="cancelfocus()"[/#if] style="cursor: pointer;" class="user-oparetion-btn1">[#if fouceCheck=0]关注[#else]取消关注[/#if]</a>
-		                     [/#if]
+		                     [/#if] -->
 		                     <!-- <a id="focus" style="cursor: pointer;" class="user-oparetion-btn1">关注</a>
 		                     <a id="cancelfocus" style="cursor: pointer;" class="user-oparetion-btn1">取消关注</a> -->
 		                     [#if friendCheck??]
-		                     <a id="addCancelFriend" style="cursor: pointer;" class="user-oparetion-btns" [#if friendCheck==0] onclick="addOrCancelFriends(0,${usert.id})"[#else]onclick="addOrCancelFriends(1,${usert.id})"[/#if]>[#if friendCheck==0]添加好友[#else]解除关系[/#if]</a>
+		                     <a id="addCancelFriend" style="cursor: pointer;margin-left: 35%;" class="user-oparetion-btns" [#if friendCheck==0] onclick="addOrCancelFriends(0,${usert.id})"[#else]onclick="addOrCancelFriends(1,${usert.id})"[/#if]>[#if friendCheck==0]添加好友[#else]解除关系[/#if]</a>
 		                     [/#if]
 		                    [#else]
 		                     <a href="${base}/logout.jspx" class="user-oparetion-btn">退出</a>
@@ -83,8 +83,8 @@
 								</ul> 	
 							</li>    	
 		                    <li><a  href="${base}/blog/gotoDataShowFriend.jspx?dataFlag=1&userId=${usert.id}" >好友</a></li>
-			                <li><a  href="${base}/blog/gotoDataShowFriend.jspx?dataFlag=2&userId=${usert.id}" >关注</a></li>
-			                <li><a  href="${base}/blog/gotoDataShowFriend.jspx?dataFlag=3&userId=${usert.id}" >粉丝</a></li>
+			                <!-- <li><a  href="${base}/blog/gotoDataShowFriend.jspx?dataFlag=2&userId=${usert.id}" >关注</a></li>
+			                <li><a  href="${base}/blog/gotoDataShowFriend.jspx?dataFlag=3&userId=${usert.id}" >粉丝</a></li> -->
 		                    <li><a  href="${base}/blog/friends_visitor.jspx?userIds=${usert.id}" >访客</a></li>  
 		                    <li><a  href="${base}/blog/friendDataStatistics.jspx?userIds=${usert.id}" >访问统计</a></li>
 		                  <li style="cursor: pointer;"><a><em></em> 明星博主</a>

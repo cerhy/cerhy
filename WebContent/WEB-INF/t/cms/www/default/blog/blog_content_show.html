@@ -113,31 +113,38 @@ function btnPrints(){
 [#include "head.html"/]
 <style type="text/css">
 table th,table td{word-break:break-all;white-space:normal;overflow:hidden;}
-.backto:hover {
-    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 30px 0 rgba(0,0,0,0.19);
+/* .backto:hover {
+    box-shadow: 0 20px 40px 0 rgba(0,0,0,0.24),0 17px 30px 0 rgba(0,0,0,0.19);
     -moz-border-radius: 2px; 
     -webkit-border-radius: 2px;
     border-radius:2px;   
-}
+} */
 </style>
 <div class="blogBody">
 <div class="blog-con">
   <div class="blogHead">
-	  <div class="title1"><a href="${base}/blog/index.jspx"><span id="title1">[#if user.blogTitle??]${user.blogTitle}[#else]标题[/#if]</span></a></div>
-	  <div style="font-size:15px;margin:5px auto 15px;">[#if user.blogTitle2??]${user.blogTitle2}[#else]副标题[/#if]</div>
+	  <div class="title1"><a [#if user??]href="${base}/blog/index.jspx"[#else]href="${base}/blog/index.jspx?uid=${usert.id}"[/#if]><span id="title1">[#if user??][#if user.blogTitle??]${user.blogTitle}[#else]标题[/#if][#else][#if usert.blogTitle??]${usert.blogTitle}[#else]标题[/#if][/#if]</span></a></div>
+	  <div style="font-size:15px;margin:5px auto 15px;">[#if user??][#if user.blogTitle2??]${user.blogTitle2}[#else]副标题[/#if][#else][#if usert.blogTitle2??]${usert.blogTitle2}[#else]副标题[/#if][/#if]</div>
   </div>
   <div class="tj">
 	  文章数:${articleCount}&nbsp;&nbsp;
 	  评论:${commentCount}&nbsp;&nbsp;
+	  [#if user??]
 	  访问:${user.blogVisitNum!'0'}&nbsp;&nbsp;
 	  最后登录:${user.lastLoginTime?string('yyyy-MM-dd HH:mm:ss')}&nbsp;&nbsp;
+	  [#else]
+	   访问:${usert.blogVisitNum!'0'}&nbsp;&nbsp;
+	  最后登录:${usert.lastLoginTime?string('yyyy-MM-dd HH:mm:ss')}&nbsp;&nbsp;
+	  [/#if]
   </div>
    <div class="mb20 clearfix">
 			<input style="display: none;" id="no" value="">
 			<input style="display: none;" id="no1" value="">
+			[#if user??]
 			<input style="display: none;" id="no2" value="${user.username}">
-		    <input style="display: none;" id="no3" value="${content.id}">
 			<input style="display: none;" id="no4" value="${user.id}">
+			[/#if]
+		    <input style="display: none;" id="no3" value="${content.id}">
 			<input style="display: none;" id="alt" value="0">
 	<!-- <div id="fudong" class="fudong" style="border: 0;">
 			<h2 class="title">
@@ -149,12 +156,14 @@ table th,table td{word-break:break-all;white-space:normal;overflow:hidden;}
            <div class="personCenter-userInfo blog_right xueke-acticle">
                 <div ><h2>${content.title}</h2></div>
                 <input type="text" style="display:none" id="hipw" value="${content.password!}" />
-                <div class="gray9 h2dt pt5">
-                	<span class="pr15" id="backto" title="返回"><img style="width: 23px;height: 23px;margin: -2px 0;cursor: pointer;" src="/${res}/images/back.png" alt="" class="backto" onclick="javascpipt:history.go(-1);"/></span>
+                <div class="gray9 h2dt pt5" style="margin-bottom: 2px;">
 				    <span class="pr15">发布时间：${content.releaseDate}</span>
 					<span class="pr15">
-					   <a target="_blank" href="${base}/blog/find_all_url_friend.jspx?userIds=${content.user.id}" class="bz">博主：${content.user.username}</a>
+					   <a target="_blank" href="${base}/blog/find_all_url_friend.jspx?userIds=${content.user.id}" class="bz">作者：${content.author!content.user.username}</a>
 					 </span>
+                </div>
+                <div class="gray9 h2dt pt5">
+                	<span class="pr15" id="backto" title="返回"><img style="width: 20px;height: 20px;margin: -6px 0px;cursor: pointer;" src="/${res}/images/back_1.png" alt="" class="backto" onclick="javascpipt:history.go(-1);"/></span>
 					 <span class="pr15 yuedu">浏览次数：<span id="views"></span></span> 
 					 <span class="pr15 pinglun">评论：${content.commentsCheckedNum!} </span>
 				     <span id="comfirmSpan" style="display:none;cursor: pointer;">转载</span>
@@ -162,6 +171,7 @@ table th,table td{word-break:break-all;white-space:normal;overflow:hidden;}
 					 <span class="content-share">分享
 						 [#include "../content/inc_share.html"/]
 					 </span>&nbsp;
+					 [#if user??]
 					 <span id="pos" name="pos" class="pos" style="width: 40px;height: 20px;" onclick="down(0)">批注
 					 </span>
 					 <div id="setDialogs" style="display:none;margin-top:-5px;">
@@ -175,9 +185,20 @@ table th,table td{word-break:break-all;white-space:normal;overflow:hidden;}
 					 <div class="themeButton" style="width: 50px;height: 50px;padding-left: 200px;">	
 					 <button type="button" onclick="closeDialogs();" class="submit" style="margin:30px 0px 0 10px;">确定</button></div>
 	        		 </div>
+	        		 [#else]
+					 <span id="pos" name="pos" class="pos" style="width: 40px;height: 20px;" onclick="downs()">批注
+					 </span>
+					 <div id="setDialogss" style="display:none;margin-top:-5px;">
+					 <ul style="padding-left: 10px;">
+						  <li  style="list-style-type: disc;">还未登陆...请点击<a href="${base}/login.jspx" style="color: red;">登录</a></li>
+					</ul>
+					 <div class="themeButton" style="width: 50px;height: 50px;padding-left: 200px;">	
+					 <button type="button" onclick="closeDialogss();" class="submit" style="margin:30px 0px 0 10px;">确定</button></div>
+	        		 </div>
+	        		 [/#if]
 	        		 <span class="pr15" title="打印" id="btnPrints" onclick="btnPrints()"><img id="btnPrint" style="width: 23px;height: 23px;margin: -4px 0;cursor: pointer;" src="/${res}/images/printer.png" class="backto" /></span>
 				</div>
-				<div class="xueke-content-detail"  style="margin-top:30px;min-height:170px;"  id="addAttr">
+				<div class="xueke-content-detail"  style="margin-top:30px;min-height:170px;text-indent:2em;"  id="addAttr">
 					[#if preview??] [@text_cut s=txt! len=100 append="..."/]<br />
 					您需要更高的权限浏览全部内容!<br />以下会员组可浏览全部内容: [#list groups as g]
 					${g.name!}[#if g_has_next],[/#if] [/#list] [#else] ${txt!} [/#if]
@@ -325,8 +346,12 @@ table th,table td{word-break:break-all;white-space:normal;overflow:hidden;}
        
   </div>
  </div>
-</div> 
+</div>
+[#if user??] 
 [#include "model.html"]
+[#else]
+[#include "model_friend.html"]
+[/#if]
 [#include "../include/footers.html"/]
 </body>
 </html>
@@ -375,6 +400,12 @@ table th,table td{word-break:break-all;white-space:normal;overflow:hidden;}
 	    	 $("#setDialogs").dialog("open");
     	 }
      }
+     
+     function downs(){  
+    	 if($("#alt").val()==0){
+	    	 $("#setDialogss").dialog("open");
+    	 }
+     }
      function divPos(event){
     	 $("#addAttrs").mousedown(function(e){
     		$.kw.confirm("提示内容",e.pageX,e.pageY);
@@ -404,6 +435,31 @@ table th,table td{word-break:break-all;white-space:normal;overflow:hidden;}
      function closeDialogs(){
     	$("#setDialogs").dialog("close");
     }
+     
+     $("#setDialogss").dialog({
+			autoOpen: false,
+			modal: false,
+			resizable :false,
+			stack : false,
+			draggable : true,
+			closeOnEscape : false,
+			open:function(event,ui){
+				$(".ui-dialog-titlebar-close").hide();
+				$(".ui-dialog-titlebar").css("background","#ffffff");  
+				$(".ui-widget-header").css("border","0");  
+			},
+			width: 300,
+			height: 130,
+			position: ["right",$("#pos").offsetTop],
+			close: function(event, ui) {
+				$("#alt").val(1)
+			}
+	});
+     
+     function closeDialogss(){
+    	 	$("#setDialogss").dialog("close");
+    	 }
+     
 </script>
 <script type="text/javascript">
 //提示框
