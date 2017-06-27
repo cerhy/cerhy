@@ -15,7 +15,9 @@
 		                     <!-- <a id="focus" style="cursor: pointer;" class="user-oparetion-btn1">关注</a>
 		                     <a id="cancelfocus" style="cursor: pointer;" class="user-oparetion-btn1">取消关注</a> -->
 		                     [#if friendCheck??]
+		                     [#if user.id!=usert.id]
 		                     <a id="addCancelFriend" style="cursor: pointer;margin-left: 35%;" class="user-oparetion-btns" [#if friendCheck==0] onclick="addOrCancelFriends(0,${usert.id})"[#else]onclick="addOrCancelFriends(1,${usert.id})"[/#if]>[#if friendCheck==0]添加好友[#else]解除关系[/#if]</a>
+		                     [/#if]
 		                     [/#if]
 		                    [#else]
 		                     <a href="${base}/logout.jspx" class="user-oparetion-btn">退出</a>
