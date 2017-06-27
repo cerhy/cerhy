@@ -103,12 +103,11 @@ table th,table td{word-break:break-all;white-space:normal;overflow:hidden;}
 						<span class="pr15">发布时间：${content.releaseDate}</span>
 						 <span class="pr15">
 						 [#if channel.parent.id==168]
-						 	 <a target="_blank" href="${base}/blog/find_all_url_friend.jspx?userIds=${content.user.id}" class="bz">博主：${content.user.username}</a>
+						 	 <a target="_blank" href="${base}/blog/find_all_url_friend.jspx?userIds=${content.user.id}" class="bz">作者：${content.author!content.user.username}</a>
 						 [#else]
-						 	作者：${content.author!'本站编辑'}
+						 	作者：${content.author!content.user.username}
 						 [/#if]	
 						 </span>
-						 <span class="pr15">来源：${content.origin!'本站原创'}</span> 
 						 <span class="pr15 yuedu">浏览次数：<span id="views"></span></span> 
 						 <span class="pr15 pinglun">评论：${content.commentsCheckedNum!} </span>
 						 <span id="comfirmSpan" style="display:none;cursor: pointer;">转载</span>
