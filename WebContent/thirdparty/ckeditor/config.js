@@ -55,7 +55,6 @@ CKEDITOR.editorConfig = function( config ) {
 	    config.pasteFromWordRemoveFontStyles = false;
 	    config.pasteFromWordRemoveStyles = false;
 };
-
 CKEDITOR.on( 'instanceReady', function( ev ) { with (ev.editor.dataProcessor.writer) {
 	setRules("p", {indent : true, breakBeforeOpen : true, breakAfterOpen : false,breakBeforeClose : false,  breakAfterClose : true} );
 	setRules("div", {indent : true, breakBeforeOpen : true, breakAfterOpen : false,breakBeforeClose : false,  breakAfterClose : true} );
