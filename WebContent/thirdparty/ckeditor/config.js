@@ -8,7 +8,7 @@ CKEDITOR.editorConfig = function( config ) {
 	    config.width = 'auto'; // 宽度  
 	    config.height = '600px'; // 高度  
 	    config.skin = 'kama';// 界面v2,kama,office2003  
-	    config.toolbar = 'Full';// 工具栏风格（基础'Basic'、全能'Full'、自定义）
+	    config.toolbar = 'MyToolbar';// 工具栏风格（基础'Basic'、全能'Full'、自定义）
 	    //自定义的工具栏      
 	    config.toolbar_MyToolbar =  
 	    [  
@@ -17,7 +17,7 @@ CKEDITOR.editorConfig = function( config ) {
 	        ['Undo','Redo','-','Find','Replace','-','SelectAll'],  
 	        [ 'Bold','Italic','Underline','Strike','Subscript','Superscript','TextColor','BGColor','-','RemoveFormat'],
 	        ['NumberedList','BulletedList','-','Outdent','Indent','Blockquote','-','JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock'],
-	        ['Styles','Format','Font','FontSize'],  
+	        ['Styles','Format','Font','FontSize','lineheight'],  
 	        ['Link','Unlink','Anchor'],  
 	        ['Maximize','autoformat','-'], 
 		    ['Image','Flash','Table','HorizontalRule','Smiley','SpecialChar'],  
