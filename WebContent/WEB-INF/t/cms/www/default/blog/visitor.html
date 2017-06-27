@@ -70,7 +70,7 @@ $('.user-menu-links li').click(function(){
 			                        [#else]
 			                        <img src="/${res}/images/userImg-large.png" alt="" width="47" height="47" title="${visitor.visitorTime}">
 			                        [/#if]
-		                            <span>${visitor.visitorId.username}</span>
+		                            <span title="[#if visitor.visitorId.realname??]${visitor.visitorId.realname}[#else]${visitor.visitorId.username}[/#if]">[#if visitor.visitorId.realname??][@text_cut s=visitor.visitorId.realname len=5 append='...'/][#else]${visitor.visitorId.username}[/#if]</span>
 		                            </a>
 	                            </div>
 				      	[/#list]
