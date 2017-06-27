@@ -126,6 +126,19 @@ function addOrCancelFriends(obj,uId){
 </script>
 <script type="text/javascript">
 $(function () {  
+	
+	//修改图片过大问题
+	var width = $(".xueke-content-detail p img").width();
+	var height = $(".xueke-content-detail p img").height();
+	if(width>600){
+		if(width>=height){
+			var shang =  (width/height).toFixed(2);
+			var newHeight = parseInt(600/shang);
+			$(".xueke-content-detail p img").css("width","600px");
+			$(".xueke-content-detail p img").css("height",newHeight+"px");
+		}	
+	}
+	
     var printAreaCount = 0;  
     $.fn.printArea = function () {  
         var ele = $(this); 
