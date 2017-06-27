@@ -68,8 +68,7 @@ table th,table td{word-break:break-all;white-space:normal;overflow:hidden;}
 					<h2>${content.title}</h2>
 					<div class="gray9 h2dt pt5">
 						<span class="pr15">发布时间：${content.releaseDate}</span>
-						 <span class="pr15">作者：${content.author!'本站编辑'}</span>
-						 <span class="pr15">来源：${content.origin!'本站原创'}</span> 
+						 <span class="pr15">作者：${content.author!content.user.username}</span>
 						 <span class="pr15 yuedu">浏览次数：<span id="views"></span></span> 
 						 <span class="pr15 pinglun">评论：${content.commentsCheckedNum!} </span>
 						  <span class="content-share">分享
