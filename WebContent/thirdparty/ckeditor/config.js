@@ -50,8 +50,6 @@ CKEDITOR.editorConfig = function( config ) {
         '华文仿宋/STFangsong;华文彩云/STCaiyun;华文琥珀/STHupo;华文隶书/STLiti;华文行楷/STXingkai;华文新魏/STXinwei;'+  
         '方正舒体/FZShuTi;方正姚体/FZYaoti;细明体/MingLiU;新细明体/PMingLiU;微软正黑/Microsoft JhengHei;'+  
         'Arial Black/Arial Black;'+ config.font_names;
-	    config.enterMode = CKEDITOR.ENTER_P;
-	    config.shiftEnterMode = CKEDITOR.ENTER_BR; 
 	    config.pasteFromWordRemoveFontStyles = false;
 	    config.pasteFromWordRemoveStyles = false;
 };

@@ -10,14 +10,22 @@
 <script src="${resSys}/ckplayer/ckplayer.js" type="text/javascript"></script>
 <script src="${resSys}/ckplayer/offlights.js" type="text/javascript"></script>
 <script src="/${res}/js/SimpleTree.js"></script>
-<style type="text/css">
-p img {
-	width: 660px;
-	}
-</style>
 <script type="text/javascript">
 
 $(function() {
+	
+	var width = $(".xueke-content-detail p img").width();
+	var height = $(".xueke-content-detail p img").height();
+	if(width>600){
+		if(width>=height){
+			var shang =  (width/height).toFixed(2);
+			var newHeight = parseInt(600/shang);
+			$(".xueke-content-detail p img").css("width","600px");
+			$(".xueke-content-detail p img").css("height",newHeight+"px");
+		}	
+	}
+	
+	$("p img").css("width","660px");
 	$('.user-menu-links li').click(function(){
 	    $(this).toggleClass('on');
 	});
@@ -206,7 +214,7 @@ table th,table td{word-break:break-all;white-space:normal;overflow:hidden;}
 	        		 [/#if]
 	        		 <span class="pr15" title="打印" id="btnPrints" onclick="btnPrints()"><img id="btnPrint" style="width: 23px;height: 23px;margin: -4px 0;cursor: pointer;" src="/${res}/images/printer.png" class="backto" /></span>
 				</div>
-				<div class="xueke-content-detail"  style="margin-top:30px;min-height:170px;"  id="addAttr">
+				<div class="xueke-content-detail"  style="margin-top:30px;min-height:170px;text-indent:2em;"  id="addAttr">
 					[#if preview??] [@text_cut s=txt! len=100 append="..."/]<br />
 					您需要更高的权限浏览全部内容!<br />以下会员组可浏览全部内容: [#list groups as g]
 					${g.name!}[#if g_has_next],[/#if] [/#list] [#else] ${txt!} [/#if]
