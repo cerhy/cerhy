@@ -10,6 +10,25 @@
 <link  type="text/css" rel="stylesheet" href="/${res}/css/SimpleTree.css" />
 <script src="/${res}/js/SimpleTree.js"></script>
 <style>
+.jump {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 2px 8px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 10px;
+    margin: 2px 1px;
+    cursor: pointer;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+}
+
+.jump:hover {
+    box-shadow: 0 3px 4px 0 rgba(0,0,0,0.24),0 6px 12px 0 rgba(0,0,0,0.19);
+}
+
 td{border:1px solid #e7e7e7; line-height:38px; color:#666666; text-align:center;width:120px;height:20px;}
 .st_tree ul .change a:hover{color:red;}
 .st_tree ul li a:hover{color:blue;}
@@ -65,7 +84,7 @@ $(function(){
 				          <a class="hasImg clearfix a12"  href="${c.url}?d=1">
 							  <div class="item2 clearfix" [#if c_index<1]style="border-top:none;"[/#if]>
 									<div class="report-text">
-										<div><h3>[@text_cut s=c.title?html len='24' append='...'/]</h3></div>
+										<div><h3>${c.title}</h3></div>
 									</div>
 					           </div>
 						   </a>
@@ -88,12 +107,12 @@ $(function(){
 			           <table  style="margin:20px 0 0 40px;border:0px" ><tbody><tr><td style="border:0px; ">
                 共 ${pagination.totalCount} 条&nbsp;
                 每页 ${pagination.pageSize} 条&nbsp;
-                <input style="cursor: pointer;" type="button" value="首 页" onclick="_gotoPage('1');"[#if pagination.firstPage] disabled="disabled"[/#if] class="inp2"/>
-                <input style="cursor: pointer;" type="button" value="上一页" onclick="_gotoPage('${pagination.prePage}');"[#if pagination.firstPage] disabled="disabled"[/#if] class="inp2"/>
-                <input style="cursor: pointer;" type="button" value="下一页" onclick="_gotoPage('${pagination.nextPage}');"[#if pagination.lastPage] disabled="disabled"[/#if] class="inp2"/>
-                <input style="cursor: pointer;" type="button" value="尾 页" onclick="_gotoPage('${pagination.totalPage}');"[#if pagination.lastPage] disabled="disabled"[/#if] class="inp2"/>&nbsp;
+                <a href="javascript:void(0);" onclick="_gotoPage('1');"[#if pagination.firstPage] disabled="disabled"[/#if] >首页</a>
+                <a href="javascript:void(0);" onclick="_gotoPage('${pagination.prePage}');"[#if pagination.firstPage] disabled="disabled"[/#if] >上一页</a>
+                 <a href="javascript:void(0);" onclick="_gotoPage('${pagination.nextPage}');"[#if pagination.lastPage] disabled="disabled"[/#if] >下一页</a>
+                 <a href="javascript:void(0);" onclick="_gotoPage('${pagination.totalPage}');"[#if pagination.lastPage] disabled="disabled"[/#if] >尾页</a>&nbsp;
                 当前 ${pagination.pageNo}/${pagination.totalPage} 页 &nbsp;转到第<input type="text" id="_goPs" onfocus="this.select();" onkeypress="if(event.keyCode==13){$('#_goPage').click();return false;}" class="inp1"/>页
-                <input style="cursor: pointer;" id="_goPage" type="button" value="转" class="sub2" onclick="_gotoPage($('#_goPs').val());"[#if pagination.totalPage==1] disabled="disabled"[/#if] />
+                <input style="cursor: pointer;" id="_goPage" type="button" value="转" class="jump" onclick="_gotoPage($('#_goPs').val());"[#if pagination.totalPage==1] disabled="disabled"[/#if] />
             </td>
             </tr>
             </tbody>

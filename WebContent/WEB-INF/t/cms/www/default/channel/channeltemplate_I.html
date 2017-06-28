@@ -78,7 +78,7 @@ body{
 													          <img width="85" height="85" src="${a.typeImg!}" alt="">
 													          [/#if]
 													          <div class="report-text">
-													            <h3 title="${a.title}">[@text_cut s=a.title len=25 append='...'/]</h3>
+													            <h3 title="${a.title}">${a.title}</h3>
 													            <p>[#if a.typeImg??][@text_cut s=a.description len=30 append='...'/][#else][@text_cut s=a.description len=40 append='...'/][/#if]</p>
 													         [#if c.id=305||c.id=316||c.id=323]
 												          		<div class="fl"><span class="ch">美术<em>${a.date?string("yyyy-MM-dd")}&nbsp;&nbsp;&nbsp;作者:&nbsp;${a.author!a.user.username}&nbsp;&nbsp;&nbsp;阅读:&nbsp;${a.contentCount.views!}&nbsp;&nbsp;&nbsp;评论:&nbsp;${a.contentCount.comments!}</em></span></div>

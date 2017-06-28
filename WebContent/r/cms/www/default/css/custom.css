@@ -287,9 +287,9 @@ padding-top: 32px;
 .report-list2.sm {
     border-top: 0 none; }
 .report-list2.sm .report-text h3 {
-    font-size: 18px !important;
-    font-weight: 700 !important;
-    color: #666 !important; }
+   	/* font-size: 20px; */
+    font-weight: 400 ;
+  }
 .report-list2.sm .report-text p {
     width: 520px; }
 .report-list2 li {

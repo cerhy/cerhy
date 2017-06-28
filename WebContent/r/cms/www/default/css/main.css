@@ -784,8 +784,8 @@ a:hover{
 .report-list.sm {
     border-top: 0 none; }
 .report-list.sm .report-text h3 {
-    font-size: 18px !important;
-    font-weight: 700 !important;
+    font-size: 17px !important;
+    /*font-weight: 700 !important;*/
     color: #666 !important; }
 .report-list.sm .report-text p {
     width: 520px; }

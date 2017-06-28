@@ -6,8 +6,28 @@
 <link type="text/css" rel="stylesheet" href="/${res}/css/hyindex.css" />
 <link rel="stylesheet" type="text/css" href="/${res}/css/custom.css" />
 <style type="text/css">
+.button {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 3px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+}
+
+.button2:hover {
+    box-shadow: 0 3px 4px 0 rgba(0,0,0,0.24),0 8px 30px 0 rgba(0,0,0,0.19);
+}
+
+
 .sub2{
-width:50px;
+width:70px;
 height: 30px;background: #00a8eb;color: #FFF;text-align: center;font-size: 14px;border-radius: 3px;
 }
 .sub2:hover {
@@ -17,6 +37,15 @@ height: 30px;background: #00a8eb;color: #FFF;text-align: center;font-size: 14px;
 <link  type="text/css" rel="stylesheet" href="/${res}/css/SimpleTree.css" />
 <script src="/${res}/js/SimpleTree.js"></script>
 <style>
+.blogTitle{
+transition: all 0.30s ease-in-out;
+border: 1px solid gray;
+}
+.blogTitle:focus{
+border: 1px solid #66AACC;
+box-shadow: 0 0 5px #66AACC;
+outline: none;
+}
 .st_tree ul .change a:hover{color:red;}
 .st_tree ul li a:hover{color:blue;}
 .st_tree ul .change :hover{background-color:#e7e7e7 }
@@ -55,11 +84,11 @@ $(function(){
 	    <div class="personCenter-userInfo blog_right" >
           <form action="${base}/blog/updateSetting.jspx" method="post">
 	         <div style="font-size:15px">标题名:</div>
-	         <input type="text" name="blogTitle" style="margin:10px 10px 20px 0;color: #858585;padding:10px;" value="[#if user.blogTitle??]${user.blogTitle}[#else]未设置[/#if]" maxlength="60"/>
+	         <input type="text" name="blogTitle" class="blogTitle" style="margin:10px 10px 20px 0;color: #858585;padding:10px;width: 250px;" value="[#if user.blogTitle??]${user.blogTitle}[#else]未设置[/#if]" maxlength="60"/>
 	         <div style="font-size:15px">副标题名:</div>
-	         <input type="text" name="blogTitle2" style="margin:10px 10px 20px 0;color: #858585;padding:10px;width: 280px;" value="[#if user.blogTitle2??]${user.blogTitle2}[#else]未设置[/#if]" maxlength="60"/>
-	         
-	         <div ><input type="submit" value="更新" class="sub2" /></div>
+	         <input type="text" name="blogTitle2" class="blogTitle" style="margin:10px 10px 20px 0;color: #858585;padding:10px;width: 300px;" value="[#if user.blogTitle2??]${user.blogTitle2}[#else]未设置[/#if]" maxlength="60"/>
+	         <div ><input type="submit" value="更新" class="button button2" />
+	         </div>
 	        </form>
          </div>
      </div>
