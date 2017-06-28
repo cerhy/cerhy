@@ -13,15 +13,15 @@
 <script type="text/javascript">
 
 $(function() {
-	
-	var width = $(".xueke-content-detail p img").width();
-	var height = $(".xueke-content-detail p img").height();
+	debugger;
+	var width = $(".xueke-content-detail img").width();
+	var height = $(".xueke-content-detail img").height();
 	if(width>600){
 		if(width>=height){
 			var shang =  (width/height).toFixed(2);
 			var newHeight = parseInt(600/shang);
-			$(".xueke-content-detail p img").css("width","600px");
-			$(".xueke-content-detail p img").css("height",newHeight+"px");
+			$(".xueke-content-detail img").css("width","600px");
+			$(".xueke-content-detail img").css("height",newHeight+"px");
 		}	
 	}
 	
@@ -173,7 +173,7 @@ table th,table td{word-break:break-all;white-space:normal;overflow:hidden;}
                 <div ><h2>${content.title}</h2></div>
                 <input type="text" style="display:none" id="hipw" value="${content.password!}" />
                 <div class="gray9 h2dt pt5" style="margin-bottom: 2px;">
-				    <span class="pr15">发布时间：${content.releaseDate}</span>
+				    <span class="pr15">发布了时间：${content.releaseDate}</span>
 					<span class="pr15">
 					   <a target="_blank" href="${base}/blog/find_all_url_friend.jspx?userIds=${content.user.id}" class="bz">作者：${content.author!content.user.username}</a>
 					 </span>
@@ -214,7 +214,7 @@ table th,table td{word-break:break-all;white-space:normal;overflow:hidden;}
 	        		 [/#if]
 	        		 <span class="pr15" title="打印" id="btnPrints" onclick="btnPrints()"><img id="btnPrint" style="width: 23px;height: 23px;margin: -4px 0;cursor: pointer;" src="/${res}/images/printer.png" class="backto" /></span>
 				</div>
-				<div class="xueke-content-detail"  style="margin-top:30px;min-height:170px;text-indent:2em;"  id="addAttr">
+				<div class="xueke-content-detail"  style="margin-top:30px;min-height:170px;"  id="addAttr">
 					[#if preview??] [@text_cut s=txt! len=100 append="..."/]<br />
 					您需要更高的权限浏览全部内容!<br />以下会员组可浏览全部内容: [#list groups as g]
 					${g.name!}[#if g_has_next],[/#if] [/#list] [#else] ${txt!} [/#if]
