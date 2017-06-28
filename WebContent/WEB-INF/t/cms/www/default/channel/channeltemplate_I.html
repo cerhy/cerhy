@@ -104,6 +104,8 @@ body{
 												          		<div class="fl"><span class="ch">生物<em>${a.date?string("yyyy-MM-dd")}&nbsp;&nbsp;&nbsp;作者:&nbsp;${a.author!a.user.username}&nbsp;&nbsp;&nbsp;阅读:&nbsp;${a.contentCount.views!}&nbsp;&nbsp;&nbsp;评论:&nbsp;${a.contentCount.comments!}</em></span></div>
 												         	[#elseif c.id=140||c.id=142]
 												          		<div class="fl"><span class="ch">语文<em>${a.date?string("yyyy-MM-dd")}&nbsp;&nbsp;&nbsp;作者:&nbsp;${a.author!a.user.username}&nbsp;&nbsp;&nbsp;阅读:&nbsp;${a.contentCount.views!}&nbsp;&nbsp;&nbsp;评论:&nbsp;${a.contentCount.comments!}</em></span></div>
+												         	[#elseif c.id=420||c.id=421||c.id=422]
+												          		<div class="fl"><span class="ch">心理健康<em>${a.date?string("yyyy-MM-dd")}&nbsp;&nbsp;&nbsp;作者:&nbsp;${a.author!a.user.username}&nbsp;&nbsp;&nbsp;阅读:&nbsp;${a.contentCount.views!}&nbsp;&nbsp;&nbsp;评论:&nbsp;${a.contentCount.comments!}</em></span></div>
 												         	[#else]
 													          	<div class="fl"><span class="ch">${a.ctgName}<em>${a.date?string("yyyy-MM-dd")}&nbsp;&nbsp;&nbsp;作者:&nbsp;${a.author!a.user.username}&nbsp;&nbsp;&nbsp;阅读:&nbsp;${a.contentCount.views!}&nbsp;&nbsp;&nbsp;评论:&nbsp;${a.contentCount.comments!}</em></span></div>
 												         	[/#if]
@@ -132,6 +134,8 @@ body{
 												          		<input style="display: none;" id="bkNames" value="高中、初中生物">
 												         	[#elseif c.id=140||c.id=142]
 												          		<input style="display: none;" id="bkNames" value="高中、初中语文">
+												         	[#elseif c.id=420||c.id=421||c.id=422]
+												          		<input style="display: none;" id="bkNames" value="高中、初中、初中心理健康">
 												         	[#else]
 													          	<input style="display: none;" id="bkNames" value="${a.ctgName}">
 												         	[/#if]
