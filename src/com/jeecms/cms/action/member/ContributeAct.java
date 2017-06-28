@@ -22,7 +22,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -420,22 +419,29 @@ public class ContributeAct extends AbstractContentMemberAct {
 	}
 	
 	@RequestMapping("/member/o_upload_media.jspx")
-	public String uploadMedia(
+	public @ResponseBody String uploadMedia(
 			@RequestParam(value = "mediaFile", required = false) MultipartFile file,
 			String filename, HttpServletRequest request, ModelMap model) {
 		CmsSite site = CmsUtils.getSite(request);
 		CmsUser user = CmsUtils.getUser(request);
 		String origName = file.getOriginalFilename();
+		
+		JSONObject object = new JSONObject();
+		try {
 		String ext = FilenameUtils.getExtension(origName).toLowerCase(
 				Locale.ENGLISH);
 		WebErrors errors = validateUpload(file, request);
 		if (errors.hasErrors()) {
-			model.addAttribute("error", errors.getErrors().get(0));
-			return FrontUtils.getTplPath(request, site.getSolutionPath(),
-					TPLDIR_MEMBER, CONTRIBUTE_UPLOADMIDIA);
+			log.error(errors.getErrors().get(0));
+			//model.addAttribute("error", errors.getErrors().get(0));
+			//return FrontUtils.getTplPath(request, site.getSolutionPath(),
+				//	TPLDIR_MEMBER, CONTRIBUTE_Uerrors.getErrors().get(0)PLOADMIDIA);
+			object.put("code", "fail");
+			
+			return object.toString();
 		}
 		// TODO 检查允许上传的后缀
-		try {
+		
 			String fileUrl;
 			if (site.getConfig().getUploadToDb()) {
 				String dbFilePath = site.getConfig().getDbFileUri();
@@ -479,15 +485,20 @@ public class ContributeAct extends AbstractContentMemberAct {
 			}
 			cmsUserMng.updateUploadSize(user.getId(), Integer.parseInt(String.valueOf(file.getSize()/1024)));
 			fileMng.saveFileByPath(fileUrl, fileUrl, false);
-			model.addAttribute("mediaPath", fileUrl);
-			model.addAttribute("mediaExt", ext);
+			object.put("code", "success");
+			object.put("mediaPath", fileUrl);
 		} catch (IllegalStateException e) {
-			model.addAttribute("error", e.getMessage());
+			//model.addAttribute("error", e.getMessage());
+			log.error(e.getMessage(),e);
 		} catch (IOException e) {
-			model.addAttribute("error", e.getMessage());
+			log.error(e.getMessage(),e);
+			//model.addAttribute("error", e.getMessage());
+		}catch (JSONException e) {
+			// TODO Auto-generated catch block
+			log.error(e.getMessage(),e);
 		}
-		return FrontUtils.getTplPath(request, site.getSolutionPath(),
-				TPLDIR_MEMBER, CONTRIBUTE_UPLOADMIDIA);
+	
+		return object.toString();
 	}
 	
 	@RequestMapping("/member/o_upload_attachment.jspx")

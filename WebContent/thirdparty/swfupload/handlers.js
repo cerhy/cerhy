@@ -98,7 +98,7 @@ function uploadProgress(file, bytesLoaded, bytesTotal) {
 			progress.setStatus("&nbsp;&nbsp;&nbsp;&nbsp;文件上传成功");
 			progress.toggleCancel(false, this);
 			} else {
-			progress.setStatus("&nbsp;&nbsp;&nbsp;&nbsp;正在上传("+percent+" %)请稍后...");
+			//progress.setStatus("&nbsp;&nbsp;&nbsp;&nbsp;正在上传("+percent+" %)请稍后...");
 			progress.toggleCancel(true, this);
 			}
 	} catch (ex) {
