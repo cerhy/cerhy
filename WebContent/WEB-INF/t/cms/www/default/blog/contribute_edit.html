@@ -329,7 +329,11 @@ $(function(){
 						<input onchange="$('#mediaFileText').val(this.value)" size="19" type="file" name="mediaFile" id="mediaFile" style="height:28px;width:246px;opacity:0;filter:alpha(opacity=0);position:absolute;left:15px;top:0;"/>
 						<input type="button" value="上传" onclick="uploadMedia();" class="change-Btn"  style="float:left;"/>
 						</span>
-						<span style="color:#f00; margin-left:10px;">*上传的视频文件须为MP4格式!</span> 
+						<span style="color:#f00; margin-left:10px;" id="tishiType">*上传的视频文件须为MP4格式!</span> 
+						<sap id="progressSapn" style="display:none" >
+						<progress value="0" max="100" id="progressId"></progress> 
+						<span id="tishi"></span>
+					</sap>
 					</div>
                 </td>
               </tr>
