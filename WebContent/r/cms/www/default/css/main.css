@@ -1290,7 +1290,7 @@ a:hover{
     background: url(images/sp.png) no-repeat -27px -58px;
 }
 .bgfff{background: #FFF;}
-.user-center-left .user-setting{background: #FFF;margin-bottom: 5px;padding-bottom: 10px;}
+.user-center-left .user-setting{background: #FFF;margin-bottom: 5px;padding-bottom: 10px;border-radius:3px;}
 .user-center-left .user-setting .pic-dt{
     padding-top: 15px;
     margin:0 auto 5px;
@@ -1424,6 +1424,7 @@ a:hover{
 .personCenter-userInfo{
     background: #FFF;
     font-family: "MicroSoft Yahei";
+    border-radius:3px;
 }
 .personCenter-userInfo .tab-head{
     background: #f9f9f9;
