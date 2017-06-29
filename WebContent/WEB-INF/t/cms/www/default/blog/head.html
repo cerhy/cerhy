@@ -88,6 +88,10 @@ function qkeypress(){
                     <em></em>
                     </li>
          			[#if user?? && !status??]
+         			 <li>
+                    	<a href="${base}/blog/index.jspx">我的博客</a>
+                    	<em></em>
+                    </li>
 	         			<li>
          			 <div class="user-loginTopInfo clearfix">
                             <span class="userPic-small">[#if user.userImg??]<img src="${user.userImg}" width="20" height="20">[#else]<img alt="用户头像" src="/${res}/images/userImg.png" width="20" height="20">[/#if]</span>
@@ -103,6 +107,8 @@ function qkeypress(){
                         </div>
                         </li>
          			[#else]
+         				<a href="${base}/blog/index.jspx">我的博客</a>
+                    	<em></em>
       					<li><a href="${base}/login.jspx">登录</a></li>
      				[/#if]                   
                 </ul>

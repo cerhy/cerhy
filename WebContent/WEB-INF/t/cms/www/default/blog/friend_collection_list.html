@@ -140,7 +140,7 @@ $(function(){
 				          <a class="hasImg clearfix a12"  href="${c.url}?f=${usert.id}&collection=1">
 							  <div class="item2 clearfix" [#if c_index<1]style="border-top:none;"[/#if]>
 									<div class="report-text">
-										<h3>【转载】[@text_cut s=c.title?html len='24' append='...'/]</h3>
+										<h3>【转载】${c.title}</h3>
 										<div class="f2" style="float: left;"><span style="padding-right:10px;"><em>博主:&nbsp;${c.user.username}&nbsp;&nbsp;&nbsp;${c.releaseDate?string('yyyy-MM-dd')}&nbsp;&nbsp;&nbsp;作者:&nbsp;${c.author!c.user.username}&nbsp;&nbsp;&nbsp;阅读:&nbsp;${c.contentCount.views!}&nbsp;&nbsp;&nbsp;评论:&nbsp;${c.contentCount.comments!}</em></span></div>
 									</div>
 					           </div>
@@ -153,10 +153,10 @@ $(function(){
 		          <table style="margin:20px 0 0 40px;border:0px"><tr><td style="border:0px;">
 		                共 ${pagination.totalCount} 条&nbsp;
 		                每页 ${pagination.pageSize} 条&nbsp;
-		               <a href="#" onclick="_gotoPage('1');"[#if pagination.firstPage] disabled="disabled"[/#if]>首页</a>
-		                <a href="#" onclick="_gotoPage('${pagination.prePage}');"[#if pagination.firstPage] disabled="disabled"[/#if]>上一页</a>
-		               <a href="#" onclick="_gotoPage('${pagination.nextPage}');"[#if pagination.lastPage] disabled="disabled"[/#if] >下一页</a>
-		                <a href="#" onclick="_gotoPage('${pagination.totalPage}');"[#if pagination.lastPage] disabled="disabled"[/#if] >尾页</a>&nbsp;
+		               <a href="#" style="cursor: pointer;" onclick="_gotoPage('1');"[#if pagination.firstPage] disabled="disabled"[/#if]>首页</a>
+		                <a href="#" style="cursor: pointer;" onclick="_gotoPage('${pagination.prePage}');"[#if pagination.firstPage] disabled="disabled"[/#if]>上一页</a>
+		               <a href="#" style="cursor: pointer;" onclick="_gotoPage('${pagination.nextPage}');"[#if pagination.lastPage] disabled="disabled"[/#if] >下一页</a>
+		                <a href="#" style="cursor: pointer;" onclick="_gotoPage('${pagination.totalPage}');"[#if pagination.lastPage] disabled="disabled"[/#if] >尾页</a>&nbsp;
 		                当前 ${pagination.pageNo}/${pagination.totalPage} 页 &nbsp;转到第<input type="text" id="_goPs" onfocus="this.select();" onkeypress="if(event.keyCode==13){$('#_goPage').click();return false;}" class="inp1"/>页
 		                <input style="cursor: pointer;" id="_goPage" type="button" value="转" class="jump" onclick="_gotoPage($('#_goPs').val());"[#if pagination.totalPage==1] disabled="disabled"[/#if] />
 		            </td>

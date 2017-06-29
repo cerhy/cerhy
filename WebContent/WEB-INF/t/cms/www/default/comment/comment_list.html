@@ -118,12 +118,12 @@
 								          <table width="100%" border="0" cellpadding="0" cellspacing="0"><tr><td align="center" class="pn-sp">
 								                共 ${pagination.totalCount} 条&nbsp;
 								                每页 ${pagination.pageSize} 条&nbsp;
-								                <a href="#" onclick="_gotoPage('1');"[#if pagination.firstPage] disabled="disabled"[/#if]>首页</a>
-								                <a href="#" onclick="_gotoPage('${pagination.prePage}');"[#if pagination.firstPage] disabled="disabled"[/#if]>上一页</a>
-								                <a href="#" onclick="_gotoPage('${pagination.nextPage}');"[#if pagination.lastPage] disabled="disabled"[/#if]>下一页</a>
-								                <a href="#" onclick="_gotoPage('${pagination.totalPage}');"[#if pagination.lastPage] disabled="disabled"[/#if]>尾页</a>&nbsp;
+								                <a href="#" style="cursor: pointer;" onclick="_gotoPage('1');"[#if pagination.firstPage] disabled="disabled"[/#if]>首页</a>
+								                <a href="#" style="cursor: pointer;" onclick="_gotoPage('${pagination.prePage}');"[#if pagination.firstPage] disabled="disabled"[/#if]>上一页</a>
+								                <a href="#" style="cursor: pointer;" onclick="_gotoPage('${pagination.nextPage}');"[#if pagination.lastPage] disabled="disabled"[/#if]>下一页</a>
+								                <a href="#" style="cursor: pointer;" onclick="_gotoPage('${pagination.totalPage}');"[#if pagination.lastPage] disabled="disabled"[/#if]>尾页</a>&nbsp;
 								                当前 ${pagination.pageNo}/${pagination.totalPage} 页 &nbsp;转到第<input type="text" id="_goPs" onfocus="this.select();" onkeypress="if(event.keyCode==13){$('#_goPage').click();return false;}" style="width:50px; border:1px solid #e7e7e7;"/>页
-								                <input id="_goPage" type="button" value="转" class="jump" onclick="_gotoPage($('#_goPs').val());"[#if pagination.totalPage==1] disabled="disabled"[/#if] />
+								                <input id="_goPage" type="button" style="cursor: pointer;" value="转" class="jump" onclick="_gotoPage($('#_goPs').val());"[#if pagination.totalPage==1] disabled="disabled"[/#if] />
 								            </td>
 								            </tr>
 								            </table>
