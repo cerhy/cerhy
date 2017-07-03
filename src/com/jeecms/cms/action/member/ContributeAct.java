@@ -51,6 +51,7 @@ import com.jeecms.core.manager.DbFileMng;
 import com.jeecms.core.web.WebErrors;
 import com.jeecms.core.web.util.CmsUtils;
 import com.jeecms.core.web.util.FrontUtils;
+import com.jeecms.core.web.util.URLHelper;
 
 import freemarker.template.TemplateException;
 
@@ -421,7 +422,8 @@ public class ContributeAct extends AbstractContentMemberAct {
 	@RequestMapping("/member/o_upload_media.jspx")
 	public @ResponseBody String uploadMedia(
 			@RequestParam(value = "mediaFile", required = false) MultipartFile file,
-			String filename, HttpServletRequest request, ModelMap model) {
+			String filename, HttpServletRequest request, ModelMap model,HttpServletResponse response ) {
+		
 		CmsSite site = CmsUtils.getSite(request);
 		CmsUser user = CmsUtils.getUser(request);
 		String origName = file.getOriginalFilename();
@@ -437,8 +439,9 @@ public class ContributeAct extends AbstractContentMemberAct {
 			//return FrontUtils.getTplPath(request, site.getSolutionPath(),
 				//	TPLDIR_MEMBER, CONTRIBUTE_Uerrors.getErrors().get(0)PLOADMIDIA);
 			object.put("code", "fail");
-			
-			return object.toString();
+			object.put("msg", errors.getErrors().get(0));
+			String newStr = new String(object.toString().getBytes("UTF-8"), "ISO8859_1");
+			return newStr;
 		}
 		// TODO 检查允许上传的后缀
 		
@@ -1447,4 +1450,21 @@ public class ContributeAct extends AbstractContentMemberAct {
 		}
 		ResponseUtils.renderJson(response, json.toString());
 	}
+	
+
+	/**
+	 * 发送文章 
+	 */
+	@RequestMapping(value = "/blog/sendArticle.jspx", method = RequestMethod.POST)
+	public void sendArticle(String contentId,String sendee, String validateCode,
+			HttpServletRequest request, HttpServletResponse response,
+			ModelMap model){
+		@SuppressWarnings("unused")
+		String[] paths = URLHelper.getPaths(request);
+		CmsSite site = CmsUtils.getSite(request);
+		CmsUser user = CmsUtils.getUser(request);
+		cmsUserMng.sendArticle(user.getId(),site,user);
+		System.out.println("d");
+	}
+	
 }

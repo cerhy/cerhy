@@ -61,20 +61,24 @@ function uploadFi() {
     var fd = new FormData();
     fd.append("mediaFile", document.getElementById('mediaFile').files[0]);
     var xhr = new XMLHttpRequest();
+  
     xhr.upload.addEventListener("progress", uploadPro, false);
     xhr.addEventListener("load", uploadComp, false);
     xhr.addEventListener("error", uploadFai, false);
     xhr.addEventListener("abort", uploadCanc, false);
-    xhr.open("POST", "/cerhy/member/o_upload_media.jspx");//修改成自己的接口
+    
+    xhr.open("POST", "/cerhy/member/o_upload_media.jspx",true);//修改成自己的接口
+    xhr.overrideMimeType("text/html;charset=utf-8");
     xhr.onreadystatechange = function(){
         if(this.readyState == 4){
-        	 
+        	 debugger;
             var map = eval('('+ this.responseText +')');
             var code = map.code;
             if(code=="fail"){
-            	  $("#tishi").html("上传失败");
+            	  $("#tishi").html(map.msg);
             }else{
             	 $("#mediaPath").val(map.mediaPath);
+            	 $("#tishi").html("&nbsp;&nbsp;&nbsp;上传成功！"); 
             } 
         }
     };
@@ -92,9 +96,9 @@ function uploadPro(evt) {
   }
   
 function uploadComp(evt) {
-	
+	//debugger;
     /* 服务器端返回响应时候触发event事件*/
-     $("#tishi").html("&nbsp;&nbsp;&nbsp;上传成功！");
+    /*  $("#tishi").html("&nbsp;&nbsp;&nbsp;上传成功！"); */
   }
 function uploadFai(evt) {
 	 $("#tishi").html("上载文件时出错！");
