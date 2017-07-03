@@ -663,9 +663,9 @@ a:hover{
     -moz-osx-font-smoothing: grayscale; }
 .xueke-acticle{font-family: "MicroSoft YaHei";}
 .xueke-acticle h2{
-    font-size: 30px;
+    font-size: 20px;
     padding-top: 20px;
-    font-weight: 400;
+    font-weight: 700;
     text-align: center;
 }
 .xueke-acticle .h2dt{
@@ -676,6 +676,8 @@ a:hover{
     font-weight: 400;
     font-size: 14px;
     line-height: 24px;
+    word-wrap:break-word;
+ 	word-break:break-all;
 }
 .xueke-content-detail .fontweight{font-weight: 700;padding: 10px 0;}
 .prev-next-wz{
@@ -761,7 +763,6 @@ a:hover{
 .links-wrap .users-a-link{
     float: left;
     display: block;
-    width: 55px;
     overflow: hidden;
     margin-left:35px;
 }
@@ -784,8 +785,8 @@ a:hover{
 .report-list.sm {
     border-top: 0 none; }
 .report-list.sm .report-text h3 {
-    font-size: 18px !important;
-    font-weight: 700 !important;
+    font-size: 17px !important;
+    /*font-weight: 700 !important;*/
     color: #666 !important; }
 .report-list.sm .report-text p {
     width: 520px; }
@@ -1291,7 +1292,7 @@ a:hover{
     background: url(images/sp.png) no-repeat -27px -58px;
 }
 .bgfff{background: #FFF;}
-.user-center-left .user-setting{background: #FFF;margin-bottom: 5px;padding-bottom: 10px;}
+.user-center-left .user-setting{background: #FFF;margin-bottom: 5px;padding-bottom: 10px;border-radius:3px;}
 .user-center-left .user-setting .pic-dt{
     padding-top: 15px;
     margin:0 auto 5px;
@@ -1425,6 +1426,7 @@ a:hover{
 .personCenter-userInfo{
     background: #FFF;
     font-family: "MicroSoft Yahei";
+    border-radius:3px;
 }
 .personCenter-userInfo .tab-head{
     background: #f9f9f9;

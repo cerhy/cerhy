@@ -1,17 +1,38 @@
+<style type="text/css">
+.submit-on {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 3px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+}
+
+.submit-on:hover {
+    box-shadow: 0 3px 4px 0 rgba(0,0,0,0.24),0 8px 30px 0 rgba(0,0,0,0.19);
+}
+</style>
 <section class="comments">
-      <h3>评论d<span>&nbsp;已有${content.commentsCheckedNum!}&nbsp;条</span></h3>
+      <h3>评论<span>&nbsp;已有${content.commentsCheckedNum!}&nbsp;条</span></h3>
       [#if content.channel.commentControl==0 || ((content.channel.commentControl==1||content.channel.commentControl==3) && user??)]
       <form id="commentForm" action="${base}/comment.jspx" method="post">
-      <textarea name="text" placeholder="发表你此时w的观点和想法 ……" class="comments-text" id="comments-text"></textarea>
+      <textarea name="text" placeholder="发表你此时的观点和想法 ……" class="comments-text" id="comments-text"></textarea>
        [#if user??&&user.group.needCaptcha||!user??]
 	    <div class="plfr1 clearfix">
-	    <div style="float:left;">
+	    <!-- <div style="float:left;">
 	    <input name="captcha" type="text" placeholder="验证码dd" id="captcha" vld="{required:true}" class="plcode"/>
 	    </div>
 	    <div style="float:left;">
 	    <img id="commentCaptcha" src="${base}/captcha.svl" onclick="this.src='${base}/captcha.svl?d='+new Date()"/>
 	    </div>
-		    <div class="down clearfix">
+		    <div class="down clearfix"> -->
+		    <div>
 	       <input type="hidden" name="contentId" value="${content.id}"/>
 	       <input type="hidden" name="sessionId" id="sessionId" />
 	      <input type="submit" value="提交评论" class="submit-on">
@@ -22,14 +43,14 @@
        <script type="text/javascript">
     $(function() {
     	
-    	var width = $(".xueke-content-detail p img").width();
-    	var height = $(".xueke-content-detail p img").height();
+    	var width = $(".xueke-content-detail img").width();
+    	var height = $(".xueke-content-detail img").height();
     	if(width>600){
     		if(width>=height){
     			var shang =  (width/height).toFixed(2);
     			var newHeight = parseInt(600/shang);
-    			$(".xueke-content-detail p img").css("width","600px");
-    			$(".xueke-content-detail p img").css("height",newHeight+"px");
+    			$(".xueke-content-detail img").css("width","600px");
+    			$(".xueke-content-detail img").css("height",newHeight+"px");
     		}	
     	}
     	
@@ -38,10 +59,10 @@
             if(data.status==0) {
                 alert("评论成功");
                 location.href=location.href;
-            } else if(data.status==1) {	
+            } /* else if(data.status==1) {	
                 alert("验证码错误");
                 $("#commentCaptcha").click();
-            } else if(data.status==2) {	
+            }  */else if(data.status==2) {	
                 alert("内容不存在");
                 $("#commentCaptcha").click();
             } else if(data.status==3) {	

@@ -1,4 +1,24 @@
-   <span style="font-size:16px;">明星博主</span><span>( ${pagination.totalCount} )</span>
+  <style>
+.jump {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 3px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+    margin: 4px 2px;
+    cursor: pointer;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+}
+
+.jump:hover {
+    box-shadow: 0 3px 4px 0 rgba(0,0,0,0.24),0 8px 15px 0 rgba(0,0,0,0.19);
+}
+</style>
+<span style="font-size:16px;">明星博主</span><span>( ${pagination.totalCount} )</span>
       <div class="link-content" style="width: 700px;">
          <form id="tableForm" action="${base}/blog/gotoDataShow.jspx?dataFlag=4" method="post">
 			 [#if pagination.list?size gt 0]
@@ -7,9 +27,9 @@
 	                  <div>
 		                <a target="_blank" href="${base}/blog/find_all_url_friend.jspx?userIds=${user.id}" class="users-a-link" style="margin-bottom: 30px;margin-left: 10px;margin-right: 10px;">
                         	[#if user.userImg??]
-                        	<img src="${user.userImg}" width="47" height="47">
+                        	<img src="${user.userImg}" width="47" height="47" title="[#if user.realname??]${user.realname}[#else]${user.username}[/#if]">
 	                        [#else]
-	                        <img src="/${res}/images/userImg-large.png" width="47" height="47">
+	                        <img src="/${res}/images/userImg-large.png" width="47" height="47" title="[#if user.realname??]${user.realname}[#else]${user.username}[/#if]">
 	                        [/#if]
                             <span title="[#if user.realname??]${user.realname}[#else]${user.username}[/#if]">[#if user.realname??][@text_cut s=user.realname len=5 append='...'/][#else]${user.username}[/#if]</span>
                             </a>
@@ -23,12 +43,12 @@
          [/#if]
 		 <table  style="margin:20px 0 0 40px;border:0px" ><tbody><tr><td style="border:0px; ">
 		    共 ${pagination.totalCount} 条&nbsp; 每页 ${pagination.pageSize} 条&nbsp;
-             <input style="cursor: pointer;" type="button" value="首 页" onclick="_gotoPage('1');"[#if pagination.firstPage] disabled="disabled"[/#if] class="inp2"/>
-             <input style="cursor: pointer;" type="button" value="上一页" onclick="_gotoPage('${pagination.prePage}');"[#if pagination.firstPage] disabled="disabled"[/#if] class="inp2"/>
-             <input style="cursor: pointer;" type="button" value="下一页" onclick="_gotoPage('${pagination.nextPage}');"[#if pagination.lastPage] disabled="disabled"[/#if] class="inp2"/>
-             <input style="cursor: pointer;" type="button" value="尾 页" onclick="_gotoPage('${pagination.totalPage}');"[#if pagination.lastPage] disabled="disabled"[/#if] class="inp2"/>&nbsp;
+             <a href="#" style="cursor: pointer;" onclick="_gotoPage('1');"[#if pagination.firstPage] disabled="disabled"[/#if] >首页</a>
+             <a href="#" style="cursor: pointer;" onclick="_gotoPage('${pagination.prePage}');"[#if pagination.firstPage] disabled="disabled"[/#if]>上一页</a>
+             <a href="#" style="cursor: pointer;" onclick="_gotoPage('${pagination.nextPage}');"[#if pagination.lastPage] disabled="disabled"[/#if]>下一页</a>
+             <a href="#" style="cursor: pointer;" onclick="_gotoPage('${pagination.totalPage}');"[#if pagination.lastPage] disabled="disabled"[/#if]>尾页</a>&nbsp;
 			                当前 ${pagination.pageNo}/${pagination.totalPage} 页 &nbsp;转到第<input type="text" id="_goPs" onfocus="this.select();" onkeypress="if(event.keyCode==13){$('#_goPage').click();return false;}" class="inp1"/>页
-			 <input style="cursor: pointer;" id="_goPage" type="button" value="转" class="sub2" onclick="_gotoPage($('#_goPs').val());"[#if pagination.totalPage==1] disabled="disabled"[/#if] />
+			 <input style="cursor: pointer;" id="_goPage" type="button" value="转" class="jump" onclick="_gotoPage($('#_goPs').val());"[#if pagination.totalPage==1] disabled="disabled"[/#if] />
             </td>
             </tr>
             </tbody>

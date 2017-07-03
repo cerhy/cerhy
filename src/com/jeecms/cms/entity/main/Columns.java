@@ -7,6 +7,13 @@ public class Columns {
 	private String columnName;
 	private Integer orderId;
 	private String uniqueCode;
+	private Integer type ;
+	
+	
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
 
 	public Columns() {
 	}
@@ -29,12 +36,22 @@ public class Columns {
 		this.orderId = orderId;
 		this.uniqueCode=uniqueCode;
 	}
+	
 	public Columns(Integer columnId,Integer userId, String columnName, Integer orderId,String uniqueCode) {
 		this.columnId = columnId;
 		this.userId = userId;
 		this.columnName = columnName;
 		this.orderId = orderId;
 		this.uniqueCode=uniqueCode;
+	}
+	
+	public Columns(Integer columnId,Integer userId, String columnName, Integer orderId,String uniqueCode,Integer type) {
+		this.columnId = columnId;
+		this.userId = userId;
+		this.columnName = columnName;
+		this.orderId = orderId;
+		this.uniqueCode=uniqueCode;
+		this.type = type;
 	}
 
 	public Integer getColumnId() {
@@ -77,7 +94,13 @@ public class Columns {
 		this.uniqueCode = uniqueCode;
 	}
 
-	
+	public Integer getType() {
+		return type;
+	}
+
+	public void setType(Integer type) {
+		this.type = type;
+	}
 	
 	
 }

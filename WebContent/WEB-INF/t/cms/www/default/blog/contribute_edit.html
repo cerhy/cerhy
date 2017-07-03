@@ -271,6 +271,10 @@ $(function(){
 					         	  [#if c_index==0]
 					             	<option value="${c.channelId}&chan" [#if content.channel.id==c.channelId]selected="selected"[/#if]>&nbsp;&nbsp;>高中、初中生物</option>
 					              [/#if]
+					         [#elseif user.username=='9035']
+					         	  [#if c_index==0]
+					             	<option value="${c.channelId}&chan" [#if content.channel.id==c.channelId]selected="selected"[/#if]>&nbsp;&nbsp;>心理健康</option>
+					              [/#if]
 					         [#else]
 				             <option value="${c.channelId}&chan" [#if content.channel.id==c.channelId]selected="selected"[/#if]>&nbsp;&nbsp;>${c.channelName}</option>
 				             [/#if]

@@ -290,24 +290,24 @@ public class CommentAct {
 			ResponseUtils.renderJson(response, json.toString());
 			return;
 		}
-		if (user == null || user.getGroup().getNeedCaptcha()) {
-			// 验证码错误
-			try {
-				if (!imageCaptchaService.validateResponseForID(session
-						.getSessionId(request, response), captcha)) {
-					json.put("success", false);
-					json.put("status", 1);
-					ResponseUtils.renderJson(response, json.toString());
-					return;
-				}
-			} catch (CaptchaServiceException e) {
-				json.put("success", false);
-				json.put("status", 1);
-				log.warn("", e);
-				ResponseUtils.renderJson(response, json.toString());
-				return;
-			}
-		}
+//		if (user == null || user.getGroup().getNeedCaptcha()) {
+//			// 验证码错误
+//			try {
+//				if (!imageCaptchaService.validateResponseForID(session
+//						.getSessionId(request, response), captcha)) {
+//					json.put("success", false);
+//					json.put("status", 1);
+//					ResponseUtils.renderJson(response, json.toString());
+//					return;
+//				}
+//			} catch (CaptchaServiceException e) {
+//				json.put("success", false);
+//				json.put("status", 1);
+//				log.warn("", e);
+//				ResponseUtils.renderJson(response, json.toString());
+//				return;
+//			}
+//		}
 		Content content = contentMng.findById(contentId);
 		if (content == null) {
 			// 内容不存在

@@ -487,7 +487,10 @@ public class InterfaceDaoImpl  extends HibernateBaseDao<Content, Integer> implem
 				if(channelIds.toString().equals("142")){
 					channelIds=140;
 				}
-				
+				//高中、初中、小学心理健康
+				if(channelIds.toString().equals("421")||channelIds.toString().equals("422")){
+					channelIds=420;
+				}
 			}
 			f.append("select  bean from Content bean");
 			f.append(" join bean.channel node,Channel parent");

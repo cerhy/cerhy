@@ -191,9 +191,14 @@ public class ContributeAct extends AbstractContentMemberAct {
 					   channelId=297;
 					}
 				   //高中、初中语文
-					if(channelId.toString().equals("142")){
-						channelId=140;
-					}
+				   if(channelId.toString().equals("142")){
+					   channelId=140;
+				   }
+					//高中、初中、小学心理健康
+				   if(channelId.toString().equals("421")||channelId.toString().equals("422")){
+					   channelId=420;
+				   }
+
 			   }else if(str[1].equals("colu")){
 				   columnId=Integer.valueOf(str[0]);
 				   sta=1;
@@ -318,6 +323,10 @@ public class ContributeAct extends AbstractContentMemberAct {
 					if(channelId.toString().equals("142")){
 						channelId=140;
 					}
+					//高中、初中、小学心理健康
+					if(channelId.toString().equals("421")||channelId.toString().equals("422")){
+						channelId=420;
+					}
 			   }else if(str[1].equals("colu")){
 				   columnId=Integer.valueOf(str[0]);
 			   }else if(str[1].equals("chan")){
@@ -369,6 +378,10 @@ public class ContributeAct extends AbstractContentMemberAct {
 				   //高中、初中语文
 					if(channelId.toString().equals("142")){
 						channelId=140;
+					}
+					//高中、初中、小学心理健康
+					if(channelId.toString().equals("421")||channelId.toString().equals("422")){
+						channelId=420;
 					}
 			   }
 		   }

@@ -146,15 +146,15 @@ padding-top: 32px;
 .comments-item .rig .rig-top{padding-top:10px;}
 .rig .rig-top a{color:#00a2ff; font-size:12px; margin-right:10px;}
 .rig .rig-top em{color:#ccc; font-size:12px;}
-.rig .rig-txt{color:#1f1f1f; font-size:14px; line-height:18px; margin-top:10px;}  
+.rig .rig-txt{color:#1f1f1f; font-size:14px; line-height:18px; margin-top:10px;word-wrap:break-word;word-break:break-all;}  
 .rig .rig-bottom{margin:10px 0; color:#ccc; font-size:12px;}
 .rig .rig-bottom a{color:#ccc; font-size:12px; margin-right:20px; padding-left:18px; position:relative; cursor:pointer; line-height:12px; display:inline-block;}
 .rig .rig-bottom .comments-zan:before{content:""; position:absolute; left:0; bottom:0; width:12px; height:12px; background:url(../images/content_tubiao.png) -13px -274px no-repeat;}
 .rig .rig-bottom .comments-hf:before{content:""; position:absolute; left:0; bottom:0; width:12px; height:12px; background:url(../images/content_tubiao.png) -13px -254px no-repeat;}
 .rig .rig-bottom .reply-on{color:#00a2ff;}
 .rig .rig-bottom a:hover{color:#00a2ff;}
-.rig .reply{display:none; height:auto; padding:5px; margin-top:10px; border:1px solid #cbcbcb; overflow:hidden; margin-bottom:10px;}
-.rig .reply .reply-text{ height:100px; width:100%; font-size:12px; outline:none; resize:none; border-bottom:1px solid #f0f0f0; margin-bottom:5px;}
+.rig .reply{display:none; height:auto; padding:5px; margin-top:10px; border:0px solid #cbcbcb; overflow:hidden; margin-bottom:10px;}
+.rig .reply .reply-text{ height:100px; width:50%; font-size:12px; outline:none; resize:none; border-bottom:1px solid #f0f0f0; margin-bottom:5px;}
 .rig .reply .reply-btn{float:right; padding:3px 16px; background-color:#00a2ff; border-radius:3px; -moz-border-radius:3px; -o-border-radius:3px; -webkit-border-radius:3px; cursor:pointer; color:#fff; font-size:14px; margin-right:5px; outline:none;}
 .rig .reply .reply-btn:hover{background-color:#21aeff;}
 .open-more{margin-top:40px; text-align:center;}
@@ -287,9 +287,9 @@ padding-top: 32px;
 .report-list2.sm {
     border-top: 0 none; }
 .report-list2.sm .report-text h3 {
-    font-size: 18px !important;
-    font-weight: 700 !important;
-    color: #666 !important; }
+   	/* font-size: 20px; */
+    font-weight: 400 ;
+  }
 .report-list2.sm .report-text p {
     width: 520px; }
 .report-list2 li {

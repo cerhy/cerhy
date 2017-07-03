@@ -154,6 +154,10 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 				if(channelId.toString().equals("142")){
 					channelId=140;
 				}
+				//高中、初中、小学心理健康
+				if(channelId.toString().equals("421")||channelId.toString().equals("422")){
+					channelId=420;
+				}
 			f.append(" join bean.channel channel,Channel parent");
 			f.append(" where ((channel.lft between parent.lft and parent.rgt");
 			f.append(" and channel.site.id=parent.site.id");
@@ -750,6 +754,10 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 				//高中、初中语文
 				if(channelIds[0].toString().equals("142")){
 					channelIds[0]=140;
+				}
+				//高中、初中、小学心理健康
+				if(channelIds[0].toString().equals("421")||channelIds[0].toString().equals("422")){
+					channelIds[0]=420;
 				}
 				
 			}
