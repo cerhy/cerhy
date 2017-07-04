@@ -7,164 +7,177 @@ function del(){
 	  return false; 
 }
 </script>
+<style>
+#img{
+display:block;
+height:36px;
+width:36px;
+background:url(/${res}/images/sprite.png) no-repeat 0 -190px;
+} 
+</style>
+<link rel="stylesheet" type="text/css" href="/${res}/css/normalize.css" />
+<link rel="stylesheet" type="text/css" href="/${res}/css/default.css">
+<link rel="stylesheet" type="text/css" href="/${res}/css/styles.css">
+<link rel="stylesheet" type="text/css" href="/${res}/css/class2context.css">
 <div class="wrap-left">
      <div class="user-center-left">
                  		 [#if user??]
-           <div class="user-setting">
-                 <div class="pic-dt">
-                      [#if user.userImg??]<img src="${user.userImg}" width="120" height="120" >
-                      [#else]<img src="/${res}/images/userImg-large.png" width="120" height="120">
+				           <div class="user-setting">
+				                 <div class="pic-dt">
+				                      [#if user.userImg??]<img src="${user.userImg}" width="120" height="120" >
+				                      [#else]<img src="/${res}/images/userImg-large.png" width="120" height="120">
+				                      [/#if]
+				                 </div>
+				                  [#if user??]
+				                 <div class="user-name-dt"><a href="${base}/blog/index.jspx" title="[#if user.realname??]${user.realname}[#else]${user.username}[/#if]">[#if user.realname??][@text_cut s=user.realname len=5 append=''/][#else]${user.username}[/#if]</a></div>
+				                 [/#if]
+				                     [#if user??]
+				                     <a href="${base}/logout.jspx" style="cursor: pointer;" class="user-oparetion-btn">退出</a>
+				                     [/#if]
+				                     
+				           </div>
                       [/#if]
-                 </div>
-                  [#if user??]
-                 <div class="user-name-dt"><a href="${base}/blog/index.jspx" title="[#if user.realname??]${user.realname}[#else]${user.username}[/#if]">[#if user.realname??][@text_cut s=user.realname len=5 append=''/][#else]${user.username}[/#if]</a></div>
-                 [/#if]
-                     [#if user??]
-                     <a href="${base}/logout.jspx" style="cursor: pointer;" class="user-oparetion-btn">退出</a>
-                     [/#if]
-                     
-           </div>
+                 		 [#if usert??]
+				           <div class="user-setting">
+				                 <div class="pic-dt">
+				                      [#if usert.userImg??]<img src="${usert.userImg}" width="120" height="120" >
+				                      [#else]<img src="/${res}/images/userImg-large.png" width="120" height="120">
+				                      [/#if]
+				                 </div>
+				                  [#if usert??]
+				                 <div class="user-name-dt"><a href="${base}/blog/index.jspx?uid=${usert.id}" title="[#if usert.realname??]${usert.realname}[#else]${usert.username}[/#if]">[#if usert.realname??][@text_cut s=usert.realname len=5 append=''/][#else]${usert.username}[/#if]</a></div>
+				                 [/#if]				                     
+				           </div>
                       [/#if]
-           <div class="user-menu-links">
-                <ul>
-				    [#if user??]<li><a href="${base}/blog/contribute_add.jspx">发表博客</a></li>[/#if]
-					    [#if submitOn??] 
-					    <li class="on"><a style="cursor: pointer;"><em></em>博客栏目</a>
-					    [#else] 
-					    <li class="on"><a style="cursor: pointer;"><em></em>博客栏目</a>
-					    [/#if]
-                          <ul>
-                            [#if channelList??]
+               <div class="htmleaf-container" >
+				<div class="htmleaf-content bgcolor-3" style="padding-top: 0px;padding-bottom: 0px;">
+					<!-- This is mtree list -->
+					<ul class=mtree>
+					  [#if user??]<li>
+					  <a class="ff" href="${base}/blog/contribute_add.jspx" style="color: #666;">
+					  <span id="img" style="float: left;margin: -10px 0;margin-left: "></span>
+					  	发表博客
+					  </a>
+					  <br />
+					  </li>[/#if]
+					  <li><a href="#" class='class2 box1'>博客栏目</a>
+					    <ul>
+					      <li>
+					      [#if channelList??]
 				             [#list channelList as c]
 				             [#if c_index==0]
 					             [#if c.channelType==1]
-					             <li><a href="javascript:;">学科教研</a></li>
+					             <a href="javascript:;">学科教研</a>
 					             [#else]
-					             <li><a href="javascript:;">市县教研</a></li>
+					             <a href="javascript:;">市县教研</a>
 					             [/#if]
 				             [/#if]
-				             <li>
-				             [#if user??]
-				             <a href="${base}/blog/contribute_list.jspx?channelId=${c.channelId}" >&nbsp;&nbsp;>&nbsp;${c.channelName}</a>
-				             [/#if]
-				             [#if usert??]
-				             <a href="${base}/blog/contribute_list.jspx?channelId=${c.channelId}&uid=${usert.id}" >&nbsp;&nbsp;>&nbsp;${c.channelName}</a>
-				             [/#if]
-				             </li> 
 				             [/#list]
 				             [/#if]
-				        	[#if columnsList??]
-                            [#list columnsList as c]
-                            [#if c.uniqueCode??]
-                            [#else]
-		                    <li>
-		                    [#if user??]
-		                    <a href="${base}/blog/contribute_list.jspx?columnId=${c.columnId}" ><em></em>[@text_cut s=c.columnName?html len='10' append='...'/]</a>
-		                    [/#if]
-				            [#if usert??]
-			                <a href="${base}/blog/contribute_list.jspx?columnId=${c.columnId}&uid=${usert.id}" ><em></em>[@text_cut s=c.columnName?html len='10' append='...'/]</a>
-				            [/#if]
-		                    </li>
-		                    [/#if]
-		                    [/#list]
-		                    [/#if]
-				             <li>
+					        <ul>
+					        [#if channelList??]
+				             [#list channelList as c]
 				             [#if user??]
-				             <a href="${base}/blog/collection_list.jspx">转载</a>
+					          <li><a href="${base}/blog/contribute_list.jspx?channelId=${c.channelId}">${c.channelName}</a></li>
+				             [/#if]
+				             [#if usert??]
+					          <li><a href="${base}/blog/contribute_list.jspx?channelId=${c.channelId}&uid=${usert.id}">${c.channelName}</a></li>
+				             [/#if]
+				             [/#list]
+				             [/#if]
+					         </ul>
+					      </li>
+					       [#if columnsList??]
+					        [#list columnsList as map]
+					        [#list map?keys as k]
+					        [#if k=='']
+					        	[#list map[k] as v]
+						        	[#if user??]
+						        		[#if v?split('=')[2]??]
+		                                <li><a class="class1 box1" title="${v?split('=')[1]}&nbsp;${v?split('=')[2]}" id="${v?split('=')[0]}" href="${base}/blog/contribute_list.jspx?columnId=${v?split('=')[0]}" >[@text_cut s=v?split("=")[1] len='10' append='...'/]</a></li>
+				                   		[#else]
+		                                <li><a class="class1 box1" title="${v?split('=')[1]}" id="${v?split('=')[0]}" href="${base}/blog/contribute_list.jspx?columnId=${v?split('=')[0]}" >[@text_cut s=v?split("=")[1] len='10' append='...'/]</a></li>
+				                   		[/#if]
+				                    [/#if]
+						            [#if usert??]
+						            	[#if v?split('=')[2]??]
+				                	 	<li><a title="${v?split('=')[1]}&nbsp;${v?split('=')[2]}" href="${base}/blog/contribute_list.jspx?columnId=${v?split('=')[0]}&uid=${usert.id}" >[@text_cut s=v?split("=")[1] len='10' append='...'/]</a></li>
+					           		 	[#else]
+				                	 	<li><a title="${v?split('=')[1]}" href="${base}/blog/contribute_list.jspx?columnId=${v?split('=')[0]}&uid=${usert.id}" >[@text_cut s=v?split("=")[1] len='10' append='...'/]</a></li>
+					           		 	[/#if]
+					           		 [/#if]
+					        	[/#list]
+					        [#else]
+					        	<li><a class="class1 box1" title="${k?split('=')[1]}" id="${k?split('=')[0]}" href="javascript:;">${k?split("=")[1]}</a>
+					        	<ul>
+					        	[#list map[k] as v]
+						        	[#if user??]
+							        	[#if v?split('=')[2]??]
+			                                <li><a class="class1 box1" title="${v?split('=')[1]}&nbsp;${v?split('=')[2]}" id="${v?split('=')[0]}" href="${base}/blog/contribute_list.jspx?columnId=${v?split('=')[0]}">[@text_cut s=v?split("=")[1] len='10' append='...'/]</a></li>
+				                    	[#else]
+			                                <li><a class="class1 box1" title="${v?split('=')[1]}" id="${v?split('=')[0]}" href="${base}/blog/contribute_list.jspx?columnId=${v?split('=')[0]}">[@text_cut s=v?split("=")[1] len='10' append='...'/]</a></li>
+				                    	[/#if]
+				                    [/#if]
+						            [#if usert??]
+							            [#if v?split('=')[2]??]
+					                	 	<li><a title="${v?split('=')[1]}&nbsp;${v?split('=')[2]}" href="${base}/blog/contribute_list.jspx?columnId=${v?split('=')[0]}&uid=${usert.id}">[@text_cut s=v?split("=")[1] len='10' append='...'/]</a></li>
+					           		 	[#else]
+					                	 	<li><a title="${v?split('=')[1]}" href="${base}/blog/contribute_list.jspx?columnId=${v?split('=')[0]}&uid=${usert.id}">[@text_cut s=v?split("=")[1] len='10' append='...'/]</a></li>
+					           		 	[/#if]
+					           		 [/#if]
+					        	[/#list]
+					        	 </ul>
+					      		</li>
+					        [/#if]	
+					        [/#list]
+					        [/#list]
+				            [/#if] 
+		                    [#if user??]
+				             <li><a href="${base}/blog/collection_list.jspx">转载</a></li>
 				             [/#if]
 				            [#if usert??]
-				             <a href="${base}/blog/collection_list.jspx?uid=${usert.id}">转载</a>
+				             <li><a href="${base}/blog/collection_list.jspx?uid=${usert.id}">转载</a></li>
 				             [/#if]
-				             </li>
-                         </ul>
-                    </li>
-                    	[#if submitOn1??] 
-					    <li class="on"><a style="cursor: pointer;"><em></em>群组</a>
-					    [#else] 
-					    <li><a style="cursor: pointer;"><em></em>群组</a>
-					    [/#if]
-                          <ul>
-					        [#if columnsList??]
-                            [#list columnsList as c]
-                            [#if c.uniqueCode??]
-		                    <li>
-                            [#if user??]
-		                    <a href="${base}/blog/contribute_list.jspx?columnId=${c.columnId}&joinGroupStata=0" title="${c.columnName}" ><em></em>[@text_cut s=c.columnName len=5 append='...'/]</a>
-		                    [/#if]
-		                    [#if usert??]
-		                    <a href="${base}/blog/contribute_list.jspx?columnId=${c.columnId}&joinGroupStata=0&uid=${usert.id}" title="${c.columnName}" ><em></em>[@text_cut s=c.columnName len=5 append='...'/]</a>
-		                    [/#if]
-		                    </li>
-		                    [/#if]
-		                    [/#list]
-                         	[/#if]
+				             <br />
+					    </ul>
+					  </li>
+					  <li><a href="#">群组</a>
+					    <ul>
 					        [#if joinGroupList?size gt 0]
                             [#list joinGroupList as j]
-		                    <li>
 		                    [#if user??]
-		                    <a href="${base}/blog/contribute_list.jspx?columnId=${j.columnsId.columnId}&joinGroupStata=0" title="${j.columnsId.columnName}" ><em></em>[@text_cut s=j.columnsId.columnName len=5 append='...'/]</a>
+		                    <li><a href="${base}/blog/contribute_list.jspx?columnId=${j.columnsId.columnId}&joinGroupStata=0" title="${j.columnsId.columnName}" ><em></em>[@text_cut s=j.columnsId.columnName len=9 append='...'/]</a></li>
 		                    [/#if]
 		                    [#if usert??]
-		                    <a href="${base}/blog/contribute_list.jspx?columnId=${j.columnsId.columnId}&joinGroupStata=0&uid=${usert.id}" title="${j.columnsId.columnName}" ><em></em>[@text_cut s=j.columnsId.columnName len=5 append='...'/]</a>
+		                    <li><a href="${base}/blog/contribute_list.jspx?columnId=${j.columnsId.columnId}&joinGroupStata=0&uid=${usert.id}" title="${j.columnsId.columnName}" ><em></em>[@text_cut s=j.columnsId.columnName len=9 append='...'/]</a></li>
 		                    [/#if]
-		                    </li>
 		                    [/#list]
 	                        [/#if]
-                          </ul>
-                    </li>
-                    [#if user??]
-	                <li><a  href="${base}/blog/gotoDataShow.jspx?dataFlag=1" >好友</a></li>
-	                <!-- <li><a  href="${base}/blog/gotoDataShow.jspx?dataFlag=2" >关注</a></li>
-	                <li><a  href="${base}/blog/gotoDataShow.jspx?dataFlag=3" >粉丝</a></li> -->
-	                <li><a  href="${base}/blog/visitor.jspx" >访客</a></li> 
-	             	<li><a  href="${base}/blog/dataStatistics.jspx" >访问统计</a></li>
-	             	[/#if]
-                    [#if usert??]
-	                <li><a  href="${base}/blog/gotoDataShow.jspx?dataFlag=1&uid=${usert.id}" >好友</a></li>
-	               <!--  <li><a  href="${base}/blog/gotoDataShow.jspx?dataFlag=2&uid=${usert.id}" >关注</a></li>
-	                <li><a  href="${base}/blog/gotoDataShow.jspx?dataFlag=3&uid=${usert.id}" >粉丝</a></li> -->
-	                <li><a  href="${base}/blog/visitor.jspx?uid=${usert.id}" >访客</a></li> 
-	             	<li><a  href="${base}/blog/dataStatistics.jspx?uid=${usert.id}" >访问统计</a></li>
-	             	[/#if]
-	             	[#if user??]
-			 		<li style="cursor: pointer;"><a><em></em>设置</a>
-                       <ul>
-                       <!-- [#if columnsList??] -->
-                       <li><a  href="${base}/blog/columns_list.jspx" ><em></em>新建栏目</a></li>
-                       <!-- [/#if] -->
-                       <li><a  href="${base}/blog/tzsetting.jspx" ><em></em>博客信息</a></li>
-                       <li><a  style="cursor: pointer;" onclick="set();" ><em></em>页面模板</a></li>
-                       <li><a  href="${base}/blog/link_list.jspx" ><em></em>链接管理</a></li>
-                       <li><a  href="${base}/blog/friends.jspx" ><em></em>好友管理</a></li>
-                       <li><a target="_blank" href="${base}/blog/useManual.jspx" ><em></em>使用手册</a></li>
-                       </ul>
-                </li>
-                [/#if] 
-                <li style="cursor: pointer;"><a><em></em> 明星博主</a>
-                   <ul>
-                       [#if starBlogger?? ]
-		                 [#list starBlogger as c]
-		                      [#if c.userImg??]<img src="${c.userImg}" width="40" height="40" alt="" style="float: left;padding: 5px 15px 0 23px">
-		                      [#else]<img src="/${res}/images/userImg-large.png" width="40" height="40" alt="" style="float: left;padding: 5px 15px 0 23px">
-		                      [/#if]
-		                      <a href="${base}/blog/find_all_url_friend.jspx?userIds=${c.id}" target="_blank" title="[#if c.realname??]${c.realname}[#else]${c.username}[/#if]">[#if c.realname??][@text_cut s=c.realname len=5 append=''/][#else]${c.username}[/#if]</a>
-		                [/#list]
-                        [#if moreStarBloggerExist??]
-                        [#if user??]
-		                 <a href="${base}/blog/gotoDataShow.jspx?dataFlag=4">更多 &nbsp;>></a>
-                        [/#if]
-                        [#if usert??]
-		                 <a href="${base}/blog/gotoDataShow.jspx?dataFlag=4&uid=${usert.id}">更多 &nbsp;>></a>
-                        [/#if]
-                        [/#if]
-		                [/#if]
-                   </ul>
-                </li>
-                <div class="st_tree">
-				        	 <ul  show="true">
-				        	 <li><a href="javascript:;" style="text-decoration:none;"><em></em>链接</a></li>
-				        	 <ul>
-				         		[#if urlList??]
+	                        <br />
+					   </ul>
+					  </li>
+					   <li><a href="#">好友</a>
+					    <ul>
+					   [#if paginations??]
+						    [#list paginations.list as user]
+						    	[#if user_index<11]
+						    		<li><a href="${base}/blog/find_all_url_friend.jspx?userIds=${user.id}" target="_blank" title="[#if user.realname??]${user.realname}[#else]${user.username}[/#if]"><img [#if user.userImg??]src="${user.userImg}"[#else]src="/${res}/images/userImg-large.png"[/#if] width="20" height="20" alt="" style="float: left;padding: 0 10px 0 0;">[#if user.realname??][@text_cut s=user.realname len=5 append='...'/][#else]${user.username}[/#if]</a></li>
+						    	[/#if]
+						    [/#list]
+						    [#if user??]
+				               <li><a href="${base}/blog/gotoDataShow.jspx?dataFlag=1">更多 &nbsp;>></a></li>
+		                    [/#if]
+		                    [#if usert??]
+				               <li><a href="${base}/blog/gotoDataShow.jspx?dataFlag=1&uid=${usert.id}">更多 &nbsp;>></a></li>
+		                    [/#if]
+		                    [#else]
+		                    <br />
+						    [/#if]
+					    </ul>
+					    </li>
+					  <li><a href="#">链接</a>
+					    <ul>
+					    	[#if urlList??]
 						         [#list urlList as map]
 						          	[#list map?keys as k]
 						          		 [#if k=='']
@@ -177,27 +190,263 @@ function del(){
 								         		[/#if]
 								            [/#list]
 								         [#else]
-								          <li><a href="javascript:;" style="text-decoration:none;"><em></em>${k}</a></li>
+								          <li><a href="javascript:;">${k}</a>
 								          <ul>
 								            [#list map[k] as v]
 								            	[#if v?index_of("http:")!=-1]
 									            	[#if v?index_of("=")!=-1]
-									         			<li class="change"><a style="font-size: 12px;" target="_blank" href="${v?split("=")[1]}" title="${v?split("=")[0]}">[@text_cut s=v?split("=")[0] len=9 append='...'/]</a></li>
+									         			<li><a target="_blank" href="${v?split("=")[1]}" title="${v?split("=")[0]}">[@text_cut s=v?split("=")[0] len=9 append='...'/]</a></li>
 									         		[/#if]
 									         		[#if v?index_of("|")!=-1]
-									         			<li class="change"><a style="font-size: 12px;" target="_blank" href="${v?split("|")[1]}" title="${v?split("|")[0]}">[@text_cut s=v?split("|")[0] len=9 append='...'/]</a></li>
+									         			<li><a target="_blank" href="${v?split("|")[1]}" title="${v?split("|")[0]}">[@text_cut s=v?split("|")[0] len=9 append='...'/]</a></li>
 									         		[/#if]
 								            	[/#if]
 								            [/#list]
-								           </ul>	
+								           </ul>
+								           </li>	
 								          [/#if]
 						          	[/#list]
 						         [/#list]
+						         [#else]
+						         <br />
 						         [/#if]
-						</ul>
-					 </ul>
-				 </div> 
-		    </ul>
-        </div>
+					    </ul>
+					  </li>
+					  <li><a href="#">明星博客</a>
+					    <ul>
+					      [#if starBlogger?? ]
+		                 	[#list starBlogger as c]
+		                      <li><a href="${base}/blog/find_all_url_friend.jspx?userIds=${c.id}" target="_blank" title="[#if c.realname??]${c.realname}[#else]${c.username}[/#if]"><img [#if c.userImg??]src="${c.userImg}"[#else]src="/${res}/images/userImg-large.png"[/#if] width="20" height="20" alt="" style="float: left;padding: 0 10px 0 0;">[#if c.realname??][@text_cut s=c.realname len=5 append='...'/][#else]${c.username}[/#if]</a></li>
+			                [/#list]
+	                        [#if moreStarBloggerExist??]
+	                        [#if user??]
+			                 <li><a href="${base}/blog/gotoDataShow.jspx?dataFlag=4">更多 &nbsp;>></a></li>
+	                        [/#if]
+	                        [#if usert??]
+			                 <li><a href="${base}/blog/gotoDataShow.jspx?dataFlag=4&uid=${usert.id}">更多 &nbsp;>></a></li>
+	                        [/#if]
+	                        [/#if]
+			                [/#if]
+					   </ul>
+					  </li>
+					</ul>
+				</div>
+			</div> 
+        	</div>
      </div>
-</div>
+<script src='/${res}/js/stopExecutionOnTimeout.js?t=1'></script>
+<script src='/${res}/js/jquery.velocity.min.js'></script>
+<script src='/${res}/js/class2context.js'></script>
+<script>
+	;(function ($, window, document, undefined) {
+	    if ($('ul.mtree').length) {
+	        var collapsed = false;
+	        var close_same_level = false;
+	        var duration = 400;
+	        var listAnim = true;
+	        var easing = 'easeOutQuart';
+	        $('.mtree ul').css({
+	            'overflow': 'hidden',
+	            'height': collapsed ? 0 : 'auto',
+	            'display': collapsed ? 'none' : 'block'
+	        });
+	        var node = $('.mtree li:has(ul)');
+	        node.each(function (index, val) {
+	            $(this).children(':first-child').css('cursor', 'pointer');
+	            $(this).addClass('mtree-node mtree-' + (collapsed ? 'closed' : 'open'));
+	            $(this).children('ul').addClass('mtree-level-' + ($(this).parentsUntil($('ul.mtree'), 'ul').length + 1));
+	        });
+	        $('.mtree li > *:first-child').on('click.mtree-active', function (e) {
+	            if ($(this).parent().hasClass('mtree-closed')) {
+	                $('.mtree-active').not($(this).parent()).removeClass('mtree-active');
+	                $(this).parent().addClass('mtree-active');
+	            } else if ($(this).parent().hasClass('mtree-open')) {
+	                $(this).parent().removeClass('mtree-active');
+	            } else {
+	                $('.mtree-active').not($(this).parent()).removeClass('mtree-active');
+	                $(this).parent().toggleClass('mtree-active');
+	            }
+	        });
+	        node.children(':first-child').on('click.mtree', function (e) {
+	            var el = $(this).parent().children('ul').first();
+	            var isOpen = $(this).parent().hasClass('mtree-open');
+	            if ((close_same_level || $('.csl').hasClass('active')) && !isOpen) {
+	                var close_items = $(this).closest('ul').children('.mtree-open').not($(this).parent()).children('ul');
+	                if ($.Velocity) {
+	                    close_items.velocity({ height: 0 }, {
+	                        duration: duration,
+	                        easing: easing,
+	                        display: 'none',
+	                        delay: 100,
+	                        complete: function () {
+	                            setNodeClass($(this).parent(), true);
+	                        }
+	                    });
+	                } else {
+	                    close_items.delay(100).slideToggle(duration, function () {
+	                        setNodeClass($(this).parent(), true);
+	                    });
+	                }
+	            }
+	            el.css({ 'height': 'auto' });
+	            if (!isOpen && $.Velocity && listAnim)
+	                el.find(' > li, li.mtree-open > ul > li').css({ 'opacity': 0 }).velocity('stop').velocity('list');
+	            if ($.Velocity) {
+	                el.velocity('stop').velocity({
+	                    height: isOpen ? [
+	                        0,
+	                        el.outerHeight()
+	                    ] : [
+	                        el.outerHeight(),
+	                        0
+	                    ]
+	                }, {
+	                    queue: false,
+	                    duration: duration,
+	                    easing: easing,
+	                    display: isOpen ? 'none' : 'block',
+	                    begin: setNodeClass($(this).parent(), isOpen),
+	                    complete: function () {
+	                        if (!isOpen)
+	                            $(this).css('height', 'auto');
+	                    }
+	                });
+	            } else {
+	                setNodeClass($(this).parent(), isOpen);
+	                el.slideToggle(duration);
+	            }
+	            e.preventDefault();
+	        });
+	        function setNodeClass(el, isOpen) {
+	            if (isOpen) {
+	                el.removeClass('mtree-open').addClass('mtree-closed');
+	            } else {
+	                el.removeClass('mtree-closed').addClass('mtree-open');
+	            }
+	        }
+	        if ($.Velocity && listAnim) {
+	            $.Velocity.Sequences.list = function (element, options, index, size) {
+	                $.Velocity.animate(element, {
+	                    opacity: [
+	                        1,
+	                        0
+	                    ],
+	                    translateY: [
+	                        0,
+	                        -(index + 1)
+	                    ]
+	                }, {
+	                    delay: index * (duration / size / 2),
+	                    duration: duration,
+	                    easing: easing
+	                });
+	            };
+	        }
+	        if ($('.mtree').css('opacity') == 0) {
+	            if ($.Velocity) {
+	                $('.mtree').css('opacity', 1).children().css('opacity', 0).velocity('list');
+	            } else {
+	                $('.mtree').show(200);
+	            }
+	        }
+	    }
+	}(jQuery, this, this.document));
+	$(document).ready(function () {
+	    var mtree = $('ul.mtree');
+	    mtree.wrap('<div class=mtree-demo></div>');
+	    var skins = [
+	        'bubba',
+	        'skinny',
+	        'transit',
+	        'jet',
+	        'nix'
+	    ];
+	    mtree.addClass(skins[0]);
+	});
+	</script>
+<script type="text/javascript">
+	array=[["<img src='/${res}/images/iMac-add.png' width='25px' /> 新建栏目", "createChannel()"],["<img src='/${res}/images/iMac-edit.png' width='25px' /> 修改栏目", "editChannel()"],["<img src='/${res}/images/iMac-del.png' width='25px' /> 删除栏目", "delChannel()"]];
+	class2context('class1', "", array);
+	
+	array=[["<img src='/${res}/images/iMac-add.png' width='25px' /> 新建栏目", "createChannel2()"]];
+	class2context('class2', "", array);
+	function createChannel2(){
+		location.href = "${base}/blog/columns_list.jspx";
+	}
+	function createChannel(id){
+		$.ajax({
+        	url: "${base}/blog/checkLevel.jspx?ccId="+id,
+            type:'POST',
+            data:"",
+            dataType:'json',
+            async:false,
+            success:function(data) {
+                if(data.status==1) {
+					location.href = "${base}/blog/columns_list.jspx?ccId="+id;
+                    return true;
+                }else if(data.status==2){
+                    alert("该操作不被允许!\r\n请勿在二级栏目下新建子栏目!");
+                    return false;
+                }else if(data.status==3){
+                	alert("该操作不被允许!\r\n该一级栏目已作为群组!您可以将群组栏目修改为普通栏目来添加子栏目!");
+                	return false;
+                }
+            },
+        });
+	}
+	
+	function editChannel(id){
+		location.href="${base}/blog/update_tz.jspx?id="+id;
+	}
+	function delChannel(id){
+		$.ajax({
+        	url: "${base}/blog/checkTwoColumsNum.jspx?ccId="+id,
+            type:'POST',
+            data:"",
+            dataType:'json',
+            async:false,
+            success:function(data) {
+                if(data.status==2) {
+                	$.ajax({
+        		        url: "${base}/blog/delGroup.jspx?groupId="+id,
+        		        type: "POST",
+        		        dataType:"json",
+        		        data: "",
+        		        success: function (data) {
+        		        	if(data.status>0){
+        		        		$.ajax({
+        	            			url:"${base}/blog/queryLanmuColumn.jspx?id="+id,
+        	            			type:"post",
+        	            			datatype:"json",
+        	            			data: "",
+        	            			success: function(result){
+        	            				if(result.status=="false"){
+        	            					alert("删除失败！请先删除本栏目下的文章！");	
+        	            				}else{
+        	            					if(confirm(isDel)==true){
+        	            						location.href="${base}/blog/deleteColumn.jspx?columnId="+id;
+        	            						alert("删除成功!");
+        	            					}
+        	            				}
+        	            			}
+        	            		});
+			                    return true;
+        		        	}else{
+        		        		alert("删除失败!已有用户加入该群组");
+			                    return false;
+        		        	}
+        		        }
+        		    });
+                    return true;
+                }else{
+                    alert("该操作不被允许!\r\n请先删除该栏目下的子栏目!");
+                    return false;
+                }
+            },
+        });
+	}
+
+	function ContextMenus(){
+		console.log("context menu called");
+	}
+</script>

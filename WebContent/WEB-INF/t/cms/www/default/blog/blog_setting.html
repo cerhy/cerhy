@@ -65,6 +65,7 @@ $(function(){
 	});
 });
 </script>
+<div id="contextMenus"></div>
 [#include "head.html"/]
 <div class="blogBody">
 <div class="blog-con">
@@ -77,6 +78,7 @@ $(function(){
      	 	文章数:${articleCount}&nbsp;&nbsp;评论:${commentCount}&nbsp;&nbsp;访问:${user.blogVisitNum!'0'}&nbsp;&nbsp;最后登录:${user.lastLoginTime?string('yyyy-MM-dd HH:mm:ss')}
       	</div>
       </div>
+      [#include "blog_operation.html"/]
   <div class="mb20 clearfix">
      [#include "blog_left.html"/]
   

@@ -24,9 +24,9 @@ a			{ color: #074387; }
 }
 
 .blogHead,.tj{color: #fff;}
-.tj{
+/* .tj{
 	padding-bottom:90px;
-}
+} */
 #title1{
 	color: #fff;
 }
@@ -69,3 +69,9 @@ body, button, input, select, textarea { background: transparent;}
 .tggl-top{background:transparent;}
 .st_tree ul li a:hover {color:#0070b8;}
 
+.htmleaf-container .mtree-demo .mtree {
+  background: #FDE09F;
+  margin: 20px auto;
+  max-width: 320px;
+  border-radius: 3px;
+}

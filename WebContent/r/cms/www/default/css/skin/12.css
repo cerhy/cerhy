@@ -8,9 +8,9 @@
 	background: #8A7C55; 
 }
 .blogHead,.tj{color: #fff;}
-.tj{
+/* .tj{
 	padding-bottom:80px;
-}
+} */
 #title1{
 	color: #fff;
 }
@@ -51,3 +51,9 @@ body, button, input, select, textarea { background: transparent;}
 .tggl table{border-color:#808080;}
 .tggl-top{background:transparent;}
 .st_tree ul li a:hover {color:#0070b8;}
+.htmleaf-container .mtree-demo .mtree {
+  background: #E8E5DD;
+  margin: 20px auto;
+  max-width: 320px;
+  border-radius: 3px;
+}	

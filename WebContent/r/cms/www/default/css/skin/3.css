@@ -8,9 +8,9 @@
 	background : #250f11; 
 }
 .blogHead,.tj{color: #666666;}
-.tj{
+/* .tj{
 	padding-bottom:80px;
-}
+} */
 #title1{
 	color: #666666;
 }
@@ -65,3 +65,9 @@ body, button, input, select, textarea { background: transparent;}
 .plcode ,.rig .reply,.rig .reply .reply-text {
 	color: #999;
 border: 1px solid #666666;}
+.htmleaf-container .mtree-demo .mtree {
+  background: #311411;
+  margin: 20px auto;
+  max-width: 320px;
+  border-radius: 3px;
+}

@@ -55,39 +55,7 @@ $(function(){
 	});
 });
 </script>
-<script type="text/javascript">
-$(document).ready(function(){
-    $("#checkb").click(function(){
-        enter();
-	});
-});
-function enter(){
-	if($('input[name="checkb"]').prop("checked")){
-		$.ajax({
-	        url: "${base}/blog/uniqueNum.jspx",
-	        type: "POST",
-	        dataType:"json",
-	        data: "",
-	        success: function (data) {
-		 		$("#sh").show();
-				$("#uniqueCode").val(data.status)
-	        }
-	    });
-	}else{
-		$("#sh").hide();
-		$("#uniqueCode").val("")
-	}	
-}
-</script>
-<script type="text/javascript">
-function cp(){
-		alert("==");
-        document.getElementById("uniqueCode").select();
-        document.execCommand("copy",false,null);
-        $("#info").html("复制成功...");
-        $("#info").animate({opacity: "hide"},5000);
-}
-</script>
+<div id="contextMenus"></div>
 [#include "head.html"/]
 <div class="blogBody">
 <div class="blog-con">
@@ -100,6 +68,7 @@ function cp(){
      	 	文章数:${articleCount}&nbsp;&nbsp;评论:${commentCount}&nbsp;&nbsp;访问:${user.blogVisitNum!'0'}&nbsp;&nbsp;最后登录:${user.lastLoginTime?string('yyyy-MM-dd HH:mm:ss')}
       	</div>
       </div>
+      [#include "blog_operation.html"/]
       <div class="mb20 clearfix">
            [#include "blog_left.html"/]
 
@@ -107,90 +76,71 @@ function cp(){
 				<div class="personCenter-userInfo blog_right" >
 				
         <div class="tggl" >
-        <form id="newColumn" action="${base}/blog/newColumn.jspx"  method="post">
+        <form id="newColumn" action="${base}/blog/newColumn.jspx"  method="post" onsubmit="return valid()">
         <div >
-	        <span style="font-size:16px;">栏目名称:</span>
-	        <input type="text" maxlength="15" name="columnInput" required="required" style="margin:10px;width: 180px;height: 30px;" rerequired oninvalid="setCustomValidity('请输入栏目名称');" oninput="setCustomValidity('');"/><span style="color:#f00; margin-left:10px;">*</span>
-	        <input type="checkbox" id="checkb" name="checkb" onclick="checkb()" />
-        	<span>是否将该栏目作为群组。</span>
+	        <span style="font-size:16px;">一级栏目名称:</span>
+	        <select name="tcolumnInput" style="margin:10px;width: 180px;height: 30px;" rerequired>
+	        	[#if ccId??]
+	        		<option value="" disabled="disabled">--请选择一级栏目--</option>
+	        	[#else]
+	        		<option value="">--请选择一级栏目--</option>
+	        	[/#if]
+	        	[#if columnsList??]
+		        [#list columnsList as map]
+		        [#list map?keys as k]
+		        [#if ccId??]
+			        [#if k=='']
+			        	[#list map[k] as v]
+			        		[#if v?split("=")[0]=ccId]
+				        		<option value="${v?split("=")[0]}" selected="selected">${v?split("=")[1]}</option>
+				        	[#else]
+				        		<option value="${v?split("=")[0]}" disabled="disabled">${v?split("=")[1]}</option>
+				        	[/#if]
+			        	[/#list]
+			        [#else]
+			        	[#if k?split("=")[0]=ccId]
+			        		<option value="${k?split("=")[0]}" selected="selected">${k?split("=")[1]}</option>
+			        	[#else]
+			        		<option value="${k?split("=")[0]}" disabled="disabled">${k?split("=")[1]}</option>
+			        	[/#if]
+			        [/#if]
+		        [#else]
+		        	[#if k=='']
+			        	[#list map[k] as v]
+				        	<option value="${v?split("=")[0]}">${v?split("=")[1]}</option>
+			        	[/#list]
+			        [#else]
+			        	<option value="${k?split("=")[0]}">${k?split("=")[1]}</option>
+			        [/#if]
+		        [/#if]	
+		        [/#list]
+		        [/#list]
+	            [/#if] 
+	        </select>
+	        <span style="color:#f00;">一级栏目不选择,二级栏目将作为一级栏目展示</span>
         </div>
-        <div style="display: none;" id="sh">
-        	<span style="font-size:16px;">群组唯一标识码:</span>
-        	<input type="text" style="margin:10px;width: 180px;height: 30px;" id="uniqueCode" name="uniqueCode" readonly="readonly"/>
-        	<span><a onmouseover="this.style.cssText='color:red;cursor: pointer;'" onmouseout="this.style.cssText='color:black'" href="javascript:;" id="btn" onclick="cp()">复制</a></span>
-        	<span id="info" style="color: red;font-size: 2px;"></span>
+        <div >
+	        <span style="font-size:16px;">二级栏目名称:</span>
+	        <input type="text" maxlength="15" name="columnInput" required="required" style="margin:10px;width: 180px;height: 30px;" rerequired oninvalid="setCustomValidity('请输入栏目名称');" oninput="setCustomValidity('');"/><span style="color:#f00; margin-left:10px;">*</span>
         </div>
         <div>
-         <span style="font-size:16px;">栏目序号:</span>
+         <span style="font-size:16px;">验证码:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+         <input type="text" id="uniqueCode" name="uniqueCode" maxlength="9" style="margin:10px;width: 180px;height: 30px;"/>
+         <span style="color:#f00;margin-left:10px;">设置验证码后，栏目可作为群组</span>
+         </div>
+        <div>
+         <span style="font-size:16px;">排序号:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
          <input type="text" name="columnOrder" maxlength="9" style="margin:10px;width: 180px;height: 30px;" placeholder="默认 0" />
          </div>
          <div class="s1">
              <input type="submit" value="新建" class="sub1" />
          </div>
         </form>
-          
-		<div id="tab">
-		  <div class="tabList">
-			<ul>
-				<li class="cur">栏目</li>
-				<li>已加入的群组</li>
-			</ul>
-		  </div>
-		</div>
 		<br />
 		<br />
 		<form id="tableForm0" action="" method="post">
           <table cellpadding="0" cellspacing="0">
             <tbody >
-          [#if columnsList?size gt 0]
-              <tr>
-               <td class="tggl-top" style="font-size:14px;min-width: 80px;">栏目序号</td>
-               <td class="tggl-top" style="font-size:14px;min-width: 200px;">栏目名称</td>
-               <td class="tggl-top" style="font-size:14px;min-width: 100px;">群组唯一标识码</td>
-               <td class="tggl-top" style="font-size:14px;min-width: 100px;">操作</td>
-              </tr>
-              [#list columnsList as c]
-              <tr>
-              	<td>${c.orderId}</td>
-                <td>${c.columnName}</td>
-                <td>${c.uniqueCode!""}</td>
-                <td><a href="${base}/blog/update_tz.jspx?id=${c.columnId}&name=${c.columnName}&orderId=${c.orderId}&uniqueCode=${c.uniqueCode!''}">修改</a> | [#if c.uniqueCode??]<a href="javascript:;" id="delGroup" onclick="delGroup(${c.columnId});" >删除</a>[#else]<a href="javascript:;" id="del" onclick="del(${c.columnId});" >删除</a>[/#if]</td>
-              </tr>
-              [/#list]
-            [#else]
-             <tr>
-               <td class="tggl-top" style="font-size:14px;" colspan="4">暂无栏目/组..</td>
-              </tr>
-            [/#if]
-            </tbody>
-          </table>
-          </form>
-		<form id="tableForm1" action="" method="post" style="display: none;">
-          <table cellpadding="0" cellspacing="0">
-            <tbody>
-              [#if joinGroupList??&&joinGroupList?size gt 0]
-              <tr>
-               <td class="tggl-top" style="font-size:14px;min-width: 80px;" colspan="4">已加入的群组</td>
-              </tr>
-              <tr>
-               <td class="tggl-top" style="font-size:14px;min-width: 200px;">群组名称</td>
-               <td class="tggl-top" style="font-size:14px;min-width: 100px;">加入时间</td>
-               <td class="tggl-top" style="font-size:14px;min-width: 100px;">群组唯一标识码</td>
-               <td class="tggl-top" style="font-size:14px;min-width: 100px;">操作</td>
-              </tr>
-               [#list joinGroupList as j]
-              <tr id="signOut${j.id}">
-                <td>[@text_cut s=j.columnsId.columnName len=6 append='...'/]</td>
-                <td>${j.joinTime}</td>
-                <td>${j.joinCode}</td>
-                <td onclick="signOut(${j.id})" style="cursor: pointer;" id="signOut" class="signOut">退出群组</td>
-              </tr>
-              [/#list]
-              [#else]
-              <tr>
-               <td class="tggl-top" style="font-size:14px;" colspan="4">暂无加入的群组...</td>
-              </tr>
-              [/#if]
             </tbody>
           </table>
           </form>
@@ -205,7 +155,6 @@ function cp(){
 </body>
 </html>
 <script type="text/javascript">
-
 function del(columnId){
 		$.ajax({
 			url:"${base}/blog/queryLanmuColumn.jspx?id="+columnId,
@@ -288,29 +237,15 @@ function delGroup(obj){
 	 } 
 }
 
-
-</script>
-<script>
-window.onload = function() {
-    var oDiv = document.getElementById("tab");
-    var oLi = oDiv.getElementsByTagName("div")[0].getElementsByTagName("li");
-    var timer = null;
-    for (var i = 0; i < oLi.length; i++) {
-        oLi[i].index = i;
-        oLi[i].onmouseover = function() {
-            show(this.index);
-        }
-    }
-    function show(a) {
-        index = a;
-        var alpha = 0;
-        for (var j = 0; j < oLi.length; j++) {
-            oLi[j].className = "";
-            $("#tableForm"+j).hide();
-        }
-        oLi[index].className = "cur";
-        $("#tableForm"+index).show();
-        clearInterval(timer);
-    }
+function valid(){
+	var reg = new RegExp("^[0-9]*$");
+    var obj = $('#uniqueCode').val();
+    if(!reg.test(obj)){
+		alert("验证码为数字类型!");
+		return false;
+    }else{
+		return true;
+	}
 }
+
 </script>

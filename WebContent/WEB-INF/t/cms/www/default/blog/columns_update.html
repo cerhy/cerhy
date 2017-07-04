@@ -73,6 +73,7 @@ function enter(){
 	}	
 }
 </script>
+<div id="contextMenus"></div>
 	[#include "head.html"/]
 <div class="blogBody">
 	<div class="blog-con">
@@ -81,33 +82,33 @@ function enter(){
 			<div style="font-size: 15px; margin: 5px auto 15px;">[#if
 				user.blogTitle2??]${user.blogTitle2}[#else]副标题[/#if]</div>
 		</div>
-
+		[#include "blog_operation.html"/]
 		<div class="mb20 clearfix">
 			[#include "blog_left.html"/]
-
 			<div class="wrap-right ">
 				<div class="personCenter-userInfo blog_right">
 					<div class="tggl">
-						<form
-							action="${base}/blog/updateColumn.jspx?id=${column.columnId}"
-							id="newColumn" method="post">
+						<form action="${base}/blog/updateColumn.jspx?id=${column.columnId}" id="newColumn" method="post" onsubmit="return valids()">
 							<div style="font-size: 15px">栏目名:</div>
+							<input style="display: none;" id="twoState" name="twoState" value="${twoState}"/>
+							<input style="display: none;" id="ccId" name="ccId" value="${column.columnId}"/>
+							<input style="display: none;" id="columsLevel" name="columsLevel" value="${column.columsLevel}"/>
+							[#if column.parentId??]
+							<input style="display: none;" name="parentId" value="${column.parentId.columnId}"/>
+							[#else]
+							<input style="display: none;" name="parentId" value=""/>
+							[/#if]
 							<input type="text" maxlength="15" name="updateName" value="${column.columnName}" required="required" style="margin:10px 0;width: 180px;height: 30px;" required="required" oninvalid="setCustomValidity('请输入栏目名称');" oninput="setCustomValidity('');" maxlength="60"/><span style="color:#f00; margin-left:10px;">*</span>
 							[#if column.uniqueCode??]
+								<div style="font-size: 15px">群组唯一标识码:</div>
+								<input type="text" style="width: 180px;height: 30px;" id="uniqueCode" name="uniqueCode" [#if joinStatus=0]readonly="readonly"[/#if] value="${column.uniqueCode!''}"/>
+								<span style="color:#f00;margin-left:10px;">设置验证码后，栏目可作为群组,为空则变为普通栏目</span>
+								<br />
+								<span style="color:#f00;">(当群组已有人加入时,验证码将不可以修改)</span>
 							[#else]
-							<input type="checkbox" id="checkb" name="checkb" onclick="checkb()" />
-        					<span>是否将该栏目作为群组。</span>
-							[/#if]
-							[#if column.uniqueCode??]
-							[#else]
-							<div style="display: none;" id="sh">
-							<span style="font-size:16px;">群组唯一标识码:</span>
-        					<input type="text" style="margin:10px;width: 180px;height: 30px;" id="uniqueCode" name="uniqueCode" readonly="readonly"/>
-							</div>
-							[/#if]
-							[#if column.uniqueCode??]
-							<div style="font-size: 15px">群组唯一标识码:</div>
-							<input type="text" style="width: 180px;height: 30px;" id="uniqueCode" name="uniqueCode" readonly="readonly" value="${column.uniqueCode}"/>
+								<div style="font-size: 15px">群组唯一标识码:</div>
+								<input type="text" style="width: 180px;height: 30px;" id="uniqueCode" name="uniqueCode" value=""/>
+								<span style="color:#f00;margin-left:10px;">设置验证码后，栏目可作为群组</span>
 							[/#if]
 							<div style="font-size: 15px">栏目序号:</div>
 							<input type="text" name="updateOrderId" value="${column.orderId}"  style="margin:10px 0;width: 180px;height: 30px;" required="required" oninvalid="setCustomValidity('请输入栏目序号');" oninput="setCustomValidity('');" maxlength="60"/> 
@@ -126,3 +127,15 @@ function enter(){
 [#include "../include/footers.html"/]
 </body>
 </html>
+<script type="text/javascript">
+function valids(){
+	var twoState=$("#twoState").val();
+	var uniqueCode=$("#uniqueCode").val();
+	if(twoState==1){
+		if(uniqueCode!=''){
+			alert("该操作不被允许!\r\n该栏目下已存在子栏目,不可作为群组!验证码不可填!");
+			return false;
+		}
+	}
+}
+</script>

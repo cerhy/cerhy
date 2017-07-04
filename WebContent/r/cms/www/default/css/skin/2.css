@@ -1,12 +1,13 @@
 /* view 02 */
 
+a{color: #666666}
 .blogBody .user-center-left .user-menu-links, .blogBody .personCenter-userInfo, .blogBody .user-center-left .user-setting {
     background: #222222;
     color: #666666;
 }  
 .blogHead,.tj{color: #c5c9ce;}
 .tggl a {color:#666666;}
-.tj{padding-bottom:40px;}
+/* .tj{padding-bottom:40px;} */
 .tggl-top{background:transparent;}
 .a2{color:#666666;}
 .inp2{color:#666666;}
@@ -55,4 +56,9 @@ body, button, input, select, textarea {background: transparent;}
 .plcode ,.rig .reply,.rig .reply .reply-text {
 	color: #666666;
 border: 1px solid #666666;}
-
+.htmleaf-container .mtree-demo .mtree {
+  background: #222222;
+  margin: 20px auto;
+  max-width: 320px;
+  border-radius: 3px;
+}

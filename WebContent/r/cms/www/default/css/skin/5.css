@@ -8,16 +8,16 @@
 	background: #C9DCE8; 
 }
 .blogHead,.tj{color: #B6333B;}
-.tj{
+/* .tj{
 	padding-bottom:100px;
-}
+} */
 #title1{
 	color: #B6333B;
 }
 
 
 .blogBody .user-center-left .user-menu-links, .blogBody .personCenter-userInfo, .blogBody .user-center-left .user-setting {
-   background: #F4F8FB
+   background: #F4F8FB;
 } 
 
 .blogBody .user-center-left .user-menu-links li{
@@ -52,3 +52,9 @@ body, button, input, select, textarea { background: transparent;}
 .tggl table{border-color:#e7e7e7;}
 .tggl-top{background:transparent;}
 .st_tree ul li a:hover {color:#0070b8;}
+.htmleaf-container .mtree-demo .mtree {
+  background: #F4F8FB;
+  margin: 20px auto;
+  max-width: 320px;
+  border-radius: 3px;
+}
