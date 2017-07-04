@@ -38,6 +38,34 @@ $('.user-menu-links li').click(function(){
 .st_tree ul .change :hover{background-color:#e7e7e7 }
 ::-webkit-scrollbar{width:0px}
 .clear{clear:both}
+.st{
+transition: all 0.30s ease-in-out;
+border: 1px solid gray;
+}
+.st:focus{
+border: 1px solid #66AACC;
+box-shadow: 0 0 5px #66AACC;
+outline: none;
+}
+.sub2 {
+	width:100px;
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 3px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+}
+
+.sub2:hover {
+    box-shadow: 0 3px 4px 0 rgba(0,0,0,0.24),0 8px 30px 0 rgba(0,0,0,0.19);
+}
 </style>
 <script type="text/javascript">
 $(function(){
@@ -89,7 +117,8 @@ function enter(){
 				<div class="personCenter-userInfo blog_right">
 					<div class="tggl">
 						<form action="${base}/blog/updateColumn.jspx?id=${column.columnId}" id="newColumn" method="post" onsubmit="return valids()">
-							<div style="font-size: 15px">栏目名:</div>
+							<div >
+							<span style="font-size:16px;">栏目名:&nbsp;&nbsp;&nbsp;&nbsp;</span>
 							<input style="display: none;" id="twoState" name="twoState" value="${twoState}"/>
 							<input style="display: none;" id="ccId" name="ccId" value="${column.columnId}"/>
 							<input style="display: none;" id="columsLevel" name="columsLevel" value="${column.columsLevel}"/>
@@ -98,20 +127,25 @@ function enter(){
 							[#else]
 							<input style="display: none;" name="parentId" value=""/>
 							[/#if]
-							<input type="text" maxlength="15" name="updateName" value="${column.columnName}" required="required" style="margin:10px 0;width: 180px;height: 30px;" required="required" oninvalid="setCustomValidity('请输入栏目名称');" oninput="setCustomValidity('');" maxlength="60"/><span style="color:#f00; margin-left:10px;">*</span>
+							<input class="st" type="text" maxlength="15" name="updateName" value="${column.columnName}" required="required" style="margin:10px 0;width: 180px;height: 30px;" required="required" oninvalid="setCustomValidity('请输入栏目名称');" oninput="setCustomValidity('');" maxlength="60"/><span style="color:#f00; margin-left:10px;">*</span>
+							</div>
+							<div >
 							[#if column.uniqueCode??]
-								<div style="font-size: 15px">群组唯一标识码:</div>
-								<input type="text" style="width: 180px;height: 30px;" id="uniqueCode" name="uniqueCode" [#if joinStatus=0]readonly="readonly"[/#if] value="${column.uniqueCode!''}"/>
+								<span style="font-size:16px;">验证码:&nbsp;&nbsp;&nbsp;&nbsp;</span>
+								<input class="st" type="text" style="width: 180px;height: 30px;" id="uniqueCode" name="uniqueCode" [#if joinStatus=0]readonly="readonly"[/#if] value="${column.uniqueCode!''}"/>
 								<span style="color:#f00;margin-left:10px;">设置验证码后，栏目可作为群组,为空则变为普通栏目</span>
 								<br />
-								<span style="color:#f00;">(当群组已有人加入时,验证码将不可以修改)</span>
+								<span style="color:#f00;">（当群组已有人加入时,验证码将不可以修改）</span>
 							[#else]
-								<div style="font-size: 15px">群组唯一标识码:</div>
-								<input type="text" style="width: 180px;height: 30px;" id="uniqueCode" name="uniqueCode" value=""/>
+								<span style="font-size:16px;">验证码:&nbsp;&nbsp;&nbsp;&nbsp;</span>
+								<input class="st" type="text" style="width: 180px;height: 30px;" id="uniqueCode" name="uniqueCode" value=""/>
 								<span style="color:#f00;margin-left:10px;">设置验证码后，栏目可作为群组</span>
 							[/#if]
-							<div style="font-size: 15px">栏目序号:</div>
-							<input type="text" name="updateOrderId" value="${column.orderId}"  style="margin:10px 0;width: 180px;height: 30px;" required="required" oninvalid="setCustomValidity('请输入栏目序号');" oninput="setCustomValidity('');" maxlength="60"/> 
+							</div>
+							<div >
+							<span style="font-size:16px;">栏目序号:&nbsp;</span>
+							<input class="st"  type="text" name="updateOrderId" value="${column.orderId}"  style="margin:10px 0;width: 180px;height: 30px;" required="required" oninvalid="setCustomValidity('请输入栏目序号');" oninput="setCustomValidity('');" maxlength="60"/> 
+							</div>
 							<div style="margin: 20px 0"> <input type="submit" value="更新" class="sub2" /> </div>
 						</form>
 					</div>

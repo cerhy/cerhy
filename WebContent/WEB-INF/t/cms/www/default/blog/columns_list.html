@@ -25,24 +25,33 @@ $('.user-menu-links li').click(function(){
 .st_tree ul .change :hover{background-color:#e7e7e7 }
 ::-webkit-scrollbar{width:0px}
 .clear{clear:both}
-#tab{position:relative;}
-#tab .tabList ul li{
-	float:left;
-	background:#fefefe;
-	background:-moz-linear-gradient(top, #fefefe, #ededed);	
-	background:-o-linear-gradient(left top,left bottom, from(#fefefe), to(#ededed));
-	background:-webkit-gradient(linear,left top,left bottom, from(#fefefe), to(#ededed));
-	border:1px solid #ccc;
-	padding:5px 0;
-	width:100px;
-	text-align:center;
-	margin-left:-1px;
-	position:relative;
-	cursor:pointer;
+.st{
+transition: all 0.30s ease-in-out;
+border: 1px solid gray;
 }
-#tab .tabList li.cur{
-	border-bottom:none;
-	background:#fff;
+.st:focus{
+border: 1px solid #66AACC;
+box-shadow: 0 0 5px #66AACC;
+outline: none;
+}
+.sub1 {
+	width:100px;
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 3px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+}
+
+.sub1:hover {
+    box-shadow: 0 3px 4px 0 rgba(0,0,0,0.24),0 8px 30px 0 rgba(0,0,0,0.19);
 }
 </style>
 <script type="text/javascript">
@@ -121,16 +130,16 @@ $(function(){
         </div>
         <div >
 	        <span style="font-size:16px;">二级栏目名称:</span>
-	        <input type="text" maxlength="15" name="columnInput" required="required" style="margin:10px;width: 180px;height: 30px;" rerequired oninvalid="setCustomValidity('请输入栏目名称');" oninput="setCustomValidity('');"/><span style="color:#f00; margin-left:10px;">*</span>
+	        <input class="st" type="text" maxlength="15" id="columnInput" name="columnInput" required="required" style="margin:10px;width: 180px;height: 30px;" rerequired oninvalid="setCustomValidity('请输入栏目名称');" oninput="setCustomValidity('');"/><span style="color:#f00; margin-left:10px;">*</span>
         </div>
         <div>
          <span style="font-size:16px;">验证码:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-         <input type="text" id="uniqueCode" name="uniqueCode" maxlength="9" style="margin:10px;width: 180px;height: 30px;"/>
+         <input class="st" type="text" id="uniqueCode" name="uniqueCode" maxlength="9" style="margin:10px;width: 180px;height: 30px;"/>
          <span style="color:#f00;margin-left:10px;">设置验证码后，栏目可作为群组</span>
          </div>
         <div>
          <span style="font-size:16px;">排序号:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-         <input type="text" name="columnOrder" maxlength="9" style="margin:10px;width: 180px;height: 30px;" placeholder="默认 0" />
+         <input class="st" type="text" name="columnOrder" maxlength="9" style="margin:10px;width: 180px;height: 30px;" placeholder="默认 0" />
          </div>
          <div class="s1">
              <input type="submit" value="新建" class="sub1" />
@@ -238,14 +247,18 @@ function delGroup(obj){
 }
 
 function valid(){
+	var regs = new RegExp("[~'!@#$%^&*-+_=:]"); 
+    var columnInput = $('#columnInput').val();
+    if(regs.test(columnInput)){
+		alert("栏目名称可能包含%/等特殊字符，请修改重试。");
+		return false;
+    }
 	var reg = new RegExp("^[0-9]*$");
     var obj = $('#uniqueCode').val();
     if(!reg.test(obj)){
 		alert("验证码为数字类型!");
 		return false;
-    }else{
-		return true;
-	}
+    }
 }
 
 </script>
