@@ -332,6 +332,7 @@ $(function(){
 					<span style="color:#f00; margin-left:10px;" id="tishiType">*上传的视频文件须为MP4格式!</span>
 					<sap id="progressSapn" style="display:none" >
 						<progress value="0" max="100" id="progressId"></progress> 
+						<br/>
 						<span id="tishi"></span>
 					</sap>
                 </td>
@@ -411,22 +412,7 @@ $(function(){
 					</textarea>
 					<script type="text/javascript">
 					
-					function valid(){
-						var reg = new RegExp("^[0-9]*$");
-				        var obj = $('#password').val();
-					    if(!reg.test(obj)){
-							alert("密码的类型为数字!");
-							return false;
-					        
-					    }else{
-							return true;
-						}
-					}
-					var attachIndex = 1;
-					var attachTpl = $.format($("#attachTr").val());
-					function addAttachLine() {
-						$('#attachTable').append(attachTpl(attachIndex++));
-					}
+					
 					</script>
                 </td>
               </tr>
@@ -470,7 +456,7 @@ $(function(){
                 <td class="tggl-top">验证码</td><td><input type="text" onfocus="guestbookCaptcha.src='${base}/captcha.svl?d='+new Date()" name="captcha" id="captcha" vld="{required:true}" class="plcode" maxlength="20" class="member-change" style="float:left; margin-left:15px;" /><img id="guestbookCaptcha" src="${base}/captcha.svl" onclick="this.src='${base}/captcha.svl?d='+new Date()"/></td>
               </tr> -->
               <tr>
-                <td colspan="2" style="text-align:center; padding:20px 0;"><input type="hidden" name="nextUrl" value="${base}" /><input type="submit" class="member-submit" value="提交" /><input type="reset" class="member-reset" value="重置" /></td>
+                <td colspan="2" style="text-align:center; padding:20px 0;"><input type="hidden" name="nextUrl" value="${base}" /><input type="submit" class="member-submit" value="提交" id="tj" onclick="ups();return false;" /><input type="reset" class="member-reset" value="重置" /></td>
               </tr>
             </tbody>
           </table>
@@ -532,4 +518,27 @@ function addPd(obj){
 		$("#tick").hide();
 	}
 }
+</script>
+<script type="text/javascript">
+	
+	function valid(){
+		var reg = new RegExp("^[0-9]*$");
+        var obj = $('#password').val();
+        var os = document.getElementById("tj");
+		os.disabled = true;
+	    if(!reg.test(obj)){
+			alert("密码的类型为数字!");
+			return false;
+	        
+	    }else{
+			return true;
+		}
+	}
+	var attachIndex = 1;
+	var attachTpl = $.format($("#attachTr").val());
+	function addAttachLine() {
+		$('#attachTable').append(attachTpl(attachIndex++));
+	}
+	
+	
 </script>

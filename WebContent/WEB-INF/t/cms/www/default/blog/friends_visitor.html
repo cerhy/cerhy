@@ -141,9 +141,9 @@ $(function(){
 	                        	<div>
 		                        	<a target="_blank" href="${base}/blog/find_all_url_friend.jspx?userIds=${visitor.visitorId.id}" class="users-a-link" style="margin-bottom: 25px;margin-left: 10px;margin-right: 10px;">
 		                        	[#if visitor.visitorId.userImg??]
-		                        	<img src="${visitor.visitorId.userImg}" alt="" width="47" height="47" title="${visitor.visitorTime}">
+		                        	<img src="${visitor.visitorId.userImg}" alt="" width="47" height="47" title="${visitor.visitorTime}&nbsp;[#if visitor.visitorId.realname??]${visitor.visitorId.realname}[#else]${visitor.visitorId.username}[/#if]">
 			                        [#else]
-			                        <img src="/${res}/images/userImg-large.png" alt=" width="47" height="47" title="${visitor.visitorTime}">
+			                        <img src="/${res}/images/userImg-large.png" alt=" width="47" height="47" title="${visitor.visitorTime}&nbsp;[#if visitor.visitorId.realname??]${visitor.visitorId.realname}[#else]${visitor.visitorId.username}[/#if]">
 			                        [/#if]
 		                            <span title="[#if visitor.visitorId.realname??]${visitor.visitorId.realname}[#else]${visitor.visitorId.username}[/#if]">[#if visitor.visitorId.realname??][@text_cut s=visitor.visitorId.realname len=5 append='...'/][#else]${visitor.visitorId.username}[/#if]</span>
 		                            </a>
