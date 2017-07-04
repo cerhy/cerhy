@@ -299,11 +299,7 @@ $(function(){
 			        [/#list]
 		            [/#if]
 	                [#if joinGroupList?size gt 0]
-		                [#if columnsList?size gt 0]
 		                <option value="" class="sel-disabled">群组</option>
-		                [#else]
-		                <option value="" class="sel-disabled">群组</option>
-		                [/#if]
                         [#list joinGroupList as j]
                          [#if content.columnId??]
                          <option value="${j.columnsId.columnId}&colu"[#if content.columnId==j.columnsId.columnId]selected="selected"[/#if]>${j.columnsId.columnName}</option>
