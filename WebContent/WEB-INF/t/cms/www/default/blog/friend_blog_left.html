@@ -61,13 +61,21 @@
 					        [#list map?keys as k]
 					        [#if k=='']
 					        	[#list map[k] as v]
-					        		<li><a href="${base}/blog/contribute_list_friend.jspx?columnId=${v?split('=')[0]}&user_ids=${userIds}">[@text_cut s=v?split("=")[1] len='10' append='...'/]</a></li>
+					        	[#if v?split('=')[2]??]
+					        		<li><a  title="${v?split('=')[1]}&nbsp;${v?split('=')[2]}" href="${base}/blog/contribute_list_friend.jspx?columnId=${v?split('=')[0]}&user_ids=${userIds}">[@text_cut s=v?split("=")[1] len='10' append='...'/]</a></li>
+					        	[#else]
+					        		<li><a title="${v?split('=')[1]}" href="${base}/blog/contribute_list_friend.jspx?columnId=${v?split('=')[0]}&user_ids=${userIds}">[@text_cut s=v?split("=")[1] len='10' append='...'/]</a></li>
+					        	[/#if]
 					        	[/#list]
 					        [#else]
-					        	<li><a id="${k?split('=')[0]}" href="javascript:;">${k?split("=")[1]}</a>
+					        	<li><a id="${k?split('=')[0]}" title="${k?split('=')[0]}" href="javascript:;">${k?split("=")[1]}</a>
 					        	<ul>
 					        	[#list map[k] as v]
-					        		<li><a href="${base}/blog/contribute_list_friend.jspx?columnId=${v?split('=')[0]}&user_ids=${userIds}">[@text_cut s=v?split("=")[1] len='10' append='...'/]</a></li>
+					        		[#if v?split('=')[2]??]
+					        			<li><a  title="${v?split('=')[1]}&nbsp;${v?split('=')[2]}" href="${base}/blog/contribute_list_friend.jspx?columnId=${v?split('=')[0]}&user_ids=${userIds}">[@text_cut s=v?split("=")[1] len='10' append='...'/]</a></li>
+					        		[#else]
+					        			<li><a title="${v?split('=')[1]}" href="${base}/blog/contribute_list_friend.jspx?columnId=${v?split('=')[0]}&user_ids=${userIds}">[@text_cut s=v?split("=")[1] len='10' append='...'/]</a></li>
+					        		[/#if]
 					        	[/#list]
 					        	 </ul>
 					      		</li>
