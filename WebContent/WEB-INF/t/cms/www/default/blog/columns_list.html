@@ -85,7 +85,7 @@ $(function(){
 				<div class="personCenter-userInfo blog_right" >
 				
         <div class="tggl" >
-        <form id="newColumn" action="${base}/blog/newColumn.jspx"  method="post" onsubmit="return valid()">
+        <form id="jvForm" action="newColumn.jspx"  method="post" >
         <div >
 	        <span style="font-size:16px;">一级栏目名称:</span>
 	        <select name="tcolumnInput" style="margin:10px;width: 180px;height: 30px;" rerequired>
@@ -148,17 +148,11 @@ $(function(){
          <input class="st" type="text" name="columnOrder" maxlength="9" style="margin:10px;width: 180px;height: 30px;" placeholder="默认 0" />
          </div>
          <div class="s1">
-             <input type="submit" value="新建" class="sub1" />
+             <input type="submit" value="新建" class="submit" />
          </div>
         </form>
 		<br />
 		<br />
-		<form id="tableForm0" action="" method="post">
-          <table cellpadding="0" cellspacing="0">
-            <tbody >
-            </tbody>
-          </table>
-          </form>
         </div>
       </div>
 			</div>
@@ -252,19 +246,43 @@ function delGroup(obj){
 	 } 
 }
 
-function valid(){
-	var regs = new RegExp("[~'!@#$%^&*-+_=:]"); 
-    var columnInput = $('#columnInput').val();
-    if(regs.test(columnInput)){
-		alert("栏目名称可能包含%/等特殊字符，请修改重试。");
-		return false;
-    }
-	var reg = new RegExp("^[0-9]*$");
-    var obj = $('#uniqueCode').val();
-    if(!reg.test(obj)){
-		alert("验证码为数字类型!");
-		return false;
-    }
-}
-
+(function($){
+    $(document).ready(function(){
+        $(".submit").click(function() {
+        	var regs = new RegExp("[~'!@#$%^&*-+_=:]"); 
+            var columnInput = $('#columnInput').val();
+            if(regs.test(columnInput)){
+        		alert("栏目名称可能包含%/等特殊字符，请修改重试。");
+        		return false;
+            }else{
+        		var reg = new RegExp("^[0-9]*$");
+        		var uniqueCode = $('#uniqueCode').val();
+        	    if(!reg.test(uniqueCode)){
+        			alert("验证码为数字类型!");
+        			return false;
+        	    }else{
+        		    if(uniqueCode!=""){
+        		    	var obj = $(this);
+        		    	$.ajax({
+        		    		url:"${base}/blog/checkGroupCode.jspx?code="+uniqueCode,
+        		    		type:"POST",
+        		    		dataType:"json",
+        		    		data: "",
+        		    		success: function (data) {
+        		    			if(data.status==1){
+        		    				alert("验证码已存在!");
+        		    				return false;
+        		    			}else{
+        		    				obj.parents('form').submit(); //验证码正确提交表单
+     		                        return true;
+        		    			}
+        		            }
+        		    	});
+        		    	return false;
+        		     }
+        	    }
+            }
+        })
+    });
+})(jQuery);
 </script>

@@ -116,7 +116,7 @@ function enter(){
 			<div class="wrap-right ">
 				<div class="personCenter-userInfo blog_right">
 					<div class="tggl">
-						<form action="${base}/blog/updateColumn.jspx?id=${column.columnId}" id="newColumn" method="post" onsubmit="return valids()">
+						<form action="updateColumn.jspx?id=${column.columnId}" id="jvForm" method="post" >
 							<div >
 							<span style="font-size:16px;">栏目名:&nbsp;&nbsp;&nbsp;&nbsp;</span>
 							<input style="display: none;" id="twoState" name="twoState" value="${twoState}"/>
@@ -146,7 +146,7 @@ function enter(){
 							<span style="font-size:16px;">栏目序号:&nbsp;</span>
 							<input class="st"  type="text" name="updateOrderId" value="${column.orderId}"  style="margin:10px 0;width: 180px;height: 30px;" required="required" oninvalid="setCustomValidity('请输入栏目序号');" oninput="setCustomValidity('');" maxlength="60"/> 
 							</div>
-							<div style="margin: 20px 0"> <input type="submit" value="更新" class="sub2" /> </div>
+							<div style="margin: 20px 0"> <input type="submit" value="更新" class="submit" /> </div>
 						</form>
 					</div>
 
@@ -162,14 +162,50 @@ function enter(){
 </body>
 </html>
 <script type="text/javascript">
-function valids(){
-	var twoState=$("#twoState").val();
-	var uniqueCode=$("#uniqueCode").val();
-	if(twoState==1){
-		if(uniqueCode!=''){
-			alert("该操作不被允许!\r\n该栏目下已存在子栏目,不可作为群组!验证码不可填!");
-			return false;
-		}
-	}
-}
+(function($){
+    $(document).ready(function(){
+        $(".submit").click(function() {
+        	var regs = new RegExp("[~'!@#$%^&*-+_=:]"); 
+            var columnInput = $('#columnInput').val();
+            if(regs.test(columnInput)){
+        		alert("栏目名称可能包含%/等特殊字符，请修改重试。");
+        		return false;
+            }else{
+        		var reg = new RegExp("^[0-9]*$");
+        		var uniqueCode = $('#uniqueCode').val();
+        	    if(!reg.test(uniqueCode)){
+        			alert("验证码为数字类型!");
+        			return false;
+        	    }else{
+        	    	var twoState=$("#twoState").val();
+        			var uniqueCode=$("#uniqueCode").val();
+        			if(twoState==1&&uniqueCode!=''){
+        				alert("该操作不被允许!\r\n该栏目下已存在子栏目,不可作为群组!验证码不可填!");
+        				return false;
+        			}else{
+        				if(uniqueCode!=""){
+            		    	var obj = $(this);
+            		    	$.ajax({
+            		    		url:"${base}/blog/checkGroupCode.jspx?code="+uniqueCode,
+            		    		type:"POST",
+            		    		dataType:"json",
+            		    		data: "",
+            		    		success: function (data) {
+            		    			if(data.status==1){
+            		    				alert("验证码已存在!");
+            		    				return false;
+            		    			}else{
+            		    				obj.parents('form').submit(); //验证码正确提交表单
+         		                        return true;
+            		    			}
+            		            }
+            		    	});
+            		    	return false;
+            		     }
+        			}	
+        	    }
+            }
+        })
+    });
+})(jQuery);
 </script>

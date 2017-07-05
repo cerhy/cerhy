@@ -14,6 +14,20 @@ height:36px;
 width:36px;
 background:url(/${res}/images/sprite.png) no-repeat 0 -190px;
 } 
+.htmleaf-container .mtree .join a:hover{
+	background-color: #e7e7e7;
+}
+.submit{
+cursor: pointer;
+}
+.sts{
+transition: all 0.30s ease-in-out;
+border: 1px solid gray;
+}
+.sts:focus{
+border: 1px solid #66AACC;
+box-shadow: 0 0 5px #66AACC;
+outline: none;
 </style>
 <link rel="stylesheet" type="text/css" href="/${res}/css/normalize.css" />
 <link rel="stylesheet" type="text/css" href="/${res}/css/default.css">
@@ -94,35 +108,39 @@ background:url(/${res}/images/sprite.png) no-repeat 0 -190px;
 					        	[#list map[k] as v]
 						        	[#if user??]
 						        		[#if v?split('=')[2]??]
-		                                <li><a class="class1 box1" title="${v?split('=')[1]}&nbsp;${v?split('=')[2]}" id="${v?split('=')[0]}" href="${base}/blog/contribute_list.jspx?columnId=${v?split('=')[0]}" >[@text_cut s=v?split("=")[1] len='10' append='...'/]</a></li>
+		                                <li><a class="class1 box1" title="${v?split('=')[1]}&nbsp;${v?split('=')[2]}" id="${v?split('=')[0]}" href="${base}/blog/contribute_list.jspx?columnId=${v?split('=')[0]}" >${v?split("=")[1]}&nbsp;${v?split('=')[2]}</a></li>
 				                   		[#else]
-		                                <li><a class="class1 box1" title="${v?split('=')[1]}" id="${v?split('=')[0]}" href="${base}/blog/contribute_list.jspx?columnId=${v?split('=')[0]}" >[@text_cut s=v?split("=")[1] len='10' append='...'/]</a></li>
+		                                <li><a class="class1 box1" title="${v?split('=')[1]}" id="${v?split('=')[0]}" href="${base}/blog/contribute_list.jspx?columnId=${v?split('=')[0]}" >${v?split("=")[1]}</a></li>
 				                   		[/#if]
 				                    [/#if]
 						            [#if usert??]
 						            	[#if v?split('=')[2]??]
-				                	 	<li><a title="${v?split('=')[1]}&nbsp;${v?split('=')[2]}" href="${base}/blog/contribute_list.jspx?columnId=${v?split('=')[0]}&uid=${usert.id}" >[@text_cut s=v?split("=")[1] len='10' append='...'/]</a></li>
+				                	 	<li><a title="${v?split('=')[1]}&nbsp;${v?split('=')[2]}" href="${base}/blog/contribute_list.jspx?columnId=${v?split('=')[0]}&uid=${usert.id}" >${v?split("=")[1]}&nbsp;${v?split('=')[2]}</a></li>
 					           		 	[#else]
-				                	 	<li><a title="${v?split('=')[1]}" href="${base}/blog/contribute_list.jspx?columnId=${v?split('=')[0]}&uid=${usert.id}" >[@text_cut s=v?split("=")[1] len='10' append='...'/]</a></li>
+				                	 	<li><a title="${v?split('=')[1]}" href="${base}/blog/contribute_list.jspx?columnId=${v?split('=')[0]}&uid=${usert.id}" >${v?split("=")[1]}</a></li>
 					           		 	[/#if]
 					           		 [/#if]
 					        	[/#list]
 					        [#else]
-					        	<li><a class="class1 box1" title="${k?split('=')[1]}" id="${k?split('=')[0]}" href="javascript:;">${k?split("=")[1]}</a>
+								[#if user??]						        
+					        		<li><a class="class1 box1" title="${k?split('=')[1]}" id="${k?split('=')[0]}" href="javascript:;">${k?split("=")[1]}</a>
+					        	[#else]
+						        	<li><a title="${k?split('=')[1]}" id="${k?split('=')[0]}" href="javascript:;">${k?split("=")[1]}</a>
+					        	[/#if]
 					        	<ul>
 					        	[#list map[k] as v]
 						        	[#if user??]
 							        	[#if v?split('=')[2]??]
-			                                <li><a class="class1 box1" title="${v?split('=')[1]}&nbsp;${v?split('=')[2]}" id="${v?split('=')[0]}" href="${base}/blog/contribute_list.jspx?columnId=${v?split('=')[0]}">[@text_cut s=v?split("=")[1] len='10' append='...'/]</a></li>
+			                                <li><a class="class1 box1" title="${v?split('=')[1]}&nbsp;${v?split('=')[2]}" id="${v?split('=')[0]}" href="${base}/blog/contribute_list.jspx?columnId=${v?split('=')[0]}">${v?split("=")[1]}&nbsp;${v?split('=')[2]}</a></li>
 				                    	[#else]
-			                                <li><a class="class1 box1" title="${v?split('=')[1]}" id="${v?split('=')[0]}" href="${base}/blog/contribute_list.jspx?columnId=${v?split('=')[0]}">[@text_cut s=v?split("=")[1] len='10' append='...'/]</a></li>
+			                                <li><a class="class1 box1" title="${v?split('=')[1]}" id="${v?split('=')[0]}" href="${base}/blog/contribute_list.jspx?columnId=${v?split('=')[0]}">${v?split("=")[1]}</a></li>
 				                    	[/#if]
 				                    [/#if]
 						            [#if usert??]
 							            [#if v?split('=')[2]??]
-					                	 	<li><a title="${v?split('=')[1]}&nbsp;${v?split('=')[2]}" href="${base}/blog/contribute_list.jspx?columnId=${v?split('=')[0]}&uid=${usert.id}">[@text_cut s=v?split("=")[1] len='10' append='...'/]</a></li>
+					                	 	<li><a title="${v?split('=')[1]}&nbsp;${v?split('=')[2]}" href="${base}/blog/contribute_list.jspx?columnId=${v?split('=')[0]}&uid=${usert.id}">${v?split("=")[1]}&nbsp;${v?split('=')[2]}</a></li>
 					           		 	[#else]
-					                	 	<li><a title="${v?split('=')[1]}" href="${base}/blog/contribute_list.jspx?columnId=${v?split('=')[0]}&uid=${usert.id}">[@text_cut s=v?split("=")[1] len='10' append='...'/]</a></li>
+					                	 	<li><a title="${v?split('=')[1]}" href="${base}/blog/contribute_list.jspx?columnId=${v?split('=')[0]}&uid=${usert.id}">${v?split("=")[1]}</a></li>
 					           		 	[/#if]
 					           		 [/#if]
 					        	[/#list]
@@ -153,6 +171,7 @@ background:url(/${res}/images/sprite.png) no-repeat 0 -190px;
 		                    [/#if]
 		                    [/#list]
 	                        [/#if]
+	                        <li class="join"><a  href="javascript:;" style="color: #006400;" onclick="joinGroupByCode()">加入群组</a></li>
 	                        <br />
 					   </ul>
 					  </li>
@@ -234,9 +253,86 @@ background:url(/${res}/images/sprite.png) no-repeat 0 -190px;
 			</div> 
         	</div>
      </div>
+     <div id="joinGroups" style="display:none;margin-top:-5px;">
+		<ul style="padding-left: 10px;">
+			<li>请询问群组创建人获取群组账号与验证码。</li>
+		</ul>
+		<div style="display: block;line-height: 50px;padding-left: 10px;">
+			<span>群组账号:</span>
+			<input type="text" class="sts" style="height: 30px;" id="groupName" name="groupName">
+			<a style="color: #f00;" id="groupNameTip"></a>
+		</div>
+		<div style="display: block;line-height: 50px;padding-left: 10px;">
+			<span>验证码:&nbsp;&nbsp;&nbsp;</span>
+			<input type="text" class="sts" style="height: 30px;" id="groupCode" name="groupCode">
+			<a style="color: #f00;" id="groupCodeTip"></a>
+		</div>
+		<div><a style="color: #f00;padding-left: 10px;" id="errorTip"></a></div>
+		<div class="themeButton" style="margin:5px 0px 0px 30px;">
+			<input type="submit" value="确定" class="submit"  onclick="sJoinGroup();" style="margin:30px 20px 0 40px"/>
+	     	<button type="button" onclick="closeJoinGroup();" class="submit" style="margin:30px 40px 0 -5px;">取消</button>
+		</div>
+	  </div>
 <script src='/${res}/js/stopExecutionOnTimeout.js?t=1'></script>
 <script src='/${res}/js/jquery.velocity.min.js'></script>
 <script src='/${res}/js/class2context.js'></script>
+<script type="text/javascript">
+function joinGroupByCode(){
+	 $("#groupName").val("");
+	 $("#groupCode").val("");
+	 $("#groupNameTip").html("*");
+	 $("#groupCodeTip").html("*");
+	 $("#errorTip").html("");
+	 $("#joinGroups").dialog("open");
+}
+$(document).ready(function(){ 
+	$("#joinGroups").dialog({
+		autoOpen: false,
+		modal: false,
+		resizable :false,
+		stack : false,
+		draggable : true,
+		closeOnEscape : false,
+		open:function(event,ui){
+			$(".ui-dialog-titlebar-close").hide();
+			$(".ui-dialog-titlebar").css("background","#ffffff");  
+			$(".ui-widget-header").css("border","0");  
+		},
+		width: 300,
+		height: 260,
+		position: ["center"],
+		close: function(event, ui) {
+			
+		}
+	});
+}); 
+function closeJoinGroup(){
+	$("#joinGroups").dialog("close");
+}
+function sJoinGroup(){
+	var groupName=$("#groupName").val();
+	if(groupName==""){
+		$("#groupNameTip").html("必填!");
+		return false;
+	}else{
+		$("#groupNameTip").html("*");
+		
+	}
+	var groupCode=$("#groupCode").val();
+	if(groupCode==""){
+		$("#groupCodeTip").html("必填!");
+		return false;
+	}else{
+		$("#groupCodeTip").html("*");
+	}
+	
+		//$("#errorTip").html("好好!");
+		
+	
+	
+	
+}
+</script>
 <script>
 	;(function ($, window, document, undefined) {
 	    if ($('ul.mtree').length) {
@@ -423,6 +519,7 @@ background:url(/${res}/images/sprite.png) no-repeat 0 -190px;
         	            				if(result.status=="false"){
         	            					alert("删除失败！请先删除本栏目下的文章！");	
         	            				}else{
+        	            					var isDel="确定删除吗?";
         	            					if(confirm(isDel)==true){
         	            						location.href="${base}/blog/deleteColumn.jspx?columnId="+id;
         	            						alert("删除成功!");

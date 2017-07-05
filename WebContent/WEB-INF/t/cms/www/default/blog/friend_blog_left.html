@@ -62,9 +62,9 @@
 					        [#if k=='']
 					        	[#list map[k] as v]
 					        	[#if v?split('=')[2]??]
-					        		<li><a  title="${v?split('=')[1]}&nbsp;${v?split('=')[2]}" href="${base}/blog/contribute_list_friend.jspx?columnId=${v?split('=')[0]}&user_ids=${userIds}">[@text_cut s=v?split("=")[1] len='10' append='...'/]</a></li>
+					        		<li><a  title="${v?split('=')[1]}&nbsp;${v?split('=')[2]}" href="${base}/blog/contribute_list_friend.jspx?columnId=${v?split('=')[0]}&user_ids=${userIds}">${v?split("=")[1]}&nbsp;${v?split('=')[2]}</a></li>
 					        	[#else]
-					        		<li><a title="${v?split('=')[1]}" href="${base}/blog/contribute_list_friend.jspx?columnId=${v?split('=')[0]}&user_ids=${userIds}">[@text_cut s=v?split("=")[1] len='10' append='...'/]</a></li>
+					        		<li><a title="${v?split('=')[1]}" href="${base}/blog/contribute_list_friend.jspx?columnId=${v?split('=')[0]}&user_ids=${userIds}">${v?split("=")[1]}</a></li>
 					        	[/#if]
 					        	[/#list]
 					        [#else]
@@ -72,9 +72,9 @@
 					        	<ul>
 					        	[#list map[k] as v]
 					        		[#if v?split('=')[2]??]
-					        			<li><a  title="${v?split('=')[1]}&nbsp;${v?split('=')[2]}" href="${base}/blog/contribute_list_friend.jspx?columnId=${v?split('=')[0]}&user_ids=${userIds}">[@text_cut s=v?split("=")[1] len='10' append='...'/]</a></li>
+					        			<li><a  title="${v?split('=')[1]}&nbsp;${v?split('=')[2]}" href="${base}/blog/contribute_list_friend.jspx?columnId=${v?split('=')[0]}&user_ids=${userIds}">${v?split("=")[1]}&nbsp;${v?split('=')[2]}</a></li>
 					        		[#else]
-					        			<li><a title="${v?split('=')[1]}" href="${base}/blog/contribute_list_friend.jspx?columnId=${v?split('=')[0]}&user_ids=${userIds}">[@text_cut s=v?split("=")[1] len='10' append='...'/]</a></li>
+					        			<li><a title="${v?split('=')[1]}" href="${base}/blog/contribute_list_friend.jspx?columnId=${v?split('=')[0]}&user_ids=${userIds}">${v?split("=")[1]}</a></li>
 					        		[/#if]
 					        	[/#list]
 					        	 </ul>
