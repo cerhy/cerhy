@@ -48,7 +48,7 @@ public class BlogCommon {
 					if(null!=twoList&&twoList.size()>0){
 						for(int j=0;j<twoList.size();j++){
 							if(null!=twoList.get(j).getUniqueCode()){
-								lists.add(twoList.get(j).getColumnId()+"="+twoList.get(j).getColumnName()+"=验证码:"+twoList.get(j).getUniqueCode());
+								lists.add(twoList.get(j).getColumnId()+"="+twoList.get(j).getColumnName()+"=(验证码:"+twoList.get(j).getUniqueCode()+")");
 							}else{
 								lists.add(twoList.get(j).getColumnId()+"="+twoList.get(j).getColumnName());
 							}
@@ -56,7 +56,7 @@ public class BlogCommon {
 						keyName=columnsList.get(i).getColumnId()+"="+columnsList.get(i).getColumnName();
 					}else{
 						if(null!=columnsList.get(i).getUniqueCode()){
-							lists.add(columnsList.get(i).getColumnId()+"="+columnsList.get(i).getColumnName()+"=验证码:"+columnsList.get(i).getUniqueCode());
+							lists.add(columnsList.get(i).getColumnId()+"="+columnsList.get(i).getColumnName()+"=(验证码:"+columnsList.get(i).getUniqueCode()+")");
 						}else{
 							lists.add(columnsList.get(i).getColumnId()+"="+columnsList.get(i).getColumnName());
 						}
