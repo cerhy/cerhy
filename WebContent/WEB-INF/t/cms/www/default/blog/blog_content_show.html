@@ -136,6 +136,7 @@ table th,table td{word-break:break-all;white-space:normal;overflow:hidden;}
 	text-indent:2em;
 }
 </style>
+<div id="contextMenus"></div>
 <div class="blogBody">
 <div class="blog-con">
   <div class="blogHead">
@@ -153,6 +154,7 @@ table th,table td{word-break:break-all;white-space:normal;overflow:hidden;}
 	  最后登录:${usert.lastLoginTime?string('yyyy-MM-dd HH:mm:ss')}&nbsp;&nbsp;
 	  [/#if]
   </div>
+  [#include "blog_operation.html"/]
    <div class="mb20 clearfix">
 			<input style="display: none;" id="no" value="">
 			<input style="display: none;" id="no1" value="">

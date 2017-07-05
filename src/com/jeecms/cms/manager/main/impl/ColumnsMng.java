@@ -73,7 +73,17 @@ public class ColumnsMng {
 	
 	@Autowired
 	private ColumnsDao columnsDao;
-	
 
+	public Columns findById(Integer parentId) {
+		return columnsDao.findById(parentId);
+	}
+
+	public List<Columns> getOneColumnsByUserId(Integer id) {
+		return columnsDao.getOneColumnsByUserId(id);
+	}
+
+	public List<Columns> findTwoByParentId(Integer columnId) {
+		return columnsDao.findTwoByParentId(columnId);
+	}
 
 }

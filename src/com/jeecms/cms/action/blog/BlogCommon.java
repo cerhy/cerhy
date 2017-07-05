@@ -33,10 +33,39 @@ import com.jeecms.core.manager.CmsUserMng;
 
 public class BlogCommon {
 	Logger log = (Logger) Logger.getInstance(BlogCommon.class) ;
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public ModelMap getColumn(HttpServletRequest request,ModelMap model,CmsUser user){
 		if(user!=null){
-			List<Columns> columnsList = columnsMng.getColumnsByUserId(user.getId());
-			model.addAttribute("columnsList", columnsList);
+			List<Columns> columnsList = columnsMng.getOneColumnsByUserId(user.getId());
+			List listc=null;
+			if(null!=columnsList&&columnsList.size()>0){
+				listc=new ArrayList();
+				for(int i=0;i<columnsList.size();i++){
+					Map<String,Object> map=new HashMap<String,Object>();
+					List<Columns> twoList=columnsMng.findTwoByParentId(columnsList.get(i).getColumnId());
+					List lists=new ArrayList();
+					String keyName="";
+					if(null!=twoList&&twoList.size()>0){
+						for(int j=0;j<twoList.size();j++){
+							if(null!=twoList.get(j).getUniqueCode()){
+								lists.add(twoList.get(j).getColumnId()+"="+twoList.get(j).getColumnName()+"=验证码:"+twoList.get(j).getUniqueCode());
+							}else{
+								lists.add(twoList.get(j).getColumnId()+"="+twoList.get(j).getColumnName());
+							}
+						}
+						keyName=columnsList.get(i).getColumnId()+"="+columnsList.get(i).getColumnName();
+					}else{
+						if(null!=columnsList.get(i).getUniqueCode()){
+							lists.add(columnsList.get(i).getColumnId()+"="+columnsList.get(i).getColumnName()+"=验证码:"+columnsList.get(i).getUniqueCode());
+						}else{
+							lists.add(columnsList.get(i).getColumnId()+"="+columnsList.get(i).getColumnName());
+						}
+					}
+					map.put(keyName,lists);
+					listc.add(map);
+				}
+			}
+			model.addAttribute("columnsList", listc);
 		}else{
 			return model.addAttribute("columnsList", null);
 		}
@@ -192,7 +221,7 @@ public class BlogCommon {
 		}else{
 			model.addAttribute("friends", "");
 		}
-		model.addAttribute("pagination", p);
+		model.addAttribute("paginations", p);
 		return model;
 	}
 	

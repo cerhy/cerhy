@@ -16,4 +16,5 @@ public class ContentSend extends BaseContentSend {
 		super(id, sendTime, contentId, sendUserId, recieveUserId,columnId);
 	}
 
+	
 }

@@ -9,7 +9,8 @@ public class Columns {
 	private String uniqueCode;
 	private Integer type ;
 	
-	
+	private Integer columsLevel ;
+	private com.jeecms.cms.entity.main.Columns parentId; 
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
@@ -52,6 +53,34 @@ public class Columns {
 		this.orderId = orderId;
 		this.uniqueCode=uniqueCode;
 		this.type = type;
+	}
+	public Columns(Integer userId, String columnName, Integer orderId,String uniqueCode,Integer type,Integer columsLevel,com.jeecms.cms.entity.main.Columns parentId) {
+		this.userId = userId;
+		this.columnName = columnName;
+		this.orderId = orderId;
+		this.uniqueCode=uniqueCode;
+		this.type = type;
+		this.columsLevel=columsLevel;
+		this.parentId=parentId;
+	}
+	public Columns(Integer columnId,Integer userId, String columnName, Integer orderId,String uniqueCode,Integer type,Integer columsLevel,com.jeecms.cms.entity.main.Columns parentId) {
+		this.columnId=columnId;
+		this.userId = userId;
+		this.columnName = columnName;
+		this.orderId = orderId;
+		this.uniqueCode=uniqueCode;
+		this.type = type;
+		this.columsLevel=columsLevel;
+		this.parentId=parentId;
+	}
+	public Columns(Integer columnId,Integer userId, String columnName, Integer orderId,String uniqueCode,Integer type,Integer columsLevel) {
+		this.columnId=columnId;
+		this.userId = userId;
+		this.columnName = columnName;
+		this.orderId = orderId;
+		this.uniqueCode=uniqueCode;
+		this.type = type;
+		this.columsLevel=columsLevel;
 	}
 
 	public Integer getColumnId() {
@@ -100,6 +129,22 @@ public class Columns {
 
 	public void setType(Integer type) {
 		this.type = type;
+	}
+
+	public Integer getColumsLevel() {
+		return columsLevel;
+	}
+
+	public void setColumsLevel(Integer columsLevel) {
+		this.columsLevel = columsLevel;
+	}
+
+	public com.jeecms.cms.entity.main.Columns getParentId() {
+		return parentId;
+	}
+
+	public void setParentId(com.jeecms.cms.entity.main.Columns parentId) {
+		this.parentId = parentId;
 	}
 	
 	

@@ -10,6 +10,8 @@
 		<property name="orderId" column="order_id" type="integer" not-null="true" length="11"/>
 		<property name="uniqueCode" column="unique_code" type="string" not-null="false"  length="20"/>
 		<property name="type" column="type" type="integer" not-null="false"	length="2" />
+		<property name="columsLevel" column="columsLevel" type="integer" not-null="false"	length="2" />
+		<many-to-one name="parentId" column="parentId" class="com.jeecms.cms.entity.main.Columns" not-null="false" cascade="all"></many-to-one>
 	</class>
 </hibernate-mapping>
 

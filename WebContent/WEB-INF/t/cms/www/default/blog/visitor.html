@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-<title>好研网-好友管理</title>
+<title>好研网</title>
 <link href="${resSys}/front.css" rel="stylesheet" type="text/css"/>
 <script src="${resSys}/jquery.js" type="text/javascript"></script>
 <script src="${resSys}/front.js" type="text/javascript"></script>
@@ -50,6 +50,7 @@ $('.user-menu-links li').click(function(){
 });
 });
 </script>
+<div id="contextMenus"></div>
 [#include "head.html"/]
 <div class="blogBody">
 <div class="blog-con">
@@ -70,6 +71,7 @@ $('.user-menu-links li').click(function(){
 	  [/#if]
 	  </div>
       </div>
+      [#include "blog_operation.html"/]
         <div class="mb20 clearfix">
             [#include "blog_left.html"/]
             <div class="wrap-right">

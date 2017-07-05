@@ -23,6 +23,7 @@ public abstract class BaseContentSend implements Serializable {
 	public java.lang.Integer getId() {
 		return id;
 	}
+	
 
 	public void setId(java.lang.Integer id) {
 		this.id = id;

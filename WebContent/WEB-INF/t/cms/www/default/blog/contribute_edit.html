@@ -179,6 +179,7 @@ $(function(){
 </script>
 </head>
 <body>
+<div id="contextMenus"></div>
 [#include "head.html"/]
 <div class="blogBody">
 <div class="blog-con">
@@ -190,6 +191,7 @@ $(function(){
       	<div class="tj">
      	 	文章数:${articleCount}&nbsp;&nbsp;评论:${commentCount}&nbsp;&nbsp;访问:${user.blogVisitNum!'0'}&nbsp;&nbsp;最后登录:${user.lastLoginTime?string('yyyy-MM-dd HH:mm:ss')}
       	</div>
+      	[#include "blog_operation.html"/]
    <div class="mb20 clearfix">
             [#include "blog_left.html"/]
             
@@ -280,36 +282,24 @@ $(function(){
 				             [/#if]
 				             [/#list]
 				      [/#if]
-	                [#if columnsList?size gt 0]
-	                <option value="" class="sel-disabled">栏目</option>
-	                [#list columnsList as c]
-	                	[#if c.uniqueCode??]
-                        [#else]
-	                    	[#if content.columnId??]
-	                    	<option value="${c.columnId}&colu"[#if content.columnId==c.columnId]selected="selected"[/#if]>${c.columnName}</option>
-	                		[#else]
-	                    	<option value="${c.columnId}&colu">${c.columnName}</option>
-	                		[/#if]
-	                    [/#if]
-	                [/#list]
-	                [/#if]
-	                [#if columnsList?size gt 0]
-	                	<option value="" class="sel-disabled">群组</option>
-	                [#list columnsList as c]
-	                	[#if c.uniqueCode??]
-	                    	[#if content.columnId??]
-		                    <option value="${c.columnId}&colu"[#if content.columnId==c.columnId]selected="selected"[/#if]>${c.columnName}</option>
-		                	[#else]
-		                    <option value="${c.columnId}&colu">${c.columnName}</option>
-		                	[/#if]
-	                    [/#if]
-	                [/#list]
-	                [/#if]
+	                [#if columnsList??]
+			        [#list columnsList as map]
+			        [#list map?keys as k]
+			        [#if k=='']
+			        	[#list map[k] as v]
+				        	<option value="${v?split("=")[0]}&colu" [#if v?split("=")[0]?number=content.columnId]selected="selected"[/#if]>${v?split("=")[1]}</option>
+			        	[/#list]
+			        [#else]
+			        	<option value="" class="sel-disabled">${k?split("=")[1]}</option>
+			        	[#list map[k] as v]
+				        	<option value="${v?split("=")[0]}&colu" [#if v?split("=")[0]?number=content.columnId]selected="selected"[/#if]>&nbsp;&nbsp;>${v?split("=")[1]}</option>
+			        	[/#list]
+			        [/#if]	
+			        [/#list]
+			        [/#list]
+		            [/#if]
 	                [#if joinGroupList?size gt 0]
-		                [#if columnsList?size gt 0]
-		                [#else]
 		                <option value="" class="sel-disabled">群组</option>
-		                [/#if]
                         [#list joinGroupList as j]
                          [#if content.columnId??]
                          <option value="${j.columnsId.columnId}&colu"[#if content.columnId==j.columnsId.columnId]selected="selected"[/#if]>${j.columnsId.columnName}</option>

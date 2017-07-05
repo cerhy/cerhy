@@ -31,3 +31,9 @@ body, button, input, select, textarea {background: transparent;}
 #_goPs{
 	background: transparent;
 }
+.htmleaf-container .mtree-demo .mtree {
+  background: #AA9069;
+  margin: 20px auto;
+  max-width: 320px;
+  border-radius: 3px;
+}	
