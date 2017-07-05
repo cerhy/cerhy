@@ -1456,15 +1456,60 @@ public class ContributeAct extends AbstractContentMemberAct {
 	 * 发送文章 
 	 */
 	@RequestMapping(value = "/blog/sendArticle.jspx", method = RequestMethod.POST)
-	public void sendArticle(String contentId,String sendee, String validateCode,
+	public @ResponseBody String sendArticle(Integer contentId,String sendee, Integer validateCode,
 			HttpServletRequest request, HttpServletResponse response,
 			ModelMap model){
-		@SuppressWarnings("unused")
-		String[] paths = URLHelper.getPaths(request);
-		CmsSite site = CmsUtils.getSite(request);
+		
+		JSONObject object = new JSONObject();
+		try {
+			
 		CmsUser user = CmsUtils.getUser(request);
-		cmsUserMng.sendArticle(user.getId(),site,user);
-		System.out.println("d");
+		int result =cmsUserMng.sendArticle(contentId,user.getId(),sendee,validateCode);
+		if(result==1){
+			object.put("code", "fail");
+			object.put("msg", "1");//发件人错误
+		}else if(result==2){
+			object.put("code", "fail");
+			object.put("msg", "2");//发件人错误
+		}else{
+			object.put("code", "success");
+			object.put("msg", "发送成功！");
+		}
+		}catch (Exception e){
+			try {
+				object.put("code", "fail");
+				log.error(e.getMessage(),e);
+			} catch (JSONException e1) {
+				log.error(e.getMessage(),e);
+			}
+			log.error(e.getMessage(),e);
+		}
+		return object.toString();
 	}
 	
+	/**
+	 * 撤销文章 
+	 */
+	@RequestMapping(value = "/blog/cancelArticle.jspx", method = RequestMethod.POST)
+	public @ResponseBody String cancelArticle(Integer contentId,
+			HttpServletRequest request, HttpServletResponse response,
+			ModelMap model){
+		
+		JSONObject object = new JSONObject();
+		try {
+			
+		CmsUser user = CmsUtils.getUser(request);
+		Integer result =cmsUserMng.cancelArticle(contentId, user.getId());
+		
+		object.put("code", "success");
+		}catch (Exception e){
+			try {
+				object.put("code", "fail");
+			} catch (JSONException e1) {
+				log.error(e.getMessage(),e);
+			}
+			log.error(e.getMessage(),e);
+		}
+		return object.toString();
+	}
 }

@@ -12,10 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-
-
-
+import com.jeecms.cms.dao.main.ContentDao;
 import com.jeecms.cms.entity.main.Channel;
+import com.jeecms.cms.entity.main.ContentSend;
 import com.jeecms.cms.manager.main.ChannelMng;
 import com.jeecms.cms.manager.main.ContentMng;
 import com.jeecms.common.email.EmailSender;
@@ -47,7 +46,11 @@ public class CmsUserMngImpl implements CmsUserMng {
 	public CmsUser updateBlog(CmsUser user){
 		return dao.updateBlog(user);
 	}
-	
+	private ContentDao contentDao;
+	@Autowired
+	public void setContentDao(ContentDao contentDao) {
+		this.contentDao = contentDao;
+	}
 	@Transactional(readOnly = true)
 	public Pagination getPage(String username, String email, Integer siteId,
 			Integer groupId, Boolean disabled, Boolean admin, Integer rank,
@@ -497,4 +500,42 @@ public class CmsUserMngImpl implements CmsUserMng {
 		
 	}
 
+	@Override
+	public int sendArticle(Integer contentId,Integer userId,String sendee,Integer validateCode) {
+		int result  =0;
+		//接收人id
+		Integer recieveUserId = contentDao.getUserId(sendee);
+		if(recieveUserId==null){
+			result=1;
+		}else{
+			String uniqueCode = contentDao.getUniqueCode(recieveUserId,validateCode);
+			if("".equals(uniqueCode) || uniqueCode==null){
+				result=2;
+			}else{
+				ContentSend send = new ContentSend();
+				//内容id
+				send.setContentId(contentId);
+				//发送人id
+				send.setSendUserId(userId);
+				//接收人
+				send.setRecieveUserId(recieveUserId);
+				send.setSendTime(new Date());
+				//栏目id
+				send.setColumnId(validateCode);
+				contentDao.saveContentSend(send);
+			}
+			
+		}
+		return result;
+	}
+
+	/**
+	 * 撤销文章
+	 * @param contentId
+	 * @param userId
+	 * @return int
+	 */
+	public Integer cancelArticle(Integer contentId,Integer userId){
+		return contentDao.deleteContentSend(contentId, userId);
+	}
 }

@@ -56,6 +56,16 @@ public abstract class HibernateSimpleDao {
 	}
 
 	/**
+	 * 通过HQL删除对象
+	 */
+	protected Integer deleteObject(String hql) {
+		Query query = getSession().createQuery(hql);
+		int ret=query.executeUpdate(); 
+		return ret;
+	}
+
+	
+	/**
 	 * 通过Finder获得分页数据
 	 * 
 	 * @param finder

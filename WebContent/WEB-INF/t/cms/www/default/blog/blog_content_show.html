@@ -173,7 +173,7 @@ table th,table td{word-break:break-all;white-space:normal;overflow:hidden;}
                 <div ><h2>${content.title}</h2></div>
                 <input type="text" style="display:none" id="hipw" value="${content.password!}" />
                 <div class="gray9 h2dt pt5" style="margin-bottom: 2px;">
-				    <span class="pr15">发布时间：${content.releaseDate}</span>
+				    <span class="pr15">发布时d间：${content.releaseDate}</span>
 					<span class="pr15">
 					   <a target="_blank" href="${base}/blog/find_all_url_friend.jspx?userIds=${content.user.id}" class="bz">作者：${content.author!content.user.username}</a>
 					 </span>
@@ -184,6 +184,11 @@ table th,table td{word-break:break-all;white-space:normal;overflow:hidden;}
 					 <span class="pr15 pinglun">评论：${content.commentsCheckedNum!} </span>
 				     <span id="comfirmSpan" style="display:none;cursor: pointer;">转载</span>
 				     <span id="cancelSpan" style="display:none; cursor: pointer;">取消转载</span>&nbsp;
+				     [#if user??] 
+						<span id="cancelSpan"  class="pos"><a href="javascript:void(0);" onclick="send();">发送</a></span>&nbsp;
+						<span id="cancelSpan"  class="pos"><a href="javascript:void(0);" onclick="cancel();">撤销</a></span>&nbsp;
+					 [/#if] 
+				     
 					 <span class="content-share">分享
 						 [#include "../content/inc_share.html"/]
 					 </span>&nbsp;
@@ -214,7 +219,7 @@ table th,table td{word-break:break-all;white-space:normal;overflow:hidden;}
 	        		 [/#if]
 	        		 <span class="pr15" title="打印" id="btnPrints" onclick="btnPrints()"><img id="btnPrint" style="width: 23px;height: 23px;margin: -4px 0;cursor: pointer;" src="/${res}/images/printer.png" class="backto" /></span>
 				</div>
-				<div class="xueke-content-detail"  style="margin-top:30px;min-height:170px;"  id="addAttr">
+				<div class="xueke-content-detail"  style="margin-top:30px;min-height:170px;text-indent:2em;"  id="addAttr">
 					[#if preview??] [@text_cut s=txt! len=100 append="..."/]<br />
 					您需要更高的权限浏览全部内容!<br />以下会员组可浏览全部内容: [#list groups as g]
 					${g.name!}[#if g_has_next],[/#if] [/#list] [#else] ${txt!} [/#if]
@@ -266,11 +271,6 @@ table th,table td{word-break:break-all;white-space:normal;overflow:hidden;}
 					 
 					<!-- 分页 -->
 					<div class="pagebar">[#include "../style_page/content.html"/]</div>
-					<br />
-					<br />
-					<br />
-					<br />
-					<br />
 					<div class="inter clearfix"> 
 				      [#if channel.allowUpdown]
 				      <div class="downs" title="踩" ><a onclick="Cms.down('${base}',${content.id},${content.downs});"><span id="downs"></span></a></div>
@@ -368,6 +368,35 @@ table th,table td{word-break:break-all;white-space:normal;overflow:hidden;}
   </div>
  </div>
 </div>
+<div id="sentDialog" style="display:none;">	
+      		<form id="sentFrom" class="sentFrom" action="${base}/blog/sendArticle.jspx" method="post">
+      			<table width="100%" class="pn-ftable" cellpadding="2" cellspacing="1" border="0">
+      				<tbody>
+      					<tr >
+      					<td >
+      						<span >收件人:&nbsp;&nbsp;</span><input type="text" id="sendee" name="sendee" ></input>
+      						<span style="color:red" id="sendeeSapn"></span>
+      					</td>
+      					</tr>
+      					<tr>
+      					<td>
+      						<span>验证码:&nbsp;&nbsp;</span><input type="text" id="validateCode" name="validateCode" style="margin-top:10px;"></input>
+      						<span style="color:red" id="validateCodeSapn"></span>
+      					</td>
+      					</tr>
+      				</tbody>
+      			</table>      	
+      			<div class="themeButton">	
+      			<input type="hidden" name="contentId" id="contentId" value="${content.id}"/>
+   <!--    			<input type="submit" value="确定" class="submit"  style="margin:30px 40px 0 0px"/>
+	        	<button type="button" onclick="closeSendDialog();" class="submit" style="margin:30px 40px 0 10px">取消</button> -->
+	        	</div>
+      		</form>
+      </div>
+      
+      <div id="cancelDialog" style="display:none;">	
+      		<p>要把本文从所有群组中撤回吗？(移除后需重新发送)</p>
+      </div>
 [#if user??] 
 [#include "model.html"]
 [#else]
@@ -893,6 +922,117 @@ Drag.prototype = {
 	         }
 	     }); 
 	});
+	
+	skinChange(${user.theme!0});
+	function skinChange(n){
+		document.all.MrJin.href="/${res}/css/skin/"+n+".css"; 
+	}
+	$("#sentDialog").dialog({
+		autoOpen: false,
+		modal: false,
+		resizable :false,
+		stack : false,
+		draggable : true,
+		closeOnEscape : false,
+		width: 300,
+		height: 200,
+		position: ["center",80],
+		
+		close: function(event, ui) {
+			skinChange(${user.theme!0});
+		},
+	    buttons: {
+            "确定": function () {
+            	$("#sendeeSapn").html("");
+            	$("#validateCodeSapn").html("");
+            	var sendee=$("#sendee").val();
+            	var validateCode=$("#validateCode").val();
+            	if(sendee==null || sendee==""){
+            		$("#sendeeSapn").html("必填！");
+            		return;
+            	}
+            	if(validateCode==null || validateCode==""){
+            		$("#validateCodeSapn").html("必填！");
+            		return;
+            	}
+            	if(isNaN(validateCode)){
+            		$("#validateCodeSapn").html("输数字！");
+            		return;
+            	}
+            	 $.ajax({
+ 	                type: 'POST',
+ 	                url : ' ${base}/blog/sendArticle.jspx',
+ 	                dataType : 'json',
+ 	                data : {'contentId' : $("#contentId").val(),'sendee':sendee,'validateCode':validateCode},
+ 	                success : function(datas){
+ 	                	 var code =datas.code;
+ 	                	 if(code=="fail"){
+ 	                		 msg = datas.msg;
+ 	                		 if(msg==1){
+ 	                			alert("您输入的发件人有误！");
+ 	                		 }else if(msg==2){
+ 	                			alert("您输入的验证码有误！");
+ 	                		 }else{
+ 	                			alert("发送失败！");
+ 	                			$("#sentDialog").dialog("close");
+ 	                		 }
+ 	                		
+ 	                	 }else{
+ 	                		alert("发送成功！");
+ 	                		$("#sentDialog").dialog("close");
+ 	                	 }
+            	   	 }
+           			 });
+            	 
+            },
+            "取消": function () {
+                $(this).dialog("close");
+            }
+        },
+	});	  
+	
+	function send(){
+		$("#sentDialog").dialog("open");
+	}
+	function cancel(){
+		 $("#cancelDialog").dialog({  
+             resizable: false,  
+             width: 300,
+     		 height: 200, 
+             modal: true, 
+             position: ["center",80],
+             buttons: {  
+                 "确定": function () {  
+                	 
+                	 $.ajax({
+      	                type: 'POST',
+      	                url : ' ${base}/blog/cancelArticle.jspx',
+      	                dataType : 'json',
+      	                data : {'contentId' : $("#contentId").val()},
+      	                success : function(datas){
+      	                	 var code =datas.code;
+      	                	 if(code=="fail"){
+      	                		alert("撤销失败！");
+      	                		$("#sentDialog").dialog("close");
+      	                		
+      	                	 }else{
+      	                		alert("撤销成功！");
+      	                		$("#sentDialog").dialog("close");
+      	                	 }
+                 	   	 }
+                			 });
+                     $(this).dialog("close");  
+                 },  
+                 "取消": function () {  
+                     $(this).dialog("close");  
+                 }  
+             }  
+         });  
+	}
+	function closeSendDialog(){
+		$("#sentDialog").dialog("close");
+		skinChange(${user.theme!0});
+	}
 </script>
 <script type="text/javascript">
 
@@ -942,4 +1082,6 @@ function okps(){
 			} 
 	    },1);
 }
+
+
 </script>

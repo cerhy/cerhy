@@ -90,5 +90,23 @@ public interface CmsUserMng {
 			String password, String ip, Integer groupId, boolean disabled,
 			CmsUserExt userExt,Map<String,String>attr, Boolean activation ,
 			EmailSender sender, MessageTemplate msgTpl)throws UnsupportedEncodingException, MessagingException ;
+	
+	/**
+	 * 发送文章
+	 * @param contentId
+	 * @param userId
+	 * @param sendee
+	 * @param validateCode
+	 * @return int
+	 */
+	public int sendArticle(Integer contentId,Integer userId,String sendee,Integer validateCode);
+	
+	/**
+	 * 撤销文章
+	 * @param contentId
+	 * @param userId
+	 * @return int
+	 */
+	public Integer cancelArticle(Integer contentId,Integer userId);
 
 }

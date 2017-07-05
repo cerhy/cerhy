@@ -38,6 +38,7 @@ import com.jeecms.cms.entity.main.Content;
 import com.jeecms.cms.entity.main.Content.ContentStatus;
 import com.jeecms.cms.entity.main.ContentCheck;
 import com.jeecms.cms.entity.main.ContentDoc;
+import com.jeecms.cms.entity.main.ContentSend;
 import com.jeecms.cms.service.ContentQueryFreshTimeCache;
 import com.jeecms.common.hibernate4.Finder;
 import com.jeecms.common.hibernate4.HibernateBaseDao;
@@ -1409,5 +1410,46 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 		f.setParam("userId", user.getId());
 		return find(f);
 	}
-
+	
+	@Override
+	public ContentSend saveContentSend(ContentSend bean) {
+		getSession().save(bean);
+		return bean;
+	}
+	
+	/**
+	 * 根据用户帐号查询用户id
+	 * @param userName 用户帐号
+	 * @return Integer
+	 */
+	@Override
+	public Integer getUserId(String userName){
+		String hql = "select  id from CmsUser bean where bean.username='"+userName+"'";
+		return (Integer) findUnique(hql);
+	}
+	
+	/**
+	 * 根据用id查询栏目的验证码
+	 * @param userId 用户帐号
+	 * @param validaCode 验证码
+	 * @return String
+	 */
+	@Override
+	public String getUniqueCode(int userId,int validaCode){
+		String hql = "select  uniqueCode from Columns bean where bean.userId="+userId+" and bean.uniqueCode="+validaCode+"";
+		return (String) findUnique(hql);
+	}
+	
+	/**
+	 * 撤销用户发送的文章
+	 * @param contentId
+	 * @param userId
+	 * @return int
+	 */
+	public Integer deleteContentSend(int contentId,int userId){
+		
+		
+		String hql = "delete   from ContentSend  where contentId="+contentId+" and sendUserId="+userId+"";
+		return (Integer) deleteObject(hql);
+	}
 }

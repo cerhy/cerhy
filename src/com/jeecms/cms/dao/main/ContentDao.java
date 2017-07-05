@@ -9,6 +9,7 @@ import com.jeecms.cms.entity.assist.CmsComment;
 import com.jeecms.cms.entity.assist.CmsJoinGroup;
 import com.jeecms.cms.entity.main.Content;
 import com.jeecms.cms.entity.main.Content.ContentStatus;
+import com.jeecms.cms.entity.main.ContentSend;
 import com.jeecms.common.hibernate4.Updater;
 import com.jeecms.common.page.Pagination;
 import com.jeecms.core.entity.CmsUser;
@@ -273,5 +274,30 @@ public interface ContentDao {
 	public Pagination getPage_visitor(int i, int pageNo, int pageSize, CmsUser user);
 
 	public List<CmsJoinGroup> getAlreadyJoinGroup(CmsUser user);
-
+	
+	public ContentSend saveContentSend(ContentSend bean);
+	
+	/**
+	 * 根据用户帐号查询用户id
+	 * @param userName 用户帐号
+	 * @return Integer
+	 */
+	public Integer getUserId(String userName);
+	
+	/**
+	 * 根据用id查询栏目的验证码
+	 * @param userId 用户帐号
+	 * @param validaCode 验证码
+	 * @return String
+	 */
+	public String getUniqueCode(int userId,int validaCode);
+	
+	/**
+	 * 撤销用户发送的文章
+	 * @param contentId
+	 * @param userId
+	 * @return int
+	 */
+	public Integer deleteContentSend(int contentId,int userId);
+		
 }
