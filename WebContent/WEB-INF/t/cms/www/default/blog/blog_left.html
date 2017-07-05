@@ -164,10 +164,10 @@ outline: none;
 					        [#if joinGroupList?size gt 0]
                             [#list joinGroupList as j]
 		                    [#if user??]
-		                    <li><a href="${base}/blog/contribute_list.jspx?columnId=${j.columnsId.columnId}&joinGroupStata=0" title="${j.columnsId.columnName}" ><em></em>[@text_cut s=j.columnsId.columnName len=9 append='...'/]</a></li>
+		                    <li><a href="${base}/blog/contribute_list.jspx?columnId=${j.columnsId.columnId}&joinGroupStata=0" title="${j.columnsId.columnName}" >${j.columnsId.columnName}</a></li>
 		                    [/#if]
 		                    [#if usert??]
-		                    <li><a href="${base}/blog/contribute_list.jspx?columnId=${j.columnsId.columnId}&joinGroupStata=0&uid=${usert.id}" title="${j.columnsId.columnName}" ><em></em>[@text_cut s=j.columnsId.columnName len=9 append='...'/]</a></li>
+		                    <li><a href="${base}/blog/contribute_list.jspx?columnId=${j.columnsId.columnId}&joinGroupStata=0&uid=${usert.id}" title="${j.columnsId.columnName}" >${j.columnsId.columnName}</a></li>
 		                    [/#if]
 		                    [/#list]
 	                        [/#if]
@@ -316,7 +316,6 @@ function sJoinGroup(){
 		return false;
 	}else{
 		$("#groupNameTip").html("*");
-		
 	}
 	var groupCode=$("#groupCode").val();
 	if(groupCode==""){
@@ -325,12 +324,50 @@ function sJoinGroup(){
 	}else{
 		$("#groupCodeTip").html("*");
 	}
-	
-		//$("#errorTip").html("好好!");
-		
-	
-	
-	
+	var reg = new RegExp("^[0-9]*$");
+	if(!reg.test(groupName)){
+		$("#errorTip").html("群组账号类型不正确!");
+		return false;
+	}
+	if(!reg.test(groupCode)){
+		$("#errorTip").html("验证码类型不正确!");
+		return false;
+	}
+	$("#errorTip").html("");
+	$.ajax({
+    	url: "${base}/blog/checkExistjspx.jspx?groupName="+groupName+"&groupCode="+groupCode,
+        type:'POST',
+        data:"",
+        dataType:'json',
+        async:false,
+        success:function(data) {
+        	var uid=data.status;
+        	if(data.status==1){
+				$("#errorTip").html("账号不存在!");
+				return false;
+        	}else if(data.status==2){
+				$("#errorTip").html("验证码不存在!");
+				return false;
+        	}else{
+				$("#errorTip").html("加入中...");
+        		$.ajax({
+        			url:"${base}/blog/joinGroup.jspx?code="+groupCode+"&createUserId="+uid,
+        			type:"POST",
+        			dataType:"json",
+        			data: "",
+        			success: function (data) {
+        				if(data.status==1){
+				        	$("#joinGroups").dialog("close");
+				        	window.location.reload()
+        				}else{
+							$("#errorTip").html("加入失败!");
+							return false;
+        				}
+        	        }
+        		});
+        	}
+        },
+    });	
 }
 </script>
 <script>
