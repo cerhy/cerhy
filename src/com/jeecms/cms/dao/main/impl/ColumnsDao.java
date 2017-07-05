@@ -38,9 +38,23 @@ public class ColumnsDao extends HibernateBaseDao<Columns, Integer>{
 	}
 	
 	public Columns updateColumns (Columns c){
-		getSession().update(c);
+		try {
+			StringBuilder hql = new StringBuilder("update Columns bean");
+			hql.append(" set bean.columnName=:columnName,bean.uniqueCode=:uniqueCode,bean.orderId=:orderId,bean.parentId=:parentId");
+			hql.append(" where bean.columnId=:columnId ");
+			Query query = getSession().createQuery(hql.toString());
+			query.setParameter("columnId", c.getColumnId());
+			query.setParameter("columnName", c.getColumnName());
+			query.setParameter("uniqueCode", c.getUniqueCode());
+			query.setParameter("orderId", c.getOrderId());
+			query.setParameter("parentId", c.getParentId());
+			query.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return c;
 	}
+	
 	@Override
 	protected Class<Columns> getEntityClass() {
 		// TODO Auto-generated method stub
@@ -188,6 +202,32 @@ public class ColumnsDao extends HibernateBaseDao<Columns, Integer>{
 			e.printStackTrace();
 			return 0;
 		}
+	}
+
+	public Columns findById(Integer parentId) {
+		String hql = "select bean from Columns bean where bean.columnId='"+parentId+"'";
+		Query query = getSession().createQuery(hql);
+		if(null != query.iterate() && null != query.iterate().next()){
+			return ((Columns) (query.iterate().next()));
+		}else{
+			return null ;
+		}
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<Columns> getOneColumnsByUserId(Integer userId) {
+		Finder f = Finder.create("select bean from Columns bean");
+		f.append(" where bean.userId=:userId and bean.columsLevel=1 and bean.type=1 ORDER BY bean.orderId DESC");
+		f.setParam("userId", userId);
+		return find(f);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Columns> findTwoByParentId(Integer parentId) {
+		Finder f = Finder.create("select bean from Columns bean");
+		f.append(" where bean.parentId.columnId=:parentId and bean.columsLevel=2 and bean.type=1 ORDER BY bean.orderId DESC");
+		f.setParam("parentId", parentId);
+		return find(f);
 	}
 
 }

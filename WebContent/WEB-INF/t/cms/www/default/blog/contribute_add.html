@@ -178,6 +178,7 @@ $(function(){
 </script>
 </head>
 <body>
+<div id="contextMenus"></div>
 [#include "head.html"/]
 <div class="blogBody">
 <div class="blog-con">
@@ -189,6 +190,7 @@ $(function(){
       	<div class="tj">
      	 	文章数:${articleCount}&nbsp;&nbsp;评论:${commentCount}&nbsp;&nbsp;访问:${user.blogVisitNum!'0'}&nbsp;&nbsp;最后登录:${user.lastLoginTime?string('yyyy-MM-dd HH:mm:ss')}
       	</div>
+      	[#include "blog_operation.html"/]
    <div class="mb20 clearfix">
             [#include "blog_left.html"/]
             
@@ -203,10 +205,10 @@ $(function(){
           <table cellpadding="0" cellspacing="0">
             <tbody>
               <tr class="blog_column">
-                <td class="tggl-top">标题</td><td><input type="text" name="title" maxlength="150" class="member-change" style="width:300px;" required="required" oninvalid="setCustomValidity('请输入标题');" oninput="setCustomValidity('');" /><span style="color:#f00; margin-left:10px;">*</span></td>
+                <td class="tggl-top">标题</td><td><input type="text" id="title" name="title" maxlength="150" class="member-change" style="width:300px;" required="required" oninvalid="setCustomValidity('请输入标题');" oninput="setCustomValidity('');" /><span style="color:#f00; margin-left:10px;">*</span></td>
               </tr>
               <tr>
-                <td class="tggl-top">作者</td><td><input type="text" name="author" maxlength="50" class="member-change" required="required" oninvalid="setCustomValidity('请输入作者');" oninput="setCustomValidity('');"/><span style="color:#f00; margin-left:10px;">*</span></td>
+                <td class="tggl-top">作者</td><td><input type="text" id="author" name="author" maxlength="50" class="member-change" required="required" oninvalid="setCustomValidity('请输入作者');" oninput="setCustomValidity('');"/><span style="color:#f00; margin-left:10px;">*</span></td>
               </tr>
               <tr class="blog_column">
                 <td class="tggl-top">栏目</td>
@@ -280,28 +282,24 @@ $(function(){
 				             
 				     [/#list]
 				    [/#if]
-	                [#if columnsList?size gt 0]
-	                <option value="" class="sel-disabled">栏目</option>
-	                [#list columnsList as c]
-	                	[#if c.uniqueCode??]
-                        [#else]
-	                    	<option value="${c.columnId}&colu">&nbsp;&nbsp;>${c.columnName}</option>
-	                    [/#if]
-	                [/#list]
-	                [/#if]
-	                [#if columnsList?size gt 0]
-	                	<option value="" class="sel-disabled">群组</option>
-	                [#list columnsList as c]
-	                	[#if c.uniqueCode??]
-	                    	<option value="${c.columnId}&colu">&nbsp;&nbsp;>${c.columnName}</option>
-	                    [/#if]
-	                [/#list]
-	                [/#if]
+				    [#if columnsList??]
+			        [#list columnsList as map]
+			        [#list map?keys as k]
+			        [#if k=='']
+			        	[#list map[k] as v]
+				        	<option value="${v?split("=")[0]}&colu">${v?split("=")[1]}</option>
+			        	[/#list]
+			        [#else]
+			        	<option value="" class="sel-disabled">${k?split("=")[1]}</option>
+			        	[#list map[k] as v]
+				        	<option value="${v?split("=")[0]}&colu">&nbsp;&nbsp;>${v?split("=")[1]}</option>
+			        	[/#list]
+			        [/#if]	
+			        [/#list]
+			        [/#list]
+		            [/#if]
 	                [#if joinGroupList?size gt 0]
-		                [#if columnsList?size gt 0]
-		                [#else]
 		                <option value="" class="sel-disabled">群组</option>
-		                [/#if]
                         [#list joinGroupList as j]
                          <option value="${j.columnsId.columnId}&colu">&nbsp;&nbsp;>${j.columnsId.columnName}</option>
 		                [/#list]
@@ -410,22 +408,7 @@ $(function(){
 					</textarea>
 					<script type="text/javascript">
 					
-					function valid(){
-						var reg = new RegExp("^[0-9]*$");
-				        var obj = $('#password').val();
-					    if(!reg.test(obj)){
-							alert("密码的类型为数字!");
-							return false;
-					        
-					    }else{
-							return true;
-						}
-					}
-					var attachIndex = 1;
-					var attachTpl = $.format($("#attachTr").val());
-					function addAttachLine() {
-						$('#attachTable').append(attachTpl(attachIndex++));
-					}
+					
 					</script>
                 </td>
               </tr>
@@ -469,7 +452,7 @@ $(function(){
                 <td class="tggl-top">验证码</td><td><input type="text" onfocus="guestbookCaptcha.src='${base}/captcha.svl?d='+new Date()" name="captcha" id="captcha" vld="{required:true}" class="plcode" maxlength="20" class="member-change" style="float:left; margin-left:15px;" /><img id="guestbookCaptcha" src="${base}/captcha.svl" onclick="this.src='${base}/captcha.svl?d='+new Date()"/></td>
               </tr> -->
               <tr>
-                <td colspan="2" style="text-align:center; padding:20px 0;"><input type="hidden" name="nextUrl" value="${base}" /><input type="submit" class="member-submit" value="提交" /><input type="reset" class="member-reset" value="重置" /></td>
+                <td colspan="2" style="text-align:center; padding:20px 0;"><input type="hidden" name="nextUrl" value="${base}" /><input type="submit" class="member-submit" value="提交" id="tj" onclick="ups();return false;" /><input type="reset" class="member-reset" value="重置" /></td>
               </tr>
             </tbody>
           </table>
@@ -531,4 +514,36 @@ function addPd(obj){
 		$("#tick").hide();
 	}
 }
+</script>
+<script type="text/javascript">
+	
+	function valid(){
+		var reg = new RegExp("^[0-9]*$");
+        var obj = $('#password').val();
+        var title = $('#title').val();
+        var author = $('#author').val();
+        var channelIds = $('#channelIds').val();
+        if(title == null || title == undefined || title==""){
+        	return false;
+        }else if(author == null || author == undefined || author==""){
+        	return false;
+        }else if(channelIds == null || channelIds == undefined || channelIds==""){
+        	return false;
+        }
+	    if(!reg.test(obj)){
+			alert("密码的类型为数字!");
+			return false;
+	    }else{
+	    	var os = document.getElementById("tj");
+	 		os.disabled = true; 
+			return true;
+		}
+	}
+	var attachIndex = 1;
+	var attachTpl = $.format($("#attachTr").val());
+	function addAttachLine() {
+		$('#attachTable').append(attachTpl(attachIndex++));
+	}
+	
+	
 </script>

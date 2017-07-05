@@ -19,12 +19,12 @@
 }
  
 </style>
-   <span style="font-size:16px;">好友</span><span> [#if pagination??](${pagination.totalCount} )[/#if]</span>
+   <span style="font-size:16px;">好友</span><span> [#if paginations??](${paginations.totalCount} )[/#if]</span>
       <div class="link-content" style="width: 700px;">
          <form id="tableForm" action="${base}/blog/gotoDataShow.jspx?dataFlag=1" method="post">
-			 [#if pagination??]
+			 [#if paginations??]
 			   <div class="users-a-link-wrap clearfix" style="margin-top:40px;margin-left:25px;">
-				   [#list pagination.list as user]
+				   [#list paginations.list as user]
 	                  <div>
 		                <a target="_blank" href="${base}/blog/find_all_url_friend.jspx?userIds=${user.id}" class="users-a-link" style="margin-bottom: 30px;margin-left: 10px;margin-right: 10px;">
                         	[#if user.userImg??]
@@ -43,13 +43,13 @@
 	         <input style="display: none;" id="ut" name="ut" value="${usert.id}"/>
          [/#if]
 		 <table  style="margin:20px 0 0 40px;border:0px" ><tbody><tr><td style="border:0px; ">
-		    共 ${pagination.totalCount} 条&nbsp; 每页 ${pagination.pageSize} 条&nbsp;
-             <a href="#" style="cursor: pointer;" onclick="_gotoPage('1');"[#if pagination.firstPage] disabled="disabled"[/#if] >首页</a>
-             <a href="#" style="cursor: pointer;" onclick="_gotoPage('${pagination.prePage}');"[#if pagination.firstPage] disabled="disabled"[/#if]>上一页</a>
-            <a href="#" style="cursor: pointer;" onclick="_gotoPage('${pagination.nextPage}');"[#if pagination.lastPage] disabled="disabled"[/#if] >下一页</a>
-             <a href="#" style="cursor: pointer;" onclick="_gotoPage('${pagination.totalPage}');"[#if pagination.lastPage] disabled="disabled"[/#if] >尾页</a>&nbsp;
-			                当前 ${pagination.pageNo}/${pagination.totalPage} 页 &nbsp;转到第<input type="text" id="_goPs" onfocus="this.select();" onkeypress="if(event.keyCode==13){$('#_goPage').click();return false;}" class="inp1"/>页
-			 <input style="cursor: pointer;" id="_goPage" type="button" value="转" class="jump" onclick="_gotoPage($('#_goPs').val());"[#if pagination.totalPage==1] disabled="disabled"[/#if] />
+		    共 ${paginations.totalCount} 条&nbsp; 每页 ${paginations.pageSize} 条&nbsp;
+             <a href="#" style="cursor: pointer;" onclick="_gotoPage('1');"[#if paginations.firstPage] disabled="disabled"[/#if] >首页</a>
+             <a href="#" style="cursor: pointer;" onclick="_gotoPage('${paginations.prePage}');"[#if paginations.firstPage] disabled="disabled"[/#if]>上一页</a>
+            <a href="#" style="cursor: pointer;" onclick="_gotoPage('${paginations.nextPage}');"[#if paginations.lastPage] disabled="disabled"[/#if] >下一页</a>
+             <a href="#" style="cursor: pointer;" onclick="_gotoPage('${paginations.totalPage}');"[#if paginations.lastPage] disabled="disabled"[/#if] >尾页</a>&nbsp;
+			                当前 ${paginations.pageNo}/${paginations.totalPage} 页 &nbsp;转到第<input type="text" id="_goPs" onfocus="this.select();" onkeypress="if(event.keyCode==13){$('#_goPage').click();return false;}" class="inp1"/>页
+			 <input style="cursor: pointer;" id="_goPage" type="button" value="转" class="jump" onclick="_gotoPage($('#_goPs').val());"[#if paginations.totalPage==1] disabled="disabled"[/#if] />
             </td>
             </tr>
             </tbody>

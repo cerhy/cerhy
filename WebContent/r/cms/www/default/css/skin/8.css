@@ -11,9 +11,9 @@
 #title1{
 	color: #808080;
 }
-.tj{
+/* .tj{
 	padding-bottom:90px;
-}
+} */
 .blogBody .user-center-left .user-menu-links, .blogBody .personCenter-userInfo, .blogBody .user-center-left .user-setting {
    background: #333333;
 } 
@@ -53,4 +53,9 @@ body, button, input, select, textarea {
 	 background: transparent;
 	}
 .st_tree ul li a:hover {color:#0070b8;}
-	
+.htmleaf-container .mtree-demo .mtree {
+  background: #333333;
+  margin: 20px auto;
+  max-width: 320px;
+  border-radius: 3px;
+}		

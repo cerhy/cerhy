@@ -65,6 +65,7 @@ $(function(){
 	});
 });
 </script>
+<div id="contextMenus"></div>
 [#include "head.html"/]
 <div class="blogBody">
 <div class="blog-con">
@@ -77,16 +78,17 @@ $(function(){
      	 	文章数:${articleCount}&nbsp;&nbsp;评论:${commentCount}&nbsp;&nbsp;访问:${user.blogVisitNum!'0'}&nbsp;&nbsp;最后登录:${user.lastLoginTime?string('yyyy-MM-dd HH:mm:ss')}
       	</div>
       </div>
+      [#include "blog_operation.html"/]
   <div class="mb20 clearfix">
      [#include "blog_left.html"/]
   
      <div class="wrap-right " >
 	    <div class="personCenter-userInfo blog_right" >
-          <form action="${base}/blog/updateSetting.jspx" method="post">
+          <form action="${base}/blog/updateSetting.jspx" method="post" onsubmit="return valid()">
 	         <div style="font-size:15px">标题名:</div>
-	         <input type="text" name="blogTitle" class="blogTitle" style="margin:10px 10px 20px 0;color: #858585;padding:10px;width: 250px;" value="[#if user.blogTitle??]${user.blogTitle}[#else]未设置[/#if]" maxlength="40"/>
+	         <input type="text" id="blogTitle" name="blogTitle" class="blogTitle" style="margin:10px 10px 20px 0;color: #858585;padding:10px;width: 250px;" value="[#if user.blogTitle??]${user.blogTitle}[#else]未设置[/#if]" maxlength="40"/>
 	         <div style="font-size:15px">副标题名:</div>
-	         <input type="text" name="blogTitle2" class="blogTitle" style="margin:10px 10px 20px 0;color: #858585;padding:10px;width: 300px;" value="[#if user.blogTitle2??]${user.blogTitle2}[#else]未设置[/#if]" maxlength="40"/>
+	         <input type="text" id="blogTitle2" name="blogTitle2" class="blogTitle" style="margin:10px 10px 20px 0;color: #858585;padding:10px;width: 300px;" value="[#if user.blogTitle2??]${user.blogTitle2}[#else]未设置[/#if]" maxlength="40"/>
 	         <div ><input type="submit" value="更新" class="button button2" />
 	         </div>
 	        </form>
@@ -99,3 +101,18 @@ $(function(){
 [#include "../include/footers.html"/]
 </body>
 </html>
+<script type="text/javascript">
+function valid(){
+	 var reg = new RegExp("[~'!#$%^&*-+_=:]");  
+    var blogTitle = $('#blogTitle').val();
+    var blogTitle2 = $('#blogTitle2').val();
+    if(reg.test(blogTitle)){
+		alert("标题名可能包含%/等特殊字符，请修改重试。");
+		return false;
+    }
+    if(reg.test(blogTitle2)){
+		alert("副标题名可能包含%/等特殊字符，请修改重试。");
+		return false;
+    }
+}
+</script>

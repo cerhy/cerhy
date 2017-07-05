@@ -32,6 +32,7 @@ $('.user-menu-links li').click(function(){
 });
 });
 </script>
+<div id="contextMenus"></div>
 [#include "head.html"/]
 <div class="blogBody">
 <div class="blog-con">
@@ -52,6 +53,7 @@ $('.user-menu-links li').click(function(){
 	  [/#if]
 	  </div>
       </div>
+      [#include "blog_operation.html"/]
         <div class="mb20 clearfix">
             [#include "blog_left.html"/]
             <div class="wrap-right" style="min-height: 661px;margin-left: 10px;width: 72%;">

@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -711,8 +712,8 @@ public class ContributeAct extends AbstractContentMemberAct {
 	 * @param model
 	 */
 	@RequestMapping(value = "/blog/newColumn.jspx")
-	public void columns_add(HttpServletRequest request, HttpServletResponse response,ModelMap model) {
-		blogAct.columns_add(request, response, model);
+	public String columns_add(HttpServletRequest request, HttpServletResponse response,ModelMap model) {
+		return blogAct.columns_add(request, response, model);
 	}
 	
 	/**
@@ -722,8 +723,8 @@ public class ContributeAct extends AbstractContentMemberAct {
 	 * @param model
 	 */
 	@RequestMapping(value = "/blog/deleteColumn.jspx")
-	public void columns_delete(HttpServletRequest request, HttpServletResponse response,ModelMap model) {
-		blogAct.columns_delete(request, response, model);
+	public String columns_delete(HttpServletRequest request, HttpServletResponse response,ModelMap model) {
+		return blogAct.columns_delete(request, response, model);
 	}
 	
 	/**
@@ -745,8 +746,8 @@ public class ContributeAct extends AbstractContentMemberAct {
 	 * @return
 	 */
 	@RequestMapping(value = "/blog/update_tz.jspx")
-	public String update_tz(String id, String orderId, HttpServletRequest request, HttpServletResponse response,ModelMap model) {
-		return blogAct.update_tz(id,orderId,request, response, model);
+	public String update_tz(String id, HttpServletRequest request, HttpServletResponse response,ModelMap model) {
+		return blogAct.update_tz(id,request, response, model);
 	}
 	
 	/**
@@ -756,8 +757,8 @@ public class ContributeAct extends AbstractContentMemberAct {
 	 * @param model
 	 */
 	@RequestMapping(value = "/blog/updateColumn.jspx")
-	public void columns_update(HttpServletRequest request, HttpServletResponse response,ModelMap model) {
-		blogAct.columns_update(request, response, model);
+	public String columns_update(HttpServletRequest request, HttpServletResponse response,ModelMap model) {
+		return blogAct.columns_update(request, response, model);
 	}
 	
 	/**
@@ -801,6 +802,7 @@ public class ContributeAct extends AbstractContentMemberAct {
  		model = blogCommon.getTotalCommentNum(model, user);
  		model = blogCommon.getStarBlogger(request, model);
  		model = blogCommon.getAlreadyJoinGroup(request, model,user);
+ 		model = blogCommon.getFriends(user.getId(),model,1);
 		FrontUtils.frontData(request, model, site);
 		return FrontUtils.getTplPath(request, site.getSolutionPath(),TPLDIR_BLOG, "tpl.linkList");
 	}
@@ -835,6 +837,7 @@ public class ContributeAct extends AbstractContentMemberAct {
  		model = blogCommon.getTotalCommentNum(model, user);
  		model = blogCommon.getStarBlogger(request, model);
  		model = blogCommon.getAlreadyJoinGroup(request, model,user);
+ 		model = blogCommon.getFriends(user.getId(),model,1);
 		FrontUtils.frontData(request, model, site);
 		return FrontUtils.getTplPath(request, site.getSolutionPath(),TPLDIR_BLOG, "tpl.friends");
 	}
@@ -1013,6 +1016,7 @@ public class ContributeAct extends AbstractContentMemberAct {
  		model = blogCommon.getTotalReadNum(model, user);
  		model = blogCommon.getStarBlogger(request, model);
  		model = blogCommon.getAlreadyJoinGroup(request, model,user);
+ 		model = blogCommon.getFriends(user.getId(),model,1);
 		FrontUtils.frontData(request, model, site);
 		return FrontUtils.getTplPath(request, site.getSolutionPath(),TPLDIR_BLOG, "tpl.dataStatistics");
 	}
@@ -1036,6 +1040,7 @@ public class ContributeAct extends AbstractContentMemberAct {
  		model = blogCommon.getAlreadyJoinGroup(request, model,userT);
  		model = blogCommon.getAddFriends(request, model,userT,user);
  		model = blogCommon.getFouces(request, model,userT,user);
+ 		model = blogCommon.getFriends(user.getId(),model,1);
 		String path = request.getSession().getServletContext().getRealPath("/");
 		List<Focus> list = (new BlogDao()).findMaxFocusCount( path);
 	    List<Focus> l = null;
@@ -1091,7 +1096,6 @@ public class ContributeAct extends AbstractContentMemberAct {
 			}
 		}
 //		model = blogCommon.getLinks(model,user);
-//		model = blogCommon.getFriends(model,user);
 //		model = blogCommon.blog_focus_find(null,request,model);
 		model =blogCommon.getHyperlink(request,model,user);
 		model = blogCommon.getColumn(request,model,user);
@@ -1103,6 +1107,7 @@ public class ContributeAct extends AbstractContentMemberAct {
  		model = blogCommon.getAllVistor(request, model,user);
  		model = blogCommon.getStarBlogger(request, model);
  		model = blogCommon.getAlreadyJoinGroup(request, model,user);
+ 		model = blogCommon.getFriends(user.getId(),model,1);
  		model = blogAct.getAllVisitors(queryTitle, modelId, queryChannelId,pageNo, request, model,user);
 		FrontUtils.frontData(request, model, site);
 		return FrontUtils.getTplPath(request, site.getSolutionPath(),TPLDIR_BLOG, "tpl.visitor");
@@ -1136,6 +1141,7 @@ public class ContributeAct extends AbstractContentMemberAct {
  		model = blogAct.getAllVisitors(q, modelId, queryChannelId,pageNo, request, model,userT);
  		model = blogCommon.getAddFriends(request, model,userT,user);
  		model = blogCommon.getFouces(request, model,userT,user);
+ 		model = blogCommon.getFriends(user.getId(),model,1);
 		String path = request.getSession().getServletContext().getRealPath("/");
 		List<Focus> list = (new BlogDao()).findMaxFocusCount( path);
 	    List<Focus> l = null;
@@ -1347,9 +1353,9 @@ public class ContributeAct extends AbstractContentMemberAct {
 	public String useManual(String userIds,String q,Integer modelId,Integer queryChannelId, Integer pageNo,HttpServletRequest request,HttpServletResponse response, ModelMap model) {
 		CmsSite site = CmsUtils.getSite(request);
 		CmsUser user = CmsUtils.getUser(request);
-		if(user==null){
+		/*if(user==null){
 			return FrontUtils.showLogin(request, model, site);
-		}
+		}*/
 	    FrontUtils.frontData(request, model, site);
 		return FrontUtils.getTplPath(request, site.getSolutionPath(),TPLDIR_BLOG, "tpl.use_manual");
 	}
@@ -1451,7 +1457,63 @@ public class ContributeAct extends AbstractContentMemberAct {
 		ResponseUtils.renderJson(response, json.toString());
 	}
 	
-
+	
+	/**
+	 * 检查新建栏目的级别 1为一级栏目可以建二级栏目,2为二级栏目不再允许建栏目
+	 */
+	@RequestMapping(value = "/blog/checkLevel.jspx")
+	public void checkLevel(String ccId,HttpServletRequest request,HttpServletResponse response, ModelMap model)throws UnsupportedEncodingException, JSONException {
+		CmsUser user = CmsUtils.getUser(request);
+		JSONObject json = new JSONObject();
+		if(user!=null){
+			Columns level = columnsMng.findById(Integer.valueOf(ccId));
+			if(level.getColumsLevel()==1&&null==level.getUniqueCode()){
+				json.put("status","1");
+			}else if(level.getColumsLevel()==2){
+				json.put("status","2");
+			}else if(level.getColumsLevel()==1&&null!=level.getUniqueCode()){
+				json.put("status","3");
+			}
+		}else{
+			try {
+				request.getRequestDispatcher("/login.jspx").forward(request, response);
+				return;
+			} catch (ServletException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		ResponseUtils.renderJson(response, json.toString());
+	}
+	
+	/**
+	 * 检查该栏目下是否有子栏目
+	 */
+	@RequestMapping(value = "/blog/checkTwoColumsNum.jspx")
+	public void checkTwoColumsNum(String ccId,HttpServletRequest request,HttpServletResponse response, ModelMap model)throws UnsupportedEncodingException, JSONException {
+		CmsUser user = CmsUtils.getUser(request);
+		JSONObject json = new JSONObject();
+		if(user!=null){
+			List<Columns> twoList=columnsMng.findTwoByParentId(Integer.valueOf(ccId));
+			if(null!=twoList&&twoList.size()>0){
+				//不允许删除,有子栏目
+				json.put("status","1");
+			}else{
+				json.put("status","2");
+			}
+		}else{
+			try {
+				request.getRequestDispatcher("/login.jspx").forward(request, response);
+				return;
+			} catch (ServletException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		ResponseUtils.renderJson(response, json.toString());
+	}
 	/**
 	 * 发送文章 
 	 */
