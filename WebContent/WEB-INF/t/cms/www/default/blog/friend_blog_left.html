@@ -68,7 +68,7 @@
 					        	[/#if]
 					        	[/#list]
 					        [#else]
-					        	<li><a id="${k?split('=')[0]}" title="${k?split('=')[0]}" href="javascript:;">${k?split("=")[1]}</a>
+					        	<li><a id="${k?split('=')[0]}" title="${k?split('=')[1]}" href="javascript:;">${k?split("=")[1]}</a>
 					        	<ul>
 					        	[#list map[k] as v]
 					        		[#if v?split('=')[2]??]

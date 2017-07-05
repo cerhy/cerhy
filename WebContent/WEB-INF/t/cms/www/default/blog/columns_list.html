@@ -103,7 +103,10 @@ $(function(){
 			        		[#if v?split("=")[0]=ccId]
 				        		<option value="${v?split("=")[0]}" selected="selected">${v?split("=")[1]}</option>
 				        	[#else]
-				        		<option value="${v?split("=")[0]}" disabled="disabled">${v?split("=")[1]}</option>
+				        		[#if v?split("=")[2]??]
+				        		[#else]
+				        			<option value="${v?split("=")[0]}" disabled="disabled">${v?split("=")[1]}</option>
+				        		[/#if]
 				        	[/#if]
 			        	[/#list]
 			        [#else]
@@ -116,7 +119,10 @@ $(function(){
 		        [#else]
 		        	[#if k=='']
 			        	[#list map[k] as v]
-				        	<option value="${v?split("=")[0]}">${v?split("=")[1]}</option>
+			        		[#if v?split("=")[2]??]
+				        	[#else]
+				        		<option value="${v?split("=")[0]}">${v?split("=")[1]}</option>
+				        	[/#if]
 			        	[/#list]
 			        [#else]
 			        	<option value="${k?split("=")[0]}">${k?split("=")[1]}</option>
@@ -126,7 +132,7 @@ $(function(){
 		        [/#list]
 	            [/#if] 
 	        </select>
-	        <span style="color:#f00;">一级栏目不选择,二级栏目将作为一级栏目展示</span>
+	        <span style="color:#f00;">一级栏目不选择,二级栏目将作为一级栏目展示(已过滤群组)</span>
         </div>
         <div >
 	        <span style="font-size:16px;">二级栏目名称:</span>
