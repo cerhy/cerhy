@@ -1574,4 +1574,33 @@ public class ContributeAct extends AbstractContentMemberAct {
 		}
 		return object.toString();
 	}
+	
+	
+	/**
+	 * 检测该用户下验证码唯一性
+	 */
+	@RequestMapping(value = "/blog/checkGroupCode.jspx")
+	public void checkGroupCode(String code,HttpServletRequest request,HttpServletResponse response, ModelMap model)throws UnsupportedEncodingException, JSONException {
+		CmsUser user = CmsUtils.getUser(request);
+		JSONObject json = new JSONObject();
+		if(user!=null){
+			List<Columns> cc=columnsMng.findInfoByCodeAndUserid(code,user.getId());
+			if(null!=cc&&cc.size()>0){
+				//该用户下验证码重复
+				json.put("status","1");
+			}else{
+				json.put("status","0");
+			}
+		}else{
+			try {
+				request.getRequestDispatcher("/login.jspx").forward(request, response);
+				return;
+			} catch (ServletException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		ResponseUtils.renderJson(response, json.toString());
+	}
 }

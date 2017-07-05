@@ -86,4 +86,8 @@ public class ColumnsMng {
 		return columnsDao.findTwoByParentId(columnId);
 	}
 
+	public List<Columns>  findInfoByCodeAndUserid(String code, Integer id) {
+		return columnsDao.findInfoByCodeAndUserid(code,id);
+	}
+
 }
