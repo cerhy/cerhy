@@ -508,8 +508,8 @@ public class CmsUserMngImpl implements CmsUserMng {
 		if(recieveUserId==null){
 			result=1;
 		}else{
-			String uniqueCode = contentDao.getUniqueCode(recieveUserId,validateCode);
-			if("".equals(uniqueCode) || uniqueCode==null){
+			Integer columnId = contentDao.getUniqueCode(recieveUserId,validateCode);
+			if("".equals(columnId) || columnId==null){
 				result=2;
 			}else{
 				ContentSend send = new ContentSend();
@@ -521,7 +521,7 @@ public class CmsUserMngImpl implements CmsUserMng {
 				send.setRecieveUserId(recieveUserId);
 				send.setSendTime(new Date());
 				//栏目id
-				send.setColumnId(validateCode);
+				send.setColumnId(columnId);
 				contentDao.saveContentSend(send);
 			}
 			

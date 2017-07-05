@@ -358,6 +358,14 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 		if(null != columnId ){
 			f.append(" and bean.columnId=:columnId");
 			f.setParam("columnId", columnId);
+			
+			String sql = "select contentId from ContentSend where recieveUserId="+inputUserId+" and columnId="+columnId+"";
+			List contentIdList =find(sql);
+			if(contentIdList!=null && contentIdList.size()>0){
+				/*Integer[] contentIds = new Integer[]{60001672,60001673};*/
+				f.append(" or bean.id in (:contentIds)");
+				f.setParamList("contentIds", contentIdList);
+			}
 		}
 		if (draft == status) {
 			f.append(" and bean.status=:status");
@@ -1435,9 +1443,9 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 	 * @return String
 	 */
 	@Override
-	public String getUniqueCode(int userId,int validaCode){
-		String hql = "select  uniqueCode from Columns bean where bean.userId="+userId+" and bean.uniqueCode="+validaCode+"";
-		return (String) findUnique(hql);
+	public Integer getUniqueCode(int userId,int validaCode){
+		String hql = "select  columnId from Columns bean where bean.userId="+userId+" and bean.uniqueCode="+validaCode+"";
+		return (Integer) findUnique(hql);
 	}
 	
 	/**

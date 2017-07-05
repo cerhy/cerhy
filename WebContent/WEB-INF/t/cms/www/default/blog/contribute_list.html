@@ -117,7 +117,7 @@ $(function(){
 						    [#if c.user.id=user.id]
 				            <a href="contribute_edit.jspx?id=${c.id}&nextUrl=contribute_list.jspx" class="f3"><em style="color:#b7b7b7;">修改</em></a>&nbsp;|&nbsp;
 			                [#else]
-				            <a class="f3"><em style="color:#b7b7b7;">修改&nbsp;|&nbsp;</em></a>
+				           <!--  <a class="f3"><em style="color:#b7b7b7;">修改&nbsp;|&nbsp;</em></a> -->
 			                [/#if]
 			                [#if c.columnId??]
 	                			[#if c.user.id=user.id]
@@ -127,7 +127,7 @@ $(function(){
 					                  <a href="contribute_delete.jspx?ids=${c.id}&columnId=${columnId}" onclick="javascript:return del();" class="f3"><em style="color:#b7b7b7;">删除</em></a>
 	                			 	[/#if]
 				                [#else]
-				                  <a class="f3"><em style="color:#b7b7b7;">删除</em></a>
+				                  <!-- <a class="f3"><em style="color:#b7b7b7;">删除</em></a> -->
 				                [/#if]
 			                [#else]
 			                  <a href="contribute_delete.jspx?ids=${c.id}&channelId=${channelId}" onclick="javascript:return del();" class="f3"><em style="color:#b7b7b7;">删除</em></a> 

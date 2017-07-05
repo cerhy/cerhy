@@ -290,7 +290,7 @@ public interface ContentDao {
 	 * @param validaCode 验证码
 	 * @return String
 	 */
-	public String getUniqueCode(int userId,int validaCode);
+	public Integer getUniqueCode(int userId,int validaCode);
 	
 	/**
 	 * 撤销用户发送的文章
