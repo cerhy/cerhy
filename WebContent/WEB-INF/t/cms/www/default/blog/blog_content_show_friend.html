@@ -225,6 +225,7 @@ table th,table td{word-break:break-all;white-space:normal;overflow:hidden;}
                 <span class="pr15" id="backto" title="返回"><img style="width: 20px;height: 20px;margin: -6px 0px;cursor: pointer;" src="/${res}/images/back_1.png" alt="" class="backto" onclick="javascpipt:history.go(-1);"/></span>
 					 <span class="pr15 yuedu">浏览次数：<span id="views"></span></span> 
 					 <span class="pr15 pinglun">评论：${content.commentsCheckedNum!} </span>
+					 <span id="embodySpan" style="cursor: pointer;" onclick="embody();">收录</span>
 				     <span id="comfirmSpan" style="display:none;cursor: pointer;">转载</span>
 				     <span id="cancelSpan" style="display:none; cursor: pointer;">取消转载</span>&nbsp;
 					 <span class="content-share">分享
@@ -309,11 +310,6 @@ table th,table td{word-break:break-all;white-space:normal;overflow:hidden;}
 					 
 					<!-- 分页 -->
 					<div class="pagebar">[#include "../style_page/content.html"/]</div>
-					<br />
-					<br />
-					<br />
-					<br />
-					<br />
 					<div class="inter clearfix"> 
 				      [#if channel.allowUpdown]
 				      <div class="downs" title="踩" ><a onclick="Cms.down('${base}',${content.id},${content.downs});"><span id="downs"></span></a></div>
@@ -330,7 +326,7 @@ table th,table td{word-break:break-all;white-space:normal;overflow:hidden;}
                             <em>[@text_cut s=tag_bean.title len=20 append='...'/]</em>
                         	</a>
 	                   	  [#else]
-                    		<a href="javascript:;" class="prev-pian">
+                    		<a href="#" class="prev-pian">
                             <em>没有了</em>
                         	</a>
 	                      [/#if]
@@ -342,7 +338,7 @@ table th,table td{word-break:break-all;white-space:normal;overflow:hidden;}
 	                            <span>下一篇&gt;</span>
 	                        </a>
 	                    [#else]
-		                     <a href="javascript:;" class="next-pian">
+		                     <a href="#" class="next-pian">
 	                            <em>没有了</em>
 	                        </a>
 	                    [/#if]
@@ -366,7 +362,7 @@ table th,table td{word-break:break-all;white-space:normal;overflow:hidden;}
 	                        	</a>
                     		[/#if]
                     	[#else]
-                    		<a href="javascript:;" class="prev-pian">
+                    		<a href="#" class="prev-pian">
                             <em>没有了</em>
                         	</a>
                     	[/#if]
@@ -385,7 +381,7 @@ table th,table td{word-break:break-all;white-space:normal;overflow:hidden;}
                         </a>
 	                    [/#if]
 	                    [#else]
-		                     <a href="javascript:;" class="next-pian">
+		                     <a href="#" class="next-pian">
 	                            <em>没有了</em>
 	                        </a>
 	                    [/#if]
@@ -416,6 +412,44 @@ table th,table td{word-break:break-all;white-space:normal;overflow:hidden;}
   </div>
  </div>
 </div> 
+<div id="embodyDialog" style="display:none;">	
+      		<form id="embodyFrom" class="embodyFrom"  method="post">
+      			<table width="100%" class="pn-ftable" cellpadding="2" cellspacing="1" border="0">
+      				<tbody>
+      					<tr >
+      					<td stylt="margin-left:20px; width="100px""><span class="pn-frequired"></span>收录到：</td>
+      					<td >
+      						<select id="columnsId" name="columnsId"  style="width:150px;">
+	        				[#if emBodyColumnsList??]
+					        [#list emBodyColumnsList as map]
+					        [#list map?keys as k]
+					        [#if k=='']
+					        	[#list map[k] as v]
+						        	<option value="${v?split('=')[0]}">${v?split('=')[1]}</option>
+					        	[/#list]
+					        [#else]
+					      		[#list map[k] as v]
+						        	<option value="${v?split('=')[0]}">${v?split('=')[1]}</option>
+					        	[/#list]
+					        [/#if]	
+					        [/#list]
+					        [/#list]
+				            [/#if] 
+				            
+	        			</select>
+	        			<span style="color:red" id="columnsIdSapn"></span>
+      					</td>
+      					</tr>
+      					
+      				</tbody>
+      			</table>      	
+      			<div class="themeButton">	
+      			<input type="hidden" name="contentId" id="contentId" value="${content.id}"/>
+   <!--    			<input type="submit" value="确定" class="submit"  style="margin:30px 40px 0 0px"/>
+	        	<button type="button" onclick="closeSendDialog();" class="submit" style="margin:30px 40px 0 10px">取消</button> -->
+	        	</div>
+      		</form>
+      </div>
 [#include "model_friend.html"]
 [#include "../include/footers.html"/]
 </body>
@@ -935,7 +969,62 @@ Drag.prototype = {
 	 				}
 	         }
 	     }); 
+		
+		skinChange(${user.theme!0});
+		function skinChange(n){
+			document.all.MrJin.href="/${res}/css/skin/"+n+".css"; 
+		}
+		$("#embodyDialog").dialog({
+			autoOpen: false,
+			modal: false,
+			resizable :false,
+			stack : false,
+			draggable : true,
+			closeOnEscape : false,
+			width: 300,
+			height: 200,
+			position: ["center",80],
+			
+			close: function(event, ui) {
+				skinChange(${user.theme!0});
+			},
+		    buttons: {
+	            "确定": function () {
+	            	$("#columnsIdSapn").html("");
+	            	var columnsId=$("#columnsId").val();
+	            	if(columnsId==null || columnsId==""){
+	            		$("#columnsIdSapn").html("必填！");
+	            		return;
+	            	}
+	            	debugger;
+	            	var friendId = '${usert.id}';
+	            	 $.ajax({
+	 	                type: 'POST',
+	 	                url : ' ${base}/blog/embodyArticle.jspx',
+	 	                dataType : 'json',
+	 	                data : {'contentId' : $("#contentId").val(),'friendId' : friendId,'columnId' : columnsId},
+	 	                success : function(datas){
+	 	                	 var code =datas.code;
+	 	                	 if(code=="fail"){
+	 	                			alert("收录失败！");
+	 	                			$("#embodyDialog").dialog("close");
+	 	                	 }else{
+	 	                		alert("收录成功！");
+	 	                		$("#embodyDialog").dialog("close");
+	 	                	 }
+	            	   	 }
+	           			 });
+	            	 
+	            },
+	            "取消": function () {
+	                $(this).dialog("close");
+	            }
+	        },
+		});	  
 	});
+	function embody(){
+		$("#embodyDialog").dialog("open");
+	}
 </script>
 <script type="text/javascript">
 

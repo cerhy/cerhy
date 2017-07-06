@@ -108,5 +108,30 @@ public interface CmsUserMng {
 	 * @return int
 	 */
 	public Integer cancelArticle(Integer contentId,Integer userId);
+	
+	/**
+	 * 收录文章
+	 * @param contentId
+	 * @param userId
+	 * @param friendId
+	 * @return int
+	 */
+	public void embodyArticle(Integer contentId,Integer userId,Integer friendId,Integer columnId);
+	
+	/**
+	 * 移除用户收录的 文章
+	 * @param contentId
+	 * @param userId
+	 * @return int
+	 */
+	public Integer removeArticle(Integer contentId,Integer userId);
+	
+	/**
+	 * 查询文章是否是发送的还是收录的
+	 * @param contentId
+	 * @param userId
+	 * @return int
+	 */
+	public Integer getContentSendType(Integer contentId,Integer userId);
 
 }

@@ -12,8 +12,8 @@ public class ContentSend extends BaseContentSend {
 	}
 
 	public ContentSend(Integer id, Date sendTime, Integer contentId,
-			Integer sendUserId, Integer recieveUserId,Integer columnId) {
-		super(id, sendTime, contentId, sendUserId, recieveUserId,columnId);
+			Integer sendUserId, Integer recieveUserId,Integer columnId,Integer type) {
+		super(id, sendTime, contentId, sendUserId, recieveUserId,columnId,type);
 	}
 
 	
