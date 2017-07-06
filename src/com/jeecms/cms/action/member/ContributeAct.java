@@ -1245,7 +1245,7 @@ public class ContributeAct extends AbstractContentMemberAct {
 		try {
 			String tbHtml= "<div class='"+idss+"' id='"+idss+"'"
 					     + " style='display: block; top: "+Y+"px; left: "+X+"px; position: absolute; margin: 0px;"
-					     + "border: 0px solid rgb(255, 102, 0); width: 25px; height: 25px;'>"
+					     + "border: 0px solid rgb(255, 102, 0); width: 25px; height: 25px; z-index: 99'>"
 					     + "<h2 class='t"+idss+"' style='cursor: move; width: 25px; height: 25px; padding-left: 25px;'>"
 					     + "</h2></div>";
 			CmsPostilInfo cpi=new CmsPostilInfo();
