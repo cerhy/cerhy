@@ -53,13 +53,15 @@ outline: none;
                       [/#if]
                  		 [#if usert??]
 				           <div class="user-setting">
-				                 <div class="pic-dt" style="margin-left: 60px;>
-				                      [#if usert.userImg??]<img src="${usert.userImg}" width="140" height="140" >
-				                      [#else]<img src="/${res}/images/userImg-large.png" width="140" height="140">
+				                 <div class="pic-dt" style="margin-left: 60px;">
+				                      [#if usert.userImg??]
+				                      <img src="${usert.userImg}" width="140" height="140" >
+				                      [#else]
+				                      <img src="/${res}/images/userImg-large.png" width="140" height="140">
 				                      [/#if]
 				                 </div>
 				                  [#if usert??]
-				                 <div class="user-name-dt"><a href="${base}/blog/index.jspx?uid=${usert.id}" title="[#if usert.realname??]${usert.realname}[#else]${usert.username}[/#if]">[#if usert.realname??][@text_cut s=usert.realname len=5 append=''/][#else]${usert.username}[/#if]</a></div>
+				                 	<div class="user-name-dt"><a href="${base}/blog/index.jspx?uid=${usert.id}" title="[#if usert.realname??]${usert.realname}[#else]${usert.username}[/#if]">[#if usert.realname??][@text_cut s=usert.realname len=5 append=''/][#else]${usert.username}[/#if]</a></div>
 				                 [/#if]				                     
 				           </div>
                       [/#if]
