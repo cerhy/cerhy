@@ -357,8 +357,13 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 		if(null != columnId ){
 			f.append(" and bean.columnId=:columnId");
 			f.setParam("columnId", columnId);
+			String sql ="";
+			if(inputUserId==0){
+				 sql = "select contentId from ContentSend where  columnId="+columnId+"";
+			}else{
+				 sql = "select contentId from ContentSend where recieveUserId="+recieveUserId+" and columnId="+columnId+"";
+			}
 			
-			String sql = "select contentId from ContentSend where recieveUserId="+recieveUserId+" and columnId="+columnId+"";
 			List contentIdList =find(sql);
 			if(contentIdList!=null && contentIdList.size()>0){
 				/*Integer[] contentIds = new Integer[]{60001672,60001673};*/

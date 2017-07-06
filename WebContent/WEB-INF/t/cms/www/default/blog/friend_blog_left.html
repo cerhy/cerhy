@@ -62,9 +62,17 @@
 					        [#if k=='']
 					        	[#list map[k] as v]
 					        	[#if v?split('=')[2]??]
-					        		<li><a  title="${v?split('=')[1]}&nbsp;${v?split('=')[2]}" href="${base}/blog/contribute_list_friend.jspx?columnId=${v?split('=')[0]}&user_ids=${userIds}&joinGroupStata=0">${v?split("=")[1]}&nbsp;${v?split('=')[2]}</a></li>
+					        		[#if columnId??]
+					        			<li [#if columnId=v?split('=')[0]]class="mtree-active"[/#if]><a  title="${v?split('=')[1]}&nbsp;${v?split('=')[2]}" href="${base}/blog/contribute_list_friend.jspx?columnId=${v?split('=')[0]}&user_ids=${userIds}&joinGroupStata=0">${v?split("=")[1]}&nbsp;${v?split('=')[2]}</a></li>
+					        		[#else]
+						        		<li><a  title="${v?split('=')[1]}&nbsp;${v?split('=')[2]}" href="${base}/blog/contribute_list_friend.jspx?columnId=${v?split('=')[0]}&user_ids=${userIds}&joinGroupStata=0">${v?split("=")[1]}&nbsp;${v?split('=')[2]}</a></li>
+					        		[/#if]
 					        	[#else]
-					        		<li><a title="${v?split('=')[1]}" href="${base}/blog/contribute_list_friend.jspx?columnId=${v?split('=')[0]}&user_ids=${userIds}">${v?split("=")[1]}</a></li>
+					        		[#if columnId??]
+					        			<li [#if columnId=v?split('=')[0]]class="mtree-active"[/#if]><a title="${v?split('=')[1]}" href="${base}/blog/contribute_list_friend.jspx?columnId=${v?split('=')[0]}&user_ids=${userIds}">${v?split("=")[1]}</a></li>
+					        		[#else]
+						        		<li><a title="${v?split('=')[1]}" href="${base}/blog/contribute_list_friend.jspx?columnId=${v?split('=')[0]}&user_ids=${userIds}">${v?split("=")[1]}</a></li>
+					        		[/#if]
 					        	[/#if]
 					        	[/#list]
 					        [#else]
@@ -72,9 +80,17 @@
 					        	<ul>
 					        	[#list map[k] as v]
 					        		[#if v?split('=')[2]??]
-					        			<li><a  title="${v?split('=')[1]}&nbsp;${v?split('=')[2]}" href="${base}/blog/contribute_list_friend.jspx?columnId=${v?split('=')[0]}&user_ids=${userIds}&joinGroupStata=0">${v?split("=")[1]}&nbsp;${v?split('=')[2]}</a></li>
+					        			[#if columnId??]
+					        				<li [#if columnId=v?split('=')[0]]class="mtree-active"[/#if]><a  title="${v?split('=')[1]}&nbsp;${v?split('=')[2]}" href="${base}/blog/contribute_list_friend.jspx?columnId=${v?split('=')[0]}&user_ids=${userIds}&joinGroupStata=0">${v?split("=")[1]}&nbsp;${v?split('=')[2]}</a></li>
+					        			[#else]
+						        			<li><a  title="${v?split('=')[1]}&nbsp;${v?split('=')[2]}" href="${base}/blog/contribute_list_friend.jspx?columnId=${v?split('=')[0]}&user_ids=${userIds}&joinGroupStata=0">${v?split("=")[1]}&nbsp;${v?split('=')[2]}</a></li>
+					        			[/#if]
 					        		[#else]
-					        			<li><a title="${v?split('=')[1]}" href="${base}/blog/contribute_list_friend.jspx?columnId=${v?split('=')[0]}&user_ids=${userIds}">${v?split("=")[1]}</a></li>
+					        			[#if columnId??]
+					        				<li [#if columnId=v?split('=')[0]]class="mtree-active"[/#if]><a title="${v?split('=')[1]}" href="${base}/blog/contribute_list_friend.jspx?columnId=${v?split('=')[0]}&user_ids=${userIds}">${v?split("=")[1]}</a></li>
+					        			[#else]
+						        			<li><a title="${v?split('=')[1]}" href="${base}/blog/contribute_list_friend.jspx?columnId=${v?split('=')[0]}&user_ids=${userIds}">${v?split("=")[1]}</a></li>
+					        			[/#if]
 					        		[/#if]
 					        	[/#list]
 					        	 </ul>
@@ -92,7 +108,11 @@
 					    <ul>
 					        [#if joinGroupList?size gt 0]
                             [#list joinGroupList as j]
-		                    <li><a href="${base}/blog/contribute_list_friend.jspx?columnId=${j.columnsId.columnId}&user_ids=${userIds}&joinGroupStata=0" title="${j.columnsId.columnName}" ><em></em>[@text_cut s=j.columnsId.columnName len=9 append='...'/]</a></li>
+	                            [#if columnId??]
+			                    	<li [#if columnId?number=j.columnsId.columnId]class="mtree-active"[/#if]><a href="${base}/blog/contribute_list_friend.jspx?columnId=${j.columnsId.columnId}&user_ids=${userIds}&joinGroupStata=0" title="${j.columnsId.columnName}" ><em></em>[@text_cut s=j.columnsId.columnName len=9 append='...'/]</a></li>
+		                    	[#else]
+				                    <li><a href="${base}/blog/contribute_list_friend.jspx?columnId=${j.columnsId.columnId}&user_ids=${userIds}&joinGroupStata=0" title="${j.columnsId.columnName}" ><em></em>[@text_cut s=j.columnsId.columnName len=9 append='...'/]</a></li>
+		                    	[/#if]
 		                    [/#list]
 	                        [/#if]
 	                        <br />
