@@ -110,14 +110,14 @@ outline: none;
 					        	[#list map[k] as v]
 						        	[#if user??]
 						        		[#if v?split('=')[2]??]
-		                                <li><a class="class1 box1" title="${v?split('=')[1]}&nbsp;${v?split('=')[2]}" id="${v?split('=')[0]}" href="${base}/blog/contribute_list.jspx?columnId=${v?split('=')[0]}" >${v?split("=")[1]}&nbsp;${v?split('=')[2]}</a></li>
+		                                <li><a class="class1 box1" title="${v?split('=')[1]}&nbsp;${v?split('=')[2]}" id="${v?split('=')[0]}" href="${base}/blog/contribute_list.jspx?columnId=${v?split('=')[0]}&joinGroupStata=0" >${v?split("=")[1]}&nbsp;${v?split('=')[2]}</a></li>
 				                   		[#else]
 		                                <li><a class="class1 box1" title="${v?split('=')[1]}" id="${v?split('=')[0]}" href="${base}/blog/contribute_list.jspx?columnId=${v?split('=')[0]}" >${v?split("=")[1]}</a></li>
 				                   		[/#if]
 				                    [/#if]
 						            [#if usert??]
 						            	[#if v?split('=')[2]??]
-				                	 	<li><a title="${v?split('=')[1]}&nbsp;${v?split('=')[2]}" href="${base}/blog/contribute_list.jspx?columnId=${v?split('=')[0]}&uid=${usert.id}" >${v?split("=")[1]}&nbsp;${v?split('=')[2]}</a></li>
+				                	 	<li><a title="${v?split('=')[1]}&nbsp;${v?split('=')[2]}" href="${base}/blog/contribute_list.jspx?columnId=${v?split('=')[0]}&uid=${usert.id}&joinGroupStata=0" >${v?split("=")[1]}&nbsp;${v?split('=')[2]}</a></li>
 					           		 	[#else]
 				                	 	<li><a title="${v?split('=')[1]}" href="${base}/blog/contribute_list.jspx?columnId=${v?split('=')[0]}&uid=${usert.id}" >${v?split("=")[1]}</a></li>
 					           		 	[/#if]
@@ -133,14 +133,14 @@ outline: none;
 					        	[#list map[k] as v]
 						        	[#if user??]
 							        	[#if v?split('=')[2]??]
-			                                <li><a class="class1 box1" title="${v?split('=')[1]}&nbsp;${v?split('=')[2]}" id="${v?split('=')[0]}" href="${base}/blog/contribute_list.jspx?columnId=${v?split('=')[0]}">${v?split("=")[1]}&nbsp;${v?split('=')[2]}</a></li>
+			                                <li><a class="class1 box1" title="${v?split('=')[1]}&nbsp;${v?split('=')[2]}" id="${v?split('=')[0]}" href="${base}/blog/contribute_list.jspx?columnId=${v?split('=')[0]}&joinGroupStata=0">${v?split("=")[1]}&nbsp;${v?split('=')[2]}</a></li>
 				                    	[#else]
 			                                <li><a class="class1 box1" title="${v?split('=')[1]}" id="${v?split('=')[0]}" href="${base}/blog/contribute_list.jspx?columnId=${v?split('=')[0]}">${v?split("=")[1]}</a></li>
 				                    	[/#if]
 				                    [/#if]
 						            [#if usert??]
 							            [#if v?split('=')[2]??]
-					                	 	<li><a title="${v?split('=')[1]}&nbsp;${v?split('=')[2]}" href="${base}/blog/contribute_list.jspx?columnId=${v?split('=')[0]}&uid=${usert.id}">${v?split("=")[1]}&nbsp;${v?split('=')[2]}</a></li>
+					                	 	<li><a title="${v?split('=')[1]}&nbsp;${v?split('=')[2]}" href="${base}/blog/contribute_list.jspx?columnId=${v?split('=')[0]}&uid=${usert.id}&joinGroupStata=0">${v?split("=")[1]}&nbsp;${v?split('=')[2]}</a></li>
 					           		 	[#else]
 					                	 	<li><a title="${v?split('=')[1]}" href="${base}/blog/contribute_list.jspx?columnId=${v?split('=')[0]}&uid=${usert.id}">${v?split("=")[1]}</a></li>
 					           		 	[/#if]
