@@ -39,8 +39,8 @@
 	clear: both;
 }
 
-.htmleaf-container a{color: #2fa0ec;text-decoration: none;outline: none;font-family: "Microsoft YaHei",Arial;}
-.htmleaf-container a:hover,a:focus{color:#74777b;}
+.htmleaf-container a{color: #111010;text-decoration: none;outline: none;font-family: "Microsoft YaHei",Arial;font-size: 14px;}
+.htmleaf-container a:hover,a:focus{color:#cd0a0a;}
 
 .htmleaf-container{
 	margin: 0 auto;

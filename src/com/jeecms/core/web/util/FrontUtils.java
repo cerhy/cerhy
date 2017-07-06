@@ -22,6 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.propertyeditors.LocaleEditor;
 import org.springframework.context.MessageSource;
+import org.springframework.ui.ModelMap;
 
 import com.jeecms.common.web.RequestUtils;
 import com.jeecms.common.web.freemarker.DirectiveUtils;
@@ -295,6 +296,21 @@ public class FrontUtils {
 		}
 		return buff.toString();
 	}
+	public static String showLoginBlog(HttpServletRequest request,
+			ModelMap model, CmsSite site, String message,String state) {
+		if (!StringUtils.isBlank(message)) {
+			model.put(MESSAGE, message);
+		}
+		model.addAttribute("state",state);
+		StringBuilder buff = new StringBuilder("redirect:");
+		buff.append(site.getLoginUrl()).append("?");
+		buff.append(RETURN_URL).append("=");
+		buff.append(RequestUtils.getLocation(request));
+		if (!StringUtils.isBlank(site.getProcessUrl())) {
+			buff.append("&").append(PROCESS_URL).append(site.getProcessUrl());
+		}
+		return buff.toString();
+	}
 
 	/**
 	 * 显示登录页面
@@ -307,6 +323,10 @@ public class FrontUtils {
 	public static String showLogin(HttpServletRequest request,
 			Map<String, Object> model, CmsSite site) {
 		return showLogin(request, model, site, "true");
+	}
+	public static String showLoginBlog(HttpServletRequest request,
+			ModelMap model, CmsSite site) {
+		return showLoginBlog(request, model, site, "true","0");
 	}
 
 	/**

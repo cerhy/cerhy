@@ -866,8 +866,8 @@ a:hover{
 
 .xueke{background: #FFF;}
 
-.wrap-left{width: 200px;float: left;}
-.wrap-right{width: 735px;float: left;padding-left: 20px;}
+.wrap-left{width: 250px;float: left;}
+.wrap-right{width: 700px;float: left;padding-left: 20px;}
 .right-news-comments{
     margin-top: 20px;
 }
@@ -1311,7 +1311,7 @@ a:hover{
     border-radius: 10px;
     vertical-align: middle;
     text-align: center;
-    margin-left: 70px;
+    margin-left: 93px;
 }
 .user-setting .user-oparetion-btn:hover{
     background: #0b91df;

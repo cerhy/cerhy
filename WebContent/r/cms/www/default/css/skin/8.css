@@ -59,3 +59,6 @@ body, button, input, select, textarea {
   max-width: 320px;
   border-radius: 3px;
 }		
+.header-right-list li a{
+	color: #0b91df;
+}

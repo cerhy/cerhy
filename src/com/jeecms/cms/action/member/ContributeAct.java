@@ -1188,17 +1188,25 @@ public class ContributeAct extends AbstractContentMemberAct {
 	public void joinGroup(String code,String createUserId,HttpServletRequest request,HttpServletResponse response, ModelMap model)throws UnsupportedEncodingException, JSONException {
 		CmsUser user = CmsUtils.getUser(request);
 		if(user==null){
-			return;
+			try {
+				request.getRequestDispatcher("/login.jspx").forward(request, response);
+				return;
+			} catch (ServletException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}else{
 			CmsUser userT=cmsUserMng.findById(Integer.valueOf(createUserId.toString()));
-			Columns cu=columnsMng.findInfoByCode(code);
+			List<Columns> cc=columnsMng.findInfoByCodeAndUserid(code,Integer.valueOf(createUserId.toString()));
+			//Columns cu=columnsMng.findInfoByCode(code);
 			JSONObject json = new JSONObject();
 			CmsJoinGroup cjg=new CmsJoinGroup();
 			cjg.setCreateUserId(userT);
 			cjg.setJoinUserId(user);
 			cjg.setJoinCode(code);
 			cjg.setJoinTime(new Date());
-			cjg.setColumnsId(cu);
+			cjg.setColumnsId(cc.get(0));
 			int joinStatus=columnsMng.saveJoinGroup(cjg);
 			json.put("status",joinStatus);
 			ResponseUtils.renderJson(response, json.toString());
@@ -1237,7 +1245,7 @@ public class ContributeAct extends AbstractContentMemberAct {
 		try {
 			String tbHtml= "<div class='"+idss+"' id='"+idss+"'"
 					     + " style='display: block; top: "+Y+"px; left: "+X+"px; position: absolute; margin: 0px;"
-					     + "border: 0px solid rgb(255, 102, 0); width: 25px; height: 25px;'>"
+					     + "border: 0px solid rgb(255, 102, 0); width: 25px; height: 25px; z-index: 99'>"
 					     + "<h2 class='t"+idss+"' style='cursor: move; width: 25px; height: 25px; padding-left: 25px;'>"
 					     + "</h2></div>";
 			CmsPostilInfo cpi=new CmsPostilInfo();
@@ -1657,5 +1665,76 @@ public class ContributeAct extends AbstractContentMemberAct {
 			log.error(e.getMessage(),e);
 		}
 		return object.toString();
+	}
+	/**
+	 * 检测用户以及验证码是否存在
+	 */
+	@RequestMapping(value = "/blog/checkExist.jspx")
+	public void checkExistjspx(String groupName,String groupCode,HttpServletRequest request,HttpServletResponse response, ModelMap model)throws UnsupportedEncodingException, JSONException {
+		CmsUser user = CmsUtils.getUser(request);
+		JSONObject json = new JSONObject();
+		if(user!=null){
+			CmsUser users=cmsUserMng.findByUsername(groupName);
+			if(null!=users){
+				List<Columns> cc=columnsMng.findInfoByCodeAndUserid(groupCode,users.getId());
+				if(null!=cc&&cc.size()>0){
+					json.put("status",users.getId());
+				}else{
+					//验证码不存在
+					json.put("status","2");
+				}
+			}else{
+				//群组账号不存在
+				json.put("status","1");
+			}	
+		}else{
+			try {
+				request.getRequestDispatcher("/login.jspx").forward(request, response);
+				return;
+			} catch (ServletException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		ResponseUtils.renderJson(response, json.toString());
+	}
+	
+	
+	/**
+	 * 加入群组
+	 */
+	@RequestMapping(value = "/blog/joinGroupCode.jspx")
+	public void joinGroupCode(String code,String createUserId,HttpServletRequest request,HttpServletResponse response, ModelMap model)throws UnsupportedEncodingException, JSONException {
+		CmsUser user = CmsUtils.getUser(request);
+		JSONObject json = new JSONObject();
+		if(user==null){
+			try {
+				request.getRequestDispatcher("/login.jspx").forward(request, response);
+				return;
+			} catch (ServletException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}else{
+			List<CmsJoinGroup> joinGroup=columnsMng.getJoinGroupByUserIdAndCode(user.getId(),code);
+			if(null!=joinGroup&&joinGroup.size()>0){
+				//重复加入群组
+				json.put("status","2");
+			}else{
+				CmsUser userT=cmsUserMng.findById(Integer.valueOf(createUserId.toString()));
+				List<Columns> cc=columnsMng.findInfoByCodeAndUserid(code,Integer.valueOf(createUserId.toString()));
+				CmsJoinGroup cjg=new CmsJoinGroup();
+				cjg.setCreateUserId(userT);
+				cjg.setJoinUserId(user);
+				cjg.setJoinCode(code);
+				cjg.setJoinTime(new Date());
+				cjg.setColumnsId(cc.get(0));
+				int joinStatus=columnsMng.saveJoinGroup(cjg);
+				json.put("status",joinStatus);
+			}
+			ResponseUtils.renderJson(response, json.toString());
+		}
 	}
 }

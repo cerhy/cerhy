@@ -90,4 +90,9 @@ public class ColumnsMng {
 		return columnsDao.findInfoByCodeAndUserid(code,id);
 	}
 
+	public List<CmsJoinGroup> getJoinGroupByUserIdAndCode(Integer userId,
+			String code) {
+		return columnsDao.getJoinGroupByUserIdAndCode(userId,code);
+	}
+
 }

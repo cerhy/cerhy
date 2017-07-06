@@ -664,7 +664,8 @@ function smallIcons(X,Y,inputInfo){
          "top"  : Y,  
          "left" : X,
          "width":25,
-         "height":25
+         "height":25,
+         "z-index":99
      });
      $(".t"+idss).css({  
          "width":25,
@@ -940,10 +941,7 @@ Drag.prototype = {
 	     }); 
 	});
 	
-	/* skinChange(${user.theme!0});
-	function skinChange(n){
-		document.all.MrJin.href="/${res}/css/skin/"+n+".css"; 
-	} */
+
 	$("#sentDialog").dialog({
 		autoOpen: false,
 		modal: false,
@@ -956,7 +954,6 @@ Drag.prototype = {
 		position: ["center",80],
 		
 		close: function(event, ui) {
-			//skinChange(${user.theme!0});
 		},
 	    buttons: {
             "确定": function () {
@@ -1088,7 +1085,6 @@ Drag.prototype = {
 	
 	function closeSendDialog(){
 		$("#sentDialog").dialog("close");
-		//skinChange(${user.theme!0});
 	}
 </script>
 <script type="text/javascript">

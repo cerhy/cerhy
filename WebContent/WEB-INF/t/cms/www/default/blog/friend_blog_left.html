@@ -5,22 +5,22 @@
      <div class="user-center-left">
                  		 [#if usert??]
 				           <div class="user-setting">
-				                 <div class="pic-dt">
-		                      [#if usert.userImg??]<img src="${usert.userImg}" width="120" height="120">
-		                      [#else]<img src="/${res}/images/userImg-large.png" width="120" height="120">
+				                 <div class="pic-dt" style="margin-left: 60px;">
+		                      [#if usert.userImg??]<img src="${usert.userImg}" width="140" height="140">
+		                      [#else]<img src="/${res}/images/userImg-large.png" width="140" height="140">
 		                      [/#if]
 		                 </div>
 		                 <div class="user-name-dt"><a href="#" title="[#if usert.realname??]${usert.realname}[#else]${usert.username}[/#if]">[#if usert.realname??][@text_cut s=usert.realname len=5 append=''/][#else]${usert.username}[/#if]</a></div>
 		                 	[#if user??]
 		                     [#if usert??]
-		                     <!-- [#if fouceCheck??]
-		                     <a id="focus"[#if fouceCheck==0] onclick="focuss()"[#else]onclick="cancelfocus()"[/#if] style="cursor: pointer;" class="user-oparetion-btn1">[#if fouceCheck=0]关注[#else]取消关注[/#if]</a>
-		                     [/#if] -->
-		                     <!-- <a id="focus" style="cursor: pointer;" class="user-oparetion-btn1">关注</a>
-		                     <a id="cancelfocus" style="cursor: pointer;" class="user-oparetion-btn1">取消关注</a> -->
+		                     [#if fouceCheck??]
+		                     [#if user.id!=usert.id]
+		                     <a id="focus" style="cursor: pointer;margin-left: 25%; [#if fouceCheck==0] onclick="focuss()"[#else]onclick="cancelfocus()"[/#if] style="cursor: pointer;" class="user-oparetion-btn1">[#if fouceCheck=0]关注[#else]取消关注[/#if]</a>
+		                     [/#if]
+		                     [/#if]
 		                     [#if friendCheck??]
 		                     [#if user.id!=usert.id]
-		                     <a id="addCancelFriend" style="cursor: pointer;margin-left: 35%;" class="user-oparetion-btns" [#if friendCheck==0] onclick="addOrCancelFriends(0,${usert.id})"[#else]onclick="addOrCancelFriends(1,${usert.id})"[/#if]>[#if friendCheck==0]添加好友[#else]解除关系[/#if]</a>
+		                     <a id="addCancelFriend" style="cursor: pointer;margin-left: 5%;" class="user-oparetion-btns" [#if friendCheck==0] onclick="addOrCancelFriends(0,${usert.id})"[#else]onclick="addOrCancelFriends(1,${usert.id})"[/#if]>[#if friendCheck==0]添加好友[#else]解除关系[/#if]</a>
 		                     [/#if]
 		                     [/#if]
 		                    [#else]

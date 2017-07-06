@@ -36,10 +36,10 @@ outline: none;
 <div class="wrap-left">
      <div class="user-center-left">
                  		 [#if user??]
-				           <div class="user-setting">
-				                 <div class="pic-dt">
-				                      [#if user.userImg??]<img src="${user.userImg}" width="120" height="120" >
-				                      [#else]<img src="/${res}/images/userImg-large.png" width="120" height="120">
+				           <div class="user-setting" >
+				                 <div class="pic-dt" style="margin-left: 60px;">
+				                      [#if user.userImg??]<img src="${user.userImg}" width="140" height="140" >
+				                      [#else]<img src="/${res}/images/userImg-large.png" width="140" height="140">
 				                      [/#if]
 				                 </div>
 				                  [#if user??]
@@ -53,13 +53,15 @@ outline: none;
                       [/#if]
                  		 [#if usert??]
 				           <div class="user-setting">
-				                 <div class="pic-dt">
-				                      [#if usert.userImg??]<img src="${usert.userImg}" width="120" height="120" >
-				                      [#else]<img src="/${res}/images/userImg-large.png" width="120" height="120">
+				                 <div class="pic-dt" style="margin-left: 60px;">
+				                      [#if usert.userImg??]
+				                      <img src="${usert.userImg}" width="140" height="140" >
+				                      [#else]
+				                      <img src="/${res}/images/userImg-large.png" width="140" height="140">
 				                      [/#if]
 				                 </div>
 				                  [#if usert??]
-				                 <div class="user-name-dt"><a href="${base}/blog/index.jspx?uid=${usert.id}" title="[#if usert.realname??]${usert.realname}[#else]${usert.username}[/#if]">[#if usert.realname??][@text_cut s=usert.realname len=5 append=''/][#else]${usert.username}[/#if]</a></div>
+				                 	<div class="user-name-dt"><a href="${base}/blog/index.jspx?uid=${usert.id}" title="[#if usert.realname??]${usert.realname}[#else]${usert.username}[/#if]">[#if usert.realname??][@text_cut s=usert.realname len=5 append=''/][#else]${usert.username}[/#if]</a></div>
 				                 [/#if]				                     
 				           </div>
                       [/#if]
@@ -68,7 +70,7 @@ outline: none;
 					<!-- This is mtree list -->
 					<ul class=mtree>
 					  [#if user??]<li>
-					  <a class="ff" href="${base}/blog/contribute_add.jspx" style="color: #666;">
+					  <a class="ff" href="${base}/blog/contribute_add.jspx" style="color: #111010;">
 					  <span id="img" style="float: left;margin: -10px 0;margin-left: "></span>
 					  	发表博客
 					  </a>
@@ -164,14 +166,16 @@ outline: none;
 					        [#if joinGroupList?size gt 0]
                             [#list joinGroupList as j]
 		                    [#if user??]
-		                    <li><a href="${base}/blog/contribute_list.jspx?columnId=${j.columnsId.columnId}&joinGroupStata=0" title="${j.columnsId.columnName}" ><em></em>[@text_cut s=j.columnsId.columnName len=9 append='...'/]</a></li>
+		                    <li><a href="${base}/blog/contribute_list.jspx?columnId=${j.columnsId.columnId}&joinGroupStata=0" title="${j.columnsId.columnName}" >${j.columnsId.columnName}</a></li>
 		                    [/#if]
 		                    [#if usert??]
-		                    <li><a href="${base}/blog/contribute_list.jspx?columnId=${j.columnsId.columnId}&joinGroupStata=0&uid=${usert.id}" title="${j.columnsId.columnName}" ><em></em>[@text_cut s=j.columnsId.columnName len=9 append='...'/]</a></li>
+		                    <li><a href="${base}/blog/contribute_list.jspx?columnId=${j.columnsId.columnId}&joinGroupStata=0&uid=${usert.id}" title="${j.columnsId.columnName}" >${j.columnsId.columnName}</a></li>
 		                    [/#if]
 		                    [/#list]
 	                        [/#if]
+	                        [#if user??]
 	                        <li class="join"><a  href="javascript:;" style="color: #006400;" onclick="joinGroupByCode()">加入群组</a></li>
+	                        [/#if]
 	                        <br />
 					   </ul>
 					  </li>
@@ -316,7 +320,6 @@ function sJoinGroup(){
 		return false;
 	}else{
 		$("#groupNameTip").html("*");
-		
 	}
 	var groupCode=$("#groupCode").val();
 	if(groupCode==""){
@@ -325,12 +328,53 @@ function sJoinGroup(){
 	}else{
 		$("#groupCodeTip").html("*");
 	}
-	
-		//$("#errorTip").html("好好!");
-		
-	
-	
-	
+	var reg = new RegExp("^[0-9]*$");
+	if(!reg.test(groupName)){
+		$("#errorTip").html("群组账号类型不正确!");
+		return false;
+	}
+	if(!reg.test(groupCode)){
+		$("#errorTip").html("验证码类型不正确!");
+		return false;
+	}
+	$("#errorTip").html("");
+	$.ajax({
+    	url: "${base}/blog/checkExist.jspx?groupName="+groupName+"&groupCode="+groupCode,
+        type:'POST',
+        data:"",
+        dataType:'json',
+        async:false,
+        success:function(data) {
+        	var uid=data.status;
+        	if(data.status==1){
+				$("#errorTip").html("账号不存在!");
+				return false;
+        	}else if(data.status==2){
+				$("#errorTip").html("验证码不存在!");
+				return false;
+        	}else{
+				$("#errorTip").html("加入中...加入成功弹框将自动关闭!");
+        		$.ajax({
+        			url:"${base}/blog/joinGroupCode.jspx?code="+groupCode+"&createUserId="+uid,
+        			type:"POST",
+        			dataType:"json",
+        			data: "",
+        			success: function (data) {
+        				if(data.status==1){
+				        	$("#joinGroups").dialog("close");
+				        	window.location.reload()
+        				}else if(data.status==2){
+							$("#errorTip").html("请勿重复加入群组!");
+							return false;
+        				}else{
+							$("#errorTip").html("加入失败!");
+							return false;
+        				}
+        	        }
+        		});
+        	}
+        },
+    });	
 }
 </script>
 <script>

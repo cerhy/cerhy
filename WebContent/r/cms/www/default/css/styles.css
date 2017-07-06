@@ -60,10 +60,9 @@ ul.mtree.bubba a {
   padding: 7px 0px 7px 1em;
 }
 ul.mtree.bubba li li > a {
-  padding-left: 2em;
 }
 ul.mtree.bubba li li li > a {
-  padding-left: 3em;
+  padding-left: 1.5em;
 }
 ul.mtree.bubba li li li li > a {
   padding-left: 4em;
@@ -106,7 +105,7 @@ ul.mtree.skinny ul a {
 }
 
 ul.mtree.transit {
-  background: #111;
+  background: white;
 }
 ul.mtree.transit ul {
   margin-left: 0;

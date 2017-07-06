@@ -238,4 +238,13 @@ public class ColumnsDao extends HibernateBaseDao<Columns, Integer>{
 		return find(f);
 	}
 
+	public List<CmsJoinGroup> getJoinGroupByUserIdAndCode(Integer userId,
+			String code) {
+		Finder f = Finder.create("select bean from CmsJoinGroup bean");
+		f.append(" where bean.joinUserId.id=:userId and bean.joinCode=:joinCode");
+		f.setParam("joinCode", code);
+		f.setParam("userId", userId);
+		return find(f);
+	}
+
 }
