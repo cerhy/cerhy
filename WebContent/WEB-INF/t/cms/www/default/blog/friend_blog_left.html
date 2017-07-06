@@ -6,8 +6,8 @@
                  		 [#if usert??]
 				           <div class="user-setting">
 				                 <div class="pic-dt">
-		                      [#if usert.userImg??]<img src="${usert.userImg}" width="120" height="120">
-		                      [#else]<img src="/${res}/images/userImg-large.png" width="120" height="120">
+		                      [#if usert.userImg??]<img src="${usert.userImg}" width="120" height="140">
+		                      [#else]<img src="/${res}/images/userImg-large.png" width="120" height="140">
 		                      [/#if]
 		                 </div>
 		                 <div class="user-name-dt"><a href="#" title="[#if usert.realname??]${usert.realname}[#else]${usert.username}[/#if]">[#if usert.realname??][@text_cut s=usert.realname len=5 append=''/][#else]${usert.username}[/#if]</a></div>
