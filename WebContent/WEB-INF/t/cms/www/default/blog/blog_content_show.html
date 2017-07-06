@@ -187,10 +187,19 @@ table th,table td{word-break:break-all;white-space:normal;overflow:hidden;}
 				     <span id="comfirmSpan" style="display:none;cursor: pointer;">转载</span>
 				     <span id="cancelSpan" style="display:none; cursor: pointer;">取消转载</span>&nbsp;
 				     [#if user??] 
+				      
+				      [#if content.user.id==user.id]
+				      	<a href="javascript:;" onclick="cp();">复制</a>&nbsp;
+				        <a href="${base}/blog/contribute_delete.jspx?ids=${content.id}" onclick="javascript:return del();">删除</a>&nbsp;<a href="${base}/blog/contribute_edit.jspx?id=${content.id}&nextUrl=contribute_list.jspx">修改</a>
 						<span id="cancelSpan"  class="pos"><a href="javascript:void(0);" onclick="send();">发送</a></span>&nbsp;
-						<span id="cancelSpan"  class="pos"><a href="javascript:void(0);" onclick="cancel();">撤销</a></span>&nbsp;
+						<span id="cancelSpan"  class="pos"><a href="javascript:void(0);" onclick="cancel();">撤销 </a></span>&nbsp;
+					  [/#if] 
+					  [#if contentSentType??] 
+					  	 [#if contentSentType==2]
+						<span id="cancelSpan"  class="pos"><a href="javascript:void(0);" onclick="removeDialog();">移除</a></span>&nbsp;
+						 [/#if] 
 					 [/#if] 
-				     
+				     [/#if] 
 					 <span class="content-share">分享
 						 [#include "../content/inc_share.html"/]
 					 </span>&nbsp;
@@ -403,6 +412,9 @@ table th,table td{word-break:break-all;white-space:normal;overflow:hidden;}
       
       <div id="cancelDialog" style="display:none;">	
       		<p>要把本文从所有群组中撤回吗？(移除后需重新发送)</p>
+      </div>
+       <div id="removeDialog" style="display:none;">	
+      		<p>让这篇文章从我的博客中消失！(移除后需重新收录)</p>
       </div>
 [#if user??] 
 [#include "model.html"]
@@ -931,6 +943,7 @@ Drag.prototype = {
 	     }); 
 	});
 	
+
 	$("#sentDialog").dialog({
 		autoOpen: false,
 		modal: false,
@@ -975,6 +988,9 @@ Drag.prototype = {
  	                			alert("您输入的发件人有误！");
  	                		 }else if(msg==2){
  	                			alert("您输入的验证码有误！");
+ 	                		 }else if(msg==3){
+ 	                			alert("此栏目不允许发送！");
+ 	                			$("#sentDialog").dialog("close");
  	                		 }else{
  	                			alert("发送失败！");
  	                			$("#sentDialog").dialog("close");
@@ -1032,6 +1048,43 @@ Drag.prototype = {
              }  
          });  
 	}
+	
+	function removeDialog(){
+		 $("#removeDialog").dialog({  
+            resizable: false,  
+            width: 300,
+    		 height: 200, 
+            modal: true, 
+            position: ["center",80],
+            buttons: {  
+                "确定": function () {  
+               	 
+               	 $.ajax({
+     	                type: 'POST',
+     	                url : ' ${base}/blog/removeArticle.jspx',
+     	                dataType : 'json',
+     	                data : {'contentId' : $("#contentId").val()},
+     	                success : function(datas){
+     	                	 var code =datas.code;
+     	                	 if(code=="fail"){
+     	                		alert("移除失败！");
+     	                		$("#removeDialog").dialog("close");
+     	                		
+     	                	 }else{
+     	                		alert("移除成功！");
+     	                		$("#removeDialog").dialog("close");
+     	                	 }
+                	   	 }
+               			 });
+                    $(this).dialog("close");  
+                },  
+                "取消": function () {  
+                    $(this).dialog("close");  
+                }  
+            }  
+        });  
+	}
+	
 	function closeSendDialog(){
 		$("#sentDialog").dialog("close");
 	}
@@ -1086,4 +1139,10 @@ function okps(){
 }
 
 
+</script>
+<script type="text/javascript">
+	function cp(){
+		var urlcp = this.location.href;
+		alert("请选中博客链接地址使用Ctrl+c或鼠标右击复制："+" "+urlcp);
+	}
 </script>

@@ -72,6 +72,53 @@ public class BlogCommon {
 		return model;
 	}
 	
+	/**
+	 * 查询收录人的栏目id
+	 * @param request
+	 * @param model
+	 * @param user
+	 * @return ModelMap
+	 */
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	public ModelMap getEmbodyColumn(ModelMap model,Integer id){
+		if(id!=null){
+			List<Columns> columnsList = columnsMng.getOneColumnsByUserId(id);
+			List listc=null;
+			if(null!=columnsList&&columnsList.size()>0){
+				listc=new ArrayList();
+				for(int i=0;i<columnsList.size();i++){
+					Map<String,Object> map=new HashMap<String,Object>();
+					List<Columns> twoList=columnsMng.findTwoByParentId(columnsList.get(i).getColumnId());
+					List lists=new ArrayList();
+					String keyName="";
+					if(null!=twoList&&twoList.size()>0){
+						for(int j=0;j<twoList.size();j++){
+							if(null!=twoList.get(j).getUniqueCode()){
+								lists.add(twoList.get(j).getColumnId()+"="+twoList.get(j).getColumnName()+"=(验证码:"+twoList.get(j).getUniqueCode()+")");
+							}else{
+								lists.add(twoList.get(j).getColumnId()+"="+twoList.get(j).getColumnName());
+							}
+						}
+						keyName=columnsList.get(i).getColumnId()+"="+columnsList.get(i).getColumnName();
+					}else{
+						if(null!=columnsList.get(i).getUniqueCode()){
+							lists.add(columnsList.get(i).getColumnId()+"="+columnsList.get(i).getColumnName()+"=(验证码:"+columnsList.get(i).getUniqueCode()+")");
+						}else{
+							lists.add(columnsList.get(i).getColumnId()+"="+columnsList.get(i).getColumnName());
+						}
+					}
+					map.put(keyName,lists);
+					listc.add(map);
+				}
+			}
+			model.addAttribute("emBodyColumnsList", listc);
+		}else{
+			return model.addAttribute("emBodyColumnsList", null);
+		}
+		return model;
+	}
+	
+	
 	public ModelMap getChannel(HttpServletRequest request,ModelMap model,CmsUser user,CmsSite site) {
 		// 学科教研，市县教研专用
 		List<CmsPersonalChannel> channelList=null;
@@ -403,6 +450,18 @@ public class BlogCommon {
 			}
 		}else{
 			model.addAttribute("friendCheck", null);
+		}
+		return model;
+	}
+	/**
+	 * 查询是否已经添加好友
+	 **/
+	public ModelMap getContentSendType(ModelMap model,Integer contentId, CmsUser user) {
+		if(user!=null){
+			Integer contentSentType = cmsUserMng.getContentSendType(contentId, user.getId());
+			model.addAttribute("contentSentType", contentSentType);
+		}else{
+			model.addAttribute("contentSentType", null);
 		}
 		return model;
 	}

@@ -1449,6 +1449,17 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 	}
 	
 	/**
+	 * 根据内容id查询栏目id
+	 * @param contentId contentId
+	 * @return Integer
+	 */
+	@Override
+	public Integer getColumnId(int contentId){
+		String hql = "select  columnId from Content bean where bean.id="+contentId+"";
+		return (Integer) findUnique(hql);
+	}
+	
+	/**
 	 * 撤销用户发送的文章
 	 * @param contentId
 	 * @param userId
@@ -1457,7 +1468,30 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 	public Integer deleteContentSend(int contentId,int userId){
 		
 		
-		String hql = "delete   from ContentSend  where contentId="+contentId+" and sendUserId="+userId+"";
+		String hql = "delete   from ContentSend  where contentId="+contentId+" and sendUserId="+userId+" and type=1";
 		return (Integer) deleteObject(hql);
 	}
+	
+	/**
+	 * 移除用户收录的文章
+	 * @param contentId
+	 * @param userId
+	 * @return int
+	 */
+	public Integer removeContentSend(int contentId,int userId){
+		String hql = "delete   from ContentSend  where contentId="+contentId+" and recieve_user_id="+userId+" and type=2";
+		return (Integer) deleteObject(hql);
+	}
+	
+	/**
+	 * 查询文章类型是发送的还是收录的
+	 * @param contentId
+	 * @param userId
+	 * @return int
+	 */
+	public Integer getContentSendType(Integer contentId, Integer userId){
+		String hql = "select type   from ContentSend  where contentId="+contentId+" and recieve_user_id="+userId+"";
+		return (Integer) findUnique(hql);
+	}
+
 }

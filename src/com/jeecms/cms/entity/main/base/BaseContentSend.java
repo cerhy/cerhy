@@ -19,6 +19,7 @@ public abstract class BaseContentSend implements Serializable {
 	private java.lang.Integer sendUserId;
 	private java.lang.Integer recieveUserId;
 	private java.lang.Integer columnId;
+	private java.lang.Integer type;
 
 	public java.lang.Integer getId() {
 		return id;
@@ -76,13 +77,14 @@ public abstract class BaseContentSend implements Serializable {
 	}
 
 	public BaseContentSend(Integer id, Date sendTime, Integer contentId,
-			Integer sendUserId, Integer recieveUserId, Integer columnId) {
+			Integer sendUserId, Integer recieveUserId, Integer columnId,Integer type) {
 		this.id = id;
 		this.sendTime = sendTime;
 		this.contentId = contentId;
 		this.sendUserId = sendUserId;
 		this.recieveUserId = recieveUserId;
 		this.columnId = columnId;
+		this.type = type;
 		initialize();
 	}
 
@@ -92,4 +94,18 @@ public abstract class BaseContentSend implements Serializable {
 	public String toString() {
 		return super.toString();
 	}
+
+
+
+	public java.lang.Integer getType() {
+		return type;
+	}
+
+
+
+	public void setType(java.lang.Integer type) {
+		this.type = type;
+	}
+	
+	
 }

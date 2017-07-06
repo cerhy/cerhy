@@ -201,6 +201,7 @@ public class BlogAct {
  		model = blogCommon.getStarBlogger(request, model);
  		model = blogCommon.getAlreadyJoinGroup(request, model,user);
  		model = blogCommon.getFriends(user.getId(),model,1);
+ 		// model.addAttribute("channelId", 1);
 		FrontUtils.frontData(request, model, site);
 		Pagination p = contentMng.getPageForMember_blog(q, queryChannelId,site.getId(), modelId,userId, cpn(pageNo), 20,columnId,channelId);
 		//p.setTotalCount(totalCount);
@@ -209,7 +210,7 @@ public class BlogAct {
 			model.addAttribute("q", q);
 		}
 		if (modelId != null) {
-			model.addAttribute("modelId", modelId);
+			model.addAttribute("channelId", 1);
 		}
 		return FrontUtils.getTplPath(request, site.getSolutionPath(), TPLDIR_BLOG, nextUrl);
 	}
@@ -1280,6 +1281,8 @@ public class BlogAct {
 			model = blogCommon.getTotalCommentNum(model, u);
 			model = blogCommon.getStarBlogger(request, model);
 			model = blogCommon.getFriends(u.getId(),model,1);
+			
+			model = blogCommon.getContentSendType(model,Integer.parseInt(paths[1]),u);
 		} catch (Exception e) {
 			log.error("blogContentShow error", e);
 		}
@@ -1346,6 +1349,7 @@ public class BlogAct {
 			model = blogCommon.getAlreadyJoinGroup(request, model,user);
 			model = blogCommon.getChannel(request,model,user,site);
 			model = blogCommon.getColumn(request,model,user);
+			model = blogCommon.getEmbodyColumn(model,u.getId());
 			int totalCount = blogCommon.getTotalArticleNum(model,user);
 			model.addAttribute("articleCount", totalCount);
 	 		model = blogCommon.getTotalCommentNum(model, user);
@@ -1353,6 +1357,8 @@ public class BlogAct {
 	 		model = blogCommon.getAddFriends(request, model,user,u);
 	 		model = blogCommon.getFouces(request, model,user,u);
 	 		model = blogCommon.getFriends(user.getId(),model,1);
+	 		
+	 		
 			FrontUtils.frontData(request, model, site);
 			return FrontUtils.getTplPath(request, site.getSolutionPath(),TPLDIR_BLOG,"tpl.blogContentShowFriend");
 		}

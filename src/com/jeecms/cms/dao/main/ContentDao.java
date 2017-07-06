@@ -293,11 +293,33 @@ public interface ContentDao {
 	public Integer getUniqueCode(int userId,int validaCode);
 	
 	/**
+	 * 根据内容id查询栏目id
+	 * @param contentId 
+	 * @return Integer
+	 */
+	public Integer getColumnId(int contentId);
+	
+	/**
 	 * 撤销用户发送的文章
 	 * @param contentId
 	 * @param userId
 	 * @return int
 	 */
 	public Integer deleteContentSend(int contentId,int userId);
-		
+	
+	/**
+	 * 移除用户收录的文章
+	 * @param contentId
+	 * @param userId
+	 * @return int
+	 */
+	public Integer removeContentSend(int contentId,int userId);
+	
+	/**
+	 * 查询文章是否是发送的还是收录的
+	 * @param contentId
+	 * @param userId
+	 * @return int
+	 */
+	public Integer getContentSendType(Integer contentId,Integer userId);
 }

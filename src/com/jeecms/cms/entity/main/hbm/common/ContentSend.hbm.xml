@@ -8,7 +8,8 @@
 		<property name="contentId" column="content_id" type="java.lang.Integer" not-null="false" length="11"/>
 		<property name="recieveUserId" column="recieve_user_id" type="java.lang.Integer" not-null="false" length="11"/>
 		<property name="columnId"       column="column_id"      type="java.lang.Integer" not-null="false" length="11"/>
- 		<property name="sendUserId" column="send_user_id" type="integer" not-null="false" length="11"/>
+ 		<property name="sendUserId" column="send_user_id" type="java.lang.Integer" not-null="false" length="11"/>
+ 		<property name="type" column="type" type="java.lang.Integer" not-null="false" length="1"/>
 		<property name="sendTime" column="send_time" type="timestamp" not-null="false" length="19"/> 
 	</class>
 </hibernate-mapping>

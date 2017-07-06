@@ -1540,7 +1540,10 @@ public class ContributeAct extends AbstractContentMemberAct {
 			object.put("msg", "1");//发件人错误
 		}else if(result==2){
 			object.put("code", "fail");
-			object.put("msg", "2");//发件人错误
+			object.put("msg", "2");//验证码错误
+		}else if(result==3){
+			object.put("code", "fail");
+			object.put("msg", "3");//栏目不允许发送错误
 		}else{
 			object.put("code", "success");
 			object.put("msg", "发送成功！");
@@ -1610,6 +1613,58 @@ public class ContributeAct extends AbstractContentMemberAct {
 			}
 		}
 		ResponseUtils.renderJson(response, json.toString());
+	}
+	
+	/**
+	 * 收录文章 
+	 */
+	@RequestMapping(value = "/blog/embodyArticle.jspx", method = RequestMethod.POST)
+	public @ResponseBody String embodyArticle(Integer contentId,Integer friendId, Integer columnId,
+			HttpServletRequest request, HttpServletResponse response,
+			ModelMap model){
+		
+		JSONObject object = new JSONObject();
+		try {
+		CmsUser user = CmsUtils.getUser(request);
+		cmsUserMng.embodyArticle(contentId, user.getId(), friendId, columnId);
+		object.put("code", "success");
+		object.put("msg", "发送成功！");
+		}catch (Exception e){
+			try {
+				object.put("code", "fail");
+				log.error(e.getMessage(),e);
+			} catch (JSONException e1) {
+				log.error(e.getMessage(),e);
+			}
+			log.error(e.getMessage(),e);
+		}
+		return object.toString();
+	}
+
+	/**
+	 * 移除用户收录的文章 
+	 */
+	@RequestMapping(value = "/blog/removeArticle.jspx", method = RequestMethod.POST)
+	public @ResponseBody String removeArticle(Integer contentId,
+			HttpServletRequest request, HttpServletResponse response,
+			ModelMap model){
+		
+		JSONObject object = new JSONObject();
+		try {
+			
+		CmsUser user = CmsUtils.getUser(request);
+		Integer result =cmsUserMng.removeArticle(contentId, user.getId());
+		
+		object.put("code", "success");
+		}catch (Exception e){
+			try {
+				object.put("code", "fail");
+			} catch (JSONException e1) {
+				log.error(e.getMessage(),e);
+			}
+			log.error(e.getMessage(),e);
+		}
+		return object.toString();
 	}
 	/**
 	 * 检测用户以及验证码是否存在

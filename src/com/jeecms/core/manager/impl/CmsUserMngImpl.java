@@ -508,21 +508,28 @@ public class CmsUserMngImpl implements CmsUserMng {
 		if(recieveUserId==null){
 			result=1;
 		}else{
+			//验证发送人的栏目是否存在
 			Integer columnId = contentDao.getUniqueCode(recieveUserId,validateCode);
-			if("".equals(columnId) || columnId==null){
+			if(columnId==null){
 				result=2;
 			}else{
-				ContentSend send = new ContentSend();
-				//内容id
-				send.setContentId(contentId);
-				//发送人id
-				send.setSendUserId(userId);
-				//接收人
-				send.setRecieveUserId(recieveUserId);
-				send.setSendTime(new Date());
-				//栏目id
-				send.setColumnId(columnId);
-				contentDao.saveContentSend(send);
+				//验证当前文章是否存在栏目id
+				Integer colId = contentDao.getColumnId(contentId);
+				if(colId==null){
+					result=3;
+				}else{
+					ContentSend send = new ContentSend();
+					//内容id
+					send.setContentId(contentId);
+					//发送人id
+					send.setSendUserId(userId);
+					//接收人
+					send.setRecieveUserId(recieveUserId);
+					send.setSendTime(new Date());
+					//栏目id
+					send.setColumnId(columnId);
+					contentDao.saveContentSend(send);
+				}
 			}
 			
 		}
@@ -535,7 +542,53 @@ public class CmsUserMngImpl implements CmsUserMng {
 	 * @param userId
 	 * @return int
 	 */
+	@Override
 	public Integer cancelArticle(Integer contentId,Integer userId){
 		return contentDao.deleteContentSend(contentId, userId);
+	}
+	
+	/**
+	 * 收录文章
+	 * @param contentId
+	 * @param userId
+	 * @param friendId
+	 * @return int
+	 */
+	@Override
+	public void embodyArticle(Integer contentId,Integer userId,Integer friendId,Integer columnId){
+		ContentSend send = new ContentSend();
+		//内容id
+		send.setContentId(contentId);
+		//收录人及发送人id
+		send.setSendUserId(friendId);
+		//接收人
+		send.setRecieveUserId(userId);
+		send.setSendTime(new Date());
+		//栏目id
+		send.setColumnId(columnId);
+		send.setType(2);//2为收录
+		contentDao.saveContentSend(send);
+	}
+	
+	/**
+	 * 移除用户收录的文章
+	 * @param contentId
+	 * @param userId
+	 * @return int
+	 */
+	@Override
+	public Integer removeArticle(Integer contentId,Integer userId){
+		return contentDao.removeContentSend(contentId, userId);
+	}
+	
+	/**
+	 * 查询文章是否是发送的还是收录的
+	 * @param contentId
+	 * @param userId
+	 * @return int
+	 */
+	@Override
+	public Integer getContentSendType(Integer contentId,Integer userId){
+		return contentDao.getContentSendType(contentId, userId);
 	}
 }
