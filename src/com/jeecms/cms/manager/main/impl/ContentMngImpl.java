@@ -132,8 +132,8 @@ public class ContentMngImpl implements ContentMng, ChannelDeleteChecker {
 		return dao.getPage(title, null,memberId,memberId, false, false,ContentStatus.all, null, siteId,modelId,  channelId, 0, pageNo,pageSize,removeBlog);
 	}
 	
-	public Pagination getPageForMember_blog(String title, Integer channelId,Integer siteId,Integer modelId, Integer userId,  int pageNo, int pageSize,Integer columnId,Integer channelId2) {
-		return dao.getPage_blog(title, null,userId, false, false,ContentStatus.all, null, siteId,modelId,  channelId, 0, pageNo,pageSize,columnId,channelId2);
+	public Pagination getPageForMember_blog(String title, Integer channelId,Integer siteId,Integer modelId, Integer userId,  int pageNo, int pageSize,Integer columnId,Integer channelId2,Integer recieveUserId) {
+		return dao.getPage_blog(title, null,userId, false, false,ContentStatus.all, null, siteId,modelId,  channelId, 0, pageNo,pageSize,columnId,channelId2,recieveUserId);
 	}
 	
 	@Transactional(readOnly = true)
@@ -1443,8 +1443,8 @@ public class ContentMngImpl implements ContentMng, ChannelDeleteChecker {
 
 	@Override
 	public Pagination getPageForMember_firendsBlog(int ids,String title, Integer channelId,
-			Integer siteId, Integer modelId,Integer memberId, int pageNo, int pageSize,String columnId) {
-		return dao.getPage_friendsBlog(ids,title, null,memberId,memberId, false, false,ContentStatus.all, null, siteId,modelId,  channelId, 0, pageNo,pageSize,columnId);
+			Integer siteId, Integer modelId,Integer memberId, int pageNo, int pageSize,String columnId,Integer recieveUserId) {
+		return dao.getPage_friendsBlog(ids,title, null,memberId,memberId, false, false,ContentStatus.all, null, siteId,modelId,  channelId, 0, pageNo,pageSize,columnId,recieveUserId);
 	}
 
 	@Override

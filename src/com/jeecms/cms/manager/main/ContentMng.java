@@ -56,7 +56,7 @@ public interface ContentMng {
 			Integer siteId, Integer modelId,Integer memberId, int pageNo, int pageSize);
 	
 	public Pagination getPageForMember_blog(String title, Integer channelId,
-			Integer siteId, Integer modelId,Integer userId, int pageNo, int pageSize,Integer columnId,Integer channelId2);
+			Integer siteId, Integer modelId,Integer userId, int pageNo, int pageSize,Integer columnId,Integer channelId2,Integer recieveUserId);
 	
 	/**
 	 * 根据内容ID数组获取文章列表
@@ -227,7 +227,7 @@ public interface ContentMng {
 
 
 	public Pagination getPageForMember_firendsBlog(int ids,String title, Integer channelId,
-			Integer siteId, Integer modelId,Integer memberId, int pageNo, int pageSize,String column_name);
+			Integer siteId, Integer modelId,Integer memberId, int pageNo, int pageSize,String column_name,Integer recieveUserId);
 
 
 	public List<Content> findListInfo(int userId);

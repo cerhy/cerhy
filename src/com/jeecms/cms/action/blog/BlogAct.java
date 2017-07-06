@@ -71,6 +71,7 @@ public class BlogAct {
 	public String blog_index(String q, Integer modelId,Integer queryChannelId,String nextUrl,Integer pageNo,HttpServletRequest request, ModelMap model) {
 		CmsSite site = CmsUtils.getSite(request);
 		CmsUser user = CmsUtils.getUser(request);
+		Integer recieveUserId = user.getId();
 		if (user == null) {
 			String uid=request.getParameter("uid");
 			if(StringUtils.isNotEmpty(uid)){
@@ -90,7 +91,7 @@ public class BlogAct {
 	    model = blogCommon.getAlreadyJoinGroup(request, model,user);
 	    model = blogCommon.getFriends(user.getId(),model,1);
 		FrontUtils.frontData(request, model, site);
-		Pagination p = contentMng.getPageForMember_blog(q, queryChannelId,site.getId(), modelId,user.getId(), cpn(pageNo), 20,null,null);
+		Pagination p = contentMng.getPageForMember_blog(q, queryChannelId,site.getId(), modelId,user.getId(), cpn(pageNo), 20,null,null,recieveUserId);
 		//p.setTotalCount(totalCount);
 		model.addAttribute("pagination", p);
 		if (!StringUtils.isBlank(q)) {
@@ -154,6 +155,7 @@ public class BlogAct {
 	public String blog_list(String q, Integer modelId,Integer queryChannelId,String nextUrl,Integer pageNo,HttpServletRequest request, ModelMap model) {
 		CmsSite site = CmsUtils.getSite(request);
 		CmsUser user = CmsUtils.getUser(request);
+		Integer recieveUserId = user.getId();
 		if (user == null) {
 			String uid=request.getParameter("uid");
 			if(StringUtils.isNotEmpty(uid)){
@@ -203,7 +205,7 @@ public class BlogAct {
  		model = blogCommon.getFriends(user.getId(),model,1);
  		// model.addAttribute("channelId", 1);
 		FrontUtils.frontData(request, model, site);
-		Pagination p = contentMng.getPageForMember_blog(q, queryChannelId,site.getId(), modelId,userId, cpn(pageNo), 20,columnId,channelId);
+		Pagination p = contentMng.getPageForMember_blog(q, queryChannelId,site.getId(), modelId,userId, cpn(pageNo), 20,columnId,channelId,recieveUserId);
 		//p.setTotalCount(totalCount);
 		model.addAttribute("pagination", p);
 		if (!StringUtils.isBlank(q)) {
@@ -963,6 +965,7 @@ public class BlogAct {
 	public String friendCenter(String userIds,String q, Integer modelId,Integer queryChannelId,String nextUrl,Integer pageNo,HttpServletRequest request, ModelMap model) {
 		CmsSite site = CmsUtils.getSite(request);
 		CmsUser user = CmsUtils.getUser(request);
+		Integer recieveUserId = user.getId();
 		/*if(user==null){
 			return FrontUtils.showLogin(request, model, site);
 		}*/
@@ -996,7 +999,7 @@ public class BlogAct {
 		model = blogCommon.getFouces(request, model,userT,user);
 		model = blogCommon.getFriends(userT.getId(),model,1);
 		FrontUtils.frontData(request, model, site);
-		Pagination p = contentMng.getPageForMember_firendsBlog(Integer.valueOf(userT.getId()),q, queryChannelId,site.getId(), modelId,null, cpn(pageNo), 20,null);
+		Pagination p = contentMng.getPageForMember_firendsBlog(Integer.valueOf(userT.getId()),q, queryChannelId,site.getId(), modelId,null, cpn(pageNo), 20,null,recieveUserId);
 		//p.setTotalCount(totalCount);
 		model.addAttribute("pagination", p);
 		model.addAttribute("GroupFlag", 0);
@@ -1015,6 +1018,7 @@ public class BlogAct {
 	public String blog_list_friend(String q, Integer modelId,Integer queryChannelId,String nextUrl,Integer pageNo,HttpServletRequest request, ModelMap model) {
 		CmsSite site = CmsUtils.getSite(request);
 		CmsUser u = CmsUtils.getUser(request);
+		Integer recieveUserId = u.getId();
 		String user_ids = request.getParameter("user_ids");
 		CmsUser user=cmsUserMng.findById(Integer.valueOf(user_ids.toString()));
 		String joinGroupStata = request.getParameter("joinGroupStata");
@@ -1061,7 +1065,7 @@ public class BlogAct {
 		model.addAttribute("userIds", user.getId());
 		//model.addAttribute("columnId", columnId);
 		FrontUtils.frontData(request, model, site);
-		Pagination p = contentMng.getPageForMember_blog(q, queryChannelId,site.getId(), modelId,userId, cpn(pageNo), 20,columnId,channelId);
+		Pagination p = contentMng.getPageForMember_blog(q, queryChannelId,site.getId(), modelId,userId, cpn(pageNo), 20,columnId,channelId,recieveUserId);
 		//p.setTotalCount(totalCount);
 		model.addAttribute("pagination", p);
 		if (!StringUtils.isBlank(q)) {
