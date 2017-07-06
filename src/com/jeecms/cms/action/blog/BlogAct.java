@@ -1252,6 +1252,7 @@ public class BlogAct {
 			model.addAttribute("title", content.getTitleByNo(pageNo));
 			model.addAttribute("txt", txt);
 			model.addAttribute("columnIdZ", columnId);
+			model.addAttribute("columnId", columnId);
 			model.addAttribute("pic", content.getPictureByNo(pageNo));
 			String collection = request.getParameter("collection");
 			String d = request.getParameter("d");
@@ -1322,6 +1323,7 @@ public class BlogAct {
 			model.addAttribute("title", content.getTitleByNo(pageNo));
 			model.addAttribute("txt", txt);
 			model.addAttribute("columnIdZ", columnId);
+			model.addAttribute("columnId", columnId);
 			model.addAttribute("pic", content.getPictureByNo(pageNo));
 			model.addAttribute("password", content.getPassword());
 			
