@@ -25,7 +25,7 @@ $(function() {
          </div>
    [/#if] 
   <div class="register-nav"><span>用户登录</span><!-- <div class="register-login">没有账号，<a class="tc" href="${base}/register.jspx">立即注册 ></a></div> --></div> 
-  <form id="jvForm" action="${base}/login.jspx" method="post">
+	  <form id="jvForm" action="${base}/login.jspx" method="post">
       <div class="inf-message">
       [#if message??]
             
@@ -77,3 +77,17 @@ $(function() {
 [#include "../include/footer.html"/]
 </body>
 </html>
+<script type="text/javascript">
+function getQueryString(name) {
+    var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
+    var r = window.location.search.substr(1).match(reg);
+    if (r != null) {
+        return unescape(r[2]);
+    }
+    return null;
+}
+
+if(getQueryString("state")==0){
+	$("#jvForm").attr('action',"${base}/login.jspx?state=0");
+}
+</script>

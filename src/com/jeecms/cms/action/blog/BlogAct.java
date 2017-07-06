@@ -77,7 +77,7 @@ public class BlogAct {
 				user=cmsUserMng.findById(Integer.parseInt(uid));
 				model.addAttribute("usert", user);
 			}else{
-				return FrontUtils.showLogin(request, model, site);
+				return FrontUtils.showLoginBlog(request, model, site);
 			}
 		}
 		model =blogCommon.getHyperlink(request,model,user);

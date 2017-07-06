@@ -19,6 +19,7 @@ import org.apache.shiro.web.util.WebUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.util.UrlPathHelper;
 
 import com.jeecms.common.security.CaptchaErrorException;
 import com.jeecms.common.security.CaptchaRequiredException;
@@ -64,6 +65,8 @@ public class CmsAuthenticationFilter extends FormAuthenticationFilter {
 		HttpServletRequest req = (HttpServletRequest) request;
 		HttpServletResponse res = (HttpServletResponse) response;
 		String username = (String) token.getPrincipal();
+		UrlPathHelper helper = new UrlPathHelper();
+		String queryString = helper.getOriginatingQueryString(req);
 		boolean adminLogin=false;
 		if (req.getRequestURI().startsWith(req.getContextPath() + getAdminPrefix())){
 			adminLogin=true;
@@ -92,6 +95,9 @@ public class CmsAuthenticationFilter extends FormAuthenticationFilter {
 		try {
 			Subject subject = getSubject(request, response);
 			subject.login(token);;
+			if(StringUtils.isNotEmpty(queryString)&&queryString.equals("state=0")){
+				return onLoginSuccessBlog(token,adminLogin,subject, request, response);
+			}
 			return onLoginSuccess(token,adminLogin,subject, request, response);
 		} catch (AuthenticationException e) {
 			//e.printStackTrace();
@@ -163,6 +169,30 @@ public class CmsAuthenticationFilter extends FormAuthenticationFilter {
 		unifiedUserMng.updateLoginSuccess(user.getId(), ip);
 		loginCookie(username, req, res);
 		return super.onLoginSuccess(token, subject, request, response);
+	}
+	/**
+	 * 博客登录成功
+	 */
+	private boolean onLoginSuccessBlog(AuthenticationToken token,boolean adminLogin,Subject subject,
+			ServletRequest request, ServletResponse response)
+					throws Exception {
+		HttpServletRequest req = (HttpServletRequest) request;
+		HttpServletResponse res = (HttpServletResponse) response;
+		String username = (String) subject.getPrincipal();
+		CmsUser user = cmsUserMng.findByUsername(username);
+		String ip = RequestUtils.getIpAddr(req);
+		Date now = new Timestamp(System.currentTimeMillis());
+		String userSessionId=session.getSessionId((HttpServletRequest)request, (HttpServletResponse)response);
+		userMng.updateLoginInfo(user.getId(), ip,now,userSessionId);
+		//管理登录
+		if(adminLogin){
+			cmsLogMng.loginSuccess(req, user);
+		}
+		unifiedUserMng.updateLoginSuccess(user.getId(), ip);
+		loginCookie(username, req, res);
+		WebUtils.getAndClearSavedRequest(req);
+		WebUtils.redirectToSavedRequest(req, res, "/blog/index.jspx");
+		return false;
 	}
 
 	/**
