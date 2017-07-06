@@ -335,7 +335,7 @@ function sJoinGroup(){
 	}
 	$("#errorTip").html("");
 	$.ajax({
-    	url: "${base}/blog/checkExistjspx.jspx?groupName="+groupName+"&groupCode="+groupCode,
+    	url: "${base}/blog/checkExist.jspx?groupName="+groupName+"&groupCode="+groupCode,
         type:'POST',
         data:"",
         dataType:'json',
@@ -349,9 +349,9 @@ function sJoinGroup(){
 				$("#errorTip").html("验证码不存在!");
 				return false;
         	}else{
-				$("#errorTip").html("加入中...");
+				$("#errorTip").html("加入中...加入成功弹框将自动关闭!");
         		$.ajax({
-        			url:"${base}/blog/joinGroup.jspx?code="+groupCode+"&createUserId="+uid,
+        			url:"${base}/blog/joinGroupCode.jspx?code="+groupCode+"&createUserId="+uid,
         			type:"POST",
         			dataType:"json",
         			data: "",
@@ -359,6 +359,9 @@ function sJoinGroup(){
         				if(data.status==1){
 				        	$("#joinGroups").dialog("close");
 				        	window.location.reload()
+        				}else if(data.status==2){
+							$("#errorTip").html("请勿重复加入群组!");
+							return false;
         				}else{
 							$("#errorTip").html("加入失败!");
 							return false;
