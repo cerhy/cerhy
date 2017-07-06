@@ -211,6 +211,15 @@ table th,table td{word-break:break-all;white-space:normal;overflow:hidden;}
 	</div> -->
      [#include "friend_blog_left.html"/]
      [#include "friend_content.html"/]
+      <div class="wrap-right" id="mainpwdiv">
+       		<div class="personCenter-userInfo blog_right xueke-acticle">
+       		<div style="margin-top: 200px;text-align: center">
+		    	<input  type="password" placeholder="请输入阅读密码" id="mima" class="plcode"></input>
+		    	<input  type="button" onclick="jiaoyan()" value="校验密码"style="width: 90px;height: 36px;line-height: 36px; background: #00a8eb;color: #FFF;text-align: center;display: inline-block;" />
+<!-- 		    	<span style="color:#f00; margin-left:10px;">密码类型为数字</span> -->
+		    </div>
+		    </div>
+       </div>
        <div class="wrap-right" id="maindiv">
            <div class="personCenter-userInfo blog_right xueke-acticle">
                 <div ><h2>${content.title}</h2></div>
@@ -395,17 +404,6 @@ table th,table td{word-break:break-all;white-space:normal;overflow:hidden;}
     				[/#if]
 				</div>
            </div>
-       </div>
-	   
-	   
-	   <div class="wrap-right" id="mainpwdiv">
-       		<div class="personCenter-userInfo blog_right xueke-acticle">
-       		<div style="margin-top: 200px;text-align: center">
-		    	<input  type="password" placeholder="请输入阅读密码" id="mima" class="plcode"></input>
-		    	<input  type="button" onclick="jiaoyan()" value="校验密码"style="width: 90px;height: 36px;line-height: 36px; background: #00a8eb;color: #FFF;text-align: center;display: inline-block;" />
-<!-- 		    	<span style="color:#f00; margin-left:10px;">密码类型为数字</span> -->
-		    </div>
-		    </div>
        </div>
 	   
 	   
