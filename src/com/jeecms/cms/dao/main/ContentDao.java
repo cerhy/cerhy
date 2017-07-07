@@ -80,7 +80,7 @@ public interface ContentDao {
 	public Pagination getPage_blog(String title, Integer typeId,Integer inputUserId,
 			 boolean topLevel, boolean recommend,
 			ContentStatus status, Byte checkStep, Integer siteId,Integer modelId,
-			Integer channelId,int orderBy, int pageNo, int pageSize,Integer columnId,Integer channelId2);
+			Integer channelId,int orderBy, int pageNo, int pageSize,Integer columnId,Integer channelId2,Integer recieveUserId);
 	
 	/**
 	 * 获得自己发布的内容列表
@@ -252,7 +252,7 @@ public interface ContentDao {
 	public Pagination getPage_friendsBlog(int ids,String title, Integer typeId,Integer currUserId,
 			Integer inputUserId, boolean topLevel, boolean recommend,
 			ContentStatus status, Byte checkStep, Integer siteId,Integer modelId,
-			Integer channelId,int orderBy, int pageNo, int pageSize,String columnId);
+			Integer channelId,int orderBy, int pageNo, int pageSize,String columnId,Integer recieveUserId);
 
 	public List<Content> getListInfo(int userId);
 	

@@ -2,7 +2,6 @@ package com.jeecms.cms.action.blog;
 
 import static com.jeecms.cms.Constants.TPLDIR_BLOG;
 import static com.jeecms.common.page.SimplePage.cpn;
-import static com.jeecms.core.action.front.LoginAct.PROCESS_URL;
 
 import java.io.IOException;
 import java.text.DateFormat;
@@ -11,9 +10,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import javax.servlet.ServletException;
@@ -28,7 +25,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
 
-import com.jeecms.cms.action.front.DynamicPageAct;
 import com.jeecms.cms.entity.main.Channel;
 import com.jeecms.cms.entity.main.CmsModel;
 import com.jeecms.cms.entity.main.Columns;
@@ -51,7 +47,6 @@ import com.jeecms.common.page.Pagination;
 import com.jeecms.common.page.SimplePage;
 import com.jeecms.common.util.RedisUtil;
 import com.jeecms.common.util.StrUtils;
-import com.jeecms.common.web.RequestUtils;
 import com.jeecms.common.web.ResponseUtils;
 import com.jeecms.common.web.session.SessionProvider;
 import com.jeecms.core.entity.CmsConfig;
@@ -63,7 +58,6 @@ import com.jeecms.core.web.WebErrors;
 import com.jeecms.core.web.util.CmsUtils;
 import com.jeecms.core.web.util.FrontUtils;
 import com.jeecms.core.web.util.URLHelper.PageInfo;
-import com.octo.captcha.service.CaptchaServiceException;
 import com.octo.captcha.service.image.ImageCaptchaService;
 
 public class BlogAct {
@@ -71,6 +65,7 @@ public class BlogAct {
 	public String blog_index(String q, Integer modelId,Integer queryChannelId,String nextUrl,Integer pageNo,HttpServletRequest request, ModelMap model) {
 		CmsSite site = CmsUtils.getSite(request);
 		CmsUser user = CmsUtils.getUser(request);
+		Integer recieveUserId = null;
 		if (user == null) {
 			String uid=request.getParameter("uid");
 			if(StringUtils.isNotEmpty(uid)){
@@ -80,6 +75,7 @@ public class BlogAct {
 				return FrontUtils.showLoginBlog(request, model, site);
 			}
 		}
+		recieveUserId = user.getId();
 		model =blogCommon.getHyperlink(request,model,user);
 		model = blogCommon.getColumn(request,model,user);
 	    model = blogCommon.getChannel(request,model,user,site);
@@ -90,7 +86,7 @@ public class BlogAct {
 	    model = blogCommon.getAlreadyJoinGroup(request, model,user);
 	    model = blogCommon.getFriends(user.getId(),model,1);
 		FrontUtils.frontData(request, model, site);
-		Pagination p = contentMng.getPageForMember_blog(q, queryChannelId,site.getId(), modelId,user.getId(), cpn(pageNo), 20,null,null);
+		Pagination p = contentMng.getPageForMember_blog(q, queryChannelId,site.getId(), modelId,user.getId(), cpn(pageNo), 20,null,null,recieveUserId);
 		//p.setTotalCount(totalCount);
 		model.addAttribute("pagination", p);
 		if (!StringUtils.isBlank(q)) {
@@ -154,7 +150,9 @@ public class BlogAct {
 	public String blog_list(String q, Integer modelId,Integer queryChannelId,String nextUrl,Integer pageNo,HttpServletRequest request, ModelMap model) {
 		CmsSite site = CmsUtils.getSite(request);
 		CmsUser user = CmsUtils.getUser(request);
+		Integer recieveUserId = null;
 		if (user == null) {
+			
 			String uid=request.getParameter("uid");
 			if(StringUtils.isNotEmpty(uid)){
 				user=cmsUserMng.findById(Integer.parseInt(uid));
@@ -163,6 +161,7 @@ public class BlogAct {
 				return FrontUtils.showLogin(request, model, site);
 			}
 		}
+		recieveUserId = user.getId();
 		int userId=user.getId();
 		String joinGroupStata=request.getParameter("joinGroupStata");
 		Integer columnId = null;
@@ -203,7 +202,7 @@ public class BlogAct {
  		model = blogCommon.getFriends(user.getId(),model,1);
  		// model.addAttribute("channelId", 1);
 		FrontUtils.frontData(request, model, site);
-		Pagination p = contentMng.getPageForMember_blog(q, queryChannelId,site.getId(), modelId,userId, cpn(pageNo), 20,columnId,channelId);
+		Pagination p = contentMng.getPageForMember_blog(q, queryChannelId,site.getId(), modelId,userId, cpn(pageNo), 20,columnId,channelId,recieveUserId);
 		//p.setTotalCount(totalCount);
 		model.addAttribute("pagination", p);
 		if (!StringUtils.isBlank(q)) {
@@ -963,6 +962,7 @@ public class BlogAct {
 	public String friendCenter(String userIds,String q, Integer modelId,Integer queryChannelId,String nextUrl,Integer pageNo,HttpServletRequest request, ModelMap model) {
 		CmsSite site = CmsUtils.getSite(request);
 		CmsUser user = CmsUtils.getUser(request);
+		Integer recieveUserId = null;
 		/*if(user==null){
 			return FrontUtils.showLogin(request, model, site);
 		}*/
@@ -980,6 +980,7 @@ public class BlogAct {
 		}
 		channelMng.updateBlogVisitNum(userT);
 		if(user!=null){
+			recieveUserId = user.getId();
 			if(!user.getId().equals(userT.getId())){
 				channelMng.updateBlogVisitorTime(user,userT);
 			}
@@ -996,7 +997,7 @@ public class BlogAct {
 		model = blogCommon.getFouces(request, model,userT,user);
 		model = blogCommon.getFriends(userT.getId(),model,1);
 		FrontUtils.frontData(request, model, site);
-		Pagination p = contentMng.getPageForMember_firendsBlog(Integer.valueOf(userT.getId()),q, queryChannelId,site.getId(), modelId,null, cpn(pageNo), 20,null);
+		Pagination p = contentMng.getPageForMember_firendsBlog(Integer.valueOf(userT.getId()),q, queryChannelId,site.getId(), modelId,null, cpn(pageNo), 20,null,recieveUserId);
 		//p.setTotalCount(totalCount);
 		model.addAttribute("pagination", p);
 		model.addAttribute("GroupFlag", 0);
@@ -1015,6 +1016,7 @@ public class BlogAct {
 	public String blog_list_friend(String q, Integer modelId,Integer queryChannelId,String nextUrl,Integer pageNo,HttpServletRequest request, ModelMap model) {
 		CmsSite site = CmsUtils.getSite(request);
 		CmsUser u = CmsUtils.getUser(request);
+		Integer recieveUserId = u.getId();
 		String user_ids = request.getParameter("user_ids");
 		CmsUser user=cmsUserMng.findById(Integer.valueOf(user_ids.toString()));
 		String joinGroupStata = request.getParameter("joinGroupStata");
@@ -1061,7 +1063,7 @@ public class BlogAct {
 		model.addAttribute("userIds", user.getId());
 		//model.addAttribute("columnId", columnId);
 		FrontUtils.frontData(request, model, site);
-		Pagination p = contentMng.getPageForMember_blog(q, queryChannelId,site.getId(), modelId,userId, cpn(pageNo), 20,columnId,channelId);
+		Pagination p = contentMng.getPageForMember_blog(q, queryChannelId,site.getId(), modelId,userId, cpn(pageNo), 20,columnId,channelId,recieveUserId);
 		//p.setTotalCount(totalCount);
 		model.addAttribute("pagination", p);
 		if (!StringUtils.isBlank(q)) {
@@ -1095,6 +1097,7 @@ public class BlogAct {
 			response.getWriter().print("0");
 		}
 	}
+	
 	
 	public void blog_focus_check(String focusUserId, HttpServletRequest request, HttpServletResponse response) throws IOException {
 		CmsUser user = CmsUtils.getUser(request);
