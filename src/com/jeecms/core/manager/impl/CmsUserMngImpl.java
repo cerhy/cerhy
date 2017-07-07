@@ -528,6 +528,7 @@ public class CmsUserMngImpl implements CmsUserMng {
 					send.setSendTime(new Date());
 					//栏目id
 					send.setColumnId(columnId);
+					send.setType(1);
 					contentDao.saveContentSend(send);
 				}
 			}
