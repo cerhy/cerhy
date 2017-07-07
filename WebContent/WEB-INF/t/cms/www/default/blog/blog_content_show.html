@@ -180,17 +180,17 @@ outline: none;
        <div class="wrap-right" id="maindiv">
            <div class="personCenter-userInfo blog_right xueke-acticle">
                 <div ><h2>${content.title}</h2></div>
-                <input type="text" style="display:none" id="hipw" value="${content.password!}" />
+                <input type="text" style="display:none" id="hipw" value="${content.password!''}" />
                 <div class="gray9 h2dt pt5" style="margin-bottom: 2px;">
 				    <span class="pr15">发布时间：${content.releaseDate}</span>
 					<span class="pr15">
 					   <a target="_blank" href="${base}/blog/find_all_url_friend.jspx?userIds=${content.user.id}" class="bz">作者：${content.author!content.user.username}</a>
 					 </span>
+					 <span class="pr15 yuedu">浏览次数：<span id="views"></span></span> 
+					 <span class="pr15 pinglun">评论：${content.commentsCheckedNum!} </span>
                 </div>
                 <div class="gray9 h2dt pt5">
                 	<span class="pr15" id="backto" title="返回"><img style="width: 20px;height: 20px;margin: -6px 0px;cursor: pointer;" src="/${res}/images/back_1.png" alt="" class="backto" onclick="javascpipt:history.go(-1);"/></span>
-					 <span class="pr15 yuedu">浏览次数：<span id="views"></span></span> 
-					 <span class="pr15 pinglun">评论：${content.commentsCheckedNum!} </span>
 				     <span id="comfirmSpan" style="display:none;cursor: pointer;">转载</span>
 				     <span id="cancelSpan" style="display:none; cursor: pointer;">取消转载</span>&nbsp;
 				     [#if user??] 
@@ -432,26 +432,18 @@ outline: none;
 </body>
 </html>
 <script type="text/javascript">
-	var bool = false;
 	var val = $('#hipw').val();
-	var length = val.length;
-	if(length>=1){
-		bool = true
-	}
-	if(bool){
-		$('#maindiv').hide();
-		$('#mainpwdiv').show();
-	}
-	
 	if(val == ""){
-		$('#mainpwdiv').hide();
+		$('#mainpwdiv').css('display','none');
+	}else{
+		$('#maindiv').css('display','none');
+		$('#mainpwdiv').css('display','block');
 	}
-	
 	function jiaoyan(){
 		var userPw = $('#mima').val();
 		if(userPw == val){
-			$('#maindiv').show();
-			$('#mainpwdiv').hide();
+			$('#maindiv').css('display','block');
+			$('#mainpwdiv').css('display','none');
 		}else{
 			alert("密码错误，请重新输入");
 		}
