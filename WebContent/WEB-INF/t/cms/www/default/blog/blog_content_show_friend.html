@@ -198,6 +198,12 @@ table th,table td{word-break:break-all;white-space:normal;overflow:hidden;}
 			<input style="display: none;" id="no2" value="${user.username}">
 			<input style="display: none;" id="no4" value="${user.id}">
 			[/#if]
+			[#if user??]
+				<input style="display: none;" id="slActicle" value="${user.id}">
+			[#else]	
+				<input style="display: none;" id="slActicle" value="">
+			[/#if]
+			
 		   	<input style="display: none;" id="no3" value="${content.id}">
 			<input style="display: none;" id="alt" value="0">
 	 <!-- <div id="fudong" class="fudong" style="border: 0;">
@@ -1019,6 +1025,11 @@ Drag.prototype = {
 		});	  
 	});
 	function embody(){
+		var logUser = $("#slActicle").val();
+    	if(logUser==""){
+    		alert("请登陆!未登录不可以收录文章");
+    		return;
+    	}
 		$("#embodyDialog").dialog("open");
 	}
 </script>
