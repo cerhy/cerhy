@@ -1098,6 +1098,7 @@ public class BlogAct {
 		}
 	}
 	
+	
 	public void blog_focus_check(String focusUserId, HttpServletRequest request, HttpServletResponse response) throws IOException {
 		CmsUser user = CmsUtils.getUser(request);
 		if (user != null) {
