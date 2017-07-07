@@ -63,33 +63,33 @@
 					        	[#list map[k] as v]
 					        	[#if v?split('=')[2]??]
 					        		[#if columnId??]
-					        			<li [#if columnId=v?split('=')[0]]class="mtree-active"[/#if]><a  title="${v?split('=')[1]}&nbsp;${v?split('=')[2]}" href="${base}/blog/contribute_list_friend.jspx?columnId=${v?split('=')[0]}&user_ids=${userIds}&joinGroupStata=0">${v?split("=")[1]}&nbsp;${v?split('=')[2]}</a></li>
+					        			<li [#if columnId=v?split('=')[0]]class="mtree-active"[/#if]><a style="font-size: 16px;"  title="${v?split('=')[1]}&nbsp;${v?split('=')[2]}" href="${base}/blog/contribute_list_friend.jspx?columnId=${v?split('=')[0]}&user_ids=${userIds}&joinGroupStata=0">${v?split("=")[1]}&nbsp;${v?split('=')[2]}</a></li>
 					        		[#else]
-						        		<li><a  title="${v?split('=')[1]}&nbsp;${v?split('=')[2]}" href="${base}/blog/contribute_list_friend.jspx?columnId=${v?split('=')[0]}&user_ids=${userIds}&joinGroupStata=0">${v?split("=")[1]}&nbsp;${v?split('=')[2]}</a></li>
+						        		<li><a style="font-size: 16px;" title="${v?split('=')[1]}&nbsp;${v?split('=')[2]}" href="${base}/blog/contribute_list_friend.jspx?columnId=${v?split('=')[0]}&user_ids=${userIds}&joinGroupStata=0">${v?split("=")[1]}&nbsp;${v?split('=')[2]}</a></li>
 					        		[/#if]
 					        	[#else]
 					        		[#if columnId??]
-					        			<li [#if columnId=v?split('=')[0]]class="mtree-active"[/#if]><a title="${v?split('=')[1]}" href="${base}/blog/contribute_list_friend.jspx?columnId=${v?split('=')[0]}&user_ids=${userIds}">${v?split("=")[1]}</a></li>
+					        			<li [#if columnId=v?split('=')[0]]class="mtree-active"[/#if]><a style="font-size: 16px;" title="${v?split('=')[1]}" href="${base}/blog/contribute_list_friend.jspx?columnId=${v?split('=')[0]}&user_ids=${userIds}">${v?split("=")[1]}</a></li>
 					        		[#else]
-						        		<li><a title="${v?split('=')[1]}" href="${base}/blog/contribute_list_friend.jspx?columnId=${v?split('=')[0]}&user_ids=${userIds}">${v?split("=")[1]}</a></li>
+						        		<li><a style="font-size: 16px;" title="${v?split('=')[1]}" href="${base}/blog/contribute_list_friend.jspx?columnId=${v?split('=')[0]}&user_ids=${userIds}">${v?split("=")[1]}</a></li>
 					        		[/#if]
 					        	[/#if]
 					        	[/#list]
 					        [#else]
-					        	<li><a id="${k?split('=')[0]}" title="${k?split('=')[1]}" href="javascript:;">${k?split("=")[1]}</a>
+					        	<li><a style="font-size: 16px;" id="${k?split('=')[0]}" title="${k?split('=')[1]}" href="javascript:;">${k?split("=")[1]}</a>
 					        	<ul>
 					        	[#list map[k] as v]
 					        		[#if v?split('=')[2]??]
 					        			[#if columnId??]
-					        				<li [#if columnId=v?split('=')[0]]class="mtree-active"[/#if]><a  title="${v?split('=')[1]}&nbsp;${v?split('=')[2]}" href="${base}/blog/contribute_list_friend.jspx?columnId=${v?split('=')[0]}&user_ids=${userIds}&joinGroupStata=0">${v?split("=")[1]}&nbsp;${v?split('=')[2]}</a></li>
+					        				<li [#if columnId=v?split('=')[0]]class="mtree-active"[/#if]><a  style="font-size: 14px;color: #255EC7;" title="${v?split('=')[1]}&nbsp;${v?split('=')[2]}" href="${base}/blog/contribute_list_friend.jspx?columnId=${v?split('=')[0]}&user_ids=${userIds}&joinGroupStata=0">${v?split("=")[1]}&nbsp;${v?split('=')[2]}</a></li>
 					        			[#else]
-						        			<li><a  title="${v?split('=')[1]}&nbsp;${v?split('=')[2]}" href="${base}/blog/contribute_list_friend.jspx?columnId=${v?split('=')[0]}&user_ids=${userIds}&joinGroupStata=0">${v?split("=")[1]}&nbsp;${v?split('=')[2]}</a></li>
+						        			<li><a style="font-size: 14px;color: #255EC7;" title="${v?split('=')[1]}&nbsp;${v?split('=')[2]}" href="${base}/blog/contribute_list_friend.jspx?columnId=${v?split('=')[0]}&user_ids=${userIds}&joinGroupStata=0">${v?split("=")[1]}&nbsp;${v?split('=')[2]}</a></li>
 					        			[/#if]
 					        		[#else]
 					        			[#if columnId??]
-					        				<li [#if columnId=v?split('=')[0]]class="mtree-active"[/#if]><a title="${v?split('=')[1]}" href="${base}/blog/contribute_list_friend.jspx?columnId=${v?split('=')[0]}&user_ids=${userIds}">${v?split("=")[1]}</a></li>
+					        				<li [#if columnId=v?split('=')[0]]class="mtree-active"[/#if]><a style="font-size: 14px;color: #255EC7;" title="${v?split('=')[1]}" href="${base}/blog/contribute_list_friend.jspx?columnId=${v?split('=')[0]}&user_ids=${userIds}">${v?split("=")[1]}</a></li>
 					        			[#else]
-						        			<li><a title="${v?split('=')[1]}" href="${base}/blog/contribute_list_friend.jspx?columnId=${v?split('=')[0]}&user_ids=${userIds}">${v?split("=")[1]}</a></li>
+						        			<li><a style="font-size: 14px;color: #255EC7;" title="${v?split('=')[1]}" href="${base}/blog/contribute_list_friend.jspx?columnId=${v?split('=')[0]}&user_ids=${userIds}">${v?split("=")[1]}</a></li>
 					        			[/#if]
 					        		[/#if]
 					        	[/#list]
