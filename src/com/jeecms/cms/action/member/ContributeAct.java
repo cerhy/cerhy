@@ -1534,6 +1534,11 @@ public class ContributeAct extends AbstractContentMemberAct {
 		try {
 			
 		CmsUser user = CmsUtils.getUser(request);
+		if(user==null){
+			object.put("code", "fail");
+			object.put("msg", "5");//请先登录
+			return object.toString();
+		}
 		int result =cmsUserMng.sendArticle(contentId,user.getId(),sendee,validateCode);
 		if(result==1){
 			object.put("code", "fail");
@@ -1572,6 +1577,11 @@ public class ContributeAct extends AbstractContentMemberAct {
 		try {
 			
 		CmsUser user = CmsUtils.getUser(request);
+		if(user==null){
+			object.put("code", "fail");
+			object.put("msg", "2");//请先登录
+			return object.toString();
+		}
 		Integer result =cmsUserMng.cancelArticle(contentId, user.getId());
 		
 		object.put("code", "success");
@@ -1633,6 +1643,11 @@ public class ContributeAct extends AbstractContentMemberAct {
 		JSONObject object = new JSONObject();
 		try {
 		CmsUser user = CmsUtils.getUser(request);
+		if(user==null){
+			object.put("code", "fail");
+			object.put("msg", "2");//请先登录
+			return object.toString();
+		}
 		Integer result  = cmsUserMng.embodyArticle(contentId, user.getId(), friendId, columnId);
 		if(result==1){
 			object.put("code", "fail");
@@ -1666,6 +1681,11 @@ public class ContributeAct extends AbstractContentMemberAct {
 		try {
 			
 		CmsUser user = CmsUtils.getUser(request);
+		if(user==null){
+			object.put("code", "fail");
+			object.put("msg", "2");//请先登录
+			return object.toString();
+		}
 		Integer result =cmsUserMng.removeArticle(contentId, user.getId());
 		
 		object.put("code", "success");

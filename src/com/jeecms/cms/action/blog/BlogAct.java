@@ -1016,7 +1016,10 @@ public class BlogAct {
 	public String blog_list_friend(String q, Integer modelId,Integer queryChannelId,String nextUrl,Integer pageNo,HttpServletRequest request, ModelMap model) {
 		CmsSite site = CmsUtils.getSite(request);
 		CmsUser u = CmsUtils.getUser(request);
-		Integer recieveUserId = u.getId();
+		Integer recieveUserId = null;
+		if(u!=null){
+			recieveUserId = u.getId();
+		}
 		String user_ids = request.getParameter("user_ids");
 		CmsUser user=cmsUserMng.findById(Integer.valueOf(user_ids.toString()));
 		String joinGroupStata = request.getParameter("joinGroupStata");
@@ -1352,7 +1355,7 @@ public class BlogAct {
 			model = blogCommon.getAlreadyJoinGroup(request, model,user);
 			model = blogCommon.getChannel(request,model,user,site);
 			model = blogCommon.getColumn(request,model,user);
-			model = blogCommon.getEmbodyColumn(model,u.getId());
+			model = blogCommon.getEmbodyColumn(model,u);
 			int totalCount = blogCommon.getTotalArticleNum(model,user);
 			model.addAttribute("articleCount", totalCount);
 	 		model = blogCommon.getTotalCommentNum(model, user);

@@ -80,9 +80,9 @@ public class BlogCommon {
 	 * @return ModelMap
 	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public ModelMap getEmbodyColumn(ModelMap model,Integer id){
-		if(id!=null){
-			List<Columns> columnsList = columnsMng.getOneColumnsByUserId(id);
+	public ModelMap getEmbodyColumn(ModelMap model,CmsUser user){
+		if(user!=null){
+			List<Columns> columnsList = columnsMng.getOneColumnsByUserId(user.getId());
 			List listc=null;
 			if(null!=columnsList&&columnsList.size()>0){
 				listc=new ArrayList();
