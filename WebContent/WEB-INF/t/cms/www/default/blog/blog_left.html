@@ -355,19 +355,21 @@ function closeJoinGroup(){
 }
 function sJoinGroup(){
 	var groupName=$("#groupName").val();
+	var groupCode=$("#groupCode").val();
 	if(groupName==""){
 		$("#groupNameTip").html("必填!");
 		return false;
 	}else{
 		$("#groupNameTip").html("*");
 	}
-	var groupCode=$("#groupCode").val();
 	if(groupCode==""){
 		$("#groupCodeTip").html("必填!");
 		return false;
 	}else{
 		$("#groupCodeTip").html("*");
 	}
+	
+	
 	var reg = new RegExp("^[0-9]*$");
 	if(!reg.test(groupName)){
 		$("#errorTip").html("群组账号类型不正确!");
