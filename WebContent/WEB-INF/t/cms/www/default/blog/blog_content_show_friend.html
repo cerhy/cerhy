@@ -964,11 +964,6 @@ Drag.prototype = {
 	 				}
 	         }
 	     }); 
-		
-		skinChange(${user.theme!0});
-		function skinChange(n){
-			document.all.MrJin.href="/${res}/css/skin/"+n+".css"; 
-		}
 		$("#embodyDialog").dialog({
 			autoOpen: false,
 			modal: false,
@@ -981,7 +976,6 @@ Drag.prototype = {
 			position: ["center",80],
 			
 			close: function(event, ui) {
-				skinChange(${user.theme!0});
 			},
 		    buttons: {
 	            "确定": function () {
