@@ -116,7 +116,7 @@ public interface CmsUserMng {
 	 * @param friendId
 	 * @return int
 	 */
-	public void embodyArticle(Integer contentId,Integer userId,Integer friendId,Integer columnId);
+	public Integer embodyArticle(Integer contentId,Integer userId,Integer friendId,Integer columnId);
 	
 	/**
 	 * 移除用户收录的 文章

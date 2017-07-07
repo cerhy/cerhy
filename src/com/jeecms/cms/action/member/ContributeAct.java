@@ -1633,9 +1633,15 @@ public class ContributeAct extends AbstractContentMemberAct {
 		JSONObject object = new JSONObject();
 		try {
 		CmsUser user = CmsUtils.getUser(request);
-		cmsUserMng.embodyArticle(contentId, user.getId(), friendId, columnId);
-		object.put("code", "success");
-		object.put("msg", "发送成功！");
+		Integer result  = cmsUserMng.embodyArticle(contentId, user.getId(), friendId, columnId);
+		if(result==1){
+			object.put("code", "fail");
+			object.put("msg", "1");//已经收录
+		}else{
+			object.put("code", "success");
+			object.put("msg", "发送成功！");
+		}
+		
 		}catch (Exception e){
 			try {
 				object.put("code", "fail");

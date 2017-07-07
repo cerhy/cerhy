@@ -1497,5 +1497,17 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 		String hql = "select type   from ContentSend  where contentId="+contentId+" and recieve_user_id="+userId+"";
 		return (Integer) findUnique(hql);
 	}
+	
+	/**
+	 * 验证文章是否重复收录
+	 * @param contentId
+	 * @param userId
+	 * @return int
+	 */
+	public Integer getContentSend(int contentId,int userId){
+		String hql = "select   id from ContentSend  where contentId="+contentId+" and recieve_user_id="+userId+" ";
+		return (Integer) findUnique(hql);
+	}
+	
 
 }

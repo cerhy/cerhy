@@ -322,4 +322,14 @@ public interface ContentDao {
 	 * @return int
 	 */
 	public Integer getContentSendType(Integer contentId,Integer userId);
+	
+	/**
+	 * 验证文章是否重复收录
+	 * @param contentId
+	 * @param userId
+	 * @return int
+	 */
+	public Integer getContentSend(int contentId,int userId);
+	
+	
 }

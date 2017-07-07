@@ -1001,7 +1001,12 @@ Drag.prototype = {
 	 	                success : function(datas){
 	 	                	 var code =datas.code;
 	 	                	 if(code=="fail"){
+	 	                		 var msg = datas.msg;
+	 	                		 if(msg=="1"){
+	 	                			alert("该文章已经收录！");
+	 	                		 }else{
 	 	                			alert("收录失败！");
+	 	                		 }
 	 	                			$("#embodyDialog").dialog("close");
 	 	                	 }else{
 	 	                		alert("收录成功！");

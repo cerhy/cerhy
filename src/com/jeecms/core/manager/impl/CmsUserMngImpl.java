@@ -556,19 +556,27 @@ public class CmsUserMngImpl implements CmsUserMng {
 	 * @return int
 	 */
 	@Override
-	public void embodyArticle(Integer contentId,Integer userId,Integer friendId,Integer columnId){
+	public Integer embodyArticle(Integer contentId,Integer userId,Integer friendId,Integer columnId){
 		ContentSend send = new ContentSend();
-		//内容id
-		send.setContentId(contentId);
-		//收录人及发送人id
-		send.setSendUserId(friendId);
-		//接收人
-		send.setRecieveUserId(userId);
-		send.setSendTime(new Date());
-		//栏目id
-		send.setColumnId(columnId);
-		send.setType(2);//2为收录
-		contentDao.saveContentSend(send);
+		int result  =0;
+		Integer conId = contentDao.getContentSendType(contentId, userId);
+		if(conId!=null){
+			result=1;//已经收录
+		}else{
+			//内容id
+			send.setContentId(contentId);
+			//收录人及发送人id
+			send.setSendUserId(friendId);
+			//接收人
+			send.setRecieveUserId(userId);
+			send.setSendTime(new Date());
+			//栏目id
+			send.setColumnId(columnId);
+			send.setType(2);//2为收录
+			contentDao.saveContentSend(send);
+		}
+		
+		return result;
 	}
 	
 	/**
