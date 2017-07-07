@@ -189,7 +189,7 @@ table th,table td{word-break:break-all;white-space:normal;overflow:hidden;}
 				     [#if user??] 
 				      
 				      [#if content.user.id==user.id]
-				      	<a href="javascript:;" onclick="cp();">复制</a>&nbsp;
+				      	<a href="javascript:;" onclick="cp();">复制链接</a>&nbsp;
 				        <a href="${base}/blog/contribute_delete.jspx?ids=${content.id}" onclick="javascript:return del();">删除</a>&nbsp;<a href="${base}/blog/contribute_edit.jspx?id=${content.id}&nextUrl=contribute_list.jspx">修改</a>
 						<span id="cancelSpan"  class="pos"><a href="javascript:void(0);" onclick="send();">发送</a></span>&nbsp;
 						<span id="cancelSpan"  class="pos"><a href="javascript:void(0);" onclick="cancel();">撤销 </a></span>&nbsp;
