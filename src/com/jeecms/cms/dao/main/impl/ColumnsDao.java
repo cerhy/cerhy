@@ -247,4 +247,14 @@ public class ColumnsDao extends HibernateBaseDao<Columns, Integer>{
 		return find(f);
 	}
 
+	public List<Columns> findInfoByCodeAndUserids(String code, Integer id,
+			Integer columnId) {
+		Finder f = Finder.create("select bean from Columns bean");
+		f.append(" where bean.userId=:userId and bean.uniqueCode=:uniqueCode and bean.columnId!=:columnId");
+		f.setParam("uniqueCode", code);
+		f.setParam("userId", id);
+		f.setParam("columnId", columnId);
+		return find(f);
+	}
+
 }
