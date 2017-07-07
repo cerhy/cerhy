@@ -45,14 +45,11 @@ $("#cancelSpan").click(function(){
     Cms.collect_blog("${base}","${content.id!}",0,"cancelSpan","comfirmSpan");
 });
 
-Cms.checkPerm("${base}", "${content.id}");
 Cms.collectCsi("${base}", "collectCsiDiv", "collect_csi",
 		"${content.id}");
 Cms.attachment("${base}", "${content.id}",
 		"${content.attachments?size}", "attach");
 Cms.viewCount("${base}", "${content.id}");
-Cms.siteFlow("${base}", location.href, document.referrer,
-		"${site.config.flowSwitch?string}");
 		
 });
 </script>

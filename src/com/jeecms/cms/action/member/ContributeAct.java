@@ -1595,7 +1595,14 @@ public class ContributeAct extends AbstractContentMemberAct {
 		CmsUser user = CmsUtils.getUser(request);
 		JSONObject json = new JSONObject();
 		if(user!=null){
-			List<Columns> cc=columnsMng.findInfoByCodeAndUserids(code,user.getId(),Integer.valueOf(columnId));
+			List<Columns> cc=null;
+			if(StringUtils.isNotEmpty(columnId)){
+				//修改判断
+				cc=columnsMng.findInfoByCodeAndUserids(code,user.getId(),Integer.valueOf(columnId));
+			}else{
+				//新建判断
+				cc=columnsMng.findInfoByCodeAndUserid(code,user.getId());
+			}
 			if(null!=cc&&cc.size()>0){
 				//该用户下验证码重复
 				json.put("status","1");
