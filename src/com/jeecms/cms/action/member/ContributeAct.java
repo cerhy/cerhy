@@ -1591,11 +1591,11 @@ public class ContributeAct extends AbstractContentMemberAct {
 	 * 检测该用户下验证码唯一性
 	 */
 	@RequestMapping(value = "/blog/checkGroupCode.jspx")
-	public void checkGroupCode(String code,HttpServletRequest request,HttpServletResponse response, ModelMap model)throws UnsupportedEncodingException, JSONException {
+	public void checkGroupCode(String code,String columnId,HttpServletRequest request,HttpServletResponse response, ModelMap model)throws UnsupportedEncodingException, JSONException {
 		CmsUser user = CmsUtils.getUser(request);
 		JSONObject json = new JSONObject();
 		if(user!=null){
-			List<Columns> cc=columnsMng.findInfoByCodeAndUserid(code,user.getId());
+			List<Columns> cc=columnsMng.findInfoByCodeAndUserids(code,user.getId(),Integer.valueOf(columnId));
 			if(null!=cc&&cc.size()>0){
 				//该用户下验证码重复
 				json.put("status","1");
