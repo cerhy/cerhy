@@ -151,6 +151,11 @@ $(function() {
 					[/#if] 
 					<!-- 分页 -->
 					<div class="pagebar">[#include "../style_page/content.html"/]</div>
+					<br />
+					<br />
+					<br />
+					<br />
+					<br />
 					<div class="prev-next-wz clearfix">
 					   <span class="prev-pian">[@cms_content id=content.id next='1' channelId=channel.id][#if tag_bean??]<a href="${tag_bean.url}">&lt;上一篇&nbsp;<em>[@text_cut s=tag_bean.title len=20 append='...'/]</em></a>[#else]没有了[/#if][/@cms_content]</span>
 					   <span class="next-pian">[@cms_content id=content.id next='0' channelId=channel.id][#if tag_bean??]<a href="${tag_bean.url}"><em>[@text_cut s=tag_bean.title len=20 append='...'/]</em>&nbsp;下一篇 &gt;</a>[#else]没有了[/#if][/@cms_content]</span>
