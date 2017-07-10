@@ -1178,6 +1178,7 @@ public class BlogAct {
 			model.addAttribute("dataFlag", 4);
 		}
 		model.addAttribute("checkPageInfo", 0);
+		model.addAttribute("q", "");
 		model =blogCommon.getHyperlink(request,model,u);
 		model = blogCommon.getChannel(request,model,u,site);
 		model = blogCommon.getColumn(request,model,u);
