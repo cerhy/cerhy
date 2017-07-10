@@ -1325,11 +1325,12 @@ public class ContributeAct extends AbstractContentMemberAct {
 	@RequestMapping(value = "/blog/signOutGroup.jspx")
 	public void signOutGroup(String groupId,HttpServletRequest request,HttpServletResponse response, ModelMap model)throws UnsupportedEncodingException, JSONException {
 		CmsUser user = CmsUtils.getUser(request);
+		JSONObject json = new JSONObject();
 		if(user==null){
+			json.put("status","3");
 			return;
 		}
 		int joinStatus=columnsMng.signOutGroup(groupId);
-		JSONObject json = new JSONObject();
 		json.put("status",joinStatus);
 		ResponseUtils.renderJson(response, json.toString());
 	}
@@ -1769,5 +1770,23 @@ public class ContributeAct extends AbstractContentMemberAct {
 			}
 			ResponseUtils.renderJson(response, json.toString());
 		}
+	}
+	
+	
+	/**
+	 * 新退出群组
+	 */
+	@RequestMapping(value = "/blog/signOutGroups.jspx")
+	public void signOutGroups(String groupId,HttpServletRequest request,HttpServletResponse response, ModelMap model)throws UnsupportedEncodingException, JSONException {
+		CmsUser user = CmsUtils.getUser(request);
+		JSONObject json = new JSONObject();
+		if(user==null){
+			json.put("status","3");
+			return;
+		}
+		Columns cc=columnsMng.findById(Integer.valueOf(groupId));
+		int joinStatus=columnsMng.signOutGroups(cc,user);
+		json.put("status",joinStatus);
+		ResponseUtils.renderJson(response, json.toString());
 	}
 }

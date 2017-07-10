@@ -31,15 +31,22 @@ function class2context(classgiv, title, options){
         aux+="<div class='contextTitle'>" + title + "</div>";
         for(var i=0; i<options.length; i++)
         {
-        	if(i==0){
-        		aux+="    <a id='createEle' onmousedown='"+options[i][1]+"; ContextMenus();' href='javascript:void(0);'>"+options[i][0]+"</a>";
+        	if(classgiv=='class3'){
+        		if(i==0){
+        			aux+="    <a id='sigout' onmousedown='"+options[i][1]+"; ContextMenus();' href='javascript:void(0);'>"+options[i][0]+"</a>";
+        		}
+        	}else{
         		
-        	}else if(i==1){
-        		
-        		aux+="    <a id='editEle' onmousedown='"+options[i][1]+"; ContextMenus();' href='javascript:void(0);'>"+options[i][0]+"</a>";
-        	}else if(i==2){
-        		
-        		aux+="    <a id='delEle' onmousedown='"+options[i][1]+"; ContextMenus();' href='javascript:void(0);'>"+options[i][0]+"</a>";
+        		if(i==0){
+        			aux+="    <a id='createEle' onmousedown='"+options[i][1]+"; ContextMenus();' href='javascript:void(0);'>"+options[i][0]+"</a>";
+        			
+        		}else if(i==1){
+        			
+        			aux+="    <a id='editEle' onmousedown='"+options[i][1]+"; ContextMenus();' href='javascript:void(0);'>"+options[i][0]+"</a>";
+        		}else if(i==2){
+        			
+        			aux+="    <a id='delEle' onmousedown='"+options[i][1]+"; ContextMenus();' href='javascript:void(0);'>"+options[i][0]+"</a>";
+        		}
         	}
 
         }
@@ -51,20 +58,35 @@ function class2context(classgiv, title, options){
     for(var i=0; i<document.getElementsByClassName(classgiv).length; i++)
     {
         classgiv=JSON.parse(JSON.stringify(classgiv));
-        document.getElementsByClassName(classgiv)[i].addEventListener("contextmenu", function(e){
-            // Avoid the real one
-            e.preventDefault();
-            e.stopPropagation();
-            var tar = e.target;
-            $("#createEle").attr("onmousedown","createChannel("+tar.id+");ContextMenus();");
-            $("#editEle").attr("onmousedown","editChannel("+tar.id+");ContextMenus();");
-            $("#delEle").attr("onmousedown","delChannel("+tar.id+");ContextMenus();");
-            setTimeout(function(){
-                document.getElementById('context'+classgiv).style.display='block';
-                document.getElementById('context'+classgiv).style.left=e.pageX + "px";
-                document.getElementById('context'+classgiv).style.top=e.pageY + "px";
-            }, 150);
-        });
+        if(classgiv=='class3'){
+        	document.getElementsByClassName(classgiv)[i].addEventListener("contextmenu", function(e){
+        		// Avoid the real one
+        		e.preventDefault();
+        		e.stopPropagation();
+        		var tar = e.target;
+        		$("#sigout").attr("onmousedown","quitGroup("+tar.id+");ContextMenus();");
+        		setTimeout(function(){
+        			document.getElementById('context'+classgiv).style.display='block';
+        			document.getElementById('context'+classgiv).style.left=e.pageX + "px";
+        			document.getElementById('context'+classgiv).style.top=e.pageY + "px";
+        		}, 150);
+        	});
+        }else{
+        	document.getElementsByClassName(classgiv)[i].addEventListener("contextmenu", function(e){
+        		// Avoid the real one
+        		e.preventDefault();
+        		e.stopPropagation();
+        		var tar = e.target;
+        		$("#createEle").attr("onmousedown","createChannel("+tar.id+");ContextMenus();");
+        		$("#editEle").attr("onmousedown","editChannel("+tar.id+");ContextMenus();");
+        		$("#delEle").attr("onmousedown","delChannel("+tar.id+");ContextMenus();");
+        		setTimeout(function(){
+        			document.getElementById('context'+classgiv).style.display='block';
+        			document.getElementById('context'+classgiv).style.left=e.pageX + "px";
+        			document.getElementById('context'+classgiv).style.top=e.pageY + "px";
+        		}, 150);
+        	});
+        }
     }
 
     document.body.addEventListener("mousedown", function(e){
