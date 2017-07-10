@@ -100,4 +100,8 @@ public class ColumnsMng {
 		return columnsDao.findInfoByCodeAndUserids(code,id,columnId);
 	}
 
+	public int signOutGroups(Columns cc, CmsUser user) {
+		return columnsDao.signOutGroups(cc,user);
+	}
+
 }

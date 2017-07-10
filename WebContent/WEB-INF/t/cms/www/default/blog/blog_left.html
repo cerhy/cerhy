@@ -44,10 +44,10 @@ outline: none;
 				                      [/#if]
 				                 </div>
 				                  [#if user??]
-				                 <div class="user-name-dt"><a href="${base}/blog/index.jspx" title="[#if user.realname??]${user.realname}[#else]${user.username}[/#if]">[#if user.realname??][@text_cut s=user.realname len=5 append=''/][#else]${user.username}[/#if]</a></div>
+				                 <div class="user-name-dt"><a style="cursor: pointer;margin-left: 5%;" href="${base}/blog/index.jspx" title="[#if user.realname??]${user.realname}[#else]${user.username}[/#if]">[#if user.realname??][@text_cut s=user.realname len=5 append=''/][#else]${user.username}[/#if]</a></div>
 				                 [/#if]
 				                     [#if user??]
-				                     <a href="${base}/logout.jspx" style="cursor: pointer;" class="user-oparetion-btn">退出</a>
+				                     <a href="${base}/logout.jspx" style="cursor: pointer;margin-left: 40%;" class="user-oparetion-btn">退出</a>
 				                     [/#if]
 				                     
 				           </div>
@@ -84,9 +84,9 @@ outline: none;
 				             [#list channelList as c]
 				             [#if c_index==0]
 					             [#if c.channelType==1]
-					             <a href="javascript:;">学科教研</a>
+					             <a href="javascript:;" style="font-size: 16px;">学科教研</a>
 					             [#else]
-					             <a href="javascript:;">市县教研</a>
+					             <a href="javascript:;" style="font-size: 16px;">市县教研</a>
 					             [/#if]
 				             [/#if]
 				             [/#list]
@@ -95,10 +95,10 @@ outline: none;
 					        [#if channelList??]
 				             [#list channelList as c]
 				             [#if user??]
-					          <li><a href="${base}/blog/contribute_list.jspx?channelId=${c.channelId}">${c.channelName}</a></li>
+					          <li><a style="font-size: 14px;color: #255EC7;" href="${base}/blog/contribute_list.jspx?channelId=${c.channelId}">${c.channelName}</a></li>
 				             [/#if]
 				             [#if usert??]
-					          <li><a href="${base}/blog/contribute_list.jspx?channelId=${c.channelId}&uid=${usert.id}">${c.channelName}</a></li>
+					          <li><a style="font-size: 14px;color: #255EC7;" href="${base}/blog/contribute_list.jspx?channelId=${c.channelId}&uid=${usert.id}">${c.channelName}</a></li>
 				             [/#if]
 				             [/#list]
 				             [/#if]
@@ -200,16 +200,16 @@ outline: none;
                             [#list joinGroupList as j]
 		                    [#if user??]
 		                    	[#if columnId??]
-		                    		<li [#if columnId?number=j.columnsId.columnId]class="mtree-active"[/#if]><a href="${base}/blog/contribute_list.jspx?columnId=${j.columnsId.columnId}&joinGroupStata=0" title="${j.columnsId.columnName}" >${j.columnsId.columnName}</a></li>
+		                    		<li id="cc${j.columnsId.columnId}" [#if columnId?number=j.columnsId.columnId]class="mtree-active"[/#if]><a id="${j.columnsId.columnId}" class="class3 box1" href="${base}/blog/contribute_list.jspx?columnId=${j.columnsId.columnId}&joinGroupStata=0" title="${j.columnsId.columnName}" >${j.columnsId.columnName}</a></li>
 		                   		[#else]
-			                    	<li ><a href="${base}/blog/contribute_list.jspx?columnId=${j.columnsId.columnId}&joinGroupStata=0" title="${j.columnsId.columnName}" >${j.columnsId.columnName}</a></li>
+			                    	<li id="cc${j.columnsId.columnId}"><a  class="class3 box1" id="${j.columnsId.columnId}" href="${base}/blog/contribute_list.jspx?columnId=${j.columnsId.columnId}&joinGroupStata=0" title="${j.columnsId.columnName}" >${j.columnsId.columnName}</a></li>
 		                   		[/#if]
 		                    [/#if]
 		                    [#if usert??]
 			                    [#if columnId??]
-			                    	<li [#if columnId?number=j.columnsId.columnId]class="mtree-active"[/#if]><a href="${base}/blog/contribute_list.jspx?columnId=${j.columnsId.columnId}&joinGroupStata=0&uid=${usert.id}" title="${j.columnsId.columnName}" >${j.columnsId.columnName}</a></li>
+			                    	<li id="cc${j.columnsId.columnId}" [#if columnId?number=j.columnsId.columnId]class="mtree-active"[/#if]><a  class="class3 box1" id="${j.columnsId.columnId}" href="${base}/blog/contribute_list.jspx?columnId=${j.columnsId.columnId}&joinGroupStata=0&uid=${usert.id}" title="${j.columnsId.columnName}" >${j.columnsId.columnName}</a></li>
 		                    	[#else]
-			                    	<li><a href="${base}/blog/contribute_list.jspx?columnId=${j.columnsId.columnId}&joinGroupStata=0&uid=${usert.id}" title="${j.columnsId.columnName}" >${j.columnsId.columnName}</a></li>
+			                    	<li id="cc${j.columnsId.columnId}"><a  class="class3 box1" id="${j.columnsId.columnId}" href="${base}/blog/contribute_list.jspx?columnId=${j.columnsId.columnId}&joinGroupStata=0&uid=${usert.id}" title="${j.columnsId.columnName}" >${j.columnsId.columnName}</a></li>
 		                    	[/#if]
 		                    [/#if]
 		                    [/#list]
@@ -553,6 +553,9 @@ function sJoinGroup(){
 	
 	array=[["<img src='/${res}/images/iMac-add.png' width='25px' /> 新建栏目", "createChannel2()"]];
 	class2context('class2', "", array);
+	
+	array=[["<img src='/${res}/images/quit_ group_2.png' width='25px' /> 退出群组", "quitGroup()"]];
+	class2context('class3', "", array);
 	function createChannel2(){
 		location.href = "${base}/blog/columns_list.jspx";
 	}
@@ -632,5 +635,33 @@ function sJoinGroup(){
 
 	function ContextMenus(){
 		console.log("context menu called");
+	}
+	
+	
+	function quitGroup(id){
+		var msg = "您确定要退出该群组吗？"; 
+		 if (confirm(msg)==true){ 
+			 $.ajax({
+			        url: "${base}/blog/signOutGroups.jspx?groupId="+id,
+			        type: "POST",
+			        dataType:"json",
+			        data: "",
+			        success: function (data) {
+			        	if(data.status==3){
+			        		alert("未登录或已失去登陆状态,请登陆后在进行此操作!");
+			        		return false;
+			        	}else if(data.status==1){
+							 $("#cc"+id).fadeOut();
+						     return true; 
+			        	}else{
+			        		alert("群组退出失败!");
+			        		return false;
+			        	}
+			        }
+			    });
+		     return true; 
+		 }else{ 
+		     return false; 
+		 } 
 	}
 </script>

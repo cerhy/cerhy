@@ -191,6 +191,11 @@ table th,table td{word-break:break-all;white-space:normal;overflow:hidden;}
 					[/#if]
 				 [#include "../content/picture.html"/]
 				<div class="pagebar">[#include "../style_page/content.html"/]</div>
+					<br />
+					<br />
+					<br />
+					<br />
+					<br />
 				<div class="inter clearfix"> 
 			      [#if channel.allowUpdown]
 			      <div class="downs" title="踩" ><a onclick="Cms.down('${base}',${content.id},${content.downs});"><span id="downs"></span></a></div>
@@ -212,7 +217,7 @@ table th,table td{word-break:break-all;white-space:normal;overflow:hidden;}
                             <em>[@text_cut s=tag_bean.title len=20 append='...'/]</em>
                         	</a>
                     	[#else]
-                    		<a href="" class="prev-pian">
+                    		<a href="javascript:;" class="prev-pian">
                             <span>&lt;上一篇</span>
                             <em>没有了</em>
                         	</a>
@@ -231,7 +236,7 @@ table th,table td{word-break:break-all;white-space:normal;overflow:hidden;}
                             <span>下一篇&gt;</span>
                         </a>
 	                    [#else]
-		                     <a href="" class="next-pian">
+		                     <a href="javascript:;" class="next-pian">
 	                            <em>没有了</em>
 	                            <span>下一篇&gt;</span>
 	                        </a>
