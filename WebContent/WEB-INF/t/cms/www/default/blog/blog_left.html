@@ -44,10 +44,10 @@ outline: none;
 				                      [/#if]
 				                 </div>
 				                  [#if user??]
-				                 <div class="user-name-dt"><a href="${base}/blog/index.jspx" title="[#if user.realname??]${user.realname}[#else]${user.username}[/#if]">[#if user.realname??][@text_cut s=user.realname len=5 append=''/][#else]${user.username}[/#if]</a></div>
+				                 <div class="user-name-dt"><a style="cursor: pointer;margin-left: 5%;" href="${base}/blog/index.jspx" title="[#if user.realname??]${user.realname}[#else]${user.username}[/#if]">[#if user.realname??][@text_cut s=user.realname len=5 append=''/][#else]${user.username}[/#if]</a></div>
 				                 [/#if]
 				                     [#if user??]
-				                     <a href="${base}/logout.jspx" style="cursor: pointer;" class="user-oparetion-btn">退出</a>
+				                     <a href="${base}/logout.jspx" style="cursor: pointer;margin-left: 40%;" class="user-oparetion-btn">退出</a>
 				                     [/#if]
 				                     
 				           </div>
@@ -84,9 +84,9 @@ outline: none;
 				             [#list channelList as c]
 				             [#if c_index==0]
 					             [#if c.channelType==1]
-					             <a href="javascript:;">学科教研</a>
+					             <a href="javascript:;" style="font-size: 16px;">学科教研</a>
 					             [#else]
-					             <a href="javascript:;">市县教研</a>
+					             <a href="javascript:;" style="font-size: 16px;">市县教研</a>
 					             [/#if]
 				             [/#if]
 				             [/#list]
@@ -95,10 +95,10 @@ outline: none;
 					        [#if channelList??]
 				             [#list channelList as c]
 				             [#if user??]
-					          <li><a href="${base}/blog/contribute_list.jspx?channelId=${c.channelId}">${c.channelName}</a></li>
+					          <li><a style="font-size: 14px;color: #255EC7;" href="${base}/blog/contribute_list.jspx?channelId=${c.channelId}">${c.channelName}</a></li>
 				             [/#if]
 				             [#if usert??]
-					          <li><a href="${base}/blog/contribute_list.jspx?channelId=${c.channelId}&uid=${usert.id}">${c.channelName}</a></li>
+					          <li><a style="font-size: 14px;color: #255EC7;" href="${base}/blog/contribute_list.jspx?channelId=${c.channelId}&uid=${usert.id}">${c.channelName}</a></li>
 				             [/#if]
 				             [/#list]
 				             [/#if]

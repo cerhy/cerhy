@@ -40,9 +40,9 @@
 				             [#list channelList as c]
 				             [#if c_index==0]
 					             [#if c.channelType==1]
-					             <a href="javascript:;">学科教研</a>
+					             <a href="javascript:;" style="font-size: 16px;">学科教研</a>
 					             [#else]
-					             <a href="javascript:;">市县教研</a>
+					             <a href="javascript:;" style="font-size: 16px;">市县教研</a>
 					             [/#if]
 				             [/#if]
 				             [/#list]
@@ -50,7 +50,7 @@
 					        <ul>
 					        [#if channelList??]
 				             [#list channelList as c]
-					          <li><a href="${base}/blog/contribute_list_friend.jspx?channelId=${c.channelId}&user_ids=${userIds}">${c.channelName}</a></li>
+					          <li><a style="font-size: 14px;color: #255EC7;" href="${base}/blog/contribute_list_friend.jspx?channelId=${c.channelId}&user_ids=${userIds}">${c.channelName}</a></li>
 				             [/#list]
 				             [/#if]
 					         </ul>

@@ -893,20 +893,16 @@ public class ContributeAct extends AbstractContentMemberAct {
 	
 	/**
 	 * 博客背景
+	 * @throws JSONException 
 	 */
-	@RequestMapping(value = "/blog/changeTheme.jspx", method = RequestMethod.POST)
+	@RequestMapping(value = "/blog/changeTheme.jspx")
 	public void updateTheme(String theme, String nextUrl,
 			HttpServletRequest request, HttpServletResponse response,
-			ModelMap model){
+			ModelMap model) throws JSONException{
 		CmsSite site = CmsUtils.getSite(request);
 		FrontUtils.frontData(request, model, site);
 		CmsUser user = CmsUtils.getUser(request);
-		FrontUtils.frontData(request, model, site);
-		MemberConfig mcfg = site.getConfig().getMemberConfig();
-		// 没有开启会员功能
-		if (!mcfg.isMemberOn()) {
-			FrontUtils.showMessage(request, model, "member.memberClose");
-		}
+		JSONObject json = new JSONObject();
 		if (user == null) {
 			FrontUtils.showLogin(request, model, site);
 		}
@@ -914,12 +910,9 @@ public class ContributeAct extends AbstractContentMemberAct {
 			user.setTheme(theme);
 			cmsUserMng.updateUser(user);
 			log.info("update CmsUser success. id={}", user.getId());
+			json.put("status", 1);
 		}	
-		try {
-			response.sendRedirect("../blog/index.jspx");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		ResponseUtils.renderJson(response, json.toString());
 	}
 	
 	/**
