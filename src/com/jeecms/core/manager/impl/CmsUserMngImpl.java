@@ -518,18 +518,25 @@ public class CmsUserMngImpl implements CmsUserMng {
 				if(colId==null){
 					result=3;
 				}else{
-					ContentSend send = new ContentSend();
-					//内容id
-					send.setContentId(contentId);
-					//发送人id
-					send.setSendUserId(userId);
-					//接收人
-					send.setRecieveUserId(recieveUserId);
-					send.setSendTime(new Date());
-					//栏目id
-					send.setColumnId(columnId);
-					send.setType(1);
-					contentDao.saveContentSend(send);
+					
+					Integer contId = contentDao.getContentSendType(contentId, recieveUserId);//判断接收人是否已经存在此文章
+					if(contId!=null){
+						result=4;//已经存在此文章
+					}else{
+						ContentSend send = new ContentSend();
+						//内容id
+						send.setContentId(contentId);
+						//发送人id
+						send.setSendUserId(userId);
+						//接收人
+						send.setRecieveUserId(recieveUserId);
+						send.setSendTime(new Date());
+						//栏目id
+						send.setColumnId(columnId);
+						send.setType(1);
+						contentDao.saveContentSend(send);
+					}
+					
 				}
 			}
 			

@@ -893,20 +893,16 @@ public class ContributeAct extends AbstractContentMemberAct {
 	
 	/**
 	 * 博客背景
+	 * @throws JSONException 
 	 */
-	@RequestMapping(value = "/blog/changeTheme.jspx", method = RequestMethod.POST)
+	@RequestMapping(value = "/blog/changeTheme.jspx")
 	public void updateTheme(String theme, String nextUrl,
 			HttpServletRequest request, HttpServletResponse response,
-			ModelMap model){
+			ModelMap model) throws JSONException{
 		CmsSite site = CmsUtils.getSite(request);
 		FrontUtils.frontData(request, model, site);
 		CmsUser user = CmsUtils.getUser(request);
-		FrontUtils.frontData(request, model, site);
-		MemberConfig mcfg = site.getConfig().getMemberConfig();
-		// 没有开启会员功能
-		if (!mcfg.isMemberOn()) {
-			FrontUtils.showMessage(request, model, "member.memberClose");
-		}
+		JSONObject json = new JSONObject();
 		if (user == null) {
 			FrontUtils.showLogin(request, model, site);
 		}
@@ -914,12 +910,9 @@ public class ContributeAct extends AbstractContentMemberAct {
 			user.setTheme(theme);
 			cmsUserMng.updateUser(user);
 			log.info("update CmsUser success. id={}", user.getId());
+			json.put("status", 1);
 		}	
-		try {
-			response.sendRedirect("../blog/index.jspx");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		ResponseUtils.renderJson(response, json.toString());
 	}
 	
 	/**
@@ -1325,11 +1318,12 @@ public class ContributeAct extends AbstractContentMemberAct {
 	@RequestMapping(value = "/blog/signOutGroup.jspx")
 	public void signOutGroup(String groupId,HttpServletRequest request,HttpServletResponse response, ModelMap model)throws UnsupportedEncodingException, JSONException {
 		CmsUser user = CmsUtils.getUser(request);
+		JSONObject json = new JSONObject();
 		if(user==null){
+			json.put("status","3");
 			return;
 		}
 		int joinStatus=columnsMng.signOutGroup(groupId);
-		JSONObject json = new JSONObject();
 		json.put("status",joinStatus);
 		ResponseUtils.renderJson(response, json.toString());
 	}
@@ -1549,6 +1543,9 @@ public class ContributeAct extends AbstractContentMemberAct {
 		}else if(result==3){
 			object.put("code", "fail");
 			object.put("msg", "3");//栏目不允许发送错误
+		}else if(result==4){
+			object.put("code", "fail");
+			object.put("msg", "4");//已经存在此文章
 		}else{
 			object.put("code", "success");
 			object.put("msg", "发送成功！");
@@ -1769,5 +1766,23 @@ public class ContributeAct extends AbstractContentMemberAct {
 			}
 			ResponseUtils.renderJson(response, json.toString());
 		}
+	}
+	
+	
+	/**
+	 * 新退出群组
+	 */
+	@RequestMapping(value = "/blog/signOutGroups.jspx")
+	public void signOutGroups(String groupId,HttpServletRequest request,HttpServletResponse response, ModelMap model)throws UnsupportedEncodingException, JSONException {
+		CmsUser user = CmsUtils.getUser(request);
+		JSONObject json = new JSONObject();
+		if(user==null){
+			json.put("status","3");
+			return;
+		}
+		Columns cc=columnsMng.findById(Integer.valueOf(groupId));
+		int joinStatus=columnsMng.signOutGroups(cc,user);
+		json.put("status",joinStatus);
+		ResponseUtils.renderJson(response, json.toString());
 	}
 }

@@ -990,6 +990,9 @@ Drag.prototype = {
  	                		 }else if(msg==3){
  	                			alert("此栏目不允许发送！");
  	                			$("#sentDialog").dialog("close");
+ 	                		 }else if(msg==4){
+ 	                			alert("该文章已经存在！");
+ 	                			$("#sentDialog").dialog("close");
  	                		 }else if(msg==5){
  	                			alert("请先登录！");
  	                			$("#sentDialog").dialog("close");
@@ -1004,6 +1007,13 @@ Drag.prototype = {
  	                	 }
             	   	 }
            			 });
+            	 
+            	 
+            	 
+            	 
+            	 
+            	 
+            	 
             	 
             },
             "取消": function () {
