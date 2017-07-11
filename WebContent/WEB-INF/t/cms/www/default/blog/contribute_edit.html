@@ -289,6 +289,8 @@ $(function(){
 			        	[#list map[k] as v]
 			        		[#if content.columnId??]
 				        		<option value="${v?split("=")[0]}&colu" [#if v?split("=")[0]?number=content.columnId]selected="selected"[/#if]>${v?split("=")[1]}</option>
+			        		[#else]
+				        		<option value="${v?split("=")[0]}&colu">${v?split("=")[1]}</option>
 			        		[/#if]
 			        	[/#list]
 			        [#else]
@@ -296,6 +298,8 @@ $(function(){
 			        	[#list map[k] as v]
 			        		[#if content.columnId??]
 				        		<option value="${v?split("=")[0]}&colu" [#if v?split("=")[0]?number=content.columnId]selected="selected"[/#if]>&nbsp;&nbsp;>${v?split("=")[1]}</option>
+			        		[#else]
+				        		<option value="${v?split("=")[0]}&colu">&nbsp;&nbsp;>${v?split("=")[1]}</option>
 			        		[/#if]
 			        	[/#list]
 			        [/#if]	
