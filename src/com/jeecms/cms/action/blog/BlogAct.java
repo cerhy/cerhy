@@ -91,6 +91,8 @@ public class BlogAct {
 		model.addAttribute("pagination", p);
 		if (!StringUtils.isBlank(q)) {
 			model.addAttribute("q", q);
+		}else{
+			model.addAttribute("q", "");
 		}
 		if (modelId != null) {
 			model.addAttribute("modelId", modelId);
@@ -207,6 +209,8 @@ public class BlogAct {
 		model.addAttribute("pagination", p);
 		if (!StringUtils.isBlank(q)) {
 			model.addAttribute("q", q);
+		}else{
+			model.addAttribute("q", "");
 		}
 		if (modelId != null) {
 			model.addAttribute("channelId", 1);
@@ -1005,6 +1009,8 @@ public class BlogAct {
 		model.addAttribute("userIds", userT.getId());
 		if (!StringUtils.isBlank(q)) {
 			model.addAttribute("q", q);
+		}else{
+			model.addAttribute("q", "");
 		}
 		if (modelId != null) {
 			model.addAttribute("modelId", modelId);
@@ -1071,6 +1077,8 @@ public class BlogAct {
 		model.addAttribute("pagination", p);
 		if (!StringUtils.isBlank(q)) {
 			model.addAttribute("q", q);
+		}else{
+			model.addAttribute("q", "");
 		}
 		if (modelId != null) {
 			model.addAttribute("modelId", modelId);
@@ -1170,6 +1178,7 @@ public class BlogAct {
 			model.addAttribute("dataFlag", 4);
 		}
 		model.addAttribute("checkPageInfo", 0);
+		model.addAttribute("q", "");
 		model =blogCommon.getHyperlink(request,model,u);
 		model = blogCommon.getChannel(request,model,u,site);
 		model = blogCommon.getColumn(request,model,u);

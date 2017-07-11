@@ -1543,6 +1543,9 @@ public class ContributeAct extends AbstractContentMemberAct {
 		}else if(result==3){
 			object.put("code", "fail");
 			object.put("msg", "3");//栏目不允许发送错误
+		}else if(result==4){
+			object.put("code", "fail");
+			object.put("msg", "4");//已经存在此文章
 		}else{
 			object.put("code", "success");
 			object.put("msg", "发送成功！");

@@ -126,6 +126,13 @@ $(function(){
      	 	评论:${commentCount}&nbsp;&nbsp;
      	 	访问:${usert.blogVisitNum!'0'}&nbsp;&nbsp;
      	 	最后登录:${usert.lastLoginTime?string('yyyy-MM-dd HH:mm:ss')}&nbsp;&nbsp;
+     	 	<div style="width:300px;float: right;margin-right:-22px;">
+     	 	         <form action="${base}/blog/find_all_url_friend.jspx"  id="searchForm" >
+        				<input type="text" id="queryTitle" name="queryTitle" maxLength="10" value="${q}" maxlength="50"  autocomplete="off" style="background:#f6fbff;height: 22px;border: 1px solid #0b91df;color: #999;padding: 2px 5px;width: 200px;"/>
+        				<input type="submit" value="搜  索" style="background-color: #4CAF50; color: white;padding: 2px 8px;" />
+        				<input type="hidden" id="userIds"  name="userIds" value="${usert.id}"></input>
+       			    </form> 
+       		 </div>
       	</div>
         <div class="mb20 clearfix">
         [#include "friend_blog_left.html"/]
@@ -184,17 +191,17 @@ $(function(){
 			            function _gotoPage(pageNo) {
 			                try{
 			                    var tableForm = document.getElementById("tableForm");
+			                    var queryTitle = $("#queryTitle").val();
 			                    $("input[name=pageNo]").val(pageNo);
 								if($("#ud").val()!=''&&$("#jg").val()!=''){
-			                    	tableForm.action="${base}/blog/contribute_list_friend.jspx?user_ids=${usert.id}&columnId=${columnId!'null'}&joinGroupStata=${joinGroupStata!'null'}";
+			                    	tableForm.action="${base}/blog/contribute_list_friend.jspx?user_ids=${usert.id}&columnId=${columnId!'null'}&joinGroupStata=${joinGroupStata!'null'}&queryTitle="+queryTitle;
 								}else if($("#ud").val()!=''&&$("#jg").val()==''){
-			                    	tableForm.action="${base}/blog/contribute_list_friend.jspx?user_ids=${usert.id}&columnId=${columnId!'null'}";
+			                    	tableForm.action="${base}/blog/contribute_list_friend.jspx?user_ids=${usert.id}&columnId=${columnId!'null'}&queryTitle="+queryTitle;
 								}else{
 									if($("#cd").val()==''){
-				                    	tableForm.action="${base}/blog/find_all_url_friend.jspx?userIds=${usert.id}";
+				                    	tableForm.action="${base}/blog/find_all_url_friend.jspx?userIds=${usert.id}&queryTitle="+queryTitle;
 									}else{
-										
-			                    	    tableForm.action="${base}/blog/contribute_list_friend.jspx?channelId=${channelId!''}&user_ids=${usert.id}";
+			                    	    tableForm.action="${base}/blog/contribute_list_friend.jspx?channelId=${channelId!''}&user_ids=${usert.id}&queryTitle="+queryTitle;
 									}
 								}
 			                    tableForm.onsubmit=null;

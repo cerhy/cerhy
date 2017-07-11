@@ -74,3 +74,17 @@ text-decoration: underline;
 		</ul>
 </div>
 [/#if]
+
+<div  style="float: right;margin: -32px 0;width:270px;">
+
+                   <form action="${base}/blog/index.jspx"  id="searchForm" >
+                    [#if q??]
+                  	 <input type="text" id="queryTitle" name="queryTitle" maxLength="10"  maxlength="50"  autocomplete="off" style="background:#f6fbff;height: 22px;border: 1px solid #0b91df;color: #999;padding: 2px 5px;width: 200px;"/>
+                  	[#else]
+                  	<input type="text" id="queryTitle" name="queryTitle" maxLength="10"  maxlength="50" autocomplete="off" style="background:#f6fbff;height: 22px;border: 1px solid #0b91df;color: #999;padding: 2px 5px;width: 200px;"/>
+				    [/#if]
+        				
+        				<input type="submit" value="搜  索" style="float: right;background-color: #4CAF50; color: white;padding: 2px 8px;" />
+       			    </form> 
+   			    
+</div>

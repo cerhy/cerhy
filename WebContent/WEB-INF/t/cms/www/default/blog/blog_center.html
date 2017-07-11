@@ -123,11 +123,23 @@ $(function(){
 			            function _gotoPage(pageNo) {
 			                try{
 			                    var tableForm = document.getElementById("tableForm");
+			                    var queryTitle = parent.document.getElementById("queryTitle").value;
+			                    //var queryTitle = $("queryTitle").val();
 			                    $("input[name=pageNo]").val(pageNo);
 			                    if(typeof($("#hy").val())=='undefined'){
-				                    tableForm.action="${base}/blog/index.jspx";
+				                   
+				                    if(queryTitle!=null && queryTitle!=""){
+				                    	 tableForm.action="${base}/blog/index.jspx?queryTitle="+queryTitle;
+			                    	}else{
+			                    		 tableForm.action="${base}/blog/index.jspx";
+			                    	}
 			                    }else{
-				                    tableForm.action="${base}/blog/index.jspx?uid="+$("#hy").val();
+			                    	if(queryTitle!=null && queryTitle!=""){
+			                    		tableForm.action="${base}/blog/index.jspx?uid="+$("#hy").val()+"&queryTitle="+queryTitle;
+			                    	}else{
+			                    		tableForm.action="${base}/blog/index.jspx?uid="+$("#hy").val();
+			                    	}
+				                    
 			                    }
 			                    tableForm.onsubmit=null;
 			                    tableForm.submit();
