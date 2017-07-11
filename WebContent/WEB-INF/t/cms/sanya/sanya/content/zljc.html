@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+[#include "../hyinclude/header.html"/]
+<script src="${resSys}/jquery.js" type="text/javascript"></script> 
+<script src="${resSys}/jqueryUI/jquery-ui.js" type="text/javascript"></script> 
+<script src="${resSys}/front.js" type="text/javascript"></script> 
+<script type="text/javascript"> 
+$(function() { 
+Cms.attachment("${base}","${content.id}","${content.attachments?size}","attach"); 
+Cms.viewCount("${base}","${content.id}"); 
+Cms.siteFlow("${base}", location.href, document.referrer); 
+}); 
+</script>  
+<div class="local">
+    <div class="wrap">
+        <span class="local-icon icon-font"></span>
+        <a href="${base}/">首页</a>
+        <em> &gt; </em>
+        <a href="${base}/zljc/index.jhtml">质量监测</a>
+        <em> &gt; </em>
+        <span class="cur-page">${content.title}</span>
+    </div>
+
+</div>
+<div class="container">
+    <div class="wrap">
+        <div class="bd-padding">
+            <div class="xueke-acticle">
+                <h2>${content.title}</h2>
+                <p class="gray9 h2dt pt5"><span class="pr15">发布时间：${content.releaseDate}</span><span class="pr15">${content.author!'本站编辑'}</span><span class="pr15 yuedu">阅读 <span id="views"></span></span><span class="pr15 pinglun">评论 ${content.commentsCheckedNum!}</span></p>
+                <div class="xueke-content-detail">
+                	<div class="content-txt">
+			   		[#if preview??]
+			           [@text_cut s=txt! len=100  append="..."/]<br/>
+			                               您需要更高的权限浏览全部内容!<br/>以下会员组可浏览全部内容:
+				           [#list groups as g]
+				              ${g.name!}[#if g_has_next],[/#if]
+				           [/#list]              
+			          	[#else]
+			            ${txt!}
+			          [/#if]
+				    </div>
+				    <!-- 分页 -->
+				    <div class="pagebar">[#include "../style_page/content.html"/]</div>
+                    <div class="prev-next-wz clearfix">
+                    [@cms_content id=content.id next='1' channelId=channel.id]
+                    	[#if tag_bean??]
+                    		<a href="${tag_bean.url}" class="prev-pian">
+                            <span>&lt;上一篇</span>
+                            <em>[@text_cut s=tag_bean.title len=20 append='...'/]</em>
+                        	</a>
+                    	[#else]
+                    		<a href="" class="prev-pian">
+                            <span>&lt;上一篇</span>
+                            <em>没有了</em>
+                        	</a>
+                    	[/#if]
+                    [/@cms_content]
+                    [@cms_content id=content.id next='0' channelId=channel.id]
+	                    [#if tag_bean??]
+	                     <a href="${tag_bean.url}" class="next-pian">
+                            <em>[@text_cut s=tag_bean.title len=20 append='...'/]</em>
+                            <span>下一篇&gt;</span>
+                        </a>
+	                    [#else]
+		                     <a href="" class="next-pian">
+	                            <em>没有了</em>
+	                            <span>下一篇&gt;</span>
+	                        </a>
+	                    [/#if]
+                    [/@cms_content]
+                    </div>
+                </div>
+            </div>
+            <div class="news-comments">
+                <h3>我有话要说</h3>
+                <textarea class="normal-textarea">评论仅显示昵称</textarea>
+                <div class="clearfix btns-and-num">
+                    <a href="javascript:;" class="submit-btn">发布</a>
+                    <div class="comment-count-num">
+                        <p>还可以输入<b>140</b>个字！</p>
+                    </div>
+
+                </div>
+                <div class="news-comments-list">
+                    <ul>
+                        <li class="clearfix">
+                            <div class="user-pic">
+                                <img src="temp/comments-gt_01.png" width="60" height="60" alt="用户头像">
+                            </div>
+                            <div class="comments-info">
+                                <p class="comments-top">
+                                    <span class="user-name">姜菲</span>
+                                    <a class="fr reply" href="javascript:;">回复</a>
+                                    <span class="fr time">2016-08-01 18:24:44</span>
+                                </p>
+                                <p>这篇文章很不错哦，赞一下！蛮成熟的文章！赞赞！这篇文章很不错哦，赞一下！蛮成熟的文章哦！赞赞！蛮成熟的文章！这篇文章很不错哦，赞一下！蛮成熟的文章！赞赞！这篇文章很不错哦，赞一下！</p>
+                            </div>
+                        </li>
+                        <li class="clearfix">
+                            <div class="user-pic">
+                                <img src="temp/comments-gt_02.png" width="60" height="60" alt="用户头像">
+                            </div>
+                            <div class="comments-info">
+                                <p class="comments-top">
+                                    <span class="user-name">姜菲</span>
+                                    <a class="fr reply" href="javascript:;">回复</a>
+                                    <span class="fr time">2016-08-01 18:24:44</span>
+                                </p>
+                                <p>这篇文章很不错哦，赞一下！蛮成熟的文章！赞赞！这篇文章很不错哦，赞一下！蛮成熟的文章哦！赞赞！蛮成熟的文章！这篇文章很不错哦，赞一下！蛮成熟的文章！赞赞！这篇文章很不错哦，赞一下！</p>
+                            </div>
+                        </li>
+                        <li class="clearfix">
+                            <div class="user-pic">
+                                <img src="temp/comments-gt_03.png" width="60" height="60" alt="用户头像">
+                            </div>
+                            <div class="comments-info">
+                                <p class="comments-top">
+                                    <span class="user-name">姜菲</span>
+                                    <a class="fr reply" href="javascript:;">回复</a>
+                                    <span class="fr time">2016-08-01 18:24:44</span>
+                                </p>
+                                <p>这篇文章很不错哦，赞一下！蛮成熟的文章！赞赞！这篇文章很不错哦，赞一下！蛮成熟的文章哦！赞赞！蛮成熟的文章！这篇文章很不错哦，赞一下！蛮成熟的文章！赞赞！这篇文章很不错哦，赞一下！</p>
+                            </div>
+                        </li>
+                        <li class="clearfix">
+                            <div class="user-pic">
+                                <img src="images/def-pic.jpg" width="60" height="60" alt="用户头像">
+                            </div>
+                            <div class="comments-info">
+                                <p class="comments-top">
+                                    <span class="user-name">姜菲</span>
+                                    <a class="fr reply" href="javascript:;">回复</a>
+                                    <span class="fr time">2016-08-01 18:24:44</span>
+                                </p>
+                                <p>这篇文章很不错哦，赞一下！蛮成熟的文章！赞赞！这篇文章很不错哦，赞一下！蛮成熟的文章哦！赞赞！蛮成熟的文章！这篇文章很不错哦，赞一下！蛮成熟的文章！赞赞！这篇文章很不错哦，赞一下！</p>
+                            </div>
+                        </li>
+                        <li class="clearfix">
+                            <div class="user-pic">
+                                <img src="images/def-pic.jpg" width="60" height="60" alt="用户头像">
+                            </div>
+                            <div class="comments-info">
+                                <p class="comments-top">
+                                    <span class="user-name">姜菲</span>
+                                    <a class="fr reply" href="javascript:;">回复</a>
+                                    <span class="fr time">2016-08-01 18:24:44</span>
+                                </p>
+                                <p>这篇文章很不错哦，赞一下！蛮成熟的文章！赞赞！这篇文章很不错哦，赞一下！蛮成熟的文章哦！赞赞！蛮成熟的文章！这篇文章很不错哦，赞一下！蛮成熟的文章！赞赞！这篇文章很不错哦，赞一下！</p>
+                                <div class="reply-info">
+                                    <em class="top-arrow"></em>
+                                    <p class="user-name">姜菲</p>
+                                    <p class="reply-content">这篇文章很不错哦，赞一下！蛮成熟的文章！赞赞！这篇文章很不错哦，赞一下！蛮成熟的文章哦！赞赞！蛮成熟的文章！这篇文章很不错哦，赞一下！蛮成熟的文章！赞赞！这篇文章很不错哦，赞一下！</p>
+                                </div>
+                            </div>
+                        </li>
+
+                    </ul>
+                    <!--分页-->
+                    <div class="snPages mb20">
+                        <span class="prev"><b></b> 上一页 </span>
+                        <a class="current" href="#">1</a>
+                        <a href="#" class="current-next">2</a>
+                        <a href="#">3</a>
+                        <span class="page-split">...</span>
+                        <a href="#">6</a>
+                        <a class="next" href="#"><b></b>下一页</a>
+                        <div>向第<input type="text">页<input type="button" class="pagesubmit" value="跳转"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+[#include "../hyinclude/end.html"/]
+</body>
+</html>

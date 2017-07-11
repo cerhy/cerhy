@@ -1,0 +1,43 @@
+<script type="text/javascript">	
+	
+	function focuss(){
+		$.ajax({
+			type:"post",
+			url:"${base}/blog/focus.jspx",
+			dateType:'json',
+			data:{
+				"focusUserId":${usert.id},
+				"focusUserName":'${usert.username}',
+			},
+			success:function(data){
+			if(1 == data){
+				$('#focus').attr("onclick","cancelfocus()");
+				//$('#focus').attr("id","cancelfocus");
+				$('#focus').html("取消关注");
+				//$('#cancelfocus').show();
+			}
+			}
+			
+		});	
+	}
+	
+	function cancelfocus(){
+		$.ajax({
+			type:"post",
+			url:"${base}/blog/cancelfocus.jspx",
+			dateType:'json',
+			data:{
+				"focusUserId":${usert.id},
+			},
+			success:function(data){
+			if(1 == data){
+				//$('#focus').show();
+				$('#focus').attr("onclick","focuss()");
+				//$('#cancelfocus').attr("id","focus");
+				$('#focus').html("关注");
+			}
+			}
+			
+		});	
+	}
+</script>

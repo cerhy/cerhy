@@ -1,0 +1,260 @@
+<!DOCTYPE HTML>
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>${content.title}</title>
+<link rel="shortcut icon" href="/${res}/images/cerhyheard.png" type="image/x-icon" />
+<meta content="${content.tagStr!}" http-equiv="keywords" />
+<meta content="${content.description!}" http-equiv="description" />
+<script src="${resSys}/jquery.js" type="text/javascript"></script>
+<script src="${resSys}/jqueryUI/jquery-ui.js" type="text/javascript"></script>
+<script src="${resSys}/front.js" type="text/javascript"></script>
+<script src="${resSys}/ckplayer/ckplayer.js" type="text/javascript"></script>
+<script src="${resSys}/ckplayer/offlights.js" type="text/javascript"></script>
+<link type="text/css" rel="stylesheet" href="/${res}/css/main.css" />
+<link type="text/css" rel="stylesheet" href="/${res}/css/custom.css" />
+<link href="${resSys}/jqueryUI/jquery.ui.css" rel="stylesheet" type="text/css" />
+<link id="artDialogSkin" href="/${res}/css/skin/facebook/facebook.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="${resSys}/postil.js"></script>
+<script type="text/javascript" src="${resSys}/artDialog.min.js"></script>
+<style type="text/css">
+	.list {
+		border: 1px solid #ddd;
+		height: 350px;
+		width: 250px;
+	}
+	.list div {
+		border: 1px solid #ddd;
+		margin-bottom: 5px;
+		padding: 10px;
+		cursor: pointer;
+	}
+	/*css批注样式*/
+	.postil, .postilFocus {
+		border-left: 1px solid red;
+		border-right: 1px solid red;
+		text-decoration: none;
+		cursor: default;
+	}
+	.postil {
+		background: yellow;
+	}
+	.postilFocus {
+		background: Tomato;
+	}
+	/*批注提示图标样式*/
+	.tipsIcon {
+		opacity: 0.80;
+		z-index: 1;
+		filter:alpha(opacity=80);
+	}
+	
+	.xueke-content-detail em {  
+    background: url('http://www.webdesignerwall.com/demo/jquery/images/hover.png') no-repeat;  
+    width: 180px;  
+    height: 45px;  
+    position: absolute;  
+    top: -85px;  
+    left: -15px;  
+    text-align: center;  
+    padding: 20px 12px 10px;  
+    font-style: normal;  
+    z-index: 2;  
+    display: none;  
+} 
+  </style>
+<style>
+ .bz a:hover{color: #DEB887;}
+ .bz{color: #999;}
+</style>
+<script type="text/javascript">
+	$(function() {
+		Cms.checkPerm("${base}", "${content.id}");
+		Cms.collectCsi("${base}", "collectCsiDiv", "collect_csi",
+				"${content.id}");
+		Cms.attachment("${base}", "${content.id}",
+				"${content.attachments?size}", "attach");
+		Cms.viewCount("${base}", "${content.id}");
+		Cms.siteFlow("${base}", location.href, document.referrer,
+				"${site.config.flowSwitch?string}");
+	});
+</script>
+
+<script type="text/javascript">
+	jQuery(document).ready(function($) {
+		$('.content-comment').click(function() {
+			$('html,body').animate({
+				scrollTop : $('#comments-text').offset().top
+			}, 1000)
+			$('#comments-text').focus();
+		});
+	});
+
+	$(function() {
+		//设置一个定时器，为BUTTON点击事件用
+		var timer = null;
+		var number1 = 0;
+
+		//处理输入的内容是文字还是字母的函数
+		function getLength(str) {
+			return String(str).replace(/[^\x00-\xff]/g, 'aa').length;
+		}
+		;
+	});
+</script>
+<body class="bodybg">
+[#include "../hyinclude/headernav.html"/]
+<style type="text/css">
+table th,table td{word-break:break-all;white-space:normal;overflow:hidden;}
+.xueke-content-detail p{
+	text-indent:2em;
+}
+</style>
+<div class="local">
+    <div class="wrap">
+        <span class="local-icon icon-font"></span>
+        <a class="position" href="javascript:;">${channel.parent.title}</a>
+        <em> &gt; </em>
+        <a class="position" href="${channel.url}">${channel.name}</a>
+        <em> &gt; </em>
+        <span class="cur-page">[@text_cut s=content.title len=10 append='...'/]</span>
+    </div>
+</div>
+	<div class="container_article">
+		<div class="wrap" style="width: 865px;">
+			<div class="bd-padding">
+				<div class="xueke-acticle">
+					<h2>${content.title}</h2>
+					<div class="gray9 h2dt pt5">
+						
+						<span class="pr15">发布时间：${content.releaseDate}</span>
+						 <span class="pr15">
+						 [#if channel.parent.id==98]
+						 	 <a target="_blank" href="${base}/blog/find_all_url_friend.jspx?userIds=${content.user.id}" class="bz">博主：${content.user.username}</a>
+						 [#else]
+						 	作者：${content.author!'本站编辑'}
+						 [/#if]	
+						 </span>
+						 <span class="pr15">来源：${content.origin!'本站原创'}</span> 
+						 <span class="pr15 yuedu">浏览次数：<span id="views"></span></span> 
+						 <span class="pr15 pinglun">评论：${content.commentsCheckedNum!} </span>
+					     <!-- <span id="comfirmSpan" style="display:none;cursor: pointer;">转载</span>
+					     <span id="cancelSpan" style="display:none; cursor: pointer;">取消转载</span> -->
+						  <span class="content-share">分享
+							 [#include "inc_share.html"/]
+						 </span>
+					</div>
+					<div class="xueke-content-detail">
+						[#if preview??] [@text_cut s=txt! len=100 append="..."/]<br />
+						您需要更高的权限浏览全部内容!<br />以下会员组可浏览全部内容: [#list groups as g]
+						${g.name!}[#if g_has_next],[/#if] [/#list] [#else] ${txt!} [/#if]
+					</div>
+				<div class="content-txt">
+			     [#if content.mediaPath?? && content.mediaType??]
+				        <div class="video-con clearfix">
+					        [#if content.mediaType=='FLV'] 
+					        <object height="500" width="100%" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=7,0,19,0" classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000">
+					        <param name="movie" value="/${res}/img/flvplayer.swf" />
+					        <param name="quality" value="high" />
+					        <param name="allowFullScreen" value="true" />
+					        <param name="FlashVars" value="vcastr_file=${content.mediaPath!}&BufferTime=3" /><embed height="500" width="100%" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" quality="high" flashvars="vcastr_file=${content.mediaPath!}" allowfullscreen="true" src="/${res}/img/flvplayer.swf"></embed>
+					        </object>
+					        [#elseif content.mediaType=='FLASH'] 
+					        <embed height="500" width="100%" type="application/x-shockwave-flash" quality="high" src="${content.mediaPath}" wmode="transparent" align="center"></embed>
+					        [#elseif content.mediaType=='CK']
+				            <!--ckplayer播放视频-->
+				            <div id="video" style="position:relative;z-index: 100;width:100%;height:500px;float: left;"><div id="a1"></div></div>
+					    	<script type="text/javascript">
+					    	//函数名称不允许更改 function ckmarqueeadv(){return '广告内容'};
+							var flashvars={f:'${content.mediaPath!}',c:0,b:1,my_url:'${content.url!}',my_pic:'${content.typeImg!}'};
+							var params={bgcolor:'#FFF',allowFullScreen:true,allowScriptAccess:'always'};
+							CKobject.embedSWF('${resSys}/ckplayer/ckplayer.swf','a1','ckplayer_a1','100%','500',flashvars,params);
+							var box = new LightBox();
+							function closelights(){//关灯
+								box.Show();
+							}
+							function openlights(){//开灯
+								box.Close();
+							}
+							</script>
+					        [#else] 
+					        <embed height="500" width="100%" type="video/x-ms-wmv" src="${content.mediaPath}" console="cons" controls="ImageWindow" autostart="true"></embed>
+					        [/#if]
+			      [/#if]
+			      <!-- 分页 -->
+			      [#if content.attachments?size gt 0]           
+						<h4>附件:</h4>           
+						<ul>           
+						[#list content.attachments as attach]           
+						<li><a href="${attach.path}" id="attach${attach_index}">${attach.name}</a></li>           
+						[/#list]           
+						</ul>           
+					[/#if]
+				 [#include "../content/picture.html"/]
+				<div class="pagebar">[#include "../style_page/content.html"/]</div>
+					<br />
+					<br />
+					<br />
+					<br />
+					<br />
+				<div class="inter clearfix"> 
+			      [#if channel.allowUpdown]
+			      <div class="downs" title="踩" ><a onclick="Cms.down('${base}',${content.id},${content.downs});"><span id="downs"></span></a></div>
+			      <div class="ups" title="赞"><a onclick="Cms.up('${base}',${content.id},${content.ups});"><span id="upss"></span></a></div>
+			      [/#if]
+			    </div>
+			    </div>
+                     <div class="prev-next-wz clearfix">
+                    [@cms_content id=content.id next='1' channelId=channel.id topicId=topicId typeIds=typeIds]
+                    	[#if tag_bean??]
+                    		 [#if topicId??]
+	                     <a href="${tag_bean.url}?topicId=${topicId}" class="prev-pian">
+	                     [#elseif typeIds??]
+	                     <a href="${tag_bean.url}?typeIds=${typeIds}" class="prev-pian">
+	                     [#else]
+	                      <a href="${tag_bean.url}" class="prev-pian">
+	                      [/#if]
+                            <span>&lt;上一篇</span>
+                            <em>[@text_cut s=tag_bean.title len=20 append='...'/]</em>
+                        	</a>
+                    	[#else]
+                    		<a href="javascript:;" class="prev-pian">
+                            <span>&lt;上一篇</span>
+                            <em>没有了</em>
+                        	</a>
+                    	[/#if]
+                    [/@cms_content]
+                    [@cms_content id=content.id next='0' channelId=channel.id topicId=topicId typeIds=typeIds]
+	                    [#if tag_bean??]
+	                     [#if topicId??]
+	                     <a href="${tag_bean.url}?topicId=${topicId}" class="next-pian">
+	                     [#elseif typeIds??]
+	                     <a href="${tag_bean.url}?typeIds=${typeIds}" class="next-pian">
+	                     [#else]
+	                      <a href="${tag_bean.url}" class="next-pian">
+	                      [/#if]
+                            <em>[@text_cut s=tag_bean.title len=20 append='...'/]</em>
+                            <span>下一篇&gt;</span>
+                        </a>
+	                    [#else]
+		                     <a href="javascript:;" class="next-pian">
+	                            <em>没有了</em>
+	                            <span>下一篇&gt;</span>
+	                        </a>
+	                    [/#if]
+                    [/@cms_content]
+                    </div>
+				</div>
+				<div class="news-comments">
+				    [#if channel.commentControl!=2]
+                    [#include "inc_comment_input.html"/]
+      				[#include "inc_comment_list.html"/]
+    				[/#if]
+				</div>
+			</div>
+		</div>
+	</div>
+	</div>
+	[#include "../include/footers.html"/]
+	<script src="/${res}/js/main.js"></script>
+</body>
+</html>

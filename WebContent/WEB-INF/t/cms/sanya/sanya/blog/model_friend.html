@@ -1,0 +1,83 @@
+[#include "../hyinclude/head.html"/]
+
+<div id="setDialog" style="display:none;">	
+      		<form id="setFrom" class="setfrom" action="${base}/blog/changeTheme.jspx" method="post">
+      			<table width="100%" class="pn-ftable" cellpadding="2" cellspacing="1" border="0">
+      				<tbody>
+      					<tr>
+      					<td stylt="margin-left:20px; width="100px""><span class="pn-frequired">*</span>页面模板</td>
+      					<td colspan="1" class="pn-fcontent">
+      					<select id="theme" name="theme" onchange="skinChange(this.selectedIndex)" class="themeSelect">
+	        				<option value="0">默认</option>
+	        				<option value="1">蓝天</option>
+	        				<option value="2">繁星</option>
+	        				<option value="3">华丽</option>
+	        				<option value="4">活力</option>
+	        				<option value="5">简约</option>
+	        				<option value="6">向上</option>
+	        				<option value="7">钱袋</option>
+	        				<option value="8">夜色</option>
+	        				<option value="9">忆江南</option>
+	        				<option value="10">郁金香</option>
+	        				<option value="11">猫</option>
+	        				<option value="12">沙砾</option>
+	        				<option value="13">时光</option>
+	        				<option value="14">烟火</option>
+	        				<option value="15">光明</option>
+	        				<option value="16">美</option>
+	        			</select>
+      					</td>
+      					</tr>
+      				</tbody>
+      			</table>      	
+      			<div class="themeButton">	
+      			<input type="hidden" name="nextUrl" value="index.jspx"/>
+      			<input type="submit" value="确定" class="submit"  style="margin:30px 40px 0 0px"/>
+	        	<button type="button" onclick="closeDialog();" class="submit" style="margin:30px 40px 0 10px">取消</button>
+	        	</div>
+      		</form>
+      </div>
+      
+<script type="text/javascript">
+skinChange(${usert.theme!0});
+function skinChange(n){
+	document.all.MrJin.href="/${res}/css/skin/"+n+".css"; 
+}
+$(function() {
+	$("#setDialog").dialog({
+		autoOpen: false,
+		modal: false,
+		resizable :false,
+		stack : false,
+		draggable : true,
+		closeOnEscape : false,
+		width: 300,
+		height: 200,
+		position: ["center",80],
+		
+		close: function(event, ui) {
+			skinChange(${usert.theme!0});
+		}
+	});	   
+});
+
+function closeDialog(){
+	$("#setDialog").dialog("close");
+	skinChange(${usert.theme!0});
+}
+
+function set(){
+	$("#setDialog").dialog("open");
+	var theme = document.getElementById("theme");
+	theme.value="${usert.theme!0}";
+		
+	
+	
+}
+</script>
+ <script type="text/javascript">
+		skinChange(${usert.theme!0});
+	function skinChange(n){
+		document.all.MrJin.href="/${res}/css/skin/"+n+".css"; 
+	}
+</script>

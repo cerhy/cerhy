@@ -1,0 +1,8 @@
+[@cms_channel_list]
+	<ul class="menu" style="width: 1200px;">
+	<li><a href="${site.url!}" target="_self" [#if !channel??]class="active"[/#if]><span>首 页</span></a></li>
+	[#list tag_list as c]
+		<li><a href="${c.url}"[#if channel??&&channel.id==c.id]class="active"[/#if]>${c.name}</a></li>
+	[/#list]
+	</ul>
+[/@cms_channel_list]

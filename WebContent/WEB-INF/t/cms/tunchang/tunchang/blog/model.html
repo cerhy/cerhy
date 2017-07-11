@@ -1,0 +1,103 @@
+[#include "../hyinclude/head.html"/]
+<div id="setDialog" style="display:none;">	
+      			<table width="100%" class="pn-ftable" cellpadding="2" cellspacing="1" border="0">
+      				<tbody>
+      					<tr>
+      					<td stylt="margin-left:20px;width:100px;"><span class="pn-frequired">*</span>页面模板</td>
+      					<td colspan="1" class="pn-fcontent">
+      					<select id="theme" name="theme" onchange="skinChange(this.selectedIndex)" class="themeSelect">
+	        				<option value="0">默认</option>
+	        				<option value="1">蓝天</option>
+	        				<option value="2">繁星</option>
+	        				<option value="3">华丽</option>
+	        				<option value="4">活力</option>
+	        				<option value="5">简约</option>
+	        				<option value="6">向上</option>
+	        				<option value="7">钱袋</option>
+	        				<option value="8">夜色</option>
+	        				<option value="9">忆江南</option>
+	        				<option value="10">郁金香</option>
+	        				<option value="11">猫</option>
+	        				<option value="12">沙砾</option>
+	        				<option value="13">时光</option>
+	        				<option value="14">烟火</option>
+	        				<option value="15">光明</option>
+	        				<option value="16">美</option>
+	        				<option value="17">草原绿</option>
+	        				<option value="18">卡其色</option>
+	        				<option value="19">浅蓝色</option>
+	        				<option value="20">军绿色</option>
+	        				<option value="21">灰色</option>
+	        			</select>
+      					</td>
+      					</tr>
+      				</tbody>
+      			</table>      	
+      			<div class="themeButton">	
+      			<input style="display: none;" id="ck" value="">
+      			<input type="button" value="确定" onclick="changeTheme()" class="submit"  style="margin:40px 40px 0 40px"/>
+	        	<button type="button" onclick="closeDialog();" class="submit" style="margin:30px 40px 0 10px">取消</button>
+	        	</div>
+      </div>
+      
+<script type="text/javascript">
+skinChange(${user.theme!0});
+function skinChange(n){
+	document.all.MrJin.href="/${res}/css/skin/"+n+".css"; 
+}
+$(function() {
+	$("#setDialog").dialog({
+		autoOpen: false,
+		modal: false,
+		resizable :false,
+		stack : false,
+		draggable : true,
+		closeOnEscape : false,
+		width: 300,
+		height: 200,
+		position: ["center",80],
+		
+		close: function(event, ui) {
+			skinChange(${user.theme!0});
+		}
+	});	   
+});
+
+function closeDialog(){
+	$("#setDialog").dialog("close");
+	skinChange(${user.theme!0});
+}
+
+function set(){
+	$("#setDialog").dialog("open");
+	var theme = document.getElementById("theme");
+	if($("#ck").val()!=''){
+		theme.value=$("#ck").val();
+	}else{
+		theme.value="${user.theme!0}";
+	}
+}
+</script>
+ <script type="text/javascript">
+		skinChange(${user.theme!0});
+	function skinChange(n){
+		document.all.MrJin.href="/${res}/css/skin/"+n+".css"; 
+	}
+</script>
+<script type="text/javascript">
+	function changeTheme(){
+		var themeId=$("#theme").val();
+		$.ajax({
+        	url: "${base}/blog/changeTheme.jspx?theme="+themeId,
+            type:'POST',
+            data:"",
+            dataType:'json',
+            async:false,
+            success:function(data) {
+            	$("#ck").val(themeId);
+            	$("#setDialog").dialog("close");
+            	document.all.MrJin.href="/${res}/css/skin/"+themeId+".css";
+            },
+        });
+	}
+</script>

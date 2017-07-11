@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<title>好研网-${channel.title}</title>
+[#include "../hyinclude/header.html"/]
+<script src="${resSys}/jquery.js" type="text/javascript"></script>
+<script src="${resSys}/front.js" type="text/javascript"></script>
+<script type="text/javascript" src="/${res}/js/jquery.SuperSlide.js"></script>
+<link type="text/css" rel="stylesheet" href="/${res}/css/hyindex.css" />
+<link type="text/css" rel="stylesheet" href="/${res}/css/custom.css" />
+<script src="${resSys}/jqueryUI/jquery-ui.js" type="text/javascript"></script>
+<link href="${resSys}/jqueryUI/jquery.ui.css" rel="stylesheet" type="text/css" />
+<style>
+ .actives{color: red;}
+</style>
+<div class="local">
+    <div class="wrap">
+        <span class="local-icon icon-font"></span>
+        <a href="${channel.url}">${channel.title}</a>
+    </div>
+</div>
+<div class="container">
+    <div class="wrap">
+        <div class="xueke clearfix bd-padding">
+            <div class="wrap-left">
+                <ul class="fst-lv-ul">
+                	 [@cms_channel_list parentId=channel.id orderBy='4']
+				        [#list tag_list as b]
+				        <li  [#if b_index<1]class="active"[/#if]>
+				        <a href="${b.url}">${b.name}</a>
+				        </li>
+				        [/#list]
+				      [/@cms_channel_list]
+                </ul>
+           </div>
+           <div class="wrap-right">
+           		<div class="article-list-wrap">
+					[@cms_channel_list parentId=channel.id orderBy='4']
+					  [#list tag_list as b]
+					  [#if b_index=0]
+										  <ul class="report-list sm mb20">
+									        [@cms_content_page orderBy='4'  recommend='2' channelId=b.id channelOption='1' count='10']
+										          [#list tag_pagination.list as a]
+										          <li>
+					                           		 <a class="hasImg clearfix" href="${a.url}" target="_blank">
+													      <div class="item clearfix" [#if a_index<1]style="border-top:none;"[/#if]>
+													          [#if a.typeImg??]
+													          <img width="85" height="85"  src="${a.typeImg!}" alt="">
+													          [/#if]
+													          <div class="report-text">
+													            <h3 title="${a.title}">[@text_cut s=a.title len=25 append='...'/]</h3>
+													            <p>[#if a.typeImg??][@text_cut s=a.description len=30 append='...'/][#else][@text_cut s=a.description len=40 append='...'/][/#if]</p>
+													          <div class="fl"><span class="ch">${a.ctgName}<em>${a.date?string("yyyy-MM-dd")}&nbsp;&nbsp;&nbsp;作者:&nbsp;${a.author!a.user.username}&nbsp;&nbsp;&nbsp;阅读:&nbsp;${a.contentCount.views!}&nbsp;&nbsp;&nbsp;评论:&nbsp;${a.contentCount.comments!}</em></span></div>
+													          </div>
+													          <em class="arrowBtn"></em>
+													      </div>
+					                           			 </a>
+				                        			</li>
+										          [/#list]
+										          [#if tag_pagination.list?size>0]
+										          	[#include "../include/page.html"/]
+										          [/#if]
+									        [/@cms_content_page]
+									        </ul>
+										 </ul>
+						   [/#if]
+				      [/#list]
+				  [/@cms_channel_list]
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+	$(function() {
+		$("#commentDialog").dialog({
+			autoOpen: false,
+			modal: true,
+			width: 500,
+			height: 600,
+			position: ["center",20],
+			buttons: {
+				"关闭": function() {
+					$(this).dialog("close");
+				}
+			},
+			close: function(event, ui) {
+			}
+		});
+	    [#if !parentId??]
+	     $(".comments-hf").bind("click", function(){
+	                  $(this).toggleClass("reply-on");
+			  $(this).parent().siblings(".reply").animate({height:'toggle'},10);
+	      });
+	    [#else]
+	      $(".comments-hf").unbind();
+	      $(".comments-hf").bind("click", function(){
+	                  $(this).toggleClass("reply-on");
+			  $(this).parent().siblings(".reply").animate({height:'toggle'},10);
+	      });
+	    [/#if]
+	});
+</script>
+[#include "../include/footer.html"/]
+<script src="/${res}/js/main.js"></script>
+</body>
+</html>

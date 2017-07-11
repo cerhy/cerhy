@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+</head>
+<script src="/${res}/js/piccontent.min.js" type="text/javascript"></script>
+<link type="text/css" rel="stylesheet" href="/${res}/css/piccontext.css" />
+<body style="background-color:#f9f9f9;">
+<div class="main container clearfix">
+  <!--弹出层开始-->
+  <div class="bodymodal"></div>
+  <!--播放到第一张图的提示-->
+  <div class="firsttop">
+    <div class="firsttop_right">
+      <div class="close2"> <a class="closebtn1" title="关闭" href="javascript:void(0)"></a> </div>
+      <div class="replay">
+        <p style="color: black;">已到第一张图片了。 <p>
+        <p> <a class="replaybtn1" style="cursor: pointer;" onClick="document.location.reload()">重新播放</a> </p>
+      </div>
+      <!-- <div class="returnbtn"> <a href="">返回图库首页</a> </div> -->
+    </div>
+  </div>
+  <!--播放到最后一张图的提示-->
+  <div class="endtop">
+    <div class="firsttop_right">
+      <div class="close2"> <a class="closebtn2" title="关闭" href="javascript:void(0)"></a> </div>
+      <div class="replay">
+        <p style="color: black;"> 已到最后一张图片了。<p>
+        <p> <a class="replaybtn2" style="cursor: pointer;" onClick="document.location.reload()">重新播放</a> </p>
+      </div>
+    </div>
+  </div>
+  <!--弹出层结束--> 
+  <!--图片特效内容开始-->
+    [#if pic??]
+    <!--大图展示-->
+    <div class="picshow">
+      <div class="picshowtop">
+          <a href="javascript:void(0)"><img src="" alt="" id="pic1" curindex="0" /></a>
+          <a id="preArrow" href="javascript:void(0)" class="contextDiv" title="上一张"><span id="preArrow_A"></span></a>
+          <a id="nextArrow" href="javascript:void(0)" class="contextDiv" title="下一张"><span id="nextArrow_A"></span></a>
+      </div>
+      <div class="picshowtxt">
+        <div class="picshowtxt_left"><span>1</span>/<i>${content.pictures?size}</i></div>
+        <div class="picshowtxt_right"></div>
+      </div>
+      <div class="picshowlist"> 
+        <!--上一条图库-->
+        <div class="picshowlist_mid">
+          <div class="picmidleft"> <a href="javascript:void(0)" id="preArrow_B"><img src="/${res}/images/left1.jpg" alt="上一个" /></a> </div>
+          <div class="picmidmid">
+            <ul>
+            [#list content.pictures as p]
+              <li><a href="javascript:void(0);"><img src="${p.imgPath!}" alt="" bigimg="${p.imgPath!}" text="${p.description!}" /></a></li>
+            [/#list]
+            </ul>
+          </div>
+          <div class="picmidright"> <a href="javascript:void(0)" id="nextArrow_B"><img src="/${res}/images/right1.jpg" alt="下一个" /></a> </div>
+        </div>
+        <!--下一张图库新闻-->
+      </div>
+      [#else]    
+       [/#if]
+    </div>
+  </div>
+</html>
