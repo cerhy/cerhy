@@ -287,12 +287,16 @@ $(function(){
 			        [#list map?keys as k]
 			        [#if k=='']
 			        	[#list map[k] as v]
-				        	<option value="${v?split("=")[0]}&colu" [#if v?split("=")[0]?number=content.columnId]selected="selected"[/#if]>${v?split("=")[1]}</option>
+			        		[#if content.columnId??]
+				        		<option value="${v?split("=")[0]}&colu" [#if v?split("=")[0]?number=content.columnId]selected="selected"[/#if]>${v?split("=")[1]}</option>
+			        		[/#if]
 			        	[/#list]
 			        [#else]
 			        	<option value="" class="sel-disabled">${k?split("=")[1]}</option>
 			        	[#list map[k] as v]
-				        	<option value="${v?split("=")[0]}&colu" [#if v?split("=")[0]?number=content.columnId]selected="selected"[/#if]>&nbsp;&nbsp;>${v?split("=")[1]}</option>
+			        		[#if content.columnId??]
+				        		<option value="${v?split("=")[0]}&colu" [#if v?split("=")[0]?number=content.columnId]selected="selected"[/#if]>&nbsp;&nbsp;>${v?split("=")[1]}</option>
+			        		[/#if]
 			        	[/#list]
 			        [/#if]	
 			        [/#list]
