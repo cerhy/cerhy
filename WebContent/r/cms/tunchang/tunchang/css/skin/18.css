@@ -1,0 +1,39 @@
+.blogBody{
+	width:100%;
+	background: #BBA47E; 
+}
+.blogBody .user-center-left .user-menu-links, .blogBody .personCenter-userInfo, .blogBody .user-center-left .user-setting {
+    background: #AA9069;
+}
+
+.header-top {background: #AA9069;border-bottom:0px;}
+.footer_styles {background: #AA9069; }
+
+.blogBody .user-center-left .user-menu-links li{
+	margin-top:-1px;
+	border-bottom: none; 
+}
+.blogBody .user-center-left .user-menu-links a {
+    border: none; 
+    text-decoration:none;
+}
+
+.blogBody .user-menu-links li a em {background: transparent; }
+.blogBody .user-menu-links li.on a em {background: transparent; }
+
+.tggl .tggl-top {background: transparent;color:black;}
+.tggl td{border-color:#666666;}
+.tggl table{border-color:#666666;}
+
+body, button, input, select, textarea {background: transparent;}
+.st_tree ul li a:hover {color:#0070b8;}
+
+#_goPs{
+	background: transparent;
+}
+.htmleaf-container .mtree-demo .mtree {
+  background: #AA9069;
+  margin: 20px auto;
+  max-width: 320px;
+  border-radius: 3px;
+}	

@@ -1,0 +1,64 @@
+.blogBody{
+	width:100%;
+	background: #000 url(08.jpg) no-repeat center top;
+}
+.header-top {background: #000;border-bottom:0px;}
+.footer_styles {
+	background : #000; 
+}
+.blogHead,.tj{color: #808080;}
+
+#title1{
+	color: #808080;
+}
+/* .tj{
+	padding-bottom:90px;
+} */
+.blogBody .user-center-left .user-menu-links, .blogBody .personCenter-userInfo, .blogBody .user-center-left .user-setting {
+   background: #333333;
+} 
+
+td {border: 1px solid #fff;}
+
+.blogBody .user-center-left .user-menu-links li{
+	margin-top:-1px;
+	border-bottom: none; 
+}
+.blogBody .user-center-left .user-menu-links a {
+    border : none; 
+    text-decoration:none;
+}
+.blogBody .user-menu-links li a em {
+     background: transparent; 
+}
+.blogBody .user-menu-links li.on a em {
+   background: transparent; 
+}
+.blogBody .user-menu-links li a {
+	color: #666666;
+}
+a:link {
+    color: white;
+}
+.blogBody .user-menu-links li a:hover {
+	color:#0070b8;
+}
+#_goPs{
+	background: transparent;
+}
+.inp1{border-color:transparent;}
+.tggl .tggl-top {background: transparent;}
+body, button, input, select, textarea {
+	color:#666666;
+	 background: transparent;
+	}
+.st_tree ul li a:hover {color:#0070b8;}
+.htmleaf-container .mtree-demo .mtree {
+  background: #333333;
+  margin: 20px auto;
+  max-width: 320px;
+  border-radius: 3px;
+}		
+.header-right-list li a{
+	color: #0b91df;
+}
