@@ -1,522 +1,223 @@
 <!DOCTYPE html>
-<html>
-<link rel="stylesheet" href="/${res}/css/main.css"/>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<link rel="shortcut icon" href="/${res}/images/cerhyheard.png" type="/${res}/image/x-icon" />
-<script src="${resSys}/jquery.js" type="text/javascript"></script>
-<script src="${resSys}/front.js" type="text/javascript"></script>
-<script src="${resSys}/jqueryUI/jquery-ui.js" type="text/javascript"></script>
-<title>好研网</title>
-<link rel="stylesheet" type="text/css" href="/${res}/css/login.css" />
-<link rel="stylesheet" type="text/css" href="/${res}/css/hyindex.css" />
-<link rel="stylesheet" type="text/css" href="/${res}/css/custom.css" />
-<script type="text/javascript">
-window.onload = function (){ 
-	Cms.siteFlow("${base}", location.href, document.referrer,"${site.config.flowSwitch?string}");
-};
-function g(o){
-	return document.getElementById(o);
-}
-function HoverLi(x,y,m,n,counter){
-	for(var i=1;i<=counter;i++){
-		g(x+m+i).className='normaltab';
-		g(y+m+i).className='undis';
-	}
-	g(y+m+n).className='dis';
-	g(x+m+n).className='curr';
-}
-</script>
-<script type="text/javascript">
-var ind=0;
-$(document).ready(function(){
-	$(".info-tab-br1").each(function(index){
-		 var str = $(this).text();
-		 var len=str.length;
-		 ind=ind+Math.round(len/17);
-		 var state=0;
-		 if(ind>10){
-			 $("#bt_"+(index+1)).css("display","none");
-		 }
-		 
-	});
-});
-var indx=0;
-$(document).ready(function(){
-	$(".info-tab-br2").each(function(index){
-		 var str = $(this).text();
-		 var lens=str.length;
-		 indx=indx+Math.round(lens/17);
-		 var state=0;
-		 if(indx>10){
-			 $("#br_"+(index+1)).css("display","none");
-		 }
-		 
-	});
-});
-</script>
-[#include "../hyinclude/header.html"/]
-<div class="container">
-    <div class="wrap">
-        <div class="bd-padding">
-            <div class="zj-news clearfix">
-             <div class="news-slide">
-             	   <div class="big-img">
-                         [@cms_content_list typeId='2' count='20' recommend='2' channelId='75' orderBy='4' titLen='22' channelOption='1' dateFormat='yyyy-MM-dd']      
-         				  <ul class="big-img-ul" >
-           				 [#list tag_list as a]
-           				 <li [#if a_index<1] style="display: block;" [/#if]><a href="${a.url}" target="_blank"><img src="${a.typeImg!}" width="950" height="280"><span>[@text_cut s=a.title len=titLen /]</span></a></li>
-          				  [/#list]
-         				</ul>
-        				 [/@cms_content_list]   
-                    </div>
-                       <div class="now-steps-wrap">
-                        <div class="now-steps">
-                           <a href="javascript:;" class="next"></a>
-                            <div class="small-img-wrap">
-                                <ul class="small-img-ul" data-scro="controler">
-                                	[@cms_content_list typeId='2'  count='20' recommend='2' channelId='75' orderBy='4' titLen='22' channelOption='1' dateFormat='yyyy-MM-dd']
-              						 [#list tag_list as a]
-              						 <li><a [#if a_index<1] class='active'[/#if] href="javascript:;"><span>${a_index+1}</span><em></em></a></li>
-              						 [/#list]
-            						[/@cms_content_list]	                                    
-                                </ul>
-                            </div>
-                           <a href="javascript:;" class="prev disabled"></a> 
-                        </div>
-                    </div>
-                      <script type="text/javascript" src="/${res}/js/script.js"></script>
-                </div>
-            <!--分类资讯-->
-            <div class="type-info">
-                <div class="info-wrap clearfix">
-                	<div class="info-div">                    
-                         <div class="info-div-head clearfix">
-                            <h3><span>文件通知</span></h3>
-                            <div class="info-tab-head">
-							       		 <a href="javascript:;" class="active">通知通报<em></em></a>
-						                             <a href="javascript:;">院外信息</a>
-                            </div>
-                            	<a href="http://www.cerhy.com:80/wjtz/index.jhtml" class="more" title="更多" target="_blank"></a>
+<!-- saved from url=(0023)http://sanya.hersp.com/ -->
+<html slick-uniqueid="3"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-                        </div>
-                        <div class="info-div-content">
-                            <div class="info-tab-content" style="display:block;height: 280px;overflow: hidden;">
-                                <ul class="has-dot-list" style="height: 280px;">
-                                 [@cms_content_list  channelId='199' count='8' titLen='14' orderBy='2' channelOption='1'][#list tag_list as a]
-                                 <li id="bt_${a_index+1}">
-	                                 <a class="info-tab-br1" href="${a.url}" target="_blank" title="${a.title}">${a.title}<span class="gray9">(${a.releaseDate?string('MM-dd')})</span></a>
-                                 </li>
-                                 [/#list][/@cms_content_list]
-                                </ul>
-                            </div>
-                            <div class="info-tab-content" style="height: 280px;overflow: hidden;">
-                                <ul class="has-dot-list">
-                                  [@cms_content_list  channelId='179' count='8' titLen='14' orderBy='2' channelOption='1'][#list tag_list as a]
-                                  <li id="br_${a_index+1}">
-                                  <a class="info-tab-br2" href="${a.url}" target="_blank" title="${a.title}">${a.title}<span class="gray9">(${a.releaseDate?string('MM-dd')})</span></a>
-                                  </li>
-                                  [/#list][/@cms_content_list]
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="info-div">
-             			<div class="info-div-head clearfix clearfix">
-                            <h3><span>学科教研</span></h3>
-                            <div class="info-tab-head">
-							       		 <a href="javascript:;" class="active">高中<em></em></a>
-								       		 <a href="javascript:;">初中<em></em></a>
-					                                	<a href="javascript:;">小学<em></em></a>
-						                                <a href="javascript:;">幼教</a>
-                            </div>
-                            				<a href="http://www.cerhy.com/xkjy/index.jhtml" class="more" title="更多" target="_blank"></a>
+<title>sanya</title>
+<link rel="stylesheet" href="/${res}/sanya_files/content.css">
+<script src="/${res}/sanya_files/mootools.js"></script>
+<script src="/${res}/sanya_files/mootools.pack.js"></script>
+<script src="/${res}/sanya_files/bee.core.js"></script>
+<script src="/${res}/sanya_files/bee.sy.js"></script>
+<!--<base target="_blank">--><base href="." target="_blank">
+</head>
+<body>
+<div id="header">
+	<div id="header-w">
+		<div id="navi"><a href="http://www.hersp.com/">HERSP首页</a><a href="http://res.hersp.com/">教育资源</a><a href="http://tea.hersp.com/">教师发展</a><a href="http://stu.hersp.com/">学生成长</a><a href="http://my.hersp.com/">注册/登录</a></div>
+		<div id="brand"><form id="search" action="http://www.google.com/cse" target="_blank"><div><input type="hidden" name="cx" value="008577523922045354175:ytzoijy0xg8"><input type="hidden" name="ie" value="UTF-8"><input class="searchbox" type="text" name="q"><input class="searchweb" type="submit" name="sa" value=""></div></form></div>
+	</div>
+</div>
 
-                        </div>
-                        <div class="info-div-content">
-                            <div class="info-tab-content"  style="display: block;">
-                                <ul class="has-dot-list">
-                                   [@cms_content_list channelId='135' count='8' titLen='14' orderBy='2' channelOption='1'][#list tag_list as a]<li><a href="${a.url}" class="of" target="_blank" title="${a.title}">[@text_cut s=a.title len=titLen append='...'/]<span class="gray9">(${a.releaseDate?string('MM-dd')})</span></a></li>[/#list][/@cms_content_list]
-                                </ul>
-                            </div>
-                            <div class="info-tab-content">
-                                <ul class="has-dot-list">
-                                   [@cms_content_list channelId='136' count='8' titLen='14' orderBy='2' channelOption='1'][#list tag_list as a]<li><a href="${a.url}" class="of" target="_blank" title="${a.title}">[@text_cut s=a.title len=titLen append='...'/]<span class="gray9">(${a.releaseDate?string('MM-dd')})</span></a></li>[/#list][/@cms_content_list]
-                                </ul>
-                            </div>
-                            <div class="info-tab-content">
-                                <ul class="has-dot-list">
-                                   [@cms_content_list  channelId='137' count='8' titLen='14' orderBy='2' channelOption='1'][#list tag_list as a]<li><a href="${a.url}" class="of" target="_blank" title="${a.title}">[@text_cut s=a.title len=titLen append='...'/]<span class="gray9">(${a.releaseDate?string('MM-dd')})</span></a></li>[/#list][/@cms_content_list]
-                                </ul>
-                            </div>
-                            <div class="info-tab-content">
-                                <ul class="has-dot-list"> 
-	                               [@cms_content_list  channelId='138' count='8' titLen='14' orderBy='2' channelOption='1'][#list tag_list as a]<li><a href="${a.url}" class="of" target="_blank" title="${a.title}">[@text_cut s=a.title len=titLen append='...'/]<span class="gray9">(${a.releaseDate?string('MM-dd')})</span></a></li>[/#list][/@cms_content_list]
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="info-div">
-                     	<div class="info-div-head clearfix">
-                            <h3>
-                                <span>教育科研</span>
-                            </h3>
-                            <div class="info-tab-head">
-							       		 <a href="javascript:;" class="active">教育研究<em></em></a>
-						                             <a href="javascript:;">重大课题</a>
-                            </div>
-                            				<a href="http://www.cerhy.com/jyky/index.jhtml" class="more" title="更多" target="_blank"></a>
+<div id="layout">
+	<div id="banner"></div>
+	<ul id="menu" class="menu"><li><span>课程改革</span><div class="pad col1 "><dl><dd><a href="http://res.hersp.com/category/65183">课程管理</a></dd><dd><a href="http://res.hersp.com/category/126859">校本研修</a></dd><dd><a href="http://res.hersp.com/category/5524">质量监测</a></dd><dd><a href="http://res.hersp.com/category/127146">样本校建设</a></dd></dl></div></li><li><span>学科教研</span><div class="pad col4 "><dl class="moo"><dd><a href="http://res.hersp.com/category/5497">高中语文</a></dd><dd><a href="http://res.hersp.com/category/5499">高中数学</a></dd><dd><a href="http://res.hersp.com/category/5501">高中英语</a></dd><dd><a href="http://res.hersp.com/category/5503">高中物理</a></dd><dd><a href="http://res.hersp.com/category/5505">高中化学</a></dd><dd><a href="http://res.hersp.com/category/5507">高中生物</a></dd><dd><a href="http://res.hersp.com/category/5495">高中政治</a></dd><dd><a href="http://res.hersp.com/category/5509">高中历史</a></dd><dd><a href="http://res.hersp.com/category/5510">高中地理</a></dd></dl><dl class="moo"><dd><a href="http://res.hersp.com/category/5496">初中语文</a></dd><dd><a href="http://res.hersp.com/category/5498">初中数学</a></dd><dd><a href="http://res.hersp.com/category/5500">初中英语</a></dd><dd><a href="http://res.hersp.com/category/5502">初中物理</a></dd><dd><a href="http://res.hersp.com/category/5504">初中化学</a></dd><dd><a href="http://res.hersp.com/category/5506">初中生物</a></dd><dd><a href="http://res.hersp.com/category/5494">初中思品</a></dd><dd><a href="http://res.hersp.com/category/5508">初中历史</a></dd><dd><a href="http://res.hersp.com/category/5509">初中地理</a></dd></dl><dl class="moo"><dd><a href="http://res.hersp.com/category/14165">小学语文</a></dd><dd><a href="http://res.hersp.com/category/5490">小学数学</a></dd><dd><a href="http://res.hersp.com/category/5491">小学英语</a></dd><dd><a href="http://res.hersp.com/category/5492">小学思品</a></dd><dd><a href="http://res.hersp.com/category/5493">小学科学</a></dd><dd><a href="http://res.hersp.com/category/5516">中小学美术</a></dd><dd><a href="http://res.hersp.com/category/5514">中小学体育</a></dd><dd><a href="http://res.hersp.com/category/5511">中小学音乐</a></dd></dl><dl><dd><a href="http://res.hersp.com/category/65291">学前教研</a></dd><dd><a href="http://res.hersp.com/category/5517">综合实践</a></dd><dd><a href="http://res.hersp.com/category/5513">通用技术</a></dd><dd><a href="http://res.hersp.com/category/5512">信息技术</a></dd><dd><a href="http://res.hersp.com/category/15079">心理健康</a></dd></dl></div></li><li><span>教研动态</span><div class="pad col1 "><dl><dd><a href="http://res.hersp.com/category/5431">教研简报</a></dd><dd><a href="http://res.hersp.com/category/127149">校园新闻</a></dd><dd><a href="http://res.hersp.com/category/12994">教育时政</a></dd></dl></div></li><li><span>文件通知</span><div class="pad col1 "><dl><dd><a href="http://res.hersp.com/category/5432">通知通报</a></dd></dl></div></li><li><span>教研管理</span><div class="pad col1 "><dl><dd><a href="http://res.hersp.com/category/14962">政策法规</a></dd><dd><a href="http://res.hersp.com/category/5522">制度建设</a></dd><dd><a href="http://res.hersp.com/category/5433">计划总结</a></dd></dl></div></li><li><span>教育科研</span><div class="pad col1 "><dl><dd><a href="http://res.hersp.com/category/127161">国家课题</a></dd><dd><a href="http://res.hersp.com/category/127162">省级课题</a></dd><dd><a href="http://res.hersp.com/category/5434">市级课题</a></dd><dd><a href="http://res.hersp.com/category/127163">攀登英语</a></dd></dl></div></li><li><span>网络教研</span><div class="pad col1 "><dl><dd><a href="http://res.hersp.com/category/69512">在线研讨</a></dd></dl></div></li><li><span>交流空间</span><div class="pad col1 rtl"><dl><dd><a href="http://res.hersp.com/category/64804">校长论坛</a></dd><dd><a href="http://res.hersp.com/category/5435">教学论坛</a></dd></dl></div></li><li class="rc"><span>教学资源</span><div class="pad col1 rtl"><dl><dd><a href="http://res.hersp.com/category/126355">视频中心</a></dd><dd><a href="http://res.hersp.com/category/127176">课件专区</a></dd><dd><a href="http://res.hersp.com/category/127178">试题专区</a></dd><dd><a href="http://res.hersp.com/category/19037">下载专区</a></dd></dl></div></li><li><span>关于我们</span><div class="pad col1 rtl"><dl><dd><a href="http://res.hersp.com/category/38485">博客主页</a></dd><dd><a href="http://res.hersp.com/category/127181">教研室简介</a></dd><dd><a href="http://res.hersp.com/category/123182">教研员分工</a></dd><dd><a href="http://res.hersp.com/category/62559">上网导航</a></dd></dl></div></li></ul>
+	<script> utils.initSearch(); new Menubar('menu', cfg.menu, cfg.rtl); </script>
 
-                        </div>
-                         <div class="info-div-content">
-                            <div class="info-tab-content"  style="display: block;">
-                                <ul class="has-dot-list">
-                                   [@cms_content_list channelId='152' count='8' titLen='14' orderBy='2' channelOption='1'][#list tag_list as a]<li><a href="${a.url}" class="of" target="_blank" title="${a.title}">[@text_cut s=a.title len=titLen append='...'/]<span class="gray9">(${a.releaseDate?string('MM-dd')})</span></a></li>[/#list][/@cms_content_list]
-                                </ul>
-                            </div>
-                            <div class="info-tab-content">
-                                <ul class="has-dot-list">
-                                   [@cms_content_list channelId='153' count='8' titLen='14' orderBy='2' channelOption='1'][#list tag_list as a]<li><a href="${a.url}" class="of" target="_blank" title="${a.title}">[@text_cut s=a.title len=titLen append='...'/]<span class="gray9">(${a.releaseDate?string('MM-dd')})</span></a></li>[/#list][/@cms_content_list]
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="info-wrap clearfix">
-                    <div class="info-div">                    
-                         <div class="info-div-head clearfix">
-                            <h3>
-                                <span>教师培训</span>
-                            </h3>
-                            <div class="info-tab-head">
-							       		 <a href="javascript:;" class="active">干训<em></em></a>
-								       		 <a href="javascript:;">师训<em></em></a>
-						                             <a href="javascript:;">培训管理</a>
-                            </div>
-                            	<a href="http://www.cerhy.com/jspx/index.jhtml" class="more" title="更多" target="_blank"></a>
-                        </div>
-                        <div class="info-div-content">
-                            <div class="info-tab-content" style="display: block;">
-                                <ul class="has-dot-list">
-                                 [@cms_content_list  channelId='283' count='8' titLen='14' orderBy='2' channelOption='1'][#list tag_list as a]<li><a href="${a.url}" class="of" target="_blank" title="${a.title}">[@text_cut s=a.title len=titLen append='...'/]<span class="gray9">(${a.releaseDate?string('MM-dd')})</span></a></li>[/#list][/@cms_content_list]
-                                </ul>
-                            </div>
-                            <div class="info-tab-content">
-                                <ul class="has-dot-list">
-                                  [@cms_content_list  channelId='284' count='8' titLen='14' orderBy='2' channelOption='1'][#list tag_list as a]<li><a href="${a.url}" class="of" target="_blank" title="${a.title}">[@text_cut s=a.title len=titLen append='...'/]<span class="gray9">(${a.releaseDate?string('MM-dd')})</span></a></li>[/#list][/@cms_content_list]
-                                </ul>
-                            </div>
-                            <div class="info-tab-content">
-                                <ul class="has-dot-list">
-                                  [@cms_content_list  channelId='285' count='8' titLen='14' orderBy='2' channelOption='1'][#list tag_list as a]<li><a href="${a.url}" class="of" target="_blank" title="${a.title}">[@text_cut s=a.title len=titLen append='...'/]<span class="gray9">(${a.releaseDate?string('MM-dd')})</span></a></li>[/#list][/@cms_content_list]
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="info-div">                    
-                         <div class="info-div-head clearfix">
-                            <h3>
-                                <span>市县教研</span>
-                            </h3>
-                            <div class="info-tab-head">
-							       		 <a href="javascript:;" class="active">市县教研<em></em></a>
-                            </div>
-                            	<a href="http://www.cerhy.com/sxjy/index.jhtml" class="more" title="更多" target="_blank"></a>
-                        </div>
-                        <div class="info-div-content">
-                            <div class="info-tab-content" style="display: block;">
-                                <ul class="has-dot-list">
-                                 [@cms_content_list  channelId='169' count='8' titLen='14' orderBy='2' channelOption='1'][#list tag_list as a]<li><a href="${a.url}" class="of" target="_blank" title="${a.title}">[@text_cut s=a.title len=titLen append='...'/]<span class="gray9">(${a.releaseDate?string('MM-dd')})</span></a></li>[/#list][/@cms_content_list]
-                                </ul>
-                            </div>
-                            <div class="info-tab-content">
-                                <ul class="has-dot-list">
-                                  [@cms_content_list  channelId='170' count='8' titLen='14' orderBy='2' channelOption='1'][#list tag_list as a]<li><a href="${a.url}" class="of" target="_blank" title="${a.title}">[@text_cut s=a.title len=titLen append='...'/]<span class="gray9">(${a.releaseDate?string('MM-dd')})</span></a></li>[/#list][/@cms_content_list]
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="info-div">                        
-                           <div class="info-div-head clearfix">
-                            <h3>
-                                <span>课程改革</span>
-                            </h3>
-                             <div class="info-tab-head">
-							       		 <a href="javascript:;" class="active">课改综合信息<em></em></a>
-						                             <a href="javascript:;">综合样本校</a>
-                            </div>
-                            <a href="http://www.cerhy.com/kcgg/index.jhtml" class="more" title="更多" target="_blank"></a>
-                        </div>
-                         <div class="info-div-content">
-                            <div class="info-tab-content"  style="display: block;">
-                                <ul class="has-dot-list">
-                                   [@cms_content_list channelId='200' count='8' titLen='14' orderBy='2' channelOption='1'][#list tag_list as a]<li><a href="${a.url}" class="of" target="_blank" title="${a.title}">[@text_cut s=a.title len=titLen append='...'/]<span class="gray9">(${a.releaseDate?string('MM-dd')})</span></a></li>[/#list][/@cms_content_list]
-                                </ul>
-                            </div>
-                            <div class="info-tab-content">
-                                <ul class="has-dot-list">
-                                   [@cms_content_list channelId='201' count='8' titLen='14' orderBy='2' channelOption='1'][#list tag_list as a]<li><a href="${a.url}" class="of" target="_blank" title="${a.title}">[@text_cut s=a.title len=titLen append='...'/]<span class="gray9">(${a.releaseDate?string('MM-dd')})</span></a></li>[/#list][/@cms_content_list]
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="small-banner">
-                    <a  href="${base}/topic/4.jspx" target="_blank">
-                        <img src="/${res}/images/smallbanner1.jpg" width="956" height="110" alt="">
-                    </a>
-                </div>
-                <div class="info-wrap clearfix">
-                <div class="info-div">
-                  		<div class="info-div-head clearfix">
-                            <h3>
-                                <span>政策研究</span>
-                            </h3>
-                             <a href="http://www.cerhy.com/zcyj/index.jhtml" class="more" title="更多" target="_blank"></a>
-                        </div>
-                        <div class="info-div-content">
-         				<ul class="has-dot-list">
-                         [@cms_content_list  channelId='177' orderBy='4' titLen='14' channelOption='1' count='8'][#list tag_list as a]<li><a href="${a.url}" class="of" target="_blank" title="${a.title}"><span>[@text_cut s=a.title len=titLen  append='...'/]</span><span class="gray9">(${a.releaseDate?string('MM-dd')})</span></a></li>[/#list][/@cms_content_list]  
-         				</ul>
-                        </div>
-                    </div>
-                    <div class="info-div">
-                        <div class="info-div-head clearfix">
-                            <h3>
-                                <span>质量监测</span>
-                            </h3>
-                             <div class="info-tab-head">
-							       		 <a href="javascript:;" class="active">质量监测信息<em></em></a>
-						                 <a href="javascript:;">数据填报</a>
-                            </div>
-                            <a href="http://www.cerhy.com/zljc/index.jhtml" class="more" title="更多" target="_blank"></a>
-                        </div>
-                        <div class="info-div-content">
-                            <div class="info-tab-content"  style="display: block;">
-                                <ul class="has-dot-list">
-                                   [@cms_content_list channelId='227' count='8' titLen='14' orderBy='2' channelOption='1'][#list tag_list as a]<li><a href="${a.url}" class="of" target="_blank" title="${a.title}">[@text_cut s=a.title len=titLen append='...'/]<span class="gray9">(${a.releaseDate?string('MM-dd')})</span></a></li>[/#list][/@cms_content_list]
-                                </ul>
-                            </div>
-                            <div class="info-tab-content">
-                                <ul class="has-dot-list">
-                                   [@cms_content_list channelId='228' count='8' titLen='14' orderBy='2' channelOption='1'][#list tag_list as a]<li><a href="${a.url}" class="of" target="_blank" title="${a.title}">[@text_cut s=a.title len=titLen append='...'/]<span class="gray9">(${a.releaseDate?string('MM-dd')})</span></a></li>[/#list][/@cms_content_list]
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="info-div">                    
-                         <div class="info-div-head clearfix">
-                            <h3>
-                                <span>职业教育</span>
-                            </h3>
-                            <div class="info-tab-head">
-							       		 <a href="javascript:;" class="active">新闻发布<em></em></a>
-						                  <a href="javascript:;">专业工作室</a>
-                            </div>
-                           <a href="http://www.cerhy.com/zyjy/index.jhtml" class="more" title="更多" target="_blank"></a>
-                        </div>
-                        <div class="info-div-content">
-                            <div class="info-tab-content" style="display: block;">
-                                <ul class="has-dot-list">
-                                 [@cms_content_list  channelId='178' count='8' titLen='14' orderBy='2' channelOption='1'][#list tag_list as a]<li><a href="${a.url}" class="of" target="_blank" title="${a.title}">[@text_cut s=a.title len=titLen append='...'/]<span class="gray9">(${a.releaseDate?string('MM-dd')})</span></a></li>[/#list][/@cms_content_list]
-                                </ul>
-                            </div>
-                            <div class="info-tab-content">
-                                <ul class="has-dot-list">
-                                  [@cms_content_list  channelId='181' count='8' titLen='14' orderBy='2' channelOption='1'][#list tag_list as a]<li><a href="${a.url}" class="of" target="_blank" title="${a.title}">[@text_cut s=a.title len=titLen append='...'/]<span class="gray9">(${a.releaseDate?string('MM-dd')})</span></a></li>[/#list][/@cms_content_list]
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="info-wrap clearfix">
-                  <div class="info-div">
-                       <div class="info-div-head clearfix">
-                             <h3>
-                                <span>党群建设</span>
-                            </h3>
-                            <a href="http://www.cerhy.com/dqjs/index.jhtml" class="more" title="更多" target="_blank"></a>
-                        </div>
-                        <div class="info-div-content">
-                            <ul class="has-dot-list">
-                                [@cms_content_list  channelId='260' count='8' titLen='14' orderBy='2' channelOption='1'][#list tag_list as a]<li><a href="${a.url}" class="of" target="_blank" title="${a.title}">[@text_cut s=a.title len=titLen append='...'/]<span class="gray9">(${a.releaseDate?string('MM-dd')})</span></a></li>[/#list][/@cms_content_list]
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="info-div">
-                         <div class="info-div-head clearfix">
-                            <h3>
-                                <span>教育学会</span>
-                            </h3>
-                           <a href="http://www.cerhy.com/jyxh/index.jhtml" class="more" title="更多" target="_blank"></a>
-                        </div>
-                        <div class="info-div-content">
-                            <ul class="has-dot-list">
-                                [@cms_content_list  channelId='266' count='8' titLen='14' orderBy='2' channelOption='1'][#list tag_list as a]<li><a href="${a.url}" class="of" target="_blank" title="${a.title}">[@text_cut s=a.title len=titLen append='...'/]<span class="gray9">(${a.releaseDate?string('MM-dd')})</span></a></li>[/#list][/@cms_content_list]
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="info-div">
-                        <div class="info-div-head clearfix">
-                            <h3>
-                                <span>明星博客</span>
-                            </h3>
-                            <a href="http://www.cerhy.com/bk/index.jhtml" target="_blank" class="more" title="更多"></a>
-                        </div>
-                        <div class="info-div-content">
-                            <ul class="blog-content-list">
-                            	 [@cms_content_list channelId='280' count='3' typeId='5' titLen='14' orderBy='2' channelOption='1']
-                            	[#list tag_list as a]
-                                <li>
-                                    <a href="${a.url}?typeIds=5" target="_blank" title="${a.title}">
-                                        <span class="trend"></span>
-                                        <div class="con clearfix">
-                                        	[#if a.typeImg??]<img src="${a.typeImg!}" width="40" height="40" alt="" class="blog-left-img">[#else]<img src="/${res}/images/blog1.png" width="70" height="70" alt="" class="blog-left-img">[/#if]                                                                    
-                                            <div class="con-right" style="width: 50px;">
-                                                <h4 class="of">【[@text_cut s=a.title len=8 append='...'/]】</h4>
-                                                <p class="small-con of"> [@text_cut s=a.description! len=titLen append='...' /]</p>
-                                                <div class="time-num clearfix" style="width: 190px;">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </li>   
-                                [/#list]
-                                [/@cms_content_list]                                                           
-                            </ul>
-                        </div>
-                    </div>
+	<div id="inner">
+		<div id="main">
+			<div id="feature-mask"><div id="feature" class="block" style="height: 1250px; top: 0px;"><div>
+&nbsp; <h2>三亚市教育局举行兼职教研员、学科中心组成员聘任仪式</h2>
+<p>4月3日下午，三亚市教育局在教育局六楼报告厅举行兼职教研员、学科中心组成员聘任仪式。教育局副局长吴萍、教育局教研室傅元根主任、罗禹副主任出席会议，各中小学、幼儿园分管教学校长（园长）、受聘兼职教研员、学科教研中心组成员参加会议。会议由教育局教研室罗禹副主任主持。<a href="http://res.hersp.com/content/4379069">[详细]</a></p>
+&nbsp; <p style="margin: 0 0 0 1em;"><img src="/${res}/sanya_files/20171.png"></p>
+&nbsp; <ul class="dot" style="margin: 0 0 0 0;">
+&nbsp;<li><a href="http://res.hersp.com/content/1506553" target="_blank">活动综述</a>
+&nbsp;</li><li>相关资料 | <a href="http://res.hersp.com/content/265512" target="_blank">利用EXCEL进行博客数据统计（适用于批量统计）</a> | <a href="http://res.hersp.com/content/310923" target="_blank">公告区在线研讨代码生成</a> | <a href="http://res.hersp.com/content/329242" target="_blank">如何在Excel中启用宏</a>
+&nbsp;</li><li>链接收藏 | <a href="http://my.hersp.com/9210" target="_blank">三亚市教研室(9210)</a> | <a href="http://my.hersp.com/9000" target="_blank">好研平台客服(9000)</a>
+</li></ul></div>
 
-                </div>
-            </div>
-            <!--链接-->
-            <div class="friendly-links">
-                <div class="tab-wrap tab-btm-wrap">
-                    <div class="tab-head">
-                        <!-- <a href="javascript:;" class="active">市县教研</a>
-                        <a href="javascript:;">学校教研</a> -->
-                        <a href="javascript:;" class="active">友情链接</a>
-                    </div>
-                <div class="tab-content" style="display: block">
-                    <!--友情链接  ctgId='1' 为文字链接,ctgId='2' 图片链接-->
-							  <div style="margin-left:1.5%; float:left;">
-							   	 <a href="http://www.moe.edu.cn/"  target="_blank">中华人民共和国教育部</a>
-							   </div>
-							   							   <div style="margin-left:1.5%; float:left;">
-							   	 <a href="http://edu.hainan.gov.cn/"  target="_blank">海南省教育厅</a>
-							   </div>
-							   	<div style="margin-left:1.5%; float:left;">
-							   	 <a href="http://www.hainan.gov.cn/"  target="_blank">海南省人民政府</a>
-							   </div>
-							   	<div style="margin-left:1.5%; float:left;">
-							   	 <a href="http://onsgep.moe.edu.cn/"  target="_blank">全国教育科学规划领导小组办公室</a>
-							   </div>
-							   	<div style="margin-left:1.5%; float:left;">
-							   	 <a href="http://www.neea.edu.cn/"  target="_blank">教育部考试中心</a>
-							   </div>
-							   	<div style="margin-left:1.5%; float:left;">
-							   	 <a href="http://www.cse.edu.cn/"  target="_blank">中国教育学会秘书处</a>
-							   </div>
-							   	<div style="margin-left:1.5%; float:left;">
-							   	 <a href="http://www.hainanast.org/"  target="_blank">海南省科学技术协会</a>
-							   </div>
-							   	<div style="margin-left:1.5%; float:left;">
-							   	 <a href="http://www.cvae.com.cn/yjs/"  target="_blank">教育部职业技术教育研究所</a>
-							   </div>
-							   	<div style="margin-left:1.5%; float:left;">
-							   	 <a href="http://ncct.moe.edu.cn/"  target="_blank">教育部基础教育课程教材发展中心</a>
-							   </div>
-							   	
 
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+<div>
+&nbsp; <h2>三亚市中小学“226”教改实验深度研修班在上海市徐汇区举行</h2>
+<p>2013年8月8日至15日，我局教研室组织过岭中学、南岛学校、逸夫中学3所226有效教学实验学校的24名实验教师和教研室4名教研员到上海市徐汇区参加由我室与上海教育科学研究院联合举办的“226”教改实验研修班。<a href="http://res.hersp.com/content/3797294">[详细]</a></p>
+&nbsp; <p style="margin: 0 0 0 1em;"><img src="/${res}/sanya_files/37139.jpg"></p>
+&nbsp; <ul class="dot" style="margin: 0 0 0 0;">
+&nbsp;<li><a href="http://res.hersp.com/content/1506553" target="_blank">活动综述</a>
+&nbsp;</li><li>相关资料 | <a href="http://res.hersp.com/content/265512" target="_blank">利用EXCEL进行博客数据统计（适用于批量统计）</a> | <a href="http://res.hersp.com/content/310923" target="_blank">公告区在线研讨代码生成</a> | <a href="http://res.hersp.com/content/329242" target="_blank">如何在Excel中启用宏</a>
+&nbsp;</li><li>链接收藏 | <a href="http://my.hersp.com/9210" target="_blank">三亚市教研室(9210)</a> | <a href="http://my.hersp.com/9000" target="_blank">好研平台客服(9000)</a>
+</li></ul></div>
+
+<div>
+  <h2>三亚市教学成果统计系统使用暨网络教研平台操作培训专题</h2>
+<p>3月17日上午，三亚市教研室在教育局6楼报告厅举办中小学网络教研平台操作暨教学成果统计系统使用技能培训班，特邀海南省教育研究培训院网络教研平台研发管理人员张海中、梁斌两位老师现场指导。</p>
+  <p style="margin: 0 0 0 1em;"><img src="/${res}/sanya_files/01204.jpg"></p>
+  <ul class="dot" style="margin: 0 0 0 0;">
+ <li><a href="http://res.hersp.com/content/1506553" target="_blank">活动综述</a>
+ </li><li>相关资料 | <a href="http://res.hersp.com/content/265512" target="_blank">利用EXCEL进行博客数据统计（适用于批量统计）</a> | <a href="http://res.hersp.com/content/310923" target="_blank">公告区在线研讨代码生成</a> | <a href="http://res.hersp.com/content/329242" target="_blank">如何在Excel中启用宏</a>
+ </li><li>链接收藏 | <a href="http://my.hersp.com/9210" target="_blank">三亚市教研室(9210)</a> | <a href="http://my.hersp.com/9000" target="_blank">好研平台客服(9000)</a>
+</li></ul></div>
+<div>
+  <a href="http://res.hersp.com/content/1471111"><img src="/${res}/sanya_files/14163.jpg"></a>
+</div>
+
+<div>
+<p style="margin: 0px; font-weight: bold;"><span style="font-size: 12pt;"><strong><span style="font-family: verdana,宋体; font-size: 12pt;">舍我取谁——2011年三亚市首届中小学生环保作品展览暨倡议大型公益活动</span></strong></span><span style="font-size: 12pt;"><strong><span style="font-size: 12pt;">&nbsp;</span></strong></span></p>
+<p style="text-align: left;" align="center">&nbsp;</p>
+<p><span style="font-size: 14px;"><span style="font-size: 14px;"><img title="cats" src="/${res}/sanya_files/23789.jpg" alt=""></span><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;由我局组织举办的2011年三亚市首届中小学生利用废旧物品手工制作环保模型大赛作品展览暨全体中小学生向广大市民发出“ 低碳环保，从我做起”的倡议的大型公益活动于2012年1月1日在三亚市大东海夏日百货旁隆重举行，这次展出的学生作品是从入围作品中经过精心挑选择出来的优秀作品，共展出将近300件。
+<span style="font-size: 14px;"><a href="http://res.hersp.com/content/1401617">[详细信息]</a></span></span></p>
+</div></div></div><div id="feature-handle"><span class="active">1</span><span class="">2</span><span class="">3</span><span class="">4</span><span class="">5</span></div>
+			<script> utils.initFeature(); </script>
+
+			<div id="subject1" class="widget block"><h3>教研简报</h3>
+<div class="box" style="padding: 8px 0 0 0; font-size: 15pt; font-weight: bold;">三亚市2016年中学物理课堂教学大赛活动简报
+</div>
+<div style="padding: 10px;">
+  <img style="width: 150px; float: left;" src="/${res}/sanya_files/43797.jpg" alt="">
+  <div style="width: 450px; float: right;">
+季春阳光，其意融适；精品四中，儒雅铸人。三亚市2016年中学物理课堂教学大赛在这个书香绕人的校园中进行，本次活动主题为探索物理课堂教学有效性，丰富青年教师教学经验。活动分高、初中两组，各区、市直属各学校都以选优推荐，共15位青年教师参加。
+<a href="http://res.hersp.com/content/5623410">[详细]</a><br>
+  </div>
+  <div class="clr"></div>
+</div>
+<ul class="dot" style="float: left; width: 45%">
+<li><a href="http://res.hersp.com/content/4547662">[图文简报]我市组织骨干教师参加全国综合实践活动第十二届研讨会获多项一等奖</a></li><li><a href="http://res.hersp.com/content/4502295">【初中物理教研活动简报】三亚市初中物理中心教研组参加五中物理省级课题研究活动</a></li><li><a href="http://res.hersp.com/content/4476110">【教研活动简报】金海求是——”2014年全国高效课堂创新成果交流研讨会“纪实</a></li><li><a href="http://res.hersp.com/content/4457693">局教研室召开2014年市化学中考备考会</a></li>
+
+
+
+
+
+
+</ul>
+<ul class="dot" style="float: right; width: 45%">
+
+<li><a href="http://res.hersp.com/content/4628199">三亚市组织部分物理同行参加”省2014年义务教育暑期新教材跟进培训“</a></li><li><a href="http://res.hersp.com/content/4517499">三亚市“攀登英语学习实验项目”下学校指导活动简报</a></li><li><a href="http://res.hersp.com/content/4485761">【初中物理教研活动简报】三亚市初中物理中心教研组参加海军三亚榆林八一中学开放周活动</a></li><li><a href="http://res.hersp.com/content/4463595">【物理教研活动简报】“三亚市2014年初三物理总复习研讨培训会议”在三亚四中成功举行</a></li>
+
+
+
+
+
+
+</ul>
+<div class="clr"></div></div>
+			<div id="subject2" class="widget block"><h3>学科动态</h3>
+
+<ul class="dot" style="float: left; width: 45%">
+<li><a href="http://res.hersp.com/content/4550078">[综合实践]关于我市参加第26届海南省青少年科技创新大赛获奖情况的通报</a></li><li><a href="http://res.hersp.com/content/4542307">[信息技术]WiFi长怎么样？盘旋光束如幽灵！</a></li><li><a href="http://res.hersp.com/content/4624340">[中小学体育]三亚“飞北赛”总决赛：空中上演美妙舞台剧</a></li><li><a href="http://res.hersp.com/content/703713">[高中地理]关于举办三亚市中学地理“教学能手”评比活动的通知</a></li><li><a href="http://res.hersp.com/content/1248306">[高中历史]1.3.9《资本主义政治制度在欧洲大陆的扩展》练习</a></li><li><a href="http://res.hersp.com/content/4500862">[高中生物][教研简报]2014年全市生物命题、教学论文评选结活动圆满结束</a></li><li><a href="http://res.hersp.com/content/1621603">[高中化学]参加第七届全国基础教育化学新课程实施成果交流大会有感</a></li><li><a href="http://res.hersp.com/content/4546738">[高中物理]【物理在线研讨活动简报】2013-14学年三亚市中学物理教学在线研讨活动及数据统计</a></li><li><a href="http://res.hersp.com/content/720041">[高中英语]关于举办 “2010年三亚市高中学生英语书面表达竞赛”的通知</a></li><li><a href="http://res.hersp.com/content/4556531">[高中数学][教研简报]     14.6.三亚中学数学教师同一题多解多变优质案例评选活动简报</a></li><li><a href="http://res.hersp.com/content/4257780">[初中语文]【原创】荔枝沟中学瞒上欺下颠倒黑白满嘴谎言令人作呕之投诉答复</a></li><li><a href="http://res.hersp.com/content/1610578">[初中思品]关于2012年全市初中思想品德优质课比赛结果及在线研讨情况的通报</a></li><li><a href="http://res.hersp.com/content/620479">[小学思品]鱼水情深，共创和谐——河东区中心学校“军民共建”活动报道</a></li><li><a href="http://res.hersp.com/content/4033082">[小学数学]数学课应注重数学与其他学科的联系与综合</a></li>
+
+</ul>
+<ul class="dot" style="float: right; width: 45%">
+<li><a href="http://res.hersp.com/content/648787">[学前教研]关于举办“利用木偶开展幼儿园语言活动”专题研讨活动的通知</a></li><li><a href="http://res.hersp.com/content/4008690">[通用技术]【图文简报】我市组织骨干老师参加全省综合实践活动说课活动，市一小符照娟老师获全省比赛二等奖</a></li><li><a href="http://res.hersp.com/content/4477781">[中小学美术]美术送教下乡活动观摩心得</a></li><li><a href="http://res.hersp.com/content/3974472">[中小学音乐]浅谈新课程理念下的“双基”教学</a></li><li><a href="http://res.hersp.com/content/703713">[初中地理]关于举办三亚市中学地理“教学能手”评比活动的通知</a></li><li><a href="http://res.hersp.com/content/648783">[初中历史]关于举办2010年全省中学历史教师教学基本功暨课堂教学评比活动的通知</a></li><li><a href="http://res.hersp.com/content/4600854">[初中生物]2013～2014学年度第二学期七年级生物科期末学业水平检测试卷参考答案</a></li><li><a href="http://res.hersp.com/content/4309547">[初中化学]征集化学学科中考备考会建议</a></li><li><a href="http://res.hersp.com/content/4628199">[初中物理]三亚市组织部分物理同行参加”省2014年义务教育暑期新教材跟进培训“</a></li><li><a href="http://res.hersp.com/content/1591563">[初中英语]关于举办第六届全国初中英语教师教学基本功大赛暨教学观摩研讨会的通知</a></li><li><a href="http://res.hersp.com/content/4556531">[初中数学][教研简报]     14.6.三亚中学数学教师同一题多解多变优质案例评选活动简报</a></li><li><a href="http://res.hersp.com/content/715322">[高中政治]关于组织教师观摩第三届粤版《思想品德》全国优质课大赛评比活动的通知</a></li><li><a href="http://res.hersp.com/content/4512130">[小学科学][图文简报]市教研室组织开展小学科学中心组教研活动</a></li><li><a href="http://res.hersp.com/content/4446182">[小学英语]三亚市小学英语教材教法培训简报</a></li><li><a href="http://res.hersp.com/content/4058245">[小学语文]信任是最好的激励手法</a></li>
+
+
+
+
+
+</ul>
+<div class="clr"></div>
+
+<h3>教育时政</h3>
+<ul class="dot" style="float: left; width: 45%">
+<li><a href="http://edu.people.com.cn/n/2014/0831/c1006-25572574.html">书皮不环保最好不要包</a></li><li><a href="http://edu.sina.com.cn/ischool/2014-09-01/1456432410.shtml">美国校园的班干部：为当玩具管理员发表竞演 </a></li><li><a href="http://learning.sohu.com/20140902/n403976436.shtml">湖北小学砍人凶手：女儿报名四求老师被拒</a></li><li><a href="http://kids.163.com/14/0901/10/A5261CCJ00294MO6.html">小学生豪购高档文具：超四成花费过2000</a></li><li><a href="http://edu.hainan.gov.cn/showarticle.jsp?id=20074045">我省334名特岗教师今秋上岗</a></li><li><a href="http://edu.hainan.gov.cn/showarticle.jsp?id=20074000">海南省教育厅下发通知：确保灾区学生如期上学</a></li>
+
+
+
+
+
+</ul>
+<ul class="dot" style="float: right; width: 45%">
+<li><a href="http://edu.people.com.cn/n/2014/0902/c1006-25583770.html">“两个人的学校”开学</a></li><li><a href="http://edu.sina.com.cn/zxx/2014-09-01/1548432433.shtml">家长吐槽文具要求多：包书皮不能有气泡(图)</a></li><li><a href="http://learning.sohu.com/20140902/n403976721.shtml">小学生年花费：打工子弟1万国际小学22万</a></li><li><a href="http://kids.163.com/special/yangwei/">杨威:钢铁侠老爸主张男孩吃苦 </a></li><li><a href="http://edu.hainan.gov.cn/showarticle.jsp?id=20074046">省教育厅和省食药监局联合开展学校食堂安全卫生检查</a></li><li><a href="http://edu.hainan.gov.cn/showarticle.jsp?id=20074006">今年海南学生 上名校的多了</a></li>
+
+
+
+
+
+
+
+</ul>
+<div class="clr"></div>
+</div>
+			<div id="subject3" class="widget block"></div>
+			<div id="refer" class="widget block"><ul id="blog-tab" class="tab">
+<li class="cur">三亚市教研室个人博客</li>	
+ <li>三亚市各学校博客</li>
+  <li>省级学科资源</li>
+<li>各市县教研室</li>
+</ul>
+<div id="blog-page" class="box">
+  <div class="page">
+    <table style="width:100%">
+    <colgroup><col style="width:22%"><col style="width:22%"><col style="width:22%"><col style="width:22%"></colgroup>
+<tbody><tr><td><a href="http://my.hersp.com/613046/portal.aspx">一帆风顺</a></td><td><a href="http://my.hersp.com/609221/portal.aspx">傅元根的空间</a></td><td><a href="http://my.hersp.com/601217/portal.aspx">罗禹的空间</a></td></tr><tr><td><a href="http://my.hersp.com/87142/portal.aspx">陈廷文的空间</a></td><td><a href="http://my.hersp.com/608972/portal.aspx">周康的空间</a></td><td><a href="http://my.hersp.com/620336/portal.aspx">陈泽海的空间</a></td></tr><tr><td><a href="http://my.hersp.com/620157/portal.aspx">羊淑琼的空间</a></td><td><a href="http://my.hersp.com/620637/portal.aspx">陈太然的空间</a></td><td><a href="http://my.hersp.com/609223/portal.aspx">周阳的空间</a></td></tr><tr><td><a href="http://my.hersp.com/607062/portal.aspx">周兰芳的空间</a></td><td><a href="http://my.hersp.com/606246/portal.aspx">王连升的空间</a></td><td><a href="http://my.hersp.com/610152/portal.aspx">张艳玲的空间</a></td></tr><tr><td><a href="http://my.hersp.com/609038/portal.aspx">赵明铁的空间</a></td><td><a href="http://my.hersp.com/600819/portal.aspx">齐洁清的空间</a></td><td><a href="http://my.hersp.com/52013.aspx">吴革的空间</a></td></tr><tr><td><a href="http://my.hersp.com/607101/portal.aspx">苏天新的空间</a></td><td><a href="http://my.hersp.com/607064/portal.aspx">陈维强的空间</a></td><td><a href="http://my.hersp.com/628954/portal.aspx">黎回青的空间</a></td></tr><tr><td><a href="http://my.hersp.com/621932/portal.aspx">陈运恩的空间</a></td><td><a href="http://my.hersp.com/52297/portal.aspx">郭静的空间</a></td><td><a href="http://my.hersp.com/612978/portal.aspx">王廷芳的空间</a></td></tr><tr><td><a href="http://my.hersp.com/608970/portal.aspx">陈求丽的空间</a></td>
+    </tr></tbody></table>
+  </div>
+<div class="page" style="display:none">
+    <table style="width:100%">
+    <colgroup><col style="width:22%"><col style="width:22%"><col style="width:22%"><col style="width:22%"></colgroup>
+    <tbody><tr><td><a href="http://my.hersp.com/9632/portal.aspx">第一中学</a></td><td><a href="http://my.hersp.com/605911/portal.aspx">第二中学</a></td><td><a href="http://my.hersp.com/606757/portal.aspx">第三中学</a></td></tr><tr><td><a href="http://my.hersp.com/609207/portal.aspx">第五中学</a></td><td><a href="http://my.hersp.com/607785/portal.aspx">实验中学</a></td><td><a href="http://my.hersp.com/606169/portal.aspx">第四中学</a></td></tr><tr><td><a href="http://my.hersp.com/606373/blog.aspx">民族中学</a></td><td><a href="http://my.hersp.com/601670/portal.aspx">藤桥中学</a></td><td><a href="http://my.hersp.com/608678/portal.aspx">崖城高中</a></td></tr><tr><td><a href="http://my.hersp.com/608607/portal.aspx">南海学校</a></td><td><a href="http://my.hersp.com/616376/portal.aspx">红沙中学</a></td><td><a href="http://my.hersp.com/609908/portal.aspx">林旺中学</a></td></tr><tr><td><a href="http://my.hersp.com/611259/portal.aspx">逸夫中学</a></td><td><a href="http://my.hersp.com/608568/portal.aspx">荔枝沟中学</a></td><td><a href="http://my.hersp.com/609461/portal.aspx">凤凰中学</a></td></tr><tr><td><a href="http://my.hersp.com/608672/portal.aspx">妙联学校</a></td><td><a href="http://my.hersp.com/608768/portal.aspx">高峰中学</a></td><td><a href="http://my.hersp.com/601251/portal.aspx">天涯中学</a></td></tr><tr><td><a href="http://my.hersp.com/607865/portal.aspx">过岭中学</a></td><td><a href="http://my.hersp.com/605959/portal.aspx">育才中学</a></td><td><a href="http://my.hersp.com/608914/portal.aspx">崖城中学</a></td></tr><tr><td><a href="http://my.hersp.com/601253/portal.aspx">保港中学</a></td><td><a href="http://my.hersp.com/614077/portal.aspx">梅山中学</a></td><td><a href="http://my.hersp.com/608593/portal.aspx">南岛学校</a></td></tr><tr><td><a href="http://my.hersp.com/608578/portal.aspx">南滨中学</a></td><td><a href="http://my.hersp.com/609386/portal.aspx">南新中学</a></td><td><a href="http://my.hersp.com/612915/portal.aspx">南田中学</a></td></tr><tr><td><a href="http://my.hersp.com/612623/portal.aspx">立才中学</a></td><td><a href="http://my.hersp.com/607250/portal.aspx">河东区中心学校</a></td><td><a href="http://my.hersp.com/606141/portal.aspx">河西区中心学校</a></td></tr><tr><td><a href="http://my.hersp.com/601622/portal.aspx">海棠湾镇中心学校</a></td><td><a href="http://my.hersp.com/606847/portal.aspx">吉阳镇中心学校</a></td><td><a href="http://my.hersp.com/608684/portal.aspx">凤凰镇中心学校</a></td></tr><tr><td><a href="http://my.hersp.com/612231/portal.aspx">天涯镇中心学校</a></td><td><a href="http://my.hersp.com/608101/portal.aspx">崖城镇中心学校</a></td><td><a href="http://my.hersp.com/605629/portal.aspx">育才镇中心学校</a></td></tr><tr><td><a href="http://my.hersp.com/606536/portal.aspx">第一小学</a></td><td><a href="http://my.hersp.com/607161/portal.aspx">第五小学</a></td><td><a href="http://my.hersp.com/607336/portal.aspx">第七小学</a></td></tr><tr><td><a href="http://my.hersp.com/600501/portal.aspx">第九小学</a></td><td><a href="http://my.hersp.com/617723/portal.aspx">第九小学月川分校</a></td><td><a href="http://my.hersp.com/607770/portal.aspx">实验小学</a></td></tr><tr><td><a href="http://my.hersp.com/51128/portal.aspx">安由小学</a></td><td><a href="http://my.hersp.com/609059/portal.aspx">八一中学</a></td><td><a href="http://my.hersp.com/608680/portal.aspx">八一小学</a></td></tr><tr><td><a href="http://my.hersp.com/608577/portal.aspx">海南侨中三亚学校</a></td><td><a href="http://my.hersp.com/617998/portal.aspx">南亚学校</a></td><td><a href="http://my.hersp.com/609127/portal.aspx">南方公学</a></td></tr><tr><td><a href="http://my.hersp.com/650320/portal.aspx">立达学园</a></td><td><a href="http://my.hersp.com/608670/portal.aspx">和平学校</a></td><td><a href="http://my.hersp.com/620028/portal.aspx">和美学校</a></td></tr><tr><td><a href="http://my.hersp.com/609761/portal.aspx">江南学校</a></td><td><a href="http://my.hersp.com/615659/portal.aspx">青林学校</a></td><td><a href="http://my.hersp.com/617809/portal.aspx">童星学校</a></td></tr><tr><td><a href="http://my.hersp.com/608873/portal.aspx">双品学校</a></td><td><a href="http://my.hersp.com/608576/portal.aspx">中兴学校</a></td><td><a href="http://my.hersp.com/608600/portal.aspx">兴安学校</a></td></tr><tr><td><a href="http://my.hersp.com/628982/portal.aspx">求真学校</a></td><td><a href="http://my.hersp.com/628933/portal.aspx">英才学校</a></td><td><a href="http://my.hersp.com/619084/portal.aspx">鲁迅中学</a></td></tr><tr><td><a href="http://my.hersp.com/620304/portal.aspx">丰和学校</a></td><td><a href="http://my.hersp.com/621221/portal.aspx">三龙学校</a></td>
+    </tr></tbody></table>
+  </div>
+<div class="page" style="display:none">
+    <table style="width:100%">
+    <colgroup><col style="width:22%"><col style="width:22%"><col style="width:22%"><col style="width:22%"></colgroup>
+ <tbody><tr><td><a href="http://my.hersp.com/9027/portal.aspx">中学语文</a></td><td><a href="http://my.hersp.com/9001/portal.aspx">小学数学</a></td><td><a href="http://my.hersp.com/9007/portal.aspx">初中数学</a></td></tr><tr><td><a href="http://my.hersp.com/9015/portal.aspx">高中数学</a></td><td><a href="http://my.hersp.com/9016/portal.aspx">初中英语</a></td><td><a href="http://my.hersp.com/9025/portal.aspx">英语ABC</a></td></tr><tr><td><a href="http://my.hersp.com/9006/portal.aspx">中学物理</a></td><td><a href="http://my.hersp.com/9089/portal.aspx">中学化学</a></td><td><a href="http://my.hersp.com/9017/portal.aspx">中学生物</a></td></tr><tr><td><a href="http://my.hersp.com/9009/portal.aspx">中学历史</a></td><td><a href="http://my.hersp.com/9013/portal.aspx">中学地理</a></td><td><a href="http://my.hersp.com/9091/portal.aspx">信息技术</a></td></tr><tr><td><a href="http://my.hersp.com/9090/portal.aspx">通用技术</a></td><td><a href="http://my.hersp.com/9033/portal.aspx">初中思品</a></td><td><a href="http://my.hersp.com/9099/portal.aspx">高中政治</a></td></tr><tr><td><a href="http://my.hersp.com/9035/portal.aspx">心理健康</a></td><td><a href="http://my.hersp.com/9005/portal.aspx">中小学体育</a></td><td><a href="http://my.hersp.com/9019/portal.aspx">中小学音乐</a></td></tr><tr><td><a href="http://my.hersp.com/9011/portal.aspx">中小学美术</a></td><td><a href="http://my.hersp.com/9021/portal.aspx">小学科学</a></td><td><a href="http://my.hersp.com/9029/portal.aspx">学前教育</a></td></tr><tr><td><a href="http://my.hersp.com/9031/portal.aspx">综合实践</a></td><td><a href="http://my.hersp.com/9036/portal.aspx">教育科研</a></td><td><a href="http://my.hersp.com/9037/portal.aspx">教育学会</a></td></tr><tr><td><a href="http://my.hersp.com/9038/portal.aspx">省课改办</a></td><td><a href="http://my.hersp.com/9039/portal.aspx">小学教师教育</a></td><td><a href="http://my.hersp.com/9050/portal.aspx">有效教学</a></td>
+
+
+    </tr></tbody></table>
+  </div>
+<div class="page" style="display:none">
+    <table style="width:100%">
+    <colgroup><col style="width:22%"><col style="width:22%"><col style="width:22%"><col style="width:22%"></colgroup>
+    <tbody><tr><td><a href="http://my.hersp.com/9205/portal.aspx">琼海中教</a></td><td><a href="http://my.hersp.com/9200/portal.aspx">文昌小教</a></td><td><a href="http://my.hersp.com/9212/portal.aspx">澄迈教研</a></td></tr><tr><td><a href="http://my.hersp.com/9269/portal.aspx">琼海小教</a></td><td><a href="http://my.hersp.com/9252/portal.aspx">乐东教研</a></td><td><a href="http://my.hersp.com/9210/portal.aspx">三亚教研</a></td></tr><tr><td><a href="http://my.hersp.com/9204/portal.aspx">定安小教</a></td><td><a href="http://my.hersp.com/9256/portal.aspx">白沙教研</a></td><td><a href="http://my.hersp.com/9201/portal.aspx">文昌中教</a></td></tr><tr><td><a href="http://my.hersp.com/9208/portal.aspx">儋州教研</a></td><td><a href="http://my.hersp.com/9267/portal.aspx">洋浦教研</a></td><td><a href="http://my.hersp.com/9255/portal.aspx">陵水教研</a></td></tr><tr><td><a href="http://my.hersp.com/9260/portal.aspx">五指山教研</a></td><td><a href="http://my.hersp.com/9206/portal.aspx">万宁中教</a></td><td><a href="http://my.hersp.com/9258/portal.aspx">屯昌小教</a></td></tr><tr><td><a href="http://my.hersp.com/9207/portal.aspx">万宁小教</a></td><td><a href="http://my.hersp.com/9203/portal.aspx">定安中教</a></td><td><a href="http://my.hersp.com/9257/portal.aspx">东方教研</a></td></tr><tr><td><a href="http://my.hersp.com/9259/portal.aspx">昌江教研</a></td><td><a href="http://my.hersp.com/9266/portal.aspx">琼中教研</a></td><td><a href="http://my.hersp.com/9254/portal.aspx">保亭小教</a></td></tr><tr><td><a href="http://my.hersp.com/9253/portal.aspx">保亭中教</a></td><td><a href="http://my.hersp.com/9251/portal.aspx">临高教研</a></td><td><a href="http://my.hersp.com/9263/portal.aspx">海南中学</a></td></tr><tr><td><a href="http://my.hersp.com/9264/portal.aspx">国兴中学</a></td><td><a href="http://my.hersp.com/9268/portal.aspx">屯昌中教</a></td><td><a href="http://my.hersp.com/9262/portal.aspx">海南实验中学</a></td></tr><tr><td><a href="http://my.hersp.com/9209/portal.aspx">琼院附中</a></td><td><a href="http://my.hersp.com/9250/portal.aspx">农垦教研</a></td><td><a href="http://my.hersp.com/9261/portal.aspx">海师附中</a></td></tr><tr><td><a href="http://my.hersp.com/9265">海南特殊学校</a></td>
+
+
+
+    </tr></tbody></table>
+  </div>
+<script> utils.initTab('blog-tab', 'blog-page'); </script>
+
+
+</div></div>
+		</div>
+
+		<div id="sidebar">
+			<div class="widget">
+				<div id="bulletin" class="box block"><div style="text-align:center"><a href="http://sanya.hnjs.org/" title="点击进入..." target="_blank"><img src="/${res}/sanya_files/40375.png"></a></div>
+
+<!--h3>公告区</h3-->
+</div>
+			</div>
+			<div class="widget">
+				<h3><a href="http://my.hersp.com/9210/blog">» 更多</a>文件通知</h3>
+				<div id="notice" class="box"><ul><li><a href="http://res.hersp.com/content/5808786">三亚市教育局关于聘任2016-2019年度兼职教研员学科中心教研组成员的公示</a> <span class="dt">(06-07)</span></li><li><a href="http://res.hersp.com/content/5806676">关于2015—2016学年度第二学期期末学业水平测试的通知</a> <span class="dt">(06-07)</span></li><li><a href="http://res.hersp.com/content/5735417">关于召开2016年全市初中政治科中考复习备考工作交流会的通知 </a> <span class="dt">(05-26)</span></li><li><a href="http://res.hersp.com/content/5729716">三亚市教育局关于做好2016年全市小学六年级学业水平监测工作的通知</a> <span class="dt">(05-25)</span></li><li><a href="http://res.hersp.com/content/5719481">【发文】关于开展小学数学学科工作室2016年课堂教学展示活动的通知</a> <span class="dt">(05-23)</span></li><li><a href="http://res.hersp.com/content/5707564">三亚市教育局教研室关于举行中小学英语、初中物理学科中心组送教下乡活动的通知</a> <span class="dt">(05-19)</span></li><li><a href="http://res.hersp.com/content/5683722">关于转发《海南省教育厅关于2016年初中学业水平考试命题技术培训班的通知》的通知</a> <span class="dt">(05-11)</span></li><li><a href="http://res.hersp.com/content/5667979">三亚市教育局教研室关于举行初中语文、化学学科中心组送教下乡活动的通知</a> <span class="dt">(05-03)</span></li><li><a href="http://res.hersp.com/content/5667816">【发文】关于举行三亚市初中英语中考备考会的通知</a> <span class="dt">(05-03)</span></li><li><a href="http://res.hersp.com/content/5661435">三亚市教育局关于征求2016年三亚市中小学教育教学质量评价及奖励实施方案意见的通知</a> <span class="dt">(04-28)</span></li></ul></div>
+			</div>
+			<div id="link1" class="widget block"> </div>
+			<div id="link2" class="widget block"><h3>本埠链接</h3>
+<div class="box" style="padding:2px 0 0 0; line-height:100%; text-align:center;">
+<a href="http://www.sanya.gov.cn/" target="_blank"><img title="三亚市政府网" src="/${res}/sanya_files/24788.png" alt=""></a><br>　　　
+<a href="http://202.100.209.58/" target="_blank"><img title="育软政务平台" src="/${res}/sanya_files/23991.png" alt=""></a><br>　　　
+<a href="http://www.syec.net.cn/" target="_blank"><img title="三亚考试中心" src="/${res}/sanya_files/33851.png" alt=""></a><br>　　　
+<a href="http://www.sanyateacher.com/Article/index.asp" target="_blank"><img title="三亚进修学校" src="/${res}/sanya_files/42569.png" alt=""></a><br>
+</div>
+<h3>外埠链接</h3>
+<div style="text-align:center">
+
+<a href="http://djg.hainan.edu.cn/" target="_blank"><img src="/${res}/sanya_files/39718.jpg"></a><br>
+<a href="http://my.hersp.com/9039" target="_blank"><img src="/${res}/sanya_files/44390.jpg"></a><br>
+<a href="http://www.hinedu.cn/" target="_blank"><img src="/${res}/sanya_files/53734.jpg"></a><br>
+<a href="http://yxsz.qzu.edu.cn/cjxy/Index.html" target="_blank"><img src="/${res}/sanya_files/05062.jpg"></a><br>
+<a href="http://dept.qttc.edu.cn/jixu/" target="_blank"><img src="/${res}/sanya_files/12093.jpg"></a><br>
+<a href="http://www.teacherclub.com.cn/tresearch/channel/china/index.html" target="_blank"><img src="/${res}/sanya_files/16640.jpg"></a><br>
+<a href="http://www.teacher.com.cn/" target="_blank"><img src="/${res}/sanya_files/19765.jpg"></a>
+
 </div>
 </div>
-<div id="setDialogs" style="display:none;margin-top:-5px;max-height: 75px;">
-		<ul style="padding-left: 10px;">
-			 <li  style="list-style-type: disc;">您的密码为初始密码,点击<a style="cursor: pointer;color: red;" href="${base}/member/pwd.jspx">修改密码</a></li>
-		</ul><br>
-		<input type="checkbox"  id="cpwd" value="1" style="cursor: pointer;">不再提示...
-		[#if user??]
-		<input id="checkHint" name="checkHint" value="${user.linkUrl!0}" style="display: none;">
-		[/#if]
+		</div>
+
+		<div class="clr"></div>
+	</div>
 </div>
-[#if user??]<input style="display: none;" value="1" id="ups">[#else]<input style="display: none;" value="0" id="ups">[/#if]
-<link href="${base}/res/common/css/jquery.ui.css" rel="stylesheet" type="text/css"/>
-<script src="/${res}/js/main.js"></script>
-[#include "../include/footer.html"/]
-</body>
-</html>
-<script type="text/javascript">
-window.onload = function (){ 
-	if($("#ups").val()==1){
-		$.ajax({
-	        url: "${base}/member/checkPwdss.jspx",
-	        type: "POST",
-	        dataType:"json",
-	        data: "",
-	        success: function (data) {
-	        	if(data.status>0){
-	        		if($("#checkHint").val()==1){
-	        			
-	        		}else{
-	        		   $("#setDialogs").dialog("open");
-	        		}
-	        	}
-	        }
-	    });
-	}
-}
-     $("#setDialogs").dialog({
-			autoOpen: false,
-			modal: false,
-			resizable :false,
-			stack : false,
-			draggable : true,
-			closeOnEscape : false,
-			open:function(event,ui){
-				$(".ui-dialog-titlebar").css("background","#ffffff");  
-				$(".ui-widget-header").css("border","0");  
-			},
-			width: 300,
-			height: 180,
-			position: ["right",35],
-			close: function(event, ui) {
-				//不在提示
-				if ($('#cpwd').is(':checked')) {
-					$.ajax({
-				        url: "${base}/member/updateHint.jspx",
-				        type: "POST",
-				        dataType:"json",
-				        data: "",
-				        success: function (data) {
-				        	if(data.status>0){
-				        		
-				        	}
-				        }
-				    });
-				}
-			}
-		});
-     function closeDialogs(){
-    	$("#setDialogs").dialog("close");
-    }
-</script>
-<script type="text/javascript">
-$(function() {
-	/* var date=new Date();
-	var hour=date.getHours();
-	var minute=date.getMinutes();
-	var s=date.getSeconds();
-	var i=hour*60*60+minute*60+s;
-	var k=79200;
-	if(i>k){
-		$("body").click(function(event){  
-			alert("数据维护中...网站暂停使用\r\n给您造成的不便还请谅解,谢谢您的支持.\r\n维护时间:(晚10点-早八点).");
-			event.preventDefault();
-		}); 
-	} */
-});
-</script>
+
+<div id="footer">
+	<div>三亚市教育局教研室   © HERSP. 琼ICP备08100406 </div>
+</div>
+
+</body></html>
