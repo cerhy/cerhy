@@ -25,6 +25,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
 
+import com.jeecms.cms.dao.main.ContentDao;
 import com.jeecms.cms.entity.main.Channel;
 import com.jeecms.cms.entity.main.CmsModel;
 import com.jeecms.cms.entity.main.Columns;
@@ -555,6 +556,7 @@ public class BlogAct {
 				attachmentPaths,attachmentNames, attachmentFilenames
 				,picPaths,picDescs, null, columnId,channelId, null, null, 
 				charge,chargeAmount,user, true,request);
+		contentDao.updateContentSend(title,id);//修改发送的中间表标题
 		if(doc!=null){
 			contentDocMng.update(doc, c);
 		}
@@ -1477,4 +1479,6 @@ public class BlogAct {
 	protected FocusMng focusMng;
 	@Autowired
 	protected ContentMng contentMng;
+	@Autowired
+	protected ContentDao contentDao;
 }

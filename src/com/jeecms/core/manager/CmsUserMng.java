@@ -99,7 +99,7 @@ public interface CmsUserMng {
 	 * @param validateCode
 	 * @return int
 	 */
-	public int sendArticle(Integer contentId,Integer userId,String sendee,Integer validateCode);
+	public int sendArticle(Integer contentId,Integer userId,String sendee,Integer validateCode,String title);
 	
 	/**
 	 * 撤销文章
@@ -116,7 +116,7 @@ public interface CmsUserMng {
 	 * @param friendId
 	 * @return int
 	 */
-	public Integer embodyArticle(Integer contentId,Integer userId,Integer friendId,Integer columnId);
+	public Integer embodyArticle(Integer contentId,Integer userId,Integer friendId,Integer columnId,String title);
 	
 	/**
 	 * 移除用户收录的 文章

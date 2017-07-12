@@ -501,46 +501,52 @@ public class CmsUserMngImpl implements CmsUserMng {
 	}
 
 	@Override
-	public int sendArticle(Integer contentId,Integer userId,String sendee,Integer validateCode) {
+	public int sendArticle(Integer contentId,Integer userId,String sendee,Integer validateCode,String title) {
 		int result  =0;
 		//接收人id
 		Integer recieveUserId = contentDao.getUserId(sendee);
 		if(recieveUserId==null){
 			result=1;
 		}else{
-			//验证发送人的栏目是否存在
-			Integer columnId = contentDao.getUniqueCode(recieveUserId,validateCode);
-			if(columnId==null){
-				result=2;
+			if(userId == recieveUserId){
+				result=6;//自己不能发自己
 			}else{
-				//验证当前文章是否存在栏目id
-				Integer colId = contentDao.getColumnId(contentId);
-				if(colId==null){
-					result=3;
+				//验证发送人的栏目是否存在
+				Integer columnId = contentDao.getUniqueCode(recieveUserId,validateCode);
+				if(columnId==null){
+					result=2;
 				}else{
-					
-					Integer contId = contentDao.getContentSendType(contentId, recieveUserId);//判断接收人是否已经存在此文章
-					if(contId!=null){
-						result=4;//已经存在此文章
+					//验证当前文章是否存在栏目id
+					Integer colId = contentDao.getColumnId(contentId);
+					if(colId==null){
+						result=3;
 					}else{
-						ContentSend send = new ContentSend();
-						//内容id
-						send.setContentId(contentId);
-						//发送人id
-						send.setSendUserId(userId);
-						//接收人
-						send.setRecieveUserId(recieveUserId);
-						send.setSendTime(new Date());
-						//栏目id
-						send.setColumnId(columnId);
-						send.setType(1);
-						contentDao.saveContentSend(send);
+						
+						Integer contId = contentDao.getContentSend(contentId, recieveUserId);//判断接收人是否已经存在此文章
+						if(contId!=null){
+							result=4;//已经存在此文章
+						}else{
+							ContentSend send = new ContentSend();
+							//内容id
+							send.setContentId(contentId);
+							//发送人id
+							send.setSendUserId(userId);
+							//接收人
+							send.setRecieveUserId(recieveUserId);
+							send.setSendTime(new Date());
+							//栏目id
+							send.setColumnId(columnId);
+							send.setType(1);
+							send.setTitle(title);
+							contentDao.saveContentSend(send);
+						}
+						
 					}
-					
 				}
+				
 			}
-			
 		}
+			
 		return result;
 	}
 
@@ -563,24 +569,32 @@ public class CmsUserMngImpl implements CmsUserMng {
 	 * @return int
 	 */
 	@Override
-	public Integer embodyArticle(Integer contentId,Integer userId,Integer friendId,Integer columnId){
+	public Integer embodyArticle(Integer contentId,Integer userId,Integer friendId,Integer columnId,String title){
 		ContentSend send = new ContentSend();
 		int result  =0;
-		Integer conId = contentDao.getContentSendType(contentId, userId);
+		Integer conId = contentDao.getContentSend(contentId, userId);
 		if(conId!=null){
 			result=1;//已经收录
 		}else{
-			//内容id
-			send.setContentId(contentId);
-			//收录人及发送人id
-			send.setSendUserId(friendId);
-			//接收人
-			send.setRecieveUserId(userId);
-			send.setSendTime(new Date());
-			//栏目id
-			send.setColumnId(columnId);
-			send.setType(2);//2为收录
-			contentDao.saveContentSend(send);
+			//验证当前文章是否存在栏目id
+			Integer cId = contentDao.getColumnId(contentId);
+			if(cId==null){
+				result=3;//该文章不能收录
+			}else{
+				//内容id
+				send.setContentId(contentId);
+				//收录人及发送人id
+				send.setSendUserId(friendId);
+				//接收人
+				send.setRecieveUserId(userId);
+				send.setSendTime(new Date());
+				//栏目id
+				send.setColumnId(columnId);
+				send.setType(2);//2为收录
+				send.setTitle(title);
+				contentDao.saveContentSend(send);
+			}
+			
 		}
 		
 		return result;

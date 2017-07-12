@@ -1520,7 +1520,7 @@ public class ContributeAct extends AbstractContentMemberAct {
 	 * 发送文章 
 	 */
 	@RequestMapping(value = "/blog/sendArticle.jspx", method = RequestMethod.POST)
-	public @ResponseBody String sendArticle(Integer contentId,String sendee, Integer validateCode,
+	public @ResponseBody String sendArticle(Integer contentId,String sendee, Integer validateCode,String contTitle,
 			HttpServletRequest request, HttpServletResponse response,
 			ModelMap model){
 		
@@ -1533,7 +1533,7 @@ public class ContributeAct extends AbstractContentMemberAct {
 			object.put("msg", "5");//请先登录
 			return object.toString();
 		}
-		int result =cmsUserMng.sendArticle(contentId,user.getId(),sendee,validateCode);
+		int result =cmsUserMng.sendArticle(contentId,user.getId(),sendee,validateCode,contTitle);
 		if(result==1){
 			object.put("code", "fail");
 			object.put("msg", "1");//发件人错误
@@ -1546,6 +1546,9 @@ public class ContributeAct extends AbstractContentMemberAct {
 		}else if(result==4){
 			object.put("code", "fail");
 			object.put("msg", "4");//已经存在此文章
+		}else if(result==6){
+			object.put("code", "fail");
+			object.put("msg", "6");//自己不能发送自己
 		}else{
 			object.put("code", "success");
 			object.put("msg", "发送成功！");
@@ -1633,7 +1636,7 @@ public class ContributeAct extends AbstractContentMemberAct {
 	 * 收录文章 
 	 */
 	@RequestMapping(value = "/blog/embodyArticle.jspx", method = RequestMethod.POST)
-	public @ResponseBody String embodyArticle(Integer contentId,Integer friendId, Integer columnId,
+	public @ResponseBody String embodyArticle(Integer contentId,Integer friendId, Integer columnId,String contTitle,
 			HttpServletRequest request, HttpServletResponse response,
 			ModelMap model){
 		
@@ -1645,10 +1648,13 @@ public class ContributeAct extends AbstractContentMemberAct {
 			object.put("msg", "2");//请先登录
 			return object.toString();
 		}
-		Integer result  = cmsUserMng.embodyArticle(contentId, user.getId(), friendId, columnId);
+		Integer result  = cmsUserMng.embodyArticle(contentId, user.getId(), friendId, columnId,contTitle);
 		if(result==1){
 			object.put("code", "fail");
 			object.put("msg", "1");//已经收录
+		}else if(result==3){
+			object.put("code", "fail");
+			object.put("msg", "3");//改文章不允许收录
 		}else{
 			object.put("code", "success");
 			object.put("msg", "发送成功！");

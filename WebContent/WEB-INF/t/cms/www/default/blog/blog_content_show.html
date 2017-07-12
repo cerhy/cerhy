@@ -11,7 +11,6 @@
 <script src="${resSys}/ckplayer/offlights.js" type="text/javascript"></script>
 <script src="/${res}/js/SimpleTree.js"></script>
 <script type="text/javascript">
-
 $(function() {
 	
 	var width = $(".xueke-content-detail p img").width();
@@ -177,9 +176,21 @@ outline: none;
 			</h2>
 	</div> -->
      [#include "blog_left.html"/]
+     [#if content.password != ""]
+       <div class="wrap-right" id="mainpwdiv">
+       		<div class="personCenter-userInfo blog_right xueke-acticle">
+       		<div style="margin-top: 200px;text-align: center">
+		    	<input  type="password" placeholder="请输入阅读密码" id="mima" class="plcode"></input>
+		    	<input  type="button" onclick="jiaoyan()" value="校验密码"style="width: 90px;height: 36px;line-height: 36px; background: #00a8eb;color: #FFF;text-align: center;display: inline-block;" />
+<!-- 		    	<span style="color:#f00; margin-left:10px;">密码类型为数字</span> -->
+		    </div>
+		    </div>
+       </div>
+       [/#if]
        <div class="wrap-right" id="maindiv">
            <div class="personCenter-userInfo blog_right xueke-acticle">
                 <div ><h2>${content.title}</h2></div>
+                <input type="hidden" id="contTitle" name="conTitle" value="${content.title}"/>
                 <input type="text" style="display:none" id="hipw" value="${content.password!''}" />
                 <div class="gray9 h2dt pt5" style="margin-bottom: 2px;">
 				    <span class="pr15">发布时间：${content.releaseDate}</span>
@@ -376,16 +387,6 @@ outline: none;
     				[/#if]
 				</div>
            </div>
-       </div>
-       
-       <div class="wrap-right" id="mainpwdiv">
-       		<div class="personCenter-userInfo blog_right xueke-acticle">
-       		<div style="margin-top: 200px;text-align: center">
-		    	<input  type="password" placeholder="请输入阅读密码" id="mima" class="plcode"></input>
-		    	<input  type="button" onclick="jiaoyan()" value="校验密码"style="width: 90px;height: 36px;line-height: 36px; background: #00a8eb;color: #FFF;text-align: center;display: inline-block;" />
-<!-- 		    	<span style="color:#f00; margin-left:10px;">密码类型为数字</span> -->
-		    </div>
-		    </div>
        </div>
        
   </div>
@@ -978,7 +979,7 @@ Drag.prototype = {
  	                type: 'POST',
  	                url : ' ${base}/blog/sendArticle.jspx',
  	                dataType : 'json',
- 	                data : {'contentId' : $("#contentId").val(),'sendee':sendee,'validateCode':validateCode},
+ 	                data : {'contentId' : $("#contentId").val(),'sendee':sendee,'validateCode':validateCode,'contTitle' : $("#contTitle").val()},
  	                success : function(datas){
  	                	 var code =datas.code;
  	                	 if(code=="fail"){
@@ -995,6 +996,9 @@ Drag.prototype = {
  	                			$("#sentDialog").dialog("close");
  	                		 }else if(msg==5){
  	                			alert("请先登录！");
+ 	                			$("#sentDialog").dialog("close");
+ 	                		 }else if(msg==6){
+ 	                			alert("该文章已经存在！");
  	                			$("#sentDialog").dialog("close");
  	                		 }else{
  	                			alert("发送失败！");
@@ -1164,6 +1168,7 @@ function okps(){
 
 </script>
 <script type="text/javascript">
+	
 	function cp(){
 		var urlcp = this.location.href;
 		prompt("请使用Ctrl+c或鼠标右击复制下框中的博客链接地址：",urlcp);
