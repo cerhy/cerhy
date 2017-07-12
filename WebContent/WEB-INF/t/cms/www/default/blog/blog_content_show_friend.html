@@ -213,6 +213,7 @@ table th,table td{word-break:break-all;white-space:normal;overflow:hidden;}
 	</div> -->
      [#include "friend_blog_left.html"/]
      [#include "friend_content.html"/]
+      [#if content.password != ""]
       <div class="wrap-right" id="mainpwdiv">
        		<div class="personCenter-userInfo blog_right xueke-acticle">
        		<div style="margin-top: 200px;text-align: center">
@@ -222,6 +223,7 @@ table th,table td{word-break:break-all;white-space:normal;overflow:hidden;}
 		    </div>
 		    </div>
        </div>
+       [/#if]
        <div class="wrap-right" id="maindiv">
            <div class="personCenter-userInfo blog_right xueke-acticle">
                 <div ><h2>${content.title}</h2></div>
