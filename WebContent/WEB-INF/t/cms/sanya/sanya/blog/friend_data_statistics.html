@@ -1,0 +1,227 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<title>好研网-${usert.username}的博客</title>
+<link href="${resSys}/front.css" rel="stylesheet" type="text/css"/>
+<script src="${resSys}/jquery.js" type="text/javascript"></script>
+<script src="${resSys}/front.js" type="text/javascript"></script>
+<link id="hello" type="text/css" rel="stylesheet" href="/${res}/css/custom.css" />
+<link  type="text/css" rel="stylesheet" href="/${res}/css/hyindex.css" />
+<link  type="text/css" rel="stylesheet" href="/${res}/css/SimpleTree.css" />
+<script src="/${res}/js/SimpleTree.js"></script>
+<style>
+.st_tree ul .change a:hover{color:red;}
+.st_tree ul .change :hover{background-color:#e7e7e7 }
+/* .change .butt:hover{color:red;background-color:#e7e7e7} */
+::-webkit-scrollbar{width:0px}
+.change .butt{cursor: pointer;}
+::-webkit-scrollbar{width:0px}
+.clear{clear:both}
+.change .disableds{
+    color: white;
+    cursor: text;
+}
+</style>
+<script type="text/javascript">
+
+	/* $.ajax({
+		type:"post",
+		url:"${base}/blog/focuscheck.jspx",
+		dateType:'json',
+		data:{
+			"focusUserId":${usert.id},
+		},
+		success:function(data){
+		if(1 == data){
+			$('#focus').hide();
+			$('#cancelfocus').show();
+		}else{
+			$('#focus').show();
+			$('#cancelfocus').hide();
+		}
+		}
+		
+	}); */	
+	
+	function focuss(){
+		$.ajax({
+			type:"post",
+			url:"${base}/blog/focus.jspx",
+			dateType:'json',
+			data:{
+				"focusUserId":${usert.id},
+				"focusUserName":'${usert.username}',
+			},
+			success:function(data){
+			if(1 == data){
+				$('#focus').attr("onclick","cancelfocus()");
+				//$('#focus').attr("id","cancelfocus");
+				$('#focus').html("取消关注");
+				//$('#cancelfocus').show();
+			}
+			}
+			
+		});	
+	}
+	
+	function cancelfocus(){
+		$.ajax({
+			type:"post",
+			url:"${base}/blog/cancelfocus.jspx",
+			dateType:'json',
+			data:{
+				"focusUserId":${usert.id},
+			},
+			success:function(data){
+			if(1 == data){
+				//$('#focus').show();
+				$('#focus').attr("onclick","focuss()");
+				//$('#cancelfocus').attr("id","focus");
+				$('#focus').html("关注");
+			}
+			}
+			
+		});	
+	}
+$(function(){	
+	$('.user-menu-links li').click(function(){
+	    $(this).toggleClass('on');
+	});
+	$(".st_tree").SimpleTree({
+		click:function(a){
+			if(!$(a).attr("hasChild"))
+				alert($(a).attr("ref"));
+		}
+	});
+});
+</script>
+[#include "head.html"/]
+<div class="blogBody">
+<div class="blog-con">
+  <div class="blogHead">
+   <div class="title1"><a href="${base}/blog/find_all_url_friend.jspx?userIds=${usert.id}"><span id="title1">[#if usert.blogTitle??]${usert.blogTitle}[#else]标题[/#if]</span></a></div>
+	  <div style="font-size:15px;margin:15px auto 10px;">[#if usert.blogTitle2??]${usert.blogTitle2}[#else]副标题[/#if]</div>
+  </div>
+  
+      <div>
+      <div>
+      	<div class="tj">
+     	 	文章数:${articleCount}&nbsp;&nbsp;评论:${commentCount}&nbsp;&nbsp;访问:${usert.blogVisitNum!'0'}&nbsp;&nbsp;最后登录:${usert.lastLoginTime?string('yyyy-MM-dd HH:mm:ss')}
+      	</div>
+      </div>
+        <div class="mb20 clearfix">
+        [#include "friend_blog_left.html"/]
+            <div class="mb20 clearfix">
+            <div class="wrap-right" style="min-height: 661px;margin-left: 10px;width: 72%;">
+           <div class="personCenter-userInfo blog_right">
+	                         基本信息:
+	            <ul style="padding-left: 50px;">
+				  <li  style="list-style-type: disc;">访问人次:${usert.blogVisitNum!'0'} </li>
+				  <li  style="list-style-type: disc;">发表文章数:${articleCount} </li>
+				  <li  style="list-style-type: disc;">发表评论数:${coverCommentCount}</li>
+				  <li  style="list-style-type: disc;">文章阅读数:${readCount} </li>
+				  <li  style="list-style-type: disc;">文章被评数:${commentCount} </li>
+				</ul>
+            </div>
+            </div>
+        </div>
+</div>
+  </div>
+  </div>
+  </div>
+[#include "../include/footers.html"/]
+ <script type="text/javascript">
+		skinChange(${usert.theme!0});
+	function skinChange(n){
+		document.all.MrJin.href="/${res}/css/skin/"+n+".css"; 
+	}
+</script>
+[#include "model_friend.html"/]
+</body>
+</html>
+<script type="text/javascript">
+function join_group(code,id){
+	$.ajax({
+		url:"${base}/blog/joinGroup.jspx?code="+code+"&createUserId="+id,
+		type:"POST",
+		dataType:"json",
+		data: "",
+		success: function (data) {
+			if(data.status==1){
+				$("#"+code).attr("class", "disableds");
+				$("#"+code).removeAttr("onclick");
+				$("#"+code).html("已加入")
+			}else{
+				alert("加入失败!");
+			}
+        }
+	});
+}
+</script>
+<script type="text/javascript">
+$(function(){
+	var els =document.getElementsByName("uniqueCode");
+	for (var i = 0, j = els.length; i < j; i++){
+		var code=els[i].id;
+		$.ajax({
+			url:"${base}/blog/checkJoinState.jspx?joinState="+els[i].id,
+			type:"POST",
+			dataType:"json",
+			data: "",
+			async: false,
+			success: function (data) {
+				if(data.status==1){
+					$("#"+code).attr("class", "disableds");
+					$("#"+code).removeAttr("onclick");
+					$("#"+code).html("已加入");
+				}
+	        }
+		});
+	}
+});
+</script>
+<script type="text/javascript">
+function addOrCancelFriends(obj,uId){
+	if(obj==0){
+		//0为未添加好友
+		$.ajax({
+			     url: "${base}/blog/addOrCancelFriends.jspx?state="+obj+"&uId="+uId,
+			     type: "POST",
+			     dataType:"json",
+			     data: "",
+			     success: function (data) {
+			        if(data.status>0){
+						//改变显示状态
+						$("#addCancelFriend").html("解除关系");
+						$("#addCancelFriend").attr("onclick","addOrCancelFriends(1,${usert.id})"); 
+			        }else{
+			        	alert("添加失败...!");
+			      }
+			    }
+			})
+	}else if(obj==1){
+		//1是已添加好友
+		var msg = "您确定要和该好友解除关系吗?"; 
+		 if (confirm(msg)==true){ 
+			 $.ajax({
+			        url: "${base}/blog/addOrCancelFriends.jspx?state="+obj+"&uId="+uId,
+			        type: "POST",
+			        dataType:"json",
+			        data: "",
+			        success: function (data) {
+			        	if(data.status>0){
+							 //改变显示状态
+							 $("#addCancelFriend").html("添加好友");
+							 $("#addCancelFriend").attr("onclick","addOrCancelFriends(0,${usert.id})"); 
+			        	}else{
+			        		alert("解除失败...!");
+			        	}
+			        }
+			    });
+		     return true; 
+		 }else{ 
+		     return false; 
+		 }
+	}
+}
+
+</script>

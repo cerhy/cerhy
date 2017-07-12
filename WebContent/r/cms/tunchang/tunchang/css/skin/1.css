@@ -1,0 +1,56 @@
+/* view 01 */
+
+.blogBody{
+	width:100%;
+	background: #bcd3e5 url(01.jpg) no-repeat center top;
+}
+.header-top {background: #bcd3e5;border-bottom:0px;}
+.footer_styles {
+	background : #bcd3e5; 
+}
+.blogHead,.tj{color: #fff;}
+
+#title1{
+	color: #fff;
+}
+/* .tj{
+	padding-bottom:40px;
+} */
+.blogBody .user-center-left .user-menu-links,.blogBody .personCenter-userInfo, .blogBody .user-center-left .user-setting {
+   background: #F4F8FB;
+} 
+
+.blogBody .user-center-left .user-menu-links li{
+	margin-top:-1px;
+	border-bottom: none; 
+}
+.blogBody .user-center-left .user-menu-links a {
+    border : none; 
+    text-decoration:none;
+}
+.blogBody .user-menu-links li a em {
+     background: transparent; 
+}
+.blogBody .user-menu-links li.on a em {
+   background: transparent; 
+}
+.blogBody .user-menu-links li a {
+	color: #666666;
+}
+.blogBody .user-menu-links li a:hover {
+	color:#0070b8;
+}
+#_goPs{
+	background: transparent;
+}
+.tggl .tggl-top {background: transparent;}
+body, button, input, select, textarea {
+	 background: transparent;
+	}
+.st_tree ul li a:hover {color:#0070b8;}
+.htmleaf-container .mtree-demo .mtree {
+  background: #F4F8FB;
+  margin: 20px auto;
+  max-width: 320px;
+  border-radius: 3px;
+}

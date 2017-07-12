@@ -1,0 +1,161 @@
+.surveyBody{
+	padding: 0;
+    margin: 0;
+}
+.surveyWrap{
+	width:1200px;
+	margin: 0 auto;
+}
+.surveyContent{
+	width:1000px;
+	margin: 0 auto;
+	margin-bottom:20px!important;
+}
+.surveyLeft{
+	width:200px;
+	float:left;
+	margin-left:10px;
+	padding:10px;
+	min-height:520px;
+	background:#fff;
+}
+.surveyRight{
+	width:670px;
+	float:left;
+	padding:30px;
+	min-height:480px;
+	margin-left:20px;
+	background:#fff;
+}
+
+.surveyLeft .user-menu-links{
+    background: #FFF;
+
+}
+.surveyLeft .user-menu-links li{
+
+    border-bottom: 1px solid #eff8ff;
+}
+.surveyLeft .user-menu-links a{
+    display: block;
+    height:50px;
+    line-height: 50px;
+    border-left: 3px solid #FFF;
+    padding-left: 20px;
+    font-size: 16px;
+    font-family: "MicroSoft Yahei";
+}
+.surveyLeft .user-menu-links a.active{
+    color: #ed4800;
+    border-left-color: #ed4800;
+}
+.surveyLeft .user-menu-links li ul{
+    display: none;
+    padding-bottom: 20px;
+}
+.surveyLeft .user-menu-links li.on ul{
+    display: block;
+}
+.surveyLeft .user-menu-links li li{
+    border-bottom: 0 none;
+}
+.surveyLeft .user-menu-links li li a{
+	margin:0 25px;
+    position: relative;
+    font-size: 12px;
+    height:20px;
+    line-height: 20px;
+    border:0 none;
+    color: #666;
+    padding: 5px 0 5px 23px;
+}
+.user-menu-links li a em{
+    float: right;
+    margin-right: 15px;
+    margin-top: 20px;
+    display: inline-block;
+    width: 12px;
+    height:12px;
+    background: url(images/sp.png) no-repeat -52px 0;
+}
+.user-menu-links li.on a em{
+    background: url(images/sp.png) no-repeat -72px 0;
+}
+.user-menu-links li li a em,.user-menu-links li.on li a em{
+    position: absolute;
+    left:10px;
+    top:15px;
+    display: inline-block;
+    background: none;
+    margin: 0;
+}
+.user-menu-links li li a:hover em,.user-menu-links li li a.active em{
+    background: #ef693f;
+    width: 4px;
+    height:4px;
+    border-radius: 100%;
+}
+.user-menu-links li li a:hover{
+    color: #ef693f;
+}
+.surveyTitle{
+	text-align:center;
+	font-size: 24px;
+    font-family: "MicroSoft YaHei";
+    margin: 15px 0;
+}
+
+.survey_list{margin-top:36px;}
+.survey_list .item{margin-bottom:30px;}
+.survey_list .item p{color:#000000; font-size:16px; margin-bottom:20px;}
+.survey_list .item span{margin-right:20px; color:#1e1e1e; font-size:14px; display:inline-block;}
+.survey_list .item span input{float:left; margin-right:5px;margin-top: 4px;}
+.survey_list .item textarea{width:90%; margin:0 auto; margin-left:25px; border:1px solid #a9a9a9; height:100px;}
+.survey_Btn{ text-align:center;margin-top:150px;}
+.survey_Btn input{color:#fff; font-size:18px; padding:10px 30px; background-color:#1160b2; border-radius:3px; -moz-border-radius:3px; -o-border-radius:3px; -webkit-border-radius:3px; margin-right:10px; cursor:pointer; outline:none;}
+.survey_Btn input:hover{background-color:#2c77c5;}
+.survey_Btn a{color:#202020; font-size:16px; text-decoration:underline;}
+.survey_Btn a:hover{color:#1160b2;}
+
+.r11{
+	margin-left:70px;
+} 
+.r11 a{text-decoration: none;}
+
+.surveyPeopleNumber{
+	color:#000000;
+	text-align:left;
+	font-size: 16px;
+	font-family: "MicroSoft YaHei";
+	margin-top:30px;
+	margin-bottom:50px;
+}
+
+.result li{margin:0 0 20px 23px; width:580px;}
+.result li .option{color:#1160b2; font-size:14px;}
+.result li .percent{padding-left:10px; background:url(../images/vote_bar.gif) left center repeat-x; height:10px; position:relative; margin-top:10px;}
+.result li .percent span{color:#1f1f1f; font-size:14px; position:absolute; right:-60px; bottom:-2px;}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

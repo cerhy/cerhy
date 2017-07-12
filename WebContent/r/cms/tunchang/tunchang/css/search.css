@@ -1,0 +1,8 @@
+#search-btn1{
+    position: absolute;
+    right:1px;
+    top:1px;
+    width: 26px;
+    height:26px;
+    background: url(./images/search.png) no-repeat;
+}

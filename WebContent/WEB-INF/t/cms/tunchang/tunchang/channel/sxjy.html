@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<title>好研网-${channel.title}</title>
+[#include "../hyinclude/header.html"/]
+<script src="${resSys}/jquery.js" type="text/javascript"></script>
+<script src="${resSys}/front.js" type="text/javascript"></script>
+<script type="text/javascript" src="/${res}/js/jquery.SuperSlide.js"></script>
+<link type="text/css" rel="stylesheet" href="/${res}/css/hyindex.css" />
+<link type="text/css" rel="stylesheet" href="/${res}/css/custom.css" />
+<script src="${resSys}/jqueryUI/jquery-ui.js" type="text/javascript"></script>
+<link href="${resSys}/jqueryUI/jquery.ui.css" rel="stylesheet" type="text/css" />
+<style>
+ .actives{color: red;}
+  .local-icon {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    line-height: 14px;
+    color: #999999; }
+.local-icon:before {
+    content: "\e618"; }
+.local-icon:hover:before {
+    content: "\f618"; }
+</style>
+<div class="local">
+    <div class="wrap">
+        <span class="local-icon icon-font"></span>
+        <a class="position" href="${channel.parent.parent.url}">${channel.parent.parent.title}</a>
+        <em> &gt; </em>
+        <a href="javascript:;">${channel.parent.title}</a>
+        <em> &gt; </em>
+        <a class="cur-page" href="${channel.url}">${channel.title}</a>
+    </div>
+</div>
+<div class="container">
+    <div class="wrap">
+        <div class="xueke clearfix bd-padding">
+        <div class="wrap-left">
+                <ul class="fst-lv-ul">
+                	 [@cms_channel_list parentId=channel.parent.parent.id orderBy='4']
+				        [#list tag_list as b]
+				        <li [#if parentId??&&channel.parent.id==b.id]class="active"[/#if]>
+				        <a href="javascript:;">${b.name}<em class="arrow-down"></em></a>
+				        <div class="sub-div">
+                            <ul class="clearfix">
+		                	 [@cms_channel_list parentId=b.id orderBy='4']
+						        [#list tag_list as c]
+		                                <li><a [#if parentId??&&channel.id=c.id]style="color:red;"[/#if] href="${c.url}">${c.name}</a></li>
+						        [/#list]
+						      [/@cms_channel_list]
+                            </ul>
+                        </div>
+				        </li>
+				        [/#list]
+				      [/@cms_channel_list]
+                </ul>
+           </div>
+           [#if channel.parent.parent.id=168]
+ 			<div class="wrap-right" id="shd" style="display: none;">
+           <span><img style="margin-bottom: -5px;" width="20px;" height="20px;" src="/${res}/usemanual/0309.jpg"></span>
+				<a id="unames" href="${base}/blog/find_all_url_friend.jspx?userIds=" target="_blank" style="cursor: pointer;font-size: 1.2em;"></a>
+           </div>
+			[/#if]
+               <div class="wrap-right">
+                <div class="article-list-wrap">
+                    <ul class="report-list sm mb20">
+								     [@cms_content_page count='10' recommend='2'  orderBy='4' channelId=channel.id channelOption='1']
+								      [#list tag_pagination.list as a]
+	                        			<li>
+		                           		 <a class="hasImg clearfix" href="${a.url}" target="_blank">
+										      <div class="item clearfix" [#if a_index<1]style="border-top:none;"[/#if]>
+										          [#if a.typeImg??]
+										          <img width="85" height="85" src="${a.typeImg!}" alt="">
+										          [/#if]
+										          <div class="report-text">
+										            <h3 title="${a.title}">[@text_cut s=a.title len=25 append='...'/]</h3>
+										            <p>[#if a.typeImg??][@text_cut s=a.description len=30 append='...'/][#else][@text_cut s=a.description len=40 append='...'/][/#if]</p>
+										          	<div class="fl"><span class="ch">${a.ctgName}<em>${a.date?string("yyyy-MM-dd")}&nbsp;&nbsp;&nbsp;作者:&nbsp;${a.author!a.user.username}&nbsp;&nbsp;&nbsp;阅读:&nbsp;${a.contentCount.views!}&nbsp;&nbsp;&nbsp;评论:&nbsp;${a.contentCount.comments!}</em></span></div>
+										           [#if a_index<1]
+													      <input style="display: none;" id="bkNames" value="${a.ctgName}">
+													      <input style="display: none;" id="bkIds" value="${a.user.id}">
+													 [/#if]
+										          </div>
+										          <em class="arrowBtn"></em>
+										      </div>
+		                           			 </a>
+	                        			</li>
+								       [/#list]
+								      [#if tag_pagination.list?size>0]
+										 [#include "../include/page.html"/]
+									  [/#if]
+								    [/@cms_content_page]
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+	$(function() {
+		$("#commentDialog").dialog({
+			autoOpen: false,
+			modal: true,
+			width: 500,
+			height: 600,
+			position: ["center",20],
+			buttons: {
+				"关闭": function() {
+					$(this).dialog("close");
+				}
+			},
+			close: function(event, ui) {
+			}
+		});
+	    [#if !parentId??]
+	     $(".comments-hf").bind("click", function(){
+	                  $(this).toggleClass("reply-on");
+			  $(this).parent().siblings(".reply").animate({height:'toggle'},10);
+	      });
+	    [#else]
+	      $(".comments-hf").unbind();
+	      $(".comments-hf").bind("click", function(){
+	                  $(this).toggleClass("reply-on");
+			  $(this).parent().siblings(".reply").animate({height:'toggle'},10);
+	      });
+	    [/#if]
+	});
+</script>
+<script defer type="text/javascript">
+window.onload=function(){
+	var bkNames=$("#bkNames").val();
+	var ids=$("#bkIds").val();
+	if(typeof(bkNames)!='undefined'){
+		$("#unames").html(bkNames+"博客中心");
+	}
+	if(typeof(ids)!='undefined'){
+		$('#unames').attr('href','${base}/blog/find_all_url_friend.jspx?userIds='+ids);
+		$("#shd").show();
+	}
+}
+</script>
+[#include "../include/footer.html"/]
+<script src="/${res}/js/main.js"></script>
+</body>
+</html>

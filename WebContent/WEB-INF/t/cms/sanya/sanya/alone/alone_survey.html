@@ -1,0 +1,108 @@
+<!DOCTYPE HTML>
+<html>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>好研网-${channel.name!}</title>
+<link rel="shortcut icon" href="/${res}/images/cerhyheard.png" type="image/x-icon" />
+<meta http-equiv="keywords" content="${site.keywords!}"/>
+<meta http-equiv="description" content="${site.description!}"/>
+<script src="${resSys}/jquery.js" type="text/javascript"></script>
+<script src="${resSys}/front.js" type="text/javascript"></script>
+
+<link type="text/css" rel="stylesheet" href="/${res}/css/survey.css" />
+<link type="text/css" rel="stylesheet" href="/${res}/css/custom.css" />
+<script type="text/javascript">
+$(function() {
+	$('.user-menu-links li').click(function(){
+	    $(this).toggleClass('on');
+	});
+	
+	Cms.channelViewCount("${base}","${channel.id}");
+	Cms.siteFlow("${base}", location.href, document.referrer,"${site.config.flowSwitch?string}");
+});
+</script>
+<head>
+<body>
+[#include "../hyinclude/header.html"/]
+<div class="local">
+    <div class="wrap">
+        <span class="local-icon icon-font"></span>
+        <a href="${base}/index.jhtml">首页</a>
+        <em> &gt; </em>
+        <span class="cur-page"><a href="${base}/survey/index.jhtml">问卷调查</a></span>
+    </div>
+</div>
+
+<div class="surveyBody">
+  <div class="surveyWrap">
+   <div class="surveyContent clearfix">
+      <div class="surveyLeft">
+         <div class="user-menu-links">
+            <ul>
+	           <li class="on"><a style="cursor: pointer;"><em></em>进行中调查</a>
+	             <ul>
+	              [@cms_vote]<li><a>[#if tag_bean??][@text_cut s=tag_bean.title?html len=7 append='...' /][/#if]</a></li>[/@cms_vote]
+	             </ul>
+	           </li>
+	           
+	           <li><a style="cursor: pointer;"><em></em>过往调查</a>
+	             <ul>
+	             [@cms_vote_list  siteId=site.id]   
+			        <ul>
+			         [#list tag_list as vote]
+			          <li><a href="${base}/vote.jspx?voteId=${vote.id}">[@text_cut s=vote.title?html len=5 append='...' /] [#if vote.endTime??]${vote.endTime?string("yyyy-MM-dd")}[/#if]</a></li>
+			         [/#list]
+			        </ul>
+			     [/@cms_vote_list]
+	             </ul>
+	           </li>
+	           
+	         </ul>
+           </div>
+         </div>
+	       
+	    <div class="surveyRight">
+	       [@cms_vote]
+			[#if !tag_bean??]
+			<div class="surveyTitle">问卷调查</div>
+			[#else]
+			<form name="votes" action="${base}/vote.jspx" method="post" target="_blank">
+			<div class="surveyTitle">${tag_bean.title?html}</div> 
+			<input type="hidden" name="voteId" value="${tag_bean.id}"/>
+			      <h3>${tag_bean.description?html}</h3>
+			      <div class="survey_list">
+			        [#list tag_bean.subtopics as subTopic]
+			        <div class="item">
+			          <p>${subTopic_index+1}、${subTopic.title?html}</p>
+			          <div>
+			          [#if subTopic.isRadio]
+			          [#list subTopic.voteItems as item]
+			          <span><input type="radio" name="itemIds${subTopic.id}" value="${item.id}"/>${item.title?html}</span>
+			          [/#list]
+			          [/#if]
+			          [#if subTopic.isMulti]
+			          [#list subTopic.voteItems as item]
+			          <span><input type="checkbox" name="itemIds${subTopic.id}" value="${item.id}"  id="${item.id}"/>${item.title?html}</span>
+			          [/#list]
+			          [/#if]
+			          [#if subTopic.isText]
+			          <textarea name="reply" type="text"></textarea>
+			          [/#if]
+			          </div>
+			        </div>
+			        <input name=subIds type="hidden" value="${subTopic.id}"/>
+			        [/#list]
+			      </div>
+			      <div class="survey_Btn"><input type="submit" value="提交投票"><span class="r11"><a href="${base}/vote_result.jspx?voteId=${tag_bean.id}" class="result">查看投票结果&nbsp;>></a></span></div>
+			</form>
+			[/#if]
+           [/@cms_vote]
+	    </div>
+	    
+      </div>
+   </div>
+ </div>
+
+[#include "../include/footer.html"/]
+</body>
+</html>

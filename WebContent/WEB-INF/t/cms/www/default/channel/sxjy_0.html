@@ -41,7 +41,17 @@
                             <ul class="clearfix">
 		                	 [@cms_channel_list parentId=b.id orderBy='4']
 						        [#list tag_list as c]
+						            [#if c.id==395 ]
+		                                <li><a style="font-weight:bold; [#if c_index=0&&b_index=0]color:red;[/#if] " target="_blank" href="http://sanya.localhost:8080/cerhy/">${c.name}</a></li>
+		                             [#elseif c.id==413]
+		                             <li><a style="font-weight:bold; [#if c_index=0&&b_index=0]color:red;[/#if] " target="_blank" href="http://haikou.localhost:8080/cerhy/">${c.name}</a></li>
+		                             [#elseif c.id==170]
+		                             <li><a style="font-weight:bold; [#if c_index=0&&b_index=0]color:red;[/#if] " target="_blank" href="http://tunchang.localhost:8080/cerhy/">${c.name}</a></li>
+		                             [#elseif c.id==171]
+		                             <li><a style="font-weight:bold; [#if c_index=0&&b_index=0]color:red;[/#if] " target="_blank" href="http://baoting.localhost:8080/cerhy/">${c.name}</a></li>
+		                             [#else]
 		                                <li><a [#if c_index=0&&b_index=0]style="color:red;"[/#if] href="${c.url}">${c.name}</a></li>
+		                           [/#if]
 						        [/#list]
 						      [/@cms_channel_list]
                             </ul>

@@ -1,0 +1,73 @@
+/* view 03 */
+.blogBody{
+	width:100%;
+	background: #250f11 url(03.jpg) no-repeat center top;
+}
+.header-top {background: #250f11;border-bottom:0px;}
+.footer_styles {
+	background : #250f11; 
+}
+.blogHead,.tj{color: #666666;}
+/* .tj{
+	padding-bottom:80px;
+} */
+#title1{
+	color: #666666;
+}
+
+.blogBody .user-center-left .user-menu-links, .blogBody .personCenter-userInfo, .blogBody .user-center-left .user-setting {
+   background: #311411;
+} 
+
+.blogBody .user-center-left .user-menu-links li{
+	margin-top:-1px;
+	border-bottom: none; 
+}
+.blogBody .user-center-left .user-menu-links a {
+    border : none; 
+    text-decoration:none;
+}
+.blogBody .user-menu-links li a em {
+     background: transparent; 
+}
+.blogBody .user-menu-links li.on a em {
+   background: transparent; 
+}
+.blogBody .user-menu-links li a {
+	color: #666666;
+}
+.blogBody .user-menu-links li a:hover {
+	color:#0070b8;
+}
+#_goPs{
+	background: transparent;
+}
+.tggl .tggl-top {background: transparent;}
+body, button, input, select, textarea { background: transparent;}
+
+.tggl a {color:#666666;}
+.a2{color:#666666;}
+.inp2{color:#666666;}
+.tggl td{border-color:#666666;}
+.tggl table{border-color:#666666;}
+.tggl-top{background:transparent;}
+.st_tree ul li a:hover {color:#0070b8;}
+
+.comments h3 {color:#FFFFFF;}
+
+.xueke-content-detail p  ,.comments-list h1 ,.xueke-acticle h2 {color: #999;}
+
+.comments .comments-text{
+	color: #999;
+	border: 1px solid #666666;
+}
+
+.plcode ,.rig .reply,.rig .reply .reply-text {
+	color: #999;
+border: 1px solid #666666;}
+.htmleaf-container .mtree-demo .mtree {
+  background: #311411;
+  margin: 20px auto;
+  max-width: 320px;
+  border-radius: 3px;
+}

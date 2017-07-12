@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html slick-uniqueid="3">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>三亚教研网</title>
+<link rel="stylesheet" href="/${res}/sanya_files/content.css">
+<script src="/${res}/sanya_files/mootools.js"></script>
+<script src="/${res}/sanya_files/mootools.pack.js"></script>
+<script src="/${res}/sanya_files/bee.core.js"></script>
+<script src="/${res}/sanya_files/bee.sy.js"></script>
+<base href="." target="_blank">
+</head>
+<body>
+	<div id="header">
+		<div id="header-w">
+			<div id="navi">
+				<a href="http://www.cerhy.com/">CERHY首页</a><a
+					href="http://res.hersp.com/">教育资源</a><a
+					href="http://tea.hersp.com/">教师发展</a><a
+					href="http://stu.hersp.com/">学生成长</a><a href="http://localhost:8080/cerhy/blog/index.jspx">注册/登录</a>
+			</div>
+			<div class="header-right">
+			<div class="search-bar">
+                    <form action="${base}/search.jspx" target="_blank" id="searchForm">
+        				<input type="text" name="q" value="${oldq!}" maxlength="50" autocomplete="off" class="searchCon" placeholder="搜索博客账号">
+        				<input type="submit" value="" id="search-btn1" class="search-btn1" style="border: 0px;">
+       			    </form>
+             </div>
+             </div>
+		</div>
+	</div>
+	<div id="layout">
+		<div id="banner"></div>
+		<ul id="menu" class="menu">
+			<li><span>课程改革</span>
+			<div class="pad col1 ">
+					<dl>
+						<dd>
+							<a href="http://res.hersp.com/category/65183">课程管理</a>
+						</dd>
+						<dd>
+							<a href="http://res.hersp.com/category/126859">校本研修</a>
+						</dd>
+						<dd>
+							<a href="http://res.hersp.com/category/5524">质量监测</a>
+						</dd>
+						<dd>
+							<a href="http://res.hersp.com/category/127146">样本校建设</a>
+						</dd>
+					</dl>
+				</div></li>
+			<li><span>学科教研</span>
+			<div class="pad col4 ">
+					<dl class="moo">
+						<dd>
+							<a href="http://res.hersp.com/category/5497">高中语文</a>
+						</dd>
+						<dd>
+							<a href="http://res.hersp.com/category/5499">高中数学</a>
+						</dd>
+						<dd>
+							<a href="http://res.hersp.com/category/5501">高中英语</a>
+						</dd>
+						<dd>
+							<a href="http://res.hersp.com/category/5503">高中物理</a>
+						</dd>
+						<dd>
+							<a href="http://res.hersp.com/category/5505">高中化学</a>
+						</dd>
+						<dd>
+							<a href="http://res.hersp.com/category/5507">高中生物</a>
+						</dd>
+						<dd>
+							<a href="http://res.hersp.com/category/5495">高中政治</a>
+						</dd>
+						<dd>
+							<a href="http://res.hersp.com/category/5509">高中历史</a>
+						</dd>
+						<dd>
+							<a href="http://res.hersp.com/category/5510">高中地理</a>
+						</dd>
+					</dl>
+					<dl class="moo">
+						<dd>
+							<a href="http://res.hersp.com/category/5496">初中语文</a>
+						</dd>
+						<dd>
+							<a href="http://res.hersp.com/category/5498">初中数学</a>
+						</dd>
+						<dd>
+							<a href="http://res.hersp.com/category/5500">初中英语</a>
+						</dd>
+						<dd>
+							<a href="http://res.hersp.com/category/5502">初中物理</a>
+						</dd>
+						<dd>
+							<a href="http://res.hersp.com/category/5504">初中化学</a>
+						</dd>
+						<dd>
+							<a href="http://res.hersp.com/category/5506">初中生物</a>
+						</dd>
+						<dd>
+							<a href="http://res.hersp.com/category/5494">初中思品</a>
+						</dd>
+						<dd>
+							<a href="http://res.hersp.com/category/5508">初中历史</a>
+						</dd>
+						<dd>
+							<a href="http://res.hersp.com/category/5509">初中地理</a>
+						</dd>
+					</dl>
+					<dl class="moo">
+						<dd>
+							<a href="http://res.hersp.com/category/14165">小学语文</a>
+						</dd>
+						<dd>
+							<a href="http://res.hersp.com/category/5490">小学数学</a>
+						</dd>
+						<dd>
+							<a href="http://res.hersp.com/category/5491">小学英语</a>
+						</dd>
+						<dd>
+							<a href="http://res.hersp.com/category/5492">小学思品</a>
+						</dd>
+						<dd>
+							<a href="http://res.hersp.com/category/5493">小学科学</a>
+						</dd>
+						<dd>
+							<a href="http://res.hersp.com/category/5516">中小学美术</a>
+						</dd>
+						<dd>
+							<a href="http://res.hersp.com/category/5514">中小学体育</a>
+						</dd>
+						<dd>
+							<a href="http://res.hersp.com/category/5511">中小学音乐</a>
+						</dd>
+					</dl>
+					<dl>
+						<dd>
+							<a href="http://res.hersp.com/category/65291">学前教研</a>
+						</dd>
+						<dd>
+							<a href="http://res.hersp.com/category/5517">综合实践</a>
+						</dd>
+						<dd>
+							<a href="http://res.hersp.com/category/5513">通用技术</a>
+						</dd>
+						<dd>
+							<a href="http://res.hersp.com/category/5512">信息技术</a>
+						</dd>
+						<dd>
+							<a href="http://res.hersp.com/category/15079">心理健康</a>
+						</dd>
+					</dl>
+				</div></li>
+			<li><span>教研动态</span>
+			<div class="pad col1 ">
+					<dl>
+						<dd>
+							<a href="http://res.hersp.com/category/5431">教研简报</a>
+						</dd>
+						<dd>
+							<a href="http://res.hersp.com/category/127149">校园新闻</a>
+						</dd>
+						<dd>
+							<a href="http://res.hersp.com/category/12994">教育时政</a>
+						</dd>
+					</dl>
+				</div></li>
+			<li><span>文件通知</span>
+			<div class="pad col1 ">
+					<dl>
+						<dd>
+							<a href="http://res.hersp.com/category/5432">通知通报</a>
+						</dd>
+					</dl>
+				</div></li>
+			<li><span>教研管理</span>
+			<div class="pad col1 ">
+					<dl>
+						<dd>
+							<a href="http://res.hersp.com/category/14962">政策法规</a>
+						</dd>
+						<dd>
+							<a href="http://res.hersp.com/category/5522">制度建设</a>
+						</dd>
+						<dd>
+							<a href="http://res.hersp.com/category/5433">计划总结</a>
+						</dd>
+					</dl>
+				</div></li>
+			<li><span>教育科研</span>
+			<div class="pad col1 ">
+					<dl>
+						<dd>
+							<a href="http://res.hersp.com/category/127161">国家课题</a>
+						</dd>
+						<dd>
+							<a href="http://res.hersp.com/category/127162">省级课题</a>
+						</dd>
+						<dd>
+							<a href="http://res.hersp.com/category/5434">市级课题</a>
+						</dd>
+						<dd>
+							<a href="http://res.hersp.com/category/127163">攀登英语</a>
+						</dd>
+					</dl>
+				</div></li>
+			<li><span>网络教研</span>
+			<div class="pad col1 ">
+					<dl>
+						<dd>
+							<a href="http://res.hersp.com/category/69512">在线研讨</a>
+						</dd>
+					</dl>
+				</div></li>
+			<li><span>交流空间</span>
+			<div class="pad col1 rtl">
+					<dl>
+						<dd>
+							<a href="http://res.hersp.com/category/64804">校长论坛</a>
+						</dd>
+						<dd>
+							<a href="http://res.hersp.com/category/5435">教学论坛</a>
+						</dd>
+					</dl>
+				</div></li>
+			<li class="rc"><span>教学资源</span>
+			<div class="pad col1 rtl">
+					<dl>
+						<dd>
+							<a href="http://res.hersp.com/category/126355">视频中心</a>
+						</dd>
+						<dd>
+							<a href="http://res.hersp.com/category/127176">课件专区</a>
+						</dd>
+						<dd>
+							<a href="http://res.hersp.com/category/127178">试题专区</a>
+						</dd>
+						<dd>
+							<a href="http://res.hersp.com/category/19037">下载专区</a>
+						</dd>
+					</dl>
+				</div></li>
+			<li><span>关于我们</span>
+			<div class="pad col1 rtl">
+					<dl>
+						<dd>
+							<a href="http://res.hersp.com/category/38485">博客主页</a>
+						</dd>
+						<dd>
+							<a href="http://res.hersp.com/category/127181">教研室简介</a>
+						</dd>
+						<dd>
+							<a href="http://res.hersp.com/category/123182">教研员分工</a>
+						</dd>
+						<dd>
+							<a href="http://res.hersp.com/category/62559">上网导航</a>
+						</dd>
+					</dl>
+				</div></li>
+		</ul>
+		<script>
+			utils.initSearch();
+			new Menubar('menu', cfg.menu, cfg.rtl);
+		</script>
+
+		<div id="inner">
+			<div id="main">
+				<div id="feature-mask">
+					<div id="feature" class="block" style="height: 1250px; top: 0px;">
+						<div>
+							&nbsp;
+							<h2>三亚市教育局举行兼职教研员、学科中心组成员聘任仪式</h2>
+							<p>
+								4月3日下午，三亚市教育局在教育局六楼报告厅举行兼职教研员、学科中心组成员聘任仪式。教育局副局长吴萍、教育局教研室傅元根主任、罗禹副主任出席会议，各中小学、幼儿园分管教学校长（园长）、受聘兼职教研员、学科教研中心组成员参加会议。会议由教育局教研室罗禹副主任主持。<a
+									href="http://res.hersp.com/content/4379069">[详细]</a>
+							</p>
+							&nbsp;
+							<p style="margin: 0 0 0 1em;">
+								<img src="/${res}/sanya_files/20171.png">
+							</p>
+							&nbsp;
+							<ul class="dot" style="margin: 0 0 0 0;">
+								&nbsp;
+								<li><a href="http://res.hersp.com/content/1506553"
+									target="_blank">活动综述</a> &nbsp;</li>
+								<li>相关资料 | <a href="http://res.hersp.com/content/265512"
+									target="_blank">利用EXCEL进行博客数据统计（适用于批量统计）</a> | <a
+									href="http://res.hersp.com/content/310923" target="_blank">公告区在线研讨代码生成</a>
+									| <a href="http://res.hersp.com/content/329242" target="_blank">如何在Excel中启用宏</a>
+									&nbsp;
+								</li>
+								<li>链接收藏 | <a href="http://www.cerhy.com/blog/user/9210"
+									target="_blank">三亚市教研室(9210)</a> | <a
+									href="http://www.cerhy.com/blog/user/9000" target="_blank">好研平台客服(9000)</a>
+								</li>
+							</ul>
+						</div>
+
+
+						<div>
+							&nbsp;
+							<h2>三亚市中小学“226”教改实验深度研修班在上海市徐汇区举行</h2>
+							<p>
+								2013年8月8日至15日，我局教研室组织过岭中学、南岛学校、逸夫中学3所226有效教学实验学校的24名实验教师和教研室4名教研员到上海市徐汇区参加由我室与上海教育科学研究院联合举办的“226”教改实验研修班。<a
+									href="http://res.hersp.com/content/3797294">[详细]</a>
+							</p>
+							&nbsp;
+							<p style="margin: 0 0 0 1em;">
+								<img src="/${res}/sanya_files/37139.jpg">
+							</p>
+							&nbsp;
+							<ul class="dot" style="margin: 0 0 0 0;">
+								&nbsp;
+								<li><a href="http://res.hersp.com/content/1506553"
+									target="_blank">活动综述</a> &nbsp;</li>
+								<li>相关资料 | <a href="http://res.hersp.com/content/265512"
+									target="_blank">利用EXCEL进行博客数据统计（适用于批量统计）</a> | <a
+									href="http://res.hersp.com/content/310923" target="_blank">公告区在线研讨代码生成</a>
+									| <a href="http://res.hersp.com/content/329242" target="_blank">如何在Excel中启用宏</a>
+									&nbsp;
+								</li>
+								<li>链接收藏 | <a href="http://www.cerhy.com/blog/user/9210"
+									target="_blank">三亚市教研室(9210)</a> | <a
+									href="http://www.cerhy.com/blog/user/9000" target="_blank">好研平台客服(9000)</a>
+								</li>
+							</ul>
+						</div>
+
+						<div>
+							<h2>三亚市教学成果统计系统使用暨网络教研平台操作培训专题</h2>
+							<p>3月17日上午，三亚市教研室在教育局6楼报告厅举办中小学网络教研平台操作暨教学成果统计系统使用技能培训班，特邀海南省教育研究培训院网络教研平台研发管理人员张海中、梁斌两位老师现场指导。</p>
+							<p style="margin: 0 0 0 1em;">
+								<img src="/${res}/sanya_files/01204.jpg">
+							</p>
+							<ul class="dot" style="margin: 0 0 0 0;">
+								<li><a href="http://res.hersp.com/content/1506553"
+									target="_blank">活动综述</a></li>
+								<li>相关资料 | <a href="http://res.hersp.com/content/265512"
+									target="_blank">利用EXCEL进行博客数据统计（适用于批量统计）</a> | <a
+									href="http://res.hersp.com/content/310923" target="_blank">公告区在线研讨代码生成</a>
+									| <a href="http://res.hersp.com/content/329242" target="_blank">如何在Excel中启用宏</a>
+								</li>
+								<li>链接收藏 | <a href="http://www.cerhy.com/blog/user/9210"
+									target="_blank">三亚市教研室(9210)</a> | <a
+									href="http://www.cerhy.com/blog/user/9000" target="_blank">好研平台客服(9000)</a>
+								</li>
+							</ul>
+						</div>
+						<div>
+							<a href="http://res.hersp.com/content/1471111"><img
+								src="/${res}/sanya_files/14163.jpg"></a>
+						</div>
+
+						<div>
+							<p style="margin: 0px; font-weight: bold;">
+								<span style="font-size: 12pt;"><strong><span
+										style="font-family: verdana, 宋体; font-size: 12pt;">舍我取谁——2011年三亚市首届中小学生环保作品展览暨倡议大型公益活动</span></strong></span><span
+									style="font-size: 12pt;"><strong><span
+										style="font-size: 12pt;">&nbsp;</span></strong></span>
+							</p>
+							<p style="text-align: left;" align="center">&nbsp;</p>
+							<p>
+								<span style="font-size: 14px;"><span
+									style="font-size: 14px;"><img title="cats"
+										src="/${res}/sanya_files/23789.jpg" alt=""></span><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;由我局组织举办的2011年三亚市首届中小学生利用废旧物品手工制作环保模型大赛作品展览暨全体中小学生向广大市民发出“
+									低碳环保，从我做起”的倡议的大型公益活动于2012年1月1日在三亚市大东海夏日百货旁隆重举行，这次展出的学生作品是从入围作品中经过精心挑选择出来的优秀作品，共展出将近300件。
+									<span style="font-size: 14px;"><a
+										href="http://res.hersp.com/content/1401617">[详细信息]</a></span></span>
+							</p>
+						</div>
+					</div>
+				</div>
+				<div id="feature-handle">
+					<span class="active">1</span><span class="">2</span><span class="">3</span><span
+						class="">4</span><span class="">5</span>
+				</div>
+				<script>
+					utils.initFeature();
+				</script>
+
+				<div id="subject1" class="widget block">
+					<h3>教研简报</h3>
+					<div class="box"
+						style="padding: 8px 0 0 0; font-size: 15pt; font-weight: bold;">三亚市2016年中学物理课堂教学大赛活动简报
+					</div>
+					<div style="padding: 10px;">
+						<img style="width: 150px; float: left;"
+							src="/${res}/sanya_files/43797.jpg" alt="">
+						<div style="width: 450px; float: right;">
+							季春阳光，其意融适；精品四中，儒雅铸人。三亚市2016年中学物理课堂教学大赛在这个书香绕人的校园中进行，本次活动主题为探索物理课堂教学有效性，丰富青年教师教学经验。活动分高、初中两组，各区、市直属各学校都以选优推荐，共15位青年教师参加。
+							<a href="http://res.hersp.com/content/5623410">[详细]</a><br>
+						</div>
+						<div class="clr"></div>
+					</div>
+					<ul class="dot" style="float: left; width: 45%">
+						<li><a href="http://res.hersp.com/content/4547662">[图文简报]我市组织骨干教师参加全国综合实践活动第十二届研讨会获多项一等奖</a></li>
+						<li><a href="http://res.hersp.com/content/4502295">【初中物理教研活动简报】三亚市初中物理中心教研组参加五中物理省级课题研究活动</a></li>
+						<li><a href="http://res.hersp.com/content/4476110">【教研活动简报】金海求是——”2014年全国高效课堂创新成果交流研讨会“纪实</a></li>
+						<li><a href="http://res.hersp.com/content/4457693">局教研室召开2014年市化学中考备考会</a></li>
+
+
+
+
+
+
+					</ul>
+					<ul class="dot" style="float: right; width: 45%">
+
+						<li><a href="http://res.hersp.com/content/4628199">三亚市组织部分物理同行参加”省2014年义务教育暑期新教材跟进培训“</a></li>
+						<li><a href="http://res.hersp.com/content/4517499">三亚市“攀登英语学习实验项目”下学校指导活动简报</a></li>
+						<li><a href="http://res.hersp.com/content/4485761">【初中物理教研活动简报】三亚市初中物理中心教研组参加海军三亚榆林八一中学开放周活动</a></li>
+						<li><a href="http://res.hersp.com/content/4463595">【物理教研活动简报】“三亚市2014年初三物理总复习研讨培训会议”在三亚四中成功举行</a></li>
+
+
+
+
+
+
+					</ul>
+					<div class="clr"></div>
+				</div>
+				<div id="subject2" class="widget block">
+					<h3>学科动态</h3>
+
+					<ul class="dot" style="float: left; width: 45%">
+						<li><a href="http://res.hersp.com/content/4550078">[综合实践]关于我市参加第26届海南省青少年科技创新大赛获奖情况的通报</a></li>
+						<li><a href="http://res.hersp.com/content/4542307">[信息技术]WiFi长怎么样？盘旋光束如幽灵！</a></li>
+						<li><a href="http://res.hersp.com/content/4624340">[中小学体育]三亚“飞北赛”总决赛：空中上演美妙舞台剧</a></li>
+						<li><a href="http://res.hersp.com/content/703713">[高中地理]关于举办三亚市中学地理“教学能手”评比活动的通知</a></li>
+						<li><a href="http://res.hersp.com/content/1248306">[高中历史]1.3.9《资本主义政治制度在欧洲大陆的扩展》练习</a></li>
+						<li><a href="http://res.hersp.com/content/4500862">[高中生物][教研简报]2014年全市生物命题、教学论文评选结活动圆满结束</a></li>
+						<li><a href="http://res.hersp.com/content/1621603">[高中化学]参加第七届全国基础教育化学新课程实施成果交流大会有感</a></li>
+						<li><a href="http://res.hersp.com/content/4546738">[高中物理]【物理在线研讨活动简报】2013-14学年三亚市中学物理教学在线研讨活动及数据统计</a></li>
+						<li><a href="http://res.hersp.com/content/720041">[高中英语]关于举办
+								“2010年三亚市高中学生英语书面表达竞赛”的通知</a></li>
+						<li><a href="http://res.hersp.com/content/4556531">[高中数学][教研简报]
+								14.6.三亚中学数学教师同一题多解多变优质案例评选活动简报</a></li>
+						<li><a href="http://res.hersp.com/content/4257780">[初中语文]【原创】荔枝沟中学瞒上欺下颠倒黑白满嘴谎言令人作呕之投诉答复</a></li>
+						<li><a href="http://res.hersp.com/content/1610578">[初中思品]关于2012年全市初中思想品德优质课比赛结果及在线研讨情况的通报</a></li>
+						<li><a href="http://res.hersp.com/content/620479">[小学思品]鱼水情深，共创和谐——河东区中心学校“军民共建”活动报道</a></li>
+						<li><a href="http://res.hersp.com/content/4033082">[小学数学]数学课应注重数学与其他学科的联系与综合</a></li>
+
+					</ul>
+					<ul class="dot" style="float: right; width: 45%">
+						<li><a href="http://res.hersp.com/content/648787">[学前教研]关于举办“利用木偶开展幼儿园语言活动”专题研讨活动的通知</a></li>
+						<li><a href="http://res.hersp.com/content/4008690">[通用技术]【图文简报】我市组织骨干老师参加全省综合实践活动说课活动，市一小符照娟老师获全省比赛二等奖</a></li>
+						<li><a href="http://res.hersp.com/content/4477781">[中小学美术]美术送教下乡活动观摩心得</a></li>
+						<li><a href="http://res.hersp.com/content/3974472">[中小学音乐]浅谈新课程理念下的“双基”教学</a></li>
+						<li><a href="http://res.hersp.com/content/703713">[初中地理]关于举办三亚市中学地理“教学能手”评比活动的通知</a></li>
+						<li><a href="http://res.hersp.com/content/648783">[初中历史]关于举办2010年全省中学历史教师教学基本功暨课堂教学评比活动的通知</a></li>
+						<li><a href="http://res.hersp.com/content/4600854">[初中生物]2013～2014学年度第二学期七年级生物科期末学业水平检测试卷参考答案</a></li>
+						<li><a href="http://res.hersp.com/content/4309547">[初中化学]征集化学学科中考备考会建议</a></li>
+						<li><a href="http://res.hersp.com/content/4628199">[初中物理]三亚市组织部分物理同行参加”省2014年义务教育暑期新教材跟进培训“</a></li>
+						<li><a href="http://res.hersp.com/content/1591563">[初中英语]关于举办第六届全国初中英语教师教学基本功大赛暨教学观摩研讨会的通知</a></li>
+						<li><a href="http://res.hersp.com/content/4556531">[初中数学][教研简报]
+								14.6.三亚中学数学教师同一题多解多变优质案例评选活动简报</a></li>
+						<li><a href="http://res.hersp.com/content/715322">[高中政治]关于组织教师观摩第三届粤版《思想品德》全国优质课大赛评比活动的通知</a></li>
+						<li><a href="http://res.hersp.com/content/4512130">[小学科学][图文简报]市教研室组织开展小学科学中心组教研活动</a></li>
+						<li><a href="http://res.hersp.com/content/4446182">[小学英语]三亚市小学英语教材教法培训简报</a></li>
+						<li><a href="http://res.hersp.com/content/4058245">[小学语文]信任是最好的激励手法</a></li>
+
+
+
+
+
+					</ul>
+					<div class="clr"></div>
+
+					<h3>教育时政</h3>
+					<ul class="dot" style="float: left; width: 45%">
+						<li><a
+							href="http://edu.people.com.cn/n/2014/0831/c1006-25572574.html">书皮不环保最好不要包</a></li>
+						<li><a
+							href="http://edu.sina.com.cn/ischool/2014-09-01/1456432410.shtml">美国校园的班干部：为当玩具管理员发表竞演
+						</a></li>
+						<li><a
+							href="http://learning.sohu.com/20140902/n403976436.shtml">湖北小学砍人凶手：女儿报名四求老师被拒</a></li>
+						<li><a
+							href="http://kids.163.com/14/0901/10/A5261CCJ00294MO6.html">小学生豪购高档文具：超四成花费过2000</a></li>
+						<li><a
+							href="http://edu.hainan.gov.cn/showarticle.jsp?id=20074045">我省334名特岗教师今秋上岗</a></li>
+						<li><a
+							href="http://edu.hainan.gov.cn/showarticle.jsp?id=20074000">海南省教育厅下发通知：确保灾区学生如期上学</a></li>
+
+
+
+
+
+					</ul>
+					<ul class="dot" style="float: right; width: 45%">
+						<li><a
+							href="http://edu.people.com.cn/n/2014/0902/c1006-25583770.html">“两个人的学校”开学</a></li>
+						<li><a
+							href="http://edu.sina.com.cn/zxx/2014-09-01/1548432433.shtml">家长吐槽文具要求多：包书皮不能有气泡(图)</a></li>
+						<li><a
+							href="http://learning.sohu.com/20140902/n403976721.shtml">小学生年花费：打工子弟1万国际小学22万</a></li>
+						<li><a href="http://kids.163.com/special/yangwei/">杨威:钢铁侠老爸主张男孩吃苦
+						</a></li>
+						<li><a
+							href="http://edu.hainan.gov.cn/showarticle.jsp?id=20074046">省教育厅和省食药监局联合开展学校食堂安全卫生检查</a></li>
+						<li><a
+							href="http://edu.hainan.gov.cn/showarticle.jsp?id=20074006">今年海南学生
+								上名校的多了</a></li>
+
+
+
+
+
+
+
+					</ul>
+					<div class="clr"></div>
+				</div>
+				<div id="subject3" class="widget block"></div>
+				<div id="refer" class="widget block">
+					<ul id="blog-tab" class="tab">
+						<li class="cur">三亚市教研室个人博客</li>
+						<li>三亚市各学校博客</li>
+						<li>省级学科资源</li>
+						<li>各市县教研室</li>
+					</ul>
+					<div id="blog-page" class="box">
+						<div class="page">
+							<table style="width: 100%">
+								<colgroup>
+									<col style="width: 22%">
+									<col style="width: 22%">
+									<col style="width: 22%">
+									<col style="width: 22%">
+								</colgroup>
+								<tbody>
+									<tr>
+										<td><a href="http://www.cerhy.com/blog/user/613046">一帆风顺</a></td>
+										<td><a href="http://www.cerhy.com/blog/user/609221">傅元根的空间</a></td>
+										<td><a href="http://www.cerhy.com/blog/user/601217">罗禹的空间</a></td>
+									</tr>
+									<tr>
+										<td><a href="http://www.cerhy.com/blog/user/87142">陈廷文的空间</a></td>
+										<td><a href="http://www.cerhy.com/blog/user/608972">周康的空间</a></td>
+										<td><a href="http://www.cerhy.com/blog/user/620336">陈泽海的空间</a></td>
+									</tr>
+									<tr>
+										<td><a href="http://www.cerhy.com/blog/user/620157">羊淑琼的空间</a></td>
+										<td><a href="http://www.cerhy.com/blog/user/620637">陈太然的空间</a></td>
+										<td><a href="http://www.cerhy.com/blog/user/609223">周阳的空间</a></td>
+									</tr>
+									<tr>
+										<td><a href="http://www.cerhy.com/blog/user/607062">周兰芳的空间</a></td>
+										<td><a href="http://www.cerhy.com/blog/user/606246">王连升的空间</a></td>
+										<td><a href="http://www.cerhy.com/blog/user/610152">张艳玲的空间</a></td>
+									</tr>
+									<tr>
+										<td><a href="http://www.cerhy.com/blog/user/609038">赵明铁的空间</a></td>
+										<td><a href="http://www.cerhy.com/blog/user/600819">齐洁清的空间</a></td>
+										<td><a href="http://www.cerhy.com/blog/user/52013">吴革的空间</a></td>
+									</tr>
+									<tr>
+										<td><a href="http://www.cerhy.com/blog/user/607101">苏天新的空间</a></td>
+										<td><a href="http://www.cerhy.com/blog/user/607064">陈维强的空间</a></td>
+										<td><a href="http://www.cerhy.com/blog/user/628954">黎回青的空间</a></td>
+									</tr>
+									<tr>
+										<td><a href="http://www.cerhy.com/blog/user/621932">陈运恩的空间</a></td>
+										<td><a href="http://www.cerhy.com/blog/user/52297">郭静的空间</a></td>
+										<td><a href="http://www.cerhy.com/blog/user/612978">王廷芳的空间</a></td>
+									</tr>
+									<tr>
+										<td><a href="http://www.cerhy.com/blog/user/608970">陈求丽的空间</a></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+						<div class="page" style="display: none">
+							<table style="width: 100%">
+								<colgroup>
+									<col style="width: 22%">
+									<col style="width: 22%">
+									<col style="width: 22%">
+									<col style="width: 22%">
+								</colgroup>
+								<tbody>
+									<tr>
+										<td><a href="http://www.cerhy.com/blog/user/9632">第一中学</a></td>
+										<td><a href="http://www.cerhy.com/blog/user/605911">第二中学</a></td>
+										<td><a href="http://www.cerhy.com/blog/user/606757">第三中学</a></td>
+									</tr>
+									<tr>
+										<td><a href="http://www.cerhy.com/blog/user/609207">第五中学</a></td>
+										<td><a href="http://www.cerhy.com/blog/user/607785">实验中学</a></td>
+										<td><a href="http://www.cerhy.com/blog/user/606169">第四中学</a></td>
+									</tr>
+									<tr>
+										<td><a href="http://www.cerhy.com/blog/user/606373">民族中学</a></td>
+										<td><a href="http://www.cerhy.com/blog/user/601670">藤桥中学</a></td>
+										<td><a href="http://www.cerhy.com/blog/user/608678">崖城高中</a></td>
+									</tr>
+									<tr>
+										<td><a href="http://www.cerhy.com/blog/user/608607">南海学校</a></td>
+										<td><a href="http://www.cerhy.com/blog/user/616376">红沙中学</a></td>
+										<td><a href="http://www.cerhy.com/blog/user/609908">林旺中学</a></td>
+									</tr>
+									<tr>
+										<td><a href="http://www.cerhy.com/blog/user/611259">逸夫中学</a></td>
+										<td><a href="http://www.cerhy.com/blog/user/608568">荔枝沟中学</a></td>
+										<td><a href="http://www.cerhy.com/blog/user/609461">凤凰中学</a></td>
+									</tr>
+									<tr>
+										<td><a href="http://www.cerhy.com/blog/user/608672">妙联学校</a></td>
+										<td><a href="http://www.cerhy.com/blog/user/608768">高峰中学</a></td>
+										<td><a href="http://www.cerhy.com/blog/user/601251">天涯中学</a></td>
+									</tr>
+									<tr>
+										<td><a href="http://www.cerhy.com/blog/user/607865">过岭中学</a></td>
+										<td><a href="http://www.cerhy.com/blog/user/605959">育才中学</a></td>
+										<td><a href="http://www.cerhy.com/blog/user/608914">崖城中学</a></td>
+									</tr>
+									<tr>
+										<td><a href="http://www.cerhy.com/blog/user/601253">保港中学</a></td>
+										<td><a href="http://www.cerhy.com/blog/user/614077">梅山中学</a></td>
+										<td><a href="http://www.cerhy.com/blog/user/608593">南岛学校</a></td>
+									</tr>
+									<tr>
+										<td><a href="http://www.cerhy.com/blog/user/608578">南滨中学</a></td>
+										<td><a href="http://www.cerhy.com/blog/user/609386">南新中学</a></td>
+										<td><a href="http://www.cerhy.com/blog/user/612915">南田中学</a></td>
+									</tr>
+									<tr>
+										<td><a href="http://www.cerhy.com/blog/user/612623">立才中学</a></td>
+										<td><a href="http://www.cerhy.com/blog/user/607250">河东区中心学校</a></td>
+										<td><a href="http://www.cerhy.com/blog/user/606141">河西区中心学校</a></td>
+									</tr>
+									<tr>
+										<td><a href="http://www.cerhy.com/blog/user/601622">海棠湾镇中心学校</a></td>
+										<td><a href="http://www.cerhy.com/blog/user/606847">吉阳镇中心学校</a></td>
+										<td><a href="http://www.cerhy.com/blog/user/608684">凤凰镇中心学校</a></td>
+									</tr>
+									<tr>
+										<td><a href="http://www.cerhy.com/blog/user/612231">天涯镇中心学校</a></td>
+										<td><a href="http://www.cerhy.com/blog/user/608101">崖城镇中心学校</a></td>
+										<td><a href="http://www.cerhy.com/blog/user/605629">育才镇中心学校</a></td>
+									</tr>
+									<tr>
+										<td><a href="http://www.cerhy.com/blog/user/606536">第一小学</a></td>
+										<td><a href="http://www.cerhy.com/blog/user/607161">第五小学</a></td>
+										<td><a href="http://www.cerhy.com/blog/user/607336">第七小学</a></td>
+									</tr>
+									<tr>
+										<td><a href="http://www.cerhy.com/blog/user/600501">第九小学</a></td>
+										<td><a href="http://www.cerhy.com/blog/user/617723">第九小学月川分校</a></td>
+										<td><a href="http://www.cerhy.com/blog/user/607770">实验小学</a></td>
+									</tr>
+									<tr>
+										<td><a href="http://www.cerhy.com/blog/user/51128">安由小学</a></td>
+										<td><a href="http://www.cerhy.com/blog/user/609059">八一中学</a></td>
+										<td><a href="http://www.cerhy.com/blog/user/608680">八一小学</a></td>
+									</tr>
+									<tr>
+										<td><a href="http://www.cerhy.com/blog/user/608577">海南侨中三亚学校</a></td>
+										<td><a href="http://www.cerhy.com/blog/user/617998">南亚学校</a></td>
+										<td><a href="http://www.cerhy.com/blog/user/609127">南方公学</a></td>
+									</tr>
+									<tr>
+										<td><a href="http://www.cerhy.com/blog/user/650320">立达学园</a></td>
+										<td><a href="http://www.cerhy.com/blog/user/608670">和平学校</a></td>
+										<td><a href="http://www.cerhy.com/blog/user/620028">和美学校</a></td>
+									</tr>
+									<tr>
+										<td><a href="http://www.cerhy.com/blog/user/609761">江南学校</a></td>
+										<td><a href="http://www.cerhy.com/blog/user/615659">青林学校</a></td>
+										<td><a href="http://www.cerhy.com/blog/user/617809">童星学校</a></td>
+									</tr>
+									<tr>
+										<td><a href="http://www.cerhy.com/blog/user/608873">双品学校</a></td>
+										<td><a href="http://www.cerhy.com/blog/user/608576">中兴学校</a></td>
+										<td><a href="http://www.cerhy.com/blog/user/608600">兴安学校</a></td>
+									</tr>
+									<tr>
+										<td><a href="http://www.cerhy.com/blog/user/628982">求真学校</a></td>
+										<td><a href="http://www.cerhy.com/blog/user/628933">英才学校</a></td>
+										<td><a href="http://www.cerhy.com/blog/user/619084">鲁迅中学</a></td>
+									</tr>
+									<tr>
+										<td><a href="http://www.cerhy.com/blog/user/620304">丰和学校</a></td>
+										<td><a href="http://www.cerhy.com/blog/user/621221">三龙学校</a></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+						<div class="page" style="display: none">
+							<table style="width: 100%">
+								<colgroup>
+									<col style="width: 22%">
+									<col style="width: 22%">
+									<col style="width: 22%">
+									<col style="width: 22%">
+								</colgroup>
+								<tbody>
+									<tr>
+										<td><a href="http://www.cerhy.com/blog/user/9027">中学语文</a></td>
+										<td><a href="http://www.cerhy.com/blog/user/9001">小学数学</a></td>
+										<td><a href="http://www.cerhy.com/blog/user/9007">初中数学</a></td>
+									</tr>
+									<tr>
+										<td><a href="http://www.cerhy.com/blog/user/9015">高中数学</a></td>
+										<td><a href="http://www.cerhy.com/blog/user/9016">初中英语</a></td>
+										<td><a href="http://www.cerhy.com/blog/user/9025">英语ABC</a></td>
+									</tr>
+									<tr>
+										<td><a href="http://www.cerhy.com/blog/user/9006">中学物理</a></td>
+										<td><a href="http://www.cerhy.com/blog/user/9089">中学化学</a></td>
+										<td><a href="http://www.cerhy.com/blog/user/9017">中学生物</a></td>
+									</tr>
+									<tr>
+										<td><a href="http://www.cerhy.com/blog/user/9009">中学历史</a></td>
+										<td><a href="http://www.cerhy.com/blog/user/9013">中学地理</a></td>
+										<td><a href="http://www.cerhy.com/blog/user/9091">信息技术</a></td>
+									</tr>
+									<tr>
+										<td><a href="http://www.cerhy.com/blog/user/9090">通用技术</a></td>
+										<td><a href="http://www.cerhy.com/blog/user/9033">初中思品</a></td>
+										<td><a href="http://www.cerhy.com/blog/user/9099">高中政治</a></td>
+									</tr>
+									<tr>
+										<td><a href="http://www.cerhy.com/blog/user/9035">心理健康</a></td>
+										<td><a href="http://www.cerhy.com/blog/user/9005">中小学体育</a></td>
+										<td><a href="http://www.cerhy.com/blog/user/9019">中小学音乐</a></td>
+									</tr>
+									<tr>
+										<td><a href="http://www.cerhy.com/blog/user/9011">中小学美术</a></td>
+										<td><a href="http://www.cerhy.com/blog/user/9021">小学科学</a></td>
+										<td><a href="http://www.cerhy.com/blog/user/9029">学前教育</a></td>
+									</tr>
+									<tr>
+										<td><a href="http://www.cerhy.com/blog/user/9031">综合实践</a></td>
+										<td><a href="http://www.cerhy.com/blog/user/9036">教育科研</a></td>
+										<td><a href="http://www.cerhy.com/blog/user/9037">教育学会</a></td>
+									</tr>
+									<tr>
+										<td><a href="http://www.cerhy.com/blog/user/9038">省课改办</a></td>
+										<td><a href="http://www.cerhy.com/blog/user/9039">小学教师教育</a></td>
+										<td><a href="http://www.cerhy.com/blog/user/9050">有效教学</a></td>
+
+
+									</tr>
+								</tbody>
+							</table>
+						</div>
+						<div class="page" style="display: none">
+							<table style="width: 100%">
+								<colgroup>
+									<col style="width: 22%">
+									<col style="width: 22%">
+									<col style="width: 22%">
+									<col style="width: 22%">
+								</colgroup>
+								<tbody>
+									<tr>
+										<td><a href="http://www.cerhy.com/blog/user/9205">琼海中教</a></td>
+										<td><a href="http://www.cerhy.com/blog/user/9200">文昌小教</a></td>
+										<td><a href="http://www.cerhy.com/blog/user/9212">澄迈教研</a></td>
+									</tr>
+									<tr>
+										<td><a href="http://www.cerhy.com/blog/user/9269">琼海小教</a></td>
+										<td><a href="http://www.cerhy.com/blog/user/9252">乐东教研</a></td>
+										<td><a href="http://www.cerhy.com/blog/user/9210">三亚教研</a></td>
+									</tr>
+									<tr>
+										<td><a href="http://www.cerhy.com/blog/user/9204">定安小教</a></td>
+										<td><a href="http://www.cerhy.com/blog/user/9256">白沙教研</a></td>
+										<td><a href="http://www.cerhy.com/blog/user/9201">文昌中教</a></td>
+									</tr>
+									<tr>
+										<td><a href="http://www.cerhy.com/blog/user/9208">儋州教研</a></td>
+										<td><a href="http://www.cerhy.com/blog/user/9267">洋浦教研</a></td>
+										<td><a href="http://www.cerhy.com/blog/user/9255">陵水教研</a></td>
+									</tr>
+									<tr>
+										<td><a href="http://www.cerhy.com/blog/user/9260">五指山教研</a></td>
+										<td><a href="http://www.cerhy.com/blog/user/9206">万宁中教</a></td>
+										<td><a href="http://www.cerhy.com/blog/user/9258">屯昌小教</a></td>
+									</tr>
+									<tr>
+										<td><a href="http://www.cerhy.com/blog/user/9207">万宁小教</a></td>
+										<td><a href="http://www.cerhy.com/blog/user/9203">定安中教</a></td>
+										<td><a href="http://www.cerhy.com/blog/user/9257">东方教研</a></td>
+									</tr>
+									<tr>
+										<td><a href="http://www.cerhy.com/blog/user/9259">昌江教研</a></td>
+										<td><a href="http://www.cerhy.com/blog/user/9266">琼中教研</a></td>
+										<td><a href="http://www.cerhy.com/blog/user/9254">保亭小教</a></td>
+									</tr>
+									<tr>
+										<td><a href="http://www.cerhy.com/blog/user/9253">保亭中教</a></td>
+										<td><a href="http://www.cerhy.com/blog/user/9251">临高教研</a></td>
+										<td><a href="http://www.cerhy.com/blog/user/9263">海南中学</a></td>
+									</tr>
+									<tr>
+										<td><a href="http://www.cerhy.com/blog/user/9264">国兴中学</a></td>
+										<td><a href="http://www.cerhy.com/blog/user/9268">屯昌中教</a></td>
+										<td><a href="http://www.cerhy.com/blog/user/9262">海南实验中学</a></td>
+									</tr>
+									<tr>
+										<td><a href="http://www.cerhy.com/blog/user/9209">琼院附中</a></td>
+										<td><a href="http://www.cerhy.com/blog/user/9250">农垦教研</a></td>
+										<td><a href="http://www.cerhy.com/blog/user/9261">海师附中</a></td>
+									</tr>
+									<tr>
+										<td><a href="http://www.cerhy.com/blog/user/9265">海南特殊学校</a></td>
+
+
+
+									</tr>
+								</tbody>
+							</table>
+						</div>
+						<script>
+							utils.initTab('blog-tab', 'blog-page');
+						</script>
+
+
+					</div>
+				</div>
+			</div>
+
+			<div id="sidebar">
+				<div class="widget">
+					<div id="bulletin" class="box block">
+						<div style="text-align: center">
+							<a href="http://sanya.hnjs.org/" title="点击进入..." target="_blank"><img
+								src="/${res}/sanya_files/40375.png"></a>
+						</div>
+
+						<!--h3>公告区</h3-->
+					</div>
+				</div>
+				<div class="widget">
+					<h3>
+						<a href="http://www.cerhy.com/blog/user/9210">» 更多</a>文件通知
+					</h3>
+					<div id="notice" class="box">
+						<ul>
+							<li><a href="http://res.hersp.com/content/5808786">三亚市教育局关于聘任2016-2019年度兼职教研员学科中心教研组成员的公示</a>
+								<span class="dt">(06-07)</span></li>
+							<li><a href="http://res.hersp.com/content/5806676">关于2015—2016学年度第二学期期末学业水平测试的通知</a>
+								<span class="dt">(06-07)</span></li>
+							<li><a href="http://res.hersp.com/content/5735417">关于召开2016年全市初中政治科中考复习备考工作交流会的通知
+							</a> <span class="dt">(05-26)</span></li>
+							<li><a href="http://res.hersp.com/content/5729716">三亚市教育局关于做好2016年全市小学六年级学业水平监测工作的通知</a>
+								<span class="dt">(05-25)</span></li>
+							<li><a href="http://res.hersp.com/content/5719481">【发文】关于开展小学数学学科工作室2016年课堂教学展示活动的通知</a>
+								<span class="dt">(05-23)</span></li>
+							<li><a href="http://res.hersp.com/content/5707564">三亚市教育局教研室关于举行中小学英语、初中物理学科中心组送教下乡活动的通知</a>
+								<span class="dt">(05-19)</span></li>
+							<li><a href="http://res.hersp.com/content/5683722">关于转发《海南省教育厅关于2016年初中学业水平考试命题技术培训班的通知》的通知</a>
+								<span class="dt">(05-11)</span></li>
+							<li><a href="http://res.hersp.com/content/5667979">三亚市教育局教研室关于举行初中语文、化学学科中心组送教下乡活动的通知</a>
+								<span class="dt">(05-03)</span></li>
+							<li><a href="http://res.hersp.com/content/5667816">【发文】关于举行三亚市初中英语中考备考会的通知</a>
+								<span class="dt">(05-03)</span></li>
+							<li><a href="http://res.hersp.com/content/5661435">三亚市教育局关于征求2016年三亚市中小学教育教学质量评价及奖励实施方案意见的通知</a>
+								<span class="dt">(04-28)</span></li>
+						</ul>
+					</div>
+				</div>
+				<div id="link1" class="widget block"></div>
+				<div id="link2" class="widget block">
+					<h3>本部链接</h3>
+					<div class="box"
+						style="padding: 2px 0 0 0; line-height: 100%; text-align: center;">
+						<a href="http://www.sanya.gov.cn/" target="_blank"><img
+							title="三亚市政府网" src="/${res}/sanya_files/24788.png" alt=""></a><br>
+						<a href="http://202.100.209.58/" target="_blank"><img
+							title="育软政务平台" src="/${res}/sanya_files/23991.png" alt=""></a><br>
+						<a href="http://www.syec.net.cn/" target="_blank"><img
+							title="三亚考试中心" src="/${res}/sanya_files/33851.png" alt=""></a><br>
+						<a href="http://www.sanyateacher.com/Article/index.asp"
+							target="_blank"><img title="三亚进修学校"
+							src="/${res}/sanya_files/42569.png" alt=""></a><br>
+					</div>
+					<h3>外部链接</h3>
+					<div style="text-align: center">
+
+						<a href="http://djg.hainan.edu.cn/" target="_blank"><img
+							src="/${res}/sanya_files/39718.jpg"></a><br> <a
+							href="http:http://www.cerhy.com/blog/user/ target="_blank"><img
+							src="/${res}/sanya_files/44390.jpg"></a><br> <a
+							href="http://www.hinedu.cn/" target="_blank"><img
+							src="/${res}/sanya_files/53734.jpg"></a><br> <a
+							href="http://yxsz.qzu.edu.cn/cjxy/Index.html" target="_blank"><img
+							src="/${res}/sanya_files/05062.jpg"></a><br> <a
+							href="http://dept.qttc.edu.cn/jixu/" target="_blank"><img
+							src="/${res}/sanya_files/12093.jpg"></a><br> <a
+							href="http://www.teacherclub.com.cn/tresearch/channel/china/index.html"
+							target="_blank"><img src="/${res}/sanya_files/16640.jpg"></a><br>
+						<a href="http://www.teacher.com.cn/" target="_blank"><img
+							src="/${res}/sanya_files/19765.jpg"></a>
+
+					</div>
+				</div>
+			</div>
+
+			<div class="clr"></div>
+		</div>
+	</div>
+
+	<div id="footer">
+		<div>三亚市教育局教研室 © HERSP. 琼ICP备17000512号</div>
+	</div>
+
+</body>
+</html>
