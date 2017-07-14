@@ -339,9 +339,12 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 			f.append(" and bean.user.group.id=:group");
 			f.setParam("group", userGroupId);
 		}*/
+		String sendWhere= "";
 		if (!StringUtils.isBlank(title)) {
 			f.append(" and bean.contentExt.title like :title");
 			f.setParam("title", "%" + title + "%");
+			
+		    sendWhere = " and title like '%"+title+"%'";//发送中间表模糊查询
 		}
 		if (typeId != null) {
 			f.append(" and bean.type.id=:typeId");
@@ -358,12 +361,13 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 			f.append(" and bean.columnId=:columnId");
 			f.setParam("columnId", columnId);
 			String sql ="";
-			if(recieveUserId==null){
-				 sql = "select contentId from ContentSend where recieveUserId="+inputUserId+" and columnId="+columnId+"";
-			}else if(inputUserId==0){
-				 sql = "select contentId from ContentSend where  columnId="+columnId+"";
+			
+			if((inputUserId==0 && recieveUserId!=null)||(inputUserId==0 && recieveUserId==null)){//0代表群组
+				sql = "select contentId from ContentSend where  columnId="+columnId+"" +sendWhere;
+			}else if(recieveUserId==null){//等于null说明没有登录访问的
+				 sql = "select contentId from ContentSend where recieveUserId="+inputUserId+" and columnId="+columnId+"" +sendWhere;
 			}else{
-				 sql = "select contentId from ContentSend where recieveUserId="+recieveUserId+" and columnId="+columnId+"";
+				 sql = "select contentId from ContentSend where recieveUserId="+recieveUserId+" and columnId="+columnId+"" +sendWhere;
 			}
 			
 			List contentIdList =find(sql);
@@ -372,6 +376,19 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 				f.append(" or bean.id in (:contentIds)");
 				f.setParamList("contentIds", contentIdList);
 			}
+		}else{
+			String sql ="";
+			if(recieveUserId==null){
+				sql = "select contentId from ContentSend where recieveUserId="+inputUserId+"" +sendWhere;
+			}else{
+				sql = "select contentId from ContentSend where recieveUserId="+recieveUserId+"" +sendWhere;
+			}
+			 
+			 List contentIdList =find(sql);
+				if(contentIdList!=null && contentIdList.size()>0){
+					f.append(" or bean.id in (:contentIds)");
+					f.setParamList("contentIds", contentIdList);
+				}
 		}
 		if (draft == status) {
 			f.append(" and bean.status=:status");
@@ -1485,7 +1502,7 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 	 * @return int
 	 */
 	public Integer removeContentSend(int contentId,int userId){
-		String hql = "delete   from ContentSend  where contentId="+contentId+" and recieve_user_id="+userId+" and type=2";
+		String hql = "delete   from ContentSend  where contentId="+contentId+" and recieveUserId="+userId+" and type=2";
 		return (Integer) deleteObject(hql);
 	}
 	
@@ -1496,7 +1513,7 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 	 * @return int
 	 */
 	public Integer getContentSendType(Integer contentId, Integer userId){
-		String hql = "select type   from ContentSend  where contentId="+contentId+" and recieve_user_id="+userId+"";
+		String hql = "select type   from ContentSend  where contentId="+contentId+" and recieveUserId="+userId+"";
 		return (Integer) findUnique(hql);
 	}
 	
@@ -1507,9 +1524,18 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 	 * @return int
 	 */
 	public Integer getContentSend(int contentId,int userId){
-		String hql = "select   id from ContentSend  where contentId="+contentId+" and recieve_user_id="+userId+" ";
+		String hql = "select   id from ContentSend  where contentId="+contentId+" and recieveUserId="+userId+" ";
 		return (Integer) findUnique(hql);
 	}
 	
-
+	/**
+	 * 修改发送表的标题
+	 * @param contentId
+	 * @param userId
+	 * @return Integer
+	 */
+	public Integer updateContentSend(String title,int contentId){
+		String hql = "update  ContentSend  set title ='"+title+"' where contentId="+contentId+"";
+		return (Integer) updateObject(hql);
+	}
 }

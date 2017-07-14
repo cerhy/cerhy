@@ -190,6 +190,7 @@ outline: none;
        <div class="wrap-right" id="maindiv">
            <div class="personCenter-userInfo blog_right xueke-acticle">
                 <div ><h2>${content.title}</h2></div>
+                <input type="hidden" id="contTitle" name="conTitle" value="${content.title}"/>
                 <input type="text" style="display:none" id="hipw" value="${content.password!''}" />
                 <div class="gray9 h2dt pt5" style="margin-bottom: 2px;">
 				    <span class="pr15">发布时间：${content.releaseDate}</span>
@@ -978,7 +979,7 @@ Drag.prototype = {
  	                type: 'POST',
  	                url : ' ${base}/blog/sendArticle.jspx',
  	                dataType : 'json',
- 	                data : {'contentId' : $("#contentId").val(),'sendee':sendee,'validateCode':validateCode},
+ 	                data : {'contentId' : $("#contentId").val(),'sendee':sendee,'validateCode':validateCode,'contTitle' : $("#contTitle").val()},
  	                success : function(datas){
  	                	 var code =datas.code;
  	                	 if(code=="fail"){
@@ -995,6 +996,9 @@ Drag.prototype = {
  	                			$("#sentDialog").dialog("close");
  	                		 }else if(msg==5){
  	                			alert("请先登录！");
+ 	                			$("#sentDialog").dialog("close");
+ 	                		 }else if(msg==6){
+ 	                			alert("该文章已经存在！");
  	                			$("#sentDialog").dialog("close");
  	                		 }else{
  	                			alert("发送失败！");
