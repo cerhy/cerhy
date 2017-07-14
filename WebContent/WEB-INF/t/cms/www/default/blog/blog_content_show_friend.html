@@ -213,6 +213,7 @@ table th,table td{word-break:break-all;white-space:normal;overflow:hidden;}
 	</div> -->
      [#include "friend_blog_left.html"/]
      [#include "friend_content.html"/]
+      [#if content.password != ""]
       <div class="wrap-right" id="mainpwdiv">
        		<div class="personCenter-userInfo blog_right xueke-acticle">
        		<div style="margin-top: 200px;text-align: center">
@@ -222,9 +223,11 @@ table th,table td{word-break:break-all;white-space:normal;overflow:hidden;}
 		    </div>
 		    </div>
        </div>
+       [/#if]
        <div class="wrap-right" id="maindiv">
            <div class="personCenter-userInfo blog_right xueke-acticle">
                 <div ><h2>${content.title}</h2></div>
+                <input type="hidden" id="contTitle" name="conTitle" value="${content.title}"/>
 				<input type="text" style="display:none" id="hipw" value="${content.password!}" />
 				<div class="gray9 h2dt pt5" style="margin-bottom: 2px;">
 				    <span class="pr15">发布时间：${content.releaseDate}</span>
@@ -997,7 +1000,7 @@ Drag.prototype = {
 	 	                type: 'POST',
 	 	                url : ' ${base}/blog/embodyArticle.jspx',
 	 	                dataType : 'json',
-	 	                data : {'contentId' : $("#contentId").val(),'friendId' : friendId,'columnId' : columnsId},
+	 	                data : {'contentId' : $("#contentId").val(),'friendId' : friendId,'columnId' : columnsId,'contTitle' : $("#contTitle").val()},
 	 	                success : function(datas){
 	 	                	 var code =datas.code;
 	 	                	 if(code=="fail"){
@@ -1006,6 +1009,8 @@ Drag.prototype = {
 	 	                			alert("该文章已经收录！");
 	 	                		 }else if(msg=="2"){
 	 	                			alert("请先登录！")
+	 	                		 }else if(msg=="3"){
+	 	                			alert("该文章不允许收录！")
 	 	                		 }else{
 	 	                			alert("收录失败！");
 	 	                		 }

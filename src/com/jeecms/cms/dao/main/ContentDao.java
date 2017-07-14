@@ -331,5 +331,11 @@ public interface ContentDao {
 	 */
 	public Integer getContentSend(int contentId,int userId);
 	
-	
+	/**
+	 * 修改发送表的标题
+	 * @param contentId
+	 * @param userId
+	 * @return Integer
+	 */
+	public Integer updateContentSend(String title,int contentId);
 }

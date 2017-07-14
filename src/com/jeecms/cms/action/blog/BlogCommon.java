@@ -454,7 +454,7 @@ public class BlogCommon {
 		return model;
 	}
 	/**
-	 * 查询是否已经添加好友
+	 *查询文章是否是发送的还是收录的
 	 **/
 	public ModelMap getContentSendType(ModelMap model,Integer contentId, CmsUser user) {
 		if(user!=null){
