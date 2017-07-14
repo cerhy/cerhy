@@ -104,3 +104,38 @@ ul.tab li.cur a	{ color: #fff; }
 
 #footer		{ height: 50px; background: #2f2f2f; line-height: 50px; }
 #footer div	{ margin: 0 auto; width: 960px; color: #fff; text-align: center; }
+
+
+.header-w .search-bar{
+    float: right;
+    position: relative;
+    width: 232px;
+    height: 24px;
+    margin-left: 15px;
+    margin-top: 4px;
+}
+.header-w .search-bar input{
+    width: 220px;
+    padding: 2px 5px;
+    height:22px;
+    border:1px solid #0b91df;
+    background: #f6fbff;
+    color: #999;
+}
+.header-w .search-bar input:focus{
+    border:1px solid #0b91df;
+    background: #fff;
+}
+.search-btn1{
+    position: absolute;
+    right:194px;
+    top:55px;
+    width: 20px;
+    height:20px;
+    background: url(search.png) no-repeat;
+    cursor: pointer;
+}
+.searchCon{
+	float: right;
+	margin-top: 8px;
+}

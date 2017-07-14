@@ -2,9 +2,14 @@
 <div id="header" class="inner">
 	<div id="brand">
 		<div id="navi"><a href="http://www.cerhy.com/">好研</a><a href="http://tea.hersp.com/">教师发展</a><a href="http://stu.hersp.com/">学生成长</a><a href="http://m%2C.hnjs.org/">社区</a>|<a href="http://localhost:8080/cerhy/blog/index.jspx">注册/登录</a></div>
-		<form id="search" action="${base}/search.jspx" target="_blank"><div>
-		<input class="searchbox" type="text" name="q" placeholder="搜索博客账号">
-		<input class="searchweb" type="submit"  value=""></div></form>
+			<div class="header-right">
+			<div class="search-bar">
+                    <form action="${base}/search.jspx" target="_blank" id="searchForm">
+        				<input type="text" name="q" value="${oldq!}" maxlength="50" autocomplete="off" class="searchCon" placeholder="搜索博客账号">
+        				<input type="submit" value="" id="search-btn1" class="search-btn1" style="border: 0px;">
+       			    </form>
+             </div>
+             </div>
 	</div>
 	<div id="logo"><span>屯昌</span>教研培训网<br>县教育研究培训中心</div>
 </div>
