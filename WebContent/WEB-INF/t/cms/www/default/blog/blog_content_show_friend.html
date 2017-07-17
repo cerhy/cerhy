@@ -213,8 +213,9 @@ table th,table td{word-break:break-all;white-space:normal;overflow:hidden;}
 	</div> -->
      [#include "friend_blog_left.html"/]
      [#include "friend_content.html"/]
-      [#if content.password != ""]
-      <div class="wrap-right" id="mainpwdiv">
+      [#if content.password??]
+        [#if content.password !=""]
+          <div class="wrap-right" id="mainpwdiv">
        		<div class="personCenter-userInfo blog_right xueke-acticle">
        		<div style="margin-top: 200px;text-align: center">
 		    	<input  type="password" placeholder="请输入阅读密码" id="mima" class="plcode"></input>
@@ -222,8 +223,9 @@ table th,table td{word-break:break-all;white-space:normal;overflow:hidden;}
 <!-- 		    	<span style="color:#f00; margin-left:10px;">密码类型为数字</span> -->
 		    </div>
 		    </div>
-       </div>
+          </div>
        [/#if]
+      [/#if] 
        <div class="wrap-right" id="maindiv">
            <div class="personCenter-userInfo blog_right xueke-acticle">
                 <div ><h2>${content.title}</h2></div>

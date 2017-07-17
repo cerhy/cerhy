@@ -1189,7 +1189,7 @@ public class BlogAct {
  		model = blogCommon.getTotalCommentNum(model, u);
  		model = blogCommon.getStarBlogger(request, model);
  		model = blogCommon.getAlreadyJoinGroup(request, model,u);
- 		model = blogCommon.getFriends(u.getId(),model,1);
+ 		//model = blogCommon.getFriends(u.getId(),model,1);
 		FrontUtils.frontData(request, model, site);
 		return FrontUtils.getTplPath(request, site.getSolutionPath(),TPLDIR_BLOG,"tpl.dataShow");
 	}
