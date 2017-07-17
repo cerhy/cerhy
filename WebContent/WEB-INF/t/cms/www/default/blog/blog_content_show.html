@@ -176,7 +176,8 @@ outline: none;
 			</h2>
 	</div> -->
      [#include "blog_left.html"/]
-     [#if content.password != ""]
+     [#if content.password??]
+     	[#if content.password !=""]
        <div class="wrap-right" id="mainpwdiv">
        		<div class="personCenter-userInfo blog_right xueke-acticle">
        		<div style="margin-top: 200px;text-align: center">
@@ -187,6 +188,7 @@ outline: none;
 		    </div>
        </div>
        [/#if]
+     [/#if]
        <div class="wrap-right" id="maindiv">
            <div class="personCenter-userInfo blog_right xueke-acticle">
                 <div ><h2>${content.title}</h2></div>
