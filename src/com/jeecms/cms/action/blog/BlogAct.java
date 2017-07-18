@@ -522,6 +522,36 @@ public class BlogAct {
 		FrontUtils.frontData(request, model, site);
 		if(null != columnId){
 			channelId = 280;
+			Content bean=contentMng.findById(id);
+			List<Content> list=new ArrayList<Content>();
+			Integer parentId=null;
+			String parentIds=null;
+			Channel idDel = channelMng.findById(bean.getChannel().getId());//获取该栏目实体
+			//根据ids.getParentId()判断该栏目是否为只有一级栏目
+			if(null!=idDel.getParentId()){
+				parentId=idDel.getParentId();//走到这说明该传进来的栏目ID 存在上一级栏目-二级栏目
+				//获取上一级栏目id
+				Channel idss = channelMng.findById(parentId);
+				//再根据上一级栏目ID--parentId 来判读是否存在上上一级栏目--一级栏目(已知只有三级栏目,无序继续往上上上一级判断(4级栏目))
+				if(null!=idss.getParentId()){
+					//获取上上一级栏目id(一级栏目)
+					parentIds=String.valueOf(idss.getParentId().toString());
+				}
+			}
+			//判断parentId是否为null.如果为null则说明传进来的栏目ID 只有一级栏目 切为本身.如果不为null则说明传进来的栏目ID存在上一级栏目
+			if(null!=parentId){
+				//判断parentIds是否为null.如果为null则说明传进来的栏目ID 只有两级栏目.如果不为null则说明传进来的栏目ID存在上三级栏目
+				if(null!=parentIds){
+					//只有三级栏目就把该栏目的上一级栏目ID 作为key 也就是parentId
+					RedisUtil.lrem(parentId.toString(), 0, bean.getId().toString(),list);
+				}else{
+					//只有二级栏目就把该栏目的上一级栏目ID 作为key也就是传进来的栏目id
+					RedisUtil.lrem(bean.getChannel().getId().toString(), 0, bean.getId().toString(),list);
+				}
+			}else{
+				//只有1级栏目就把该栏目的ID 作为key
+				RedisUtil.lrem(bean.getChannel().getId().toString(), 0, bean.getId().toString(),list);
+			}
 		}
 		
 //		String columnId = request.getParameter("columnId");
