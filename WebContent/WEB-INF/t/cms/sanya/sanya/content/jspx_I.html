@@ -3,13 +3,13 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>三亚教研网</title>
+<meta content="${content.tagStr!}" http-equiv="keywords" />
+<meta content="${content.description!}" http-equiv="description" />
 <link rel="stylesheet" href="/${res}/sanya_files/content.css">
 <script src="/${res}/sanya_files/mootools.js"></script>
 <script src="/${res}/sanya_files/mootools.pack.js"></script>
 <script src="/${res}/sanya_files/bee.core.js"></script>
 <script src="/${res}/sanya_files/bee.sy.js"></script>
-<meta content="${content.tagStr!}" http-equiv="keywords" />
-<meta content="${content.description!}" http-equiv="description" />
 <script src="${resSys}/jquery.js" type="text/javascript"></script>
 <script src="${resSys}/jqueryUI/jquery-ui.js" type="text/javascript"></script>
 <script src="${resSys}/front.js" type="text/javascript"></script>
@@ -19,11 +19,6 @@
 <link type="text/css" rel="stylesheet" href="/${res}/css/custom.css" />
 <link href="${resSys}/jqueryUI/jquery.ui.css" rel="stylesheet" type="text/css" />
 <style>
- .bz a:hover{color: #DEB887;}
- .bz{color: #999;}
- body {
-	background: #E0EDF4;
-}
 </style>
 <script type="text/javascript">
 	$(function() {
@@ -68,10 +63,19 @@ table th,table td{word-break:break-all;white-space:normal;overflow:hidden;}
 </style>
 </head>
 <body style="background: #E0EDF4;">
-	
 	[#include "../syinclude/head.html"/]
-	<div id="layout">
+	<div id="layout" style="min-height: 570px;">
 		[#include "../syinclude/header.html"/]
+		<div class="local">
+	    <div class="wrap">
+	        <span class="local-icon icon-font"></span>
+	        <a class="position" href="javascript:;">${channel.parent.title}</a>
+	        <em> &gt; </em>
+	        <a class="position" href="${channel.url}">${channel.name}</a>
+	        <em> &gt; </em>
+	        <span class="cur-page">[@text_cut s=content.title len=10 append='...'/]</span>
+	    </div>
+		</div>
 	<div class="container_article">
 		<div class="wrap">
 			<div class="bd-padding">

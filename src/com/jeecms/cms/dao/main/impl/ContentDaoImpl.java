@@ -180,7 +180,7 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 		}/*else{
 			f.append(" and bean.model.id in (11,21,24)");
 		}*/
-		appendQuery_blog(f, title, typeId, userId,status, topLevel, recommend,columnId,recieveUserId);
+		appendQuery_blog(f, title, typeId, userId,status, topLevel, recommend,columnId,recieveUserId,channelId);
 		appendOrder(f, orderBy);
 		return find(f, pageNo, pageSize);
 	}
@@ -328,7 +328,7 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 
 	private void appendQuery_blog(Finder f, String title, Integer typeId,
 			Integer inputUserId, ContentStatus status, boolean topLevel,
-			boolean recommend ,Integer columnId,Integer recieveUserId) {
+			boolean recommend ,Integer columnId,Integer recieveUserId,Integer channelId) {
 		if (inputUserId != null&&inputUserId!=0) {
 			f.append(" and bean.user.id=:inputUserId");
 			f.setParam("inputUserId", inputUserId);
@@ -377,18 +377,22 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 				f.setParamList("contentIds", contentIdList);
 			}
 		}else{
-			String sql ="";
-			if(recieveUserId==null){
-				sql = "select contentId from ContentSend where recieveUserId="+inputUserId+"" +sendWhere;
-			}else{
-				sql = "select contentId from ContentSend where recieveUserId="+recieveUserId+"" +sendWhere;
-			}
-			 
-			 List contentIdList =find(sql);
-				if(contentIdList!=null && contentIdList.size()>0){
-					f.append(" or bean.id in (:contentIds)");
-					f.setParamList("contentIds", contentIdList);
+			if(channelId==null){
+				String sql ="";
+				
+				if(recieveUserId==null){
+					sql = "select contentId from ContentSend where recieveUserId="+inputUserId+"" +sendWhere;
+				}else{
+					sql = "select contentId from ContentSend where recieveUserId="+recieveUserId+"" +sendWhere;
 				}
+				 
+				 List contentIdList =find(sql);
+					if(contentIdList!=null && contentIdList.size()>0){
+						f.append(" or bean.id in (:contentIds)");
+						f.setParamList("contentIds", contentIdList);
+					}
+			}
+			
 		}
 		if (draft == status) {
 			f.append(" and bean.status=:status");
@@ -808,6 +812,8 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 			f.append(" where node.lft between parent.lft and parent.rgt");
 			f.append(" and bean.site.id=parent.site.id");
 			f.append(" and parent.id=:channelId");
+			f.append(" and bean.status<>:status");
+			f.setParam("status", ContentCheck.RECYCLE);
 			f.setParam("channelId", channelIds[0]);
 		} else if (option == 2) {
 			// 包含副栏目
@@ -1322,7 +1328,7 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 			f.append(" and bean.model.id in (11,21,24)");
 		}*/
 		inputUserId=ids;
-		appendQuery_blog(f, title, typeId, inputUserId, status, topLevel, recommend,null,recieveUserId);
+		appendQuery_blog(f, title, typeId, inputUserId, status, topLevel, recommend,null,recieveUserId,channelId);
 		appendOrder(f, orderBy);
 		return find(f, pageNo, pageSize);
 	}
