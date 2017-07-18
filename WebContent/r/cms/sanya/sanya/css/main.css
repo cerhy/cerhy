@@ -112,7 +112,6 @@ a:hover{
     color: #ed4800;
 }
 .wrap{
-    width: 1000px;
     margin:0 auto;
 }
 .bodybg{
@@ -147,34 +146,6 @@ a:hover{
     height:12px;
     line-height: 12px;
     background: #ccc;
-}
-.header-right .search-bar{
-    float: right;
-    position: relative;
-    width: 232px;
-    height: 24px;
-    margin-left: 15px;
-    margin-top: 4px;
-}
-.header-right .search-bar input{
-    width: 220px;
-    padding: 2px 5px;
-    height:22px;
-    border:1px solid #0b91df;
-    background: #f6fbff;
-    color: #999;
-}
-.header-right .search-bar input:focus{
-    border:1px solid #0b91df;
-    background: #fff;
-}
-.header-right .search-bar .search-btn{
-    position: absolute;
-    right:1px;
-    top:1px;
-    width: 23px;
-    height:22px;
-    background: url(images/search.png) no-repeat;
 }
 .banner img{vertical-align: top;}
 .nav{
