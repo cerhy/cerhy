@@ -808,6 +808,8 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 			f.append(" where node.lft between parent.lft and parent.rgt");
 			f.append(" and bean.site.id=parent.site.id");
 			f.append(" and parent.id=:channelId");
+			f.append(" and bean.status<>:status");
+			f.setParam("status", ContentCheck.RECYCLE);
 			f.setParam("channelId", channelIds[0]);
 		} else if (option == 2) {
 			// 包含副栏目
