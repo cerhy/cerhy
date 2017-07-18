@@ -133,18 +133,23 @@
 
 				<div id="subject1" class="widget block">
 					<h3>教研简报</h3>
-					<div class="box"
-						style="padding: 8px 0 0 0; font-size: 15pt; font-weight: bold;">三亚市2016年中学物理课堂教学大赛活动简报
-					</div>
-					<div style="padding: 10px;">
-						<img style="width: 150px; float: left;"
-							src="/${res}/sanya_files/43797.jpg" alt="">
-						<div style="width: 450px; float: right;">
-							季春阳光，其意融适；精品四中，儒雅铸人。三亚市2016年中学物理课堂教学大赛在这个书香绕人的校园中进行，本次活动主题为探索物理课堂教学有效性，丰富青年教师教学经验。活动分高、初中两组，各区、市直属各学校都以选优推荐，共15位青年教师参加。
-							<a href="http://res.hersp.com/content/5623410">[详细]</a><br>
-						</div>
-						<div class="clr"></div>
-					</div>
+					[@cms_content_list  channelId='461' count='8' titLen='14' orderBy='2' channelOption='1']
+					[#list tag_list as a]
+							<div class="box"
+								style="padding: 8px 0 0 0; font-size: 15pt; font-weight: bold;">${a.title}
+							</div>
+							<div style="padding: 10px;">
+								<img style="width: 150px; float: left;"
+									src="${a.typeImg!}" alt="">
+								<div style="width: 450px; float: right;">
+									${a.description!''}
+									<a href="${a.url}">[详细]</a><br>
+								</div>
+								<div class="clr"></div>
+							</div>
+                     [/#list]
+                     [/@cms_content_list]
+					
 					<ul class="dot" style="float: left; width: 45%">
 						<li><a href="http://res.hersp.com/content/4547662">[图文简报]我市组织骨干教师参加全国综合实践活动第十二届研讨会获多项一等奖</a></li>
 						<li><a href="http://res.hersp.com/content/4502295">【初中物理教研活动简报】三亚市初中物理中心教研组参加五中物理省级课题研究活动</a></li>
