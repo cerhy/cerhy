@@ -173,43 +173,13 @@
 					<div class="clr"></div>
 
 					<h3>教育时政</h3>
+					[@cms_content_list  channelId='463' count='12'  orderBy='2' channelOption='1' ]
+					[#list tag_list as a]
 					<ul class="dot" style="float: left; width: 45%">
-						<li><a
-							href="http://edu.people.com.cn/n/2014/0831/c1006-25572574.html">书皮不环保最好不要包</a></li>
-						<li><a
-							href="http://edu.sina.com.cn/ischool/2014-09-01/1456432410.shtml">美国校园的班干部：为当玩具管理员发表竞演
-						</a></li>
-						<li><a
-							href="http://learning.sohu.com/20140902/n403976436.shtml">湖北小学砍人凶手：女儿报名四求老师被拒</a></li>
-						<li><a
-							href="http://kids.163.com/14/0901/10/A5261CCJ00294MO6.html">小学生豪购高档文具：超四成花费过2000</a></li>
-						<li><a
-							href="http://edu.hainan.gov.cn/showarticle.jsp?id=20074045">我省334名特岗教师今秋上岗</a></li>
-						<li><a
-							href="http://edu.hainan.gov.cn/showarticle.jsp?id=20074000">海南省教育厅下发通知：确保灾区学生如期上学</a></li>
+					<li><a href="${a.url}">${a.title}</a></li>
 					</ul>
-					<ul class="dot" style="float: right; width: 45%">
-						<li><a
-							href="http://edu.people.com.cn/n/2014/0902/c1006-25583770.html">“两个人的学校”开学</a></li>
-						<li><a
-							href="http://edu.sina.com.cn/zxx/2014-09-01/1548432433.shtml">家长吐槽文具要求多：包书皮不能有气泡(图)</a></li>
-						<li><a
-							href="http://learning.sohu.com/20140902/n403976721.shtml">小学生年花费：打工子弟1万国际小学22万</a></li>
-						<li><a href="http://kids.163.com/special/yangwei/">杨威:钢铁侠老爸主张男孩吃苦
-						</a></li>
-						<li><a
-							href="http://edu.hainan.gov.cn/showarticle.jsp?id=20074046">省教育厅和省食药监局联合开展学校食堂安全卫生检查</a></li>
-						<li><a
-							href="http://edu.hainan.gov.cn/showarticle.jsp?id=20074006">今年海南学生
-								上名校的多了</a></li>
-
-
-
-
-
-
-
-					</ul>
+                     [/#list]
+               		[/@cms_content_list]
 					<div class="clr"></div>
 				</div>
 				<div id="subject3" class="widget block"></div>
@@ -540,27 +510,12 @@
 					</h3>
 					<div id="notice" class="box">
 						<ul>
-							<li><a href="http://res.hersp.com/content/5808786">三亚市教育局关于聘任2016-2019年度兼职教研员学科中心教研组成员的公示</a>
-								<span class="dt">(06-07)</span></li>
-							<li><a href="http://res.hersp.com/content/5806676">关于2015—2016学年度第二学期期末学业水平测试的通知</a>
-								<span class="dt">(06-07)</span></li>
-							<li><a href="http://res.hersp.com/content/5735417">关于召开2016年全市初中政治科中考复习备考工作交流会的通知
-							</a> <span class="dt">(05-26)</span></li>
-							<li><a href="http://res.hersp.com/content/5729716">三亚市教育局关于做好2016年全市小学六年级学业水平监测工作的通知</a>
-								<span class="dt">(05-25)</span></li>
-							<li><a href="http://res.hersp.com/content/5719481">【发文】关于开展小学数学学科工作室2016年课堂教学展示活动的通知</a>
-								<span class="dt">(05-23)</span></li>
-							<li><a href="http://res.hersp.com/content/5707564">三亚市教育局教研室关于举行中小学英语、初中物理学科中心组送教下乡活动的通知</a>
-								<span class="dt">(05-19)</span></li>
-							<li><a href="http://res.hersp.com/content/5683722">关于转发《海南省教育厅关于2016年初中学业水平考试命题技术培训班的通知》的通知</a>
-								<span class="dt">(05-11)</span></li>
-							<li><a href="http://res.hersp.com/content/5667979">三亚市教育局教研室关于举行初中语文、化学学科中心组送教下乡活动的通知</a>
-								<span class="dt">(05-03)</span></li>
-							<li><a href="http://res.hersp.com/content/5667816">【发文】关于举行三亚市初中英语中考备考会的通知</a>
-								<span class="dt">(05-03)</span></li>
-							<li><a href="http://res.hersp.com/content/5661435">三亚市教育局关于征求2016年三亚市中小学教育教学质量评价及奖励实施方案意见的通知</a>
-								<span class="dt">(04-28)</span></li>
-						</ul>
+						[@cms_content_list  channelId='465' count='10'  orderBy='2' channelOption='1' ]
+						[#list tag_list as a]
+							<li><a href="${a.url}">${a.title}</a><span class="dt">(${a.releaseDate?string('MM-dd')})</span></li>
+						[/#list]
+						[/@cms_content_list]
+					</ul>
 					</div>
 				</div>
 				<div id="link1" class="widget block"></div>
