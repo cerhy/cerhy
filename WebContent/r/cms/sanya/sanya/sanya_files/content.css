@@ -232,3 +232,24 @@ ul.tab li.cur a	{ color: #fff; }
     font-size: 18px;
     font-weight: 700;
     color: #666; }
+    
+.register-box{width:600px; height:480px; padding:30px 50px 56px 50px; background-color:#fff; margin:70px auto; border-radius:12px; -moz-border-radius:12px; -o-border-radius:12px; -webkit-border-radius:12px; box-shadow:0px 0px 9px #ddd; -webkit-box-shadow:0px 0px 9px #ddd; -moz-box-shadow:0px 0px 9px #ddd;}
+.register-nav{position:relative; border-bottom:1px solid #f0f0f0; padding-bottom:10px;}
+.register-nav span{color:#333; font-size:20px; position:relative; display:inline-block; padding:0 5px;}
+.register-nav span:before{position:absolute; content:""; left:0; bottom:-11px; width:100%; height:2px; background-color:#ef3838; }
+.register-login{position:absolute; right:0; bottom:10px; font-size:14px; color:#333;}
+.register-login a{color:#368cf6;}
+.register-list{padding-left:81px; padding-top:10px;}
+.register-list li{margin-top:28px; line-height:36px; color:#333; font-size:16px;}
+.register-list li span{width:90px; line-height:36px; display:inline-block;}
+.register-list .register-input{line-height:36px; height:36px; width:306px; box-sizing:border-box; -moz-box-sizing:border-box; -o-box-sizing:border-box; -webkit-box-sizing:border-box; border:1px solid #b5b5b5; border-radius:5px; -moz-border-radius:5px; -o-border-radius:5px; -webkit-border-radius:5px; box-shadow:inset 0 -1px rgba(34,25,25,.15),0 -1px rgba(255,255,255,.8); -moz-box-shadow:inset 0 -1px rgba(34,25,25,.15),0 -1px rgba(255,255,255,.8); -webkit-box-shadow:inset 0 -1px rgba(34,25,25,.15),0 -1px rgba(255,255,255,.8); text-indent:10px; font-size:13px;}
+.register-list .register-input:focus{border:1px solid #7dabdf;}
+.register-list .register-code{width:160px;}
+.code-img{width:108px; height:36px; margin-left:20px; display:inline-block;}
+.code-img img{height:100%; width:100%;}
+.register-list .register-checkbox{width:12px; height:12px; vertical-align:middle; margin-right:10px; margin-left:90px;}
+.register-list .register-txt{color:#444; font-size:14px; margin-top:10px;}
+.register-list .register-txt a{color:#368cf6;}
+.register-list .register-btn input{color:#fff; font-size:16px; line-height:36px; height:36px; width:306px; border-radius:5px; -moz-border-radius:5px; -o-border-radius:5px; -webkit-border-radius:5px; background-color: #0B91DF;; margin-left:90px; cursor:pointer;}
+.register-list .register-btn input:hover{background-color:#f94d4d;}
+.register-list li label{font-size:12px; color:#f00; width:100%;}

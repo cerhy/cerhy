@@ -1,19 +1,21 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<title>好研网-用户登录</title>
-<script src="${resSys}/jquery.js" type="text/javascript"></script>
-<script src="${resSys}/front.js" type="text/javascript"></script>
+<!DOCTYPE html>
+<html slick-uniqueid="3">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>三亚教研网</title>
+<link rel="stylesheet" href="/${res}/sanya_files/content.css">
+<link rel="stylesheet" type="text/css" href="/${res}/css/login.css" />
+<script src="/${res}/sanya_files/mootools.js"></script>
+<script src="/${res}/sanya_files/mootools.pack.js"></script>
+<script src="/${res}/sanya_files/bee.core.js"></script>
+<script src="/${res}/sanya_files/bee.sy.js"></script>
 
-<link type="text/css" rel="stylesheet" href="/${res}/css/hyindex.css" />
-
-<script type="text/javascript">
-$(function() {
-	$("#jvForm").validate();
-});
-</script>
-
-[#include "../hyinclude/header.html"/] 
-
+</head>
+<body>
+	
+	[#include "../syinclude/head.html"/]
+	<div id="layout">
+		[#include "../syinclude/header.html"/]
 <div class="register-box login-box" style="">   
    [#if loginSource??]
         <div class="login-source">
@@ -74,20 +76,9 @@ $(function() {
     <input type="submit" class="login-btn" value="登 录">
   </form>
   </div>
-[#include "../include/footer.html"/]
+			</div>
+	
+	[#include "../syinclude/end.html"/]
+
 </body>
 </html>
-<script type="text/javascript">
-function getQueryString(name) {
-    var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
-    var r = window.location.search.substr(1).match(reg);
-    if (r != null) {
-        return unescape(r[2]);
-    }
-    return null;
-}
-
-if(getQueryString("state")==0){
-	$("#jvForm").attr('action',"${base}/login.jspx?state=0");
-}
-</script>
