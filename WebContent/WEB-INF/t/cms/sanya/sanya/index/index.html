@@ -133,95 +133,43 @@
 
 				<div id="subject1" class="widget block">
 					<h3>教研简报</h3>
-					[@cms_content_list  channelId='461' count='8' titLen='14' orderBy='2' channelOption='1']
+					[@cms_content_list  channelId='461' count='9' titLen='14' orderBy='2' channelOption='1']
 					[#list tag_list as a]
+					[#if a_index<1]
 							<div class="box"
 								style="padding: 8px 0 0 0; font-size: 15pt; font-weight: bold;">${a.title}
 							</div>
 							<div style="padding: 10px;">
 								<img style="width: 150px; float: left;"
-									src="${a.typeImg!}" alt="">
+									src="/${res}/sanya_files/43797.jpg" alt="">
 								<div style="width: 450px; float: right;">
 									${a.description!''}
 									<a href="${a.url}">[详细]</a><br>
 								</div>
 								<div class="clr"></div>
 							</div>
+					
+						 [#else]
+						 	<ul class="dot" style="float: left; width: 45%">
+								<li><a href="${a.url}">${a.title}</a></li>
+							</ul>
+						 [/#if]
                      [/#list]
                      [/@cms_content_list]
-					
-					<ul class="dot" style="float: left; width: 45%">
-						<li><a href="http://res.hersp.com/content/4547662">[图文简报]我市组织骨干教师参加全国综合实践活动第十二届研讨会获多项一等奖</a></li>
-						<li><a href="http://res.hersp.com/content/4502295">【初中物理教研活动简报】三亚市初中物理中心教研组参加五中物理省级课题研究活动</a></li>
-						<li><a href="http://res.hersp.com/content/4476110">【教研活动简报】金海求是——”2014年全国高效课堂创新成果交流研讨会“纪实</a></li>
-						<li><a href="http://res.hersp.com/content/4457693">局教研室召开2014年市化学中考备考会</a></li>
-
-
-
-
-
-
-					</ul>
-					<ul class="dot" style="float: right; width: 45%">
-
-						<li><a href="http://res.hersp.com/content/4628199">三亚市组织部分物理同行参加”省2014年义务教育暑期新教材跟进培训“</a></li>
-						<li><a href="http://res.hersp.com/content/4517499">三亚市“攀登英语学习实验项目”下学校指导活动简报</a></li>
-						<li><a href="http://res.hersp.com/content/4485761">【初中物理教研活动简报】三亚市初中物理中心教研组参加海军三亚榆林八一中学开放周活动</a></li>
-						<li><a href="http://res.hersp.com/content/4463595">【物理教研活动简报】“三亚市2014年初三物理总复习研讨培训会议”在三亚四中成功举行</a></li>
-
-
-
-
-
-
-					</ul>
+                     
 					<div class="clr"></div>
 				</div>
 				<div id="subject2" class="widget block">
 					<h3>学科动态</h3>
 
-					<ul class="dot" style="float: left; width: 45%">
-						<li><a href="http://res.hersp.com/content/4550078">[综合实践]关于我市参加第26届海南省青少年科技创新大赛获奖情况的通报</a></li>
-						<li><a href="http://res.hersp.com/content/4542307">[信息技术]WiFi长怎么样？盘旋光束如幽灵！</a></li>
-						<li><a href="http://res.hersp.com/content/4624340">[中小学体育]三亚“飞北赛”总决赛：空中上演美妙舞台剧</a></li>
-						<li><a href="http://res.hersp.com/content/703713">[高中地理]关于举办三亚市中学地理“教学能手”评比活动的通知</a></li>
-						<li><a href="http://res.hersp.com/content/1248306">[高中历史]1.3.9《资本主义政治制度在欧洲大陆的扩展》练习</a></li>
-						<li><a href="http://res.hersp.com/content/4500862">[高中生物][教研简报]2014年全市生物命题、教学论文评选结活动圆满结束</a></li>
-						<li><a href="http://res.hersp.com/content/1621603">[高中化学]参加第七届全国基础教育化学新课程实施成果交流大会有感</a></li>
-						<li><a href="http://res.hersp.com/content/4546738">[高中物理]【物理在线研讨活动简报】2013-14学年三亚市中学物理教学在线研讨活动及数据统计</a></li>
-						<li><a href="http://res.hersp.com/content/720041">[高中英语]关于举办
-								“2010年三亚市高中学生英语书面表达竞赛”的通知</a></li>
-						<li><a href="http://res.hersp.com/content/4556531">[高中数学][教研简报]
-								14.6.三亚中学数学教师同一题多解多变优质案例评选活动简报</a></li>
-						<li><a href="http://res.hersp.com/content/4257780">[初中语文]【原创】荔枝沟中学瞒上欺下颠倒黑白满嘴谎言令人作呕之投诉答复</a></li>
-						<li><a href="http://res.hersp.com/content/1610578">[初中思品]关于2012年全市初中思想品德优质课比赛结果及在线研讨情况的通报</a></li>
-						<li><a href="http://res.hersp.com/content/620479">[小学思品]鱼水情深，共创和谐——河东区中心学校“军民共建”活动报道</a></li>
-						<li><a href="http://res.hersp.com/content/4033082">[小学数学]数学课应注重数学与其他学科的联系与综合</a></li>
+				[@cms_content_list  channelId='428' count='30' titLen='14' orderBy='2' channelOption='1']
+					[#list tag_list as a]
+						<ul class="dot" style="float: left; width: 45%">
+							<li><a href="${a.url}">[${a.ctgName}]${a.title}</a></li>
+						</ul>
+                     [/#list]
+               [/@cms_content_list]
 
-					</ul>
-					<ul class="dot" style="float: right; width: 45%">
-						<li><a href="http://res.hersp.com/content/648787">[学前教研]关于举办“利用木偶开展幼儿园语言活动”专题研讨活动的通知</a></li>
-						<li><a href="http://res.hersp.com/content/4008690">[通用技术]【图文简报】我市组织骨干老师参加全省综合实践活动说课活动，市一小符照娟老师获全省比赛二等奖</a></li>
-						<li><a href="http://res.hersp.com/content/4477781">[中小学美术]美术送教下乡活动观摩心得</a></li>
-						<li><a href="http://res.hersp.com/content/3974472">[中小学音乐]浅谈新课程理念下的“双基”教学</a></li>
-						<li><a href="http://res.hersp.com/content/703713">[初中地理]关于举办三亚市中学地理“教学能手”评比活动的通知</a></li>
-						<li><a href="http://res.hersp.com/content/648783">[初中历史]关于举办2010年全省中学历史教师教学基本功暨课堂教学评比活动的通知</a></li>
-						<li><a href="http://res.hersp.com/content/4600854">[初中生物]2013～2014学年度第二学期七年级生物科期末学业水平检测试卷参考答案</a></li>
-						<li><a href="http://res.hersp.com/content/4309547">[初中化学]征集化学学科中考备考会建议</a></li>
-						<li><a href="http://res.hersp.com/content/4628199">[初中物理]三亚市组织部分物理同行参加”省2014年义务教育暑期新教材跟进培训“</a></li>
-						<li><a href="http://res.hersp.com/content/1591563">[初中英语]关于举办第六届全国初中英语教师教学基本功大赛暨教学观摩研讨会的通知</a></li>
-						<li><a href="http://res.hersp.com/content/4556531">[初中数学][教研简报]
-								14.6.三亚中学数学教师同一题多解多变优质案例评选活动简报</a></li>
-						<li><a href="http://res.hersp.com/content/715322">[高中政治]关于组织教师观摩第三届粤版《思想品德》全国优质课大赛评比活动的通知</a></li>
-						<li><a href="http://res.hersp.com/content/4512130">[小学科学][图文简报]市教研室组织开展小学科学中心组教研活动</a></li>
-						<li><a href="http://res.hersp.com/content/4446182">[小学英语]三亚市小学英语教材教法培训简报</a></li>
-						<li><a href="http://res.hersp.com/content/4058245">[小学语文]信任是最好的激励手法</a></li>
-
-
-
-
-
-					</ul>
 					<div class="clr"></div>
 
 					<h3>教育时政</h3>
