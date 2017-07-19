@@ -1,6 +1,5 @@
 @charset "utf-8";
-body,h1,h2,h3,h4,h5,h6,hr,p,dl,dt,dd,ul,ol,li,form,fieldset,legend,button,input,textarea,th,td{margin:0;padding:0;}
-body,button,input,select,textarea{font:12px/1.5 arial,tahoma,\5b8b\4f53;color:#333;background:#fff;}
+h1,h2,h3,h4,h5,h6,hr,p,dl,dt,dd,ul,ol,li,form,fieldset,legend,button,input,textarea,th,td{margin:0;padding:0;}
 body{
  overflow-x:hidden;
 }
@@ -112,7 +111,6 @@ a:hover{
     color: #ed4800;
 }
 .wrap{
-    width: 1000px;
     margin:0 auto;
 }
 .bodybg{
@@ -147,34 +145,6 @@ a:hover{
     height:12px;
     line-height: 12px;
     background: #ccc;
-}
-.header-right .search-bar{
-    float: right;
-    position: relative;
-    width: 232px;
-    height: 24px;
-    margin-left: 15px;
-    margin-top: 4px;
-}
-.header-right .search-bar input{
-    width: 220px;
-    padding: 2px 5px;
-    height:22px;
-    border:1px solid #0b91df;
-    background: #f6fbff;
-    color: #999;
-}
-.header-right .search-bar input:focus{
-    border:1px solid #0b91df;
-    background: #fff;
-}
-.header-right .search-bar .search-btn{
-    position: absolute;
-    right:1px;
-    top:1px;
-    width: 23px;
-    height:22px;
-    background: url(images/search.png) no-repeat;
 }
 .banner img{vertical-align: top;}
 .nav{
@@ -555,8 +525,6 @@ a:hover{
 }
 
 .local {
-    height: 70px;
-    line-height: 70px;
     text-align: left;
     font-family: 'Microsoft YaHei';
 }
@@ -867,7 +835,7 @@ a:hover{
 .xueke{background: #FFF;}
 
 .wrap-left{width: 200px;float: left;}
-.wrap-right{width: 735px;float: left;padding-left: 20px;}
+.wrap-right{width: 850px;float: left;padding-left: 20px;}
 .right-news-comments{
     margin-top: 20px;
 }
