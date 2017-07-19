@@ -833,7 +833,7 @@ a:hover{
     float: left; }
 .report-list li a.hasImg .report-text {
     float: left;
-    width: 520px;
+    width: auto;
     padding-top: 5px;
     padding-left: 30px; }
 .report-list li a.hasImg .report-text h3 {
