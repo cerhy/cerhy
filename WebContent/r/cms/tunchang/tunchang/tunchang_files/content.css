@@ -49,7 +49,7 @@ body		{ background: #f7f7f7; }
 #search .searchbox	{ padding: 2px 0 0 0; width: 195px; border: 0; float: left;  background: #fff; }
 #search .searchweb	{ margin-left: 4px; width: 24px; height: 20px; border: 0; background: #fff url(search.png) no-repeat center center; float: left; }
 #navi			{ text-align: right; }
-#navi a			{ padding: 0 6px; color: #8f8f8f; text-decoration: none; }
+#navi a			{ padding: 0 5px; color: #8f8f8f; text-decoration: none; }
 #navi a:hover	{ color: #ff6f3d; }
 
 #menubar		{ margin: 10px 0; background: #FD6440; }
