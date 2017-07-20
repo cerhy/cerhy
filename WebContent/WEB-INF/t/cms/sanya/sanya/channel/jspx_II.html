@@ -47,9 +47,9 @@ table th,table td{word-break:break-all;white-space:normal;overflow:hidden;}
 										          <img width="85" height="85" src="${a.typeImg!}" alt="">
 										          [/#if]
 										          <div class="report-text">
-										            <h3 title="${a.title}">${a.title}</h3>
-										            <p title="${a.description!}">${a.description!}</p>
-										          	<div class="fl"><span class="ch">${a.ctgName}<em>${a.date?string("yyyy-MM-dd")}&nbsp;&nbsp;&nbsp;作者:&nbsp;${a.author!a.user.username}&nbsp;&nbsp;&nbsp;阅读:&nbsp;${a.contentCount.views!}&nbsp;&nbsp;&nbsp;评论:&nbsp;${a.contentCount.comments!}</em></span></div>
+										             <h3 title="${a.title}">[@text_cut s=a.title len=30 append='...'/]</h3>
+										             <p title="${a.description!}">[#if a.typeImg??][@text_cut s=a.description len=75 append='...'/][#else][@text_cut s=a.description len=75 append='...'/][/#if]</p>
+													 <div class="fl"><span class="ch">${a.ctgName}<em>${a.date?string("yyyy-MM-dd")}&nbsp;&nbsp;&nbsp;作者:&nbsp;${a.author!a.user.username}&nbsp;&nbsp;&nbsp;阅读:&nbsp;${a.contentCount.views!}&nbsp;&nbsp;&nbsp;评论:&nbsp;${a.contentCount.comments!}</em></span></div>
 										          </div>
 										          <em class="arrowBtn"></em>
 										      </div>
