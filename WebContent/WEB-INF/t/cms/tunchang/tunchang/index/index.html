@@ -28,11 +28,12 @@
 						<strong>&nbsp;</strong>
 					</p>
 					<p style="text-align: center;">
-						<img style="max-height: 150px;max-width: 600px;" src="${a.typeImg!}" />&nbsp; &nbsp;&nbsp; &nbsp;
+						<img style="max-height: 140px;max-width: 600px;" src="${a.typeImg!}" />&nbsp; &nbsp;&nbsp; &nbsp;
 					</p>
 					<p style="text-indent: 2em;">
-						&nbsp;<span>${a.description!''}</span><a
+						&nbsp;<span>[@text_cut s=a.description len='160' append='...'/]</span><a
 							href="${a.url}">[详细信息] </a>
+[@text_cut s=description len='160' append='...'/]					
 					</p>
 				</div>
 			[/#list]
