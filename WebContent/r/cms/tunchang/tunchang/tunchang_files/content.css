@@ -256,12 +256,12 @@ ul.tab li.cur a	{ color: #fff; }
 .register-list li label{font-size:12px; color:#f00; width:100%;}
 
 .menu1			{ margin: 0; padding: 0 10px; height: 25px; line-height: 25px; color: #8f8f8f;  position: relative; z-index: 999; list-style: none; }
-.menu1 li		{ width: 92px; height: 100%; float: left; position: relative; cursor: pointer; }
+.menu1 li		{  height: 100%; float: left; position: relative; cursor: pointer; }
 .menu1 li.rc		{ background-image: none; }
 .menu1 li span	{ text-align: center; display: block; }
-.menu1 li:hover, .menu li.hover	{ background: #ffffff; }
+.menu1 li:hover, .menu li.hover	{ background: #f7f7f7; }
 .menu1 li:hover .pad, .menu li.hover .pad	{ display: block; }
-.menu1 .pad		{ padding: 8px; border: 1px solid #ffffff; color: #333; background: #fff; display: none; position: absolute; cursor: default; }
+.menu1 .pad		{ padding: 8px; border: 1px solid #f7f7f7; color: #333; background: #f7f7f7; display: none; position: absolute; cursor: default;margin-left: -25px; }
 .menu1 .pad dl	{ margin: 0; padding: 0; width: 168px; line-height: 250%; float: left; }
 .menu1 .pad dl.moo	{ margin-right: 10px; border-right: 1px dotted #999; }
 .menu1 .pad dt	{ font-weight: bold; }

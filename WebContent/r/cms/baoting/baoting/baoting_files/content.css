@@ -255,3 +255,21 @@ ul.tab li.cur a	{ color: #fff; }
 .register-list .register-btn input{color:#fff; font-size:16px; line-height:36px; height:36px; width:306px; border-radius:5px; -moz-border-radius:5px; -o-border-radius:5px; -webkit-border-radius:5px; background-color: #0B91DF;; margin-left:90px; cursor:pointer;}
 .register-list .register-btn input:hover{background-color:#f94d4d;}
 .register-list li label{font-size:12px; color:#f00; width:100%;}
+
+.menu1			{ margin: 0; padding: 0 10px; height: 35px; line-height: 35px; color: #fff; background: #5C7920; position: relative; z-index: 999; list-style: none; }
+.menu1 li		{  height: 100%; border-right: 0px solid #999; float: left; position: relative; cursor: pointer; }
+.menu1 li.rc		{ background-image: none; }
+.menu1 li span	{ text-align: center; display: block; }
+.menu1 li:hover, .menu1 li.hover	{ background: #465C18; }
+.menu1 li:hover .pad, .menu1 li.hover .pad	{ display: block; }
+.menu1 .pad		{ padding: 8px; border: 1px solid #465C18; color: #fff; background: #5C7920; display: none; position: absolute; cursor: default;margin-left: -25px; }
+.menu1 .pad dl	{ margin: 0; padding: 0; width: 168px; line-height: 150%; float: left; }
+.menu1 .pad dl.moo	{ margin-right: 10px; border-right: 1px dotted #999; }
+.menu1 .pad dt	{ font-weight: bold; }
+.menu1 .pad dd	{ margin: 0; padding: 0 0 0 16px; }
+.menu1 .pad.col2	{ width: 347px; }
+.menu1 .pad.col3	{ width: 526px; }
+.menu1 .pad.col4	{ width: 705px; }
+.menu1 .pad.rtl	{ left: -94px; }
+.menu1 .pad.rtl2	{ left: -200px; }
+.menu1 .pad a	{ color: #fff; }
