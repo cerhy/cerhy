@@ -55,8 +55,10 @@
 								style="padding: 8px 0 0 0; font-size: 15pt; font-weight: bold;">${a.title}
 							</div>
 							<div style="padding: 10px;">
+								[#if a.typeImg??]
 								<img style="width: 150px; float: left;"
 									src="${a.typeImg!}" alt="">
+								[/#if]
 								<div style="width: 450px; float: right;">
 									${a.description!''}
 									<a href="${a.url}">[详细]</a><br>
