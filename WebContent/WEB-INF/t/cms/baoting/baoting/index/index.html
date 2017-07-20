@@ -27,7 +27,7 @@
 								<div>
 							<h2>${a.title}</h2>
 							<p>
-								${a.description!''}……<a href="${a.url}">[ 查看详细]</a>
+								[@text_cut s=a.description len='200' append='...'/]<a href="${a.url}">[查看详细]</a>
 							</p>
 							<p style="margin: 0 0 0 5px;">
 								<img style="max-height: 90px;max-width: 630px;margin-top:5px;" src="${a.typeImg!}">
