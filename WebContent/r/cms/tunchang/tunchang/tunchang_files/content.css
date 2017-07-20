@@ -44,7 +44,7 @@ body		{ background: #f7f7f7; }
 #header		{ padding: 25px 0 10px 0; }
 #logo		{ padding: 10px 0 0 0; }
 #logo span	{ margin: 3px 20px 0 0; color: #f75733; font-size: 38px; font-weight: bold; line-height: 38px; float: left; }
-#brand		{ color: #b0b0b0; float: right; /* ie6 */ width: 300px; }
+#brand		{ color: #b0b0b0; float: right; /* ie6 */ width: 600px; }
 #search		{ margin: 6px 8px 0 0; height: 30px; padding: 0 8px; border: 2px solid #f75733; background: #fff; border-radius: 4px; /* ie6 */ float: right; }
 #search .searchbox	{ padding: 2px 0 0 0; width: 195px; border: 0; float: left;  background: #fff; }
 #search .searchweb	{ margin-left: 4px; width: 24px; height: 20px; border: 0; background: #fff url(search.png) no-repeat center center; float: left; }
@@ -129,7 +129,7 @@ ul.tab li.cur a	{ color: #fff; }
 .search-btn1{
     position: absolute;
     right:194px;
-    top:55px;
+    top:27px;
     width: 20px;
     height:20px;
     background: url(search.png) no-repeat;
@@ -254,3 +254,21 @@ ul.tab li.cur a	{ color: #fff; }
 .register-list .register-btn input{color:#fff; font-size:16px; line-height:36px; height:36px; width:306px; border-radius:5px; -moz-border-radius:5px; -o-border-radius:5px; -webkit-border-radius:5px; background-color: #0B91DF;; margin-left:90px; cursor:pointer;}
 .register-list .register-btn input:hover{background-color:#f94d4d;}
 .register-list li label{font-size:12px; color:#f00; width:100%;}
+
+.menu1			{ margin: 0; padding: 0 10px; height: 25px; line-height: 25px; color: #8f8f8f;  position: relative; z-index: 999; list-style: none; }
+.menu1 li		{ width: 92px; height: 100%; float: left; position: relative; cursor: pointer; }
+.menu1 li.rc		{ background-image: none; }
+.menu1 li span	{ text-align: center; display: block; }
+.menu1 li:hover, .menu li.hover	{ background: #ffffff; }
+.menu1 li:hover .pad, .menu li.hover .pad	{ display: block; }
+.menu1 .pad		{ padding: 8px; border: 1px solid #ffffff; color: #333; background: #fff; display: none; position: absolute; cursor: default; }
+.menu1 .pad dl	{ margin: 0; padding: 0; width: 168px; line-height: 250%; float: left; }
+.menu1 .pad dl.moo	{ margin-right: 10px; border-right: 1px dotted #999; }
+.menu1 .pad dt	{ font-weight: bold; }
+.menu1 .pad dd	{ margin: 0; padding: 0 0 0 16px; }
+.menu1 .pad.col2	{ width: 347px; }
+.menu1 .pad.col3	{ width: 526px; }
+.menu1 .pad.col4	{ width: 705px; }
+.menu1 .pad.rtl	{ left: -94px; }
+.menu1 .pad.rtl2	{ left: -200px; }
+.menu1 .pad a	{ color: #333; }

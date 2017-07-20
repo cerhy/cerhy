@@ -7,12 +7,27 @@
 					href="http://stu.hersp.com/">学生成长</a><a
 					href="http://m%2C.hnjs.org/">社区</a>| [#if user??] [#if
 				user.userImg??] <img src="${user.userImg}"
-					style="margin-top: 6px; width: 20px; height: 20px"></img> [#else]
+					style="margin-top: -2px; width: 20px; height: 20px"></img> [#else]
 				<img alt="用户头像" src="/${res}/images/userImg.png"
-					style="margin-top: 6px; width: 20px; height: 20px"></img> [/#if] <a>${user.username}</a>
+					style="margin-top: -2px; width: 20px; height: 20px"></img> [/#if]
+					
+					   
+					    	<ul id="menu" class="menu1" style="float: right;margin-right:160px"">
+				<li><span >${user.username}</span>
+					<div class="pad col1 ">
+						<dl
+							style="margin: 0; padding: 0; width: 74px; line-height: 150%; float: left;">
+							<dd>
+								<a href="http://sanya.localhost:8080/cerhy/kcgl/index.jhtml">我的博客</a>
+							</dd>
+							<dd>
+								<a href="http://sanya.localhost:8080/cerhy/xbxjs/index.jhtml">退出帐号</a>
+							</dd>
+						</dl>
+					</div></li>
+			</ul>
 				[#else] <a href="${base}/login.jspx">注册/登录</a> [/#if]
-			</div>
-			<div class="header-right">
+				<div class="header-right" style="float:right;margin-top:[#if user??]-30px;[#else]-5px;[/#if]">
 				<div class="search-bar">
 					<form action="http://www.cerhy.com/search.jspx" target="_blank" id="searchForm">
 						<input type="text" name="q" value="${oldq!}" maxlength="50"
@@ -22,6 +37,13 @@
 					</form>
 				</div>
 			</div>
+			</div>
+			
+			
+			
+		
+			
+			
 		</div>
 		<div id="logo">
 			<span>屯昌</span>教研培训网<br>县教育研究培训中心
