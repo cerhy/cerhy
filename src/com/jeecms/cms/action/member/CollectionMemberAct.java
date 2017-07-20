@@ -192,7 +192,7 @@ public class CollectionMemberAct {
  		model = blogCommon.getStarBlogger(request, model);
  		model.addAttribute("submitOn", 1);
 		FrontUtils.frontData(request, model, site);
-		Pagination p = contentMng.getPageForCollection(site.getId(), id, cpn(pageNo), CookieUtils.getPageSize(request));
+		Pagination p = contentMng.getPageForCollection(null, id, cpn(pageNo), CookieUtils.getPageSize(request));
 		//p.setTotalCount(totalCount);
 		model.addAttribute("pagination", p);
 		if (!StringUtils.isBlank(queryTitle)) {
@@ -240,7 +240,7 @@ public class CollectionMemberAct {
  		model = blogCommon.getAddFriends(request, model,userT,u);
  		model = blogCommon.getFouces(request, model,userT,u);
 		FrontUtils.frontData(request, model, site);
-		Pagination p = contentMng.getPageForCollection(site.getId(), userT
+		Pagination p = contentMng.getPageForCollection(null, userT
 				.getId(), cpn(pageNo), CookieUtils.getPageSize(request));
 		//p.setTotalCount(totalCount);
 		model.addAttribute("pagination", p);

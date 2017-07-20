@@ -161,13 +161,13 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 				}
 			f.append(" join bean.channel channel,Channel parent");
 			f.append(" where ((channel.lft between parent.lft and parent.rgt");
-			f.append(" and channel.site.id=parent.site.id");
-			f.append(" and parent.id=:parentId  )   or ( shareCheck.checkStatus<>0 and shareCheck.shareValid=true and  tarChannel.lft between parent.lft and parent.rgt and tarChannel.site.id=parent.site.id and parent.id=:parentId))");
+			//f.append(" and channel.site.id=parent.site.id");
+			f.append(" and parent.id=:parentId  )   or ( shareCheck.checkStatus<>0 and shareCheck.shareValid=true and  tarChannel.lft between parent.lft and parent.rgt and parent.id=:parentId))");
 			f.setParam("parentId", channelId);
-		} else if (siteId != null) {
+		} /*else if (siteId != null) {
 			f.append(" where (bean.site.id=:siteId  or (shareCheck.checkStatus<>0 and shareCheck.shareValid=true and tarChannel.site.id=:siteId))");
 			f.setParam("siteId", siteId);
-		} else {
+		} */else {
 			f.append(" where 1=1");
 		}
 		
@@ -1300,13 +1300,13 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 		if (channelId != null) {
 			f.append(" join bean.channel channel,Channel parent");
 			f.append(" where ((channel.lft between parent.lft and parent.rgt");
-			f.append(" and channel.site.id=parent.site.id");
-			f.append(" and parent.id=:parentId)   or (shareCheck.checkStatus<>0 and shareCheck.shareValid=true and  tarChannel.lft between parent.lft and parent.rgt and tarChannel.site.id=parent.site.id and parent.id=:parentId))");
+			//f.append(" and channel.site.id=parent.site.id");
+			f.append(" and parent.id=:parentId)   or (shareCheck.checkStatus<>0 and shareCheck.shareValid=true and  tarChannel.lft between parent.lft and parent.rgt and parent.id=:parentId))");
 			f.setParam("parentId", channelId);
-		} else if (siteId != null) {
+		} /*else if (siteId != null) {
 			f.append(" where (bean.site.id=:siteId  or (shareCheck.checkStatus<>0 and shareCheck.shareValid=true and tarChannel.site.id=:siteId))");
 			f.setParam("siteId", siteId);
-		} else {
+		}*/ else {
 			f.append(" where 1=1");
 		}
 		//跳级审核人不应该看到？
