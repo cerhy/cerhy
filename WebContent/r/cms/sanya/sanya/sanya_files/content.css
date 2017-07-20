@@ -259,7 +259,7 @@ ul.tab li.cur a	{ color: #fff; }
 .menu1 li		{  height: 100%; border-right: 1px solid #47647B; float: left; position: relative; cursor: pointer; }
 .menu1 li.rc		{ background-image: none; }
 .menu1 li span	{ text-align: center; display: block; }
-.menu1 li:hover, .menu1 li.hover	{ background: #07243B; }
+.menu1 li:hover, .menu1 li.hover	{  }
 .menu1 li:hover .pad, .menu1 li.hover .pad	{ display: block; }
 .menu1 .pad		{ padding: 8px; border: 1px solid #27445B; color: #fff; background: #27445B; display: none; position: absolute; cursor: default;margin-left: -25px; }
 .menu1 .pad dl	{ margin: 0; padding: 0; width: 168px; line-height: 150%; float: left; }
