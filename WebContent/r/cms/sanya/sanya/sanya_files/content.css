@@ -261,11 +261,11 @@ ul.tab li.cur a	{ color: #fff; }
 .menu1 li span	{ text-align: center; display: block; }
 .menu1 li:hover, .menu1 li.hover	{  }
 .menu1 li:hover .pad, .menu1 li.hover .pad	{ display: block; }
-.menu1 .pad		{ padding: 8px; border: 1px solid #27445B; color: #fff; background: #27445B; display: none; position: absolute; cursor: default;margin-left: -25px; }
+.menu1 .pad		{ padding: 8px; border: 1px solid #27445B; color: #fff; background: #27445B; display: none; position: absolute; cursor: default;margin-left: -42px; }
 .menu1 .pad dl	{ margin: 0; padding: 0; width: 168px; line-height: 150%; float: left; }
 .menu1 .pad dl.moo	{ margin-right: 10px; border-right: 1px dotted #999; }
 .menu1 .pad dt	{ font-weight: bold; }
-.menu1 .pad dd	{ margin: 0; padding: 0 0 0 16px; }
+.menu1 .pad dd	{ margin: 0; padding: 0 0 0 0px; }
 .menu1 .pad.col2	{ width: 347px; }
 .menu1 .pad.col3	{ width: 526px; }
 .menu1 .pad.col4	{ width: 705px; }
