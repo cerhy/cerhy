@@ -25,7 +25,7 @@
 .quick-list .quick-tx{background:url(../images/quick-tx.png) #38a6d7 no-repeat;}
 .quick-list .quick-sina{background:url(../images/quick-sina.png) #f56467 no-repeat;}
 .quick .quick-list a:hover{opacity:0.7;}
-.inf-message{position:absolute; top:80px;font-size: 12px;color: #F00;}
+.inf-message{position:absolute; top:70px;font-size: 12px;color: #F00;}
 .error-message{padding-left:14px; background:url(../images/error-icon.png) no-repeat;}
 
 .header-r .login-user{float:left; line-height:30px; margin-left:20px; padding-right:14px; color:#979797; font-size:12px; position:relative; cursor:pointer;}
