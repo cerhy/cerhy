@@ -262,7 +262,7 @@ ul.tab li.cur a	{ color: #fff; }
 .menu1 li span	{ text-align: center; display: block; }
 .menu1 li:hover, .menu1 li.hover	{  }
 .menu1 li:hover .pad, .menu1 li.hover .pad	{ display: block; }
-.menu1 .pad		{ padding: 8px; border: 1px solid #465C18; color: #fff; background: #5C7920; display: none; position: absolute; cursor: default;margin-left: -25px; }
+.menu1 .pad		{ padding: 8px; border: 1px solid #465C18; color: #fff; background: #5C7920; display: none; position: absolute; cursor: default;margin-left: -30px; }
 .menu1 .pad dl	{ margin: 0; padding: 0; width: 168px; line-height: 150%; float: left; }
 .menu1 .pad dl.moo	{ margin-right: 10px; border-right: 1px dotted #999; }
 .menu1 .pad dt	{ font-weight: bold; }
