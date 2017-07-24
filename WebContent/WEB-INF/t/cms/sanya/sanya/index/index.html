@@ -92,9 +92,41 @@
 					<h3>教育时政</h3>
 					[@cms_content_list  channelId='463' count='12'  orderBy='2' channelOption='1' ]
 					[#list tag_list as a]
-					<ul class="dot" style="float: left; width: 45%">
-					<li><a href="${a.url}">${a.title}</a></li>
-					</ul>
+						[#if tag_list?size>1]
+							[#if tag_list?size<6]
+								[#if a_index<1]
+									<ul class="dot" style="float: left; width: 45%">
+								[/#if]
+									<li><a href="${a.url}">${a.title}</a></li>
+								[#if (a_index+1)= tag_list?size]	
+								</ul>
+								[/#if]
+							[#else]
+								[#if a_index=0]
+									<ul class="dot" style="float: left; width: 45%">
+								[/#if]
+								[#if a_index<6]	
+									<li><a href="${a.url}">${a.title}</a></li>
+									[#if a_index=5]	
+									</ul>
+									[/#if]
+								[#elseif a_index>5]
+									[#if tag_list?size<13]
+										[#if a_index=6]
+										<ul class="dot" style="float: right; width: 45%">
+										[/#if]
+										<li><a href="${a.url}">${a.title}</a></li>
+										[#if (a_index+1)=tag_list?size]
+											</ul>
+										[/#if]
+									[/#if]
+								[/#if]
+							[/#if]
+						[#else]
+							<ul class="dot" style="float: left; width: 45%">
+								<li><a href="${a.url}">${a.title}</a></li>
+							</ul>
+						[/#if]
                      [/#list]
                		[/@cms_content_list]
 					<div class="clr"></div>
