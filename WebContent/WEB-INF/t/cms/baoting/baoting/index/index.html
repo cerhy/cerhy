@@ -76,10 +76,42 @@
 							<div class="clr"></div>
 						</div>
 					[#else]
+							[#if tag_list?size>2]
+							[#if tag_list?size<5]
+								[#if a_index<2]
+									<ul class="dot" style="float: left; width: 45%">
+								[/#if]
+									<li><a href="${a.url}">${a.title}</a></li>
+								[#if (a_index+1)= tag_list?size]	
+								</ul>
+								[/#if]
+							[#else]
+								[#if a_index=1]
+									<ul class="dot" style="float: left; width: 45%">
+								[/#if]
+								[#if a_index<5]	
+									<li><a href="${a.url}">${a.title}</a></li>
+									[#if a_index=4]	
+									</ul>
+									[/#if]
+								[#elseif a_index>4]
+									[#if tag_list?size<10]
+										[#if a_index=5]
+										<ul class="dot" style="float: right; width: 45%">
+										[/#if]
+										<li><a href="${a.url}">${a.title}</a></li>
+										[#if (a_index+1)=tag_list?size]
+											</ul>
+										[/#if]
+									[/#if]
+								[/#if]
+							[/#if]
+						[#else]
 							<ul class="dot" style="float: left; width: 45%">
 								<li><a href="${a.url}">${a.title}</a></li>
 							</ul>
-					[/#if]
+						 [/#if]
+					  [/#if]
 					[/#list]
                     [/@cms_content_list]
 					<div class="clr"></div>
@@ -107,10 +139,42 @@
 							<div class="clr"></div>
 						</div>
 					[#else]
+							[#if tag_list?size>2]
+							[#if tag_list?size<5]
+								[#if a_index<2]
+									<ul class="dot" style="float: left; width: 45%">
+								[/#if]
+									<li><a href="${a.url}">${a.title}</a></li>
+								[#if (a_index+1)= tag_list?size]	
+								</ul>
+								[/#if]
+							[#else]
+								[#if a_index=1]
+									<ul class="dot" style="float: left; width: 45%">
+								[/#if]
+								[#if a_index<5]	
+									<li><a href="${a.url}">${a.title}</a></li>
+									[#if a_index=4]	
+									</ul>
+									[/#if]
+								[#elseif a_index>4]
+									[#if tag_list?size<10]
+										[#if a_index=5]
+										<ul class="dot" style="float: right; width: 45%">
+										[/#if]
+										<li><a href="${a.url}">${a.title}</a></li>
+										[#if (a_index+1)=tag_list?size]
+											</ul>
+										[/#if]
+									[/#if]
+								[/#if]
+							[/#if]
+						[#else]
 							<ul class="dot" style="float: left; width: 45%">
 								<li><a href="${a.url}">${a.title}</a></li>
 							</ul>
-					[/#if]
+						 [/#if]
+					  [/#if]
 					[/#list]
                     [/@cms_content_list]
 					<div class="clr"></div>
