@@ -245,8 +245,12 @@ public class BlogCommon {
 			String[] strs = friends.split(" ");
 			for (int i = 0; i < strs.length; i++) {
 				String[] str = strs[i].split("=");
-				if(channelMng.findUserImage(str[1].toString())!=null){
-					list.add(channelMng.findUserImage(str[1].toString()));
+				if(str[1].toString()!=null){
+					CmsUser nc=channelMng.findUserImage(str[1].toString());
+					if(null!=nc){
+						nc.setNicknames(str[0].toString());
+						list.add(nc);
+					}
 				}
 			}
 			model.addAttribute("friends", friends.replaceAll(" ", "\r\n"));
@@ -269,6 +273,34 @@ public class BlogCommon {
 			model.addAttribute("friends", "");
 		}
 		model.addAttribute("paginations", p);
+		return model;
+	}
+	//获取好友列表左侧
+	public ModelMap getFriendLeft(int id, ModelMap model,int pageNo) {
+		String friends = cmsUserMng.findById(id).getFriends();
+		Pagination p = null;
+		if (friends != null) {
+			List<CmsUser> list = new ArrayList<CmsUser>();
+			String[] strs = friends.split(" ");
+			for (int i = 0; i < strs.length; i++) {
+				if(i<10){
+					String[] str = strs[i].split("=");
+					if(str[1].toString()!=null){
+						CmsUser nc=channelMng.findUserImage(str[1].toString());
+						if(null!=nc){
+							nc.setNicknames(str[0].toString());
+							list.add(nc);
+						}
+					}
+				}
+			}
+			model.addAttribute("friends", friends.replaceAll(" ", "\r\n"));
+			p = new Pagination();
+			p.setList(list);
+		}else{
+			model.addAttribute("friends", "");
+		}
+		model.addAttribute("paginationLeft", p);
 		return model;
 	}
 	

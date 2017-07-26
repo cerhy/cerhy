@@ -796,13 +796,12 @@ public class ContributeAct extends AbstractContentMemberAct {
 		model =blogCommon.getHyperlink(request,model,user);
 		model = blogCommon.getColumn(request,model,user);
 	    model = blogCommon.getChannel(request,model,user,site);
-	    model = blogCommon.getFriends(user.getId(), model, 1);
 	    int totalCount = blogCommon.getTotalArticleNum(model,user);
 	    model.addAttribute("articleCount", totalCount);
  		model = blogCommon.getTotalCommentNum(model, user);
  		model = blogCommon.getStarBlogger(request, model);
  		model = blogCommon.getAlreadyJoinGroup(request, model,user);
- 		model = blogCommon.getFriends(user.getId(),model,1);
+ 		model = blogCommon.getFriendLeft(user.getId(),model,1);
 		FrontUtils.frontData(request, model, site);
 		return FrontUtils.getTplPath(request, site.getSolutionPath(),TPLDIR_BLOG, "tpl.linkList");
 	}
@@ -831,13 +830,12 @@ public class ContributeAct extends AbstractContentMemberAct {
 		model =blogCommon.getHyperlink(request,model,user);
 		model = blogCommon.getColumn(request,model,user);
 	    model = blogCommon.getChannel(request,model,user,site);
-	    model = blogCommon.getFriends(user.getId(), model, 1);
 	    int totalCount = blogCommon.getTotalArticleNum(model,user);
 	    model.addAttribute("articleCount", totalCount);
  		model = blogCommon.getTotalCommentNum(model, user);
  		model = blogCommon.getStarBlogger(request, model);
  		model = blogCommon.getAlreadyJoinGroup(request, model,user);
- 		model = blogCommon.getFriends(user.getId(),model,1);
+ 		model = blogCommon.getFriendLeft(user.getId(),model,1);
 		FrontUtils.frontData(request, model, site);
 		return FrontUtils.getTplPath(request, site.getSolutionPath(),TPLDIR_BLOG, "tpl.friends");
 	}
@@ -1009,7 +1007,7 @@ public class ContributeAct extends AbstractContentMemberAct {
  		model = blogCommon.getTotalReadNum(model, user);
  		model = blogCommon.getStarBlogger(request, model);
  		model = blogCommon.getAlreadyJoinGroup(request, model,user);
- 		model = blogCommon.getFriends(user.getId(),model,1);
+ 		model = blogCommon.getFriendLeft(user.getId(),model,1);
 		FrontUtils.frontData(request, model, site);
 		return FrontUtils.getTplPath(request, site.getSolutionPath(),TPLDIR_BLOG, "tpl.dataStatistics");
 	}
@@ -1033,7 +1031,7 @@ public class ContributeAct extends AbstractContentMemberAct {
  		model = blogCommon.getAlreadyJoinGroup(request, model,userT);
  		model = blogCommon.getAddFriends(request, model,userT,user);
  		model = blogCommon.getFouces(request, model,userT,user);
- 		model = blogCommon.getFriends(user.getId(),model,1);
+ 		model = blogCommon.getFriendLeft(user.getId(),model,1);
 		String path = request.getSession().getServletContext().getRealPath("/");
 		List<Focus> list = (new BlogDao()).findMaxFocusCount( path);
 	    List<Focus> l = null;
@@ -1100,7 +1098,7 @@ public class ContributeAct extends AbstractContentMemberAct {
  		model = blogCommon.getAllVistor(request, model,user);
  		model = blogCommon.getStarBlogger(request, model);
  		model = blogCommon.getAlreadyJoinGroup(request, model,user);
- 		model = blogCommon.getFriends(user.getId(),model,1);
+ 		model = blogCommon.getFriendLeft(user.getId(),model,1);
  		model = blogAct.getAllVisitors(queryTitle, modelId, queryChannelId,pageNo, request, model,user);
 		FrontUtils.frontData(request, model, site);
 		return FrontUtils.getTplPath(request, site.getSolutionPath(),TPLDIR_BLOG, "tpl.visitor");
@@ -1134,7 +1132,7 @@ public class ContributeAct extends AbstractContentMemberAct {
  		model = blogAct.getAllVisitors(q, modelId, queryChannelId,pageNo, request, model,userT);
  		model = blogCommon.getAddFriends(request, model,userT,user);
  		model = blogCommon.getFouces(request, model,userT,user);
- 		model = blogCommon.getFriends(user.getId(),model,1);
+ 		model = blogCommon.getFriendLeft(user.getId(),model,1);
 		String path = request.getSession().getServletContext().getRealPath("/");
 		List<Focus> list = (new BlogDao()).findMaxFocusCount( path);
 	    List<Focus> l = null;
