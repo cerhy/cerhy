@@ -375,4 +375,11 @@ public interface ContentDao {
 	 * @return int
 	 */
 	public Integer cancelContentStick(Integer contentId,Integer userId);
+	
+	/**
+	 * 查询用户置顶的文章数
+	 * @param userId
+	 * @return int
+	 */
+	public Long getStickCount(Integer userId);
 }

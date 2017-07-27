@@ -1601,4 +1601,14 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 		String hql = "delete   from ContentStick  where contentId="+contentId+" and stickUserId="+userId+"";
 		return (Integer) deleteObject(hql);
 	}
+	
+	/**
+	 * 查询用户置顶的文章数
+	 * @param userId
+	 * @return int
+	 */
+	public Long getStickCount(Integer userId){
+		String hql = "select   count(1) from ContentStick  where stickUserId="+userId+" ";
+		return (Long) findUnique(hql);
+	}
 }

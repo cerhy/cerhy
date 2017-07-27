@@ -629,10 +629,16 @@ public class CmsUserMngImpl implements CmsUserMng {
 	 * @return int
 	 */
 	@Override
-	public void contentStick(ContentStick contentStick){
+	public Integer contentStick(ContentStick contentStick){
 		String channelPath = contentDao.getChannelPath(contentStick.getContentId());
+		int result =0;
+		Long count = contentDao.getStickCount(contentStick.getStickUserId());
+		if(count>10){
+			result=1;//最多置顶10篇文章
+		}
 		contentStick.setPath( channelPath);
 		contentDao.contentStick(contentStick);
+		return result;
 	}
 	
 	/**

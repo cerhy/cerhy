@@ -1816,7 +1816,12 @@ public class ContributeAct extends AbstractContentMemberAct {
 		contentStick.setContentTitle(contentTitle);
 		
 		//置顶
-		cmsUserMng.contentStick(contentStick);
+		int result = cmsUserMng.contentStick(contentStick);
+		if(result==1){
+			object.put("code", "fail");
+			object.put("msg", "3");//最多置顶10篇文章
+			return object.toString();
+		}
 		
 		object.put("code", "success");
 		}catch (Exception e){

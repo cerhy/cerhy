@@ -139,7 +139,7 @@ public interface CmsUserMng {
 	 * 文章置顶
 	 * @param contentStick
 	 */
-	public void contentStick(ContentStick contentStick);
+	public Integer contentStick(ContentStick contentStick);
 	
 	/**
 	 * 查询该文章是否置顶
