@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.jeecms.cms.entity.main">
+	<class name="ContentStick" table="jc_content_stick">
+		<meta attribute="sync-DAO">false</meta>
+		<cache usage="read-write"/>
+		 <id name="id" type="java.lang.Integer" column="id"><generator class="identity"/></id>
+		<!-- <id name="id" type="java.lang.Integer" column="id">
+			<generator class="identity"><param name="property">channel</param></generator>
+		</id> -->
+		<property name="contentId" column="content_id" type="java.lang.Integer" not-null="false" length="11"/>
+		<property name="contentTitle" column="content_title" type="string" not-null="false" length="150"/>
+		<property name="contentTime"       column="content_time"      type="timestamp" not-null="false" length="19"/>
+ 		<property name="stickUserId" column="stick_user_id" type="java.lang.Integer" not-null="false" length="11"/>
+ 		<property name="stickTime" column="stick_time" type="timestamp" not-null="false" length="19"/>
+		<property name="path" column="path" type="string" not-null="false" length="30"/> 
+	</class>
+</hibernate-mapping>

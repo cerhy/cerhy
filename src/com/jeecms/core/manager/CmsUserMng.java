@@ -7,6 +7,7 @@ import java.util.Map;
 
 import javax.mail.MessagingException;
 
+import com.jeecms.cms.entity.main.ContentStick;
 import com.jeecms.common.email.EmailSender;
 import com.jeecms.common.email.MessageTemplate;
 import com.jeecms.common.page.Pagination;
@@ -133,5 +134,24 @@ public interface CmsUserMng {
 	 * @return int
 	 */
 	public Integer getContentSendType(Integer contentId,Integer userId);
+	
+	/**
+	 * 文章置顶
+	 * @param contentStick
+	 */
+	public void contentStick(ContentStick contentStick);
+	
+	/**
+	 * 查询该文章是否置顶
+	 * @param contentId
+	 * @param userId
+	 * @return int
+	 */
+	public Integer getStickId(Integer contentId,Integer userId);
 
+	/**
+	 * 取消文章置顶
+	 * @param contentId
+	 */
+	public void cancelContentStick(Integer contentId,Integer userId);
 }

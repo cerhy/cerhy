@@ -4,6 +4,7 @@ import static com.jeecms.cms.Constants.TPLDIR_MEMBER;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -38,6 +39,7 @@ import com.jeecms.cms.entity.assist.CmsJoinGroup;
 import com.jeecms.cms.entity.assist.CmsPostilInfo;
 import com.jeecms.cms.entity.main.Channel;
 import com.jeecms.cms.entity.main.Columns;
+import com.jeecms.cms.entity.main.ContentStick;
 import com.jeecms.cms.entity.main.Focus;
 import com.jeecms.cms.manager.assist.CmsFileMng;
 import com.jeecms.cms.manager.main.ContentMng;
@@ -46,13 +48,11 @@ import com.jeecms.common.web.ResponseUtils;
 import com.jeecms.core.entity.CmsSite;
 import com.jeecms.core.entity.CmsUser;
 import com.jeecms.core.entity.Ftp;
-import com.jeecms.core.entity.MemberConfig;
 import com.jeecms.core.manager.CmsUserMng;
 import com.jeecms.core.manager.DbFileMng;
 import com.jeecms.core.web.WebErrors;
 import com.jeecms.core.web.util.CmsUtils;
 import com.jeecms.core.web.util.FrontUtils;
-import com.jeecms.core.web.util.URLHelper;
 
 import freemarker.template.TemplateException;
 
@@ -633,7 +633,7 @@ public class ContributeAct extends AbstractContentMemberAct {
 	@RequestMapping(value = "/blog/index.jspx")
 	public String blog_index(String queryTitle, Integer modelId,
 			Integer queryChannelId, Integer pageNo, HttpServletRequest request,
-			ModelMap model) {
+			ModelMap model) { 
 		 return blogAct.blog_index(queryTitle, modelId, queryChannelId, "tpl.blogCenter",
 				pageNo, request, model);
 	} 
@@ -796,13 +796,12 @@ public class ContributeAct extends AbstractContentMemberAct {
 		model =blogCommon.getHyperlink(request,model,user);
 		model = blogCommon.getColumn(request,model,user);
 	    model = blogCommon.getChannel(request,model,user,site);
-	    model = blogCommon.getFriends(user.getId(), model, 1);
 	    int totalCount = blogCommon.getTotalArticleNum(model,user);
 	    model.addAttribute("articleCount", totalCount);
  		model = blogCommon.getTotalCommentNum(model, user);
  		model = blogCommon.getStarBlogger(request, model);
  		model = blogCommon.getAlreadyJoinGroup(request, model,user);
- 		model = blogCommon.getFriends(user.getId(),model,1);
+ 		model = blogCommon.getFriendLeft(user.getId(),model,1);
 		FrontUtils.frontData(request, model, site);
 		return FrontUtils.getTplPath(request, site.getSolutionPath(),TPLDIR_BLOG, "tpl.linkList");
 	}
@@ -831,13 +830,12 @@ public class ContributeAct extends AbstractContentMemberAct {
 		model =blogCommon.getHyperlink(request,model,user);
 		model = blogCommon.getColumn(request,model,user);
 	    model = blogCommon.getChannel(request,model,user,site);
-	    model = blogCommon.getFriends(user.getId(), model, 1);
 	    int totalCount = blogCommon.getTotalArticleNum(model,user);
 	    model.addAttribute("articleCount", totalCount);
  		model = blogCommon.getTotalCommentNum(model, user);
  		model = blogCommon.getStarBlogger(request, model);
  		model = blogCommon.getAlreadyJoinGroup(request, model,user);
- 		model = blogCommon.getFriends(user.getId(),model,1);
+ 		model = blogCommon.getFriendLeft(user.getId(),model,1);
 		FrontUtils.frontData(request, model, site);
 		return FrontUtils.getTplPath(request, site.getSolutionPath(),TPLDIR_BLOG, "tpl.friends");
 	}
@@ -1009,7 +1007,7 @@ public class ContributeAct extends AbstractContentMemberAct {
  		model = blogCommon.getTotalReadNum(model, user);
  		model = blogCommon.getStarBlogger(request, model);
  		model = blogCommon.getAlreadyJoinGroup(request, model,user);
- 		model = blogCommon.getFriends(user.getId(),model,1);
+ 		model = blogCommon.getFriendLeft(user.getId(),model,1);
 		FrontUtils.frontData(request, model, site);
 		return FrontUtils.getTplPath(request, site.getSolutionPath(),TPLDIR_BLOG, "tpl.dataStatistics");
 	}
@@ -1033,7 +1031,7 @@ public class ContributeAct extends AbstractContentMemberAct {
  		model = blogCommon.getAlreadyJoinGroup(request, model,userT);
  		model = blogCommon.getAddFriends(request, model,userT,user);
  		model = blogCommon.getFouces(request, model,userT,user);
- 		model = blogCommon.getFriends(user.getId(),model,1);
+ 		model = blogCommon.getFriendLeft(user.getId(),model,1);
 		String path = request.getSession().getServletContext().getRealPath("/");
 		List<Focus> list = (new BlogDao()).findMaxFocusCount( path);
 	    List<Focus> l = null;
@@ -1100,7 +1098,7 @@ public class ContributeAct extends AbstractContentMemberAct {
  		model = blogCommon.getAllVistor(request, model,user);
  		model = blogCommon.getStarBlogger(request, model);
  		model = blogCommon.getAlreadyJoinGroup(request, model,user);
- 		model = blogCommon.getFriends(user.getId(),model,1);
+ 		model = blogCommon.getFriendLeft(user.getId(),model,1);
  		model = blogAct.getAllVisitors(queryTitle, modelId, queryChannelId,pageNo, request, model,user);
 		FrontUtils.frontData(request, model, site);
 		return FrontUtils.getTplPath(request, site.getSolutionPath(),TPLDIR_BLOG, "tpl.visitor");
@@ -1134,7 +1132,7 @@ public class ContributeAct extends AbstractContentMemberAct {
  		model = blogAct.getAllVisitors(q, modelId, queryChannelId,pageNo, request, model,userT);
  		model = blogCommon.getAddFriends(request, model,userT,user);
  		model = blogCommon.getFouces(request, model,userT,user);
- 		model = blogCommon.getFriends(user.getId(),model,1);
+ 		model = blogCommon.getFriendLeft(user.getId(),model,1);
 		String path = request.getSession().getServletContext().getRealPath("/");
 		List<Focus> list = (new BlogDao()).findMaxFocusCount( path);
 	    List<Focus> l = null;
@@ -1791,4 +1789,77 @@ public class ContributeAct extends AbstractContentMemberAct {
 		json.put("status",joinStatus);
 		ResponseUtils.renderJson(response, json.toString());
 	}
+	
+	/**
+	 * 文章置顶
+	 */
+	@RequestMapping(value = "/blog/contentStick.jspx", method = RequestMethod.POST)
+	public @ResponseBody String contentStick(Integer contentId,String contentTitle,String releaseDate,
+			HttpServletRequest request, HttpServletResponse response,
+			ModelMap model){
+		
+		JSONObject object = new JSONObject();
+		try {
+			
+		CmsUser user = CmsUtils.getUser(request);
+		if(user==null){
+			object.put("code", "fail");
+			object.put("msg", "2");//请先登录
+			return object.toString();
+		}
+		SimpleDateFormat  dfm = new SimpleDateFormat ("yyyy-MM-dd HH:mm:ss");
+		ContentStick contentStick = new ContentStick();
+		contentStick.setContentId(contentId);
+		contentStick.setContentTime(dfm.parse(releaseDate));
+		contentStick.setStickTime(new Date());
+		contentStick.setStickUserId(user.getId());
+		contentStick.setContentTitle(contentTitle);
+		
+		//置顶
+		cmsUserMng.contentStick(contentStick);
+		
+		object.put("code", "success");
+		}catch (Exception e){
+			try {
+				object.put("code", "fail");
+			} catch (JSONException e1) {
+				log.error(e.getMessage(),e);
+			}
+			log.error(e.getMessage(),e);
+		}
+		return object.toString();
+	}
+	/**
+	 * 取消文章置顶
+	 */
+	@RequestMapping(value = "/blog/cancelStick.jspx", method = RequestMethod.POST)
+	public @ResponseBody String cancelStick(Integer contentId,
+			HttpServletRequest request, HttpServletResponse response,
+			ModelMap model){
+		
+		JSONObject object = new JSONObject();
+		try {
+			
+		CmsUser user = CmsUtils.getUser(request);
+		if(user==null){
+			object.put("code", "fail");
+			object.put("msg", "2");//请先登录
+			return object.toString();
+		}
+		
+		//取消置顶
+		cmsUserMng.cancelContentStick(contentId, user.getId());
+		
+		object.put("code", "success");
+		}catch (Exception e){
+			try {
+				object.put("code", "fail");
+			} catch (JSONException e1) {
+				log.error(e.getMessage(),e);
+			}
+			log.error(e.getMessage(),e);
+		}
+		return object.toString();
+	}
+	
 }

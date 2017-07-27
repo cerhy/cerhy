@@ -39,6 +39,32 @@
 .jump:hover {
     box-shadow: 0 3px 4px 0 rgba(0,0,0,0.24),0 8px 15px 0 rgba(0,0,0,0.19);
 }
+.cap	{
+    color: #fff;
+    background: #0072C6;
+    /* padding: 4px 20px 4px 20px; */
+    cursor: pointer;
+    padding-left: 20px;
+    width: 710px;
+    float: left;
+    margin-left: 20px;
+    height: 36px;
+    padding-top: 10px;}
+.blog_right1 {
+    padding: 35px;
+    background: #ffffff;
+  
+}
+.topicList {
+    color: #000;
+    font-family: "Microsoft YaHei",Arial;
+    font-size: 14px;
+    line-height: 200%;
+    margin: 0;
+    padding: 0 0 0 2em;
+    list-style: square;
+}
+.topicList a{ color: #2152AC; text-decoration: none; }
 </style>
 <script type="text/javascript">
 
@@ -112,6 +138,22 @@ $(function(){
 		}
 	});
 });
+function showHidden(){
+	var display = $("#wzId.wrap-right").css('display');
+	if(display=="block"){
+		$("#wzId.wrap-right").css('display','none'); 
+	}else{
+		$("#wzId.wrap-right").css('display','block'); 
+	}
+}
+function zdShowHidden(){
+	var display = $("#zdId.wrap-right").css('display');
+	if(display=="block"){
+		$("#zdId.wrap-right").css('display','none'); 
+	}else{
+		$("#zdId.wrap-right").css('display','block'); 
+	}
+}
 </script>
 [#include "head.html"/]
 <div class="blogBody">
@@ -136,7 +178,22 @@ $(function(){
       	</div>
         <div class="mb20 clearfix">
         [#include "friend_blog_left.html"/]
-            <div class="wrap-right">
+         <div id="zd_u-hilite-cap" class="cap" onclick="zdShowHidden();" >置顶</div>
+          <div id="zdId" class="wrap-right">
+                <div class="personCenter-userInfo blog_right1">
+                <ul class="topicList" >
+				 [#if stickList?size gt 0]
+				          [#list stickList as sti]
+				           <li class="row"><a cmd="LoadTopic" _list="hilite"  href="${base}/${sti.path}/${sti.contentId}.jhtml?d=1">${sti.contentTitle}</a> <span class="lt">(${sti.contentTime?string('yyyy-MM-dd')})</span></li>
+				           [/#list]
+				 [#else]
+				 <li class="row" >暂无置顶内容！ </li>
+				 [/#if]
+                </ul>
+                </div>
+                </div>
+           <div id="u-hilite-cap" class="cap" onclick="showHidden();" >文章</div>
+            <div id="wzId" class="wrap-right">
                 <div class="personCenter-userInfo" style="min-height: 600px;">
                     
                     <div class="tab-content" style="display: block;">

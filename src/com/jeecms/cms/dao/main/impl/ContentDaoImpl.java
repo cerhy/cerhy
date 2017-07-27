@@ -39,6 +39,7 @@ import com.jeecms.cms.entity.main.Content.ContentStatus;
 import com.jeecms.cms.entity.main.ContentCheck;
 import com.jeecms.cms.entity.main.ContentDoc;
 import com.jeecms.cms.entity.main.ContentSend;
+import com.jeecms.cms.entity.main.ContentStick;
 import com.jeecms.cms.service.ContentQueryFreshTimeCache;
 import com.jeecms.common.hibernate4.Finder;
 import com.jeecms.common.hibernate4.HibernateBaseDao;
@@ -1543,5 +1544,61 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 	public Integer updateContentSend(String title,int contentId){
 		String hql = "update  ContentSend  set title ='"+title+"' where contentId="+contentId+"";
 		return (Integer) updateObject(hql);
+	}
+	
+	/**
+	 * 根据用户id查询用户置顶文章
+	 * @param userId
+	 * @return
+	 */
+	@Override
+	public List<ContentStick> getStickList(Integer userId){
+		Finder f = Finder.create("select bean from ContentStick bean");
+		f.append(" where 1=1");
+		f.append(" and bean.stickUserId=:userId");
+		f.setParam("userId", userId);
+		f.append(" order by  stickTime desc");
+		return find(f);
+	}
+	
+	/**
+	 * 文章置顶
+	 * @param contentStick
+	 * @return int
+	 */
+	public ContentStick contentStick(ContentStick contentStick){
+		getSession().save(contentStick);
+		return contentStick;
+	}
+	
+	/**
+	 * 根据文章id查询路径
+	 * @param contentId
+	 * @return int
+	 */
+	public String getChannelPath(Integer contentId){
+		String hql = "select   channel.path from Content bean join bean.channel channel where bean.id="+contentId+"";
+		return (String) findUnique(hql);
+	}
+	
+	/**
+	 * 查询该文章是否置顶
+	 * @param contentId
+	 * @param userId
+	 * @return int
+	 */
+	public Integer getStickId(Integer contentId,Integer userId){
+		String hql = "select   id from ContentStick  where contentId="+contentId+" and stickUserId="+userId+" ";
+		return (Integer) findUnique(hql);
+	}
+	
+	/**
+	 * 取消文章置顶
+	 * @param contentId
+	 * @return int
+	 */
+	public Integer cancelContentStick(Integer contentId,Integer userId){
+		String hql = "delete   from ContentStick  where contentId="+contentId+" and stickUserId="+userId+"";
+		return (Integer) deleteObject(hql);
 	}
 }

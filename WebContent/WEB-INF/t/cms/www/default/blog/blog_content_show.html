@@ -207,6 +207,7 @@ outline: none;
                 <input type="text" style="display:none" id="hipw" value="${content.password!''}" />
                 <div class="gray9 h2dt pt5" style="margin-bottom: 2px;">
 				    <span class="pr15">发布时间：${content.releaseDate}</span>
+				   
 					<span class="pr15">
 					   <a target="_blank" href="${base}/blog/find_all_url_friend.jspx?userIds=${content.user.id}" class="bz">作者：${content.author!content.user.username}</a>
 					 </span>
@@ -224,6 +225,12 @@ outline: none;
 				        <a href="${base}/blog/contribute_delete.jspx?ids=${content.id}" onclick="javascript:return del();">删除</a>&nbsp;<a href="${base}/blog/contribute_edit.jspx?id=${content.id}&nextUrl=contribute_list.jspx">修改</a>
 						<span id="cancelSpan"  class="pos"><a href="javascript:void(0);" onclick="send();">发送</a></span>&nbsp;
 						<span id="cancelSpan"  class="pos"><a href="javascript:void(0);" onclick="cancel();">撤销 </a></span>&nbsp;
+						[#if isStick??]
+							<span id="cancelStickSpan"  class="pos"><a href="javascript:void(0);" onclick="canCelstick(${content.id},0);">取消置顶</a></span>&nbsp;
+							[#else]
+							<span id="stickSpan"  class="pos"><a href="javascript:void(0);" onclick="stick(${content.id},'${content.title}','${content.releaseDate}',1);">置顶</a></span>&nbsp;
+						[/#if]
+						
 					  [/#if] 
 					  [#if contentSentType??] 
 					  	 [#if contentSentType==2]
@@ -342,7 +349,7 @@ outline: none;
 	                    [#if tag_bean??]
 		                     <a href="${tag_bean.url}?d=2" class="next-pian">
 	                            <em>[@text_cut s=tag_bean.title len=20 append='...'/]</em>
-	                            <span>下一篇&gt;</span>
+	                            <span>下一篇12&gt;</span>
 	                        </a>
 	                    [#else]
 		                     <a href="javascript:;" class="next-pian">
@@ -377,12 +384,12 @@ outline: none;
 	                       [#if columnIdZ??]
 		                     <a href="${tag_bean.url}?d=1&GroupFlag=${GroupFlagData}&columnIdZ=${columnIdZ}" class="next-pian">
 	                            <em>[@text_cut s=tag_bean.title len=15 append='...'/]</em>
-	                            <span>下一篇&gt;</span>
+	                            <span>下一篇s&gt;</span>
 	                        </a>
                            [#else]
 		                     <a href="${tag_bean.url}?d=1&GroupFlag=${GroupFlagData}" class="next-pian">
 	                            <em>[@text_cut s=tag_bean.title len=15 append='...'/]</em>
-	                            <span>下一篇&gt;</span>
+	                            <span>下一45篇&gt;</span>
 	                        </a>
                            [/#if]
 	                    [#else]
@@ -1128,6 +1135,73 @@ Drag.prototype = {
 	function closeSendDialog(){
 		$("#sentDialog").dialog("close");
 	}
+	function stick(contentId,contentTitle,releaseDate,flag){
+	 	 $.ajax({
+              type: 'POST',
+              url : ' ${base}/blog/contentStick.jspx',
+              dataType : 'json',
+              data : {'contentId' : contentId,'contentTitle' : contentTitle,'releaseDate' : releaseDate},
+              success : function(datas){
+              	var code =datas.code;
+             	 if(code=="fail"){
+             		msg = datas.msg;
+            		 if(msg=="2"){
+            			alert("请先登录！");
+            		 }else{
+            			alert("置顶失败！");
+            		 }
+             		
+             	 }else{
+             		alert("置顶成功！");
+             		if(flag==1){
+             			$("#stickSpan").html("");
+                		var stickHtml = "<a href=\"javascript:void(0);\" onclick=\"canCelstick(${content.id},1);\">取消置顶</a>";
+                		$("#stickSpan").html(stickHtml);	
+             		}else{
+             			$("#cancelStickSpan").html("");
+             			var stickHtml = "<a href=\"javascript:void(0);\" onclick=\"canCelstick(${content.id},0);\">取消置顶</a>";
+             			$("#cancelStickSpan").html(stickHtml);	
+             		}
+             	
+             	 }
+
+     	   		 }
+    		 });
+	}
+	
+	function canCelstick(contentId,flag){
+	 	 $.ajax({
+             type: 'POST',
+             url : ' ${base}/blog/cancelStick.jspx',
+             dataType : 'json',
+             data : {'contentId' : contentId},
+             success : function(datas){
+             	var code =datas.code;
+            	 if(code=="fail"){
+            		msg = datas.msg;
+           		 if(msg=="2"){
+           			alert("请先登录！");
+           		 }else{
+           			alert("取消置顶失败！");
+           		 }
+            		
+            	 }else{
+            		alert("取消置顶成功！");
+            		if(flag==1){
+             			$("#stickSpan").html("");
+             			var stickHtml = "<a href=\"javascript:void(0);\" onclick=\"stick(${content.id},'${content.title}','${content.releaseDate}',1);\">置顶</a>";
+                		$("#stickSpan").html(stickHtml);	
+             		}else{
+             			$("#cancelStickSpan").html("");
+             			var stickHtml = "<a href=\"javascript:void(0);\" onclick=\"stick(${content.id},'${content.title}','${content.releaseDate}',0);\">置顶</a>";
+             			$("#cancelStickSpan").html(stickHtml);	
+             		}
+            	 }
+
+    	   		 }
+   		 });
+	}
+	
 </script>
 <script type="text/javascript">
 

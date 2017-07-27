@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.jeecms.cms.dao.main.ContentDao;
 import com.jeecms.cms.entity.main.Channel;
 import com.jeecms.cms.entity.main.ContentSend;
+import com.jeecms.cms.entity.main.ContentStick;
 import com.jeecms.cms.manager.main.ChannelMng;
 import com.jeecms.cms.manager.main.ContentMng;
 import com.jeecms.common.email.EmailSender;
@@ -620,5 +621,35 @@ public class CmsUserMngImpl implements CmsUserMng {
 	@Override
 	public Integer getContentSendType(Integer contentId,Integer userId){
 		return contentDao.getContentSendType(contentId, userId);
+	}
+	
+	/**
+	 * 文章置顶
+	 * @param contentStick
+	 * @return int
+	 */
+	@Override
+	public void contentStick(ContentStick contentStick){
+		String channelPath = contentDao.getChannelPath(contentStick.getContentId());
+		contentStick.setPath( channelPath);
+		contentDao.contentStick(contentStick);
+	}
+	
+	/**
+	 * 查询该文章是否置顶
+	 * @param contentId
+	 * @param userId
+	 * @return int
+	 */
+	public Integer getStickId(Integer contentId,Integer userId){
+		return contentDao.getStickId(contentId, userId);
+	}
+	
+	/**
+	 * 取消文章置顶
+	 * @param contentId
+	 */
+	public void cancelContentStick(Integer contentId,Integer userId){
+		contentDao.cancelContentStick(contentId, userId);
 	}
 }

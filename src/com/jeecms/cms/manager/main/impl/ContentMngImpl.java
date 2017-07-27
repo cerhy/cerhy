@@ -19,6 +19,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.ModelMap;
 import org.springframework.util.Assert;
 
 import com.jeecms.cms.action.member.ContributeAct;
@@ -37,6 +38,7 @@ import com.jeecms.cms.entity.main.ContentCheck;
 import com.jeecms.cms.entity.main.ContentCount;
 import com.jeecms.cms.entity.main.ContentDoc;
 import com.jeecms.cms.entity.main.ContentExt;
+import com.jeecms.cms.entity.main.ContentStick;
 import com.jeecms.cms.entity.main.ContentRecord.ContentOperateType;
 import com.jeecms.cms.entity.main.ContentShareCheck;
 import com.jeecms.cms.entity.main.ContentTag;
@@ -1492,6 +1494,16 @@ public class ContentMngImpl implements ContentMng, ChannelDeleteChecker {
 	public List<CmsJoinGroup> getAlreadyJoinGroup(CmsUser user) {
 		return dao.getAlreadyJoinGroup(user);
 	}
-
-
+	
+	@Override
+	public ModelMap getStickList(CmsUser user, ModelMap model){
+		
+		if(user!=null){
+			List<ContentStick> list = dao.getStickList(user.getId());
+			model.addAttribute("stickList", list);
+		}else{
+			model.addAttribute("stickList", null);
+		}
+		return model;
+	}
 }

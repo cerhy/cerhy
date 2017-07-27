@@ -8,6 +8,7 @@ import com.jeecms.cms.entity.assist.CmsBlogVisitor;
 import com.jeecms.cms.entity.assist.CmsComment;
 import com.jeecms.cms.entity.assist.CmsJoinGroup;
 import com.jeecms.cms.entity.main.Content;
+import com.jeecms.cms.entity.main.ContentStick;
 import com.jeecms.cms.entity.main.Content.ContentStatus;
 import com.jeecms.cms.entity.main.ContentSend;
 import com.jeecms.common.hibernate4.Updater;
@@ -338,4 +339,40 @@ public interface ContentDao {
 	 * @return Integer
 	 */
 	public Integer updateContentSend(String title,int contentId);
+	
+	/**
+	 * 根据用户id查询用户置顶文章
+	 * @param userId
+	 * @return
+	 */
+	public List<ContentStick> getStickList(Integer userId);
+	
+	/**
+	 * 文章置顶
+	 * @param contentStick
+	 * @return int
+	 */
+	public ContentStick contentStick(ContentStick contentStick);
+	
+	/**
+	 * 根据文章id查询路径
+	 * @param contentId
+	 * @return int
+	 */
+	public String getChannelPath(Integer contentId);
+	
+	/**
+	 * 查询该文章是否置顶
+	 * @param contentId
+	 * @param userId
+	 * @return int
+	 */
+	public Integer getStickId(Integer contentId,Integer userId);
+	
+	/**
+	 * 取消文章置顶
+	 * @param contentId
+	 * @return int
+	 */
+	public Integer cancelContentStick(Integer contentId,Integer userId);
 }

@@ -6,16 +6,17 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.ui.ModelMap;
+
 import com.jeecms.cms.entity.assist.CmsBlogVisitor;
 import com.jeecms.cms.entity.assist.CmsComment;
 import com.jeecms.cms.entity.assist.CmsJoinGroup;
-import com.jeecms.cms.entity.main.Columns;
 import com.jeecms.cms.entity.main.Content;
+import com.jeecms.cms.entity.main.Content.ContentStatus;
 import com.jeecms.cms.entity.main.ContentDoc;
 import com.jeecms.cms.entity.main.ContentExt;
-import com.jeecms.cms.entity.main.ContentTxt;
-import com.jeecms.cms.entity.main.Content.ContentStatus;
 import com.jeecms.cms.entity.main.ContentRecord.ContentOperateType;
+import com.jeecms.cms.entity.main.ContentTxt;
 import com.jeecms.cms.staticpage.exception.ContentNotCheckedException;
 import com.jeecms.cms.staticpage.exception.GeneratedZeroStaticPageException;
 import com.jeecms.cms.staticpage.exception.StaticPageNotOpenException;
@@ -258,6 +259,8 @@ public interface ContentMng {
 
 
 	public List<CmsJoinGroup> getAlreadyJoinGroup(CmsUser user);
+	
+	public ModelMap getStickList(CmsUser user, ModelMap model);
 
 	
 }

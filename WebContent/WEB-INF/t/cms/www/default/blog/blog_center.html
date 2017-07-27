@@ -28,14 +28,45 @@
 .jump:hover {
     box-shadow: 0 3px 4px 0 rgba(0,0,0,0.24),0 6px 12px 0 rgba(0,0,0,0.19);
 }
-
+.cap	{
+    color: #fff;
+    background: #0072C6;
+    /* padding: 4px 20px 4px 20px; */
+    cursor: pointer;
+    padding-left: 20px;
+    width: 710px;
+    float: left;
+    margin-left: 20px;
+    height: 36px;
+    padding-top: 10px;}
 td{border:1px solid #e7e7e7; line-height:38px; color:#666666; text-align:center;width:120px;height:20px;}
 .st_tree ul .change a:hover{color:red;}
 .st_tree ul li a:hover{color:blue;}
 .st_tree ul .change :hover{background-color:#e7e7e7 }
 ::-webkit-scrollbar{width:0px}
 .clear{clear:both}
+.blog_right1 {
+    padding: 35px;
+    background: #ffffff;
+  
+}
+/* .personCenter-userInfo blog_right1 ul {
+    margin: 0;
+    padding: 0 0 0 2em;
+    list-style: square;
+} */
+.topicList {
+    color: #000;
+    font-family: "Microsoft YaHei",Arial;
+    font-size: 14px;
+    line-height: 200%;
+    margin: 0;
+    padding: 0 0 0 2em;
+    list-style: square;
+}
+.topicList a{ color: #2152AC; text-decoration: none; }
 </style>
+
 
 <script type="text/javascript">
 
@@ -51,6 +82,22 @@ $(function(){
 		}
 	});
 });
+function showHidden(){
+	var display = $("#wzId.wrap-right").css('display');
+	if(display=="block"){
+		$("#wzId.wrap-right").css('display','none'); 
+	}else{
+		$("#wzId.wrap-right").css('display','block'); 
+	}
+}
+function zdShowHidden(){
+	var display = $("#zdId.wrap-right").css('display');
+	if(display=="block"){
+		$("#zdId.wrap-right").css('display','none'); 
+	}else{
+		$("#zdId.wrap-right").css('display','block'); 
+	}
+}
 </script>
 <div id="contextMenus"></div>
 [#include "head.html"/]
@@ -74,11 +121,28 @@ $(function(){
       	[#include "blog_operation.html"/]
         <div class="mb20 clearfix">
           [#include "blog_left.html"/]
-            <div class="wrap-right">
+          <div id="zd_u-hilite-cap" class="cap" onclick="zdShowHidden();" >置顶</div>
+               <div id="zdId" class="wrap-right">
+                <div class="personCenter-userInfo blog_right1">
+                <ul class="topicList" >
+                 [#if stickList?size gt 0]
+				          [#list stickList as sti]
+				          
+				          <!--  ${stickList[0].contentId}  -->
+				           <li class="row"><a cmd="LoadTopic" _list="hilite"  href="${base}/${sti.path}/${sti.contentId}.jhtml?d=1">${sti.contentTitle}</a> <span class="lt">(${sti.contentTime?string('yyyy-MM-dd')})</span></li>
+				           [/#list]
+				 [#else]
+				 <li class="row" >暂无置顶内容！ </li>
+				 [/#if]
+                </ul>
+                </div>
+                </div>
+          <div id="u-hilite-cap" class="cap" onclick="showHidden();" >文章</div>
+            <div id="wzId" class="wrap-right">
                 <div class="personCenter-userInfo blog_right">
                     <div class="tggl" style="display: block;">
 			          <form id="tableForm" action="${base}/blog/index.jspx" method="post">
-			          <ul class="report-list2 sm mb20">
+			          <ul class="report-list2 sm mb20" style="">
 			          [#if pagination.list?size gt 0]
 				          [#list pagination.list as c]
 				         <li>
