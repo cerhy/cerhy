@@ -24,6 +24,8 @@ public class CmsUser extends BaseCmsUser implements PriorityInterface {
 	private String blogTitle;
 	private String blogTitle2;
 	
+	private String nicknames;//不做表字段 只做显示
+	
 	public String getBlogTitle2() {
 		return blogTitle2;
 	}
@@ -46,6 +48,14 @@ public class CmsUser extends BaseCmsUser implements PriorityInterface {
 
 	public void setBlogTitle(String blogTitle) {
 		this.blogTitle = blogTitle;
+	}
+
+	public String getNicknames() {
+		return nicknames;
+	}
+
+	public void setNicknames(String nicknames) {
+		this.nicknames = nicknames;
 	}
 
 	public Byte getCheckStep(Integer siteId) {

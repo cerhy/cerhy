@@ -224,10 +224,10 @@ outline: none;
 					  </li>
 					   <li><a href="#">好友</a>
 					    <ul>
-					   [#if paginations??]
-						    [#list paginations.list as user]
+					   [#if paginationLeft??]
+						    [#list paginationLeft.list as user]
 						    	[#if user_index<11]
-						    		<li><a href="${base}/blog/find_all_url_friend.jspx?userIds=${user.id}" target="_blank" title="[#if user.realname??]${user.realname}[#else]${user.username}[/#if]"><img [#if user.userImg??]src="${user.userImg}"[#else]src="/${res}/images/userImg-large.png"[/#if] width="20" height="20" alt="" style="float: left;padding: 0 10px 0 0;">[#if user.realname??][@text_cut s=user.realname len=5 append='...'/][#else]${user.username}[/#if]</a></li>
+						    		<li><a href="${base}/blog/find_all_url_friend.jspx?userIds=${user.id}" target="_blank" title="[#if user.nicknames??]${user.nicknames}[#else]${user.username}[/#if]"><img [#if user.userImg??]src="${user.userImg}"[#else]src="/${res}/images/userImg-large.png"[/#if] width="20" height="20" alt="" style="float: left;padding: 0 10px 0 0;">[#if user.nicknames??][@text_cut s=user.nicknames len=10 append='...'/][#else]${user.username}[/#if]</a></li>
 						    	[/#if]
 						    [/#list]
 						    [#if user??]
