@@ -15,7 +15,10 @@ a{color: #666666}
 .tggl table{border-color:#333333;}
 
 a:link{color:#666666;}
-
+.cap{
+    color: #fff;
+    background: #999999;
+}
 .blogBody{
 	width:100%;
 	background: #000  url(02.gif); 

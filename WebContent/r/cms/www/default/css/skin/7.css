@@ -7,7 +7,10 @@
 	background : #e3ebf0; 
 }
 .blogHead,.tj{color: #808080;}
-
+.cap{
+    color: #fff;
+    background: #8b9db5;
+}
 #title1{
 	color: #808080;
 }

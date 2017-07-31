@@ -22,7 +22,10 @@ a			{ color: #074387; }
 .footer_styles {
 	background: #E0912F; 
 }
-
+.cap{
+    color: #fff;
+    background:#bf700c;
+}
 .blogHead,.tj{color: #fff;}
 /* .tj{
 	padding-bottom:90px;

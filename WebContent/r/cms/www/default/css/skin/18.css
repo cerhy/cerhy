@@ -17,6 +17,10 @@
     border: none; 
     text-decoration:none;
 }
+.cap{
+    color: #fff;
+    background: #d8bc8d;
+}
 
 .blogBody .user-menu-links li a em {background: transparent; }
 .blogBody .user-menu-links li.on a em {background: transparent; }

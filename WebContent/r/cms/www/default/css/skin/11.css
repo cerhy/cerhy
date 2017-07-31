@@ -14,7 +14,10 @@
 #title1{
 	color: #465715;
 }
-
+.cap{
+    color: #fff;
+    background: #b9b3b3;
+}
 .blogBody .user-center-left .user-menu-links, .blogBody .personCenter-userInfo, .blogBody .user-center-left .user-setting {
    background: #E7E7E7;
 } 

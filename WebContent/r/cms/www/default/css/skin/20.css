@@ -17,7 +17,10 @@
     border: none; 
     text-decoration:none;
 }
-
+.cap{
+    color: #fff;
+    background: #26462d;
+}
 .user-menu-links li a em {background: transparent; }
 .user-menu-links li.on a em {background: transparent; }
 
