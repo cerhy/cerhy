@@ -1,0 +1,63 @@
+/* view 10 */
+.blogBody{
+	width:100%;
+	background:#e2e2e2  url(36.jpg) no-repeat center top;
+}
+.header-top {background:#efefef;border-bottom:0px;}
+.footer_styles {
+	background: #e2e2e2; 
+}
+.blogHead,.tj{color: #000;}
+/* .tj{
+	padding-bottom:80px;
+} */
+#title1{
+	color: #000;
+}
+.cap{
+    color: #000;
+    background: #d6d2d2;
+}
+.footer-content{padding-top: 30px;color: #000;font-size: 14px;text-align: center;}
+.blogBody .user-center-left .user-menu-links, .blogBody .personCenter-userInfo, .blogBody .user-center-left .user-setting {
+   background:#fff;
+} 
+
+.blogBody .user-center-left .user-menu-links li{
+	margin-top:-1px;
+	border-bottom: none; 
+}
+.blogBody .user-center-left .user-menu-links a {
+    border : none; 
+    text-decoration:none;
+}
+.blogBody .user-menu-links li a em {
+     background: transparent; 
+}
+.blogBody .user-menu-links li.on a em {
+   background: transparent; 
+}
+.blogBody .user-menu-links li a {
+	color: #666666;
+}
+.blogBody .user-menu-links li a:hover {
+	color:#0070b8;
+}
+#_goPs{
+	background: transparent;
+}
+.tggl .tggl-top {background: transparent;}
+body, button, input, select, textarea { background: transparent;}
+.tggl a {color:#666666;}
+.a2{color:#666666;}
+.inp2{color:#666666;}
+.tggl td{border-color:#666666;}
+.tggl table{border-color:#666666;}
+.tggl-top{background:transparent;}
+.st_tree ul li a:hover {color:#0070b8;}
+.htmleaf-container .mtree-demo .mtree {
+  background: #fff;
+  margin: 20px auto;
+  max-width: 320px;
+  border-radius: 3px;
+}	
