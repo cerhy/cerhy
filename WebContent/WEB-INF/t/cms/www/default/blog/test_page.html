@@ -41,7 +41,7 @@
 }
 .cap	{
     color: #fff;
-    background: #0072C6;
+    background: #a2e4b1;
     /* padding: 4px 20px 4px 20px; */
     cursor: pointer;
     padding-left: 20px;
@@ -184,8 +184,7 @@ function zdShowHidden(){
                 <ul class="topicList" >
 				 [#if stickList?size gt 0]
 				          [#list stickList as sti]
-				           <li class="row"><a cmd="LoadTopic" _list="hilite"  href="${base}/${sti.path}/${sti.contentId}.jhtml?d=1">${sti.contentTitle}</a> <span class="lt">(${sti.contentTime?string('yyyy-MM-dd')})</span></li>
-				           [/#list]
+ 						  <li class="row"><a cmd="LoadTopic" _list="hilite"  href="${base}/${sti.path}/${sti.contentId}.jhtml?d=1&currentId=${sti.id}&stickUserId=${sti.stickUserId}" >${sti.contentTitle}</a> <span class="lt">(${sti.contentTime?string('yyyy-MM-dd')})</span></li>				           [/#list]
 				 [#else]
 				 <li class="row" >暂无置顶内容！ </li>
 				 [/#if]
