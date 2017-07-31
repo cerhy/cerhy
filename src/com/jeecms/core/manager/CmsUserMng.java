@@ -154,4 +154,16 @@ public interface CmsUserMng {
 	 * @param contentId
 	 */
 	public void cancelContentStick(Integer contentId,Integer userId);
+	
+	/**
+	 * 获取置顶的上一篇
+	 * @param id
+	 */
+	public List<ContentStick> getPreStick(Integer id,Integer userId);
+	
+	/**
+	 *获取置顶的下一篇
+	 * @param id
+	 */
+	public List<ContentStick> getNextStick(Integer id,Integer userId);
 }

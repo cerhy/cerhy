@@ -660,4 +660,20 @@ public class CmsUserMngImpl implements CmsUserMng {
 	public void cancelContentStick(Integer contentId,Integer userId){
 		contentDao.cancelContentStick(contentId, userId);
 	}
+	
+	/**
+	 * 获取置顶的上一篇
+	 * @param id
+	 */
+	public List<ContentStick> getPreStick(Integer id,Integer userId){
+		return contentDao.getPreStick(id, userId);
+	}
+	
+	/**
+	 *获取置顶的下一篇
+	 * @param id
+	 */
+	public List<ContentStick> getNextStick(Integer id,Integer userId){
+		return contentDao.getNextStick(id, userId);
+	}
 }

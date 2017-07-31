@@ -1087,6 +1087,7 @@ public class ContentMngImpl implements ContentMng, ChannelDeleteChecker {
 	public void deleteByIdBlog(Integer id) {
 		cmsCommentMng.deleteByContentId(id);
 		fileMng.deleteByContentId(id);
+		cmsUserMng.cancelContentStick(id, null);
 		dao.deleteById(id);
 	}
 	

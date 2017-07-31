@@ -3,6 +3,7 @@ package com.jeecms.cms.action.blog;
 import static com.jeecms.cms.Constants.TPLDIR_BLOG;
 import static com.jeecms.common.page.SimplePage.cpn;
 
+import java.awt.datatransfer.StringSelection;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -1307,6 +1308,15 @@ public class BlogAct {
 			model.addAttribute("columnId", columnId);
 			model.addAttribute("pic", content.getPictureByNo(pageNo));
 			String collection = request.getParameter("collection");
+			
+			//置顶下一页上一页参数
+			String currentId = request.getParameter("currentId");//当前文章的id
+			if(StringUtils.isNotBlank(currentId)){
+				String stickUserId = request.getParameter("stickUserId");//当前文章的id
+				model=blogCommon.getPreNextStick(model, Integer.parseInt(currentId),Integer.parseInt(stickUserId) );
+			
+			}
+			
 			String d = request.getParameter("d");
 			if(null != collection || "2".equals(d)){//转载文章显示
 				model.addAttribute("collection", 1);

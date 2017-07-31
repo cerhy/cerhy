@@ -21,6 +21,7 @@ import com.jeecms.cms.entity.assist.CmsBlogVisitor;
 import com.jeecms.cms.entity.assist.CmsJoinGroup;
 import com.jeecms.cms.entity.assist.CmsPersonalChannel;
 import com.jeecms.cms.entity.main.Columns;
+import com.jeecms.cms.entity.main.ContentStick;
 import com.jeecms.cms.entity.main.Focus;
 import com.jeecms.cms.manager.main.ChannelMng;
 import com.jeecms.cms.manager.main.ContentMng;
@@ -574,6 +575,29 @@ public class BlogCommon {
 		}else{
 			model.addAttribute("isStick", null);
 		}
+		return model;
+	}
+	
+	/**
+	 *获取当前文章的上一篇和下一篇
+	 **/
+	public ModelMap getPreNextStick(ModelMap model,Integer currentId, Integer stickUserId) {
+			//上一篇文章
+		List<ContentStick> preStickList = cmsUserMng.getPreStick(currentId, stickUserId);
+		
+		if(preStickList!=null && preStickList.size()>0){
+			model.addAttribute("preStick", preStickList.get(0));
+		}else{
+			model.addAttribute("preStick", null);
+		}
+			//下一篇文章
+		List<ContentStick> nextStickList = cmsUserMng.getNextStick(currentId, stickUserId);
+		if(nextStickList!=null && nextStickList.size()>0){
+			model.addAttribute("nextStick", nextStickList.get(0));
+		}else{
+			model.addAttribute("nextStick", null);
+		}
+		model.addAttribute("currentId", currentId);
 		return model;
 	}
 	

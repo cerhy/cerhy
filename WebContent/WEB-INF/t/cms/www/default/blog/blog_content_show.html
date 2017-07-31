@@ -129,6 +129,9 @@ $(function () {
 function btnPrints(){
       $(".xueke-content-detail").printArea();
 }
+function goback(){
+	window.location.href="http://localhost:8080/cerhy/blog/index.jspx";
+}
 </script> 
 [#include "head.html"/]
 <style type="text/css">
@@ -215,7 +218,7 @@ outline: none;
 					 <span class="pr15 pinglun">评论：${content.commentsCheckedNum!} </span>
                 </div>
                 <div class="gray9 h2dt pt5">
-                	<span class="pr15" id="backto" title="返回"><img style="width: 20px;height: 20px;margin: -6px 0px;cursor: pointer;" src="/${res}/images/back_1.png" alt="" class="backto" onclick="javascpipt:history.go(-1);"/></span>
+                	<span class="pr15" id="backto" title="返回"><img style="width: 20px;height: 20px;margin: -6px 0px;cursor: pointer;" src="/${res}/images/back_1.png" alt="" class="backto" onclick="goback();"/></span>
 				     <span id="comfirmSpan" style="display:none;cursor: pointer;">转载</span>
 				     <span id="cancelSpan" style="display:none; cursor: pointer;">取消转载</span>&nbsp;
 				     [#if user??] 
@@ -331,6 +334,32 @@ outline: none;
 				      <div class="ups" title="赞"><a onclick="Cms.up('${base}',${content.id},${content.ups});"><span id="upss"></span></a></div>
 				      [/#if]
 				    </div>
+				    [#if currentId??]
+				    	  <div class="prev-next-wz clearfix">
+						        
+						        	[#if preStick??]
+		                    		<a href="${base}/${preStick[2]}/${preStick[3]}.jhtml?d=1&currentId=${preStick[0]}&stickUserId=${preStick[4]}" class="prev-pian">
+		                            <span>&lt;上一篇</span>
+		                            <em>${preStick[1]}</em>
+		                        	</a>
+		                        	[#else]
+			                        	<a href="javascript:;" class="prev-pian">
+			                            <em>没有了</em>
+			                        	</a>
+		                        	[/#if]
+		                        	[#if nextStick??]
+				                     <a href="${base}/${nextStick[2]}/${nextStick[3]}.jhtml?d=1&currentId=${nextStick[0]}&stickUserId=${nextStick[4]}" class="next-pian">
+			                            <em>${nextStick[1]}</em>
+			                            <span>下一篇&gt;</span>
+			                        </a>
+			                        [#else]
+			                          <a href="javascript:;" class="next-pian">
+			                            <em>没有了</em>
+			                       	  </a>
+			                        [/#if]
+						       </div>
+				    [#else]
+				    
 				      [#if collection??]
 				      <div class="prev-next-wz clearfix">
 				         [@cms_content_collection id=content.id next='1' userId=uId]
@@ -349,7 +378,7 @@ outline: none;
 	                    [#if tag_bean??]
 		                     <a href="${tag_bean.url}?d=2" class="next-pian">
 	                            <em>[@text_cut s=tag_bean.title len=20 append='...'/]</em>
-	                            <span>下一篇12&gt;</span>
+	                            <span>下一篇&gt;</span>
 	                        </a>
 	                    [#else]
 		                     <a href="javascript:;" class="next-pian">
@@ -384,12 +413,12 @@ outline: none;
 	                       [#if columnIdZ??]
 		                     <a href="${tag_bean.url}?d=1&GroupFlag=${GroupFlagData}&columnIdZ=${columnIdZ}" class="next-pian">
 	                            <em>[@text_cut s=tag_bean.title len=15 append='...'/]</em>
-	                            <span>下一篇s&gt;</span>
+	                            <span>下一篇&gt;</span>
 	                        </a>
                            [#else]
 		                     <a href="${tag_bean.url}?d=1&GroupFlag=${GroupFlagData}" class="next-pian">
 	                            <em>[@text_cut s=tag_bean.title len=15 append='...'/]</em>
-	                            <span>下一45篇&gt;</span>
+	                            <span>下一篇&gt;</span>
 	                        </a>
                            [/#if]
 	                    [#else]
@@ -399,6 +428,7 @@ outline: none;
 	                    [/#if]
                     [/@cms_content]
                     </div>
+                    [/#if]
                     [/#if]
                <div class="news-comments" style="width:665px;">
 				    [#if channel.commentControl!=2]
