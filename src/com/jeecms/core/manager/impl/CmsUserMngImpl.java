@@ -635,9 +635,11 @@ public class CmsUserMngImpl implements CmsUserMng {
 		Long count = contentDao.getStickCount(contentStick.getStickUserId());
 		if(count>10){
 			result=1;//最多置顶10篇文章
+		}else{
+			contentStick.setPath( channelPath);
+			contentDao.contentStick(contentStick);
 		}
-		contentStick.setPath( channelPath);
-		contentDao.contentStick(contentStick);
+		
 		return result;
 	}
 	
