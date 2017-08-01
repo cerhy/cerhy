@@ -8,17 +8,18 @@
 		</div>
 		<div class="header-right"
 			style="float: left; margin-left: 12px; cursor: pointer;">
-			[#if user??] [#if user.userImg??] <img src="${user.userImg}"
+			<!-- [#if user??] [#if user.userImg??] <img src="${user.userImg}"
 				style="margin-top: 6px; width: 20px; height: 20px"></img> [#else]
 			<img alt="用户头像" src="/${res}/images/userImg.png"
 				style="margin-top: 6px; width: 20px; height: 20px"></img> [/#if]
-			<!--  <a style="color: white;margin-top: 10px;">${user.username}</a>  -->
-			[#else] <a style="color: #fff;" href="http://localhost:8080/cerhy/blog/index.jspx">注册/登录</a>
-			[/#if]
+			 <a style="color: white;margin-top: 10px;">${user.username}</a> 
+			[#else]  
+			[/#if]-->
+			<a style="color: #fff;" href="http://localhost:8080/cerhy/blog/index.jspx">注册/登录</a>
 		</div>
-		[#if user??]
+<!-- 		[#if user??]
 		<div class="header-right" style="float: left; cursor: pointer;">
-			<!-- <span style="color: white;margin-top: 10px;">${user.username}</span>  -->
+			<span style="color: white;margin-top: 10px;">${user.username}</span> 
 			<ul id="menu" class="menu1">
 				<li><span style="color: white;">${user.username}</span>
 					<div class="pad col1 ">
@@ -34,7 +35,7 @@
 					</div></li>
 			</ul>
 		</div>
-		[/#if]
+		[/#if] -->
 		<div class="header-right">
 			<div class="search-bar">
 				<form action="http://www.cerhy.com/search.jspx" target="_blank" id="searchForm">
