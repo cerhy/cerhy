@@ -292,6 +292,8 @@ public class BlogCommon {
 							list.add(nc);
 						}
 					}
+				}else{
+					break;
 				}
 			}
 			model.addAttribute("friends", friends.replaceAll(" ", "\r\n"));
