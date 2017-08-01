@@ -39,9 +39,29 @@
 .jump:hover {
     box-shadow: 0 3px 4px 0 rgba(0,0,0,0.24),0 8px 15px 0 rgba(0,0,0,0.19);
 }
+.submit {
+    background-color: #3385ff; 
+    border: none;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+    margin: 4px 2px;
+    cursor: pointer;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    width: 60px !important;
+    position:relative;
+    top:-1px;
+}
+
+.submit:hover {
+    box-shadow: 0 3px 4px 0 rgba(0,0,0,0.24),0 8px 15px 0 rgba(0,0,0,0.19);
+}
 .cap	{
-    color: #fff;
-    background: #a2e4b1;
+    color: #000;
+    background: #def7ff;
     /* padding: 4px 20px 4px 20px; */
     cursor: pointer;
     padding-left: 20px;
@@ -49,7 +69,8 @@
     float: left;
     margin-left: 20px;
     height: 36px;
-    padding-top: 10px;}
+    padding-top: 10px;
+    font-size:20px;}
 .blog_right1 {
     padding: 35px;
     background: #ffffff;
@@ -171,7 +192,7 @@ function zdShowHidden(){
      	 	<div style="width:300px;float: right;margin-right:-22px;">
      	 	         <form action="${base}/blog/find_all_url_friend.jspx"  id="searchForm" >
         				<input type="text" id="queryTitle" name="queryTitle" maxLength="10" value="${q}" maxlength="50"  autocomplete="off" style="background:#f6fbff;height: 22px;border: 1px solid #0b91df;color: #999;padding: 2px 5px;width: 200px;"/>
-        				<input type="submit" value="搜  索" style="background-color: #4CAF50; color: white;padding: 2px 8px;" />
+        				<input type="submit" value="搜  索" class="submit" style=" color: white;" />
         				<input type="hidden" id="userIds"  name="userIds" value="${usert.id}"></input>
        			    </form> 
        		 </div>
