@@ -47,14 +47,14 @@ ul.mtree.bubba li:last-child > a {
   border: none;
 }
 ul.mtree.bubba > li.mtree-open > a {
-  background: #DDD;
+  background: #def7ff;
 }
 ul.mtree.bubba li > a:hover {
   background: #DDD;
 }
 ul.mtree.bubba li.mtree-active > a {
-  background: #FFC000;
-  color: #FFF;
+  background: #eff8ff; 
+  color: #000;
 }
 ul.mtree.bubba a {
   padding: 7px 0px 7px 1em;
