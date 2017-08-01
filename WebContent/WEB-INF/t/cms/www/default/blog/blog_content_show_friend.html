@@ -344,7 +344,31 @@ table th,table td{word-break:break-all;white-space:normal;overflow:hidden;}
 				      <div class="ups" title="赞"><a onclick="Cms.up('${base}',${content.id},${content.ups});"><span id="upss"></span></a></div>
 				      [/#if]
 				    </div>
-				       
+				           [#if currentId??]
+				    	  <div class="prev-next-wz clearfix">
+						        
+						        	[#if preStick??]
+		                    		<a href="${base}/${preStick[2]}/${preStick[3]}.jhtml?d=1&currentId=${preStick[0]}" class="prev-pian">
+		                            <span>&lt;上一篇</span>
+		                            <em>${preStick[1]}</em>
+		                        	</a>
+		                        	[#else]
+			                        	<a href="javascript:;" class="prev-pian">
+			                            <em>没有了</em>
+			                        	</a>
+		                        	[/#if]
+		                        	[#if nextStick??]
+				                     <a href="${base}/${nextStick[2]}/${nextStick[3]}.jhtml?d=1&currentId=${nextStick[0]}" class="next-pian">
+			                            <em>${nextStick[1]}</em>
+			                            <span>下一篇&gt;</span>
+			                        </a>
+			                        [#else]
+			                          <a href="javascript:;" class="next-pian">
+			                            <em>没有了</em>
+			                       	  </a>
+			                        [/#if]
+						       </div>
+				    [#else]
 				           [#if collection??]
 				      <div class="prev-next-wz clearfix">
 				         [@cms_content_collection id=content.id next='1' userId=usert.id]
@@ -415,6 +439,7 @@ table th,table td{word-break:break-all;white-space:normal;overflow:hidden;}
 	                    [/#if]
                     [/@cms_content]
                     </div>
+                    [/#if]
                     [/#if]
                <div class="news-comments" style="width:665px;">
 				    [#if channel.commentControl!=2]

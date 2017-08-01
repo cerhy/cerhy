@@ -1598,7 +1598,7 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 	 * @return int
 	 */
 	public Integer cancelContentStick(Integer contentId,Integer userId){
-		String hql = "delete   from ContentStick  where contentId="+contentId+" and stickUserId="+userId+"";
+		String hql = "delete   from ContentStick  where contentId="+contentId+" ";
 		return (Integer) deleteObject(hql);
 	}
 	
@@ -1610,5 +1610,40 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 	public Long getStickCount(Integer userId){
 		String hql = "select   count(1) from ContentStick  where stickUserId="+userId+" ";
 		return (Long) findUnique(hql);
+	}
+	
+	/**
+	 * 获取置顶的上一篇
+	 * @param id
+	 */
+	public List<ContentStick> getPreStick(Integer id,Integer userId){
+		Finder f = Finder.create("select   id,contentTitle,path,contentId,stickUserId from ContentStick bean");
+		f.append(" where 1=1");
+		f.append(" and bean.stickUserId=:userId");
+		f.setParam("userId", userId);
+		
+		f.append(" and bean.id>:id");
+		f.setParam("id", id);
+		f.append(" order by  id ");
+		
+		//String hql = "select   id,contentTitle from ContentStick   where stickUserId="+userId+" and id =41 order by id  ";
+		return find(f);
+	}
+	
+	/**
+	 *获取置顶的下一篇
+	 * @param id
+	 */
+	public List<ContentStick> getNextStick(Integer id,Integer userId){
+		Finder f = Finder.create("select   id,contentTitle,path,contentId,stickUserId from ContentStick bean");
+		f.append(" where 1=1");
+		f.append(" and bean.stickUserId=:userId");
+		f.setParam("userId", userId);
+		
+		f.append(" and bean.id<:id");
+		f.setParam("id", id);
+		f.append(" order by  id desc");
+		//String hql = "select   id,contentTitle from ContentStick    where stickUserId="+userId+" and id =41 order by id desc";
+		return  find(f);
 	}
 }

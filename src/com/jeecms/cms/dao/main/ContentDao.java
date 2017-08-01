@@ -382,4 +382,16 @@ public interface ContentDao {
 	 * @return int
 	 */
 	public Long getStickCount(Integer userId);
+	
+	/**
+	 * 获取置顶的上一篇
+	 * @param id
+	 */
+	public List<ContentStick> getPreStick(Integer id,Integer userId);
+	
+	/**
+	 *获取置顶的下一篇
+	 * @param id
+	 */
+	public List<ContentStick> getNextStick(Integer id,Integer userId);
 }

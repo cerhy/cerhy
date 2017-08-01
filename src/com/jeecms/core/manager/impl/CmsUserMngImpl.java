@@ -633,11 +633,13 @@ public class CmsUserMngImpl implements CmsUserMng {
 		String channelPath = contentDao.getChannelPath(contentStick.getContentId());
 		int result =0;
 		Long count = contentDao.getStickCount(contentStick.getStickUserId());
-		if(count>10){
+		if(count>=10){
 			result=1;//最多置顶10篇文章
+		}else{
+			contentStick.setPath( channelPath);
+			contentDao.contentStick(contentStick);
 		}
-		contentStick.setPath( channelPath);
-		contentDao.contentStick(contentStick);
+		
 		return result;
 	}
 	
@@ -657,5 +659,21 @@ public class CmsUserMngImpl implements CmsUserMng {
 	 */
 	public void cancelContentStick(Integer contentId,Integer userId){
 		contentDao.cancelContentStick(contentId, userId);
+	}
+	
+	/**
+	 * 获取置顶的上一篇
+	 * @param id
+	 */
+	public List<ContentStick> getPreStick(Integer id,Integer userId){
+		return contentDao.getPreStick(id, userId);
+	}
+	
+	/**
+	 *获取置顶的下一篇
+	 * @param id
+	 */
+	public List<ContentStick> getNextStick(Integer id,Integer userId){
+		return contentDao.getNextStick(id, userId);
 	}
 }
