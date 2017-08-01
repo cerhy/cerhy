@@ -570,7 +570,27 @@ public class BlogAct {
 		if (errors.hasErrors()) {
 			return FrontUtils.showError(request, response, model, errors);
 		}*/
+		CmsModel defaultModel=cmsModelMng.getDefModel();
 		Content c = new Content();
+		Integer modelId=null;
+		int groupId = user.getGroup().getId();//学科教研模板，市县教研内容模板
+		int sta=0;
+		if(channelId!=null&&!channelId.toString().equals("280")){
+			sta=1;
+		}
+		if (4 == groupId&&sta==1) {
+			modelId = 11;//学科教研
+		} else if (5 == groupId&&sta==1) {
+			modelId = 21;//市县教研
+		} else {
+			modelId = 24;//普通博客
+		}
+		CmsModel m=cmsModelMng.findById(modelId);
+		if(m!=null){
+			c.setModel(m);
+		}else{
+			c.setModel(defaultModel);
+		}
 		c.setId(id);
 		c.setSite(site);
 		c.setPassword(password);
@@ -620,14 +640,22 @@ public class BlogAct {
 						//只有三级栏目就把该栏目的上一级栏目ID 作为key 也就是parentId
 						try {
 							list=RedisUtil.getList(String.valueOf(parentId));
+							int ck=0;//主要目的是为了修改文章的时候将文章修改到学科教研,市县教研和普通栏目redis移除和添加
 							if(list!=null&&list.size()>0){
 								for(int i=0;i<list.size();i++){
 									if(c.getId().toString().equals(list.get(i).getId().toString())){
+										ck=1;//走到这说明修改文章时候市县教研或者学科教研redis已经存在该文章做修改处理.
 										listCopy.add(c);
 									}else{
+										if(ck==0){
+											listCopy.add(c);//走到这说明是普通栏目下的文章修改到市县教研或者学科教研下.做添加处理
+											ck=2;//解决重复添加
+										}
 										listCopy.add(list.get(i));
 									}
 								}
+							}else{
+								listCopy.add(c);
 							}
 							RedisUtil.setList(String.valueOf(parentId), listCopy);
 						} catch (Exception e) {
@@ -637,14 +665,22 @@ public class BlogAct {
 						//只有二级栏目就把该栏目的ID 作为key也就是传进来的栏目id
 						try {
 							list=RedisUtil.getList(String.valueOf(channelId));
+							int ck=0;
 							if(list!=null&&list.size()>0){
 								for(int i=0;i<list.size();i++){
 									if(c.getId().toString().equals(list.get(i).getId().toString())){
+										ck=1;
 										listCopy.add(c);
 									}else{
+										if(ck==0){
+											listCopy.add(c);
+											ck=2;//解决重复添加
+										}
 										listCopy.add(list.get(i));
 									}
 								}
+							}else{
+								listCopy.add(c);
 							}
 							RedisUtil.setList(String.valueOf(channelId), listCopy);
 						} catch (Exception e) {
@@ -655,14 +691,22 @@ public class BlogAct {
 					//只有1级栏目就把该栏目的ID 作为key
 					try {
 						list=RedisUtil.getList(String.valueOf(channelId));
+						int ck=0;
 						if(list!=null&&list.size()>0){
 							for(int i=0;i<list.size();i++){
 								if(c.getId().toString().equals(list.get(i).getId().toString())){
+									ck=1;
 									listCopy.add(c);
 								}else{
+									if(ck==0){
+										listCopy.add(c);
+										ck=2;//解决重复添加
+									}
 									listCopy.add(list.get(i));
 								}
 							}
+						}else{
+							listCopy.add(c);
 						}
 						RedisUtil.setList(String.valueOf(channelId), listCopy);
 					} catch (Exception e) {

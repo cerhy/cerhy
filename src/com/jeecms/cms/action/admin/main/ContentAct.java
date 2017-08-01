@@ -671,6 +671,38 @@ public class ContentAct{
 		if (errors.hasErrors()) {
 			return errors.showErrorPage(model);
 		}
+		
+		//先移除redis
+		List<Content> listt=new ArrayList<Content>();
+		Integer parentIdt=null;
+		String parentIdst=null;
+		Content beans=manager.findById(bean.getId());
+		Channel idst = channelMng.findById(beans.getChannel().getId());//获取该栏目实体
+		//根据ids.getParentId()判断该栏目是否为只有一级栏目
+		if(null!=idst.getParentId()){
+			parentIdt=idst.getParentId();//走到这说明该传进来的栏目ID 存在上一级栏目-二级栏目
+			//获取上一级栏目id
+			Channel idsst = channelMng.findById(parentIdt);
+			//再根据上一级栏目ID--parentId 来判读是否存在上上一级栏目--一级栏目(已知只有三级栏目,无序继续往上上上一级判断(4级栏目))
+			if(null!=idsst.getParentId()){
+				//获取上上一级栏目id(一级栏目)
+				parentIdst=String.valueOf(idsst.getParentId().toString());
+			}
+		}
+		//判断parentId是否为null.如果为null则说明传进来的栏目ID 只有一级栏目 切为本身.如果不为null则说明传进来的栏目ID存在上一级栏目
+		if(null!=parentIdt){
+			//判断parentIds是否为null.如果为null则说明传进来的栏目ID 只有两级栏目.如果不为null则说明传进来的栏目ID存在上三级栏目
+			if(null!=parentIdst){
+				//只有三级栏目就把该栏目的上一级栏目ID 作为key 也就是parentId
+				RedisUtil.lrem(parentIdt.toString(), 0, bean.getId().toString(),listt);
+			}else{
+				//只有二级栏目就把该栏目的上一级栏目ID 作为key也就是传进来的栏目id
+				RedisUtil.lrem(bean.getChannel().getId().toString(), 0, bean.getId().toString(),listt);
+			}
+		}else{
+			//只有1级栏目就把该栏目的ID 作为key
+			RedisUtil.lrem(bean.getChannel().getId().toString(), 0, bean.getId().toString(),listt);
+		}
 		// 加上模板前缀
 		CmsSite site = CmsUtils.getSite(request);
 		CmsUser user = CmsUtils.getUser(request);
@@ -701,7 +733,6 @@ public class ContentAct{
 		//更新redis存储
 		List<Content> list=new ArrayList<Content>();
 		List<Content> listCopy=new ArrayList<Content>();
-		List<Content> listCopyJp=new ArrayList<Content>();
 		Integer parentId=null;
 		String parentIds=null;
 		Channel ids = channelMng.findById(channelId);//获取该栏目实体
@@ -723,14 +754,22 @@ public class ContentAct{
 				//只有三级栏目就把该栏目的上一级栏目ID 作为key 也就是parentId
 				try {
 					list=RedisUtil.getList(String.valueOf(parentId));
+					int ck=0;
 					if(list!=null&&list.size()>0){
 						for(int i=0;i<list.size();i++){
 							if(bean.getId().toString().equals(list.get(i).getId().toString())){
+								ck=1;
 								listCopy.add(bean);
 							}else{
+								if(ck==0){
+									listCopy.add(bean);
+									ck=2;//解决重复添加
+								}
 								listCopy.add(list.get(i));
 							}
 						}
+					}else{
+						listCopy.add(bean);
 					}
 					RedisUtil.setList(String.valueOf(parentId), listCopy);
 				} catch (Exception e) {
@@ -740,14 +779,22 @@ public class ContentAct{
 				//只有二级栏目就把该栏目的ID 作为key也就是传进来的栏目id
 				try {
 					list=RedisUtil.getList(String.valueOf(channelId));
+					int ck=0;
 					if(list!=null&&list.size()>0){
 						for(int i=0;i<list.size();i++){
 							if(bean.getId().toString().equals(list.get(i).getId().toString())){
+								ck=1;
 								listCopy.add(bean);
 							}else{
+								if(ck==0){
+									listCopy.add(bean);
+									ck=2;//解决重复添加
+								}
 								listCopy.add(list.get(i));
 							}
 						}
+					}else{
+						listCopy.add(bean);
 					}
 					RedisUtil.setList(String.valueOf(channelId), listCopy);
 				} catch (Exception e) {
@@ -758,8 +805,10 @@ public class ContentAct{
 			//只有1级栏目就把该栏目的ID 作为key
 			try {
 				list=RedisUtil.getList(String.valueOf(channelId));
+				int ck=0;
 				if(list!=null&&list.size()>0){
 					if(channelId==280&&typeId==5){
+						//精品博客
 						list.add(bean);
 						if(list.size()>2){
 							for(int j=0;j<listCopy.size();j++){
@@ -773,12 +822,18 @@ public class ContentAct{
 					}else if(channelId!=280){
 						for(int i=0;i<list.size();i++){
 							if(bean.getId().toString().equals(list.get(i).getId().toString())){
+								ck=1;
 								listCopy.add(bean);
 							}else{
+								if(ck==0){
+									listCopy.add(bean);
+									ck=2;//解决重复添加
+								}
 								listCopy.add(list.get(i));
 							}
 						}
 					}else if(channelId==280&&typeId!=5){
+						//精品博客
 						RedisUtil.lrem(bean.getChannel().getId().toString(), 0, bean.getId().toString(),list);
 					}
 				}else{
