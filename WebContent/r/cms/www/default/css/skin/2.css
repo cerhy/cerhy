@@ -17,14 +17,14 @@ a{color: #666666}
 a:link{color:#666666;}
 .cap{
     color: #fff;
-    background: #999999;
+    background: #000000;
 }
 .blogBody{
 	width:100%;
 	background: #000  url(02.gif); 
 }
 #title1{color: #c5c9ce;}
-.header-top {background: #000;border-bottom:0px;}
+.header-top {background: #efefef;border-bottom:0px;}
 .footer_styles {background-image: url(02.gif); }
 
 .blogBody .user-center-left .user-menu-links li{
@@ -64,4 +64,59 @@ border: 1px solid #666666;}
   margin: 20px auto;
   max-width: 320px;
   border-radius: 3px;
+}
+.htmleaf-container a{
+	color:#b7b7b7 !important;
+}
+.ff{
+	color: #dbdadb !important;
+}
+.report-list2 li a .report-text h3{
+	color:#8197b0;
+}
+#queryTitle{
+	  border:1px solid #666666 !important;
+}
+.submit{
+	background:#666666 !important;
+	color: #000000 !important;
+}
+.topicList a{
+	color: #8197b0 !important;
+}
+.topicList {
+    color: #aaa !important;
+}
+
+/* .user-setting .user-oparetion-btn{
+	background: #222 !important;
+    border: 1px solid #666666 !important;
+    color: #aaaaaa !important;
+} */
+.udl ul li:hover ul li a {
+    background: #222222 !important;
+    color: #aaa !important;
+}
+.udl ul li:hover a {
+    color: #fff !important;
+    background: #222222 !important;
+}   
+.udl ul li a, .menu ul li a:visited{
+	color: #c5c9ce !important;
+    background: #000000 !important;
+}
+.udl ul li:hover ul li a:hover {
+    background: #467ca8 !important;
+}
+ul.mtree.bubba > li.mtree-open > a {
+    background: #000 !important;
+}
+ul.mtree.bubba li.mtree-active > a {
+    background: #2d2d2d !important; 
+}
+.fbgj .member-change {
+     color: #ddd !important;
+}
+.fbgj .tggl-top {
+    color: #c7c7c7 !important;
 }

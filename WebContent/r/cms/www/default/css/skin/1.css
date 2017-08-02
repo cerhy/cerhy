@@ -11,8 +11,8 @@
 .blogHead,.tj{color: #fff;}
 
 .cap{
-    color: #fff;
-    background: #3f9ce2;
+    color: #497eaa;
+    background: #c1d4e5;
 }
 
 #title1{
@@ -22,7 +22,7 @@
 	padding-bottom:40px;
 } */
 .blogBody .user-center-left .user-menu-links,.blogBody .personCenter-userInfo, .blogBody .user-center-left .user-setting {
-   background: #F4F8FB;
+   background: #fff;
 } 
 
 .blogBody .user-center-left .user-menu-links li{
@@ -54,8 +54,29 @@ body, button, input, select, textarea {
 	}
 .st_tree ul li a:hover {color:#0070b8;}
 .htmleaf-container .mtree-demo .mtree {
-  background: #F4F8FB;
+  background: #fff;
   margin: 20px auto;
   max-width: 320px;
   border-radius: 3px;
+}
+#queryTitle{
+	    background: #bcd3e5 !important;
+}
+.udl ul li:hover ul li a:hover {
+    background: gray !important;
+}
+.udl ul li a, .menu ul li a:visited{
+	    background: #bcd3e5 !important;
+}
+
+.udl ul li:hover a {
+    color: #fff !important;
+    background: #bcd3e5 !important;
+}
+ul.mtree.bubba > li.mtree-open > a {
+  background: #bcd3e5 !important;
+}
+ul.mtree.bubba li.mtree-active > a {
+  background: #c4def3 !important; 
+  color: #000;
 }

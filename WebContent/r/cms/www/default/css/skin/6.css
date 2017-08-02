@@ -2,14 +2,14 @@
 	width:100%;
 	background: #007ab1 url(06.jpg) no-repeat center top;
 }
-.header-top {background: #007ab1;border-bottom:0px;}
+.header-top {background: #efefef;border-bottom:0px;}
 .footer_styles {
 	background : #007ab1; 
 }
 .blogHead,.tj{color: #fff;}
 .cap{
     color: #fff;
-    background: #369fce;
+    background: #B3BDE1;
 }
 #title1{
 	color: #fff;
@@ -59,3 +59,38 @@ body, button, input, select, textarea { background: transparent;}
   max-width: 320px;
   border-radius: 3px;
 }
+.udl ul li:hover ul li a {
+    background: #B3BDE1 !important;
+    color: #fff !important;
+}
+.udl ul li:hover a {
+    color: #fff !important;
+    background: #B3BDE1 !important;
+}   
+.udl ul li a, .menu ul li a:visited{
+	color: #fff !important;
+    background: #B3BDE1 !important;
+}
+.udl ul li:hover ul li a:hover {
+    background: #3385ff !important;
+}
+ul.mtree.bubba > li.mtree-open > a {
+    background: #B3BDE1 !important;
+}
+ul.mtree.bubba li.mtree-active > a {
+    background: #9bb0b9 !important; 
+}
+.report-list2 li a .report-text h3{
+	color:#2971c0;
+}
+.f2{
+	color:#2971c0 !important;
+}
+#queryTitle{
+	  border:1px solid #B3BDE1 !important;
+	  color: #fff !important;
+}
+.submit{
+	background:#B3BDE1 !important;
+	color: white !important;
+} 
