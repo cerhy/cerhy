@@ -865,18 +865,18 @@ public class ContentAct{
 						listCopy=list;
 					}
 				}
-				for(int i=0;i<list.size();i++){
+				for(int i=0;i<listCopy.size();i++){
 					if(channelId.toString().equals("75")&&typeId.toString().equals("2")){
-						listRedis.add(list.get(i));
+						listRedis.add(listCopy.get(i));
 					}else{
-						if(list.size()>8){
+						if(listCopy.size()>8){
 							if((i+1)<=8){
-								listRedis.add(list.get(i));
+								listRedis.add(listCopy.get(i));
 							}else{
 								break;
 							}
 						}else{
-							listRedis.add(list.get(i));
+							listRedis.add(listCopy.get(i));
 						}
 					}
 				}
