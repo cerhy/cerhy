@@ -651,6 +651,7 @@ public class BlogAct {
 			if(!channelId.toString().equals("280")){
 				List<Content> list=new ArrayList<Content>();
 				List<Content> listCopy=new ArrayList<Content>();
+				List<Content> listRedis=new ArrayList<Content>();
 				Integer parentId=null;
 				String parentIds=null;
 				Channel ids = channelMng.findById(channelId);//获取该栏目实体
@@ -689,7 +690,18 @@ public class BlogAct {
 							}else{
 								listCopy.add(c);
 							}
-							RedisUtil.setList(String.valueOf(parentId), listCopy);
+							for(int i=0;i<listCopy.size();i++){
+								if(listCopy.size()>8){
+									if((i+1)<=8){
+										listRedis.add(listCopy.get(i));
+									}else{
+										break;
+									}
+								}else{
+									listRedis.add(listCopy.get(i));
+								}
+							}
+							RedisUtil.setList(String.valueOf(parentId), listRedis);
 						} catch (Exception e) {
 							log.error("redis存储异常....", e);
 						}
@@ -714,7 +726,18 @@ public class BlogAct {
 							}else{
 								listCopy.add(c);
 							}
-							RedisUtil.setList(String.valueOf(channelId), listCopy);
+							for(int i=0;i<listCopy.size();i++){
+								if(listCopy.size()>8){
+									if((i+1)<=8){
+										listRedis.add(listCopy.get(i));
+									}else{
+										break;
+									}
+								}else{
+									listRedis.add(listCopy.get(i));
+								}
+							}
+							RedisUtil.setList(String.valueOf(channelId), listRedis);
 						} catch (Exception e) {
 							log.error("redis存储异常....", e);
 						}
@@ -740,7 +763,22 @@ public class BlogAct {
 						}else{
 							listCopy.add(c);
 						}
-						RedisUtil.setList(String.valueOf(channelId), listCopy);
+						for(int i=0;i<listCopy.size();i++){
+							if(channelId.toString().equals("75")&&c.getType().getId().toString().equals("2")){
+								listRedis.add(listCopy.get(i));
+							}else{
+								if(listCopy.size()>8){
+									if((i+1)<=8){
+										listRedis.add(listCopy.get(i));
+									}else{
+										break;
+									}
+								}else{
+									listRedis.add(listCopy.get(i));
+								}
+							}
+						}
+						RedisUtil.setList(String.valueOf(channelId), listRedis);
 					} catch (Exception e) {
 						log.error("redis存储异常....", e);
 					}

@@ -733,6 +733,7 @@ public class ContentAct{
 		//更新redis存储
 		List<Content> list=new ArrayList<Content>();
 		List<Content> listCopy=new ArrayList<Content>();
+		List<Content> listRedis=new ArrayList<Content>();
 		Integer parentId=null;
 		String parentIds=null;
 		Channel ids = channelMng.findById(channelId);//获取该栏目实体
@@ -771,7 +772,18 @@ public class ContentAct{
 					}else{
 						listCopy.add(bean);
 					}
-					RedisUtil.setList(String.valueOf(parentId), listCopy);
+					for(int i=0;i<listCopy.size();i++){
+						if(listCopy.size()>8){
+							if((i+1)<=8){
+								listRedis.add(listCopy.get(i));
+							}else{
+								break;
+							}
+						}else{
+							listRedis.add(listCopy.get(i));
+						}
+					}
+					RedisUtil.setList(String.valueOf(parentId), listRedis);
 				} catch (Exception e) {
 					log.error("redis存储异常....", e);
 				}
@@ -796,7 +808,18 @@ public class ContentAct{
 					}else{
 						listCopy.add(bean);
 					}
-					RedisUtil.setList(String.valueOf(channelId), listCopy);
+					for(int i=0;i<listCopy.size();i++){
+						if(listCopy.size()>8){
+							if((i+1)<=8){
+								listRedis.add(listCopy.get(i));
+							}else{
+								break;
+							}
+						}else{
+							listRedis.add(listCopy.get(i));
+						}
+					}
+					RedisUtil.setList(String.valueOf(channelId), listRedis);
 				} catch (Exception e) {
 					log.error("redis存储异常....", e);
 				}
@@ -842,7 +865,22 @@ public class ContentAct{
 						listCopy=list;
 					}
 				}
-				RedisUtil.setList(String.valueOf(channelId), listCopy);
+				for(int i=0;i<list.size();i++){
+					if(channelId.toString().equals("75")&&typeId.toString().equals("2")){
+						listRedis.add(list.get(i));
+					}else{
+						if(list.size()>8){
+							if((i+1)<=8){
+								listRedis.add(list.get(i));
+							}else{
+								break;
+							}
+						}else{
+							listRedis.add(list.get(i));
+						}
+					}
+				}
+				RedisUtil.setList(String.valueOf(channelId), listRedis);
 			} catch (Exception e) {
 				log.error("redis存储异常....", e);
 			}
