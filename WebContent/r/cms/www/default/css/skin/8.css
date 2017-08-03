@@ -3,6 +3,9 @@
 	background: #000 url(08.jpg) no-repeat center top;
 }
 .header-top {background: #efefef;border-bottom:0px;}
+a:link {
+    color: #000 !important;
+}
 .footer_styles {
 	background : #000; 
 }
@@ -43,7 +46,7 @@ td {border: 1px solid #fff;}
 	color: #666666;
 }
 a:link {
-    color: white;
+    color: #c0c0c0 !important ;
 }
 .blogBody .user-menu-links li a:hover {
 	color:#0070b8;
@@ -101,7 +104,7 @@ ul.mtree.bubba li.mtree-active > a {
 	color:#ece8ae ;
 }
 .fbgj .member-change {
-     color: #ddd !important;
+     color: #999999 !important;
 }
 .fbgj .tggl-top {
     color: #c7c7c7 !important;
@@ -111,4 +114,14 @@ ul.mtree.bubba li.mtree-active > a {
 }
 .topicList {
     color: #b7b7b7 !important;
+}
+body, button, input, select, textarea {
+    color: #c0c0c0 !important;
+}
+.links-wrap h3 {
+    background: #171414 !important;
+    color: #c6c6c6 !important;
+}
+.user-name-dt a{
+	color:white !important;
 }

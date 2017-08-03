@@ -15,8 +15,8 @@
 	color: #465715;
 }
 .cap{
-    color: #fff;
-    background: #b9b3b3;
+    color: #000;
+    background: #E1E1E1;
 }
 .blogBody .user-center-left .user-menu-links, .blogBody .personCenter-userInfo, .blogBody .user-center-left .user-setting {
    background: #E7E7E7;
@@ -60,3 +60,39 @@ body, button, input, select, textarea { background: transparent;}
   max-width: 320px;
   border-radius: 3px;
 }	
+.udl ul li:hover ul li a {
+    background: #E1E1E1 !important;
+    color: #000 !important;
+}
+.udl ul li:hover a {
+    color: #000 !important;
+    background: #E1E1E1 !important;
+}   
+.udl ul li a, .menu ul li a:visited{
+	color: #000 !important;
+    background: #E1E1E1 !important;
+}
+.udl ul li:hover ul li a:hover {
+    background: #faf6e7 !important;
+}
+#queryTitle{
+	  border:1px solid #E1E1E1 !important;
+	  color: #000 !important;
+}
+.submit{
+	background:#E1E1E1 !important;
+	color: #000 !important;
+} 
+ul.mtree.bubba > li.mtree-open > a {
+    background: #E1E1E1 !important;
+}
+ul.mtree.bubba li.mtree-active > a {
+    background: #e4ddc7 !important; 
+}
+.report-list2 li a .report-text h3{
+	color:#983d9e;
+}
+.f2{
+	color:#000 !important;
+}
+.footer-content{padding-top: 30px;color: #000;font-size: 14px;text-align: center;}

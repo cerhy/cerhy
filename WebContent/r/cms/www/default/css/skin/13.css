@@ -15,8 +15,8 @@
 	color: #376043;
 }
 .cap{
-    color: #fff;
-    background: #c4eaf7;
+    color: #000;
+    background: #def7ff;
 }
 .blogBody .user-center-left .user-menu-links, .blogBody .personCenter-userInfo, .blogBody .user-center-left .user-setting {
    background: #F5FFFD;
@@ -60,3 +60,15 @@ body, button, input, select, textarea { background: transparent;}
   max-width: 320px;
   border-radius: 3px;
 }	
+.footer-content{padding-top: 30px;color: #000;font-size: 14px;text-align: center;}
+.f2{
+	color:#000 !important;
+}
+#queryTitle{
+	  border:1px solid #def7ff !important;
+	  color: #000 !important;
+}
+.submit{
+	background:#def7ff !important;
+	color: #000 !important;
+} 

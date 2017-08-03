@@ -3,7 +3,7 @@
 	width:100%;
 	background:#8A7C55  url(12.jpg) no-repeat center top;
 }
-.header-top {background: #8A7C55;border-bottom:0px;}
+.header-top {background: #efefef;border-bottom:0px;}
 .footer_styles {
 	background: #8A7C55; 
 }
@@ -16,7 +16,7 @@
 }
 .cap{
     color: #fff;
-    background: #b9a87a;
+    background: #cec2a1;
 }
 .blogBody .user-center-left .user-menu-links, .blogBody .personCenter-userInfo, .blogBody .user-center-left .user-setting {
    background: #E8E5DD;
@@ -60,3 +60,35 @@ body, button, input, select, textarea { background: transparent;}
   max-width: 320px;
   border-radius: 3px;
 }	
+.udl ul li:hover ul li a {
+    background: #cec2a1 !important;
+    color: #000 !important;
+}
+.udl ul li:hover a {
+    color: #000 !important;
+    background: #cec2a1 !important;
+}   
+.udl ul li a, .menu ul li a:visited{
+	color: #000 !important;
+    background: #cec2a1 !important;
+}
+.udl ul li:hover ul li a:hover {
+    background: #fff !important;
+}
+#queryTitle{
+	  border:1px solid #cec2a1 !important;
+	  color: #000 !important;
+}
+.submit{
+	background:#cec2a1 !important;
+	color: #000 !important;
+} 
+ul.mtree.bubba > li.mtree-open > a {
+    background: #cec2a1 !important;
+}
+ul.mtree.bubba li.mtree-active > a {
+    background: #cec2a1 !important; 
+}
+.f2{
+	color:#000 !important;
+}

@@ -3,7 +3,7 @@
 	width:100%;
 	background:#1E1F47  url(16.jpg) no-repeat center top;
 }
-.header-top {background: #1E1F47;border-bottom:0px;}
+.header-top {background: #efefef;border-bottom:0px;}
 .footer_styles {
 	background: #1E1F47; 
 }
@@ -16,7 +16,7 @@
 }
 .cap{
     color: #fff;
-    background: #242984;
+    background: #B3BDE1;
 }
 
 .blogBody .user-center-left .user-menu-links, .blogBody .personCenter-userInfo, .blogBody .user-center-left .user-setting {
@@ -61,3 +61,41 @@ body, button, input, select, textarea { background: transparent;}
   max-width: 320px;
   border-radius: 3px;
 }	
+.udl ul li:hover ul li a {
+    background: #B3BDE1 !important;
+    color: #fff !important;
+}
+.udl ul li:hover a {
+    color: #fff !important;
+    background: #B3BDE1 !important;
+}   
+.udl ul li a, .menu ul li a:visited{
+	color: #fff !important;
+    background: #B3BDE1 !important;
+}
+.udl ul li:hover ul li a:hover {
+    background: #666 !important;
+}
+#queryTitle{
+	  border:1px solid #B3BDE1 !important;
+	  color: #fff !important;
+}
+.submit{
+	background:#B3BDE1 !important;
+	color: #fff !important;
+} 
+.report-list2 li a .report-text h3{
+	color:#1d1f46;
+}
+.topicList a{
+	color: #1d1f46 !important;
+}
+.f2{
+	color: #000 !important;
+}
+ul.mtree.bubba > li.mtree-open > a {
+    background: #B3BDE1 !important;
+}
+ul.mtree.bubba li.mtree-active > a {
+    background: #B3BDE1 !important; 
+}

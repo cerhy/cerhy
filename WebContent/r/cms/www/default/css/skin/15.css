@@ -3,7 +3,7 @@
 	width:100%;
 	background:#000202  url(15.jpg) no-repeat center top;
 }
-.header-top {background: #000202;border-bottom:0px;}
+.header-top {background: #efefef;border-bottom:0px;color:#000 !important;}
 .footer_styles {
 	background: #000202; 
 }
@@ -16,10 +16,10 @@
 }
 .cap{
     color: #fff;
-    background: #999999;
+    background: #333;
 }
 .blogBody .user-center-left .user-menu-links, .blogBody .personCenter-userInfo, .blogBody .user-center-left .user-setting {
-   background: #D7D7D7;
+   background: #111111;
 } 
 
 .blogBody .user-center-left .user-menu-links li{
@@ -55,8 +55,64 @@ body, button, input, select, textarea { background: transparent;}
 .tggl-top{background:transparent;}
 .st_tree ul li a:hover {color:#0070b8;}
 .htmleaf-container .mtree-demo .mtree {
-  background: #D7D7D7;
+  background: #111111;
   margin: 20px auto;
   max-width: 320px;
   border-radius: 3px;
 }	
+.udl ul li:hover ul li a {
+    background: #333 !important;
+    color: #fff !important;
+}
+.udl ul li:hover a {
+    color: #fff !important;
+    background: #333 !important;
+}   
+.udl ul li a, .menu ul li a:visited{
+	color: #fff !important;
+    background: #333 !important;
+}
+.udl ul li:hover ul li a:hover {
+    background: #666 !important;
+}
+#queryTitle{
+	  border:1px solid #333 !important;
+	  color: #fff !important;
+}
+.submit{
+	background:#333 !important;
+	color: #fff !important;
+} 
+.report-list2 li a .report-text h3{
+	color:#b4ad96;
+}
+.topicList a{
+	color: #ece8ae !important;
+}
+.topicList {
+    color: #b7b7b7 !important;
+}
+ul.mtree.bubba > li.mtree-open > a {
+    background: #333 !important;
+}
+ul.mtree.bubba li.mtree-active > a {
+    background: #333 !important; 
+}
+.htmleaf-container a {
+    color: #b1b1b1 !important;
+}
+.ff{
+	color: #b1b1b1 !important;
+}
+.user-name-dt a {
+    color: #999999 !important;
+}
+.links-wrap h3 {
+    background: #333333 !important;
+    color: #fff !important;
+}
+a{
+	color:#d6c2c2 !important;
+}
+body, button, input, select, textarea {
+    color: #d6c2c2 !important;}

@@ -61,7 +61,13 @@ body, button, input, select, textarea {
 }
 #queryTitle{
 	    background: #bcd3e5 !important;
+	    border: 1px solid #769ec1 !important;
+    	color: #000 !important;
 }
+.submit{
+	background:#a2c1dc !important;
+	color: #000 !important;
+} 
 .udl ul li:hover ul li a:hover {
     background: gray !important;
 }
@@ -79,4 +85,7 @@ ul.mtree.bubba > li.mtree-open > a {
 ul.mtree.bubba li.mtree-active > a {
   background: #c4def3 !important; 
   color: #000;
+}
+.f2{
+	color:#000 !important;
 }
