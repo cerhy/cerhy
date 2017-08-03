@@ -18,7 +18,7 @@ a			{ color: #074387; }
 	width:100%;
 	background: #E0912F  url(04.jpg) no-repeat center top;
 }
-.header-top {background: #E0912F;border-bottom:0px;}
+.header-top {background: #efefef;border-bottom:0px;}
 .footer_styles {
 	background: #E0912F; 
 }
@@ -78,3 +78,44 @@ body, button, input, select, textarea { background: transparent;}
   max-width: 320px;
   border-radius: 3px;
 }
+
+#queryTitle{
+	  border:1px solid #bf700c !important;
+	  color: #fff !important;
+}
+.submit{
+	background:#bf700c !important;
+	color: white !important;
+}  
+.udl ul li:hover ul li a {
+    background: #bf700c !important;
+    color: #fff !important;
+}
+.udl ul li:hover a {
+    color: #fff !important;
+    background: #bf700c !important;
+}   
+.udl ul li a, .menu ul li a:visited{
+	color: #fff !important;
+    background: #bf700c !important;
+}
+.udl ul li:hover ul li a:hover {
+    background: #FDE09F !important;
+}
+ul.mtree.bubba > li.mtree-open > a {
+    background: #bf700c !important;
+}
+ul.mtree.bubba li.mtree-active > a {
+    background: #da901d !important; 
+}
+.f2{
+	color:#da901d !important;
+}
+/* .user-setting .user-oparetion-btn{
+	background: #fde09f !important;
+    border: 1px solid #da901d !important;
+    color: #da901d !important;
+}
+.user-name-dt a{
+	color:#da901d !important;
+} */

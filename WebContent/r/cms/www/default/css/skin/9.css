@@ -3,7 +3,7 @@
 	width:100%;
 	background:#e5e7e7  url(09.jpg) no-repeat center top;
 }
-.header-top {background: #e5e7e7;border-bottom:0px;}
+.header-top {background: #efefef;border-bottom:0px;}
 .footer_styles {
 	background: #e5e7e7; 
 }
@@ -18,9 +18,9 @@
     color: #fff;
     background: #d6d8d7;
 }
-
+.footer-content{padding-top: 30px;color: #000;font-size: 14px;text-align: center;}
 .blogBody .user-center-left .user-menu-links, .blogBody .personCenter-userInfo, .blogBody .user-center-left .user-setting {
-   background: #F4F8FB;
+   background: #fff;
 } 
 
 .blogBody .user-center-left .user-menu-links li{
@@ -56,8 +56,46 @@ body, button, input, select, textarea { background: transparent;}
 .tggl-top{background:transparent;}
 .st_tree ul li a:hover {color:#0070b8;}
 .htmleaf-container .mtree-demo .mtree {
-  background: #F4F8FB;
+  background: #fff;
   margin: 20px auto;
   max-width: 320px;
   border-radius: 3px;
 }	
+.udl ul li:hover ul li a {
+    background: #d6d8d7 !important;
+    color: #000 !important;
+}
+.udl ul li:hover a {
+    color: #000 !important;
+    background: #d6d8d7 !important;
+}   
+.udl ul li a, .menu ul li a:visited{
+	color: #000 !important;
+    background: #d6d8d7 !important;
+}
+.udl ul li:hover ul li a:hover {
+    background: #666 !important;
+}
+#queryTitle{
+	  border:1px solid #d6d8d7 !important;
+	  color: #000 !important;
+}
+.submit{
+	background:#d6d8d7 !important;
+	color: #000 !important;
+} 
+ul.mtree.bubba > li.mtree-open > a {
+    background: #d6d8d7 !important;
+}
+ul.mtree.bubba li.mtree-active > a {
+    background: #f3f1f1 !important; 
+}
+.f2{
+	color:#286446 !important;
+}
+.report-list2 li a .report-text h3{
+	color:#286446;
+}
+.topicList a {
+    color: #286446 !important;
+}
