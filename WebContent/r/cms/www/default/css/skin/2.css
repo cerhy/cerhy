@@ -120,3 +120,18 @@ ul.mtree.bubba li.mtree-active > a {
 .fbgj .tggl-top {
     color: #c7c7c7 !important;
 }
+body, button, input, select, textarea {
+    color: #999 !important;
+}
+#pos {
+	color: #666666 !important;
+}
+.xueke-content-detail p, .comments-list h1, .xueke-acticle h2  {
+    color: #fff !important;
+}    
+.rig .rig-txt {
+    color: #cccccc !important;}
+.links-wrap h3 {
+    background: #191313 !important;
+    color: #fff !important;
+}
