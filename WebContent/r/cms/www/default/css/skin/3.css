@@ -135,3 +135,28 @@ ul.mtree.bubba li.mtree-active > a {
 .fbgj .tggl-top {
     color: #c7c7c7 !important;
 }
+body, button, input, select, textarea {
+    color: #aa7c3c !important;
+}
+.links-wrap h3 {
+    background: #25110e !important;
+    color: #55c6a3 !important;
+}
+a {
+    color: #7f6c3c !important;
+}
+.pr15 {
+    color: #7f6c3c !important;
+}
+.xueke-content-detail p, .comments-list h1, .xueke-acticle h2 {
+    color: #fff !important;
+}
+.content-share {
+    color: #7f6c3c !important;
+}
+#pos {
+    color: #7f6c3c !important;
+}
+.rig .rig-txt {
+    color: #cccccc !important;
+}
