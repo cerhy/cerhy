@@ -251,7 +251,10 @@ function delGroup(obj){
         $(".submit").click(function() {
         	var regs = new RegExp("[~'!@#$%^&*-+_=:]"); 
             var columnInput = $('#columnInput').val();
-            if(regs.test(columnInput)){
+            if(columnInput.replace(/\s+/g,"")==''){
+            	alert("请填写栏目名称。");
+        		return false;
+            }else if(regs.test(columnInput)){
         		alert("栏目名称可能包含%/等特殊字符，请修改重试。");
         		return false;
             }else{

@@ -127,7 +127,7 @@ function enter(){
 							[#else]
 							<input style="display: none;" name="parentId" value=""/>
 							[/#if]
-							<input class="st" type="text" maxlength="15" name="updateName" value="${column.columnName}" required="required" style="margin:10px 0;width: 180px;height: 30px;" required="required" oninvalid="setCustomValidity('请输入栏目名称');" oninput="setCustomValidity('');" maxlength="60"/><span style="color:#f00; margin-left:10px;">*</span>
+							<input class="st" id="updateName" type="text" maxlength="15" name="updateName" value="${column.columnName}" required="required" style="margin:10px 0;width: 180px;height: 30px;" required="required" oninvalid="setCustomValidity('请输入栏目名称');" oninput="setCustomValidity('');" maxlength="60"/><span style="color:#f00; margin-left:10px;">*</span>
 							</div>
 							<div >
 							[#if column.uniqueCode??]
@@ -167,8 +167,11 @@ function enter(){
         $(".submit").click(function() {
         	var ccId=$("#ccId").val();
         	var regs = new RegExp("[~'!@#$%^&*-+_=:]"); 
-            var columnInput = $('#columnInput').val();
-            if(regs.test(columnInput)){
+            var columnInput = $('#updateName').val();
+            if(columnInput.replace(/\s+/g,"")==''){
+            	alert("请填写栏目名称。");
+        		return false;
+            }else if(regs.test(columnInput)){
         		alert("栏目名称可能包含%/等特殊字符，请修改重试。");
         		return false;
             }else{
