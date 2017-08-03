@@ -111,7 +111,19 @@ public class BlogAct {
 		}
 		if (null != user) {
 			String blogTitle = request.getParameter("blogTitle");
+			if(blogTitle.contains("&＃40;")){
+				blogTitle=blogTitle.replace("&＃40;", "(");
+			}
+			if(blogTitle.contains("&＃41;")){
+				blogTitle=blogTitle.replace("&＃41;", ")");
+			}
 			String blogTitle2 = request.getParameter("blogTitle2");
+			if(blogTitle2.contains("&＃40;")){
+				blogTitle2=blogTitle2.replace("&＃40;", "(");
+			}
+			if(blogTitle2.contains("&＃41;")){
+				blogTitle2=blogTitle2.replace("&＃41;", ")");
+			}
 			String blogNotice = request.getParameter("blogNotice");
 			if (StringUtils.isNotEmpty(blogTitle)) {
 				user.setBlogTitle(blogTitle);
@@ -939,6 +951,12 @@ public class BlogAct {
 		}
 		String parentId = request.getParameter("tcolumnInput");
 		String name = request.getParameter("columnInput");
+		if(name.contains("&＃40;")){
+			name=name.replace("&＃40;", "(");
+		}
+		if(name.contains("&＃41;")){
+			name=name.replace("&＃41;", ")");
+		}
 		Integer columsLevel=1;
 		Columns cnew=null;
 		if(StringUtils.isEmpty(parentId)){
@@ -1023,6 +1041,12 @@ public class BlogAct {
 		String columnId = request.getParameter("id");
 		String columsLevel=request.getParameter("columsLevel");
 		String name = request.getParameter("updateName");
+		if(name.contains("&＃40;")){
+			name=name.replace("&＃40;", "(");
+		}
+		if(name.contains("&＃41;")){
+			name=name.replace("&＃41;", ")");
+		}
 		String orderId = request.getParameter("updateOrderId");
 		String uniqueCode = request.getParameter("uniqueCode");
 		String parentIds = request.getParameter("parentId");
