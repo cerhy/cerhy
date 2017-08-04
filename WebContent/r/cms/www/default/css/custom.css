@@ -264,7 +264,7 @@ padding-top: 32px;
 .inter .score{float:right;}
 .inter .score li{margin-left:4px;}
  
-.content-share{color:#666666; padding-left:20px; position:relative; cursor:pointer;}
+.content-share{color:#333; padding-left:20px; position:relative; cursor:pointer;}
 .content-share{padding-bottom:8px;}
 .content-share:before{content:""; position:absolute;}
 .content-share:before{width:12px; height:12px; background:url(../images/content_tubiao.png) -13px -103px no-repeat; left:2px; bottom:10px;}

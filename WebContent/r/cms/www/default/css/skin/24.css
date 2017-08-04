@@ -99,3 +99,6 @@ ul.mtree.bubba li.mtree-active > a {
 .topicList a{
 	color: #a47b2c !important;
 }
+.wrap-right .gray9 {
+    color: #333 !important;
+}

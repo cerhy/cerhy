@@ -125,3 +125,12 @@ body, button, input, select, textarea {
 .user-name-dt a{
 	color:white !important;
 }
+.wrap-right .gray9 {
+    color: #c0c0c0 !important;
+}
+.content-share{
+	color: #c0c0c0 !important;
+}
+.pos{
+	color: #c0c0c0 !important;
+}

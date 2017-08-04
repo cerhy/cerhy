@@ -120,3 +120,12 @@ body, button, input, select, textarea {
 .header-right a{
 	color:#000 !important;
 }
+.wrap-right .gray9 {
+    color: #d6c2c2 !important;
+}
+.content-share{
+	color: #d6c2c2 !important;
+}
+.pos{
+	color: #d6c2c2 !important;
+}
