@@ -1,43 +1,101 @@
+/* view 10 */
 .blogBody{
 	width:100%;
-	background: #BBA47E; 
+	background:#e6e6e6  url(35.jpg) no-repeat center top;
 }
+.header-top {background:#efefef;border-bottom:0px;}
+.footer_styles {
+	background: #e6e6e6; 
+}
+.blogHead,.tj{color: #fff;}
+/* .tj{
+	padding-bottom:80px;
+} */
+#title1{
+	color: #fff;
+}
+.cap{
+    color: #000;
+    background: #D2D2D2;
+}
+.footer-content{padding-top: 30px;color: #000;font-size: 14px;text-align: center;}
 .blogBody .user-center-left .user-menu-links, .blogBody .personCenter-userInfo, .blogBody .user-center-left .user-setting {
-    background: #AA9069;
-}
-
-.header-top {background: #AA9069;border-bottom:0px;}
-.footer_styles {background: #AA9069; }
+   background:#dcdcdc;
+} 
 
 .blogBody .user-center-left .user-menu-links li{
 	margin-top:-1px;
 	border-bottom: none; 
 }
 .blogBody .user-center-left .user-menu-links a {
-    border: none; 
+    border : none; 
     text-decoration:none;
 }
-.cap{
-    color: #fff;
-    background: #d8bc8d;
+.blogBody .user-menu-links li a em {
+     background: transparent; 
 }
-
-.blogBody .user-menu-links li a em {background: transparent; }
-.blogBody .user-menu-links li.on a em {background: transparent; }
-
-.tggl .tggl-top {background: transparent;color:black;}
-.tggl td{border-color:#666666;}
-.tggl table{border-color:#666666;}
-
-body, button, input, select, textarea {background: transparent;}
-.st_tree ul li a:hover {color:#0070b8;}
-
+.blogBody .user-menu-links li.on a em {
+   background: transparent; 
+}
+.blogBody .user-menu-links li a {
+	color: #666666;
+}
+.blogBody .user-menu-links li a:hover {
+	color:#0070b8;
+}
 #_goPs{
 	background: transparent;
 }
+.tggl .tggl-top {background: transparent;}
+body, button, input, select, textarea { background: transparent;}
+.tggl a {color:#666666;}
+.a2{color:#666666;}
+.inp2{color:#666666;}
+.tggl td{border-color:#666666;}
+.tggl table{border-color:#666666;}
+.tggl-top{background:transparent;}
+.st_tree ul li a:hover {color:#0070b8;}
 .htmleaf-container .mtree-demo .mtree {
-  background: #AA9069;
+  background: #dcdcdc;
   margin: 20px auto;
   max-width: 320px;
   border-radius: 3px;
 }	
+.udl ul li:hover ul li a {
+    background: #D2D2D2 !important;
+    color: #fff !important;
+}
+.udl ul li:hover a {
+    color: #fff !important;
+    background: #D2D2D2 !important;
+}   
+.udl ul li a, .menu ul li a:visited{
+	color: #fff !important;
+    background: #D2D2D2 !important;
+}
+.udl ul li:hover ul li a:hover {
+    background: #666 !important;
+}
+#queryTitle{
+	  border:1px solid #D2D2D2 !important;
+	  color: #000 !important;
+}
+.submit{
+	background:#D2D2D2 !important;
+	color: #fff !important;
+} 
+ul.mtree.bubba > li.mtree-open > a {
+    background: #D2D2D2 !important;
+}
+ul.mtree.bubba li.mtree-active > a {
+    background: #D2D2D2 !important; 
+}
+.report-list2 li a .report-text h3{
+	color:#950100;
+}
+.topicList a{
+	color: #950100 !important;
+}
+.f2{
+	color:#000 !important;
+}

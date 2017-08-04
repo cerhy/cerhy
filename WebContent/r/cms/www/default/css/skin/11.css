@@ -95,4 +95,7 @@ ul.mtree.bubba li.mtree-active > a {
 .f2{
 	color:#000 !important;
 }
+.topicList a {
+    color: #983d9e !important;
+}
 .footer-content{padding-top: 30px;color: #000;font-size: 14px;text-align: center;}

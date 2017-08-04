@@ -72,3 +72,6 @@ body, button, input, select, textarea { background: transparent;}
 	background:#def7ff !important;
 	color: #000 !important;
 } 
+.topicList a {
+    color: #666666 !important;
+}

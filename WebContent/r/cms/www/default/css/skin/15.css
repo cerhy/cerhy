@@ -84,7 +84,7 @@ body, button, input, select, textarea { background: transparent;}
 	color: #fff !important;
 } 
 .report-list2 li a .report-text h3{
-	color:#b4ad96;
+	color:#ece8ae;
 }
 .topicList a{
 	color: #ece8ae !important;
@@ -116,3 +116,7 @@ a{
 }
 body, button, input, select, textarea {
     color: #d6c2c2 !important;}
+    
+.header-right a{
+	color:#000 !important;
+}

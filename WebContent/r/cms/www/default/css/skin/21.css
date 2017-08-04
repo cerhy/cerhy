@@ -1,45 +1,74 @@
+/* view 10 */
 .blogBody{
 	width:100%;
-	background: #C0C0C0; 
+	background:#afe1d6  url(39.jpg) no-repeat center top;
 }
-.user-center-left .user-menu-links, .personCenter-userInfo, .user-center-left .user-setting {
-    background: #A9A9A9;
+.header-top {background:#efefef;border-bottom:0px;}
+.footer_styles {
+	background: #afe1d6; 
 }
+.blogHead,.tj{color: #fff;}
+/* .tj{
+	padding-bottom:80px;
+} */
+#title1{
+	color: #fff;
+}
+.cap{
+    color: #000;
+    background: #fff;
+    filter:alpha(opacity:0); opacity:0.5;
+}
+.blogBody .user-center-left .user-menu-links, .blogBody .personCenter-userInfo, .blogBody .user-center-left .user-setting {
+   background:#dbf7f1;
+} 
 
-.header-top {background: #A9A9A9;border-bottom:0px;}
-.footer_styles {background: #A9A9A9; }
-
- .user-center-left .user-menu-links li{
+.blogBody .user-center-left .user-menu-links li{
 	margin-top:-1px;
 	border-bottom: none; 
 }
-.user-center-left .user-menu-links a {
-    border: none; 
+.blogBody .user-center-left .user-menu-links a {
+    border : none; 
     text-decoration:none;
 }
-.cap{
-    color: #fff;
-    background: #999999;
+.blogBody .user-menu-links li a em {
+     background: transparent; 
 }
-.user-menu-links li a em {background: transparent; }
-.user-menu-links li.on a em {background: transparent; }
-
-.tggl .tggl-top {background: transparent;color:black;}
-.tggl td{border-color:#C6C6C6;}
-.tggl table{border-color:#C6C6C6;}
-
-body, button, input, select, textarea {background: transparent;}
-.st_tree ul li a:hover {color:#0070b8;}
-
+.blogBody .user-menu-links li.on a em {
+   background: transparent; 
+}
+.blogBody .user-menu-links li a {
+	color: #666666;
+}
+.blogBody .user-menu-links li a:hover {
+	color:#0070b8;
+}
 #_goPs{
 	background: transparent;
 }
+.tggl .tggl-top {background: transparent;}
+body, button, input, select, textarea { background: transparent;}
+.tggl a {color:#666666;}
+.a2{color:#666666;}
+.inp2{color:#666666;}
+.tggl td{border-color:#666666;}
+.tggl table{border-color:#666666;}
+.tggl-top{background:transparent;}
+.st_tree ul li a:hover {color:#0070b8;}
 .htmleaf-container .mtree-demo .mtree {
-  background: #A9A9A9;
+  background: #dbf7f1;
   margin: 20px auto;
   max-width: 320px;
   border-radius: 3px;
-}
-.personCenter-userInfo .tggl li  em{
-	color: #666 !important;
 }	
+ul.mtree.bubba > li.mtree-open > a {
+    background: #c8e5ef !important;
+}
+ul.mtree.bubba li.mtree-active > a {
+    background: #c8e5ef !important; 
+}
+.f2{
+	color:#000 !important;
+}
+.topicList a {
+    color: #666666 !important;}

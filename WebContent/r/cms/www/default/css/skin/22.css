@@ -16,11 +16,11 @@
 }
 .cap{
     color: #fff;
-    background: #069598;
+    background: #35c0c5;
 }
 
 .blogBody .user-center-left .user-menu-links, .blogBody .personCenter-userInfo, .blogBody .user-center-left .user-setting {
-   background: #fff;
+   background: #f1fcff;
 } 
 
 .blogBody .user-center-left .user-menu-links li{
@@ -56,8 +56,21 @@ body, button, input, select, textarea { background: transparent;}
 .tggl-top{background:transparent;}
 .st_tree ul li a:hover {color:#0070b8;}
 .htmleaf-container .mtree-demo .mtree {
-  background: #fff;
+  background: #f1fcff;
   margin: 20px auto;
   max-width: 320px;
   border-radius: 3px;
 }	
+.report-list2 li a .report-text h3{
+	color:#1b1d8a;
+}
+.topicList a {
+    color: #1b1d8a !important;}
+#queryTitle{
+	  border:1px solid #60d6da !important;
+	  color: #fff !important;
+}
+.submit{
+	background:#35c0c5 !important;
+	color: #000 !important;
+} 
