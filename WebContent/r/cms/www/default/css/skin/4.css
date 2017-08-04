@@ -109,7 +109,13 @@ ul.mtree.bubba li.mtree-active > a {
     background: #da901d !important; 
 }
 .f2{
-	color:#da901d !important;
+	color:#676262 !important;
+}
+.report-list2 li a .report-text h3{
+	color:#da901d;
+}
+.topicList a{
+	color: #da901d !important;
 }
 /* .user-setting .user-oparetion-btn{
 	background: #fde09f !important;
