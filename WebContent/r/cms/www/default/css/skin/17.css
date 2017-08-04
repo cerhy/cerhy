@@ -20,7 +20,7 @@
 }
 .footer-content{padding-top: 30px;color: #000;font-size: 14px;text-align: center;}
 .blogBody .user-center-left .user-menu-links, .blogBody .personCenter-userInfo, .blogBody .user-center-left .user-setting {
-   background:#edf7de;
+   background:#e1ecd0;
 } 
 
 .blogBody .user-center-left .user-menu-links li{
@@ -56,7 +56,7 @@ body, button, input, select, textarea { background: transparent;}
 .tggl-top{background:transparent;}
 .st_tree ul li a:hover {color:#0070b8;}
 .htmleaf-container .mtree-demo .mtree {
-  background: #edf7de;
+  background: #e1ecd0;
   margin: 20px auto;
   max-width: 320px;
   border-radius: 3px;
@@ -95,4 +95,7 @@ ul.mtree.bubba li.mtree-active > a {
 }
 .topicList a{
 	color: #4b9021 !important;
+}
+.f2{
+	color:#000 !important;
 }
