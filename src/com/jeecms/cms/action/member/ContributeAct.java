@@ -665,6 +665,19 @@ public class ContributeAct extends AbstractContentMemberAct {
 				pageNo, request, model);
 	}
 	
+	/**
+	 * 局部刷新博客文章
+	 * @throws JSONException 
+	 */
+	@RequestMapping(value = "/blog/contribute_list_own.jspx")
+	public   String blog_list3(String queryTitle, Integer modelId,
+			Integer queryChannelId, Integer pageNo, HttpServletRequest request,HttpServletResponse response,
+			ModelMap model) throws JSONException {
+		return  blogAct.blog_list_own(queryTitle, modelId, queryChannelId, null,
+				pageNo, request, model);
+		 
+	}
+	
 	//好友博客栏目
 	@RequestMapping(value = "/blog/contribute_list_friend.jspx")
 	public String blog_list_friend(String queryTitle, Integer modelId,

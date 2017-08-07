@@ -234,6 +234,67 @@ public class BlogAct {
 		return FrontUtils.getTplPath(request, site.getSolutionPath(), TPLDIR_BLOG, nextUrl);
 	}
 	
+	public String blog_list_own(String q, Integer modelId,Integer queryChannelId,String nextUrl,Integer pageNo,HttpServletRequest request, ModelMap model) {
+		CmsSite site = CmsUtils.getSite(request);
+		CmsUser user = CmsUtils.getUser(request);
+		Integer recieveUserId = null;
+		
+		if (user == null) {
+			String uid=request.getParameter("uid");
+			if(StringUtils.isNotEmpty(uid)){
+				user=cmsUserMng.findById(Integer.parseInt(uid));
+				model.addAttribute("usert", user);
+			}else{
+				return FrontUtils.showLogin(request, model, site);
+			}
+		}
+		recieveUserId = user.getId();
+		int userId=user.getId();
+		String joinGroupStata=request.getParameter("joinGroupStata");
+		Integer columnId = null;
+		Integer channelId = null;
+		if(joinGroupStata!=null&&joinGroupStata.equals("0")){
+			model.addAttribute("GroupFlag", -1);
+			userId=0;
+			if(null != request.getParameter("columnId")){
+				model.addAttribute("columnId", request.getParameter("columnId"));
+				model.addAttribute("columnIdZ", request.getParameter("columnId"));
+				model.addAttribute("joinGroupStata", 0);
+				model.addAttribute("submitOn1", 1);
+				columnId = Integer.parseInt(request.getParameter("columnId"));
+			}
+		}else{
+			model.addAttribute("GroupFlag", 0);
+			//为了删除文章后能跳转回本栏目下
+			if(null != request.getParameter("columnId")){
+				model.addAttribute("columnId", request.getParameter("columnId"));
+				model.addAttribute("columnIdZ", request.getParameter("columnId"));
+				model.addAttribute("submitOn", 1);
+				columnId = Integer.parseInt(request.getParameter("columnId"));
+			}
+			if(null != request.getParameter("channelId")){
+				model.addAttribute("channelId", request.getParameter("channelId"));
+				model.addAttribute("submitOn", 1);
+				channelId = Integer.parseInt(request.getParameter("channelId"));
+			}
+		}
+ 		// model.addAttribute("channelId", 1);
+		FrontUtils.frontData(request, model, site);
+
+		Pagination p = contentMng.getPageForMember_blog(q, queryChannelId,site.getId(), modelId,userId, cpn(pageNo), 20,columnId,channelId,recieveUserId);
+		model.addAttribute("pagination", p);
+		if (!StringUtils.isBlank(q)) {
+			model.addAttribute("q", q);
+		}else{
+			model.addAttribute("q", "");
+		}
+		if (modelId != null) {
+			model.addAttribute("channelId", 1);
+		}
+		return "/WEB-INF/t/cms/www/default/blog/contribute_list_own.html";
+	}
+	
+	
 	public String blog_add(boolean hasPermission,String nextUrl,HttpServletRequest request,HttpServletResponse response, ModelMap model) {
 		CmsSite site = CmsUtils.getSite(request);
 		CmsUser user = CmsUtils.getUser(request);

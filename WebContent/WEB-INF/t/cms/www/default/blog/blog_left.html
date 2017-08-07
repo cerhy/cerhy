@@ -97,8 +97,7 @@ outline: none;
 					        [#if channelList??]
 				             [#list channelList as c]
 				             [#if user??]
-					          <li><a style="font-size: 14px;color: #255EC7 !important; " href="${base}/blog/contribute_list.jspx?channelId=${c.channelId}">${c.channelName}</a></li>
-				             [/#if]
+ 							 <li><a style="font-size: 14px;color: #255EC7;" href="javascript:void(0);" onclick="myblog(${c.channelId},null)">${c.channelName}1</a></li>				             [/#if]
 				             [#if usert??]
 					          <li><a style="font-size: 14px;color: #255EC7 !important;" href="${base}/blog/contribute_list.jspx?channelId=${c.channelId}&uid=${usert.id}">${c.channelName}</a></li>
 				             [/#if]
@@ -153,10 +152,10 @@ outline: none;
 						        	[#if user??]
 							        	[#if v?split('=')[2]??]
 							        		[#if columnId??]
-			                                	<li [#if columnId=v?split('=')[0]]class="mtree-active"[/#if]><a style="font-size: 14px;color: #255EC7 !important;" class="class1 box1" title="${v?split('=')[1]}&nbsp;${v?split('=')[2]}" id="${v?split('=')[0]}" href="${base}/blog/contribute_list.jspx?columnId=${v?split('=')[0]}&joinGroupStata=0">${v?split("=")[1]}&nbsp;${v?split('=')[2]}</a></li>
-					                    	[#else]
-				                                <li><a style="font-size: 14px;color: #255EC7 !important;" class="class1 box1" title="${v?split('=')[1]}&nbsp;${v?split('=')[2]}" id="${v?split('=')[0]}" href="${base}/blog/contribute_list.jspx?columnId=${v?split('=')[0]}&joinGroupStata=0">${v?split("=")[1]}&nbsp;${v?split('=')[2]}</a></li>
-					                    	[/#if]
+												<li [#if columnId=v?split('=')[0]]class="mtree-active"[/#if]><a style="font-size: 14px;color: #255EC7;" class="class1 box1" title="${v?split('=')[1]}&nbsp;${v?split('=')[2]}" id="${v?split('=')[0]}" href="#" onclick="myblog(null,0,${v?split('=')[0]})">${v?split("=")[1]}&nbsp;${v?split('=')[2]}44</a></li>
+											[#else]
+ 												<li><a style="font-size: 14px;color: #255EC7;" class="class1 box1" title="${v?split('=')[1]}&nbsp;${v?split('=')[2]}" id="${v?split('=')[0]}" href="#" onclick="myblog(null,0,${v?split('=')[0]})">${v?split("=")[1]}&nbsp;${v?split('=')[2]}55</a></li>					                    	
+ 											[/#if]
 				                    	[#else]
 				                    		[#if columnId??]
 			                                	<li [#if columnId=v?split('=')[0]]class="mtree-active"[/#if]><a style="font-size: 14px;color: #255EC7 !important;" class="class1 box1" title="${v?split('=')[1]}" id="${v?split('=')[0]}" href="${base}/blog/contribute_list.jspx?columnId=${v?split('=')[0]}">${v?split("=")[1]}</a></li>
@@ -548,6 +547,28 @@ function sJoinGroup(){
 	    ];
 	    mtree.addClass(skins[0]);
 	});
+	
+	function myblog(channelId,joinGroupStata,columnId){
+	 	 $.ajax({
+            type: 'POST',
+            url : ' ${base}/blog/contribute_list_own.jspx',
+            /*  dataType : 'json', */
+             dataType:"html",
+            data : {'queryTitle' : null,'modelId' : null,'queryChannelId' : null,'pageNo':null,'channelId':channelId,'joinGroupStata':joinGroupStata,'columnId':columnId},
+            async: false,
+            success : function(datas){
+           	 
+           	 debugger;
+
+           	/*  var str=datas.pagination;
+           	 var list =str.list; */
+           	 $("#tgglDiv").empty();
+           	 $("#tgglDiv").append(datas);
+           	
+						
+   	   		 }
+  		 });
+	}
 	</script>
 <script type="text/javascript">
 	array=[["<img src='/${res}/images/iMac-add.png' width='25px' /> 新建栏目", "createChannel()"],["<img src='/${res}/images/iMac-edit.png' width='25px' /> 修改栏目", "editChannel()"],["<img src='/${res}/images/iMac-del.png' width='25px' /> 删除栏目", "delChannel()"]];
