@@ -19,7 +19,7 @@
     <div class="content-title" align="center" style="font-size: 25px;">${content.title!}</div>
     <div class="content-inf">
 	    发布时间:${content.releaseDate!}&nbsp;&nbsp;&nbsp;&nbsp;
-	    作者:${content.author!content.user.username}
+	   <a href="${base}/blog/find_all_url_friend.jspx?userIds=${content.user.id}" style="color: #9a9a9a;">作者:${content.author!content.user.username}</a>
     </div>
     <div class="content-txt">
     			${txt!}
