@@ -1,3 +1,5 @@
+ <div class="personCenter-userInfo blog_right">
+ <div id="tgglDiv" class="tggl" style="display: block;">
  <form id="tableForm" action="contribute_list.jspx" method="post" >
             	<ul class="report-list2 sm mb20">
 			          [#if pagination.list?size gt 0]
@@ -103,3 +105,49 @@
                 <div>暂无博文</div>
             [/#if]
           </form>
+          </div>
+          </div>
+          
+<script type="text/javascript">
+ $("#zd_u-hilite-cap").remove();
+ $("#zdId").remove();
+ $("#u-hilite-cap").remove();
+var html =""; 
+	html  +="<div id=\"zd_u-hilite-cap\" class=\"cap\" onclick=\"zdShowHidden();\" >置顶</div>"; 
+	html  +=" <div id=\"zdId\" style=\"width: 730px;float: left; padding-left: 20px;\">"; 
+	html  +="<div class=\"personCenter-userInfo blog_right1\">"; 
+	html  +="<ul class=\"topicList\" >"; 
+	html  +="[#if stickList??]";
+	html  +="[#if stickList?size gt 0]"; 
+	html  +="[#list stickList as sti]"; 
+	html  +="<li class=\"row\"><a cmd=\"LoadTopic\" _list=\"hilite\"  href=\"${base}/${sti.path}/${sti.contentId}.jhtml?d=1&currentId=${sti.id}&stickUserId=${sti.stickUserId}\" >${sti.contentTitle}</a> <span class=\"lt\">(${sti.contentTime?string('yyyy-MM-dd')})</span></li>				           [/#list]"; 
+	html  +=" [#else]"; 
+	html  +="<li class=\"row\" >暂无置顶内容！ </li>"; 
+	html  +=" [/#if]"; 
+	html  +=" [#else]"; 
+	html  +="<li class=\"row\" >暂无置顶内容！ </li>"; 
+	html  +=" [/#if]"; 
+	html  +=" </ul>"; 
+	html  +=" </div>"; 
+	html  +=" </div> "; 
+	html  +="  <div id=\"u-hilite-cap\" class=\"cap\" onclick=\"showHidden();\" >文章</div>"
+$(".wrap-right").before(html);
+
+
+function showHidden(){
+	var display = $(".wrap-right").css('display');
+	if(display=="block"){
+		$(".wrap-right").css('display','none'); 
+	}else{
+		$(".wrap-right").css('display','block'); 
+	}
+}
+function zdShowHidden(){
+	var display = $("#zdId").css('display');
+	if(display=="block"){
+		$("#zdId").css('display','none'); 
+	}else{
+		$("#zdId").css('display','block'); 
+	}
+}
+</script>

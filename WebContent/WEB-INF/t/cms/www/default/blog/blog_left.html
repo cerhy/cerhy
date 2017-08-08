@@ -97,9 +97,10 @@ outline: none;
 					        [#if channelList??]
 				             [#list channelList as c]
 				             [#if user??]
- 							 <li><a style="font-size: 14px;color: #255EC7;" href="javascript:void(0);" onclick="myblog(${c.channelId},null)">${c.channelName}1</a></li>				             [/#if]
+					          <li><a style="font-size: 14px;color: #255EC7;" href="javascript:void(0);" onclick="myblog(${c.channelId},null,null)">${c.channelName}1</a><input type="button" onclick="myblog(${c.channelId})" value="加载"></input></li>
+				             [/#if]
 				             [#if usert??]
-					          <li><a style="font-size: 14px;color: #255EC7 !important;" href="${base}/blog/contribute_list.jspx?channelId=${c.channelId}&uid=${usert.id}">${c.channelName}</a></li>
+					          <li><a style="font-size: 14px;color: #255EC7;" href="${base}/blog/contribute_list.jspx?channelId=${c.channelId}&uid=${usert.id}">${c.channelName}2</a></li>
 				             [/#if]
 				             [/#list]
 				             [/#if]
@@ -113,30 +114,30 @@ outline: none;
 						        	[#if user??]
 						        		[#if v?split('=')[2]??]
 							        		[#if columnId??]
-			                                	<li [#if columnId=v?split('=')[0]]class="mtree-active"[/#if]><a style="font-size: 16px;" class="class1 box1" title="${v?split('=')[1]}&nbsp;${v?split('=')[2]}" id="${v?split('=')[0]}" href="${base}/blog/contribute_list.jspx?columnId=${v?split('=')[0]}&joinGroupStata=0" >${v?split("=")[1]}&nbsp;${v?split('=')[2]}</a></li>
+			                                	<li [#if columnId=v?split('=')[0]]class="mtree-active"[/#if]><a style="font-size: 16px;" class="class1 box1" title="${v?split('=')[1]}&nbsp;${v?split('=')[2]}" id="${v?split('=')[0]}" href="${base}/blog/contribute_list.jspx?columnId=${v?split('=')[0]}&joinGroupStata=0" >${v?split("=")[1]}&nbsp;${v?split('=')[2]}3</a></li>
 				                   			[#else]
-				                                <li><a style="font-size: 16px;" class="class1 box1" title="${v?split('=')[1]}&nbsp;${v?split('=')[2]}" id="${v?split('=')[0]}" href="${base}/blog/contribute_list.jspx?columnId=${v?split('=')[0]}&joinGroupStata=0" >${v?split("=")[1]}&nbsp;${v?split('=')[2]}</a></li>
+				                                <li><a style="font-size: 16px;" class="class1 box1" title="${v?split('=')[1]}&nbsp;${v?split('=')[2]}" id="${v?split('=')[0]}" href="${base}/blog/contribute_list.jspx?columnId=${v?split('=')[0]}&joinGroupStata=0" >${v?split("=")[1]}&nbsp;${v?split('=')[2]}4</a></li>
 				                   			[/#if]
 				                   		[#else]
 				                   			[#if columnId??]
-		                                		<li [#if columnId=v?split('=')[0]]class="mtree-active"[/#if]><a style="font-size: 16px;" class="class1 box1" title="${v?split('=')[1]}" id="${v?split('=')[0]}" href="${base}/blog/contribute_list.jspx?columnId=${v?split('=')[0]}" >${v?split("=")[1]}</a></li>
+		                                		<li [#if columnId=v?split('=')[0]]class="mtree-active"[/#if]><a style="font-size: 16px;" class="class1 box1" title="${v?split('=')[1]}" id="${v?split('=')[0]}" href="${base}/blog/contribute_list.jspx?columnId=${v?split('=')[0]}" >${v?split("=")[1]}5</a></li>
 				                   			[#else]
-		                                		<li><a style="font-size: 16px;" class="class1 box1" title="${v?split('=')[1]}" id="${v?split('=')[0]}" href="${base}/blog/contribute_list.jspx?columnId=${v?split('=')[0]}" >${v?split("=")[1]}</a></li>
+		                                		<li><a style="font-size: 16px;" class="class1 box1" title="${v?split('=')[1]}" id="${v?split('=')[0]}" href="${base}/blog/contribute_list.jspx?columnId=${v?split('=')[0]}" >${v?split("=")[1]}9</a></li>
 				                   			[/#if]
 				                   		[/#if]
 				                    [/#if]
 						            [#if usert??]
 						            	[#if v?split('=')[2]??]
 							            	[#if columnId??]
-					                	 		<li [#if columnId=v?split('=')[0]]class="mtree-active"[/#if]><a style="font-size: 16px;" title="${v?split('=')[1]}&nbsp;${v?split('=')[2]}" href="${base}/blog/contribute_list.jspx?columnId=${v?split('=')[0]}&uid=${usert.id}&joinGroupStata=0" >${v?split("=")[1]}&nbsp;${v?split('=')[2]}</a></li>
+					                	 		<li [#if columnId=v?split('=')[0]]class="mtree-active"[/#if]><a style="font-size: 16px;" title="${v?split('=')[1]}&nbsp;${v?split('=')[2]}" href="${base}/blog/contribute_list.jspx?columnId=${v?split('=')[0]}&uid=${usert.id}&joinGroupStata=0" >${v?split("=")[1]}&nbsp;${v?split('=')[2]}6</a></li>
 						           		 	[#else]
-					                	 		<li><a style="font-size: 16px;" title="${v?split('=')[1]}&nbsp;${v?split('=')[2]}" href="${base}/blog/contribute_list.jspx?columnId=${v?split('=')[0]}&uid=${usert.id}&joinGroupStata=0" >${v?split("=")[1]}&nbsp;${v?split('=')[2]}</a></li>
+					                	 		<li><a style="font-size: 16px;" title="${v?split('=')[1]}&nbsp;${v?split('=')[2]}" href="${base}/blog/contribute_list.jspx?columnId=${v?split('=')[0]}&uid=${usert.id}&joinGroupStata=0" >${v?split("=")[1]}&nbsp;${v?split('=')[2]}7</a></li>
 						           		 	[/#if]
 					           		 	[#else]
 						           		 	[#if columnId??]
-					                	 		<li [#if columnId=v?split('=')[0]]class="mtree-active"[/#if]><a style="font-size: 16px;" title="${v?split('=')[1]}" href="${base}/blog/contribute_list.jspx?columnId=${v?split('=')[0]}&uid=${usert.id}" >${v?split("=")[1]}</a></li>
+					                	 		<li [#if columnId=v?split('=')[0]]class="mtree-active"[/#if]><a style="font-size: 16px;" title="${v?split('=')[1]}" href="${base}/blog/contribute_list.jspx?columnId=${v?split('=')[0]}&uid=${usert.id}" >${v?split("=")[1]}8</a></li>
 					           		 		[#else]
-					                	 		<li><a style="font-size: 16px;" title="${v?split('=')[1]}" href="${base}/blog/contribute_list.jspx?columnId=${v?split('=')[0]}&uid=${usert.id}" >${v?split("=")[1]}</a></li>
+					                	 		<li><a style="font-size: 16px;" title="${v?split('=')[1]}" href="${base}/blog/contribute_list.jspx?columnId=${v?split('=')[0]}&uid=${usert.id}" >${v?split("=")[1]}11</a></li>
 					           		 		[/#if]
 					           		 	[/#if]
 					           		 [/#if]
@@ -152,30 +153,30 @@ outline: none;
 						        	[#if user??]
 							        	[#if v?split('=')[2]??]
 							        		[#if columnId??]
-												<li [#if columnId=v?split('=')[0]]class="mtree-active"[/#if]><a style="font-size: 14px;color: #255EC7;" class="class1 box1" title="${v?split('=')[1]}&nbsp;${v?split('=')[2]}" id="${v?split('=')[0]}" href="#" onclick="myblog(null,0,${v?split('=')[0]})">${v?split("=")[1]}&nbsp;${v?split('=')[2]}44</a></li>
-											[#else]
- 												<li><a style="font-size: 14px;color: #255EC7;" class="class1 box1" title="${v?split('=')[1]}&nbsp;${v?split('=')[2]}" id="${v?split('=')[0]}" href="#" onclick="myblog(null,0,${v?split('=')[0]})">${v?split("=")[1]}&nbsp;${v?split('=')[2]}55</a></li>					                    	
- 											[/#if]
+			                                		<li [#if columnId=v?split('=')[0]]class="mtree-active"[/#if]><a style="font-size: 14px;color: #255EC7;" class="class1 box1" title="${v?split('=')[1]}&nbsp;${v?split('=')[2]}" id="${v?split('=')[0]}" href="#" onclick="myblog(null,0,${v?split('=')[0]})">${v?split("=")[1]}&nbsp;${v?split('=')[2]}44</a></li>
+					                    	[#else]
+				                                <li><a style="font-size: 14px;color: #255EC7;" class="class1 box1" title="${v?split('=')[1]}&nbsp;${v?split('=')[2]}" id="${v?split('=')[0]}" href="javascript:void(0);" onclick="myblog(null,0,${v?split('=')[0]})">${v?split("=")[1]}&nbsp;${v?split('=')[2]}55</a></li>
+					                    	[/#if]
 				                    	[#else]
 				                    		[#if columnId??]
-			                                	<li [#if columnId=v?split('=')[0]]class="mtree-active"[/#if]><a style="font-size: 14px;color: #255EC7 !important;" class="class1 box1" title="${v?split('=')[1]}" id="${v?split('=')[0]}" href="${base}/blog/contribute_list.jspx?columnId=${v?split('=')[0]}">${v?split("=")[1]}</a></li>
+			                                	<li [#if columnId=v?split('=')[0]]class="mtree-active"[/#if]><a style="font-size: 14px;color: #255EC7;" class="class1 box1" title="${v?split('=')[1]}" id="${v?split('=')[0]}" href="javascript:void(0);" onclick="myblog(null,null,${v?split('=')[0]})">${v?split("=")[1]}66</a></li>
 				                    		[#else]
-			                                	<li><a style="font-size: 14px;color: #255EC7 !important;" class="class1 box1" title="${v?split('=')[1]}" id="${v?split('=')[0]}" href="${base}/blog/contribute_list.jspx?columnId=${v?split('=')[0]}">${v?split("=")[1]}</a></li>
+			                                	<li><a style="font-size: 14px;color: #255EC7;" class="class1 box1" title="${v?split('=')[1]}" id="${v?split('=')[0]}" href="javascript:void(0);" onclick="myblog(null,null,${v?split('=')[0]})">${v?split("=")[1]}377</a></li>
 				                    		[/#if]
 				                    	[/#if]
 				                    [/#if]
 						            [#if usert??]
 							            [#if v?split('=')[2]??]
 							            	[#if columnId??]
-					                	 		<li [#if columnId=v?split('=')[0]]class="mtree-active"[/#if]><a style="font-size: 14px;color: #255EC7 !important;" title="${v?split('=')[1]}&nbsp;${v?split('=')[2]}" href="${base}/blog/contribute_list.jspx?columnId=${v?split('=')[0]}&uid=${usert.id}&joinGroupStata=0">${v?split("=")[1]}&nbsp;${v?split('=')[2]}</a></li>
+					                	 		<li [#if columnId=v?split('=')[0]]class="mtree-active"[/#if]><a style="font-size: 14px;color: #255EC7;" title="${v?split('=')[1]}&nbsp;${v?split('=')[2]}" href="${base}/blog/contribute_list.jspx?columnId=${v?split('=')[0]}&uid=${usert.id}&joinGroupStata=0">${v?split("=")[1]}&nbsp;${v?split('=')[2]}88</a></li>
 						           		 	[#else]
-						                	 	<li><a style="font-size: 14px;color: #255EC7 !important;" title="${v?split('=')[1]}&nbsp;${v?split('=')[2]}" href="${base}/blog/contribute_list.jspx?columnId=${v?split('=')[0]}&uid=${usert.id}&joinGroupStata=0">${v?split("=")[1]}&nbsp;${v?split('=')[2]}</a></li>
+						                	 	<li><a style="font-size: 14px;color: #255EC7;" title="${v?split('=')[1]}&nbsp;${v?split('=')[2]}" href="${base}/blog/contribute_list.jspx?columnId=${v?split('=')[0]}&uid=${usert.id}&joinGroupStata=0">${v?split("=")[1]}&nbsp;${v?split('=')[2]}99</a></li>
 						           		 	[/#if]
 					           		 	[#else]
 					           		 		[#if columnId??]
-					                	 		<li [#if columnId=v?split('=')[0]]class="mtree-active"[/#if]><a style="font-size: 14px;color: #255EC7 !important;" title="${v?split('=')[1]}" href="${base}/blog/contribute_list.jspx?columnId=${v?split('=')[0]}&uid=${usert.id}">${v?split("=")[1]}</a></li>
+					                	 		<li [#if columnId=v?split('=')[0]]class="mtree-active"[/#if]><a style="font-size: 14px;color: #255EC7;" title="${v?split('=')[1]}" href="${base}/blog/contribute_list.jspx?columnId=${v?split('=')[0]}&uid=${usert.id}">${v?split("=")[1]}11</a></li>
 					           		 		[#else]
-						                	 	<li><a style="font-size: 14px;color: #255EC7 !important;" title="${v?split('=')[1]}" href="${base}/blog/contribute_list.jspx?columnId=${v?split('=')[0]}&uid=${usert.id}">${v?split("=")[1]}</a></li>
+						                	 	<li><a style="font-size: 14px;color: #255EC7;" title="${v?split('=')[1]}" href="${base}/blog/contribute_list.jspx?columnId=${v?split('=')[0]}&uid=${usert.id}">${v?split("=")[1]}22</a></li>
 					           		 		[/#if]
 					           		 	[/#if]
 					           		 [/#if]
@@ -201,22 +202,22 @@ outline: none;
                             [#list joinGroupList as j]
 		                    [#if user??]
 		                    	[#if columnId??]
-		                    		<li id="cc${j.columnsId.columnId}" [#if columnId?number=j.columnsId.columnId]class="mtree-active"[/#if]><a id="${j.columnsId.columnId}" class="class3 box1" href="${base}/blog/contribute_list.jspx?columnId=${j.columnsId.columnId}&joinGroupStata=0" title="${j.columnsId.columnName}" >${j.columnsId.columnName}</a></li>
+		                    		<li id="cc${j.columnsId.columnId}" [#if columnId?number=j.columnsId.columnId]class="mtree-active"[/#if]><a id="${j.columnsId.columnId}" class="class3 box1" href="javascript:void(0);" onclick="myblog(null,0,${j.columnsId.columnId})" title="${j.columnsId.columnName}" >${j.columnsId.columnName}q</a></li>
 		                   		[#else]
-			                    	<li id="cc${j.columnsId.columnId}"><a  class="class3 box1" id="${j.columnsId.columnId}" href="${base}/blog/contribute_list.jspx?columnId=${j.columnsId.columnId}&joinGroupStata=0" title="${j.columnsId.columnName}" >${j.columnsId.columnName}</a></li>
+			                    	<li id="cc${j.columnsId.columnId}"><a  class="class3 box1" id="${j.columnsId.columnId}" href="javascript:void(0);" onclick="myblog(null,0,${j.columnsId.columnId})" title="${j.columnsId.columnName}" >${j.columnsId.columnName}w1</a></li>
 		                   		[/#if]
 		                    [/#if]
 		                    [#if usert??]
 			                    [#if columnId??]
-			                    	<li id="cc${j.columnsId.columnId}" [#if columnId?number=j.columnsId.columnId]class="mtree-active"[/#if]><a  class="class3 box1" id="${j.columnsId.columnId}" href="${base}/blog/contribute_list.jspx?columnId=${j.columnsId.columnId}&joinGroupStata=0&uid=${usert.id}" title="${j.columnsId.columnName}" >${j.columnsId.columnName}</a></li>
+			                    	<li id="cc${j.columnsId.columnId}" [#if columnId?number=j.columnsId.columnId]class="mtree-active"[/#if]><a  class="class3 box1" id="${j.columnsId.columnId}" href="${base}/blog/contribute_list.jspx?columnId=${j.columnsId.columnId}&joinGroupStata=0&uid=${usert.id}" title="${j.columnsId.columnName}" >${j.columnsId.columnName}e</a></li>
 		                    	[#else]
-			                    	<li id="cc${j.columnsId.columnId}"><a  class="class3 box1" id="${j.columnsId.columnId}" href="${base}/blog/contribute_list.jspx?columnId=${j.columnsId.columnId}&joinGroupStata=0&uid=${usert.id}" title="${j.columnsId.columnName}" >${j.columnsId.columnName}</a></li>
+			                    	<li id="cc${j.columnsId.columnId}"><a  class="class3 box1" id="${j.columnsId.columnId}" href="${base}/blog/contribute_list.jspx?columnId=${j.columnsId.columnId}&joinGroupStata=0&uid=${usert.id}" title="${j.columnsId.columnName}" >${j.columnsId.columnName}77</a></li>
 		                    	[/#if]
 		                    [/#if]
 		                    [/#list]
 	                        [/#if]
 	                        [#if user??]
-	                        <li class="join"><a  href="javascript:;" style="color: #006400 !important;" onclick="joinGroupByCode()">加入群组</a></li>
+	                        <li class="join"><a  href="javascript:;" style="color: #006400;" onclick="joinGroupByCode()">加入群组</a></li>
 	                        [/#if]
 	                        <br />
 					   </ul>
@@ -549,25 +550,48 @@ function sJoinGroup(){
 	});
 	
 	function myblog(channelId,joinGroupStata,columnId){
+		debugger;
 	 	 $.ajax({
-            type: 'POST',
-            url : ' ${base}/blog/contribute_list_own.jspx',
-            /*  dataType : 'json', */
-             dataType:"html",
-            data : {'queryTitle' : null,'modelId' : null,'queryChannelId' : null,'pageNo':null,'channelId':channelId,'joinGroupStata':joinGroupStata,'columnId':columnId},
-            async: false,
-            success : function(datas){
-           	 
-           	 debugger;
+             type: 'POST',
+             url : ' ${base}/blog/contribute_list_own.jspx',
+             /*  dataType : 'json', */
+              dataType:"html",
+             data : {'queryTitle' : null,'modelId' : null,'queryChannelId' : null,'pageNo':null,'channelId':channelId,'joinGroupStata':joinGroupStata,'columnId':columnId},
+             async: false,
+             success : function(datas){
+            	 
+            	 debugger;
 
-           	/*  var str=datas.pagination;
-           	 var list =str.list; */
-           	 $("#tgglDiv").empty();
-           	 $("#tgglDiv").append(datas);
-           	
+            	/*  var str=datas.pagination;
+            	 var list =str.list; */
+       
+            	 
+            	/* 	 var html =""; 
+             	 	html  +="<div id=\"zd_u-hilite-cap\" class=\"cap\" onclick=\"zdShowHidden();\" >置顶</div>"; 
+             	 	html  +=" <div id=\"zdId\" style=\"width: 730px;float: left; padding-left: 20px;\">"; 
+             	 	html  +="<div class=\"personCenter-userInfo blog_right1\">"; 
+             	 	html  +="<ul class=\"topicList\" >"; 
+             	 	html  +="[#if stickList??]";
+             	 	html  +="[#if stickList?size gt 0]"; 
+             	 	html  +="[#list stickList as sti]"; 
+             	 	html  +="<li class=\"row\"><a cmd=\"LoadTopic\" _list=\"hilite\"  href=\"${base}/${sti.path}/${sti.contentId}.jhtml?d=1&currentId=${sti.id}&stickUserId=${sti.stickUserId}\" >${sti.contentTitle}</a> <span class=\"lt\">(${sti.contentTime?string('yyyy-MM-dd')})</span></li>				           [/#list]"; 
+             	 	html  +=" [#else]"; 
+             	 	html  +="<li class=\"row\" >暂无置顶内容！ </li>"; 
+             	 	html  +=" [/#if]"; 
+             	 	html  +="<li class=\"row\" >暂无置顶内容！ </li>"; 
+             	 	html  +=" [/#if]"; 
+             	 	html  +=" </ul>"; 
+             	 	html  +=" </div>"; 
+             	 	html  +=" </div> "; 
+             	 	html  +="  <div id=\"u-hilite-cap\" class=\"cap\" onclick=\"showHidden();\" >文章</div>"
+             	 $(".wrap-right").before(html); */
+            	
+            	 $(".wrap-right").empty();
+            	 $(".wrap-right").append(datas);
+            	
 						
-   	   		 }
-  		 });
+    	   		 }
+   		 });
 	}
 	</script>
 <script type="text/javascript">

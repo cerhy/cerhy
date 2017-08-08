@@ -256,7 +256,7 @@ public class BlogAct {
 		if(joinGroupStata!=null&&joinGroupStata.equals("0")){
 			model.addAttribute("GroupFlag", -1);
 			userId=0;
-			if(null != request.getParameter("columnId")){
+			if(StringUtils.isNotBlank(request.getParameter("columnId"))){
 				model.addAttribute("columnId", request.getParameter("columnId"));
 				model.addAttribute("columnIdZ", request.getParameter("columnId"));
 				model.addAttribute("joinGroupStata", 0);
@@ -266,13 +266,13 @@ public class BlogAct {
 		}else{
 			model.addAttribute("GroupFlag", 0);
 			//为了删除文章后能跳转回本栏目下
-			if(null != request.getParameter("columnId")){
+			if(StringUtils.isNotBlank(request.getParameter("columnId"))){
 				model.addAttribute("columnId", request.getParameter("columnId"));
 				model.addAttribute("columnIdZ", request.getParameter("columnId"));
 				model.addAttribute("submitOn", 1);
 				columnId = Integer.parseInt(request.getParameter("columnId"));
 			}
-			if(null != request.getParameter("channelId")){
+			if(StringUtils.isNotBlank(request.getParameter("channelId"))){
 				model.addAttribute("channelId", request.getParameter("channelId"));
 				model.addAttribute("submitOn", 1);
 				channelId = Integer.parseInt(request.getParameter("channelId"));
@@ -280,7 +280,7 @@ public class BlogAct {
 		}
  		// model.addAttribute("channelId", 1);
 		FrontUtils.frontData(request, model, site);
-
+		model = contentMng.getStickList(user,model);
 		Pagination p = contentMng.getPageForMember_blog(q, queryChannelId,site.getId(), modelId,userId, cpn(pageNo), 20,columnId,channelId,recieveUserId);
 		model.addAttribute("pagination", p);
 		if (!StringUtils.isBlank(q)) {
