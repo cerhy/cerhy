@@ -113,12 +113,16 @@ public class DynamicPageAct {
 		CmsConfig config=configMng.get();
 		String d = request.getParameter("d");//自己博客中心，博客内容跳转.  1
 		String f = request.getParameter("f");//好友  0
+		String wx = request.getParameter("wx");//好友  0
 		String columnId = request.getParameter("columnIdZ");//好友  0
 		if(null != d){
 			return blogAct.blogContentShow(paths, params, info, pageNo,request, response, model,columnId);
 		}
 		if(null != f){
 			return blogAct.blogContentShowFriend(paths, params, info, pageNo,request, response, model,f,columnId);
+		}
+		if(null != wx){
+			return blogAct.blogContentShare(paths, params, info, pageNo,request, response, model,f,columnId);
 		}
 		if(config.getInsideSite()){
 			return network(paths, params, info, pageNo, request, response, model);
