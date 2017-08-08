@@ -73,29 +73,49 @@
           <script type="text/javascript">
             function _gotoPage(pageNo) {
                 try{
-                    var tableForm = document.getElementById("tableForm");
+                    //var tableForm = document.getElementById("tableForm");
                     $("input[name=pageNo]").val(pageNo);
+                    var ownUrl="";
                     if($("#ud").val()!=''&&$("#jg").val()!=''){
                     	if(typeof($("#hy").val())=='undefined'){
-	                     	tableForm.action="${base}/blog/contribute_list.jspx?columnId=${columnId!'null'}&joinGroupStata=${joinGroupStata!'null'}";
+                    		ownUrl="${base}/blog/contribute_list_own.jspx?columnId=${columnId!'null'}&joinGroupStata=${joinGroupStata!'null'}";
+	                     	//tableForm.action="${base}/blog/contribute_list.jspx?columnId=${columnId!'null'}&joinGroupStata=${joinGroupStata!'null'}";
                     	}else{
-	                     tableForm.action="${base}/blog/contribute_list.jspx?columnId=${columnId!'null'}&joinGroupStata=${joinGroupStata!'null'}&uid="+$("#hy").val();
+                    		ownUrl="${base}/blog/contribute_list_own.jspx?columnId=${columnId!'null'}&joinGroupStata=${joinGroupStata!'null'}&uid="+$("#hy").val();
+	                    // tableForm.action="${base}/blog/contribute_list.jspx?columnId=${columnId!'null'}&joinGroupStata=${joinGroupStata!'null'}&uid="+$("#hy").val();
                     	}	
 					}else if($("#ud").val()!=''&&$("#jg").val()==''){
 						if(typeof($("#hy").val())=='undefined'){
-                     		tableForm.action="${base}/blog/contribute_list.jspx?columnId=${columnId!'null'}";
+							ownUrl="${base}/blog/contribute_list_own.jspx?columnId=${columnId!'null'}";
+                     		//tableForm.action="${base}/blog/contribute_list.jspx?columnId=${columnId!'null'}";
 						}else{
-                     		tableForm.action="${base}/blog/contribute_list.jspx?columnId=${columnId!'null'}&uid="+$("#hy").val();
+							ownUrl="${base}/blog/contribute_list_own.jspx?columnId=${columnId!'null'}&uid="+$("#hy").val();
+                     		//tableForm.action="${base}/blog/contribute_list.jspx?columnId=${columnId!'null'}&uid="+$("#hy").val();
 						}
 					}else{
 						if(typeof($("#hy").val())=='undefined'){
-                     		tableForm.action="${base}/blog/contribute_list.jspx?channelId=${channelId!'null'}";
+							ownUrl="${base}/blog/contribute_list_own.jspx?channelId=${channelId!'null'}";
+                     		//tableForm.action="${base}/blog/contribute_list.jspx?channelId=${channelId!'null'}";
 						}else{
-                     		tableForm.action="${base}/blog/contribute_list.jspx?channelId=${channelId!'null'}&uid="+$("#hy").val();
+							ownUrl="${base}/blog/contribute_list_own.jspx?channelId=${channelId!'null'}&uid="+$("#hy").val();
+                     		//tableForm.action="${base}/blog/contribute_list.jspx?channelId=${channelId!'null'}&uid="+$("#hy").val();
 						}
 					}
-                    tableForm.onsubmit=null;
-                    tableForm.submit();
+                    
+                	$.ajax({
+				           type: 'POST',
+				           url : ownUrl,
+				           dataType:"html",
+				           data : {'pageNo':pageNo},
+				           async: false,
+				           success : function(datas){
+				        	   $(".wrap-right").empty();
+				               $(".wrap-right").append(datas);		
+				  	   		 }
+				 	});
+                	
+                   // tableForm.onsubmit=null;
+                   // tableForm.submit();
                 } catch(e) {
                     alert('_gotoPage(pageNo)方法出错');
                 }
