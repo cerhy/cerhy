@@ -1699,6 +1699,39 @@ public class BlogAct {
 		}
 		return errors;
 	}
+	
+	
+	public String blog_indexs(String q, Integer modelId,
+			Integer queryChannelId, String string, Integer pageNo,
+			HttpServletRequest request, ModelMap model) {
+		CmsSite site = CmsUtils.getSite(request);
+		CmsUser user = CmsUtils.getUser(request);
+		Integer recieveUserId = null;
+		if (user == null) {
+			String uid=request.getParameter("uid");
+			if(StringUtils.isNotEmpty(uid)){
+				user=cmsUserMng.findById(Integer.parseInt(uid));
+				model.addAttribute("usert", user);
+			}else{
+				return FrontUtils.showLoginBlog(request, model, site);
+			}
+		}
+		recieveUserId = user.getId();
+	    model = contentMng.getStickList(user,model);
+		FrontUtils.frontData(request, model, site);
+		Pagination p = contentMng.getPageForMember_blog(q, queryChannelId,site.getId(), modelId,user.getId(), cpn(pageNo), 20,null,null,recieveUserId);
+		model.addAttribute("pagination", p);
+		if (!StringUtils.isBlank(q)) {
+			model.addAttribute("q", q);
+		}else{
+			model.addAttribute("q", "");
+		}
+		if (modelId != null) {
+			model.addAttribute("modelId", modelId);
+		}
+		return "/WEB-INF/t/cms/www/default/blog/contribute_list_indexs.html";
+	}
+	
 	@Autowired
 	protected ImageCaptchaService imageCaptchaService;
 	@Autowired
@@ -1725,4 +1758,5 @@ public class BlogAct {
 	protected ContentMng contentMng;
 	@Autowired
 	protected ContentDao contentDao;
+	
 }

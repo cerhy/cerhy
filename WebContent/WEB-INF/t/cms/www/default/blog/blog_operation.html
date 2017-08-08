@@ -50,7 +50,7 @@ text-decoration: underline;
 		</ul>  
 		</div>
 	   [#else]
-		<div class="udl">
+	<!-- 	<div class="udl">
 	    <ul>
 			<li><a class="hide" href="javascript:;" style="position:relative;top:2px;">更多</a>
 			    <ul>
@@ -62,7 +62,7 @@ text-decoration: underline;
 			    </ul>
 			</li> 
 		</ul>  
-		</div>
+		</div> -->
 	   [/#if]
 [#if user??]
 <div class="udl" style="float: right;margin: -40px 0;padding-right: 58%;margin-right:10%">
@@ -71,11 +71,11 @@ text-decoration: underline;
 		</ul>
 </div>
 [#else]
-<div class="udl" style="float: right;margin: -32px 0;padding-right: 79%;">
+<!-- <div class="udl" style="float: right;margin: -32px 0;padding-right: 79%;">
 	  	<ul>
 		 <li><a style="cursor: pointer;" [#if user??]href="${base}/blog/index.jspx"[#else]href="${base}/blog/index.jspx?uid=${usert.id}"[/#if]>博客首页</a></li>
 		</ul>
-</div>
+</div> -->
 [/#if]
 
 <div class="udl" style="float: right;margin: -40px 0;width:290px;">
