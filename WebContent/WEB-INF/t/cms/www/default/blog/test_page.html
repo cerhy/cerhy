@@ -59,33 +59,6 @@
 .submit:hover {
     box-shadow: 0 3px 4px 0 rgba(0,0,0,0.24),0 8px 15px 0 rgba(0,0,0,0.19);
 }
-.cap	{
-    color: #000;
-    background: #def7ff;
-    /* padding: 4px 20px 4px 20px; */
-    cursor: pointer;
-    padding-left: 20px;
-    width: 710px;
-    float: left;
-    margin-left: 20px;
-    height: 36px;
-    padding-top: 10px;
-    font-size:20px;}
-.blog_right1 {
-    padding: 35px;
-    background: #ffffff;
-  
-}
-.topicList {
-    color: #000;
-    font-family: "Microsoft YaHei",Arial;
-    font-size: 14px;
-    line-height: 200%;
-    margin: 0;
-    padding: 0 0 0 2em;
-    list-style: square;
-}
-.topicList a{ color: #2152AC; text-decoration: none; }
 </style>
 <script type="text/javascript">
 
@@ -168,11 +141,11 @@ function showHidden(){
 	}
 }
 function zdShowHidden(){
-	var display = $("#zdId.wrap-right").css('display');
+	var display = $("#zdId").css('display');
 	if(display=="block"){
-		$("#zdId.wrap-right").css('display','none'); 
+		$("#zdId").css('display','none'); 
 	}else{
-		$("#zdId.wrap-right").css('display','block'); 
+		$("#zdId").css('display','block'); 
 	}
 }
 </script>
@@ -200,12 +173,16 @@ function zdShowHidden(){
         <div class="mb20 clearfix">
         [#include "friend_blog_left.html"/]
          <div id="zd_u-hilite-cap" class="cap" onclick="zdShowHidden();" >置顶</div>
-          <div id="zdId" class="wrap-right">
+          <div id="zdId" style="width: 730px;float: left; padding-left: 20px;">
                 <div class="personCenter-userInfo blog_right1">
                 <ul class="topicList" >
+                 [#if stickList??]
 				 [#if stickList?size gt 0]
 				          [#list stickList as sti]
  						  <li class="row"><a cmd="LoadTopic" _list="hilite"  href="${base}/${sti.path}/${sti.contentId}.jhtml?d=1&currentId=${sti.id}&stickUserId=${sti.stickUserId}" >${sti.contentTitle}</a> <span class="lt">(${sti.contentTime?string('yyyy-MM-dd')})</span></li>				           [/#list]
+				 [#else]
+				 <li class="row" >暂无置顶内容！ </li>
+				 [/#if]
 				 [#else]
 				 <li class="row" >暂无置顶内容！ </li>
 				 [/#if]
@@ -214,6 +191,7 @@ function zdShowHidden(){
                 </div>
            <div id="u-hilite-cap" class="cap" onclick="showHidden();" >文章</div>
             <div id="wzId" class="wrap-right">
+			        <div id="tgglDiv" class="tggl" style="display: block;">
                 <div class="personCenter-userInfo" style="min-height: 600px;">
                     
                     <div class="tab-content" style="display: block;">
@@ -225,7 +203,7 @@ function zdShowHidden(){
 				          [#list pagination.list as c]
 				         <li>
 				         [#if columnIdZ??]
-				          <a class="hasImg clearfix a12"  href="${c.url}?f=${usert.id}&GroupFlag=${GroupFlag}&columnIdZ=${columnIdZ}">
+				          <a class="hasImg clearfix a12"  href="${c.url}?f=${usert.id}&GroupFlag=${GroupFlag}&columnIdZ=${columnIdZ}" onclick="">
 							  <div class="item2 clearfix" [#if c_index<1]style="border-top:none;"[/#if]>
 									<div class="report-text">
 										<h3>${c.title}</h3>
@@ -234,7 +212,7 @@ function zdShowHidden(){
 					           </div>
 						  </a>
 				         [#else]
-				          <a class="hasImg clearfix a12"  href="${c.url}?f=${usert.id}&GroupFlag=${GroupFlag}">
+				          <a class="hasImg clearfix a12"  href="${c.url}?f=${usert.id}&GroupFlag=${GroupFlag}" onclick="findArtical(${c.url}?f=${usert.id}&GroupFlag=${GroupFlag})">
 							  <div class="item2 clearfix" [#if c_index<1]style="border-top:none;"[/#if]>
 									<div class="report-text">
 										<h3>${c.title}</h3>
@@ -277,7 +255,6 @@ function zdShowHidden(){
 			          <script type="text/javascript">
 			            function _gotoPage(pageNo) {
 			                try{
-			                    var tableForm = document.getElementById("tableForm");
 			                    var queryTitle = $("#queryTitle").val();
 			                    $("input[name=pageNo]").val(pageNo);
 								if($("#ud").val()!=''&&$("#jg").val()!=''){
@@ -286,13 +263,22 @@ function zdShowHidden(){
 			                    	tableForm.action="${base}/blog/contribute_list_friend.jspx?user_ids=${usert.id}&columnId=${columnId!'null'}&queryTitle="+queryTitle;
 								}else{
 									if($("#cd").val()==''){
-				                    	tableForm.action="${base}/blog/find_all_url_friend.jspx?userIds=${usert.id}&queryTitle="+queryTitle;
+										$.ajax({
+									           type: 'POST',
+									           url : '${base}/blog/find_all_url_friends.jspx',
+									           dataType:"html",
+									           data : {'queryTitle' : queryTitle,'modelId' : null,'queryChannelId' : null,'pageNo':pageNo,'channelId':null,'joinGroupStata':null,'columnId':null,'userIds':${usert.id}},
+									           async: false,
+									           success : function(datas){
+									        	   $(".wrap-right").empty();
+									               $(".wrap-right").append(datas);		
+									  	   		 }
+									 	});
+				                    	//tableForm.action="${base}/blog/find_all_url_friend.jspx?userIds=${usert.id}&queryTitle="+queryTitle;
 									}else{
 			                    	    tableForm.action="${base}/blog/contribute_list_friend.jspx?channelId=${channelId!''}&user_ids=${usert.id}&queryTitle="+queryTitle;
 									}
 								}
-			                    tableForm.onsubmit=null;
-			                    tableForm.submit();
 			                } catch(e) {
 			                    alert('_gotoPage(pageNo)方法出错');
 			                }
@@ -303,6 +289,7 @@ function zdShowHidden(){
 			                <div>暂无博文</div>
 			            [/#if]
 			          </form>
+			          </div>
 			        </div>
                 </div>
             </div>

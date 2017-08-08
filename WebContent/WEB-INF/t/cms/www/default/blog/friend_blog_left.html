@@ -54,7 +54,7 @@
 					        <ul>
 					        [#if channelList??]
 				             [#list channelList as c]
-					          <li><a style="font-size: 14px;color: #255EC7;" href="${base}/blog/contribute_list_friend.jspx?channelId=${c.channelId}&user_ids=${userIds}">${c.channelName}</a></li>
+					          <li><a style="font-size: 14px;color: #255EC7;" href="javascript:;" onclick="friendBlogs(${c.channelId},null,null,${userIds})">${c.channelName}</a></li>
 				             [/#list]
 				             [/#if]
 					         </ul>
@@ -67,15 +67,15 @@
 					        	[#list map[k] as v]
 					        	[#if v?split('=')[2]??]
 					        		[#if columnId??]
-					        			<li [#if columnId=v?split('=')[0]]class="mtree-active"[/#if]><a style="font-size: 16px;"  title="${v?split('=')[1]}&nbsp;${v?split('=')[2]}" href="${base}/blog/contribute_list_friend.jspx?columnId=${v?split('=')[0]}&user_ids=${userIds}&joinGroupStata=0">${v?split("=")[1]}&nbsp;${v?split('=')[2]}</a></li>
+					        			<li [#if columnId=v?split('=')[0]]class="mtree-active"[/#if]><a style="font-size: 16px;"  title="${v?split('=')[1]}&nbsp;${v?split('=')[2]}" href="javascript:;" onclick="friendBlogs(null,0,${v?split('=')[0]},${userIds})">${v?split("=")[1]}&nbsp;${v?split('=')[2]}</a></li>
 					        		[#else]
-						        		<li><a style="font-size: 16px;" title="${v?split('=')[1]}&nbsp;${v?split('=')[2]}" href="${base}/blog/contribute_list_friend.jspx?columnId=${v?split('=')[0]}&user_ids=${userIds}&joinGroupStata=0">${v?split("=")[1]}&nbsp;${v?split('=')[2]}</a></li>
+						        		<li><a style="font-size: 16px;" title="${v?split('=')[1]}&nbsp;${v?split('=')[2]}" href="javascript:;" onclick="friendBlogs(null,0,${v?split('=')[0]},${userIds})">${v?split("=")[1]}&nbsp;${v?split('=')[2]}</a></li>
 					        		[/#if]
 					        	[#else]
 					        		[#if columnId??]
-					        			<li [#if columnId=v?split('=')[0]]class="mtree-active"[/#if]><a style="font-size: 16px;" title="${v?split('=')[1]}" href="${base}/blog/contribute_list_friend.jspx?columnId=${v?split('=')[0]}&user_ids=${userIds}">${v?split("=")[1]}</a></li>
+					        			<li [#if columnId=v?split('=')[0]]class="mtree-active"[/#if]><a style="font-size: 16px;" title="${v?split('=')[1]}" href="javascript:;" onclick="friendBlogs(null,null,${v?split('=')[0]},${userIds})">${v?split("=")[1]}</a></li>
 					        		[#else]
-						        		<li><a style="font-size: 16px;" title="${v?split('=')[1]}" href="${base}/blog/contribute_list_friend.jspx?columnId=${v?split('=')[0]}&user_ids=${userIds}">${v?split("=")[1]}</a></li>
+						        		<li><a style="font-size: 16px;" title="${v?split('=')[1]}" href="javascript:;" onclick="friendBlogs(null,null,${v?split('=')[0]},${userIds})">${v?split("=")[1]}</a></li>
 					        		[/#if]
 					        	[/#if]
 					        	[/#list]
@@ -85,15 +85,15 @@
 					        	[#list map[k] as v]
 					        		[#if v?split('=')[2]??]
 					        			[#if columnId??]
-					        				<li [#if columnId=v?split('=')[0]]class="mtree-active"[/#if]><a  style="font-size: 14px;color: #255EC7;" title="${v?split('=')[1]}&nbsp;${v?split('=')[2]}" href="${base}/blog/contribute_list_friend.jspx?columnId=${v?split('=')[0]}&user_ids=${userIds}&joinGroupStata=0">${v?split("=")[1]}&nbsp;${v?split('=')[2]}</a></li>
+					        				<li [#if columnId=v?split('=')[0]]class="mtree-active"[/#if]><a  style="font-size: 14px;color: #255EC7;" title="${v?split('=')[1]}&nbsp;${v?split('=')[2]}" href="javascript:;" onclick="friendBlogs(null,0,${v?split('=')[0]},${userIds})">${v?split("=")[1]}&nbsp;${v?split('=')[2]}</a></li>
 					        			[#else]
-						        			<li><a style="font-size: 14px;color: #255EC7;" title="${v?split('=')[1]}&nbsp;${v?split('=')[2]}" href="${base}/blog/contribute_list_friend.jspx?columnId=${v?split('=')[0]}&user_ids=${userIds}&joinGroupStata=0">${v?split("=")[1]}&nbsp;${v?split('=')[2]}</a></li>
+						        			<li><a style="font-size: 14px;color: #255EC7;" title="${v?split('=')[1]}&nbsp;${v?split('=')[2]}" href="javascript:;" onclick="friendBlogs(null,0,${v?split('=')[0]},${userIds})">${v?split("=")[1]}&nbsp;${v?split('=')[2]}</a></li>
 					        			[/#if]
 					        		[#else]
 					        			[#if columnId??]
-					        				<li [#if columnId=v?split('=')[0]]class="mtree-active"[/#if]><a style="font-size: 14px;color: #255EC7;" title="${v?split('=')[1]}" href="${base}/blog/contribute_list_friend.jspx?columnId=${v?split('=')[0]}&user_ids=${userIds}">${v?split("=")[1]}</a></li>
+					        				<li [#if columnId=v?split('=')[0]]class="mtree-active"[/#if]><a style="font-size: 14px;color: #255EC7;" title="${v?split('=')[1]}" href="javascript:;" onclick="friendBlogs(null,null,${v?split('=')[0]},${userIds})">${v?split("=")[1]}</a></li>
 					        			[#else]
-						        			<li><a style="font-size: 14px;color: #255EC7;" title="${v?split('=')[1]}" href="${base}/blog/contribute_list_friend.jspx?columnId=${v?split('=')[0]}&user_ids=${userIds}">${v?split("=")[1]}</a></li>
+						        			<li><a style="font-size: 14px;color: #255EC7;" title="${v?split('=')[1]}" href="javascript:;" onclick="friendBlogs(null,null,${v?split('=')[0]},${userIds})">${v?split("=")[1]}</a></li>
 					        			[/#if]
 					        		[/#if]
 					        	[/#list]
@@ -113,9 +113,9 @@
 					        [#if joinGroupList?size gt 0]
                             [#list joinGroupList as j]
 	                            [#if columnId??]
-			                    	<li [#if columnId?number=j.columnsId.columnId]class="mtree-active"[/#if]><a href="${base}/blog/contribute_list_friend.jspx?columnId=${j.columnsId.columnId}&user_ids=${userIds}&joinGroupStata=0" title="${j.columnsId.columnName}" ><em></em>[@text_cut s=j.columnsId.columnName len=9 append='...'/]</a></li>
+			                    	<li [#if columnId?number=j.columnsId.columnId]class="mtree-active"[/#if]><a href="javascript:;" onclick="friendBlogs(null,0,${j.columnsId.columnId},${userIds})"><em></em>[@text_cut s=j.columnsId.columnName len=9 append='...'/]</a></li>
 		                    	[#else]
-				                    <li><a href="${base}/blog/contribute_list_friend.jspx?columnId=${j.columnsId.columnId}&user_ids=${userIds}&joinGroupStata=0" title="${j.columnsId.columnName}" ><em></em>[@text_cut s=j.columnsId.columnName len=9 append='...'/]</a></li>
+				                    <li><a href="javascript:;" title="${j.columnsId.columnName}" onclick="friendBlogs(null,0,${j.columnsId.columnId},${userIds})"><em></em>[@text_cut s=j.columnsId.columnName len=9 append='...'/]</a></li>
 		                    	[/#if]
 		                    [/#list]
 	                        [/#if]
@@ -316,4 +316,37 @@
 	    ];
 	    mtree.addClass(skins[0]);
 	});
+	
+	
+	function friendBlogs(channelId,joinGroupStata,columnId,user_ids){
+		if(typeof($("#no3").val())!='undefined'){
+			 delPos();
+		};
+	 	 $.ajax({
+           type: 'POST',
+           url : ' ${base}/blog/contribute_list_friends.jspx',
+           dataType:"html",
+           data : {'queryTitle' : null,'modelId' : null,'queryChannelId' : null,'pageNo':null,'channelId':channelId,'joinGroupStata':joinGroupStata,'columnId':columnId,'user_ids':user_ids},
+           async: false,
+           success : function(datas){
+        	 $(".wrap-right").empty();
+          	 $(".wrap-right").append(datas);		
+  	   		 }
+ 		 });
+	}
+	
+	function delPos(){
+		$.ajax({
+	         url: "${base}/blog/searchPostil.jspx?contentId="+$("#no3").val(),
+	         type: "POST",
+	         dataType:"json",
+	         data: "",
+	         async: false,
+	         success: function (data) {
+	 				for(var i=0;i<data.length;i++){
+						$("div#"+data[i].postilDivId).remove();
+	 				}
+	         }
+	     });
+	}
 	</script>
