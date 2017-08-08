@@ -638,6 +638,16 @@ public class ContributeAct extends AbstractContentMemberAct {
 				pageNo, request, model);
 	} 
 	
+	
+	//博客主页
+	@RequestMapping(value = "/blog/indexs.jspx")
+	public String blog_indexs(String queryTitle, Integer modelId,
+			Integer queryChannelId, Integer pageNo, HttpServletRequest request,
+			ModelMap model) { 
+		return blogAct.blog_indexs(queryTitle, modelId, queryChannelId, "tpl.blogCenter",
+				pageNo, request, model);
+	} 
+	
 	@RequestMapping(value = "/blog/tzsetting.jspx")
 	public String tzsetting(HttpServletRequest request, HttpServletResponse response,ModelMap model) {
 		return blogAct.tzsetting(request, response, model);
