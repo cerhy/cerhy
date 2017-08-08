@@ -1699,6 +1699,136 @@ public class BlogAct {
 		}
 		return errors;
 	}
+	
+	public String blog_list_friends(String q, Integer modelId,Integer queryChannelId, Object object, Integer pageNo,HttpServletRequest request, ModelMap model) {
+		CmsSite site = CmsUtils.getSite(request);
+		CmsUser u = CmsUtils.getUser(request);
+		Integer recieveUserId = null;
+		if(u!=null){
+			recieveUserId = u.getId();
+		}
+		String user_ids = request.getParameter("user_ids");
+		CmsUser user=cmsUserMng.findById(Integer.valueOf(user_ids.toString()));
+		String joinGroupStata = request.getParameter("joinGroupStata");
+		int userId=user.getId();
+		Integer columnId = null;
+		Integer channelId = null;
+		if(joinGroupStata!=null&&joinGroupStata.equals("0")){
+			userId=0;
+			model.addAttribute("GroupFlag", -1);
+			if(StringUtils.isNotBlank(request.getParameter("columnId"))&&!"null".equals(request.getParameter("columnId"))){
+				model.addAttribute("columnId", request.getParameter("columnId"));
+				model.addAttribute("columnIdZ", request.getParameter("columnId"));
+				model.addAttribute("joinGroupStata", 0);
+				model.addAttribute("submitOn1", 1);
+				columnId = Integer.parseInt(request.getParameter("columnId"));
+			}
+		}else{
+			model.addAttribute("GroupFlag", 0);
+			//为了删除文章后能跳转回本栏目下
+			if(StringUtils.isNotBlank(request.getParameter("columnId"))&&!"null".equals(request.getParameter("columnId"))){
+				model.addAttribute("columnId", request.getParameter("columnId"));
+				model.addAttribute("columnIdZ", request.getParameter("columnId"));
+				model.addAttribute("submitOn", 1);
+				columnId = Integer.parseInt(request.getParameter("columnId"));
+			}
+			if(StringUtils.isNotBlank(request.getParameter("channelId"))&&!"null".equals(request.getParameter("channelId"))){
+				model.addAttribute("channelId", request.getParameter("channelId"));
+				model.addAttribute("submitOn", 1);
+				channelId = Integer.parseInt(request.getParameter("channelId"));
+			}
+		}
+		model.addAttribute("usert", user);
+		model.addAttribute("userIds", user.getId());
+		FrontUtils.frontData(request, model, site);
+		model = contentMng.getStickList(user,model);
+		Pagination p = contentMng.getPageForMember_blog(q, queryChannelId,site.getId(), modelId,userId, cpn(pageNo), 20,columnId,channelId,recieveUserId);
+		model.addAttribute("pagination", p);
+		if (!StringUtils.isBlank(q)) {
+			model.addAttribute("q", q);
+		}else{
+			model.addAttribute("q", "");
+		}
+		if (modelId != null) {
+			model.addAttribute("modelId", modelId);
+		}
+		return "/WEB-INF/t/cms/www/default/blog/contribute_list_friends.html";
+	}
+	
+	public String find_all_url_friends(String userIds,String q,Integer modelId, Integer queryChannelId, String string,Integer pageNo, HttpServletRequest request, ModelMap model) {
+		CmsSite site = CmsUtils.getSite(request);
+		CmsUser user = CmsUtils.getUser(request);
+		Integer recieveUserId = null;
+		CmsUser userT=null;
+		if(request.getParameter("name")!=null){
+			String username=request.getParameter("name").substring(1, request.getParameter("name").length());
+			CmsUser uname=cmsUserMng.findByUsername(username);
+			if(uname!=null){
+				userT=cmsUserMng.findById(uname.getId());
+			}else{
+				return FrontUtils.showMessage(request, model, "该账号暂未开通博客,或者请检查输入的账号是否正确!"); 
+			}
+		}else{
+			userT=cmsUserMng.findById(Integer.valueOf(userIds.toString()));
+		}
+		channelMng.updateBlogVisitNum(userT);
+		if(user!=null){
+			recieveUserId = user.getId();
+			if(!user.getId().equals(userT.getId())){
+				channelMng.updateBlogVisitorTime(user,userT);
+			}
+		}
+		FrontUtils.frontData(request, model, site);
+		Pagination p = contentMng.getPageForMember_firendsBlog(Integer.valueOf(userT.getId()),q, queryChannelId,site.getId(), modelId,null, cpn(pageNo), 20,null,recieveUserId);
+		model.addAttribute("pagination", p);
+		model.addAttribute("GroupFlag", 0);
+		model.addAttribute("usert", userT);
+		model.addAttribute("userIds", userT.getId());
+		model = contentMng.getStickList(userT,model);
+		if (!StringUtils.isBlank(q)) {
+			model.addAttribute("q", q);
+		}else{
+			model.addAttribute("q", "");
+		}
+		if (modelId != null) {
+			model.addAttribute("modelId", modelId);
+		}
+		model.addAttribute("GroupStata", 0);
+		return "/WEB-INF/t/cms/www/default/blog/contribute_list_friends.html";
+	}
+	
+	
+	public String blogContentShare(String[] paths, String[] params,
+			PageInfo info, int pageNo, HttpServletRequest request,
+			HttpServletResponse response, ModelMap model, String f,
+			String columnId) {
+		Content content = contentMng.findById(Integer.parseInt(paths[1]));
+		if (content == null) {
+			log.debug("Content id not found: {}", paths[1]);
+			return FrontUtils.pageNotFound(request, response, model);
+		}
+		Integer pageCount=content.getPageCount();
+		if(pageNo>pageCount||pageNo<0){
+			return FrontUtils.pageNotFound(request, response, model);
+		}
+		//非终审文章
+		CmsConfig config=CmsUtils.getSite(request).getConfig();
+		config.getConfigAttr().getPreview();
+		CmsSite site = content.getSite();
+		Set<CmsGroup> groups = content.getViewGroupsExt();
+		groups.size();
+		String txt = content.getTxtByNo(pageNo);
+		// 内容加上关键字
+		txt = cmsKeywordMng.attachKeyword(site.getId(), txt);
+		Paginable pagination = new SimplePage(pageNo, 1, content.getPageCount());
+		model.addAttribute("pagination", pagination);
+		FrontUtils.frontPageData(request, model);
+		model.addAttribute("content", content);
+		model.addAttribute("title", content.getTitleByNo(pageNo));
+		model.addAttribute("txt", txt);
+		return FrontUtils.getTplPath(request, site.getSolutionPath(),TPLDIR_BLOG,"tpl.blogContentShare");
+	}
+	
 	@Autowired
 	protected ImageCaptchaService imageCaptchaService;
 	@Autowired
@@ -1725,4 +1855,5 @@ public class BlogAct {
 	protected ContentMng contentMng;
 	@Autowired
 	protected ContentDao contentDao;
+	
 }

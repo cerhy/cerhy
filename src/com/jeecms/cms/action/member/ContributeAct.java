@@ -678,6 +678,23 @@ public class ContributeAct extends AbstractContentMemberAct {
 		 
 	}
 	
+	
+	/**
+	 * 局部刷新好友博客文章
+	 * @throws JSONException 
+	 */
+	@RequestMapping(value = "/blog/contribute_list_friends.jspx")
+	public String blog_list_friends(String queryTitle, Integer modelId,
+			Integer queryChannelId, Integer pageNo, HttpServletRequest request,HttpServletResponse response,
+			ModelMap model) throws JSONException {
+		return  blogAct.blog_list_friends(queryTitle, modelId, queryChannelId, null,
+				pageNo, request, model);
+		 
+	}
+	
+	
+	
+	
 	//好友博客栏目
 	@RequestMapping(value = "/blog/contribute_list_friend.jspx")
 	public String blog_list_friend(String queryTitle, Integer modelId,
@@ -872,6 +889,18 @@ public class ContributeAct extends AbstractContentMemberAct {
 			Integer queryChannelId, Integer pageNo, HttpServletRequest request,
 			ModelMap model) {
 		return blogAct.friendCenter(userIds,queryTitle, modelId, queryChannelId, "tpl.testPage",
+				pageNo, request, model);
+	}
+	
+	
+	/**
+	 *跳转好友博客页面方法  局部刷新
+	  */
+	@RequestMapping(value = "/blog/find_all_url_friends.jspx")
+	public String find_all_url_friends(String userIds,String queryTitle, Integer modelId,
+			Integer queryChannelId, Integer pageNo, HttpServletRequest request,
+			ModelMap model) {
+		return blogAct.find_all_url_friends(userIds,queryTitle, modelId, queryChannelId, "tpl.testPage",
 				pageNo, request, model);
 	}
 	
