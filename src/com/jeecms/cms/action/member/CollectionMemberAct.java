@@ -228,21 +228,10 @@ public class CollectionMemberAct {
 			Integer pageNo, HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		CmsSite site = CmsUtils.getSite(request);
-		CmsUser u = CmsUtils.getUser(request);
 		CmsUser userT=cmsUserMng.findById(Integer.valueOf(userIds.toString()));
-		model = blogCommon.getColumn(request,model,userT);
-	    model = blogCommon.getChannel(request,model,userT,site);
-	    int totalCount = blogCommon.getTotalArticleNum(model,userT);
-	    model.addAttribute("articleCount", totalCount);
- 		model = blogCommon.getTotalCommentNum(model, userT);
- 		model = blogCommon.getStarBlogger(request, model);
- 		model = blogCommon.getAlreadyJoinGroup(request, model,userT);
- 		model = blogCommon.getAddFriends(request, model,userT,u);
- 		model = blogCommon.getFouces(request, model,userT,u);
+		model = contentMng.getStickList(userT,model);
 		FrontUtils.frontData(request, model, site);
-		Pagination p = contentMng.getPageForCollection(null, userT
-				.getId(), cpn(pageNo), CookieUtils.getPageSize(request));
-		//p.setTotalCount(totalCount);
+		Pagination p = contentMng.getPageForCollection(null, userT.getId(), cpn(pageNo), CookieUtils.getPageSize(request));
 		model.addAttribute("pagination", p);
 		if (!StringUtils.isBlank(queryTitle)) {
 			model.addAttribute("queryTitle", queryTitle);
@@ -253,8 +242,7 @@ public class CollectionMemberAct {
 		model.addAttribute("usert", userT);
 	    model.addAttribute("userIds", userIds);
         model.addAttribute("submitOn",1);
-		return FrontUtils.getTplPath(request, site.getSolutionPath(),
-				TPLDIR_BLOG, FRIEND_COLLECTION_LIST);
+        return "/WEB-INF/t/cms/www/default/blog/friend_collection_list_refresh.html";
 	}
 	
 	@RequestMapping(value = "/blog/friend_collect_cancel.jspx")

@@ -344,7 +344,7 @@ function btnPrints(){
 				    	  <div class="prev-next-wz clearfix">
 						        
 						        	[#if preStick??]
-		                    		<a href="${base}/${preStick[2]}/${preStick[3]}.jhtml?d=1&currentId=${preStick[0]}" class="prev-pian">
+		                    		<a href="javascript:;" onclick="precOrNext('${base}/${preStick[2]}/${preStick[3]}.jhtml?f=${usert.id}&currentId=${preStick[0]}&stickUserId=${preStick[4]!null}')" class="prev-pian">
 		                            <span>&lt;上一篇</span>
 		                            <em>${preStick[1]}</em>
 		                        	</a>
@@ -354,7 +354,7 @@ function btnPrints(){
 			                        	</a>
 		                        	[/#if]
 		                        	[#if nextStick??]
-				                     <a href="${base}/${nextStick[2]}/${nextStick[3]}.jhtml?d=1&currentId=${nextStick[0]}" class="next-pian">
+				                     <a href="javascript:;" onclick="precOrNext('${base}/${nextStick[2]}/${nextStick[3]}.jhtml?f=${usert.id}&currentId=${nextStick[0]}&stickUserId=${nextStick[4]!null}')" class="next-pian">
 			                            <em>${nextStick[1]}</em>
 			                            <span>下一篇&gt;</span>
 			                        </a>

@@ -103,7 +103,7 @@
 					        [/#list]
 					        [/#list]
 				            [/#if]
-				             <li><a href="${base}/blog/friend_collection_list.jspx?userIds=${usert.id}">转载</a></li>
+				             <li><a href="javascript:;" onclick="friendCollection('${base}/blog/friend_collection_list.jspx?userIds=${usert.id}')">转载</a></li>
 				             <br />
 					      </li>
 					    </ul>
@@ -578,7 +578,7 @@
 		}else{
 			nu=url;
 		}
-		var newUrl=url+"&sx=0";
+		var newUrl=nu+"&sx=0";
 	 	$.ajax({
           type: 'GET',
           url : newUrl,
@@ -594,4 +594,74 @@
  	   		 }
 		});
 	}
+	
+	function precOrNext(url){
+		if(typeof($("#no3").val())!='undefined'){
+			 delPos();
+		};
+		//解决ajax无法跨站点访问文章问题
+		var nu="";
+		if(url.indexOf("baoting") > 0){
+			nu=url.replace("baoting.","");
+		}else if(url.indexOf("haikou") > 0){
+			nu=url.replace("haikou.","");
+		}else if(url.indexOf("sanya") > 0){
+			nu=url.replace("sanya.","");
+		}else if(url.indexOf("tunchang") > 0){
+			nu=url.replace("tunchang.","");
+		}else{
+			nu=url;
+		}
+		var newUrl=nu+"&sx=0";
+	 	$.ajax({
+         type: 'GET',
+         url : newUrl,
+         dataType:"html",
+         async: true,
+         success : function(datas){
+      	   $(".wrap-right").empty();
+             $(".wrap-right").append(datas);
+             if(window._bd_share_main){
+
+          	   window._bd_share_main.init();
+          	}
+	   		 }
+		});
+	}
+	
+	//还有转载
+	function friendCollection(url){
+		if(typeof($("#no3").val())!='undefined'){
+			 delPos();
+		};
+		//解决ajax无法跨站点访问文章问题
+		var nu="";
+		if(url.indexOf("baoting") > 0){
+			nu=url.replace("baoting.","");
+		}else if(url.indexOf("haikou") > 0){
+			nu=url.replace("haikou.","");
+		}else if(url.indexOf("sanya") > 0){
+			nu=url.replace("sanya.","");
+		}else if(url.indexOf("tunchang") > 0){
+			nu=url.replace("tunchang.","");
+		}else{
+			nu=url;
+		}
+		var newUrl=nu;
+	 	$.ajax({
+        type: 'GET',
+        url : newUrl,
+        dataType:"html",
+        async: true,
+        success : function(datas){
+     	   $(".wrap-right").empty();
+            $(".wrap-right").append(datas);
+            if(window._bd_share_main){
+
+         	   window._bd_share_main.init();
+         	}
+	   		 }
+		});
+	}
+	
 	</script>
