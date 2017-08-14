@@ -550,7 +550,6 @@ function sJoinGroup(){
 	});
 	
 	function myblog(channelId,joinGroupStata,columnId,uid){
-		debugger;
 		if(typeof($("#no3").val())!='undefined'){
 			 delPos();
 		};
@@ -560,7 +559,6 @@ function sJoinGroup(){
              /*  dataType : 'json', */
               dataType:"html",
              data : {'queryTitle' : null,'modelId' : null,'queryChannelId' : null,'pageNo':null,'channelId':channelId,'joinGroupStata':joinGroupStata,'columnId':columnId,'uid':uid},
-             async: false,
              success : function(datas){
             	 $(".wrap-right").empty();
             	 $(".wrap-right").append(datas);

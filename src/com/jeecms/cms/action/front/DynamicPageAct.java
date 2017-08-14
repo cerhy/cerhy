@@ -114,6 +114,7 @@ public class DynamicPageAct {
 		String d = request.getParameter("d");//自己博客中心，博客内容跳转.  1
 		String f = request.getParameter("f");//好友  0
 		String wx = request.getParameter("wx");//好友  0
+		String o = request.getParameter("o");//进入博客文章内容显示
 		String columnId = request.getParameter("columnIdZ");//好友  0
 		if(null != d){
 			return blogAct.blogContentShow(paths, params, info, pageNo,request, response, model,columnId);
@@ -126,7 +127,10 @@ public class DynamicPageAct {
 		}
 		if(config.getInsideSite()){
 			return network(paths, params, info, pageNo, request, response, model);
-		}else{
+		}if(null != o){
+			return blogAct.blogContentShowOwn(paths, params, info, pageNo,request, response, model,columnId);
+		}
+		else{
 			return extranet(paths, params, info, pageNo, request, response, model);
 		}
 	}

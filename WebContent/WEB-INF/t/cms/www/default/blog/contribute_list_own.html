@@ -7,7 +7,7 @@
 				         <li>
 				           <div>
 				           [#if columnIdZ??]
-					           <a class="hasImg clearfix a12"  href="${c.url}?d=1&GroupFlag=${GroupFlag}&columnIdZ=${columnIdZ}">
+					           <a class="hasImg clearfix a12"  href="javascript:void(0);" onclick="myblogShow('${c.url}',${GroupFlag},${columnIdZ})">
 									  <div class="item2 clearfix" [#if c_index<1]style="border-top:none;"[/#if]>
 											<div class="report-text">
 												<div><h3>${c.title}</h3></div>
@@ -16,7 +16,7 @@
 								   </a>
 							   </div>
 						   [#else]
-				           	  <a class="hasImg clearfix a12"  href="${c.url}?d=1&GroupFlag=${GroupFlag}">
+				           	  <a class="hasImg clearfix a12"  href="javascript:void(0);" onclick="myblogShow('${c.url}',${GroupFlag},null)">
 								  <div class="item2 clearfix" [#if c_index<1]style="border-top:none;"[/#if]>
 										<div class="report-text">
 											<div><h3>${c.title}</h3></div>
@@ -107,7 +107,6 @@
 				           url : ownUrl,
 				           dataType:"html",
 				           data : {'pageNo':pageNo},
-				           async: false,
 				           success : function(datas){
 				        	   $(".wrap-right").empty();
 				               $(".wrap-right").append(datas);		
@@ -140,7 +139,7 @@ var html ="";
 	html  +="[#if stickList??]";
 	html  +="[#if stickList?size gt 0]"; 
 	html  +="[#list stickList as sti]"; 
-	html  +="<li class=\"row\"><a cmd=\"LoadTopic\" _list=\"hilite\"  href=\"${base}/${sti.path}/${sti.contentId}.jhtml?d=1&currentId=${sti.id}&stickUserId=${sti.stickUserId}\" >${sti.contentTitle}</a> <span class=\"lt\">(${sti.contentTime?string('yyyy-MM-dd')})</span></li>				           [/#list]"; 
+	html  +="<li class=\"row\"><a cmd=\"LoadTopic\" _list=\"hilite\"  href=\"javascript:void(0);\" onclick=\"myblogZdShow('${base}','${sti.path}',${sti.contentId},${sti.id},${sti.stickUserId})\">${sti.contentTitle}</a> <span class=\"lt\">(${sti.contentTime?string('yyyy-MM-dd')})</span></li>				           [/#list]"; 
 	html  +=" [#else]"; 
 	html  +="<li class=\"row\" >暂无置顶内容！ </li>"; 
 	html  +=" [/#if]"; 
@@ -169,5 +168,43 @@ function zdShowHidden(){
 	}else{
 		$("#zdId").css('display','block'); 
 	}
+}
+
+function myblogShow(url,GroupFlag,columnIdZ){
+ 	 $.ajax({
+         type: 'GET',
+         url : url,
+         /*  dataType : 'json', */
+          dataType:"html",
+         data : {'o' : 1,'GroupFlag' : GroupFlag,'columnIdZ' : columnIdZ},
+         success : function(datas){
+        	 $("#zd_u-hilite-cap").remove();
+        	 $("#zdId").remove();
+        	 $("#u-hilite-cap").remove();
+        	 $(".wrap-right").empty();
+        	 $(".wrap-right").append(datas);
+        	
+	   		 }
+		 });
+}
+
+function myblogZdShow(base,path,contentId,currentId,stickUserId){
+	debugger;
+	var url =base+"/"+path+"/"+contentId+".jhtml?o=1&currentId="+currentId+"&stickUserId="+stickUserId;
+ 	 $.ajax({
+         type: 'GET',
+         url : url,
+          dataType:"html",
+         data :{},
+         success : function(datas){
+        	 debugger;
+        	 $("#zd_u-hilite-cap").remove();
+        	 $("#zdId").remove();
+        	 $("#u-hilite-cap").remove();
+        	 $(".wrap-right").empty();
+        	 $(".wrap-right").append(datas);
+        	
+	   		 }
+		 });
 }
 </script>
