@@ -1974,6 +1974,15 @@ public class BlogAct {
 			groups.size();
 			
 			String txt = content.getTxtByNo(pageNo);
+			
+			//置顶下一页上一页参数
+			String currentId = request.getParameter("currentId");//当前文章的id
+			if(StringUtils.isNotBlank(currentId)){
+				String stickUserId = request.getParameter("stickUserId");//当前文章的id
+				model=blogCommon.getPreNextStick(model, Integer.parseInt(currentId),Integer.parseInt(stickUserId) );
+			
+			}
+			
 			// 内容加上关键字
 			txt = cmsKeywordMng.attachKeyword(site.getId(), txt);
 			Paginable pagination = new SimplePage(pageNo, 1, content.getPageCount());

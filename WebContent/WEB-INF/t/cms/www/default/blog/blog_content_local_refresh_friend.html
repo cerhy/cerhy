@@ -1153,6 +1153,9 @@ $(function(){
 </script>
 <script type="text/javascript">
 	function backContentList(url,id){
+		if(typeof($("#no3").val())!='undefined'){
+			 delPos();
+		};
 		var newurl=url+"?userIds="+id
 		$.ajax({
 	           type: 'POST',
@@ -1164,5 +1167,21 @@ $(function(){
 	               $(".wrap-right").append(datas);		
 	  	   		 }
 	 	});
+	}
+	
+	//删除批注
+	function delPos(){
+		$.ajax({
+	         url: "${base}/blog/searchPostil.jspx?contentId="+$("#no3").val(),
+	         type: "POST",
+	         dataType:"json",
+	         data: "",
+	         async: false,
+	         success: function (data) {
+	 				for(var i=0;i<data.length;i++){
+						$("div#"+data[i].postilDivId).remove();
+	 				}
+	         }
+	     });
 	}
 </script>

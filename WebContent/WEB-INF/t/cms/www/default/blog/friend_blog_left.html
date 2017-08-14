@@ -560,19 +560,38 @@
   	   		 }
  		});
 	}
-	//返回
-	function backContentList(url,id){
-		var newurl=url+"?userIds="+id
-		$.ajax({
-	           type: 'POST',
-	           url : newurl,
-	           dataType:"html",
-	           async: true,
-	           success : function(datas){
-	        	   $(".wrap-right").empty();
-	               $(".wrap-right").append(datas);		
-	  	   		 }
-	 	});
+	//置顶文章局部刷新
+	function stickyTopic(url){
+		if(typeof($("#no3").val())!='undefined'){
+			 delPos();
+		};
+		//解决ajax无法跨站点访问文章问题
+		var nu="";
+		if(url.indexOf("baoting") > 0){
+			nu=url.replace("baoting.","");
+		}else if(url.indexOf("haikou") > 0){
+			nu=url.replace("haikou.","");
+		}else if(url.indexOf("sanya") > 0){
+			nu=url.replace("sanya.","");
+		}else if(url.indexOf("tunchang") > 0){
+			nu=url.replace("tunchang.","");
+		}else{
+			nu=url;
+		}
+		var newUrl=url+"&sx=0";
+	 	$.ajax({
+          type: 'GET',
+          url : newUrl,
+          dataType:"html",
+          async: true,
+          success : function(datas){
+       	   $(".wrap-right").empty();
+              $(".wrap-right").append(datas);
+              if(window._bd_share_main){
+
+           	   window._bd_share_main.init();
+           	}
+ 	   		 }
+		});
 	}
-	
 	</script>
