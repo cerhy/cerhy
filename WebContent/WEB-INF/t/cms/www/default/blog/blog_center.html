@@ -133,7 +133,7 @@ function zdShowHidden(){
                  [#if stickList?size gt 0]
 				          [#list stickList as sti]
 				          
- 						  <li class="row"><a cmd="LoadTopic" _list="hilite"  href="${base}/${sti.path}/${sti.contentId}.jhtml?d=1&currentId=${sti.id}&stickUserId=${sti.stickUserId}" >${sti.contentTitle}</a> <span class="lt">(${sti.contentTime?string('yyyy-MM-dd')})</span></li>				           [/#list]
+ 						  <li class="row"><a cmd="LoadTopic" _list="hilite"  href="javascript:void(0);" onclick="myblogZdShow('${base}','${sti.path}',${sti.contentId},${sti.id},${sti.stickUserId})">${sti.contentTitle}</a> <span class="lt">(${sti.contentTime?string('yyyy-MM-dd')})</span></li>				           [/#list]
 				 [#else]
 				 <li class="row" >暂无置顶内容！ </li>
 				 [/#if]
@@ -154,7 +154,7 @@ function zdShowHidden(){
 				          [#list pagination.list as c]
 				         <li>
 				          <div>
-				          <a class="hasImg clearfix a12"  href="${c.url}?d=1">
+				          <a class="hasImg clearfix a12"  href="javascript:void(0);" onclick="myblogShow('${c.url}')" >
 							  <div class="item2 clearfix" [#if c_index<1]style="border-top:none;"[/#if]>
 									<div class="report-text">
 										<div><h3>${c.title}</h3></div>
@@ -211,6 +211,42 @@ function zdShowHidden(){
             </tbody>
             </table>
 			          <script type="text/javascript">
+			          function myblogShow(url){
+			        	 	 $.ajax({
+			        	         type: 'GET',
+			        	         url : url,
+			        	         /*  dataType : 'json', */
+			        	          dataType:"html",
+			        	         data : {'o' : 1},
+			        	         success : function(datas){
+			        	        	 $("#zd_u-hilite-cap").remove();
+			        	        	 $("#zdId").remove();
+			        	        	 $("#u-hilite-cap").remove();
+			        	        	 $(".wrap-right").empty();
+			        	        	 $(".wrap-right").append(datas);
+			        	        	
+			        		   		 }
+			        			 });
+			        	}
+			          function myblogZdShow(base,path,contentId,currentId,stickUserId){
+			        		
+			        		var url =base+"/"+path+"/"+contentId+".jhtml?o=1&currentId="+currentId+"&stickUserId="+stickUserId;
+			        	 	 $.ajax({
+			        	         type: 'GET',
+			        	         url : url,
+			        	          dataType:"html",
+			        	         data :{},
+			        	         success : function(datas){
+			        	        	
+			        	        	 $("#zd_u-hilite-cap").remove();
+			        	        	 $("#zdId").remove();
+			        	        	 $("#u-hilite-cap").remove();
+			        	        	 $(".wrap-right").empty();
+			        	        	 $(".wrap-right").append(datas);
+			        	        	
+			        		   		 }
+			        			 });
+			        	}
 			            function _gotoPage(pageNo) {
 			                try{
 			                   // var tableForm = document.getElementById("tableForm");
