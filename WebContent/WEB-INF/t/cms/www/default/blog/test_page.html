@@ -4,10 +4,16 @@
 <link href="${resSys}/front.css" rel="stylesheet" type="text/css"/>
 <script src="${resSys}/jquery.js" type="text/javascript"></script>
 <script src="${resSys}/front.js" type="text/javascript"></script>
-<link id="hello" type="text/css" rel="stylesheet" href="/${res}/css/custom.css" />
+<link type="text/css" rel="stylesheet" href="/${res}/css/custom.css" />
 <link  type="text/css" rel="stylesheet" href="/${res}/css/hyindex.css" />
 <link  type="text/css" rel="stylesheet" href="/${res}/css/SimpleTree.css" />
 <script src="/${res}/js/SimpleTree.js"></script>
+<style type="text/css">
+table th,table td{word-break:break-all;white-space:normal;overflow:hidden;}
+.xueke-content-detail p{
+	text-indent:2em;
+}
+</style>
 <style>
 .st_tree ul .change a:hover{color:red;}
 .st_tree ul .change :hover{background-color:#e7e7e7 }
@@ -61,26 +67,6 @@
 }
 </style>
 <script type="text/javascript">
-
-	/* $.ajax({
-		type:"post",
-		url:"${base}/blog/focuscheck.jspx",
-		dateType:'json',
-		data:{
-			"focusUserId":${usert.id},
-		},
-		success:function(data){
-		if(1 == data){
-			$('#focus').hide();
-			$('#cancelfocus').show();
-		}else{
-			$('#focus').show();
-			$('#cancelfocus').hide();
-		}
-		}
-		
-	}); */	
-	
 	function focuss(){
 		$.ajax({
 			type:"post",
@@ -93,9 +79,7 @@
 			success:function(data){
 			if(1 == data){
 				$('#focus').attr("onclick","cancelfocus()");
-				//$('#focus').attr("id","cancelfocus");
 				$('#focus').html("取消关注");
-				//$('#cancelfocus').show();
 			}
 			}
 			
@@ -190,8 +174,7 @@ function zdShowHidden(){
                 </div>
                 </div>
            <div id="u-hilite-cap" class="cap" onclick="showHidden();" >文章</div>
-            <div id="wzId" class="wrap-right">
-			        <div id="tgglDiv" class="tggl" style="display: block;">
+            <div id="wzId" class="wrap-right" style="width: 730px;float: left;padding-left: 20px;">
                 <div class="personCenter-userInfo" style="min-height: 600px;">
                     
                     <div class="tab-content" style="display: block;">
@@ -203,7 +186,7 @@ function zdShowHidden(){
 				          [#list pagination.list as c]
 				         <li>
 				         [#if columnIdZ??]
-				          <a class="hasImg clearfix a12"  href="${c.url}?f=${usert.id}&GroupFlag=${GroupFlag}&columnIdZ=${columnIdZ}" onclick="">
+				          <a class="hasImg clearfix a12"  href="javascript:;" onclick="findArticals('${c.url}',${usert.id},${GroupFlag},${columnIdZ})">
 							  <div class="item2 clearfix" [#if c_index<1]style="border-top:none;"[/#if]>
 									<div class="report-text">
 										<h3>${c.title}</h3>
@@ -212,7 +195,7 @@ function zdShowHidden(){
 					           </div>
 						  </a>
 				         [#else]
-				          <a class="hasImg clearfix a12"  href="${c.url}?f=${usert.id}&GroupFlag=${GroupFlag}" onclick="findArtical(${c.url}?f=${usert.id}&GroupFlag=${GroupFlag})">
+				          <a class="hasImg clearfix a12"  href="javascript:;" onclick="findArtical('${c.url}',${usert.id},${GroupFlag},null)">
 							  <div class="item2 clearfix" [#if c_index<1]style="border-top:none;"[/#if]>
 									<div class="report-text">
 										<h3>${c.title}</h3>
@@ -268,7 +251,7 @@ function zdShowHidden(){
 									           url : '${base}/blog/find_all_url_friends.jspx',
 									           dataType:"html",
 									           data : {'queryTitle' : queryTitle,'modelId' : null,'queryChannelId' : null,'pageNo':pageNo,'channelId':null,'joinGroupStata':null,'columnId':null,'userIds':${usert.id}},
-									           async: false,
+									           async: true,
 									           success : function(datas){
 									        	   $(".wrap-right").empty();
 									               $(".wrap-right").append(datas);		
@@ -292,7 +275,6 @@ function zdShowHidden(){
 			          </div>
 			        </div>
                 </div>
-            </div>
         </div>
 </div>
   </div>
@@ -388,4 +370,32 @@ function addOrCancelFriends(obj,uId){
 	}
 }
 
+</script>
+<script type="text/javascript">
+$(function(){
+	//修改图片过大问题
+	$(".xueke-content-detail p img").each(function(){
+		alert("8");
+		var width =$(this).width();
+		var height = $(this).height();
+		if(width>600){
+			var shang =  (width/height).toFixed(2);
+			var newHeight = parseInt(600/shang);
+			$(this).css("width","600px");
+			$(this).css("height",newHeight+"px");
+	}
+	})
+	
+	$(".xueke-content-detail .img-box span img").each(function(){
+		alert("7");
+		var width =$(this).width();
+		var height = $(this).height();
+		if(width>600){
+			var shang =  (width/height).toFixed(2);
+			var newHeight = parseInt(600/shang);
+			$(this).css("width","600px");
+			$(this).css("height",newHeight+"px");
+	}
+	})
+});
 </script>

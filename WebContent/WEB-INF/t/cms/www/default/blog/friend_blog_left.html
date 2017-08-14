@@ -5,7 +5,7 @@
 .wrap-left{width: 250px;float: left;}
 .wrap-right{width: 730px;float: left;padding-left: 20px;}
 </style>
-<div class="wrap-left">
+<div class="wrap-left" style="width: 250px;float: left;">
      <div class="user-center-left">
                  		 [#if usert??]
 				           <div class="user-setting">
@@ -317,7 +317,7 @@
 	    mtree.addClass(skins[0]);
 	});
 	
-	
+	//点击菜单
 	function friendBlogs(channelId,joinGroupStata,columnId,user_ids){
 		if(typeof($("#no3").val())!='undefined'){
 			 delPos();
@@ -327,14 +327,18 @@
            url : ' ${base}/blog/contribute_list_friends.jspx',
            dataType:"html",
            data : {'queryTitle' : null,'modelId' : null,'queryChannelId' : null,'pageNo':null,'channelId':channelId,'joinGroupStata':joinGroupStata,'columnId':columnId,'user_ids':user_ids},
-           async: false,
+           async: true,
            success : function(datas){
         	 $(".wrap-right").empty();
-          	 $(".wrap-right").append(datas);		
+          	 $(".wrap-right").append(datas);
+          	 //初始化百度分享组件,解决ajax局部刷新导致百度分享不了问题
+          	if(window._bd_share_main){
+         	   window._bd_share_main.init();
+         	}
   	   		 }
  		 });
 	}
-	
+	//删除批注
 	function delPos(){
 		$.ajax({
 	         url: "${base}/blog/searchPostil.jspx?contentId="+$("#no3").val(),
@@ -349,4 +353,226 @@
 	         }
 	     });
 	}
+	
+	//点击文章
+	function findArtical(url,id,GroupFlag){
+		if(typeof($("#no3").val())!='undefined'){
+			 delPos();
+		};
+		//解决ajax无法跨站点访问文章问题
+		var nu="";
+		if(url.indexOf("baoting") > 0){
+			nu=url.replace("baoting.","");
+		}else if(url.indexOf("haikou") > 0){
+			nu=url.replace("haikou.","");
+		}else if(url.indexOf("sanya") > 0){
+			nu=url.replace("sanya.","");
+		}else if(url.indexOf("tunchang") > 0){
+			nu=url.replace("tunchang.","");
+		}else{
+			nu=url;
+		}
+		var newUrl=nu+"?f="+id+"&GroupFlag="+GroupFlag+"&sx=0";
+	 	$.ajax({
+           type: 'GET',
+           url : newUrl,
+           dataType:"html",
+           async: true,
+           success : function(datas){
+        	   $(".wrap-right").empty();
+               $(".wrap-right").append(datas);
+               if(window._bd_share_main){
+
+            	   window._bd_share_main.init();
+            	}
+  	   		 }
+ 		});
+	}
+	//点击文章
+	function findArticals(url,id,GroupFlag,cid){
+		if(typeof($("#no3").val())!='undefined'){
+			 delPos();
+		};
+		var nu="";
+		if(url.indexOf("baoting") > 0){
+			nu=url.replace("baoting.","");
+		}else if(url.indexOf("haikou") > 0){
+			nu=url.replace("haikou.","");
+		}else if(url.indexOf("sanya") > 0){
+			nu=url.replace("sanya.","");
+		}else if(url.indexOf("tunchang") > 0){
+			nu=url.replace("tunchang.","");
+		}else{
+			nu=url;
+		}
+		var newUrl=nu+"?f="+id+"&GroupFlag="+GroupFlag+"&columnIdZ="+cid+"&sx=0";
+	 	$.ajax({
+           type: 'GET',
+           url : newUrl,
+           dataType:"html",
+           async: true,
+           success : function(datas){
+        	   $(".wrap-right").empty();
+               $(".wrap-right").append(datas);
+               if(window._bd_share_main){
+            	   window._bd_share_main.init();
+            	}
+  	   		 }
+ 		});
+	}
+	
+	//转载的文章上下篇
+	function previousArticle(url,f,id){
+		if(typeof($("#no3").val())!='undefined'){
+			 delPos();
+		};
+		var nu="";
+		if(url.indexOf("baoting") > 0){
+			nu=url.replace("baoting.","");
+		}else if(url.indexOf("haikou") > 0){
+			nu=url.replace("haikou.","");
+		}else if(url.indexOf("sanya") > 0){
+			nu=url.replace("sanya.","");
+		}else if(url.indexOf("tunchang") > 0){
+			nu=url.replace("tunchang.","");
+		}else{
+			nu=url;
+		}
+		var newUrl=nu+"?f="+f+"&utId="+id+"&sx=0";
+	 	$.ajax({
+           type: 'GET',
+           url : newUrl,
+           dataType:"html",
+           async: true,
+           success : function(datas){
+        	   $(".wrap-right").empty();
+               $(".wrap-right").append(datas);
+               if(window._bd_share_main){
+            	   window._bd_share_main.init();
+            	}
+  	   		 }
+ 		});
+	}
+
+	function nextArticle(url,f,id){
+		if(typeof($("#no3").val())!='undefined'){
+			 delPos();
+		};
+		var nu="";
+		if(url.indexOf("baoting") > 0){
+			nu=url.replace("baoting.","");
+		}else if(url.indexOf("haikou") > 0){
+			nu=url.replace("haikou.","");
+		}else if(url.indexOf("sanya") > 0){
+			nu=url.replace("sanya.","");
+		}else if(url.indexOf("tunchang") > 0){
+			nu=url.replace("tunchang.","");
+		}else{
+			nu=url;
+		}
+		var newUrl=nu+"?f="+f+"&utId="+id+"&sx=0";
+		$.ajax({
+	           type: 'GET',
+	           url : newUrl,
+	           dataType:"html",
+	           async: true,
+	           success : function(datas){
+	        	   $(".wrap-right").empty();
+	               $(".wrap-right").append(datas);
+	               if(window._bd_share_main){
+	            	   window._bd_share_main.init();
+	            	}
+	  	   		 }
+	 	});
+	}
+	
+	//普通文章的上下篇
+	function previousArticles(url,id,group,cid){
+		if(typeof($("#no3").val())!='undefined'){
+			 delPos();
+		};
+		var nu="";
+		if(url.indexOf("baoting") > 0){
+			nu=url.replace("baoting.","");
+		}else if(url.indexOf("haikou") > 0){
+			nu=url.replace("haikou.","");
+		}else if(url.indexOf("sanya") > 0){
+			nu=url.replace("sanya.","");
+		}else if(url.indexOf("tunchang") > 0){
+			nu=url.replace("tunchang.","");
+		}else{
+			nu=url;
+		}
+		var newUrl="";
+		if(null!=cid){
+			newUrl=nu+"?f="+id+"&GroupFlag="+group+"&columnIdZ="+cid+"&sx=0";
+		}else{
+			newUrl=nu+"?f="+id+"&GroupFlag="+group+"&sx=0";
+		}
+	 	$.ajax({
+           type: 'GET',
+           url : newUrl,
+           dataType:"html",
+           async: true,
+           success : function(datas){
+        	   $(".wrap-right").empty();
+               $(".wrap-right").append(datas);
+               if(window._bd_share_main){
+            	   window._bd_share_main.init();
+            	}
+  	   		 }
+ 		});
+	}
+
+	function nextArticles(url,id,group,cid){
+		if(typeof($("#no3").val())!='undefined'){
+			 delPos();
+		};
+		var nu="";
+		if(url.indexOf("baoting") > 0){
+			nu=url.replace("baoting.","");
+		}else if(url.indexOf("haikou") > 0){
+			nu=url.replace("haikou.","");
+		}else if(url.indexOf("sanya") > 0){
+			nu=url.replace("sanya.","");
+		}else if(url.indexOf("tunchang") > 0){
+			nu=url.replace("tunchang.","");
+		}else{
+			nu=url;
+		}
+		var newUrl="";
+		if(null!=cid){
+			newUrl=nu+"?f="+id+"&GroupFlag="+group+"&columnIdZ="+cid+"&sx=0";
+		}else{
+			newUrl=nu+"?f="+id+"&GroupFlag="+group+"&sx=0";
+		}
+	 	$.ajax({
+           type: 'GET',
+           url : newUrl,
+           dataType:"html",
+           async: true,
+           success : function(datas){
+        	   $(".wrap-right").empty();
+               $(".wrap-right").append(datas);
+               if(window._bd_share_main){
+            	   window._bd_share_main.init();
+            	}
+  	   		 }
+ 		});
+	}
+	//返回
+	function backContentList(url,id){
+		var newurl=url+"?userIds="+id
+		$.ajax({
+	           type: 'POST',
+	           url : newurl,
+	           dataType:"html",
+	           async: true,
+	           success : function(datas){
+	        	   $(".wrap-right").empty();
+	               $(".wrap-right").append(datas);		
+	  	   		 }
+	 	});
+	}
+	
 	</script>

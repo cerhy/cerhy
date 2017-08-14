@@ -6,7 +6,7 @@
 				          [#list pagination.list as c]
 				         <li>
 				         [#if columnIdZ??]
-				          <a class="hasImg clearfix a12"  href="${c.url}?f=${usert.id}&GroupFlag=${GroupFlag}&columnIdZ=${columnIdZ}">
+				          <a class="hasImg clearfix a12"  href="javascript:;" onclick="findArticals('${c.url}',${usert.id},${GroupFlag},${columnIdZ})">
 							  <div class="item2 clearfix" [#if c_index<1]style="border-top:none;"[/#if]>
 									<div class="report-text">
 										<h3>${c.title}</h3>
@@ -15,7 +15,7 @@
 					           </div>
 						  </a>
 				         [#else]
-				          <a class="hasImg clearfix a12"  href="${c.url}?f=${usert.id}&GroupFlag=${GroupFlag}">
+				          <a class="hasImg clearfix a12"  href="javascript:;" onclick="findArtical('${c.url}',${usert.id},${GroupFlag},null)">
 							  <div class="item2 clearfix" [#if c_index<1]style="border-top:none;"[/#if]>
 									<div class="report-text">
 										<h3>${c.title}</h3>
@@ -67,7 +67,7 @@
 								           url : '${base}/blog/contribute_list_friends.jspx',
 								           dataType:"html",
 								           data : {'queryTitle' : queryTitle,'modelId' : null,'queryChannelId' : null,'pageNo':pageNo,'channelId':null,'joinGroupStata':${joinGroupStata!'null'},'columnId':${columnId!'null'},'user_ids':${usert.id}},
-								           async: false,
+								           async: true,
 								           success : function(datas){
 								        	   $(".wrap-right").empty();
 								            	 $(".wrap-right").append(datas);		
@@ -81,7 +81,7 @@
 								           url : '${base}/blog/contribute_list_friends.jspx',
 								           dataType:"html",
 								           data : {'queryTitle' : queryTitle,'modelId' : null,'queryChannelId' : null,'pageNo':pageNo,'channelId':null,'joinGroupStata':${joinGroupStata!'null'},'columnId':${columnId!'null'},'user_ids':${usert.id}},
-								           async: false,
+								           async: true,
 								           success : function(datas){
 								        	   $(".wrap-right").empty();
 								            	 $(".wrap-right").append(datas);		
@@ -95,7 +95,7 @@
 									           url : '${base}/blog/find_all_url_friends.jspx',
 									           dataType:"html",
 									           data : {'queryTitle' : queryTitle,'modelId' : null,'queryChannelId' : null,'pageNo':pageNo,'channelId':null,'joinGroupStata':null,'columnId':null,'userIds':${usert.id}},
-									           async: false,
+									           async: true,
 									           success : function(datas){
 									        	   $(".wrap-right").empty();
 									            	 $(".wrap-right").append(datas);		
@@ -109,7 +109,7 @@
 								           url : '${base}/blog/contribute_list_friends.jspx',
 								           dataType:"html",
 								           data : {'queryTitle' : queryTitle,'modelId' : null,'queryChannelId' : null,'pageNo':pageNo,'channelId':${channelId!'null'},'joinGroupStata':null,'columnId':null,'user_ids':${usert.id}},
-								           async: false,
+								           async: true,
 								           success : function(datas){
 								        	   $(".wrap-right").empty();
 								            	 $(".wrap-right").append(datas);		
@@ -133,6 +133,7 @@
  $("#zd_u-hilite-cap").remove();
  $("#zdId").remove();
  $("#u-hilite-cap").remove();
+ $(".wrap-right").attr("id","wzId");
 var html =""; 
 	html  +="<div id=\"zd_u-hilite-cap\" class=\"cap\" onclick=\"zdShowHidden();\" >置顶</div>"; 
 	html  +=" <div id=\"zdId\" style=\"width: 730px;float: left; padding-left: 20px;\">"; 

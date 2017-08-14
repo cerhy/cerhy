@@ -370,12 +370,12 @@ $(function(){
 	                <span style="color:#f00; margin-left:10px;">密码为数字类型(留空则不设置密码)</span>
                 	[#else]
 	                <input  type="checkbox" id="pd" name="pd" value="0" onclick="addPd(this)"/>设置密码
-	                <input type="text" style="display: none;" onfocus="this.type='password';" id="password" name="password" maxlength="100"  class="member-change"  oninvalid="setCustomValidity('请输入密码');" oninput="setCustomValidity('');"/>
+	                <input type="text" style="display: none;" onfocus="this.type='password';" autocomplete="new-password" id="password" name="password" maxlength="100"  class="member-change"  oninvalid="setCustomValidity('请输入密码');" oninput="setCustomValidity('');"/>
 	                <span id="tick" style="color:#f00; margin-left:10px;display: none;">密码为数字类型(留空则不设置密码)</span>
                 	[/#if]
                 [#else]
 	                <input  type="checkbox" id="pd" name="pd" value="0" onclick="addPd(this)"/>设置密码
-	                <input type="text" style="display: none;" onfocus="this.type='password';" id="password" name="password" maxlength="100"  class="member-change"  oninvalid="setCustomValidity('请输入密码');" oninput="setCustomValidity('');"/>
+	                <input type="text" style="display: none;" onfocus="this.type='password';" autocomplete="new-password" id="password" name="password" maxlength="100"  class="member-change"  oninvalid="setCustomValidity('请输入密码');" oninput="setCustomValidity('');"/>
 	                <span id="tick" style="color:#f00; margin-left:10px;display: none;">密码为数字类型(留空则不设置密码)</span>
                 [/#if]
                 </td>

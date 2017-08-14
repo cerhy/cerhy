@@ -4,14 +4,13 @@
 <title>${content.title!}</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1">
-<link rel="stylesheet" type="text/css" href="http://www.cerhy.com/r/cms/www/mobile/css/mob.css"> 
-<script src="http://www.cerhy.com/r/cms/jquery.js" type="text/javascript"></script>
-<script src="http://www.cerhy.com/r/cms/jqueryUI/jquery-ui.js" type="text/javascript"></script>
-<script src="http://192.168.191.1:8080/cerhy/r/cms/front.js" type="text/javascript"></script>
-<link href="http://www.cerhy.com/r/cms/jqueryUI/jquery.ui.css" rel="stylesheet" type="text/css"/>
-<link id="hello" type="text/css" rel="stylesheet" href="http://www.cerhy.com/r/cms/www/default/css/custom.css" />
-<script src="http://www.cerhy.com/r/cms/ckplayer/ckplayer.js" type="text/javascript"></script>
-<script src="http://www.cerhy.com/r/cms/ckplayer/offlights.js" type="text/javascript"></script>
+<script src="${resSys}/jquery.js" type="text/javascript"></script>
+<script src="${resSys}/jqueryUI/jquery-ui.js" type="text/javascript"></script>
+<script src="${resSys}/front.js" type="text/javascript"></script>
+<link href="${resSys}/jqueryUI/jquery.ui.css" rel="stylesheet" type="text/css" />
+<link id="hello" type="text/css" rel="stylesheet" href="/${res}/css/custom.css" />
+<script src="${resSys}/ckplayer/ckplayer.js" type="text/javascript"></script>
+<script src="${resSys}/ckplayer/offlights.js" type="text/javascript"></script>
 </head>
 <body>
 <div class="viewport">
@@ -19,9 +18,9 @@
     <div class="content-title" align="center" style="font-size: 25px;">${content.title!}</div>
     <div class="content-inf">
 	    发布时间:${content.releaseDate!}&nbsp;&nbsp;&nbsp;&nbsp;
-	   <a href="${base}/blog/find_all_url_friend.jspx?userIds=${content.user.id}" style="color: #9a9a9a;">作者:${content.author!content.user.username}</a>
+	   <a href="${base}/blog/find_all_url_friend.jspx?userIds=${content.user.id}" style="color: #9a9a9a;text-decoration: none;">作者:${content.author!content.user.username}</a>
     </div>
-    <div class="content-txt">
+    <div class="content-txt" style="min-height: 380px;">
     			${txt!}
     			[#if content.mediaPath?? && content.mediaType??]
 			        <div class="video-con clearfix">
