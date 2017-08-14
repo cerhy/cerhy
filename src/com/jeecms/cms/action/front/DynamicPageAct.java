@@ -132,12 +132,12 @@ public class DynamicPageAct {
 			//微信分享展示页面
 			return blogAct.blogContentShare(paths, params, info, pageNo,request, response, model,f,columnId);
 		}
-		if(config.getInsideSite()){
-			return network(paths, params, info, pageNo, request, response, model);
-		}if(null != o){
+		if(null != o){
 			return blogAct.blogContentShowOwn(paths, params, info, pageNo,request, response, model,columnId);
 		}
-		else{
+		if(config.getInsideSite()){
+			return network(paths, params, info, pageNo, request, response, model);
+		}else{
 			return extranet(paths, params, info, pageNo, request, response, model);
 		}
 	}
