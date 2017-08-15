@@ -1,3 +1,16 @@
+			<input style="display: none;" id="no" value="">
+			<input style="display: none;" id="no1" value="">
+			[#if user??]
+			<input style="display: none;" id="no2" value="${user.username}">
+			<input style="display: none;" id="no4" value="${user.id}">
+			[/#if]
+			[#if user??]
+				<input style="display: none;" id="slActicle" value="${user.id}">
+			[#else]	
+				<input style="display: none;" id="slActicle" value="">
+			[/#if]
+		   	<input style="display: none;" id="no3" value="${content.id}">
+			<input style="display: none;" id="alt" value="0">	
  <div class="personCenter-userInfo blog_right xueke-acticle">
                 <div ><h2>${content.title}</h2></div>
                 <input type="hidden" id="contTitle" name="conTitle" value="${content.title}"/>
@@ -167,7 +180,7 @@
 				      <div class="prev-next-wz clearfix">
 				         [@cms_content_collection id=content.id next='1' userId=uId]
 				          [#if tag_bean??]
-                    		<a href="${tag_bean.url}?d=2" class="prev-pian">
+                    		<a href="javascript:;" class="prev-pian" onclick="findActicals('${tag_bean.url}?d=2&o=1')">
                             <span>&lt;上一篇</span>
                             <em>[@text_cut s=tag_bean.title len=20 append='...'/]</em>
                         	</a>
@@ -179,7 +192,7 @@
 				         [/@cms_content_collection]
 				         [@cms_content_collection id=content.id next='0' userId=uId]
 	                    [#if tag_bean??]
-		                     <a href="${tag_bean.url}?d=2" class="next-pian">
+		                     <a href="javascript:;" class="next-pian" onclick="findActicals('${tag_bean.url}?d=2&o=1')">
 	                            <em>[@text_cut s=tag_bean.title len=20 append='...'/]</em>
 	                            <span>下一篇&gt;</span>
 	                        </a>
@@ -240,3 +253,50 @@
     				[/#if]
 				</div>
            </div>
+<script type="text/javascript">
+function findActicals(url){
+	if(typeof($("#no3").val())!='undefined'){
+		 delPos();
+	};
+	var nu="";
+	if(url.indexOf("baoting") > 0){
+		nu=url.replace("baoting.","");
+	}else if(url.indexOf("haikou") > 0){
+		nu=url.replace("haikou.","");
+	}else if(url.indexOf("sanya") > 0){
+		nu=url.replace("sanya.","");
+	}else if(url.indexOf("tunchang") > 0){
+		nu=url.replace("tunchang.","");
+	}else{
+		nu=url;
+	}
+	$.ajax({
+        type: 'GET',
+        url : nu,
+        dataType:"html",
+        async: true,
+        success : function(datas){
+     	   $(".wrap-right").empty();
+            $(".wrap-right").append(datas);
+            if(window._bd_share_main){
+         	   window._bd_share_main.init();
+         	}
+	   		 }
+		});
+}
+//删除批注
+function delPos(){
+	$.ajax({
+         url: "${base}/blog/searchPostil.jspx?contentId="+$("#no3").val(),
+         type: "POST",
+         dataType:"json",
+         data: "",
+         async: false,
+         success: function (data) {
+ 				for(var i=0;i<data.length;i++){
+					$("div#"+data[i].postilDivId).remove();
+ 				}
+         }
+     });
+}
+</script>

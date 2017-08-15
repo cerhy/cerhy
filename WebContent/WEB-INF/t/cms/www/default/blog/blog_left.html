@@ -188,10 +188,10 @@ outline: none;
 					        [/#list]
 				            [/#if] 
 		                    [#if user??]
-				             <li><a href="${base}/blog/collection_list.jspx">转载</a></li>
+				             <li><a href="javascript:;" onclick="ownCollection('${base}/blog/collection_list.jspx')">转载</a></li>
 				             [/#if]
 				            [#if usert??]
-				             <li><a href="${base}/blog/collection_list.jspx?uid=${usert.id}">转载</a></li>
+				             <li><a href="javascript:;" onclick="ownCollection('${base}/blog/collection_list.jspx?uid=${usert.id}')">转载</a></li>
 				             [/#if]
 				             <br />
 					    </ul>
@@ -556,7 +556,6 @@ function sJoinGroup(){
 	 	 $.ajax({
              type: 'POST',
              url : ' ${base}/blog/contribute_list_own.jspx',
-             /*  dataType : 'json', */
               dataType:"html",
              data : {'queryTitle' : null,'modelId' : null,'queryChannelId' : null,'pageNo':null,'channelId':channelId,'joinGroupStata':joinGroupStata,'columnId':columnId,'uid':uid},
              success : function(datas){
@@ -580,6 +579,27 @@ function sJoinGroup(){
 	 				}
 	         }
 	     });
+	}
+	
+	function ownCollection(url){
+		if(typeof($("#no3").val())!='undefined'){
+			 delPos();
+		};
+		$.ajax({
+	        type: 'GET',
+	        url : url,
+	        dataType:"html",
+	        async: true,
+	        success : function(datas){
+	     	   $(".wrap-right").empty();
+	            $(".wrap-right").append(datas);
+	            if(window._bd_share_main){
+
+	         	   window._bd_share_main.init();
+	         	}
+		   		 }
+			});
+		
 	}
 	</script>
 <script type="text/javascript">
