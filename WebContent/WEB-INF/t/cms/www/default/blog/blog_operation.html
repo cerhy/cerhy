@@ -80,14 +80,35 @@ text-decoration: underline;
 
 <div class="udl" style="float: right;margin: -40px 0;width:290px;">
 
-                   <form action="${base}/blog/index.jspx"  id="searchForm" >
+                   <form action="${base}/blog/indexs.jspx"  id="searchForm" >
                     [#if q??]
                   	 <input type="text" id="queryTitle" name="queryTitle" maxLength="10"  maxlength="50"  autocomplete="off" value="${q}" style="font-size: 15px;height: 22px;border: 1px solid #def7ff;color: #000;padding: 2px 5px;width: 200px;"/>
                   	[#else]
                   	<input type="text" id="queryTitle" name="queryTitle" maxLength="10"  maxlength="50" autocomplete="off" style="font-size: 15px;height: 22px;border: 1px solid #def7ff;color: #000;padding: 2px 5px;width: 200px;"/>
 				    [/#if]
         				
-        				<input class="submit" type="submit" value="搜  索" style="float: right;background-color: #def7ff; color: #000;padding: 2px 8px;" />
+        				<input class="submit" type="button" onclick="ajaxsearch('searchForm');" value="搜  索" style="float: right;background-color: #def7ff; color: #000;padding: 2px 8px;" />
        			    </form> 
    			    
 </div>
+<script>
+
+
+
+function ajaxsearch(formId){
+	
+	 var queryTitle = parent.document.getElementById("queryTitle").value;
+	 var pageNo=1;
+	 $.ajax({
+		    type: 'POST',
+		    url : '${base}/blog/indexs.jspx',
+		    dataType:"html",
+		    data : {'queryTitle' : queryTitle,'pageNo':pageNo},
+		    async: false,
+		    success : function(datas){
+		 	   $(".wrap-right").empty();
+		        $(".wrap-right").append(datas);		
+		  		 }
+		});
+}
+</script>

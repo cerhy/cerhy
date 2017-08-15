@@ -189,7 +189,6 @@ function myblogShow(url,GroupFlag,columnIdZ){
 }
 
 function myblogZdShow(base,path,contentId,currentId,stickUserId){
-	debugger;
 	var url =base+"/"+path+"/"+contentId+".jhtml?o=1&currentId="+currentId+"&stickUserId="+stickUserId;
  	 $.ajax({
          type: 'GET',
@@ -197,7 +196,6 @@ function myblogZdShow(base,path,contentId,currentId,stickUserId){
           dataType:"html",
          data :{},
          success : function(datas){
-        	 debugger;
         	 $("#zd_u-hilite-cap").remove();
         	 $("#zdId").remove();
         	 $("#u-hilite-cap").remove();

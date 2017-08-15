@@ -719,4 +719,78 @@ function sJoinGroup(){
 		     return false; 
 		 } 
 	}
+	
+	function nextArticles(url,id,group,cid){
+		if(typeof($("#no3").val())!='undefined'){
+			 delPos();
+		};
+		var nu="";
+		if(url.indexOf("baoting") > 0){
+			nu=url.replace("baoting.","");
+		}else if(url.indexOf("haikou") > 0){
+			nu=url.replace("haikou.","");
+		}else if(url.indexOf("sanya") > 0){
+			nu=url.replace("sanya.","");
+		}else if(url.indexOf("tunchang") > 0){
+			nu=url.replace("tunchang.","");
+		}else{
+			nu=url;
+		}
+		var newUrl="";
+		if(null!=cid){
+			newUrl=nu+"?o="+id+"&GroupFlag="+group+"&columnIdZ="+cid+"";
+		}else{
+			newUrl=nu+"?o="+id+"&GroupFlag="+group+"";
+		}
+	 	$.ajax({
+           type: 'GET',
+           url : newUrl,
+           dataType:"html",
+           async: true,
+           success : function(datas){
+        	   $(".wrap-right").empty();
+               $(".wrap-right").append(datas);
+               if(window._bd_share_main){
+            	   window._bd_share_main.init();
+            	}
+  	   		 }
+ 		});
+	}
+	
+	function previousArticles(url,id,group,cid){
+		if(typeof($("#no3").val())!='undefined'){
+			 delPos();
+		};
+		var nu="";
+		if(url.indexOf("baoting") > 0){
+			nu=url.replace("baoting.","");
+		}else if(url.indexOf("haikou") > 0){
+			nu=url.replace("haikou.","");
+		}else if(url.indexOf("sanya") > 0){
+			nu=url.replace("sanya.","");
+		}else if(url.indexOf("tunchang") > 0){
+			nu=url.replace("tunchang.","");
+		}else{
+			nu=url;
+		}
+		var newUrl="";
+		if(null!=cid){
+			newUrl=nu+"?o="+id+"&GroupFlag="+group+"&columnIdZ="+cid+"";
+		}else{
+			newUrl=nu+"?o="+id+"&GroupFlag="+group+"";
+		}
+	 	$.ajax({
+           type: 'GET',
+           url : newUrl,
+           dataType:"html",
+           async: true,
+           success : function(datas){
+        	   $(".wrap-right").empty();
+               $(".wrap-right").append(datas);
+               if(window._bd_share_main){
+            	   window._bd_share_main.init();
+            	}
+  	   		 }
+ 		});
+	}
 </script>
