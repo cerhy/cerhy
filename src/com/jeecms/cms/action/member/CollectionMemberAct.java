@@ -183,6 +183,7 @@ public class CollectionMemberAct {
 				}
 			}
 		}
+		model = contentMng.getStickList(user,model);
  		model.addAttribute("submitOn", 1);
 		FrontUtils.frontData(request, model, site);
 		Pagination p = contentMng.getPageForCollection(null, id, cpn(pageNo), CookieUtils.getPageSize(request));
