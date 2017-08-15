@@ -118,7 +118,11 @@ public class DynamicPageAct {
 		String o = request.getParameter("o");//进入博客文章内容显示
 		String columnId = request.getParameter("columnIdZ");//好友  0
 		if(null != d){
-			return blogAct.blogContentShow(paths, params, info, pageNo,request, response, model,columnId);
+			if(null != o){
+				return blogAct.blogContentShowOwn(paths, params, info, pageNo,request, response, model,columnId);
+			}else{
+				return blogAct.blogContentShow(paths, params, info, pageNo,request, response, model,columnId);
+			}
 		}
 		if(null != f){
 			if(null != sx){
