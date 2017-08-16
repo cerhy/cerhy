@@ -426,3 +426,48 @@ padding-top: 32px;
 .signOut:hover {
     color:red;
 }
+.cap	{
+    color: #000;
+    background: #def7ff;
+    cursor: pointer;
+    padding-left: 20px;
+    width: 710px;
+    float: left;
+    margin-left: 20px;
+    height: 36px;
+    padding-top: 10px;
+    font-size: 20px;
+}
+    
+.blog_right1 {
+    padding: 35px;
+    background: #ffffff;
+}
+    .topicList {
+    color: #676262;
+    font-family: "Microsoft YaHei",Arial;
+    font-size: 14px;
+    line-height: 200%;
+    margin: 0;
+    padding: 0 0 0 2em;
+    list-style: square;
+}
+.topicList a{ color: #666666; text-decoration: none; }
+.jump {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 3px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+    margin: 4px 2px;
+    cursor: pointer;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+}
+
+.jump:hover {
+    box-shadow: 0 3px 4px 0 rgba(0,0,0,0.24),0 8px 15px 0 rgba(0,0,0,0.19);
+}

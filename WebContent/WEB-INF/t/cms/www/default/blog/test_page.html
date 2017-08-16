@@ -4,10 +4,16 @@
 <link href="${resSys}/front.css" rel="stylesheet" type="text/css"/>
 <script src="${resSys}/jquery.js" type="text/javascript"></script>
 <script src="${resSys}/front.js" type="text/javascript"></script>
-<link id="hello" type="text/css" rel="stylesheet" href="/${res}/css/custom.css" />
+<link type="text/css" rel="stylesheet" href="/${res}/css/custom.css" />
 <link  type="text/css" rel="stylesheet" href="/${res}/css/hyindex.css" />
 <link  type="text/css" rel="stylesheet" href="/${res}/css/SimpleTree.css" />
 <script src="/${res}/js/SimpleTree.js"></script>
+<style type="text/css">
+table th,table td{word-break:break-all;white-space:normal;overflow:hidden;}
+.xueke-content-detail p{
+	text-indent:2em;
+}
+</style>
 <style>
 .st_tree ul .change a:hover{color:red;}
 .st_tree ul .change :hover{background-color:#e7e7e7 }
@@ -59,55 +65,8 @@
 .submit:hover {
     box-shadow: 0 3px 4px 0 rgba(0,0,0,0.24),0 8px 15px 0 rgba(0,0,0,0.19);
 }
-.cap	{
-    color: #000;
-    background: #def7ff;
-    /* padding: 4px 20px 4px 20px; */
-    cursor: pointer;
-    padding-left: 20px;
-    width: 710px;
-    float: left;
-    margin-left: 20px;
-    height: 36px;
-    padding-top: 10px;
-    font-size:20px;}
-.blog_right1 {
-    padding: 35px;
-    background: #ffffff;
-  
-}
-.topicList {
-    color: #000;
-    font-family: "Microsoft YaHei",Arial;
-    font-size: 14px;
-    line-height: 200%;
-    margin: 0;
-    padding: 0 0 0 2em;
-    list-style: square;
-}
-.topicList a{ color: #2152AC; text-decoration: none; }
 </style>
 <script type="text/javascript">
-
-	/* $.ajax({
-		type:"post",
-		url:"${base}/blog/focuscheck.jspx",
-		dateType:'json',
-		data:{
-			"focusUserId":${usert.id},
-		},
-		success:function(data){
-		if(1 == data){
-			$('#focus').hide();
-			$('#cancelfocus').show();
-		}else{
-			$('#focus').show();
-			$('#cancelfocus').hide();
-		}
-		}
-		
-	}); */	
-	
 	function focuss(){
 		$.ajax({
 			type:"post",
@@ -120,9 +79,7 @@
 			success:function(data){
 			if(1 == data){
 				$('#focus').attr("onclick","cancelfocus()");
-				//$('#focus').attr("id","cancelfocus");
 				$('#focus').html("取消关注");
-				//$('#cancelfocus').show();
 			}
 			}
 			
@@ -168,11 +125,11 @@ function showHidden(){
 	}
 }
 function zdShowHidden(){
-	var display = $("#zdId.wrap-right").css('display');
+	var display = $("#zdId").css('display');
 	if(display=="block"){
-		$("#zdId.wrap-right").css('display','none'); 
+		$("#zdId").css('display','none'); 
 	}else{
-		$("#zdId.wrap-right").css('display','block'); 
+		$("#zdId").css('display','block'); 
 	}
 }
 </script>
@@ -190,9 +147,9 @@ function zdShowHidden(){
      	 	访问:${usert.blogVisitNum!'0'}&nbsp;&nbsp;
      	 	最后登录:${usert.lastLoginTime?string('yyyy-MM-dd HH:mm:ss')}&nbsp;&nbsp;
      	 	<div style="width:300px;float: right;margin-right:-22px;">
-     	 	         <form action="${base}/blog/find_all_url_friend.jspx"  id="searchForm" >
+     	 	         <form action="${base}/blog/find_all_url_friends.jspx"  id="searchForm" >
         				<input type="text" id="queryTitle" name="queryTitle" maxLength="10" value="${q}" maxlength="50"  autocomplete="off" style="background:#f6fbff;height: 22px;border: 1px solid #0b91df;color: #999;padding: 2px 5px;width: 200px;"/>
-        				<input type="submit" value="搜  索" class="submit" style=" color: white;" />
+        				<input class="submit" type="button" onclick="ajaxsearch('searchForm');" value="搜  索" class="submit" style=" color: white;" />
         				<input type="hidden" id="userIds"  name="userIds" value="${usert.id}"></input>
        			    </form> 
        		 </div>
@@ -200,12 +157,16 @@ function zdShowHidden(){
         <div class="mb20 clearfix">
         [#include "friend_blog_left.html"/]
          <div id="zd_u-hilite-cap" class="cap" onclick="zdShowHidden();" >置顶</div>
-          <div id="zdId" class="wrap-right">
+          <div id="zdId" style="width: 730px;float: left; padding-left: 20px;">
                 <div class="personCenter-userInfo blog_right1">
                 <ul class="topicList" >
+                 [#if stickList??]
 				 [#if stickList?size gt 0]
 				          [#list stickList as sti]
- 						  <li class="row"><a cmd="LoadTopic" _list="hilite"  href="${base}/${sti.path}/${sti.contentId}.jhtml?d=1&currentId=${sti.id}&stickUserId=${sti.stickUserId}" >${sti.contentTitle}</a> <span class="lt">(${sti.contentTime?string('yyyy-MM-dd')})</span></li>				           [/#list]
+ 						  <li class="row"><a cmd="LoadTopic" _list="hilite" onclick="stickyTopic('${base}/${sti.path}/${sti.contentId}.jhtml?f=${usert.id}&currentId=${sti.id}&stickUserId=${sti.stickUserId}')" href="javascript:;" >${sti.contentTitle}</a> <span class="lt">(${sti.contentTime?string('yyyy-MM-dd')})</span></li>[/#list]
+				 [#else]
+				 <li class="row" >暂无置顶内容！ </li>
+				 [/#if]
 				 [#else]
 				 <li class="row" >暂无置顶内容！ </li>
 				 [/#if]
@@ -213,7 +174,7 @@ function zdShowHidden(){
                 </div>
                 </div>
            <div id="u-hilite-cap" class="cap" onclick="showHidden();" >文章</div>
-            <div id="wzId" class="wrap-right">
+            <div id="wzId" class="wrap-right" style="width: 730px;float: left;padding-left: 20px;">
                 <div class="personCenter-userInfo" style="min-height: 600px;">
                     
                     <div class="tab-content" style="display: block;">
@@ -225,7 +186,7 @@ function zdShowHidden(){
 				          [#list pagination.list as c]
 				         <li>
 				         [#if columnIdZ??]
-				          <a class="hasImg clearfix a12"  href="${c.url}?f=${usert.id}&GroupFlag=${GroupFlag}&columnIdZ=${columnIdZ}">
+				          <a class="hasImg clearfix a12"  href="javascript:;" onclick="findArticals('${c.url}',${usert.id},${GroupFlag},${columnIdZ})">
 							  <div class="item2 clearfix" [#if c_index<1]style="border-top:none;"[/#if]>
 									<div class="report-text">
 										<h3>${c.title}</h3>
@@ -234,7 +195,7 @@ function zdShowHidden(){
 					           </div>
 						  </a>
 				         [#else]
-				          <a class="hasImg clearfix a12"  href="${c.url}?f=${usert.id}&GroupFlag=${GroupFlag}">
+				          <a class="hasImg clearfix a12"  href="javascript:;" onclick="findArtical('${c.url}',${usert.id},${GroupFlag},null)">
 							  <div class="item2 clearfix" [#if c_index<1]style="border-top:none;"[/#if]>
 									<div class="report-text">
 										<h3>${c.title}</h3>
@@ -277,7 +238,6 @@ function zdShowHidden(){
 			          <script type="text/javascript">
 			            function _gotoPage(pageNo) {
 			                try{
-			                    var tableForm = document.getElementById("tableForm");
 			                    var queryTitle = $("#queryTitle").val();
 			                    $("input[name=pageNo]").val(pageNo);
 								if($("#ud").val()!=''&&$("#jg").val()!=''){
@@ -286,13 +246,22 @@ function zdShowHidden(){
 			                    	tableForm.action="${base}/blog/contribute_list_friend.jspx?user_ids=${usert.id}&columnId=${columnId!'null'}&queryTitle="+queryTitle;
 								}else{
 									if($("#cd").val()==''){
-				                    	tableForm.action="${base}/blog/find_all_url_friend.jspx?userIds=${usert.id}&queryTitle="+queryTitle;
+										$.ajax({
+									           type: 'POST',
+									           url : '${base}/blog/find_all_url_friends.jspx',
+									           dataType:"html",
+									           data : {'queryTitle' : queryTitle,'modelId' : null,'queryChannelId' : null,'pageNo':pageNo,'channelId':null,'joinGroupStata':null,'columnId':null,'userIds':${usert.id}},
+									           async: true,
+									           success : function(datas){
+									        	   $(".wrap-right").empty();
+									               $(".wrap-right").append(datas);		
+									  	   		 }
+									 	});
+				                    	//tableForm.action="${base}/blog/find_all_url_friend.jspx?userIds=${usert.id}&queryTitle="+queryTitle;
 									}else{
 			                    	    tableForm.action="${base}/blog/contribute_list_friend.jspx?channelId=${channelId!''}&user_ids=${usert.id}&queryTitle="+queryTitle;
 									}
 								}
-			                    tableForm.onsubmit=null;
-			                    tableForm.submit();
 			                } catch(e) {
 			                    alert('_gotoPage(pageNo)方法出错');
 			                }
@@ -303,9 +272,9 @@ function zdShowHidden(){
 			                <div>暂无博文</div>
 			            [/#if]
 			          </form>
+			          </div>
 			        </div>
                 </div>
-            </div>
         </div>
 </div>
   </div>
@@ -401,4 +370,48 @@ function addOrCancelFriends(obj,uId){
 	}
 }
 
+</script>
+<script type="text/javascript">
+$(function(){
+	//修改图片过大问题
+	$(".xueke-content-detail p img").each(function(){
+		alert("8");
+		var width =$(this).width();
+		var height = $(this).height();
+		if(width>600){
+			var shang =  (width/height).toFixed(2);
+			var newHeight = parseInt(600/shang);
+			$(this).css("width","600px");
+			$(this).css("height",newHeight+"px");
+	}
+	})
+	
+	$(".xueke-content-detail .img-box span img").each(function(){
+		alert("7");
+		var width =$(this).width();
+		var height = $(this).height();
+		if(width>600){
+			var shang =  (width/height).toFixed(2);
+			var newHeight = parseInt(600/shang);
+			$(this).css("width","600px");
+			$(this).css("height",newHeight+"px");
+	}
+	})
+});
+function ajaxsearch(formId){
+	
+	 var queryTitle = parent.document.getElementById("queryTitle").value;
+	 var pageNo=1;
+	 $.ajax({
+		    type: 'POST',
+		    url : '${base}/blog/find_all_url_friends.jspx',
+		    dataType:"html",
+		    data : {'queryTitle' : queryTitle,'pageNo':pageNo,'userIds':${usert.id}},
+		    async: false,
+		    success : function(datas){
+		 	   $(".wrap-right").empty();
+		        $(".wrap-right").append(datas);		
+		  		 }
+		});
+}
 </script>

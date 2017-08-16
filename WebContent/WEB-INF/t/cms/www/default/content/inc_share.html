@@ -1,8 +1,6 @@
 <ul id="content-share-list" class="bdsharebuttonbox">
 	<li><a class="content_sina" data-cmd="weixin">微信好友</a></li>
-	<li><a class="content_qq"
-		onclick="window.open('http://connect.qq.com/widget/shareqq/index.html?url='+encodeURIComponent(document.location.href));return false;"
-		title="分享到QQ">QQ好友</a></li>
+	<li><a class="content_qq" onclick="window.open('http://connect.qq.com/widget/shareqq/index.html?url='+encodeURIComponent(document.location.href));return false;" title="分享到QQ">QQ好友</a></li>
 	<li><a class="content_qqzone"
 		onclick="window.open('http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url='+encodeURIComponent(document.location.href));return false;">QQ空间</a></li>
 	<li><a class="content_weixin"
@@ -10,21 +8,27 @@
 </ul>
 <script>
 	window._bd_share_config = {
-		"common" : {
-			"bdSnsKey" : {},
-			"bdText" : "${site.name!}",
-			"bdMini" : "1",
-			"bdMiniList" : false,
-			"bdPic" : "",
-			"bdStyle" : "1",
-			"bdSize" : "16"
+		common : {
+			bdSnsKey : {},
+			bdText: '${content.title!}',
+			bdMini : '1',
+			bdMiniList : false,
+			bdUrl :'http://192.168.191.1:8080/cerhy/${content.channel.path}/${content.id}.jhtml?wx=wx',
+			bdPic : '',
+			bdStyle : '1',
+			/* onAfterClick:function(cmd){
+				setTimeout("cy()", 500)
+			}, */
+			bdSize : '16'
 		},
-		"share" : {
+		share : {
 			"bdSize" : 16
 		},
 	};
-	with (document)
-		0[(getElementsByTagName('head')[0] || body)
-				.appendChild(createElement('script')).src = 'http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='
-				+ ~(-new Date() / 36e5)];
+	with (document)0[(getElementsByTagName('head')[0] || body).appendChild(createElement('script')).src = 'http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+ ~(-new Date() / 36e5)];
+</script>
+<script type="text/javascript">
+function cy(){
+	//$("#bdshare_weixin_qrcode_dialog_qr").attr("title","http://192.168.191.1:8080/cerhy/${content.channel.path}/${content.id}.jhtml?wx=wx");
+}
 </script>

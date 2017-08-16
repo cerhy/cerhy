@@ -188,6 +188,10 @@ Cms.commentBlogList = function(base, c, options) {
 	$("#" + c).load(base + "/comment_list.jspx?blogDate=0", options);
 }
 
+Cms.commentShareList = function(base, c, options) {
+	c = c || "commentListDiv";
+	$("#" + c).load(base + "/comment_list_share.jspx", options);
+}
 /**
  * 获取栏目评论
  */

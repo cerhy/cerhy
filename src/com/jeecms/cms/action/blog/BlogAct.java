@@ -55,6 +55,7 @@ import com.jeecms.core.entity.CmsConfig;
 import com.jeecms.core.entity.CmsGroup;
 import com.jeecms.core.entity.CmsSite;
 import com.jeecms.core.entity.CmsUser;
+import com.jeecms.core.manager.CmsSiteMng;
 import com.jeecms.core.manager.CmsUserMng;
 import com.jeecms.core.web.WebErrors;
 import com.jeecms.core.web.util.CmsUtils;
@@ -233,6 +234,67 @@ public class BlogAct {
 		}
 		return FrontUtils.getTplPath(request, site.getSolutionPath(), TPLDIR_BLOG, nextUrl);
 	}
+	
+	public String blog_list_own(String q, Integer modelId,Integer queryChannelId,String nextUrl,Integer pageNo,HttpServletRequest request, ModelMap model) {
+		CmsSite site = CmsUtils.getSite(request);
+		CmsUser user = CmsUtils.getUser(request);
+		Integer recieveUserId = null;
+		
+		if (user == null) {
+			String uid=request.getParameter("uid");
+			if(StringUtils.isNotEmpty(uid)){
+				user=cmsUserMng.findById(Integer.parseInt(uid));
+				model.addAttribute("usert", user);
+			}else{
+				return FrontUtils.showLogin(request, model, site);
+			}
+		}
+		recieveUserId = user.getId();
+		int userId=user.getId();
+		String joinGroupStata=request.getParameter("joinGroupStata");
+		Integer columnId = null;
+		Integer channelId = null;
+		if(joinGroupStata!=null&&joinGroupStata.equals("0")){
+			model.addAttribute("GroupFlag", -1);
+			userId=0;
+			if(StringUtils.isNotBlank(request.getParameter("columnId"))){
+				model.addAttribute("columnId", request.getParameter("columnId"));
+				model.addAttribute("columnIdZ", request.getParameter("columnId"));
+				model.addAttribute("joinGroupStata", 0);
+				model.addAttribute("submitOn1", 1);
+				columnId = Integer.parseInt(request.getParameter("columnId"));
+			}
+		}else{
+			model.addAttribute("GroupFlag", 0);
+			//为了删除文章后能跳转回本栏目下
+			if(StringUtils.isNotBlank(request.getParameter("columnId"))){
+				model.addAttribute("columnId", request.getParameter("columnId"));
+				model.addAttribute("columnIdZ", request.getParameter("columnId"));
+				model.addAttribute("submitOn", 1);
+				columnId = Integer.parseInt(request.getParameter("columnId"));
+			}
+			if(StringUtils.isNotBlank(request.getParameter("channelId"))){
+				model.addAttribute("channelId", request.getParameter("channelId"));
+				model.addAttribute("submitOn", 1);
+				channelId = Integer.parseInt(request.getParameter("channelId"));
+			}
+		}
+ 		// model.addAttribute("channelId", 1);
+		FrontUtils.frontData(request, model, site);
+		model = contentMng.getStickList(user,model);
+		Pagination p = contentMng.getPageForMember_blog(q, queryChannelId,site.getId(), modelId,userId, cpn(pageNo), 20,columnId,channelId,recieveUserId);
+		model.addAttribute("pagination", p);
+		if (!StringUtils.isBlank(q)) {
+			model.addAttribute("q", q);
+		}else{
+			model.addAttribute("q", "");
+		}
+		if (modelId != null) {
+			model.addAttribute("channelId", 1);
+		}
+		return "/WEB-INF/t/cms/www/default/blog/contribute_list_own.html";
+	}
+	
 	
 	public String blog_add(boolean hasPermission,String nextUrl,HttpServletRequest request,HttpServletResponse response, ModelMap model) {
 		CmsSite site = CmsUtils.getSite(request);
@@ -1491,6 +1553,90 @@ public class BlogAct {
 		return FrontUtils.getTplPath(request, site.getSolutionPath(),TPLDIR_BLOG,"tpl.blogContentShow");
 	}
 	
+	public String blogContentShowOwn(String[] paths,String[] params,
+			PageInfo info,Integer pageNo,HttpServletRequest request,
+			HttpServletResponse response, ModelMap model,String columnId){
+		Content content = contentMng.findById(Integer.parseInt(paths[1]));
+		if (content == null) {
+			log.debug("Content id not found: {}", paths[1]);
+			return FrontUtils.pageNotFound(request, response, model);
+		}
+		CmsSite site = content.getSite();
+		CmsUser u = CmsUtils.getUser(request);
+		if(u==null){
+			//return FrontUtils.showLogin(request, model, site);
+			u=cmsUserMng.findById(content.getUser().getId());
+			model.addAttribute("usert", u);
+		}
+		Integer pageCount=content.getPageCount();
+		if(pageNo>pageCount||pageNo<0){
+			return FrontUtils.pageNotFound(request, response, model);
+		}
+		//非终审文章
+		CmsConfig config=CmsUtils.getSite(request).getConfig();
+		config.getConfigAttr().getPreview();
+		Set<CmsGroup> groups = content.getViewGroupsExt();
+		//groups.size();
+		
+		String txt = content.getTxtByNo(pageNo);
+		// 内容加上关键字
+		try {
+			txt = cmsKeywordMng.attachKeyword(site.getId(), txt);
+			Paginable pagination = new SimplePage(pageNo, 1, content.getPageCount());
+			model.addAttribute("pagination", pagination);
+			FrontUtils.frontPageData(request, model);
+			model.addAttribute("content", content);
+			model.addAttribute("channel", content.getChannel());
+			model.addAttribute("title", content.getTitleByNo(pageNo));
+			model.addAttribute("txt", txt);
+			model.addAttribute("columnIdZ", columnId);
+			model.addAttribute("columnId", columnId);
+			model.addAttribute("pic", content.getPictureByNo(pageNo));
+			String collection = request.getParameter("collection");
+			
+			//置顶下一页上一页参数
+			String currentId = request.getParameter("currentId");//当前文章的id
+			if(StringUtils.isNotBlank(currentId)){
+				String stickUserId = request.getParameter("stickUserId");//当前文章的id
+				model=blogCommon.getPreNextStick(model, Integer.parseInt(currentId),Integer.parseInt(stickUserId) );
+			
+			}
+			
+			String d = request.getParameter("d");
+			if(null != collection || "2".equals(d)){//转载文章显示
+				model.addAttribute("collection", 1);
+				model.addAttribute("uId", u.getId());
+			}else{
+				String GroupFlag = request.getParameter("GroupFlag");
+				if("-1".equals(GroupFlag)){
+					model.addAttribute("GroupFlagData", -1);
+				}else{
+					model.addAttribute("GroupFlagData", content.getUser().getId());
+				}
+			}
+			//model = blogCommon.getAlreadyJoinGroup(request, model,u);
+			/*try {
+				model = blogCommon.getChannel(request,model,u,site);
+			} catch (Exception e) {
+				log.error("blogContentShow.getChannel error", e);
+			}*/
+			/*model =blogCommon.getHyperlink(request,model,u);
+			model = blogCommon.getColumn(request,model,u);
+			int totalCount = blogCommon.getTotalArticleNum(model,u);
+			model.addAttribute("articleCount", totalCount);
+			model = blogCommon.getTotalCommentNum(model, u);
+			model = blogCommon.getStarBlogger(request, model);
+			model = blogCommon.getFriendLeft(u.getId(),model,1);*/
+			
+			model = blogCommon.getContentSendType(model,Integer.parseInt(paths[1]),u);
+			model = blogCommon.getStickId(model, Integer.parseInt(paths[1]), u);
+		} catch (Exception e) {
+			log.error("blogContentShow error", e);
+		}
+		FrontUtils.frontData(request, model, site);
+		return "/WEB-INF/t/cms/www/default/blog/blog_content_show_own.html";
+	}
+	
 	public String blogContentShowFriend(String[] paths,String[] params,
 			PageInfo info,Integer pageNo,HttpServletRequest request,
 			HttpServletResponse response, ModelMap model,String friend,String columnId){
@@ -1639,6 +1785,241 @@ public class BlogAct {
 		}
 		return errors;
 	}
+	
+	public String blog_list_friends(String q, Integer modelId,Integer queryChannelId, Object object, Integer pageNo,HttpServletRequest request, ModelMap model) {
+		CmsSite site = CmsUtils.getSite(request);
+		CmsUser u = CmsUtils.getUser(request);
+		Integer recieveUserId = null;
+		if(u!=null){
+			recieveUserId = u.getId();
+		}
+		String user_ids = request.getParameter("user_ids");
+		CmsUser user=cmsUserMng.findById(Integer.valueOf(user_ids.toString()));
+		String joinGroupStata = request.getParameter("joinGroupStata");
+		int userId=user.getId();
+		Integer columnId = null;
+		Integer channelId = null;
+		if(joinGroupStata!=null&&joinGroupStata.equals("0")){
+			userId=0;
+			model.addAttribute("GroupFlag", -1);
+			if(StringUtils.isNotBlank(request.getParameter("columnId"))&&!"null".equals(request.getParameter("columnId"))){
+				model.addAttribute("columnId", request.getParameter("columnId"));
+				model.addAttribute("columnIdZ", request.getParameter("columnId"));
+				model.addAttribute("joinGroupStata", 0);
+				model.addAttribute("submitOn1", 1);
+				columnId = Integer.parseInt(request.getParameter("columnId"));
+			}
+		}else{
+			model.addAttribute("GroupFlag", 0);
+			//为了删除文章后能跳转回本栏目下
+			if(StringUtils.isNotBlank(request.getParameter("columnId"))&&!"null".equals(request.getParameter("columnId"))){
+				model.addAttribute("columnId", request.getParameter("columnId"));
+				model.addAttribute("columnIdZ", request.getParameter("columnId"));
+				model.addAttribute("submitOn", 1);
+				columnId = Integer.parseInt(request.getParameter("columnId"));
+			}
+			if(StringUtils.isNotBlank(request.getParameter("channelId"))&&!"null".equals(request.getParameter("channelId"))){
+				model.addAttribute("channelId", request.getParameter("channelId"));
+				model.addAttribute("submitOn", 1);
+				channelId = Integer.parseInt(request.getParameter("channelId"));
+			}
+		}
+		model.addAttribute("usert", user);
+		model.addAttribute("userIds", user.getId());
+		FrontUtils.frontData(request, model, site);
+		model = contentMng.getStickList(user,model);
+		Pagination p = contentMng.getPageForMember_blog(q, queryChannelId,site.getId(), modelId,userId, cpn(pageNo), 20,columnId,channelId,recieveUserId);
+		model.addAttribute("pagination", p);
+		if (!StringUtils.isBlank(q)) {
+			model.addAttribute("q", q);
+		}else{
+			model.addAttribute("q", "");
+		}
+		if (modelId != null) {
+			model.addAttribute("modelId", modelId);
+		}
+		return "/WEB-INF/t/cms/www/default/blog/contribute_list_friends.html";
+	}
+	
+	public String find_all_url_friends(String userIds,String q,Integer modelId, Integer queryChannelId, String string,Integer pageNo, HttpServletRequest request, ModelMap model) {
+		CmsSite site = CmsUtils.getSite(request);
+		CmsUser user = CmsUtils.getUser(request);
+		Integer recieveUserId = null;
+		CmsUser userT=null;
+		if(request.getParameter("name")!=null){
+			String username=request.getParameter("name").substring(1, request.getParameter("name").length());
+			CmsUser uname=cmsUserMng.findByUsername(username);
+			if(uname!=null){
+				userT=cmsUserMng.findById(uname.getId());
+			}else{
+				return FrontUtils.showMessage(request, model, "该账号暂未开通博客,或者请检查输入的账号是否正确!"); 
+			}
+		}else{
+			userT=cmsUserMng.findById(Integer.valueOf(userIds.toString()));
+		}
+		channelMng.updateBlogVisitNum(userT);
+		if(user!=null){
+			recieveUserId = user.getId();
+			if(!user.getId().equals(userT.getId())){
+				channelMng.updateBlogVisitorTime(user,userT);
+			}
+		}
+		FrontUtils.frontData(request, model, site);
+		Pagination p = contentMng.getPageForMember_firendsBlog(Integer.valueOf(userT.getId()),q, queryChannelId,site.getId(), modelId,null, cpn(pageNo), 20,null,recieveUserId);
+		model.addAttribute("pagination", p);
+		model.addAttribute("GroupFlag", 0);
+		model.addAttribute("usert", userT);
+		model.addAttribute("userIds", userT.getId());
+		model = contentMng.getStickList(userT,model);
+		if (!StringUtils.isBlank(q)) {
+			model.addAttribute("q", q);
+		}else{
+			model.addAttribute("q", "");
+		}
+		if (modelId != null) {
+			model.addAttribute("modelId", modelId);
+		}
+		model.addAttribute("GroupStata", 0);
+		return "/WEB-INF/t/cms/www/default/blog/contribute_list_friends.html";
+	}
+	
+	
+	public String blogContentShare(String[] paths, String[] params,
+			PageInfo info, int pageNo, HttpServletRequest request,
+			HttpServletResponse response, ModelMap model, String f,
+			String columnId) {
+		Content content = contentMng.findById(Integer.parseInt(paths[1]));
+		if (content == null) {
+			log.debug("Content id not found: {}", paths[1]);
+			return FrontUtils.pageNotFound(request, response, model);
+		}
+		Integer pageCount=content.getPageCount();
+		if(pageNo>pageCount||pageNo<0){
+			return FrontUtils.pageNotFound(request, response, model);
+		}
+		//非终审文章
+		CmsConfig config=CmsUtils.getSite(request).getConfig();
+		config.getConfigAttr().getPreview();
+		CmsSite site = content.getSite();
+		if(site.getId()!=1){
+			site=siteMng.findById(1);
+		}
+		Set<CmsGroup> groups = content.getViewGroupsExt();
+		groups.size();
+		String txt = content.getTxtByNo(pageNo);
+		// 内容加上关键字
+		txt = cmsKeywordMng.attachKeyword(site.getId(), txt);
+		Paginable pagination = new SimplePage(pageNo, 1, content.getPageCount());
+		model.addAttribute("pagination", pagination);
+		FrontUtils.frontPageData(request, model);
+		model.addAttribute("content", content);
+		model.addAttribute("title", content.getTitleByNo(pageNo));
+		model.addAttribute("txt", txt);
+		FrontUtils.frontData(request, model, site);
+		return FrontUtils.getTplPath(request, site.getSolutionPath(),TPLDIR_BLOG,"tpl.blogContentShare");
+	}
+	public String blog_indexs(String q, Integer modelId,
+			Integer queryChannelId, String string, Integer pageNo,
+			HttpServletRequest request, ModelMap model) {
+		CmsSite site = CmsUtils.getSite(request);
+		CmsUser user = CmsUtils.getUser(request);
+		Integer recieveUserId = null;
+		if (user == null) {
+			String uid=request.getParameter("uid");
+			if(StringUtils.isNotEmpty(uid)){
+				user=cmsUserMng.findById(Integer.parseInt(uid));
+				model.addAttribute("usert", user);
+			}else{
+				return FrontUtils.showLoginBlog(request, model, site);
+			}
+		}
+		recieveUserId = user.getId();
+	    model = contentMng.getStickList(user,model);
+		FrontUtils.frontData(request, model, site);
+		Pagination p = contentMng.getPageForMember_blog(q, queryChannelId,site.getId(), modelId,user.getId(), cpn(pageNo), 20,null,null,recieveUserId);
+		model.addAttribute("pagination", p);
+		if (!StringUtils.isBlank(q)) {
+			model.addAttribute("q", q);
+		}else{
+			model.addAttribute("q", "");
+		}
+		if (modelId != null) {
+			model.addAttribute("modelId", modelId);
+		}
+		return "/WEB-INF/t/cms/www/default/blog/contribute_list_indexs.html";
+	}
+	
+	public String blogContentLocalRefreshFriend(String[] paths,String[] params,
+			PageInfo info,Integer pageNo,HttpServletRequest request,
+			HttpServletResponse response, ModelMap model,String friend,String columnId){
+			Content content = contentMng.findById(Integer.parseInt(paths[1]));
+			if (content == null) {
+				log.debug("Content id not found: {}", paths[1]);
+				return FrontUtils.pageNotFound(request, response, model);
+			}
+			Integer pageCount=content.getPageCount();
+			if(pageNo>pageCount||pageNo<0){
+				return FrontUtils.pageNotFound(request, response, model);
+			}
+			//非终审文章
+			CmsConfig config=CmsUtils.getSite(request).getConfig();
+			config.getConfigAttr().getPreview();
+			//CmsUser u = CmsUtils.getUser(request);
+			if("2".equals(friend)){
+				friend = request.getParameter("utId");
+				model.addAttribute("collection", 1);
+			}
+			CmsUser user=cmsUserMng.findById(Integer.valueOf(friend.toString()));
+			CmsSite site = content.getSite();
+			Set<CmsGroup> groups = content.getViewGroupsExt();
+			groups.size();
+			
+			String txt = content.getTxtByNo(pageNo);
+			
+			//置顶下一页上一页参数
+			String currentId = request.getParameter("currentId");//当前文章的id
+			if(StringUtils.isNotBlank(currentId)){
+				String stickUserId = request.getParameter("stickUserId");//当前文章的id
+				model=blogCommon.getPreNextStick(model, Integer.parseInt(currentId),Integer.parseInt(stickUserId) );
+			
+			}
+			
+			// 内容加上关键字
+			txt = cmsKeywordMng.attachKeyword(site.getId(), txt);
+			Paginable pagination = new SimplePage(pageNo, 1, content.getPageCount());
+			model.addAttribute("pagination", pagination);
+			FrontUtils.frontPageData(request, model);
+			model.addAttribute("content", content);
+			model.addAttribute("channel", content.getChannel());
+			model.addAttribute("title", content.getTitleByNo(pageNo));
+			model.addAttribute("txt", txt);
+			model.addAttribute("columnIdZ", columnId);
+			model.addAttribute("columnId", columnId);
+			model.addAttribute("pic", content.getPictureByNo(pageNo));
+			model.addAttribute("password", content.getPassword());
+			model.addAttribute("who",0);
+			model.addAttribute("userIds", user.getId());
+			model.addAttribute("usert", user);
+			CmsUser u = CmsUtils.getUser(request);
+			model = blogCommon.getEmbodyColumn(model,u);
+			String collection = request.getParameter("collection");
+			if(null != collection ){//转载文章显示
+				model.addAttribute("collection", 1);
+			}else{
+				String GroupFlag = request.getParameter("GroupFlag");
+				if("-1".equals(GroupFlag)){
+					model.addAttribute("GroupFlagData", -1);
+				}else{
+					model.addAttribute("GroupFlagData", content.getUser().getId());
+				}
+			}
+			FrontUtils.frontData(request, model, site);
+			return "/WEB-INF/t/cms/www/default/blog/blog_content_local_refresh_friend.html";
+		}
+	
+	
+	
+	
 	@Autowired
 	protected ImageCaptchaService imageCaptchaService;
 	@Autowired
@@ -1665,4 +2046,6 @@ public class BlogAct {
 	protected ContentMng contentMng;
 	@Autowired
 	protected ContentDao contentDao;
+	@Autowired
+	private CmsSiteMng siteMng;
 }

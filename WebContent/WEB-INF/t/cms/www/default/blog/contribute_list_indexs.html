@@ -1,0 +1,164 @@
+ <div class="personCenter-userInfo blog_right">
+ <div id="tgglDiv" class="tggl" style="display: block;">
+ <form id="tableForm" action="${base}/blog/index.jspx" method="post">
+			          <ul class="report-list2 sm mb20" style="">
+			          [#if pagination.list?size gt 0]
+				          [#list pagination.list as c]
+				         <li>
+				          <div>
+				          <a class="hasImg clearfix a12"  href="${c.url}?d=1">
+							  <div class="item2 clearfix" [#if c_index<1]style="border-top:none;"[/#if]>
+									<div class="report-text">
+										<div><h3>${c.title}</h3></div>
+									</div>
+					           </div>
+						   </a>
+						  </div>
+						  [#if user??]
+							   [#if c.columnId??]
+								   [#if c.user.id=user.id]
+									  <a href="contribute_edit.jspx?id=${c.id}&nextUrl=contribute_list.jspx" class="f3"><em style="color: #b7b7b7;">修改</em></a>&nbsp;|&nbsp;
+						              <a href="contribute_delete.jspx?ids=${c.id}" onclick="javascript:return del();" class="f3"><em style="color: #b7b7b7;">删除</em></a>
+						           [#else]
+						            <a class="f3"><em style="color:#b7b7b7;">不可修改删除</em></a>
+						           [/#if]
+						       [#else]   
+						        <a href="contribute_edit.jspx?id=${c.id}&nextUrl=contribute_list.jspx" class="f3"><em style="color: #b7b7b7;">修改</em></a>&nbsp;|&nbsp;
+						              <a href="contribute_delete.jspx?ids=${c.id}" onclick="javascript:return del();" class="f3"><em style="color: #b7b7b7;">删除</em></a>
+					           [/#if]
+							<div class="f2"><span style="padding-right:10px;"><em>博主:&nbsp;${c.user.username}&nbsp;&nbsp;&nbsp;${c.releaseDate?string('yyyy-MM-dd')}&nbsp;&nbsp;&nbsp;作者:&nbsp;${c.author!c.user.username}&nbsp;&nbsp;&nbsp;阅读:&nbsp;${c.contentCount.views!}&nbsp;&nbsp;&nbsp;评论:&nbsp;${c.contentCount.comments!}</em></span></div>
+						  [#else]
+						   <a class="f3"><em style="color:#b7b7b7;">博主:&nbsp;${c.user.username}&nbsp;&nbsp;&nbsp;${c.releaseDate?string('yyyy-MM-dd')}&nbsp;&nbsp;&nbsp;作者:&nbsp;${c.author!c.user.username}&nbsp;&nbsp;&nbsp;阅读:&nbsp;${c.contentCount.views!}&nbsp;&nbsp;&nbsp;评论:&nbsp;${c.contentCount.comments!}</em></a>
+						  [/#if]			
+			             </li>
+			              [/#list]
+			          </ul>
+			          
+			          <input type="hidden" name="pageNo"/>
+			           [#if usert??]
+					  <input style="display: none;" id="hy" name="hy" value="${usert.id}"/>
+					  [/#if]
+			           <table  style="margin:20px 0 0 40px;border:0px" ><tbody><tr><td style="border:0px; ">
+                共 ${pagination.totalCount} 条&nbsp;
+                每页 ${pagination.pageSize} 条&nbsp;
+                [#if pagination.firstPage]
+                <a href="javascript:void(0);" style="cursor: default;">首页</a>
+                <a href="javascript:void(0);" style="cursor: default;">上一页</a>
+                [#else]
+                 <a href="javascript:void(0);" style="cursor: pointer;"  onclick="_gotoPage('1');" >首页</a>
+               	 <a href="javascript:void(0);" style="cursor: pointer;" onclick="_gotoPage('${pagination.prePage}');" >上一页</a>
+                [/#if]
+                [#if pagination.lastPage]
+                <a href="javascript:void(0);" style="cursor: default;">下一页</a>
+                <a href="javascript:void(0);" style="cursor: default;">尾页</a>&nbsp;
+                [#else]
+                <a href="javascript:void(0);" style="cursor: pointer;" onclick="_gotoPage('${pagination.nextPage}');" >下一页</a>
+                 <a href="javascript:void(0);" style="cursor: pointer;" onclick="_gotoPage('${pagination.totalPage}');" >尾页</a>&nbsp;
+                [/#if]
+                 
+                当前 ${pagination.pageNo}/${pagination.totalPage} 页 &nbsp;转到第<input type="text" id="_goPs" maxlength="6" onfocus="this.select();" onkeypress="if(event.keyCode==13){$('#_goPage').click();return false;}" class="inp1"/>页
+                <input style="cursor: pointer;" id="_goPage" type="button" value="转" class="jump" onclick="_gotoPage($('#_goPs').val());"[#if pagination.totalPage==1] disabled="disabled"[/#if] />
+            </td>
+            </tr>
+            </tbody>
+            </table>
+			          <script type="text/javascript">
+			            function _gotoPage(pageNo) {
+			                try{
+			                   // var tableForm = document.getElementById("tableForm");
+			                    var queryTitle = parent.document.getElementById("queryTitle").value;
+			                    //var queryTitle = $("queryTitle").val();
+			                    $("input[name=pageNo]").val(pageNo);
+			                    if(typeof($("#hy").val())=='undefined'){
+				                    if(queryTitle!=null && queryTitle!=""){
+				                    	$.ajax({
+									           type: 'POST',
+									           url : '${base}/blog/indexs.jspx',
+									           dataType:"html",
+									           data : {'queryTitle' : queryTitle,'modelId' : null,'queryChannelId' : null,'pageNo':pageNo,'channelId':null,'joinGroupStata':null,'columnId':null,'userIds':null},
+									           async: false,
+									           success : function(datas){
+									        	   $(".wrap-right").empty();
+									               $(".wrap-right").append(datas);		
+									  	   		 }
+									 	});
+				                    	// tableForm.action="${base}/blog/index.jspx?queryTitle="+queryTitle;
+			                    	}else{
+			                    		$.ajax({
+									           type: 'POST',
+									           url : '${base}/blog/indexs.jspx',
+									           dataType:"html",
+									           data : {'queryTitle' : null,'modelId' : null,'queryChannelId' : null,'pageNo':pageNo,'channelId':null,'joinGroupStata':null,'columnId':null,'userIds':null},
+									           success : function(datas){
+									        	   $(".wrap-right").empty();
+									               $(".wrap-right").append(datas);		
+									  	   		 }
+									 	});
+			                    		//tableForm.action="${base}/blog/index.jspx";
+			                    	}
+			                    }else{
+			                    	//alert("=2222=");
+			                    	if(queryTitle!=null && queryTitle!=""){
+			                    		tableForm.action="${base}/blog/index.jspx?uid="+$("#hy").val()+"&queryTitle="+queryTitle;
+			                    	}else{
+			                    		tableForm.action="${base}/blog/index.jspx?uid="+$("#hy").val();
+			                    	}
+				                    
+			                    }
+			                    //tableForm.onsubmit=null;
+			                    //tableForm.submit();
+			                } catch(e) {
+			                    alert('_gotoPage(pageNo)方法出错');
+			                }
+			            }
+			            </script>
+			             [#else]
+			         <div>暂无博文</div>
+			        [/#if]
+			          </form>
+          </div>
+          </div>
+          
+<script type="text/javascript">
+ $("#zd_u-hilite-cap").remove();
+ $("#zdId").remove();
+ $("#u-hilite-cap").remove();
+var html =""; 
+	html  +="<div id=\"zd_u-hilite-cap\" class=\"cap\" onclick=\"zdShowHidden();\" >置顶</div>"; 
+	html  +=" <div id=\"zdId\" style=\"width: 730px;float: left; padding-left: 20px;\">"; 
+	html  +="<div class=\"personCenter-userInfo blog_right1\">"; 
+	html  +="<ul class=\"topicList\" >"; 
+	html  +="[#if stickList??]";
+	html  +="[#if stickList?size gt 0]"; 
+	html  +="[#list stickList as sti]"; 
+	html  +="<li class=\"row\"><a cmd=\"LoadTopic\" _list=\"hilite\"  href=\"${base}/${sti.path}/${sti.contentId}.jhtml?d=1&currentId=${sti.id}&stickUserId=${sti.stickUserId}\" >${sti.contentTitle}</a> <span class=\"lt\">(${sti.contentTime?string('yyyy-MM-dd')})</span></li>				           [/#list]"; 
+	html  +=" [#else]"; 
+	html  +="<li class=\"row\" >暂无置顶内容！ </li>"; 
+	html  +=" [/#if]"; 
+	html  +=" [#else]"; 
+	html  +="<li class=\"row\" >暂无置顶内容！ </li>"; 
+	html  +=" [/#if]"; 
+	html  +=" </ul>"; 
+	html  +=" </div>"; 
+	html  +=" </div> "; 
+	html  +="  <div id=\"u-hilite-cap\" class=\"cap\" onclick=\"showHidden();\" >文章</div>"
+$(".wrap-right").before(html);
+
+
+function showHidden(){
+	var display = $(".wrap-right").css('display');
+	if(display=="block"){
+		$(".wrap-right").css('display','none'); 
+	}else{
+		$(".wrap-right").css('display','block'); 
+	}
+}
+function zdShowHidden(){
+	var display = $("#zdId").css('display');
+	if(display=="block"){
+		$("#zdId").css('display','none'); 
+	}else{
+		$("#zdId").css('display','block'); 
+	}
+}
+</script>

@@ -84,7 +84,10 @@ ul.mtree.bubba li.mtree-active > a {
     background: #9bb0b9 !important; 
 }
 .report-list2 li a .report-text h3{
-	color:#2971c0;
+	color:#255ec7;
+}
+.topicList a {
+    color: #255ec7 !important;
 }
 .f2{
 	color:#676262 !important;

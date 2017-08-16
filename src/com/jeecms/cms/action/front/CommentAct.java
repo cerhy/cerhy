@@ -21,6 +21,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.jeecms.cms.entity.assist.CmsComment;
 import com.jeecms.cms.entity.main.Channel;
@@ -47,6 +48,7 @@ public class CommentAct {
 
 	public static final String COMMENT_PAGE = "tpl.commentPage";
 	public static final String COMMENT_LIST = "tpl.commentList";
+	public static final String COMMENT_LIST_SHARE = "tpl.commentListShare";
 	public static final String COMMENT_INPUT = "tpl.commentInput";
 	public static final String COMMENT_CHANNEL_INPUT = "tpl.commentChannelInput";
 	public static final String COMMENT_CHANNEL_PAGE = "tpl.commentChannelPage";
@@ -214,6 +216,45 @@ public class CommentAct {
 		return FrontUtils.getTplPath(request, site.getSolutionPath(),
 				TPLDIR_CSI, COMMENT_LIST);
 	}
+	@RequestMapping(value = "/comment_list_share.jspx")
+	public String comment_list_share(Integer siteId,Integer contentId, Integer parentId,
+			Integer greatTo,Integer recommend, Integer checked, 
+			Integer orderBy, Integer count,
+			HttpServletRequest request, HttpServletResponse response,
+			ModelMap model) {
+		if (count == null || count <= 0 || count > 200) {
+			count = 200;
+		}
+		boolean desc;
+		if (orderBy == null || orderBy == 0) {
+			desc = true;
+		} else {
+			desc = false;
+		}
+		Boolean rec;
+		if (recommend != null) {
+			rec = recommend != 0;
+		} else {
+			rec = null;
+		}
+		Boolean chk;
+		if (checked != null) {
+			chk = checked != 0;
+		} else {
+			chk = null;
+		}
+		List<CmsComment> list = cmsCommentMng.getListForTag(siteId,contentId,
+				parentId,greatTo, chk, rec, desc, count);
+		// 将request中所有参数
+		model.putAll(RequestUtils.getQueryParams(request));
+		model.addAttribute("list", list);
+		model.addAttribute("contentId", contentId);
+		CmsSite site = CmsUtils.getSite(request);
+		FrontUtils.frontData(request, model, site);
+		
+		return FrontUtils.getTplPath(request, site.getSolutionPath(),
+				TPLDIR_CSI, COMMENT_LIST_SHARE);
+	}
 
 	/**
 	 * 获取栏目评论列表
@@ -364,6 +405,82 @@ public class CommentAct {
 		ResponseUtils.renderJson(response, json.toString());
 	}
 
+	@RequestMapping(value = "/ajaxsubmit.jspx", method = RequestMethod.POST)
+	@ResponseBody
+	public String ajaxsubmit(Integer contentId, Integer parentId,Integer score,
+			String text, String captcha,String sessionId,
+			HttpServletRequest request, HttpServletResponse response,
+			ModelMap model) throws JSONException, IOException {
+		CmsSite site = CmsUtils.getSite(request);
+		CmsUser user = CmsUtils.getUser(request);
+		JSONObject json = new JSONObject();
+		if (contentId == null) {
+			json.put("success", false);
+			json.put("status", 100);
+			//ResponseUtils.renderJson(response, json.toString());
+			return json.toString();
+		}
+		if (StringUtils.isBlank(text)) {
+			json.put("success", false);
+			json.put("status", 101);
+			//ResponseUtils.renderJson(response, json.toString());
+			return json.toString();
+		}
+		Content content = contentMng.findById(contentId);
+		if (content == null) {
+			// 内容不存在
+			json.put("success", false);
+			json.put("status", 2);
+		} else if (content.getChannel().getCommentControl() == ChannelExt.COMMENT_OFF) {
+			// 评论关闭
+			json.put("success", false);
+			json.put("status", 3);
+		} else if ((content.getChannel().getCommentControl() == ChannelExt.COMMENT_LOGIN|content.getChannel().getCommentControl() == ChannelExt.COMMENT_LOGIN_MANY)
+				&& user == null) {
+			// 需要登录才能评论
+			json.put("success", false);
+			json.put("status", 4);
+		}else if(content.getChannel().getCommentControl() == ChannelExt.COMMENT_LOGIN&&user!=null){
+			if (hasCommented(user, content)) {
+				// 已经评论过，不能重复评论
+				json.put("success", false);
+				json.put("status", 5);
+			}else{
+				boolean checked = false;
+				Integer userId = null;
+				if (user != null) {
+					checked = !user.getGroup().getNeedCheck();
+					userId = user.getId();
+				}
+				ContentDoc doc=content.getContentDoc();
+				if(doc!=null){
+					doc.setAvgScore(getNewAvgScore(content, score));
+					contentDocMng.update(doc,content);
+				}
+				cmsCommentMng.comment(user,score,text, RequestUtils.getIpAddr(request),
+						contentId, site.getId(), userId, checked, false,parentId);
+				json.put("success", true);
+				json.put("status", 0);
+			}
+		}else {
+			boolean checked = false;
+			Integer userId = null;
+			if (user != null) {
+				checked = !user.getGroup().getNeedCheck();
+				userId = user.getId();
+			}
+			ContentDoc doc=content.getContentDoc();
+			if(doc!=null){
+				doc.setAvgScore(getNewAvgScore(content, score));
+				contentDocMng.update(doc,content);
+			}
+			cmsCommentMng.comment(user,score,text, RequestUtils.getIpAddr(request),
+					contentId, site.getId(), userId, checked, false,parentId);
+			json.put("success", true);
+			json.put("status", 0);
+		}
+		return json.toString();
+	}
 	/**
 	 * 栏目评论
 	 * @param contentId

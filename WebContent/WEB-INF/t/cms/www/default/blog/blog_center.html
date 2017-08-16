@@ -28,10 +28,10 @@
 .jump:hover {
     box-shadow: 0 3px 4px 0 rgba(0,0,0,0.24),0 6px 12px 0 rgba(0,0,0,0.19);
 }
-.cap	{
+/*  .cap	{
     color: #000;
     background: #def7ff;
-    /* padding: 4px 20px 4px 20px; */
+    /* padding: 4px 20px 4px 20px; 
     cursor: pointer;
     padding-left: 20px;
     width: 710px;
@@ -39,18 +39,18 @@
     margin-left: 20px;
     height: 36px;
     padding-top: 10px;
-    font-size: 20px;}
+    font-size: 20px;}  */
 td{border:1px solid #e7e7e7; line-height:38px; color:#666666; text-align:center;width:120px;height:20px;}
 .st_tree ul .change a:hover{color:red;}
 .st_tree ul li a:hover{color:blue;}
 .st_tree ul .change :hover{background-color:#e7e7e7 }
 ::-webkit-scrollbar{width:0px}
 .clear{clear:both}
-.blog_right1 {
+/* .blog_right1 {
     padding: 35px;
     background: #ffffff;
   
-}
+} */
 /* .personCenter-userInfo blog_right1 ul {
     margin: 0;
     padding: 0 0 0 2em;
@@ -59,7 +59,7 @@ td{border:1px solid #e7e7e7; line-height:38px; color:#666666; text-align:center;
 .f2{
 	color:#676262 !important;
 }
-.topicList {
+/* .topicList {
     color: #676262;
     font-family: "Microsoft YaHei",Arial;
     font-size: 14px;
@@ -68,7 +68,7 @@ td{border:1px solid #e7e7e7; line-height:38px; color:#666666; text-align:center;
     padding: 0 0 0 2em;
     list-style: square;
 }
-.topicList a{ color: #666666; text-decoration: none; }
+.topicList a{ color: #666666; text-decoration: none; } */
 </style>
 
 
@@ -95,11 +95,11 @@ function showHidden(){
 	}
 }
 function zdShowHidden(){
-	var display = $("#zdId.wrap-right").css('display');
+	var display = $("#zdId").css('display');
 	if(display=="block"){
-		$("#zdId.wrap-right").css('display','none'); 
+		$("#zdId").css('display','none'); 
 	}else{
-		$("#zdId.wrap-right").css('display','block'); 
+		$("#zdId").css('display','block'); 
 	}
 }
 </script>
@@ -125,32 +125,36 @@ function zdShowHidden(){
       	[#include "blog_operation.html"/]
         <div class="mb20 clearfix">
           [#include "blog_left.html"/]
-          <div id="zd_u-hilite-cap" class="cap" onclick="zdShowHidden();" >置顶</div>
-               <div id="zdId" class="wrap-right">
+           <div id="zd_u-hilite-cap" class="cap" onclick="zdShowHidden();" >置顶</div>
+               <div id="zdId" style="width: 730px;float: left; padding-left: 20px;">
                 <div class="personCenter-userInfo blog_right1">
                 <ul class="topicList" >
+                [#if stickList??]
                  [#if stickList?size gt 0]
 				          [#list stickList as sti]
 				          
-				          <!--  ${stickList[0].contentId}  -->
- 						  <li class="row"><a cmd="LoadTopic" _list="hilite"  href="${base}/${sti.path}/${sti.contentId}.jhtml?d=1&currentId=${sti.id}&stickUserId=${sti.stickUserId}" >${sti.contentTitle}</a> <span class="lt">(${sti.contentTime?string('yyyy-MM-dd')})</span></li>				           [/#list]
+ 						  <li class="row"><a cmd="LoadTopic" _list="hilite"  href="javascript:void(0);" onclick="myblogZdShow('${base}','${sti.path}',${sti.contentId},${sti.id},${sti.stickUserId})">${sti.contentTitle}</a> <span class="lt">(${sti.contentTime?string('yyyy-MM-dd')})</span></li>				           [/#list]
+				 [#else]
+				 <li class="row" >暂无置顶内容！ </li>
+				 [/#if]
 				 [#else]
 				 <li class="row" >暂无置顶内容！ </li>
 				 [/#if]
                 </ul>
                 </div>
-                </div>
-          <div id="u-hilite-cap" class="cap" onclick="showHidden();" >文章</div>
+                </div> 
+           <div id="u-hilite-cap" class="cap" onclick="showHidden();" >文章</div> 
             <div id="wzId" class="wrap-right">
+            
                 <div class="personCenter-userInfo blog_right">
-                    <div class="tggl" style="display: block;">
+                    <div id="tgglDiv" class="tggl" style="display: block;">
 			          <form id="tableForm" action="${base}/blog/index.jspx" method="post">
 			          <ul class="report-list2 sm mb20" style="">
 			          [#if pagination.list?size gt 0]
 				          [#list pagination.list as c]
 				         <li>
 				          <div>
-				          <a class="hasImg clearfix a12"  href="${c.url}?d=1">
+				          <a class="hasImg clearfix a12"  href="javascript:void(0);" onclick="myblogShow('${c.url}')" >
 							  <div class="item2 clearfix" [#if c_index<1]style="border-top:none;"[/#if]>
 									<div class="report-text">
 										<div><h3>${c.title}</h3></div>
@@ -207,29 +211,86 @@ function zdShowHidden(){
             </tbody>
             </table>
 			          <script type="text/javascript">
+			          function myblogShow(url){
+			        	 	 $.ajax({
+			        	         type: 'GET',
+			        	         url : url,
+			        	         /*  dataType : 'json', */
+			        	          dataType:"html",
+			        	         data : {'o' : 1},
+			        	         success : function(datas){
+			        	        	 $("#zd_u-hilite-cap").remove();
+			        	        	 $("#zdId").remove();
+			        	        	 $("#u-hilite-cap").remove();
+			        	        	 $(".wrap-right").empty();
+			        	        	 $(".wrap-right").append(datas);
+			        	        	
+			        		   		 }
+			        			 });
+			        	}
+			          function myblogZdShow(base,path,contentId,currentId,stickUserId){
+			        		
+			        		var url =base+"/"+path+"/"+contentId+".jhtml?o=1&currentId="+currentId+"&stickUserId="+stickUserId;
+			        	 	 $.ajax({
+			        	         type: 'GET',
+			        	         url : url,
+			        	          dataType:"html",
+			        	         data :{},
+			        	         success : function(datas){
+			        	        	
+			        	        	 $("#zd_u-hilite-cap").remove();
+			        	        	 $("#zdId").remove();
+			        	        	 $("#u-hilite-cap").remove();
+			        	        	 $(".wrap-right").empty();
+			        	        	 $(".wrap-right").append(datas);
+			        	        	
+			        		   		 }
+			        			 });
+			        	}
 			            function _gotoPage(pageNo) {
 			                try{
-			                    var tableForm = document.getElementById("tableForm");
+			                   // var tableForm = document.getElementById("tableForm");
 			                    var queryTitle = parent.document.getElementById("queryTitle").value;
 			                    //var queryTitle = $("queryTitle").val();
 			                    $("input[name=pageNo]").val(pageNo);
 			                    if(typeof($("#hy").val())=='undefined'){
-				                   
-				                    if(queryTitle!=null && queryTitle!=""){
-				                    	 tableForm.action="${base}/blog/index.jspx?queryTitle="+queryTitle;
-			                    	}else{
-			                    		 tableForm.action="${base}/blog/index.jspx";
-			                    	}
+			                    
+			                    		$.ajax({
+									           type: 'POST',
+									           url : '${base}/blog/indexs.jspx',
+									           dataType:"html",
+									           data : {'queryTitle' : queryTitle,'pageNo':pageNo},
+									           async: false,
+									           success : function(datas){
+									        	   $(".wrap-right").empty();
+									               $(".wrap-right").append(datas);		
+									  	   		 }
+									 	});
+			                    		//tableForm.action="${base}/blog/index.jspx";
+			                    	
 			                    }else{
-			                    	if(queryTitle!=null && queryTitle!=""){
+			                    	$.ajax({
+								           type: 'POST',
+								           url : '${base}/blog/indexs.jspx',
+								           dataType:"html",
+								           data : {'queryTitle' : queryTitle,'pageNo':pageNo,'uid':$("#hy").val()},
+								           async: false,
+								           success : function(datas){
+								        	   $(".wrap-right").empty();
+								               $(".wrap-right").append(datas);		
+								  	   		 }
+								 	});
+			                    	
+			                    	
+			                    	/* if(queryTitle!=null && queryTitle!=""){
 			                    		tableForm.action="${base}/blog/index.jspx?uid="+$("#hy").val()+"&queryTitle="+queryTitle;
 			                    	}else{
 			                    		tableForm.action="${base}/blog/index.jspx?uid="+$("#hy").val();
-			                    	}
+			                    	} */
 				                    
 			                    }
-			                    tableForm.onsubmit=null;
-			                    tableForm.submit();
+			                    //tableForm.onsubmit=null;
+			                    //tableForm.submit();
 			                } catch(e) {
 			                    alert('_gotoPage(pageNo)方法出错');
 			                }
