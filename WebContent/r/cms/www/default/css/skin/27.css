@@ -8,6 +8,10 @@
 .footer_styles {
 	background: #04456f; 
 }
+.footer_style {
+	background: #04456f !important; 
+}
+
 .blogHead,.tj{color: #fff;}
 /* .tj{
 	padding-bottom:80px;

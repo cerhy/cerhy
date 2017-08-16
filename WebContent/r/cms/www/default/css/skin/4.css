@@ -22,6 +22,9 @@ a			{ color: #074387; }
 .footer_styles {
 	background: #E0912F; 
 }
+.footer_style {
+	background: #E0912F !important; 
+}
 .cap{
     color: #fff;
     background:#bf700c;

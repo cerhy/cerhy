@@ -1078,6 +1078,7 @@ public class BlogAct {
 			return FrontUtils.showLogin(request, model, site);
 		}
 		model =blogCommon.getHyperlink(request,model,user);
+		model = blogCommon.getChannel(request,model,user,site);
 		model = blogCommon.getColumn(request,model,user);
 		int totalCount = blogCommon.getTotalArticleNum(model,user);
 		model.addAttribute("articleCount", totalCount);

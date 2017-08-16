@@ -6,6 +6,9 @@
 .footer_styles {
 	background : #007ab1; 
 }
+.footer_style {
+	background : #007ab1 !important; 
+}
 .blogHead,.tj{color: #fff;}
 .cap{
     color: #fff;

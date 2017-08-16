@@ -5,6 +5,8 @@ a{color: #666666}
     background: #222222;
     color: #666666;
 }  
+
+
 .blogHead,.tj{color: #c5c9ce;}
 .tggl a {color:#666666;}
 /* .tj{padding-bottom:40px;} */
@@ -26,7 +28,9 @@ a:link{color:#666666;}
 #title1{color: #c5c9ce;}
 .header-top {background: #efefef;border-bottom:0px;}
 .footer_styles {background-image: url(02.gif); }
-
+.footer_style {
+	background-image: url(02.gif) !important; 
+}
 .blogBody .user-center-left .user-menu-links li{
 	margin-top:-1px;
 	border-bottom: none; 

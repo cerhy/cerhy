@@ -9,6 +9,9 @@ a:link {
 .footer_styles {
 	background : #000; 
 }
+.footer_style {
+	background : #000 !important; 
+}
 .blogHead,.tj{color: #808080;}
 
 #title1{
