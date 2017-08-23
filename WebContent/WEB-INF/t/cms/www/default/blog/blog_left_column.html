@@ -70,7 +70,7 @@ outline: none;
 <div class="htmleaf-content bgcolor-3" style="padding-top: 0px;padding-bottom: 0px;">
 					<ul class=mtree>
 					  [#if user??]<li>
-					  <a class="ff" href="${base}/blog/contribute_add.jspx" style="color: #111010;">
+					   <a class="ff" href="javascript:;" onclick="contributeAdd();" style="color: #111010;">
 					  <span id="img" style="float: left;margin: -10px 0;margin-left: "></span>
 					  	发表博客
 					  </a>
@@ -437,9 +437,32 @@ outline: none;
               dataType:"html",
              data : {'queryTitle' : null,'modelId' : null,'queryChannelId' : null,'pageNo':null,'channelId':channelId,'joinGroupStata':joinGroupStata,'columnId':columnId,'uid':uid},
              success : function(datas){
+            	 if(datas=="login"){
+            		 location.href="/cerhy/login.jspx";
+            	 }else{
+            		 $(".wrap-right").empty();
+                	 $(".wrap-right").append(datas);
+            	 }
+            	
+            	
+    	   		 }
+   		 });
+	}
+	
+	function contributeAdd(){
+		
+	 	 $.ajax({
+             type: 'POST',
+             url : ' ${base}/blog/contribute_ajax_add.jspx',
+              dataType:"html",
+             data : {},
+             success : function(datas){
+            	 $("#zd_u-hilite-cap").remove();
+	        	 $("#zdId").remove();
+	        	 $("#u-hilite-cap").remove();
+	        	 
             	 $(".wrap-right").empty();
             	 $(".wrap-right").append(datas);
-            	
     	   		 }
    		 });
 	}
