@@ -478,7 +478,7 @@ $(function(){
                 <input type="hidden" name="nextUrl" value="${base}" />
                     <input type="hidden" name="id" value="${content.id}"/>
                 <input type="button" class="member-submit" value="提交" onclick="ajaxconmit('jvForm');" />
-                <input type="button" class="member-reset" value="取消" onclick="javascript:history.go(-1);"/>
+                <input type="button" class="member-reset" value="取消" onclick="backCancel();"/>
                 </td>
               </tr>
             </tbody>
@@ -590,5 +590,19 @@ function addPd(obj){
 		$("#password").hide();
 		$("#tick").hide();
 	}
+}
+function backCancel(){
+	 $.ajax({
+	           type: 'POST',
+	           url : '/cerhy/blog/indexs.jspx',
+	           dataType:"html",
+	           async: true,
+	           success : function(datas){
+	        	 var oEditor = CKEDITOR.instances.txt;
+	        	 oEditor.destroy(true);
+	        	   $(".wrap-right").empty();
+	               $(".wrap-right").append(datas);		
+	  	   		 }
+	 	});
 }
 </script>

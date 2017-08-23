@@ -428,7 +428,7 @@ $(function(){
                 <td class="tggl-top">验证码</td><td><input type="text" onfocus="guestbookCaptcha.src='${base}/captcha.svl?d='+new Date()" name="captcha" id="captcha" vld="{required:true}" class="plcode" maxlength="20" class="member-change" style="float:left; margin-left:15px;" /><img id="guestbookCaptcha" src="${base}/captcha.svl" onclick="this.src='${base}/captcha.svl?d='+new Date()"/></td>
               </tr> -->
               <tr>
-                <td colspan="2" style="text-align:center; padding:20px 0;"><input type="hidden" name="nextUrl" value="${base}" /><input type="button"  class="member-submit" value="提交" id="tj" onclick="ajaxconmit('jvForm');" /><a href="#" onclick="javascript:window.history.go(-1);" ><input type="button" class="member-reset" value="取消"/ ></a></td>
+                <td colspan="2" style="text-align:center; padding:20px 0;"><input type="hidden" name="nextUrl" value="${base}" /><input type="button"  class="member-submit" value="提交" id="tj" onclick="ajaxconmit('jvForm');" /><a href="#" onclick="backCancel();" ><input type="button" class="member-reset" value="取消"/ ></a></td>
               </tr>
             </tbody>
           </table>
@@ -555,4 +555,18 @@ function addPd(obj){
 		        });
 		  }
     }
+	function backCancel(){
+		 $.ajax({
+		           type: 'POST',
+		           url : '/cerhy/blog/indexs.jspx',
+		           dataType:"html",
+		           async: true,
+		           success : function(datas){
+		        	 var oEditor = CKEDITOR.instances.txt;
+		        	 oEditor.destroy(true);
+		        	   $(".wrap-right").empty();
+		               $(".wrap-right").append(datas);		
+		  	   		 }
+		 	});
+	}
 </script>
