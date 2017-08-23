@@ -246,7 +246,7 @@ public class BlogAct {
 				user=cmsUserMng.findById(Integer.parseInt(uid));
 				model.addAttribute("usert", user);
 			}else{
-				return FrontUtils.showLogin(request, model, site);
+				return "/WEB-INF/t/cms/www/default/blog/login.html";
 			}
 		}
 		recieveUserId = user.getId();
@@ -323,7 +323,256 @@ public class BlogAct {
 		}
 	}
 	
+	public String blog_ajax_add(boolean hasPermission,String nextUrl,HttpServletRequest request,HttpServletResponse response, ModelMap model) {
+		CmsSite site = CmsUtils.getSite(request);
+		CmsUser user = CmsUtils.getUser(request);
+		FrontUtils.frontData(request, model, site);
+		if (user == null) {
+			return FrontUtils.showLogin(request, model, site);
+		}
+		model =blogCommon.getHyperlink(request,model,user);
+		model = blogCommon.getColumn(request,model,user);
+	    model = blogCommon.getChannel(request,model,user,site);
+	    int totalCount = blogCommon.getTotalArticleNum(model,user);
+	    model.addAttribute("articleCount", totalCount);
+ 		model = blogCommon.getTotalCommentNum(model, user);
+ 		model = blogCommon.getStarBlogger(request, model);
+ 		model = blogCommon.getAlreadyJoinGroup(request, model,user);
+ 		model = blogCommon.getFriendLeft(user.getId(),model,1);
+		if(hasPermission){
+			model.addAttribute("site", site);
+			model.addAttribute("sessionId",request.getSession().getId());
+			return "/WEB-INF/t/cms/www/default/blog/contribute_add_own.html";
+		}else{
+			WebErrors errors = WebErrors.create(request);
+			errors.addErrorCode("error.uploadMoreNumber", user.getGroup().getAllowFileTotal());
+			return FrontUtils.showError(request, response, model, errors);
+		}
+	}
+	
+	
+	public String blog_ajaxsave(String title, String author, String description,
+			String txt, String tagStr, Integer channelId,Integer columnId,Integer modelId,ContentDoc doc,
+			String captcha,String mediaPath,String mediaType,
+			String[] attachmentPaths, String[] attachmentNames,
+			String[] attachmentFilenames, String[] picPaths, String[] picDescs,
+			Short charge,Double chargeAmount,String password,
+			String nextUrl, HttpServletRequest request,
+			HttpServletResponse response, ModelMap model,Integer sta) {
+				CmsSite site = CmsUtils.getSite(request);
+				CmsUser user = CmsUtils.getUser(request);
+				FrontUtils.frontData(request, model, site);
+			if (user == null) {
+				return "login";
+				//return FrontUtils.showLogin(request, model, site);
+			}
+
+		Content c = new Content();
+		WebErrors errors = validateSaves(title, author, description, txt,doc,
+				tagStr,site, user, captcha, request, response,mediaPath,attachmentPaths);
+		if (errors.hasErrors()) {
+			return FrontUtils.showError(request, response, model, errors);
+		}
+		c.setSite(site);
+		CmsModel defaultModel=cmsModelMng.getDefModel();
 		
+		int groupId = user.getGroup().getId();//学科教研模板，市县教研内容模板
+		if (4 == groupId&&sta!=1) {
+			modelId = 11;//学科教研
+		} else if (5 == groupId&&sta!=1) {
+			modelId = 21;//市县教研
+		} else {
+			modelId = 24;//普通博客
+		}
+		CmsModel m=cmsModelMng.findById(modelId);
+		if(m!=null){
+			c.setModel(m);
+		}else{
+			c.setModel(defaultModel);
+		}
+		ContentExt ext = new ContentExt();
+		ext.setTitle(title);
+		ext.setAuthor(author);
+		ext.setDescription(description);
+		ext.setMediaPath(mediaPath);
+		ext.setMediaType(mediaType);
+		ContentTxt t = new ContentTxt();
+		t.setTxt(txt);
+		ContentType type = contentTypeMng.getDef();
+		if (type == null) {
+			throw new RuntimeException("Default ContentType not found.");
+		}
+		Integer typeId = type.getId();
+		String[] tagArr = StrUtils.splitAndTrim(tagStr, ",", null);
+		if(c.getRecommendLevel()==null){
+			c.setRecommendLevel((byte) 0);
+		}
+		try {
+			c = contentMng.blog_save(c, ext, t,null, null, null, null, tagArr,
+					attachmentPaths,attachmentNames, attachmentFilenames
+					,picPaths,picDescs,channelId,columnId, typeId, null,true,
+					charge,chargeAmount, user, true,password,request);
+		} catch (Exception e) {
+			log.error("**********************blogsave  error", e);
+			e.printStackTrace();
+		}
+		if(doc!=null){
+			contentDocMng.save(doc, c);
+		}
+		if(c!=null&&channelId!=null){
+			//往redis存储
+			List<Content> list=new ArrayList<Content>();
+			List<Content> listRedis=new ArrayList<Content>();
+			Integer parentId=null;
+			String parentIds=null;
+			Channel ids = channelMng.findById(channelId);//获取该栏目实体
+			//根据ids.getParentId()判断该栏目是否为只有一级栏目
+			if(null!=ids.getParentId()){
+				parentId=ids.getParentId();//走到这说明该传进来的栏目ID 存在上一级栏目-二级栏目
+				//获取上一级栏目id
+				Channel idss = channelMng.findById(parentId);
+				//再根据上一级栏目ID--parentId 来判读是否存在上上一级栏目--一级栏目(已知只有三级栏目,无序继续往上上上一级判断(4级栏目))
+				if(null!=idss.getParentId()){
+					//获取上上一级栏目id(一级栏目)
+					parentIds=String.valueOf(idss.getParentId().toString());
+				}
+			}
+			//判断parentId是否为null.如果为null则说明传进来的栏目ID 只有一级栏目 且为本身.如果不为null则说明传进来的栏目ID存在上一级栏目
+			if(null!=parentId){
+				//判断parentIds是否为null.如果为null则说明传进来的栏目ID 只有两级栏目.如果不为null则说明传进来的栏目ID存在上三级栏目
+				if(null!=parentIds){
+					//只有三级栏目就把该栏目的上一级栏目ID 作为key 也就是parentId
+					try {
+						list=RedisUtil.getList(String.valueOf(parentId));
+						if(list!=null&&list.size()>0){
+							list.add(c);
+						}else{
+							List<Content> listCopy=new ArrayList<Content>();
+							listCopy.add(c);
+							list=listCopy;
+						}
+						if(list!=null&&list.size()>1){
+							Collections.sort(list, new Comparator<Content>(){ 
+								public int compare(Content o1, Content o2) {  
+									//进行降序排列  
+									if(o1.getSortDate().getTime() < o2.getSortDate().getTime()){  
+										return 1;  
+									}
+									if(o1.getSortDate().getTime() == o2.getSortDate().getTime()){  
+										return 0;  
+									}  
+									return -1;  
+									
+								}  
+							}); 
+						} 
+						for(int i=0;i<list.size();i++){
+							if(list.size()>8){
+								if((i+1)<=8){
+									listRedis.add(list.get(i));
+								}else{
+									break;
+								}
+							}else{
+								listRedis.add(list.get(i));
+							}
+						}
+						RedisUtil.setList(String.valueOf(parentId), listRedis);
+					} catch (Exception e) {
+						log.error("redis存储异常....", e);
+					}
+				}else{
+					//只有二级栏目就把该栏目的ID 作为key也就是传进来的栏目id
+					try {
+						list=RedisUtil.getList(String.valueOf(channelId));
+						if(list!=null&&list.size()>0){
+							list.add(c);
+						}else{
+							List<Content> listCopy=new ArrayList<Content>();
+							listCopy.add(c);
+							list=listCopy;
+						}
+						if(list!=null&&list.size()>1){
+							Collections.sort(list, new Comparator<Content>(){ 
+								public int compare(Content o1, Content o2) {  
+									//进行降序排列  
+									if(o1.getSortDate().getTime() < o2.getSortDate().getTime()){  
+										return 1;  
+									}
+									if(o1.getSortDate().getTime() == o2.getSortDate().getTime()){  
+										return 0;  
+									}  
+									return -1;  
+									
+								}  
+							}); 
+						} 
+						for(int i=0;i<list.size();i++){
+							if(list.size()>8){
+								if((i+1)<=8){
+									listRedis.add(list.get(i));
+								}else{
+									break;
+								}
+							}else{
+								listRedis.add(list.get(i));
+							}
+						}
+						RedisUtil.setList(String.valueOf(channelId), listRedis);
+					} catch (Exception e) {
+						log.error("redis存储异常....", e);
+					}
+				}
+			}else{
+				//只有1级栏目就把该栏目的ID 作为key
+				try {
+					list=RedisUtil.getList(String.valueOf(channelId));
+					if(list!=null&&list.size()>0){
+						list.add(c);
+					}else{
+						List<Content> listCopy=new ArrayList<Content>();
+						listCopy.add(c);
+						list=listCopy;
+					}
+					if(list!=null&&list.size()>1){
+						Collections.sort(list, new Comparator<Content>(){ 
+							public int compare(Content o1, Content o2) {  
+								//进行降序排列  
+								if(o1.getSortDate().getTime() < o2.getSortDate().getTime()){  
+									return 1;  
+								}
+								if(o1.getSortDate().getTime() == o2.getSortDate().getTime()){  
+									return 0;  
+								}  
+								return -1;  
+								
+							}  
+						}); 
+					}
+					for(int i=0;i<list.size();i++){
+						if(channelId.toString().equals("75")&&typeId.toString().equals("2")){
+							listRedis.add(list.get(i));
+						}else{
+							if(list.size()>8){
+								if((i+1)<=8){
+									listRedis.add(list.get(i));
+								}else{
+									break;
+								}
+							}else{
+								listRedis.add(list.get(i));
+							}
+						}
+					}
+					RedisUtil.setList(String.valueOf(channelId), listRedis);
+				} catch (Exception e) {
+					log.error("redis存储异常....", e);
+				}
+			}
+			
+		}
+		return "success";
+	}
 	public String blog_save(String title, String author, String description,
 			String txt, String tagStr, Integer channelId,Integer columnId,Integer modelId,ContentDoc doc,
 			String captcha,String mediaPath,String mediaType,
@@ -576,6 +825,26 @@ public class BlogAct {
 				TPLDIR_BLOG, nextUrl);
 	}
 	
+	public String blog_ajax_edit(Integer id, String nextUrl,HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		CmsSite site = CmsUtils.getSite(request);
+		CmsUser user = CmsUtils.getUser(request);
+		FrontUtils.frontData(request, model, site);
+		
+		if (user == null) {
+			return FrontUtils.showLogin(request, model, site);
+		}
+		model = blogCommon.getColumn(request,model,user);
+	    model = blogCommon.getChannel(request,model,user,site);
+ 		model = blogCommon.getAlreadyJoinGroup(request, model,user);
+		Content content = contentMng.findById(id);
+		model.addAttribute("content", content);
+		model.addAttribute("site", site);
+		model.addAttribute("sessionId",request.getSession().getId());
+		
+		return "/WEB-INF/t/cms/www/default/blog/contribute_edit_own.html";
+		
+	}
 	public void blog_update(Integer id, String title, String author,
 			String description, String txt, String tagStr,Integer columnId, Integer channelId,
 			String mediaPath,String mediaType,
@@ -867,7 +1136,290 @@ public class BlogAct {
 			e.printStackTrace();
 		}
 	}
-	
+	public String blog_ajax_update(Integer id, String title, String author,
+			String description, String txt, String tagStr,Integer columnId, Integer channelId,
+			String mediaPath,String mediaType,
+			String[] attachmentPaths, String[] attachmentNames,
+			String[] attachmentFilenames, String[] picPaths, String[] picDescs,
+			ContentDoc doc,Short charge,Double chargeAmount,
+			String nextUrl, HttpServletRequest request,
+			HttpServletResponse response, ModelMap model,String password) {
+		CmsSite site = CmsUtils.getSite(request);
+		CmsUser user = CmsUtils.getUser(request);
+		if (user == null) {
+				//request.getRequestDispatcher("/login.jspx").forward(request, response);
+				return "login";
+		}
+		FrontUtils.frontData(request, model, site);
+		if(null != columnId){
+			channelId = 280;
+			Content bean=contentMng.findById(id);
+			List<Content> list=new ArrayList<Content>();
+			Integer parentId=null;
+			String parentIds=null;
+			Channel idDel = channelMng.findById(bean.getChannel().getId());//获取该栏目实体
+			//根据ids.getParentId()判断该栏目是否为只有一级栏目
+			if(null!=idDel.getParentId()){
+				parentId=idDel.getParentId();//走到这说明该传进来的栏目ID 存在上一级栏目-二级栏目
+				//获取上一级栏目id
+				Channel idss = channelMng.findById(parentId);
+				//再根据上一级栏目ID--parentId 来判读是否存在上上一级栏目--一级栏目(已知只有三级栏目,无序继续往上上上一级判断(4级栏目))
+				if(null!=idss.getParentId()){
+					//获取上上一级栏目id(一级栏目)
+					parentIds=String.valueOf(idss.getParentId().toString());
+				}
+			}
+			//判断parentId是否为null.如果为null则说明传进来的栏目ID 只有一级栏目 切为本身.如果不为null则说明传进来的栏目ID存在上一级栏目
+			if(null!=parentId){
+				//判断parentIds是否为null.如果为null则说明传进来的栏目ID 只有两级栏目.如果不为null则说明传进来的栏目ID存在上三级栏目
+				if(null!=parentIds){
+					//只有三级栏目就把该栏目的上一级栏目ID 作为key 也就是parentId
+					RedisUtil.lrem(parentId.toString(), 0, bean.getId().toString(),list);
+				}else{
+					//只有二级栏目就把该栏目的上一级栏目ID 作为key也就是传进来的栏目id
+					RedisUtil.lrem(bean.getChannel().getId().toString(), 0, bean.getId().toString(),list);
+				}
+			}else{
+				//只有1级栏目就把该栏目的ID 作为key
+				RedisUtil.lrem(bean.getChannel().getId().toString(), 0, bean.getId().toString(),list);
+			}
+		}
+		if(null != channelId){
+			Content bean=contentMng.findById(id);
+			List<Content> list=new ArrayList<Content>();
+			Integer parentId=null;
+			String parentIds=null;
+			Channel idDel = channelMng.findById(bean.getChannel().getId());//获取该栏目实体
+			//根据ids.getParentId()判断该栏目是否为只有一级栏目
+			if(null!=idDel.getParentId()){
+				parentId=idDel.getParentId();//走到这说明该传进来的栏目ID 存在上一级栏目-二级栏目
+				//获取上一级栏目id
+				Channel idss = channelMng.findById(parentId);
+				//再根据上一级栏目ID--parentId 来判读是否存在上上一级栏目--一级栏目(已知只有三级栏目,无序继续往上上上一级判断(4级栏目))
+				if(null!=idss.getParentId()){
+					//获取上上一级栏目id(一级栏目)
+					parentIds=String.valueOf(idss.getParentId().toString());
+				}
+			}
+			//判断parentId是否为null.如果为null则说明传进来的栏目ID 只有一级栏目 切为本身.如果不为null则说明传进来的栏目ID存在上一级栏目
+			if(null!=parentId){
+				//判断parentIds是否为null.如果为null则说明传进来的栏目ID 只有两级栏目.如果不为null则说明传进来的栏目ID存在上三级栏目
+				if(null!=parentIds){
+					//只有三级栏目就把该栏目的上一级栏目ID 作为key 也就是parentId
+					RedisUtil.lrem(parentId.toString(), 0, bean.getId().toString(),list);
+				}else{
+					//只有二级栏目就把该栏目的上一级栏目ID 作为key也就是传进来的栏目id
+					RedisUtil.lrem(bean.getChannel().getId().toString(), 0, bean.getId().toString(),list);
+				}
+			}else{
+				//只有1级栏目就把该栏目的ID 作为key
+				RedisUtil.lrem(bean.getChannel().getId().toString(), 0, bean.getId().toString(),list);
+			}
+		}
+		
+//		String columnId = request.getParameter("columnId");
+		/*MemberConfig mcfg = site.getConfig().getMemberConfig();
+		// 没有开启会员功能
+		if (!mcfg.isMemberOn()) {
+			return FrontUtils.showMessage(request, model, "member.memberClose");
+		}
+		if (user == null) {
+			return FrontUtils.showLogin(request, model, site);
+		}
+		WebErrors errors = validateUpdate(id, channelId, site, user, request);
+		if (errors.hasErrors()) {
+			return FrontUtils.showError(request, response, model, errors);
+		}*/
+		CmsModel defaultModel=cmsModelMng.getDefModel();
+		Content c = new Content();
+		Integer modelId=null;
+		int groupId = user.getGroup().getId();//学科教研模板，市县教研内容模板
+		int sta=0;
+		if(channelId!=null&&!channelId.toString().equals("280")){
+			sta=1;
+		}
+		if (4 == groupId&&sta==1) {
+			modelId = 11;//学科教研
+		} else if (5 == groupId&&sta==1) {
+			modelId = 21;//市县教研
+		} else {
+			modelId = 24;//普通博客
+		}
+		CmsModel m=cmsModelMng.findById(modelId);
+		if(m!=null){
+			c.setModel(m);
+		}else{
+			c.setModel(defaultModel);
+		}
+		c.setId(id);
+		c.setSite(site);
+		c.setPassword(password);
+		ContentExt ext = new ContentExt();
+		ext.setId(id);
+		ext.setTitle(title);
+		ext.setAuthor(author);
+		ext.setDescription(description);
+		ext.setMediaPath(mediaPath);
+		ext.setMediaType(mediaType);
+		ContentTxt t = new ContentTxt();
+		t.setId(id);
+		t.setTxt(txt);
+		String[] tagArr = StrUtils.splitAndTrim(tagStr, ",", null);
+		c=contentMng.blog_update(c, ext, t,null, tagArr, null, null, null, 
+				attachmentPaths,attachmentNames, attachmentFilenames
+				,picPaths,picDescs, null, columnId,channelId, null, null, 
+				charge,chargeAmount,user, true,request);
+		contentDao.updateContentSend(title,id);//修改发送的中间表标题
+		if(doc!=null){
+			contentDocMng.update(doc, c);
+		}
+		channelId=c.getChannel().getId();
+		if(channelId!=null){
+			//更新redis存储
+			if(!channelId.toString().equals("280")){
+				List<Content> list=new ArrayList<Content>();
+				List<Content> listCopy=new ArrayList<Content>();
+				List<Content> listRedis=new ArrayList<Content>();
+				Integer parentId=null;
+				String parentIds=null;
+				Channel ids = channelMng.findById(channelId);//获取该栏目实体
+				//根据ids.getParentId()判断该栏目是否为只有一级栏目
+				if(null!=ids.getParentId()){
+					parentId=ids.getParentId();//走到这说明该传进来的栏目ID 存在上一级栏目-二级栏目
+					//获取上一级栏目id
+					Channel idss = channelMng.findById(parentId);
+					//再根据上一级栏目ID--parentId 来判读是否存在上上一级栏目--一级栏目(已知只有三级栏目,无序继续往上上上一级判断(4级栏目))
+					if(null!=idss.getParentId()){
+						//获取上上一级栏目id(一级栏目)
+						parentIds=String.valueOf(idss.getParentId().toString());
+					}
+				}
+				//判断parentId是否为null.如果为null则说明传进来的栏目ID 只有一级栏目 且为本身.如果不为null则说明传进来的栏目ID存在上一级栏目
+				if(null!=parentId){
+					//判断parentIds是否为null.如果为null则说明传进来的栏目ID 只有两级栏目.如果不为null则说明传进来的栏目ID存在上三级栏目
+					if(null!=parentIds){
+						//只有三级栏目就把该栏目的上一级栏目ID 作为key 也就是parentId
+						try {
+							list=RedisUtil.getList(String.valueOf(parentId));
+							int ck=0;//主要目的是为了修改文章的时候将文章修改到学科教研,市县教研和普通栏目redis移除和添加
+							if(list!=null&&list.size()>0){
+								for(int i=0;i<list.size();i++){
+									if(c.getId().toString().equals(list.get(i).getId().toString())){
+										ck=1;//走到这说明修改文章时候市县教研或者学科教研redis已经存在该文章做修改处理.
+										listCopy.add(c);
+									}else{
+										if(ck==0){
+											listCopy.add(c);//走到这说明是普通栏目下的文章修改到市县教研或者学科教研下.做添加处理
+											ck=2;//解决重复添加
+										}
+										listCopy.add(list.get(i));
+									}
+								}
+							}else{
+								listCopy.add(c);
+							}
+							for(int i=0;i<listCopy.size();i++){
+								if(listCopy.size()>8){
+									if((i+1)<=8){
+										listRedis.add(listCopy.get(i));
+									}else{
+										break;
+									}
+								}else{
+									listRedis.add(listCopy.get(i));
+								}
+							}
+							RedisUtil.setList(String.valueOf(parentId), listRedis);
+						} catch (Exception e) {
+							log.error("redis存储异常....", e);
+							//return "faile";
+						}
+					}else{
+						//只有二级栏目就把该栏目的ID 作为key也就是传进来的栏目id
+						try {
+							list=RedisUtil.getList(String.valueOf(channelId));
+							int ck=0;
+							if(list!=null&&list.size()>0){
+								for(int i=0;i<list.size();i++){
+									if(c.getId().toString().equals(list.get(i).getId().toString())){
+										ck=1;
+										listCopy.add(c);
+									}else{
+										if(ck==0){
+											listCopy.add(c);
+											ck=2;//解决重复添加
+										}
+										listCopy.add(list.get(i));
+									}
+								}
+							}else{
+								listCopy.add(c);
+							}
+							for(int i=0;i<listCopy.size();i++){
+								if(listCopy.size()>8){
+									if((i+1)<=8){
+										listRedis.add(listCopy.get(i));
+									}else{
+										break;
+									}
+								}else{
+									listRedis.add(listCopy.get(i));
+								}
+							}
+							RedisUtil.setList(String.valueOf(channelId), listRedis);
+						} catch (Exception e) {
+							log.error("redis存储异常....", e);
+							//return "faile";
+						}
+					}
+				}else{
+					//只有1级栏目就把该栏目的ID 作为key
+					try {
+						list=RedisUtil.getList(String.valueOf(channelId));
+						int ck=0;
+						if(list!=null&&list.size()>0){
+							for(int i=0;i<list.size();i++){
+								if(c.getId().toString().equals(list.get(i).getId().toString())){
+									ck=1;
+									listCopy.add(c);
+								}else{
+									if(ck==0){
+										listCopy.add(c);
+										ck=2;//解决重复添加
+									}
+									listCopy.add(list.get(i));
+								}
+							}
+						}else{
+							listCopy.add(c);
+						}
+						for(int i=0;i<listCopy.size();i++){
+							if(channelId.toString().equals("75")&&c.getType().getId().toString().equals("2")){
+								listRedis.add(listCopy.get(i));
+							}else{
+								if(listCopy.size()>8){
+									if((i+1)<=8){
+										listRedis.add(listCopy.get(i));
+									}else{
+										break;
+									}
+								}else{
+									listRedis.add(listCopy.get(i));
+								}
+							}
+						}
+						RedisUtil.setList(String.valueOf(channelId), listRedis);
+					} catch (Exception e) {
+						log.error("redis存储异常....", e);
+						//return "faile";
+					}
+				}
+			}
+				
+			}
+		
+		return "success";
+	}
 	public void blog_delete(Integer contentId,Integer columnId,Integer channelId, HttpServletRequest request,
 			  HttpServletResponse response, ModelMap model) {
 			int id;
@@ -969,6 +1521,19 @@ public class BlogAct {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public String ajax_blog_delete(Integer contentId, HttpServletRequest request,
+			  HttpServletResponse response, ModelMap model) {
+		String result ="success";
+		try {
+			//删除博客
+			contentMng.deleteByIdBlog(contentId);
+		} catch (Exception e) {
+			log.error(e.getMessage(),e);
+			result="fail";
+		}
+		return result;
 	}
 	
 	public String blog_columns_list(String q, Integer modelId,Integer queryChannelId,
@@ -1140,7 +1705,6 @@ public class BlogAct {
 			return FrontUtils.showLogin(request, model, site);
 		}
 		model =blogCommon.getHyperlink(request,model,user);
-		model = blogCommon.getChannel(request,model,user,site);
 		model = blogCommon.getColumn(request,model,user);
 		int totalCount = blogCommon.getTotalArticleNum(model,user);
 		model.addAttribute("articleCount", totalCount);
@@ -1930,7 +2494,8 @@ public class BlogAct {
 				user=cmsUserMng.findById(Integer.parseInt(uid));
 				model.addAttribute("usert", user);
 			}else{
-				return FrontUtils.showLoginBlog(request, model, site);
+				return "/WEB-INF/t/cms/www/default/blog/login.html";
+				//return FrontUtils.showLoginBlog(request, model, site);
 			}
 		}
 		recieveUserId = user.getId();
