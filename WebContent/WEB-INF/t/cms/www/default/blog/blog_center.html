@@ -108,8 +108,15 @@ function zdShowHidden(){
 <div class="blogBody">
 <div class="blog-con">
   <div class="blogHead">
-	  <div class="title1"><a [#if user??]href="${base}/blog/index.jspx"[#else]href="${base}/blog/index.jspx?uid=${usert.id}"[/#if]><span id="title1">[#if user??][#if user.blogTitle??]${user.blogTitle}[#else]标题[/#if][#else][#if usert.blogTitle??]${usert.blogTitle}[#else]标题[/#if][/#if]</span></a></div>
-	  <div style="font-size:15px;margin:5px auto 15px;">[#if user??][#if user.blogTitle2??]${user.blogTitle2}[#else]副标题[/#if][#else][#if usert.blogTitle2??]${usert.blogTitle2}[#else]副标题[/#if][/#if]</div>
+	  <div class="title1">
+	  <a [#if user??]href="${base}/blog/index.jspx"[#else]href="${base}/blog/index.jspx?uid=${usert.id}"[/#if]>
+	  <span id="ftitle1">[#if user??][#if user.blogTitle??]${user.blogTitle}[#else]标题[/#if][#else][#if usert.blogTitle??]${usert.blogTitle}[#else]标题[/#if][/#if]
+	  </span>
+	  </a>
+	  </div>
+	  <div style="font-size:15px;margin:5px auto 15px;" id="ftitle2">
+	  [#if user??][#if user.blogTitle2??]${user.blogTitle2}[#else]副标题[/#if][#else][#if usert.blogTitle2??]${usert.blogTitle2}[#else]副标题[/#if][/#if]
+	  </div>
   </div>
       	<div class="tj">
      	 	文章数:${articleCount}&nbsp;&nbsp;
@@ -144,7 +151,7 @@ function zdShowHidden(){
                 </div>
                 </div> 
            <div id="u-hilite-cap" class="cap" onclick="showHidden();" >文章</div> 
-            <div id="wzId" class="wrap-right">
+            <div id="wzId" class="wrap-right" style="width: 730px;float: left; padding-left: 20px;">
             
                 <div class="personCenter-userInfo blog_right">
                     <div id="tgglDiv" class="tggl" style="display: block;">
@@ -315,5 +322,6 @@ function zdShowHidden(){
 [#include "model_friend.html"]
 [/#if]
 [#include "../include/footers.html"/]
+[#include "../include/right-fixed.html"/]
 </body>
 </html>

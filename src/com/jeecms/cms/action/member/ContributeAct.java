@@ -647,6 +647,14 @@ public class ContributeAct extends AbstractContentMemberAct {
 		return blogAct.blog_indexs(queryTitle, modelId, queryChannelId, "tpl.blogCenter",
 				pageNo, request, model);
 	} 
+	//局部刷新栏目
+	@RequestMapping(value = "/blog/refreshColumn.jspx")
+	public String refreshColumn(String queryTitle, Integer modelId,
+			Integer queryChannelId, Integer pageNo, HttpServletRequest request,
+			ModelMap model) { 
+		return blogAct.refreshColumn(queryTitle, modelId, queryChannelId,null,
+				pageNo, request, model);
+	} 
 	
 	@RequestMapping(value = "/blog/tzsetting.jspx")
 	public String tzsetting(HttpServletRequest request, HttpServletResponse response,ModelMap model) {
@@ -662,6 +670,17 @@ public class ContributeAct extends AbstractContentMemberAct {
 	@RequestMapping(value = "/blog/updateSetting.jspx")
 	public void updateSetting(HttpServletRequest request, HttpServletResponse response,ModelMap model) {
 		blogAct.updateSetting(request, response, model);
+	}
+	/**
+	 * 博客更新参数保存-局部刷新
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @throws JSONException 
+	 */
+	@RequestMapping(value = "/blog/updateSetting_refresh.jspx")
+	public void updateSetting_refresh(HttpServletRequest request, HttpServletResponse response,ModelMap model) throws JSONException {
+		blogAct.updateSetting_refresh(request, response, model);
 	}
 	
 	/**
@@ -746,6 +765,47 @@ public class ContributeAct extends AbstractContentMemberAct {
 	}
 	
 	/**
+	 * 新建博客栏目--局部刷新
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @throws JSONException 
+	 */
+	@RequestMapping(value = "/blog/columns_add_refresh.jspx")
+	public void columns_add_refresh(HttpServletRequest request, HttpServletResponse response,ModelMap model) throws JSONException {
+		blogAct.columns_add_refresh(request, response, model);
+	}
+	
+	
+	
+	/**
+	 * 跳转到博客更新参数页面
+	 * @param id
+	 * @param orderId
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "/blog/update_tz.jspx")
+	public String update_tz(String id, HttpServletRequest request, HttpServletResponse response,ModelMap model) {
+		return blogAct.update_tz(id,request, response, model);
+	}
+	
+	/**
+	 * 博客更新博客栏目
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @throws JSONException 
+	 */
+	@RequestMapping(value = "/blog/columns_updates_refresh.jspx")
+	public void columns_updates_refresh(HttpServletRequest request, HttpServletResponse response,ModelMap model) throws JSONException {
+		blogAct.columns_updates_refresh(request, response, model);
+	}
+	
+	
+	/**
 	 * 新建博客栏目
 	 * @param request
 	 * @param response
@@ -754,6 +814,19 @@ public class ContributeAct extends AbstractContentMemberAct {
 	@RequestMapping(value = "/blog/newColumn.jspx")
 	public String columns_add(HttpServletRequest request, HttpServletResponse response,ModelMap model) {
 		return blogAct.columns_add(request, response, model);
+	}
+	
+
+	/**
+	 * 删除博客栏目
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @throws JSONException 
+	 */
+	@RequestMapping(value = "/blog/deleteColumnRefresh.jspx")
+	public void columns_delete_refresh(HttpServletRequest request, HttpServletResponse response,ModelMap model) throws JSONException {
+		blogAct.columns_delete_refresh(request, response, model);
 	}
 	
 	/**
@@ -776,19 +849,8 @@ public class ContributeAct extends AbstractContentMemberAct {
 		  blogAct.columns_query(request, response, model);
 	}
 	
-	/**
-	 * 跳转到博客更新参数页面
-	 * @param id
-	 * @param orderId
-	 * @param request
-	 * @param response
-	 * @param model
-	 * @return
-	 */
-	@RequestMapping(value = "/blog/update_tz.jspx")
-	public String update_tz(String id, HttpServletRequest request, HttpServletResponse response,ModelMap model) {
-		return blogAct.update_tz(id,request, response, model);
-	}
+	
+	
 	
 	/**
 	 * 博客更新博客栏目
@@ -833,19 +895,27 @@ public class ContributeAct extends AbstractContentMemberAct {
 		if (user == null) {
 			return FrontUtils.showLogin(request, model, site);
 		}
-		model =blogCommon.getHyperlink(request,model,user);
-		model = blogCommon.getColumn(request,model,user);
-	    model = blogCommon.getChannel(request,model,user,site);
-	    int totalCount = blogCommon.getTotalArticleNum(model,user);
-	    model.addAttribute("articleCount", totalCount);
- 		model = blogCommon.getTotalCommentNum(model, user);
- 		model = blogCommon.getStarBlogger(request, model);
- 		model = blogCommon.getAlreadyJoinGroup(request, model,user);
- 		model = blogCommon.getFriendLeft(user.getId(),model,1);
+		String linkUrl=user.getHyperlink();
+		if(StringUtils.isNotEmpty(linkUrl)){
+			model.addAttribute("linkUrls", linkUrl.replaceAll(" ", "\r\n"));
+		}else{
+			model.addAttribute("linkUrls", "");
+		}
 		FrontUtils.frontData(request, model, site);
-		return FrontUtils.getTplPath(request, site.getSolutionPath(),TPLDIR_BLOG, "tpl.linkList");
+		return "/WEB-INF/t/cms/www/default/blog/link_list_refresh.html";
+		//return FrontUtils.getTplPath(request, site.getSolutionPath(),TPLDIR_BLOG, "tpl.linkList");
 	}
-	
+	//局部刷新
+	@RequestMapping(value = "/blog/add_update_refresh.jspx")
+	public void add_update_refresh(String hyperlink,String nextUrl,HttpServletRequest request,HttpServletResponse response, ModelMap model) throws JSONException {
+		if(StringUtils.isEmpty(hyperlink)){
+			blogAct.add_update_refresh(null,nextUrl,request, response, model);
+		}else{
+			hyperlink=hyperlink.replaceAll(" ", "");//强制去空格
+			blogAct.add_update_refresh(hyperlink.replaceAll("\r\n", " "),nextUrl,request, response, model);
+		}
+		
+	}
 	@RequestMapping(value = "/blog/add_link.jspx")
 	public String custom(String hyperlink,String nextUrl,HttpServletRequest request,HttpServletResponse response, ModelMap model) {
 		if(StringUtils.isEmpty(hyperlink)){
@@ -867,17 +937,26 @@ public class ContributeAct extends AbstractContentMemberAct {
 		if (user == null) {
 			return FrontUtils.showLogin(request, model, site);
 		}
-		model =blogCommon.getHyperlink(request,model,user);
-		model = blogCommon.getColumn(request,model,user);
-	    model = blogCommon.getChannel(request,model,user,site);
-	    int totalCount = blogCommon.getTotalArticleNum(model,user);
-	    model.addAttribute("articleCount", totalCount);
- 		model = blogCommon.getTotalCommentNum(model, user);
- 		model = blogCommon.getStarBlogger(request, model);
- 		model = blogCommon.getAlreadyJoinGroup(request, model,user);
- 		model = blogCommon.getFriendLeft(user.getId(),model,1);
+		String friends = user.getFriends();
+		if(StringUtils.isNotEmpty(friends)){
+			model.addAttribute("friends", friends.replaceAll(" ", "\r\n"));
+		}else{
+			model.addAttribute("friends", "");
+		}
 		FrontUtils.frontData(request, model, site);
-		return FrontUtils.getTplPath(request, site.getSolutionPath(),TPLDIR_BLOG, "tpl.friends");
+		return "/WEB-INF/t/cms/www/default/blog/friends_refresh.html";
+		//return FrontUtils.getTplPath(request, site.getSolutionPath(),TPLDIR_BLOG, "tpl.friends");
+	}
+	//局部刷新
+	@RequestMapping(value = "/blog/add_friends_refresh.jspx")
+	public void add_friends_refresh(String friends,String nextUrl,HttpServletRequest request,HttpServletResponse response, ModelMap model) throws JSONException {
+		if(StringUtils.isEmpty(friends)){
+			blogAct.add_friends_refresh(null,nextUrl,request, response, model);
+		}else{
+			friends=friends.replaceAll(" ", "");//强制去空格
+			blogAct.add_friends_refresh(friends.replaceAll("\r\n", " "),nextUrl,request, response, model);
+		}
+		
 	}
 
 	@RequestMapping(value = "/blog/add_friends.jspx")
@@ -888,7 +967,6 @@ public class ContributeAct extends AbstractContentMemberAct {
 			friends=friends.replaceAll(" ", "");//强制去空格
 			blogAct.friends_save(friends.replaceAll("\r\n", " "),nextUrl,request, response, model);
 		}
-		
 	}
 	
 	/**
@@ -1817,8 +1895,15 @@ public class ContributeAct extends AbstractContentMemberAct {
 				cjg.setJoinCode(code);
 				cjg.setJoinTime(new Date());
 				cjg.setColumnsId(cc.get(0));
-				int joinStatus=columnsMng.saveJoinGroup(cjg);
-				json.put("status",joinStatus);
+				try {
+					columnsMng.saveJoinGroup(cjg);
+					json.put("status","1");
+					json.put("sname",cc.get(0).getColumnName());
+					json.put("sid",cc.get(0).getColumnId());
+				} catch (Exception e) {
+					json.put("status","0");
+					e.printStackTrace();
+				}
 			}
 			ResponseUtils.renderJson(response, json.toString());
 		}

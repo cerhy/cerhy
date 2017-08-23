@@ -65,7 +65,7 @@
       			<div class="themeButton">	
       			<input style="display: none;" id="ck" value="">
       			<input type="button" value="确定" onclick="changeTheme()" class="submit"  style="margin:40px 40px 0 40px"/>
-	        	<!-- <button type="button" onclick="closeDialog();" class="submit" style="margin:30px 40px 0 10px">取消</button> -->
+	        	<button type="button" onclick="closeDialog();" class="submit" style="margin:30px 40px 0 10px">取消</button>
 	        	</div>
       </div>
       
@@ -85,7 +85,11 @@ $(function() {
 		width: 300,
 		height: 200,
 		position: ["center",80],
-		
+		open:function(event,ui){
+			$(".ui-dialog-titlebar-close").hide();
+			$(".ui-dialog-titlebar").css("background","#ffffff");  
+			$(".ui-widget-header").css("border","0");  
+		},
 		close: function(event, ui) {
 			skinChange(${user.theme!0});
 		}

@@ -148,7 +148,7 @@ function zdShowHidden(){
      	 	最后登录:${usert.lastLoginTime?string('yyyy-MM-dd HH:mm:ss')}&nbsp;&nbsp;
      	 	<div style="width:300px;float: right;margin-right:-22px;">
      	 	         <form action="${base}/blog/find_all_url_friends.jspx"  id="searchForm" >
-        				<input type="text" id="queryTitle" name="queryTitle" maxLength="10" value="${q}" maxlength="50"  autocomplete="off" style="background:#f6fbff;height: 22px;border: 1px solid #0b91df;color: #999;padding: 2px 5px;width: 200px;"/>
+        				<input type="text" id="queryTitle" name="queryTitle" maxLength="10" value="${q}" maxlength="50"  autocomplete="off" style="background:#f6fbff;height: 22px;border: 1px solid #0b91df;color: #999;padding: 2px 5px;width: 200px;background-color: transparent;"/>
         				<input class="submit" type="button" onclick="ajaxsearch('searchForm');" value="搜  索" class="submit" style=" color: white;" />
         				<input type="hidden" id="userIds"  name="userIds" value="${usert.id}"></input>
        			    </form> 

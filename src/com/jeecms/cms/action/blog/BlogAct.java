@@ -146,23 +146,66 @@ public class BlogAct {
 		}
 	}
 	
+	public void updateSetting_refresh(HttpServletRequest request,HttpServletResponse response, ModelMap model) throws JSONException {
+		CmsUser user = CmsUtils.getUser(request);
+		CmsSite site = CmsUtils.getSite(request);
+		JSONObject json = new JSONObject();
+		if (null != user) {
+			String blogTitle = request.getParameter("blogTitle");
+			if(blogTitle.contains("&＃40;")){
+				blogTitle=blogTitle.replace("&＃40;", "(");
+			}
+			if(blogTitle.contains("&＃41;")){
+				blogTitle=blogTitle.replace("&＃41;", ")");
+			}
+			String blogTitle2 = request.getParameter("blogTitle2");
+			if(blogTitle2.contains("&＃40;")){
+				blogTitle2=blogTitle2.replace("&＃40;", "(");
+			}
+			if(blogTitle2.contains("&＃41;")){
+				blogTitle2=blogTitle2.replace("&＃41;", ")");
+			}
+			String blogNotice = request.getParameter("blogNotice");
+			if (StringUtils.isNotEmpty(blogTitle)) {
+				user.setBlogTitle(blogTitle);
+			}
+			if (StringUtils.isNotEmpty(blogTitle2)) {
+				user.setBlogTitle2(blogTitle2);
+			}
+			if (StringUtils.isNotEmpty(blogNotice)) {
+				user.setBlogNotice(blogNotice);
+			}
+			try {
+				cmsUserMng.updateBlog(user);
+				json.put("status","0");
+			} catch (Exception e) {
+				json.put("status","1");
+				e.printStackTrace();
+			}
+			FrontUtils.frontData(request, model, site);
+			ResponseUtils.renderJson(response, json.toString());
+		}else{
+			try {
+				request.getRequestDispatcher("/login.jspx").forward(request, response);
+				return;
+			} catch (ServletException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
+	}
+	
 	public String tzsetting(HttpServletRequest request,HttpServletResponse response, ModelMap model) {
 		CmsSite site = CmsUtils.getSite(request);
 		CmsUser user = CmsUtils.getUser(request);
 		if (user == null) {
 			return FrontUtils.showLogin(request, model, site);
 		}
-		model =blogCommon.getHyperlink(request,model,user);
-		model = blogCommon.getColumn(request,model,user);
-	    model = blogCommon.getChannel(request,model,user,site);
-	    int totalCount = blogCommon.getTotalArticleNum(model,user);
-	    model.addAttribute("articleCount", totalCount);
- 		model = blogCommon.getTotalCommentNum(model, user);
- 		model = blogCommon.getStarBlogger(request, model);
- 		model = blogCommon.getAlreadyJoinGroup(request, model,user);
- 		model = blogCommon.getFriendLeft(user.getId(),model,1);
 		FrontUtils.frontData(request, model, site);
-		return FrontUtils.getTplPath(request, site.getSolutionPath(),TPLDIR_BLOG,"tpl.blogSetting");
+		return "/WEB-INF/t/cms/www/default/blog/blog_setting_refresh.html";
+		//return FrontUtils.getTplPath(request, site.getSolutionPath(),TPLDIR_BLOG,"tpl.blogSetting");
 	}
 	
 	public String blog_list(String q, Integer modelId,Integer queryChannelId,String nextUrl,Integer pageNo,HttpServletRequest request, ModelMap model) {
@@ -983,25 +1026,16 @@ public class BlogAct {
 		if(StringUtils.isNotEmpty(ccid)){
 			model.addAttribute("ccId", ccid);
 		}
-		model =blogCommon.getHyperlink(request,model,user);
-		model = blogCommon.getChannel(request,model,user,site);
 		model = blogCommon.getColumn(request,model,user);
-		int totalCount = blogCommon.getTotalArticleNum(model,user);
-		model.addAttribute("articleCount", totalCount);
- 		model = blogCommon.getTotalCommentNum(model, user);
- 		model = blogCommon.getStarBlogger(request, model);
- 		model = blogCommon.getAlreadyJoinGroup(request, model,user);
- 		model = blogCommon.getFriendLeft(user.getId(),model,1);
 		FrontUtils.frontData(request, model, site);
-		Pagination p = contentMng.getPageForMember(q, queryChannelId,site.getId(), modelId,user.getId(), cpn(pageNo), 20);
-		model.addAttribute("pagination", p);
 		if (!StringUtils.isBlank(q)) {
 			model.addAttribute("q", q);
 		}
 		if (modelId != null) {
 			model.addAttribute("modelId", modelId);
 		}
-		return FrontUtils.getTplPath(request, site.getSolutionPath(),TPLDIR_BLOG, nextUrl);
+		return "/WEB-INF/t/cms/www/default/blog/columns_list_refresh.html";
+		//return FrontUtils.getTplPath(request, site.getSolutionPath(),TPLDIR_BLOG, nextUrl);
 	}
 	
 	public String columns_add(HttpServletRequest request,HttpServletResponse response, ModelMap model) {
@@ -1046,6 +1080,127 @@ public class BlogAct {
 		return "redirect:../blog/index.jspx";
 	}
 	
+	
+	public void columns_add_refresh(HttpServletRequest request,HttpServletResponse response, ModelMap model) throws JSONException{
+		CmsSite site = CmsUtils.getSite(request);
+		FrontUtils.frontData(request, model, site);
+		CmsUser user = CmsUtils.getUser(request);
+		JSONObject json = new JSONObject();
+		if (user == null) {
+			try {
+				request.getRequestDispatcher("/login.jspx").forward(request, response);
+				return;
+			} catch (ServletException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		try {
+			String parentId = request.getParameter("tcolumnInput");
+			String name = request.getParameter("columnInput");
+			if(name.contains("&＃40;")){
+				name=name.replace("&＃40;", "(");
+			}
+			if(name.contains("&＃41;")){
+				name=name.replace("&＃41;", ")");
+			}
+			Integer columsLevel=1;
+			Columns cnew=null;
+			if(StringUtils.isEmpty(parentId)){
+				//如果父级栏目为空则该栏目作为一级栏目,且parentId(Columns)为null
+				columsLevel=1;
+				cnew=null;
+			}else{
+				//如果父级栏目不为空则该栏目作为二级栏目,且parentId(Columns)不为null
+				columsLevel=2;
+				cnew=columnsMng.findById(Integer.valueOf(parentId));
+			}
+			String order = request.getParameter("columnOrder");
+			String uniqueCode = request.getParameter("uniqueCode");
+			if(StringUtils.isEmpty(uniqueCode)){
+				uniqueCode=null;
+			}
+			Integer i = 0;
+			Columns cl=null;
+			if(null != name && null != user){
+				if(blogCommon.isNumeric(order)){
+					i = Integer.parseInt(order);
+				}
+				Columns c = new Columns(user.getId(),name,i,uniqueCode,1,columsLevel,cnew);
+				cl=columnsMng.addColumns(c);
+				
+			}
+			if(null!=cl){
+				//添加成功
+				json.put("status",cl.getColumnId());
+			}else{
+				json.put("status","1");
+			}
+		} catch (Exception e) {
+			//添加失败
+			json.put("status","1");
+			e.printStackTrace();
+		}
+		ResponseUtils.renderJson(response, json.toString());
+	}
+	
+	
+	public void columns_updates_refresh(HttpServletRequest request,HttpServletResponse response, ModelMap model) throws JSONException {
+		CmsSite site = CmsUtils.getSite(request);
+		CmsUser user = CmsUtils.getUser(request);
+		JSONObject json = new JSONObject();
+		if (user == null) {
+			try {
+				request.getRequestDispatcher("/login.jspx").forward(request, response);
+				return;
+			} catch (ServletException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		try {
+			String columnId = request.getParameter("id");
+			String columsLevel=request.getParameter("columsLevel");
+			String name = request.getParameter("updateName");
+			if(name.contains("&＃40;")){
+				name=name.replace("&＃40;", "(");
+			}
+			if(name.contains("&＃41;")){
+				name=name.replace("&＃41;", ")");
+			}
+			String orderId = request.getParameter("updateOrderId");
+			String uniqueCode = request.getParameter("uniqueCode");
+			String parentIds = request.getParameter("parentId");
+			Columns parentId=null;
+			if(StringUtils.isEmpty(parentIds)){
+				parentIds=null;
+			}else{
+				parentId=columnsMng.findById(Integer.valueOf(parentIds));
+			}
+			if(StringUtils.isEmpty(uniqueCode)){
+				uniqueCode=null;
+			}
+			FrontUtils.frontData(request, model, site);
+			Integer i = 0;
+			if(null != name && null != user){
+				if(blogCommon.isNumeric(orderId)){
+					i = Integer.parseInt(orderId);
+				}
+				Columns c = new Columns(Integer.valueOf(columnId),user.getId(),name,i,uniqueCode,1,Integer.valueOf(columsLevel),parentId);
+				columnsMng.updateColumns(c);
+			}
+			json.put("status","0");
+		} catch (Exception e) {
+			//添加失败
+			json.put("status","1");
+			e.printStackTrace();
+		}
+		ResponseUtils.renderJson(response, json.toString());
+	}
+	
+	
 
 	public void columns_query(HttpServletRequest request, HttpServletResponse response,ModelMap model) {
 		CmsSite site = CmsUtils.getSite(request);
@@ -1081,6 +1236,36 @@ public class BlogAct {
 		}
 		ResponseUtils.renderJson(response, json.toString());
 	}
+	
+	
+	public void columns_delete_refresh(HttpServletRequest request,HttpServletResponse response, ModelMap model) throws JSONException {
+		CmsSite site = CmsUtils.getSite(request);
+		FrontUtils.frontData(request, model, site);
+		CmsUser user = CmsUtils.getUser(request);
+		JSONObject json = new JSONObject(); 
+		if (user == null) {
+			try {
+				request.getRequestDispatcher("/login.jspx").forward(request, response);
+				return;
+			} catch (ServletException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		try {
+			String columnId = request.getParameter("columnId");
+			columnsMng.deleteColumns(Integer.parseInt(columnId));
+			json.put("status","0");
+		} catch (NumberFormatException e) {
+			//添加失败
+			json.put("status","1");
+			e.printStackTrace();
+		}
+		ResponseUtils.renderJson(response, json.toString());
+	}
+	
+	
 	
 	public String columns_delete(HttpServletRequest request,HttpServletResponse response, ModelMap model) {
 		CmsSite site = CmsUtils.getSite(request);
@@ -1139,15 +1324,6 @@ public class BlogAct {
 		if (user == null) {
 			return FrontUtils.showLogin(request, model, site);
 		}
-		model =blogCommon.getHyperlink(request,model,user);
-		model = blogCommon.getChannel(request,model,user,site);
-		model = blogCommon.getColumn(request,model,user);
-		int totalCount = blogCommon.getTotalArticleNum(model,user);
-		model.addAttribute("articleCount", totalCount);
- 		model = blogCommon.getTotalCommentNum(model, user);
- 		model = blogCommon.getStarBlogger(request, model);
- 		model = blogCommon.getAlreadyJoinGroup(request, model,user);
- 		model = blogCommon.getFriendLeft(user.getId(),model,1);
 		Columns column = columnsMng.findById(Integer.parseInt(id));
 		List<Columns> twoList=columnsMng.findTwoByParentId(Integer.valueOf(id));
 		if(null!=twoList&&twoList.size()>0){
@@ -1159,9 +1335,26 @@ public class BlogAct {
 		model.addAttribute("joinStatus", joinStatus);
 		model.addAttribute("column", column);
 		FrontUtils.frontData(request, model, site);
-		return FrontUtils.getTplPath(request, site.getSolutionPath(),TPLDIR_BLOG,"tpl.columnsUpdate");
+		return "/WEB-INF/t/cms/www/default/blog/columns_update_refresh.html";
+		//return FrontUtils.getTplPath(request, site.getSolutionPath(),TPLDIR_BLOG,"tpl.columnsUpdate");
 	}
 
+	public void add_update_refresh(String hyperlink,String nextUrl,HttpServletRequest request, HttpServletResponse response,ModelMap model) throws JSONException {
+		CmsSite site = CmsUtils.getSite(request);
+		CmsUser user = CmsUtils.getUser(request);
+		JSONObject json = new JSONObject();
+		FrontUtils.frontData(request, model, site);
+		try {
+			channelMng.updateLinkUrl(hyperlink,user);
+			json.put("status", "0");
+		} catch (Exception e) {
+			json.put("status", "1");
+			e.printStackTrace();
+		}
+		FrontUtils.frontData(request, model, site);
+		ResponseUtils.renderJson(response, json.toString());
+	}
+	
 	public String link_save(String hyperlink,String nextUrl,
 			HttpServletRequest request, HttpServletResponse response,
 			ModelMap model) {
@@ -1174,6 +1367,31 @@ public class BlogAct {
 		channelMng.updateLinkUrl(hyperlink,user);
 		FrontUtils.frontData(request, model, site);
 		return "redirect:../blog/index.jspx";
+	}
+	
+	public void add_friends_refresh(String friends, String nextUrl,
+			HttpServletRequest request, HttpServletResponse response,
+			ModelMap model) throws JSONException {
+		CmsUser user = CmsUtils.getUser(request);
+		JSONObject json = new JSONObject();
+		if (user == null) {
+			try {
+				request.getRequestDispatcher("/login.jspx").forward(request, response);
+				return;
+			} catch (ServletException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		try {
+			channelMng.updateFriends(friends,user);
+			json.put("status", "0");
+		} catch (Exception e) {
+			json.put("status", "1");
+			e.printStackTrace();
+		}
+		ResponseUtils.renderJson(response, json.toString());
 	}
 
 	public void friends_save(String friends, String nextUrl,
@@ -1909,14 +2127,49 @@ public class BlogAct {
 		String txt = content.getTxtByNo(pageNo);
 		// 内容加上关键字
 		txt = cmsKeywordMng.attachKeyword(site.getId(), txt);
-		Paginable pagination = new SimplePage(pageNo, 1, content.getPageCount());
-		model.addAttribute("pagination", pagination);
+		/*Paginable pagination = new SimplePage(pageNo, 1, content.getPageCount());
+		model.addAttribute("pagination", pagination);*/
 		FrontUtils.frontPageData(request, model);
 		model.addAttribute("content", content);
 		model.addAttribute("title", content.getTitleByNo(pageNo));
 		model.addAttribute("txt", txt);
 		FrontUtils.frontData(request, model, site);
 		return FrontUtils.getTplPath(request, site.getSolutionPath(),TPLDIR_BLOG,"tpl.blogContentShare");
+	}
+	
+	public String blogContentSharePc(String[] paths, String[] params,
+			PageInfo info, int pageNo, HttpServletRequest request,
+			HttpServletResponse response, ModelMap model, String f,
+			String columnId) {
+		Content content = contentMng.findById(Integer.parseInt(paths[1]));
+		if (content == null) {
+			log.debug("Content id not found: {}", paths[1]);
+			return FrontUtils.pageNotFound(request, response, model);
+		}
+		Integer pageCount=content.getPageCount();
+		if(pageNo>pageCount||pageNo<0){
+			return FrontUtils.pageNotFound(request, response, model);
+		}
+		//非终审文章
+		CmsConfig config=CmsUtils.getSite(request).getConfig();
+		config.getConfigAttr().getPreview();
+		CmsSite site = content.getSite();
+		if(site.getId()!=1){
+			site=siteMng.findById(1);
+		}
+		Set<CmsGroup> groups = content.getViewGroupsExt();
+		groups.size();
+		String txt = content.getTxtByNo(pageNo);
+		// 内容加上关键字
+		txt = cmsKeywordMng.attachKeyword(site.getId(), txt);
+		/*Paginable pagination = new SimplePage(pageNo, 1, content.getPageCount());
+		model.addAttribute("pagination", pagination);*/
+		FrontUtils.frontPageData(request, model);
+		model.addAttribute("content", content);
+		model.addAttribute("title", content.getTitleByNo(pageNo));
+		model.addAttribute("txt", txt);
+		FrontUtils.frontData(request, model, site);
+		return FrontUtils.getTplPath(request, site.getSolutionPath(),TPLDIR_BLOG,"tpl.blogContentSharePc");
 	}
 	public String blog_indexs(String q, Integer modelId,
 			Integer queryChannelId, String string, Integer pageNo,
@@ -1947,6 +2200,39 @@ public class BlogAct {
 			model.addAttribute("modelId", modelId);
 		}
 		return "/WEB-INF/t/cms/www/default/blog/contribute_list_indexs.html";
+	}
+	
+	public String refreshColumn(String q, Integer modelId,
+			Integer queryChannelId, String string, Integer pageNo,
+			HttpServletRequest request, ModelMap model) {
+		CmsSite site = CmsUtils.getSite(request);
+		CmsUser user = CmsUtils.getUser(request);
+		if (user == null) {
+			String uid=request.getParameter("uid");
+			if(StringUtils.isNotEmpty(uid)){
+				user=cmsUserMng.findById(Integer.parseInt(uid));
+				model.addAttribute("usert", user);
+			}else{
+				return FrontUtils.showLoginBlog(request, model, site);
+			}
+		}
+		model =blogCommon.getHyperlink(request,model,user);
+		model = blogCommon.getColumn(request,model,user);
+	    model = blogCommon.getChannel(request,model,user,site);
+	    model = blogCommon.getStarBlogger(request, model);
+	    model = blogCommon.getAlreadyJoinGroup(request, model,user);
+	    model = blogCommon.getFriendLeft(user.getId(),model,1);
+		model = contentMng.getStickList(user,model);
+		FrontUtils.frontData(request, model, site);
+		if (!StringUtils.isBlank(q)) {
+			model.addAttribute("q", q);
+		}else{
+			model.addAttribute("q", "");
+		}
+		if (modelId != null) {
+			model.addAttribute("modelId", modelId);
+		}
+		return "/WEB-INF/t/cms/www/default/blog/blog_left_column.html";
 	}
 	
 	public String blogContentLocalRefreshFriend(String[] paths,String[] params,

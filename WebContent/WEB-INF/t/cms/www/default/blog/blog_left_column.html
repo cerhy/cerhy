@@ -1,3 +1,9 @@
+<link href="${resSys}/jqueryUI/jquery.ui.css" rel="stylesheet" type="text/css" />
+<script src="${resSys}/jqueryUI/jquery-ui.js" type="text/javascript"></script>
+<script src="${resSys}/front.js" type="text/javascript"></script>
+<script src="${resSys}/ckplayer/ckplayer.js" type="text/javascript"></script>
+<script src="${resSys}/ckplayer/offlights.js" type="text/javascript"></script>
+<script src="/${res}/js/SimpleTree.js" type="text/javascrip" rel="stylesheet"></script>
 <script type="text/javascript">
 function del(){
 	if(confirm('确定要删除吗?')) 
@@ -32,45 +38,36 @@ outline: none;
 .wrap-left{width: 250px;float: left;}
 .wrap-right{width: 730px;float: left;padding-left: 20px;}
 </style>
+<script type="text/javascript">
+	$(".joinGroups").remove();
+	var html  = "";
+	    html +="<div id='joinGroups' style='display:none;margin-top:-5px;'>"
+	    html +="<ul style='padding-left: 10px;'>"
+	    html +="<li>请询问群组创建人获取群组账号与验证码。</li>"
+	    html +="</ul>"
+	    html +="<div style='display: block;line-height: 50px;padding-left: 10px;'>"
+	    html +="<span>群组账号:</span>"
+	    html +="<input type='text' class='sts' style='height: 30px;' id='groupName' name='groupName'>"
+	    html +="<a style='color: #f00;' id='groupNameTip'></a>"
+	    html +="</div>"
+	    html +="<div style='display: block;line-height: 50px;padding-left: 10px;'>"
+	    html +="<span>验证码:&nbsp;&nbsp;&nbsp;</span>"
+	    html +="<input type='text' class='sts' style='height: 30px;' id='groupCode' name='groupCode'>"
+	    html +="<a style='color: #f00;' id='groupCodeTip'></a>"
+	    html +="</div>"
+	    html +="<div><a style='color: #f00;padding-left: 10px;' id='errorTip'></a></div>"
+	    html +="<div class='themeButton' style='margin:5px 0px 0px 30px;'>"
+	    html +="<input type='submit' value='确定' class='submit'  onclick='sJoinGroup();' style='margin:30px 20px 0 40px'/>"
+	    html +="<button type='button' onclick='closeJoinGroup();' class='submit' style='margin:30px 40px 0 -5px;'>取消</button>"
+	    html +="</div>"
+	    html +="</div>"
+		$(".wrap-left").after(html);
+</script>
 <link rel="stylesheet" type="text/css" href="/${res}/css/normalize.css" />
 <link rel="stylesheet" type="text/css" href="/${res}/css/default.css">
 <link rel="stylesheet" type="text/css" href="/${res}/css/styles.css">
 <link rel="stylesheet" type="text/css" href="/${res}/css/class2context.css">
-<div class="wrap-left" style="width: 250px;float: left;">
-     <div class="user-center-left">
-                 		 [#if user??]
-				           <div class="user-setting" >
-				                 <div class="pic-dt" style="margin-left: 60px;">
-				                      [#if user.userImg??]<img src="${user.userImg}" width="140" height="140" >
-				                      [#else]<img src="/${res}/images/userImg-large.png" width="140" height="140">
-				                      [/#if]
-				                 </div>
-				                  [#if user??]
-				                 <div class="user-name-dt"><a style="cursor: pointer;margin-left: 5%;" href="${base}/blog/index.jspx" title="[#if user.realname??]${user.realname}[#else]${user.username}[/#if]">[#if user.realname??][@text_cut s=user.realname len=5 append=''/][#else]${user.username}[/#if]</a></div>
-				                 [/#if]
-				                     [#if user??]
-				                     <a href="${base}/logout.jspx" style="cursor: pointer;margin-left: 40%;" class="user-oparetion-btn">退出</a>
-				                     [/#if]
-				                     
-				           </div>
-                      [/#if]
-                 		 [#if usert??]
-				           <div class="user-setting">
-				                 <div class="pic-dt" style="margin-left: 60px;">
-				                      [#if usert.userImg??]
-				                      <img src="${usert.userImg}" width="140" height="140" >
-				                      [#else]
-				                      <img src="/${res}/images/userImg-large.png" width="140" height="140">
-				                      [/#if]
-				                 </div>
-				                  [#if usert??]
-				                 	<div class="user-name-dt"><a href="${base}/blog/index.jspx?uid=${usert.id}" title="[#if usert.realname??]${usert.realname}[#else]${usert.username}[/#if]">[#if usert.realname??][@text_cut s=usert.realname len=5 append=''/][#else]${usert.username}[/#if]</a></div>
-				                 [/#if]				                     
-				           </div>
-                      [/#if]
-               <div class="htmleaf-container"  id="appendHtml">
-				<div class="htmleaf-content bgcolor-3" style="padding-top: 0px;padding-bottom: 0px;">
-					<!-- This is mtree list -->
+<div class="htmleaf-content bgcolor-3" style="padding-top: 0px;padding-bottom: 0px;">
 					<ul class=mtree>
 					  [#if user??]<li>
 					  <a class="ff" href="${base}/blog/contribute_add.jspx" style="color: #111010;">
@@ -79,7 +76,7 @@ outline: none;
 					  </a>
 					  <br />
 					  </li>[/#if]
-					  <li>
+					  <li id="emptyLeft">
 					  <a href="#" class='class2 box1'>博客栏目</a>
 					    <ul>
 					      <li>
@@ -198,7 +195,7 @@ outline: none;
 					    </ul>
 					  </li>
 					  <li><a href="#">群组</a>
-					    <ul id="groupRefresh">
+					    <ul>
 					        [#if joinGroupList?size gt 0]
                             [#list joinGroupList as j]
 		                    [#if user??]
@@ -297,148 +294,12 @@ outline: none;
 					   </ul>
 					  </li>
 					</ul>
-				</div>
-			</div> 
-        	</div>
-     </div>
-     <div id="joinGroups" style="display:none;margin-top:-5px;">
-		<ul style="padding-left: 10px;">
-			<li>请询问群组创建人获取群组账号与验证码。</li>
-		</ul>
-		<div style="display: block;line-height: 50px;padding-left: 10px;">
-			<span>群组账号:</span>
-			<input type="text" class="sts" style="height: 30px;" id="groupName" name="groupName">
-			<a style="color: #f00;" id="groupNameTip"></a>
-		</div>
-		<div style="display: block;line-height: 50px;padding-left: 10px;">
-			<span>验证码:&nbsp;&nbsp;&nbsp;</span>
-			<input type="text" class="sts" style="height: 30px;" id="groupCode" name="groupCode">
-			<a style="color: #f00;" id="groupCodeTip"></a>
-		</div>
-		<div><a style="color: #f00;padding-left: 10px;" id="errorTip"></a></div>
-		<div class="themeButton" style="margin:5px 0px 0px 30px;">
-			<input type="submit" value="确定" class="submit"  onclick="sJoinGroup();" style="margin:30px 20px 0 40px"/>
-	     	<button type="button" onclick="closeJoinGroup();" class="submit" style="margin:30px 40px 0 -5px;">取消</button>
-		</div>
-	  </div>
+				</div>	
+
 <script src='/${res}/js/stopExecutionOnTimeout.js?t=1'></script>
 <script src='/${res}/js/jquery.velocity.min.js'></script>
 <script src='/${res}/js/class2context.js'></script>
-<script type="text/javascript">
-function joinGroupByCode(){
-	 $("#groupName").val("");
-	 $("#groupCode").val("");
-	 $("#groupNameTip").html("*");
-	 $("#groupCodeTip").html("*");
-	 $("#errorTip").html("");
-	 $("#joinGroups").dialog("open");
-}
-$(document).ready(function(){ 
-	$("#joinGroups").dialog({
-		autoOpen: false,
-		modal: false,
-		resizable :false,
-		stack : false,
-		draggable : true,
-		closeOnEscape : false,
-		open:function(event,ui){
-			$(".ui-dialog-titlebar-close").hide();
-			$(".ui-dialog-titlebar").css("background","#ffffff");  
-			$(".ui-widget-header").css("border","0");  
-		},
-		width: 300,
-		height: 260,
-		position: ["center"],
-		close: function(event, ui) {
-			
-		}
-	});
-}); 
-function closeJoinGroup(){
-	$("#joinGroups").dialog("close");
-}
-function sJoinGroup(){
-	var groupName=$("#groupName").val();
-	var groupCode=$("#groupCode").val();
-	if(groupName==""){
-		$("#groupNameTip").html("必填!");
-		return false;
-	}else{
-		$("#groupNameTip").html("*");
-	}
-	if(groupCode==""){
-		$("#groupCodeTip").html("必填!");
-		return false;
-	}else{
-		$("#groupCodeTip").html("*");
-	}
-	
-	
-	var reg = new RegExp("^[0-9]*$");
-	if(!reg.test(groupName)){
-		$("#errorTip").html("群组账号类型不正确!");
-		return false;
-	}
-	if(!reg.test(groupCode)){
-		$("#errorTip").html("验证码类型不正确!");
-		return false;
-	}
-	$("#errorTip").html("");
-	$.ajax({
-    	url: "${base}/blog/checkExist.jspx?groupName="+groupName+"&groupCode="+groupCode,
-        type:'POST',
-        data:"",
-        dataType:'json',
-        async:false,
-        success:function(data) {
-        	var uid=data.status;
-        	if(data.status==1){
-				$("#errorTip").html("账号不存在!");
-				return false;
-        	}else if(data.status==2){
-				$("#errorTip").html("验证码不存在!");
-				return false;
-        	}else{
-				$("#errorTip").html("加入中...加入成功弹框将自动关闭!");
-        		$.ajax({
-        			url:"${base}/blog/joinGroupCode.jspx?code="+groupCode+"&createUserId="+uid,
-        			type:"POST",
-        			dataType:"json",
-        			data: "",
-        			success: function (data) {
-        				if(data.status==1){
-				        	$("#joinGroups").dialog("close");
-				        	$.ajax({
-		    			           type: 'GET',
-		    			           url : '${base}/blog/refreshColumn.jspx',
-		    			           dataType:"html",
-		    			           async: true,
-		    			           success : function(datas){
-		    			        	   $("#appendHtml").empty();
-		    			        	   $("#joinGroups").remove();
-		    			               $("#appendHtml").append(datas);
-		    			               if(window._bd_share_main){
-		    			            	   window._bd_share_main.init();
-		    			            	}
-		    			  	   		 }
-		    			 	});
-				        	/* var html  = "";
-				        		html +="<li id='cc"+data.sid+"'><a  class='class3 box1' id='"+data.sid+"' href='javascript:void(0);' title='"+data.sname+"' onclick='myblog(null,0,"+data.sid+",null)'>"+data.sname+"</a></li>";
-				        		$("#groupRefresh").prepend(html); */
-        				}else if(data.status==2){
-							$("#errorTip").html("请勿重复加入群组!");
-							return false;
-        				}else if(data.status==1){
-							$("#errorTip").html("加入失败!");
-							return false;
-        				}
-        	        }
-        		});
-        	}
-        },
-    });	
-}
-</script>
+
 <script>
 	;(function ($, window, document, undefined) {
 	    if ($('ul.mtree').length) {
@@ -664,22 +525,21 @@ function sJoinGroup(){
             success:function(data) {
                 if(data.status==1) {
                 	$.ajax({
-         	           type: 'GET',
-         	           url : '${base}/blog/columns_list.jspx?ccId='+id,
-         	           dataType:"html",
-         	           async: true,
-         	           success : function(datas){
-         					$("#zd_u-hilite-cap").remove();
-         					$("#zdId").remove();
-         					$("#u-hilite-cap").remove();
-         				    $(".wrap-right").empty();
-         	               $(".wrap-right").append(datas);
-         	               if(window._bd_share_main){
-         	            	   window._bd_share_main.init();
-         	            	}
-         	  	   		 }
-         	 		});
-					//location.href = "${base}/blog/columns_list.jspx?ccId="+id;
+          	           type: 'GET',
+          	           url : '${base}/blog/columns_list.jspx?ccId='+id,
+          	           dataType:"html",
+          	           async: true,
+          	           success : function(datas){
+          					$("#zd_u-hilite-cap").remove();
+          					$("#zdId").remove();
+          					$("#u-hilite-cap").remove();
+          				    $(".wrap-right").empty();
+          	               $(".wrap-right").append(datas);
+          	               if(window._bd_share_main){
+          	            	   window._bd_share_main.init();
+          	            	}
+          	  	   		 }
+          	 		});
                     return true;
                 }else if(data.status==2){
                     alert("该操作不被允许!\r\n请勿在二级栏目下新建子栏目!");
@@ -712,7 +572,6 @@ function sJoinGroup(){
 	            	}
 	  	   		 }
 	 		});
-		//location.href="${base}/blog/update_tz.jspx?id="+id;
 	}
 	function delChannel(id){
 		$.ajax({
@@ -769,7 +628,6 @@ function sJoinGroup(){
         	         	        		    			}
         	         	        		            }
         	         	        		    	});
-        	            						//location.href="${base}/blog/deleteColumn.jspx?columnId="+id;
         	            					}
         	            				}
         	            			}
@@ -895,4 +753,103 @@ function sJoinGroup(){
   	   		 }
  		});
 	}
+</script>
+<script type="text/javascript">
+function joinGroupByCode(){
+	 $("#groupName").val("");
+	 $("#groupCode").val("");
+	 $("#groupNameTip").html("*");
+	 $("#groupCodeTip").html("*");
+	 $("#errorTip").html("");
+	 $("#joinGroups").dialog("open");
+}
+$(document).ready(function(){ 
+	$("#joinGroups").dialog({
+		autoOpen: false,
+		modal: false,
+		resizable :false,
+		stack : false,
+		draggable : true,
+		closeOnEscape : false,
+		open:function(event,ui){
+			$(".ui-dialog-titlebar-close").hide();
+			$(".ui-dialog-titlebar").css("background","#ffffff");  
+			$(".ui-widget-header").css("border","0");  
+		},
+		width: 300,
+		height: 260,
+		position: ["center"],
+		close: function(event, ui) {
+			
+		}
+	});
+}); 
+function closeJoinGroup(){
+	$("#joinGroups").dialog("close");
+}
+function sJoinGroup(){
+	var groupName=$("#groupName").val();
+	var groupCode=$("#groupCode").val();
+	if(groupName==""){
+		$("#groupNameTip").html("必填!");
+		return false;
+	}else{
+		$("#groupNameTip").html("*");
+	}
+	if(groupCode==""){
+		$("#groupCodeTip").html("必填!");
+		return false;
+	}else{
+		$("#groupCodeTip").html("*");
+	}
+	
+	
+	var reg = new RegExp("^[0-9]*$");
+	if(!reg.test(groupName)){
+		$("#errorTip").html("群组账号类型不正确!");
+		return false;
+	}
+	if(!reg.test(groupCode)){
+		$("#errorTip").html("验证码类型不正确!");
+		return false;
+	}
+	$("#errorTip").html("");
+	$.ajax({
+    	url: "${base}/blog/checkExist.jspx?groupName="+groupName+"&groupCode="+groupCode,
+        type:'POST',
+        data:"",
+        dataType:'json',
+        async:false,
+        success:function(data) {
+        	var uid=data.status;
+        	if(data.status==1){
+				$("#errorTip").html("账号不存在!");
+				return false;
+        	}else if(data.status==2){
+				$("#errorTip").html("验证码不存在!");
+				return false;
+        	}else{
+				$("#errorTip").html("加入中...加入成功弹框将自动关闭!");
+        		$.ajax({
+        			url:"${base}/blog/joinGroupCode.jspx?code="+groupCode+"&createUserId="+uid,
+        			type:"POST",
+        			dataType:"json",
+        			data: "",
+        			success: function (data) {
+        				if(data.status==1){
+				        	$("#joinGroups").dialog("close");
+				        	window.location.reload()
+        				}else if(data.status==2){
+							$("#errorTip").html("请勿重复加入群组!");
+							return false;
+        				}else{
+							$("#errorTip").html("加入失败!");
+							return false;
+        				}
+        	        }
+        		});
+        	}
+        },
+    });	
+}
 </script>

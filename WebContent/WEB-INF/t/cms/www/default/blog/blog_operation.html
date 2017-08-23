@@ -17,7 +17,7 @@ text-decoration: underline;
 .udl ul li ul {display: none;}
 /* specific to non IE browsers */
 .udl ul li:hover a {color:#128862; background:#def7ff;}
-.udl ul li:hover ul {display:block; position:absolute; top:21px; left:0; width:105px;}
+.udl ul li:hover ul {display:block; position:absolute;left:0; width:105px;}
 .udl ul li:hover ul li a.hide {background:#6a3; color:#fff;}
 .udl ul li:hover ul li:hover a.hide {background:#6fc; color:#000;}
 .udl ul li:hover ul li ul {display: none;}
@@ -31,11 +31,11 @@ text-decoration: underline;
 	    <ul>
 		 <li><a class="hide" href="javascript:;">博客设置</a>
 			 	<ul>
-				    <li><a href="${base}/blog/columns_list.jspx" title="新建栏目">新建栏目</a></li>
-				    <li><a href="${base}/blog/tzsetting.jspx" title="博客信息">博客信息</a></li>
+				    <li><a href="javascript:;" title="新建栏目" onclick="createChannel2()">新建栏目</a></li>
+				    <li><a href="javascript:;" onclick="blogSeting()" title="博客信息">博客信息</a></li>
 				    <li><a style="cursor: pointer;" onclick="set();" title="页面模板">页面模板</a></li>
-				    <li><a href="${base}/blog/link_list.jspx" title="链接管理">链接管理</a></li>
-				    <li><a href="${base}/blog/friends.jspx" title="好友管理">好友管理</a></li>
+				    <li><a href="javascript:;" onclick="addLinks()" title="链接管理">链接管理</a></li>
+				    <li><a href="javascript:;" onclick="addFriends()" title="好友管理">好友管理</a></li>
 				</ul>
 			</li> 
 			<li style="margin: -22px 0;margin-left: 110px;"><a class="hide" href="javascript:;" style="position:relative;top:2px;">更多</a>
@@ -82,9 +82,9 @@ text-decoration: underline;
 
                    <form action="${base}/blog/indexs.jspx"  id="searchForm" >
                     [#if q??]
-                  	 <input type="text" id="queryTitle" name="queryTitle" maxLength="10"  maxlength="50"  autocomplete="off" value="${q}" style="font-size: 15px;height: 22px;border: 1px solid #def7ff;color: #000;padding: 2px 5px;width: 200px;"/>
+                  	 <input type="text" id="queryTitle" name="queryTitle" maxLength="10"  maxlength="50"  autocomplete="off" value="${q}" style="font-size: 15px;height: 22px;border: 1px solid #def7ff;color: #000;padding: 2px 5px;width: 200px;background-color: transparent;"/>
                   	[#else]
-                  	<input type="text" id="queryTitle" name="queryTitle" maxLength="10"  maxlength="50" autocomplete="off" style="font-size: 15px;height: 22px;border: 1px solid #def7ff;color: #000;padding: 2px 5px;width: 200px;"/>
+                  	<input type="text" id="queryTitle" name="queryTitle" maxLength="10"  maxlength="50" autocomplete="off" style="font-size: 15px;height: 22px;border: 1px solid #def7ff;color: #000;padding: 2px 5px;width: 200px;background-color: transparent;"/>
 				    [/#if]
         				
         				<input class="submit" type="button" onclick="ajaxsearch('searchForm');" value="搜  索" style="float: right;background-color: #def7ff; color: #000;padding: 2px 8px;" />
@@ -110,5 +110,88 @@ function ajaxsearch(formId){
 		        $(".wrap-right").append(datas);		
 		  		 }
 		});
+}
+</script>
+<script type="text/javascript">
+function blogSeting(){
+	if(typeof($("#no3").val())!='undefined'){
+		 delPos();
+	};
+	$.ajax({
+        type: 'GET',
+        url : '${base}/blog/tzsetting.jspx',
+        dataType:"html",
+        async: true,
+        success : function(datas){
+			$("#zd_u-hilite-cap").remove();
+			$("#zdId").remove();
+			$("#u-hilite-cap").remove();
+			$(".wrap-right").empty();
+            $(".wrap-right").append(datas);
+            if(window._bd_share_main){
+         	   window._bd_share_main.init();
+         	}
+	   	}
+	});
+}
+
+function addLinks(){
+	if(typeof($("#no3").val())!='undefined'){
+		 delPos();
+	};
+	$.ajax({
+        type: 'GET',
+        url : '${base}/blog/link_list.jspx',
+        dataType:"html",
+        async: true,
+        success : function(datas){
+			$("#zd_u-hilite-cap").remove();
+			$("#zdId").remove();
+			$("#u-hilite-cap").remove();
+			$(".wrap-right").empty();
+            $(".wrap-right").append(datas);
+            if(window._bd_share_main){
+         	   window._bd_share_main.init();
+         	}
+	   	}
+	});
+}
+function addFriends(){
+	if(typeof($("#no3").val())!='undefined'){
+		 delPos();
+	};
+	$.ajax({
+        type: 'GET',
+        url : '${base}/blog/friends.jspx',
+        dataType:"html",
+        async: true,
+        success : function(datas){
+			$("#zd_u-hilite-cap").remove();
+			$("#zdId").remove();
+			$("#u-hilite-cap").remove();
+			$(".wrap-right").empty();
+            $(".wrap-right").append(datas);
+            if(window._bd_share_main){
+         	   window._bd_share_main.init();
+         	}
+	   	}
+	});
+	
+}
+
+
+function delPos(){
+	$.ajax({
+         url: "${base}/blog/searchPostil.jspx?contentId="+$("#no3").val(),
+         type: "POST",
+         dataType:"json",
+         data: "",
+         async: false,
+         success: function (data) {
+ 				for(var i=0;i<data.length;i++){
+					$("div#"+data[i].postilDivId).remove();
+ 				}
+         }
+     });
 }
 </script>

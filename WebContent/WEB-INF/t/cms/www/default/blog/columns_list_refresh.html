@@ -1,0 +1,303 @@
+<script type="text/javascript">
+$(function(){
+$('.user-menu-links li').click(function(){
+    $(this).toggleClass('on');
+});
+});
+</script>
+<style>
+.s1{
+    margin: 25px 0 60px 0;}
+.st_tree ul .change a:hover{color:red;}
+.st_tree ul li a:hover{color:blue;}
+.st_tree ul .change :hover{background-color:#e7e7e7 }
+::-webkit-scrollbar{width:0px}
+.clear{clear:both}
+.st{
+transition: all 0.30s ease-in-out;
+border: 1px solid gray;
+}
+.st:focus{
+border: 1px solid #66AACC;
+box-shadow: 0 0 5px #66AACC;
+outline: none;
+}
+.sub1 {
+	width:100px;
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 3px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+}
+
+.sub1:hover {
+    box-shadow: 0 3px 4px 0 rgba(0,0,0,0.24),0 8px 30px 0 rgba(0,0,0,0.19);
+}
+</style>
+<div id="contextMenus"></div>
+				<div class="personCenter-userInfo blog_right" >
+				
+        <div class="tggl" >
+        <form id="jvForm" action="newColumn.jspx"  method="post" >
+        <div >
+	        <span style="font-size:16px;">一级栏目名称:</span>
+	        <select name="tcolumnInput" id="tcolumnInput" style="margin:10px;width: 180px;height: 30px;" rerequired>
+	        	[#if ccId??]
+	        		<option value="" disabled="disabled">--请选择一级栏目--</option>
+	        	[#else]
+	        		<option value="">--请选择一级栏目--</option>
+	        	[/#if]
+	        	[#if columnsList??]
+		        [#list columnsList as map]
+		        [#list map?keys as k]
+		        [#if ccId??]
+			        [#if k=='']
+			        	[#list map[k] as v]
+			        		[#if v?split("=")[0]=ccId]
+				        		<option value="${v?split("=")[0]}" selected="selected">${v?split("=")[1]}</option>
+				        	[#else]
+				        		[#if v?split("=")[2]??]
+				        		[#else]
+				        			<option value="${v?split("=")[0]}" disabled="disabled">${v?split("=")[1]}</option>
+				        		[/#if]
+				        	[/#if]
+			        	[/#list]
+			        [#else]
+			        	[#if k?split("=")[0]=ccId]
+			        		<option value="${k?split("=")[0]}" selected="selected">${k?split("=")[1]}</option>
+			        	[#else]
+			        		<option value="${k?split("=")[0]}" disabled="disabled">${k?split("=")[1]}</option>
+			        	[/#if]
+			        [/#if]
+		        [#else]
+		        	[#if k=='']
+			        	[#list map[k] as v]
+			        		[#if v?split("=")[2]??]
+				        	[#else]
+				        		<option value="${v?split("=")[0]}">${v?split("=")[1]}</option>
+				        	[/#if]
+			        	[/#list]
+			        [#else]
+			        	<option value="${k?split("=")[0]}">${k?split("=")[1]}</option>
+			        [/#if]
+		        [/#if]	
+		        [/#list]
+		        [/#list]
+	            [/#if] 
+	        </select>
+	        <span style="color:#f00;">一级栏目不选择,二级栏目将作为一级栏目展示(已过滤群组)</span>
+        </div>
+        <div >
+	        <span style="font-size:16px;">二级栏目名称:</span>
+	        <input class="st" type="text" maxlength="15" id="columnInput" name="columnInput" required="required" style="margin:10px;width: 180px;height: 30px;" rerequired oninvalid="setCustomValidity('请输入栏目名称');" oninput="setCustomValidity('');"/><span style="color:#f00; margin-left:10px;">*</span>
+        </div>
+        <div>
+         <span style="font-size:16px;">验证码:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+         <input class="st" type="text" id="uniqueCode" name="uniqueCode" maxlength="9" style="margin:10px;width: 180px;height: 30px;"/>
+         <span style="color:#f00;margin-left:10px;">设置验证码后，栏目可作为群组</span>
+         </div>
+        <div>
+         <span style="font-size:16px;">排序号:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+         <input class="st" type="text" name="columnOrder" id="columnOrder" maxlength="9" style="margin:10px;width: 180px;height: 30px;" placeholder="默认 0" />
+         </div>
+         <div class="s1">
+             <input type="button" value="新建" class="submit" id="submit" onclick="addColumRefresh()"/>
+         </div>
+        </form>
+		<br />
+		<br />
+        </div>
+      </div>
+<script type="text/javascript">
+function del(columnId){
+		$.ajax({
+			url:"${base}/blog/queryLanmuColumn.jspx?id="+columnId,
+			type:"post",
+			datatype:"json",
+			data: "",
+			success: function(result){
+				if(result.status=="false"){
+					alert("删除失败！请先删除本栏目下的文章！");	
+				}else{
+					var isDel="确定删除吗?";
+					if(confirm(isDel)==true){
+						location.href="${base}/blog/deleteColumn.jspx?columnId="+columnId;
+						alert("删除成功!")
+					}
+				}
+			}
+		});
+}
+function delCheck(columnId){
+		$.ajax({
+			url:"${base}/blog/queryLanmuColumn.jspx?id="+columnId,
+			type:"post",
+			datatype:"json",
+			data: "",
+			success: function(result){
+				if(result.status=="false"){
+					alert("删除失败！请先删除本群组下的文章！");	
+				}else{
+					location.href="${base}/blog/deleteColumn.jspx?columnId="+columnId;
+					alert("删除成功!")
+				}
+			}
+		});
+}
+</script>
+<script type="text/javascript">
+function signOut(obj){
+	var msg = "您确定要退出该群组吗？"; 
+	 if (confirm(msg)==true){ 
+		 $.ajax({
+		        url: "${base}/blog/signOutGroup.jspx?groupId="+obj,
+		        type: "POST",
+		        dataType:"json",
+		        data: "",
+		        success: function (data) {
+		        	if(data.status>0){
+						 $("#signOut"+obj).fadeOut();
+						 location.reload(); 
+		        	}else{
+		        		alert("群组退出失败!");
+		        	}
+		        }
+		    });
+	     return true; 
+	 }else{ 
+	     return false; 
+	 } 
+}
+
+function delGroup(obj){
+	var msg = "您确定要删除该群组吗？"; 
+	 if (confirm(msg)==true){ 
+		 $.ajax({
+		        url: "${base}/blog/delGroup.jspx?groupId="+obj,
+		        type: "POST",
+		        dataType:"json",
+		        data: "",
+		        success: function (data) {
+		        	if(data.status>0){
+		        		delCheck(obj);
+		        	}else{
+		        		alert("群组删除失败!已有用户加入该群组");
+		        	}
+		        }
+		    });
+	     return true; 
+	 }else{ 
+	     return false; 
+	 } 
+}
+
+function addColumRefresh(){
+        	var regs = new RegExp("[~'!@#$%^&*-+_=:]"); 
+            var columnInput = $('#columnInput').val();
+            if(columnInput.replace(/\s+/g,"")==''){
+            	alert("请填写栏目名称。");
+        		return false;
+            }else if(regs.test(columnInput)){
+        		alert("栏目名称可能包含%/等特殊字符，请修改重试。");
+        		return false;
+            }else{
+        		var reg = new RegExp("^[0-9]*$");
+        		var uniqueCode = $('#uniqueCode').val();
+        	    if(!reg.test(uniqueCode)){
+        			alert("验证码为数字类型!");
+        			return false;
+        	    }else{
+        		    if(uniqueCode!=""){
+        		    	var obj = $(this);
+        		    	$.ajax({
+        		    		url:"${base}/blog/checkGroupCode.jspx?code="+uniqueCode,
+        		    		type:"POST",
+        		    		dataType:"json",
+        		    		data: "",
+        		    		success: function (data) {
+        		    			if(data.status==1){
+        		    				alert("验证码已存在!");
+        		    				return false;
+        		    			}else{
+        		    				$.ajax({
+        	        		    		url:"${base}/blog/columns_add_refresh.jspx",
+        	        		    		type:"POST",
+        	        		    		dataType:"json",
+        	        		    		 data : {'tcolumnInput' : $("#tcolumnInput").val(),'columnInput':$("#columnInput").val(),'uniqueCode':$("#uniqueCode").val(),'columnOrder':$("#columnOrder").val()},
+        	        		    		success: function (data) {
+        	        		    			if(data.status==1){
+        	        		    				alert("栏目添加失败");
+        	        		    				return false;
+        	        		    			}else{
+        	        		    				$.ajax({
+        	        		    			           type: 'GET',
+        	        		    			           url : '${base}/blog/refreshColumn.jspx',
+        	        		    			           dataType:"html",
+        	        		    			           async: true,
+        	        		    			           success : function(datas){
+        	        		    			        	   $("#appendHtml").empty();
+        	        		    			        	   $("#joinGroups").remove();
+        	        		    			               $("#appendHtml").append(datas);
+        	        		    			               $("#columnInput").val('');
+        	        		    			               $("#uniqueCode").val('');
+        	        		    			               $("#columnOrder").val('');
+        	        		    			               if(window._bd_share_main){
+        	        		    			            	   window._bd_share_main.init();
+        	        		    			            	}
+        	        		    			  	   		 }
+        	        		    			 	});
+        	     		                        return true;
+        	        		    			}
+        	        		            }
+        	        		    	});
+        		    			}
+        		            }
+        		    	});
+        		    	return false;
+        		     }else{
+        		    	 $.ajax({
+	        		    		url:"${base}/blog/columns_add_refresh.jspx",
+	        		    		type:"POST",
+	        		    		dataType:"json",
+	        		    		 data : {'tcolumnInput' : $("#tcolumnInput").val(),'columnInput':$("#columnInput").val(),'uniqueCode':$("#uniqueCode").val(),'columnOrder':$("#columnOrder").val()},
+	        		    		success: function (data) {
+	        		    			if(data.status==1){
+	        		    				alert("栏目添加失败");
+	        		    				return false;
+	        		    			}else{
+	        		    				$.ajax({
+	        		    			           type: 'GET',
+	        		    			           url : '${base}/blog/refreshColumn.jspx',
+	        		    			           dataType:"html",
+	        		    			           async: true,
+	        		    			           success : function(datas){
+	        		    			        	   $("#appendHtml").empty();
+	        		    			        	   $("#joinGroups").remove();
+	        		    			               $("#appendHtml").append(datas);
+	        		    			               $("#columnInput").val('');
+	        		    			               $("#uniqueCode").val('');
+	        		    			               $("#columnOrder").val('');
+	        		    			               if(window._bd_share_main){
+	        		    			            	   window._bd_share_main.init();
+	        		    			            	}
+	        		    			  	   		 }
+	        		    			 	});
+	     		                        return true;
+	        		    			}
+	        		            }
+	        		    	});
+        		     }
+        		    return false;
+        	    }
+           
+            }
+}  
+</script>
