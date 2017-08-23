@@ -89,3 +89,8 @@ $(function() {
     [/#if]
 });
 </script>
+<script type="text/javascript">
+$("#comments-text").val("");
+$("#addCm").html("&nbsp;已有"+${contentCm.commentsCheckedNum!}+"&nbsp;条");
+$("#addCcm").html("评论："+${contentCm.commentsCheckedNum!});
+</script>

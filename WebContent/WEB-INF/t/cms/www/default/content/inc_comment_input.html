@@ -19,7 +19,7 @@
 }
 </style>
 <section class="comments">
-      <h3>评论<span>&nbsp;已有${content.commentsCheckedNum!}&nbsp;条</span></h3>
+      <h3>评论<span id="addCm">&nbsp;已有${content.commentsCheckedNum!}&nbsp;条</span></h3>
       [#if content.channel.commentControl==0 || ((content.channel.commentControl==1||content.channel.commentControl==3) && user??)]
       <form id="commentForm" action="${base}/ajaxsubmit.jspx" method="post">
       <textarea name="text" placeholder="发表你此时的观点和想法 ……" class="comments-text" id="comments-text"></textarea>

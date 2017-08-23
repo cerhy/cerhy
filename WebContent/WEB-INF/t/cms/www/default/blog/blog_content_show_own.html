@@ -187,7 +187,7 @@ outline: none;
 					   <a target="_blank" href="${base}/blog/find_all_url_friend.jspx?userIds=${content.user.id}" class="bz">作者：${content.author!content.user.username}</a>
 					 </span>
 					 <span class="pr15 yuedu">浏览次数：<span id="views"></span></span> 
-					 <span class="pr15 pinglun">评论：${content.commentsCheckedNum!} </span>
+					 <span class="pr15 pinglun" id="addCcm">评论：${content.commentsCheckedNum!} </span>
                 </div>
                 <div class="gray9 h2dt pt5">
                 	<span class="pr15" id="backto" title="返回"><img style="width: 20px;height: 20px;margin: -6px 0px;cursor: pointer;" src="/${res}/images/back_1.png" onclick="backContentList('${base}/blog/indexs.jspx')" alt="" class="backto" /></span>
