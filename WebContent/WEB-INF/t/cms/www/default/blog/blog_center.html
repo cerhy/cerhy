@@ -177,7 +177,7 @@ function zdShowHidden(){
 						            <a class="f3"><em style="color:#b7b7b7;">不可修改删除</em></a>
 						           [/#if]
 						       [#else]   
-						        <a href="contribute_edit.jspx?id=${c.id}&nextUrl=contribute_list.jspx" class="f3"><em style="color: #b7b7b7;">修改</em></a>&nbsp;|&nbsp;
+						        <a  href="javascript:void(0);" onclick="contributeUpdate(${c.id});" class="f3"><em style="color: #b7b7b7;">修改</em></a>&nbsp;|&nbsp;
 						              <a href="javascript:void(0);" onclick="contributeDelete(${c.id});" class="f3"><em style="color: #b7b7b7;">删除</em></a>
 					           [/#if]
 							<div class="f2"><span style="padding-right:10px;"><em>博主:&nbsp;${c.user.username}&nbsp;&nbsp;&nbsp;${c.releaseDate?string('yyyy-MM-dd')}&nbsp;&nbsp;&nbsp;作者:&nbsp;${c.author!c.user.username}&nbsp;&nbsp;&nbsp;阅读:&nbsp;${c.contentCount.views!}&nbsp;&nbsp;&nbsp;评论:&nbsp;${c.contentCount.comments!}</em></span></div>
