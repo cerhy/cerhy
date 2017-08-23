@@ -133,8 +133,14 @@ public class DynamicPageAct {
 			}
 		}
 		if(null != wx){
+			//判断是PC访问还是移动端访问
+			String equipment=(String) request.getAttribute("ua");
 			//微信分享展示页面
-			return blogAct.blogContentShare(paths, params, info, pageNo,request, response, model,f,columnId);
+			if(StringUtils.isNotBlank(equipment)&&equipment.equals("mobile")){
+				return blogAct.blogContentShare(paths, params, info, pageNo,request, response, model,f,columnId);
+			}else{
+				return blogAct.blogContentSharePc(paths, params, info, pageNo,request, response, model,f,columnId);
+			}
 		}
 		if(null != o){
 			return blogAct.blogContentShowOwn(paths, params, info, pageNo,request, response, model,columnId);

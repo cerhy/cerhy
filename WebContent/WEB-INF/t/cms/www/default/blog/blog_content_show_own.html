@@ -190,14 +190,15 @@ outline: none;
 					 <span class="pr15 pinglun">评论：${content.commentsCheckedNum!} </span>
                 </div>
                 <div class="gray9 h2dt pt5">
-                	<span class="pr15" id="backto" title="返回"><img style="width: 20px;height: 20px;margin: -6px 0px;cursor: pointer;" src="/${res}/images/back_1.png" onclick="backContentList('${base}/blog/indexs.jspx')" alt="" class="backto" onclick="goback();"/></span>
+                	<span class="pr15" id="backto" title="返回"><img style="width: 20px;height: 20px;margin: -6px 0px;cursor: pointer;" src="/${res}/images/back_1.png" onclick="backContentList('${base}/blog/indexs.jspx')" alt="" class="backto" /></span>
 				     <span id="comfirmSpan" style="display:none;cursor: pointer;">转载</span>
 				     <span id="cancelSpan" style="display:none; cursor: pointer;">取消转载</span>&nbsp;
 				     [#if user??] 
 				      
 				      <a href="javascript:;" onclick="cp('${content.channel.path}',${content.id});">复制链接</a>&nbsp;
 				      [#if content.user.id==user.id]
-				        <a href="${base}/blog/contribute_delete.jspx?ids=${content.id}" onclick="javascript:return del();">删除</a>&nbsp;<a href="${base}/blog/contribute_edit.jspx?id=${content.id}&nextUrl=contribute_list.jspx">修改</a>
+				        <a href="javascript:void(0);" onclick="contributeDelete(${content.id});">删除</a>&nbsp;
+				        <a href="javascript:void(0);" onclick="contributeUpdate(${content.id});" >修改</a>
 						<span id="cancelSpan"  class="pos"><a href="javascript:void(0);" onclick="send();">发送</a></span>&nbsp;
 						<span id="cancelSpan"  class="pos"><a href="javascript:void(0);" onclick="cancel();">撤销 </a></span>&nbsp;
 						[#if isStick??]
@@ -206,7 +207,7 @@ outline: none;
 							<span id="stickSpan"  class="pos"><a href="javascript:void(0);" onclick="stick(${content.id},'${content.title}','${content.releaseDate}',1);">置顶</a></span>&nbsp;
 						[/#if]
 						
-					  [/#if] 
+					  [/#if]  
 					  [#if contentSentType??] 
 					  	 [#if contentSentType==2]
 						<span id="cancelSpan"  class="pos"><a href="javascript:void(0);" onclick="removeDialog();">移除</a></span>&nbsp;
@@ -418,38 +419,7 @@ outline: none;
     				[/#if]
 				</div>
            </div>
-           <div id="sentDialog" style="display:none;">	
-      		<form id="sentFrom" class="sentFrom" action="${base}/blog/sendArticle.jspx" method="post">
-      			<table width="100%" class="pn-ftable" cellpadding="2" cellspacing="1" border="0">
-      				<tbody>
-      					<tr >
-      					<td >
-      						<span >收件人:&nbsp;&nbsp;</span><input type="text" id="sendee" name="sendee" class="sts"></input>
-      						<span style="color:red" id="sendeeSapn"></span>
-      					</td>
-      					</tr>
-      					<tr>
-      					<td>
-      						<span>验证码:&nbsp;&nbsp;</span><input type="text" id="validateCode" name="validateCode" style="margin-top:10px;" class="sts"></input>
-      						<span style="color:red" id="validateCodeSapn"></span>
-      					</td>
-      					</tr>
-      				</tbody>
-      			</table>      	
-      			<div class="themeButton">	
-      			<input type="hidden" name="contentId" id="contentId" value="${content.id}"/>
-   <!--    			<input type="submit" value="确定" class="submit"  style="margin:30px 40px 0 0px"/>
-	        	<button type="button" onclick="closeSendDialog();" class="submit" style="margin:30px 40px 0 10px">取消</button> -->
-	        	</div>
-      		</form>
-      </div>
       
-      <div id="cancelDialog" style="display:none;">	
-      		<p>要把本文从所有群组中撤回吗？(移除后需重新发送)</p>
-      </div>
-       <div id="removeDialog" style="display:none;">	
-      		<p>让这篇文章从我的博客中消失！(移除后需重新收录)</p>
-      </div>
 <script type="text/javascript">
 function findActicals(url){
 	if(typeof($("#no3").val())!='undefined'){
@@ -966,10 +936,15 @@ Drag.prototype = {
 
 
  window.onresize=function(){  
-	var padLe=$(".xueke-acticle").offset().left+735;
-	$("#fudong").css({
-		"left":padLe
-	});
+	 var cc =$(".xueke-acticle");
+	 var xuekeOffset =  $(".xueke-acticle").offset();
+	 if(xuekeOffset!=undefined && xuekeOffset!='undefined'){
+		 var padLe=xuekeOffset.left+735;
+		 $("#fudong").css({
+				"left":padLe
+			});
+	 }
+	
 }
 </script>
 <script type="text/javascript">
@@ -1280,7 +1255,50 @@ Drag.prototype = {
     	   		 }
    		 });
 	}
-	
+	function contributeDelete(ids){
+		var delUrl ="${base}/blog/ajax_contribute_delete.jspx?ids="+ids;
+		if(confirm('确定要删除吗?')) {
+			$.ajax({
+		           type: 'GET',
+		           url : delUrl,
+		           dataType:"text",
+		           async: true,
+		           success : function(datas){
+		        	  var code =datas;
+		        	  if(code=="success"){
+		        		  alert("删除成功！");
+		        		  $.ajax({
+		       	           type: 'POST',
+		       	           url : '${base}/blog/indexs.jspx',
+		       	           dataType:"html",
+		       	           async: true,
+		       	           success : function(datas){
+		       	        	   $(".wrap-right").empty();
+		       	               $(".wrap-right").append(datas);		
+		       	  	   		 }
+		       	 	});
+		        	  }else{
+		        		  alert("删除失败！");
+		        	  }
+		  	   		 }
+		 	});
+		}
+	}
+	function contributeUpdate(id){
+		var updateUrl ="${base}/blog/contribute_ajax_edit.jspx?id="+id;
+		 $.ajax({
+             type: 'POST',
+             url : updateUrl,
+              dataType:"html",
+             data : {},
+             success : function(datas){
+            	 $(".wrap-right").empty();
+            	 $(".wrap-right").append(datas);
+    	   		 }
+   		 });
+		 
+			
+	}
 </script>
 <script type="text/javascript">
 
@@ -1351,8 +1369,13 @@ function okps(){
 	           dataType:"html",
 	           async: true,
 	           success : function(datas){
-	        	   $(".wrap-right").empty();
-	               $(".wrap-right").append(datas);		
+	        	   if(datas=="login"){
+	            		 location.href="/cerhy/login.jspx";
+	            	 }else{
+	            	   $(".wrap-right").empty();
+	   	               $(".wrap-right").append(datas);	
+	            	 }
+	        	 	
 	  	   		 }
 	 	});
 	}

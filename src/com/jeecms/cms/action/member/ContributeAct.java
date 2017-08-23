@@ -220,6 +220,123 @@ public class ContributeAct extends AbstractContentMemberAct {
 	}
 
 	/**
+	 * 会员投稿保存
+	 * 
+	 * @param id
+	 *            文章ID
+	 * @param title
+	 *            标题
+	 * @param author
+	 *            作者
+	 * @param description
+	 *            描述
+	 * @param txt
+	 *            内容
+	 * @param tagStr
+	 *            TAG字符串
+	 * @param channelId
+	 *            栏目ID
+	 * @param nextUrl
+	 *            下一个页面地址
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 * @throws TemplateException 
+	 */
+	@RequestMapping(value = "/member/contribute_ajaxsave.jspx")
+	public @ResponseBody String contribute_ajaxsave(String title, String author, String description,
+			String contentTxt, String tagStr, Integer channelId,Integer columnId,Integer modelId, 
+			String captcha,String mediaPath,String mediaType,
+			String[] attachmentPaths, String[] attachmentNames,
+			String[] attachmentFilenames, String[] picPaths, String[] picDescs,
+			Short charge,Double chargeAmount,
+			String nextUrl, HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) throws TemplateException {
+		   String channelIds = request.getParameter("channelIds");
+		   String password = request.getParameter("password");
+		   //String showStyle= request.getParameter("showStyle");
+		   String txt=contentTxt;
+		   int sta=0;
+		   JSONObject json = new JSONObject();
+		   if(channelIds!=null&&channelIds!=""){
+			   String[] str=channelIds.split("&");
+			   if(str[1].equals("chan")){
+				   channelId=Integer.valueOf(str[0]);
+				   //高中、初中、小学美术
+				   if(channelId.toString().equals("316")||channelId.toString().equals("323")){
+					   channelId=305;
+				   }
+				   //高中、初中、小学音乐
+				   if(channelId.toString().equals("315")||channelId.toString().equals("322")){
+					   channelId=304;
+				   }
+				   //高中、初中、小学体育
+				   if(channelId.toString().equals("314")||channelId.toString().equals("321")){
+					   channelId=303;
+				   }
+				   //高中、初中、小学综合实践
+				   if(channelId.toString().equals("417")||channelId.toString().equals("418")){
+					   channelId=416;
+				   }
+				   //高中、初中地理
+				   if(channelId.toString().equals("311")){
+					   channelId=300;
+				   }
+				   //高中、初中历史
+				   if(channelId.toString().equals("310")){
+					   channelId=299;
+				   }
+				   //初中、小学信息技术
+				   if(channelId.toString().equals("319")){
+					   channelId=312;
+				   }
+				   //初中、小学政治
+				   if(channelId.toString().equals("317")){
+					   channelId=309;
+				   }
+				   //高中、初中化学
+				   if(channelId.toString().equals("307")){
+					   channelId=296;
+				   }
+				   //高中、初中物理
+				   if(channelId.toString().equals("306")){
+					   channelId=295;
+				   }
+				   //高中、初中生物
+				   if(channelId.toString().equals("308")){
+					   channelId=297;
+					}
+				   //高中、初中语文
+				   if(channelId.toString().equals("142")){
+					   channelId=140;
+				   }
+					//高中、初中、小学心理健康
+				   if(channelId.toString().equals("421")||channelId.toString().equals("422")){
+					   channelId=420;
+				   }
+
+			   }else if(str[1].equals("colu")){
+				   columnId=Integer.valueOf(str[0]);
+				   sta=1;
+			   }
+		   }
+		  
+		   String result= blogAct.blog_ajaxsave(title, author, description, txt, tagStr, channelId,columnId,modelId,
+					null, captcha,mediaPath,mediaType,attachmentPaths,attachmentNames, attachmentFilenames
+					,picPaths,picDescs,charge,chargeAmount,password,
+					nextUrl, request, response, model,sta);
+		   try {
+			json.put("code", result);
+		} catch (JSONException e) {
+			log.error(e.getMessage(),e);
+		}
+			return json.toString();
+		
+	}
+
+	
+	/**
 	 * 会员投稿修改
 	 * 
 	 * @param id
@@ -401,7 +518,175 @@ public class ContributeAct extends AbstractContentMemberAct {
 		   }
 		
 	}
-
+	/**
+	 * 会有投稿更新
+	 * 
+	 * @param id
+	 *            文章ID
+	 * @param title
+	 *            标题
+	 * @param author
+	 *            作者
+	 * @param description
+	 *            描述
+	 * @param txt
+	 *            内容
+	 * @param tagStr
+	 *            TAG字符串
+	 * @param channelId
+	 *            栏目ID
+	 * @param nextUrl
+	 *            下一个页面地址
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "/member/contribute_ajax_update.jspx")
+	public @ResponseBody String ajaxUpdate(Integer id, String title, String author,
+			String description,String contentTxt, String tagStr, Integer columnId,Integer channelId,
+			String mediaPath,String mediaType,
+			String[] attachmentPaths, String[] attachmentNames,
+			String[] attachmentFilenames, String[] picPaths, String[] picDescs,
+			Short charge,Double chargeAmount,
+			String nextUrl, HttpServletRequest request,
+			HttpServletResponse response, ModelMap model,String password) {
+		JSONObject json = new JSONObject();
+		String txt=contentTxt;
+		//String showStyle= request.getParameter("showStyle");
+		String pw = request.getParameter("password");
+		String channelIds = request.getParameter("channelIds");
+		   if(channelIds!=null&&channelIds!=""){
+			   String[] str=channelIds.split("&");
+			   if(str[1]==null){
+				   channelId=Integer.valueOf(str[0]);
+				 //高中、初中、小学美术
+				   if(channelId.toString().equals("316")||channelId.toString().equals("323")){
+					   channelId=305;
+				   }
+				   //高中、初中、小学音乐
+				   if(channelId.toString().equals("315")||channelId.toString().equals("322")){
+					   channelId=304;
+				   }
+				   //高中、初中、小学体育
+				   if(channelId.toString().equals("314")||channelId.toString().equals("321")){
+					   channelId=303;
+				   }
+				   //高中、初中、小学综合实践
+				   if(channelId.toString().equals("417")||channelId.toString().equals("418")){
+					   channelId=416;
+				   }
+				   //高中、初中地理
+				   if(channelId.toString().equals("311")){
+					   channelId=300;
+				   }
+				   //高中、初中历史
+				   if(channelId.toString().equals("310")){
+					   channelId=299;
+				   }
+				   //初中、小学信息技术
+				   if(channelId.toString().equals("319")){
+					   channelId=312;
+				   }
+				   //初中、小学政治
+				   if(channelId.toString().equals("317")){
+					   channelId=309;
+				   }
+				   //高中、初中化学
+				   if(channelId.toString().equals("307")){
+					   channelId=296;
+				   }
+				   //高中、初中物理
+				   if(channelId.toString().equals("306")){
+					   channelId=295;
+				   }
+				   //高中、初中生物
+				   if(channelId.toString().equals("308")){
+					   channelId=297;
+					}
+				   //高中、初中语文
+					if(channelId.toString().equals("142")){
+						channelId=140;
+					}
+					//高中、初中、小学心理健康
+					if(channelId.toString().equals("421")||channelId.toString().equals("422")){
+						channelId=420;
+					}
+			   }else if(str[1].equals("colu")){
+				   columnId=Integer.valueOf(str[0]);
+			   }else if(str[1].equals("chan")){
+				   channelId=Integer.valueOf(str[0]);
+				   //高中、初中、小学美术
+				   if(channelId.toString().equals("316")||channelId.toString().equals("323")){
+					   channelId=305;
+				   }
+				   //高中、初中、小学音乐
+				   if(channelId.toString().equals("315")||channelId.toString().equals("322")){
+					   channelId=304;
+				   }
+				   //高中、初中、小学体育
+				   if(channelId.toString().equals("314")||channelId.toString().equals("321")){
+					   channelId=303;
+				   }
+				   //高中、初中、小学综合实践
+				   if(channelId.toString().equals("417")||channelId.toString().equals("418")){
+					   channelId=416;
+				   }
+				   //高中、初中地理
+				   if(channelId.toString().equals("311")){
+					   channelId=300;
+				   }
+				   //高中、初中历史
+				   if(channelId.toString().equals("310")){
+					   channelId=299;
+				   }
+				   //初中、小学信息技术
+				   if(channelId.toString().equals("319")){
+					   channelId=312;
+				   }
+				   //初中、小学政治
+				   if(channelId.toString().equals("317")){
+					   channelId=309;
+				   }
+				   //高中、初中化学
+				   if(channelId.toString().equals("307")){
+					   channelId=296;
+				   }
+				   //高中、初中物理
+				   if(channelId.toString().equals("306")){
+					   channelId=295;
+				   }
+				   //高中、初中生物
+				   if(channelId.toString().equals("308")){
+					   channelId=297;
+					}
+				   //高中、初中语文
+					if(channelId.toString().equals("142")){
+						channelId=140;
+					}
+					//高中、初中、小学心理健康
+					if(channelId.toString().equals("421")||channelId.toString().equals("422")){
+						channelId=420;
+					}
+			   }
+		   }
+		  
+			   String result =blogAct.blog_ajax_update(id, title, author, description, txt, tagStr,
+					   columnId,channelId, mediaPath,mediaType,attachmentPaths,
+						attachmentNames, attachmentFilenames
+						,picPaths,picDescs,null,charge, chargeAmount,
+						nextUrl, request, response, model,pw);
+			   try {
+				json.put("code", result);
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		  return json.toString();
+				  
+		
+	}
+	
 	/**
 	 * 会员投稿删除
 	 * 
@@ -747,6 +1032,18 @@ public class ContributeAct extends AbstractContentMemberAct {
 	}
 	
 	/**
+	 * 新建博客文章
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "/blog/contribute_ajax_add.jspx")
+	public String blog_ajax_add(HttpServletRequest request, HttpServletResponse response,
+			ModelMap model) {
+		return blogAct.blog_ajax_add(true, CONTRIBUTE_ADD, request, response, model);
+	}
+	/**
 	 * 博客栏目列表
 	 * @param queryTitle
 	 * @param modelId
@@ -878,11 +1175,33 @@ public class ContributeAct extends AbstractContentMemberAct {
 	}
 
 	/**
+	 * 博客文章编辑
+	 * @param id
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "/blog/contribute_ajax_edit.jspx")
+	public  String blog_ajax_edit(Integer id, HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		return blogAct.blog_ajax_edit(id, CONTRIBUTE_EDIT, request, response, model);
+	}
+	/**
 	 * 博客文章删除
 	 */
 	@RequestMapping(value = "/blog/contribute_delete.jspx")
 	public void blog_delete(Integer ids,Integer columnId,Integer channelId, HttpServletRequest request, HttpServletResponse response, ModelMap model) {
 		blogAct.blog_delete(ids,columnId,channelId, request,  response, model);
+	}
+	
+	/**
+	 * ajax文章删除
+	 */
+	@RequestMapping(value = "/blog/ajax_contribute_delete.jspx")
+	public  @ResponseBody   String ajax_contribute_delete(Integer ids,Integer columnId,Integer channelId, HttpServletRequest request, HttpServletResponse response, ModelMap model) {
+		String result = blogAct.ajax_blog_delete(ids, request,  response, model);
+		return result;
 	}
 	
 	/**
