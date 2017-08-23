@@ -1024,7 +1024,10 @@ Drag.prototype = {
 		draggable : true,
 		closeOnEscape : false,
 		width: 300,
-		height: 200,
+		height: 220,
+		open:function(event,ui){
+			$(".ui-dialog-titlebar-close").hide();
+		},
 		position: ["center",80],
 		
 		close: function(event, ui) {

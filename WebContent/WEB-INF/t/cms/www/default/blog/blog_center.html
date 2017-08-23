@@ -315,7 +315,6 @@ function zdShowHidden(){
 									           url : '${base}/blog/indexs.jspx',
 									           dataType:"html",
 									           data : {'queryTitle' : queryTitle,'pageNo':pageNo},
-									           async: false,
 									           success : function(datas){
 									        	   $(".wrap-right").empty();
 									               $(".wrap-right").append(datas);		
@@ -329,7 +328,6 @@ function zdShowHidden(){
 								           url : '${base}/blog/indexs.jspx',
 								           dataType:"html",
 								           data : {'queryTitle' : queryTitle,'pageNo':pageNo,'uid':$("#hy").val()},
-								           async: false,
 								           success : function(datas){
 								        	   $(".wrap-right").empty();
 								               $(".wrap-right").append(datas);		

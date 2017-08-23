@@ -96,7 +96,9 @@ text-decoration: underline;
 
 
 function ajaxsearch(formId){
-	
+	if(typeof($("#no3").val())!='undefined'){
+		 delPos();
+	};
 	 var queryTitle = parent.document.getElementById("queryTitle").value;
 	 var pageNo=1;
 	 $.ajax({
