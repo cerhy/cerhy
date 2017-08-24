@@ -341,6 +341,14 @@ public interface ContentDao {
 	public Integer updateContentSend(String title,int contentId);
 	
 	/**
+	 * 修改置顶表的标题
+	 * @param contentId
+	 * @param userId
+	 * @return Integer
+	 */
+	public Integer updateContentStick(String title,int contentId);
+	
+	/**
 	 * 根据用户id查询用户置顶文章
 	 * @param userId
 	 * @return
