@@ -351,7 +351,11 @@ function btnPrints(){
 						        	[#if preStick??]
 		                    		<a href="javascript:;" onclick="precOrNext('${base}/${preStick[2]}/${preStick[3]}.jhtml?f=${usert.id}&currentId=${preStick[0]}&stickUserId=${preStick[4]!null}')" class="prev-pian">
 		                            <span>&lt;上一篇</span>
-		                            <em>${preStick[1]}</em>
+		                            <em>[#if preStick[1]?length gt 20]
+										${preStick[1]?substring(0,20)}...
+										[#else]${preStick[1]}
+										[/#if]
+									</em>
 		                        	</a>
 		                        	[#else]
 			                        	<a href="javascript:;" class="prev-pian">
@@ -360,7 +364,12 @@ function btnPrints(){
 		                        	[/#if]
 		                        	[#if nextStick??]
 				                     <a href="javascript:;" onclick="precOrNext('${base}/${nextStick[2]}/${nextStick[3]}.jhtml?f=${usert.id}&currentId=${nextStick[0]}&stickUserId=${nextStick[4]!null}')" class="next-pian">
-			                            <em>${nextStick[1]}</em>
+			                             <em>
+				                            [#if nextStick[1]?length gt 20]
+											${nextStick[1]?substring(0,20)}...
+											[#else]${nextStick[1]}
+											[/#if]
+			                            </em>
 			                            <span>下一篇&gt;</span>
 			                        </a>
 			                        [#else]
