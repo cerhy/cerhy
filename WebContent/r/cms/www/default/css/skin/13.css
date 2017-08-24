@@ -5,7 +5,7 @@
 }
 .header-top {background: #EAF7FD;border-bottom:0px;}
 .footer_styles {
-	background: #EAF7FD; 
+	background: #EAF7FD !important; 
 }
 .footer_style {
 	background: #EAF7FD !important; 
