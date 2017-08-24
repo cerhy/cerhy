@@ -228,15 +228,16 @@ outline: none;
 						    		<li><a href="${base}/blog/find_all_url_friend.jspx?userIds=${user.id}" target="_blank" title="[#if user.nicknames??]${user.nicknames}[#else]${user.username}[/#if]"><img [#if user.userImg??]src="${user.userImg}"[#else]src="/${res}/images/userImg-large.png"[/#if] width="20" height="20" alt="" style="float: left;padding: 0 10px 0 0;">[#if user.nicknames??][@text_cut s=user.nicknames len=12 append='...'/][#else]${user.username}[/#if]</a></li>
 						    	[/#if]
 						    [/#list]
-						    [#if user??]
-				               <li><a href="${base}/blog/gotoDataShow.jspx?dataFlag=1">更多 &nbsp;>></a></li>
-		                    [/#if]
-		                    [#if usert??]
-				               <li><a href="${base}/blog/gotoDataShow.jspx?dataFlag=1&uid=${usert.id}">更多 &nbsp;>></a></li>
-		                    [/#if]
-		                    [#else]
-		                    <br />
-						    [/#if]
+							 [#if paginationLeft.list?size>10]
+							    [#if user??]
+					               <li><a href="javascript:;" onclick="gotoDataShow('${base}/blog/gotoDataShow.jspx?dataFlag=1')">更多 &nbsp;>></a></li>
+			               		[#else]
+					               <li><a href="javascript:;" onclick="gotoDataShow('${base}/blog/gotoDataShow.jspx?dataFlag=1&uid=${usert.id}')">更多 &nbsp;>></a></li>
+			                    [/#if]
+		                     [/#if]
+		                 [#else]
+		                  <br />
+						 [/#if]
 					    </ul>
 					    </li>
 					  <li><a href="#">链接</a>
@@ -282,14 +283,14 @@ outline: none;
 		                 	[#list starBlogger as c]
 		                      <li><a href="${base}/blog/find_all_url_friend.jspx?userIds=${c.id}" target="_blank" title="[#if c.realname??]${c.realname}[#else]${c.username}[/#if]"><img [#if c.userImg??]src="${c.userImg}"[#else]src="/${res}/images/userImg-large.png"[/#if] width="20" height="20" alt="" style="float: left;padding: 0 10px 0 0;">[#if c.realname??][@text_cut s=c.realname len=5 append='...'/][#else]${c.username}[/#if]</a></li>
 			                [/#list]
-	                        [#if moreStarBloggerExist??]
+	                         [#if moreStarBloggerExist??]
 	                        [#if user??]
-			                 <li><a href="${base}/blog/gotoDataShow.jspx?dataFlag=4">更多 &nbsp;>></a></li>
+			                 <li><a href="javascript:;" onclick="gotoDataShow('${base}/blog/gotoDataShow.jspx?dataFlag=4')">更多 &nbsp;>></a></li>
 	                        [/#if]
 	                        [#if usert??]
-			                 <li><a href="${base}/blog/gotoDataShow.jspx?dataFlag=4&uid=${usert.id}">更多 &nbsp;>></a></li>
+			                 <li><a href="javascript:;" onclick="gotoDataShow('${base}/blog/gotoDataShow.jspx?dataFlag=4&uid=${usert.id}')">更多 &nbsp;>></a></li>
 	                        [/#if]
-	                        [/#if]
+			                [/#if]
 			                [/#if]
 					   </ul>
 					  </li>
@@ -438,7 +439,7 @@ outline: none;
              data : {'queryTitle' : null,'modelId' : null,'queryChannelId' : null,'pageNo':null,'channelId':channelId,'joinGroupStata':joinGroupStata,'columnId':columnId,'uid':uid},
              success : function(datas){
             	 if(datas=="login"){
-            		 location.href="/cerhy/login.jspx";
+            		 location.href="${base}/login.jspx";
             	 }else{
             		 $(".wrap-right").empty();
                 	 $(".wrap-right").append(datas);
@@ -874,5 +875,32 @@ function sJoinGroup(){
         	}
         },
     });	
+}
+</script>
+<script type="text/javascript">
+function gotoDataShow(url){
+	if(typeof($("#no3").val())!='undefined'){
+		 delPos();
+	};
+	$.ajax({
+          type: 'GET',
+          url : url,
+          dataType:"html",
+          async: true,
+          success : function(datas){
+        	 if(datas=="login"){
+         		 location.href="${base}/login.jspx";
+         	 }else{
+				$("#zd_u-hilite-cap").remove();
+				$("#zdId").remove();
+				$("#u-hilite-cap").remove();
+				$(".wrap-right").empty();
+	            $(".wrap-right").append(datas);
+	            if(window._bd_share_main){
+	           		window._bd_share_main.init();
+	           	}
+         	 }  
+ 	   	}
+	});
 }
 </script>

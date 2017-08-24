@@ -1574,25 +1574,13 @@ public class ContributeAct extends AbstractContentMemberAct {
 				user=cmsUserMng.findById(Integer.parseInt(uid));
 				model.addAttribute("usert", user);
 			}else{
-				return FrontUtils.showLogin(request, model, site);
+				return "/WEB-INF/t/cms/www/default/blog/login.html";
 			}
 		}
-//		model = blogCommon.getLinks(model,user);
-//		model = blogCommon.blog_focus_find(null,request,model);
-		model =blogCommon.getHyperlink(request,model,user);
-		model = blogCommon.getColumn(request,model,user);
-	    model = blogCommon.getChannel(request,model,user,site);
-	    int totalCount = blogCommon.getTotalArticleNum(model,user);
-	    model.addAttribute("articleCount", totalCount);
- 		model = blogCommon.getTotalCommentNum(model, user);
-// 		model = blogCommon.getMaxFocus(request, model);
- 		model = blogCommon.getAllVistor(request, model,user);
- 		model = blogCommon.getStarBlogger(request, model);
- 		model = blogCommon.getAlreadyJoinGroup(request, model,user);
- 		model = blogCommon.getFriendLeft(user.getId(),model,1);
  		model = blogAct.getAllVisitors(queryTitle, modelId, queryChannelId,pageNo, request, model,user);
 		FrontUtils.frontData(request, model, site);
-		return FrontUtils.getTplPath(request, site.getSolutionPath(),TPLDIR_BLOG, "tpl.visitor");
+		return "/WEB-INF/t/cms/www/default/blog/visitor_refresh.html";
+		//return FrontUtils.getTplPath(request, site.getSolutionPath(),TPLDIR_BLOG, "tpl.visitor");
 	}
 	
 	

@@ -27,7 +27,7 @@
 	                  <div>
 		                <a target="_blank" href="${base}/blog/find_all_url_friend.jspx?userIds=${user.id}" class="users-a-link" style="margin-bottom: 30px;margin-left: 10px;margin-right: 10px;">
                         	[#if user.userImg??]
-                        	<img src="${user.userImg}" width="47" height="47">
+                        	<img src="${user.userImg}" onerror="javascript:this.src='/${res}/images/userImg-large.png' " width="47" height="47">
 	                        [#else]
 	                        <img src="/${res}/images/userImg-large.png" width="47" height="47">
 	                        [/#if]
@@ -66,15 +66,26 @@
 	          <script type="text/javascript">
 	            function _gotoPage(pageNo) {
 	                try{
-	                    var tableForm = document.getElementById("tableForm");
+	                    //var tableForm = document.getElementById("tableForm");
 	                    $("input[name=pageNo]").val(pageNo);
 	                    if($("#checkPageInfo").val()==0){
-		                    tableForm.action="${base}/blog/gotoDataShow.jspx?dataFlag=3";
+	                    	$.ajax({
+						           type: 'POST',
+						           url : '${base}/blog/gotoDataShow.jspx?dataFlag=3',
+						           dataType:"html",
+						           data : {'pageNo':pageNo},
+						           async: true,
+						           success : function(datas){
+						        	   $(".wrap-right").empty();
+						            	$(".wrap-right").append(datas);		
+						  	   		 }
+						 	});
+		                    //tableForm.action="${base}/blog/gotoDataShow.jspx?dataFlag=3";
 	                    }else{
 	                    	tableForm.action="${base}/blog/gotoDataShowFriend.jspx?dataFlag=3&userId="+$("#ut").val(); 
 	                    }
-	                    tableForm.onsubmit=null;
-	                    tableForm.submit();
+	                    //tableForm.onsubmit=null;
+	                    //tableForm.submit();
 	                } catch(e) {
 	                    alert('_gotoPage(pageNo)方法出错');
 	                }

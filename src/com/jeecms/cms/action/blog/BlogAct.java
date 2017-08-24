@@ -2179,7 +2179,7 @@ public class BlogAct {
 				u=cmsUserMng.findById(Integer.parseInt(uid));
 				model.addAttribute("usert", u);
 			}else{
-				return FrontUtils.showLogin(request, model, site);
+				return "/WEB-INF/t/cms/www/default/blog/login.html";
 			}
 		}
 		//好友
@@ -2201,17 +2201,9 @@ public class BlogAct {
 		}
 		model.addAttribute("checkPageInfo", 0);
 		model.addAttribute("q", "");
-		model =blogCommon.getHyperlink(request,model,u);
-		model = blogCommon.getChannel(request,model,u,site);
-		model = blogCommon.getColumn(request,model,u);
-		int totalCount = blogCommon.getTotalArticleNum(model,u);
-		model.addAttribute("articleCount", totalCount);
- 		model = blogCommon.getTotalCommentNum(model, u);
- 		model = blogCommon.getStarBlogger(request, model);
- 		model = blogCommon.getAlreadyJoinGroup(request, model,u);
- 		model = blogCommon.getFriendLeft(u.getId(),model,1);
 		FrontUtils.frontData(request, model, site);
-		return FrontUtils.getTplPath(request, site.getSolutionPath(),TPLDIR_BLOG,"tpl.dataShow");
+		return "/WEB-INF/t/cms/www/default/blog/data_show_refresh.html";
+		//return FrontUtils.getTplPath(request, site.getSolutionPath(),TPLDIR_BLOG,"tpl.dataShow");
 	}
 	
 	public String gotoDataShowFriend(int dataFlag, HttpServletRequest request,HttpServletResponse response, ModelMap model,Integer pageNo,String userId) {
