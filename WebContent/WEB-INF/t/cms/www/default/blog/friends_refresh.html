@@ -93,6 +93,7 @@ function addUpdateFriends(){
 		                async:false,
 		                success:function(data) {
 		                    if(data.status=="") {
+		                    	$("body").mLoading();
 		                    	$.ajax({
 		                    		url:"${base}/blog/add_friends_refresh.jspx",
 		                    		type:"POST",
@@ -115,6 +116,7 @@ function addUpdateFriends(){
 		                    			               if(window._bd_share_main){
 		                    			            	   window._bd_share_main.init();
 		                    			            	}
+		                    			               $("body").mLoading("hide");
 		                    			  	   		 }
 		                    			 	});
 		                                     return true;
