@@ -1313,6 +1313,7 @@ public class BlogAct {
 				,picPaths,picDescs, null, columnId,channelId, null, null, 
 				charge,chargeAmount,user, true,request);
 		contentDao.updateContentSend(title,id);//修改发送的中间表标题
+		contentDao.updateContentStick(title, id);//修改置顶表的标题
 		if(doc!=null){
 			contentDocMng.update(doc, c);
 		}

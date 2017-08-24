@@ -1547,6 +1547,17 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 	}
 	
 	/**
+	 * 修改置顶表的标题
+	 * @param contentId
+	 * @param userId
+	 * @return Integer
+	 */
+	public Integer updateContentStick(String title,int contentId){
+		String hql = "update  ContentStick  set contentTitle ='"+title+"' where contentId="+contentId+"";
+		return (Integer) updateObject(hql);
+	}
+	
+	/**
 	 * 根据用户id查询用户置顶文章
 	 * @param userId
 	 * @return

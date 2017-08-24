@@ -118,7 +118,7 @@ $(function() {
 			                <td align="center" style="padding-bottom: 0px;line-height: 40px;">[#if c.checked]审核通过[#elseif c.checkStep==0]未审核[#else]审核中[/#if]</td>
 			                <td align="center" style="padding-bottom: 0px;line-height: 40px;">${c.views}</td>
 			                <td align="center" style="padding-bottom: 0px;line-height: 40px;">${c.releaseDate?string('yyyy-MM-dd')}</td>
-			                <td align="center" style="padding-bottom: 0px;line-height: 40px;">[#if c.checkStep==0]<a href="contribute_edit.jspx?id=${c.id}&nextUrl=contribute_list.jspx">修改w<a> | <a href="contribute_delete.jspx?ids=${c.id}&nextUrl=contribute_list.jspx">删除<a>[#else]修改 1| 删除[/#if]</td>
+			                <td align="center" style="padding-bottom: 0px;line-height: 40px;">[#if c.checkStep==0]<a href="contribute_edit.jspx?id=${c.id}&nextUrl=contribute_list.jspx">修改<a> | <a href="contribute_delete.jspx?ids=${c.id}&nextUrl=contribute_list.jspx">删除<a>[#else]修改 | 删除[/#if]</td>
 			              </tr>
 			              [/#list]
 			            </tbody>

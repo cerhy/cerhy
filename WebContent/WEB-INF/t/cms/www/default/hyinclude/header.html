@@ -72,7 +72,7 @@ function qkeypress(){
         <input type="reset" style="margin-top: 8px;border: 0px;width: 300px;background-color: #f6fbff;color: red;display: none;" id="maintain">
             <div class="header-right">
                 <div class="search-bar">
-                    <form action="${base}/search.jspx" target="_blank" id="searchForm">
+                    <form action="${base}/search.jspx" target="_blank" id="searchForm" onkeydown="if(event.keyCode==13)return false;">
         				<input type="text" name="q" value="${oldq!}" maxlength="50" autocomplete="off" class="searchCon">
         				<input type="submit" value="" id="search-btn1" style="border: 0px;">
        			    </form>
