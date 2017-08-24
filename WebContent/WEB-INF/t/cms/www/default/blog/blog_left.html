@@ -664,14 +664,19 @@ function sJoinGroup(){
 	           dataType:"html",
 	           async: true,
 	           success : function(datas){
-					$("#zd_u-hilite-cap").remove();
-					$("#zdId").remove();
-					$("#u-hilite-cap").remove();
-				    $(".wrap-right").empty();
-	               $(".wrap-right").append(datas);
-	               if(window._bd_share_main){
-	            	   window._bd_share_main.init();
-	            	}
+	        	   if(datas=="login"){
+	            		 location.href="${base}/login.jspx";
+	            	 }else{
+						$("#zd_u-hilite-cap").remove();
+						$("#zdId").remove();
+						$("#u-hilite-cap").remove();
+					    $(".wrap-right").empty();
+		               $(".wrap-right").append(datas);
+		               if(window._bd_share_main){
+		            	   window._bd_share_main.init();
+		            	}
+	        		   
+	        	   }
 	  	   		 }
 	 		});
 		//location.href = "${base}/blog/columns_list.jspx";
@@ -695,6 +700,9 @@ function sJoinGroup(){
          	           dataType:"html",
          	           async: true,
          	           success : function(datas){
+         	        	  if(datas=="login"){
+     	            		 location.href="${base}/login.jspx";
+     	            	 }else{
          					$("#zd_u-hilite-cap").remove();
          					$("#zdId").remove();
          					$("#u-hilite-cap").remove();
@@ -703,7 +711,8 @@ function sJoinGroup(){
          	               if(window._bd_share_main){
          	            	   window._bd_share_main.init();
          	            	}
-         	  	   		 }
+     	            	 }
+         	  	   		}
          	 		});
 					//location.href = "${base}/blog/columns_list.jspx?ccId="+id;
                     return true;
@@ -712,6 +721,9 @@ function sJoinGroup(){
                     return false;
                 }else if(data.status==3){
                 	alert("该操作不被允许!\r\n该一级栏目已作为群组!您可以将群组栏目修改为普通栏目来添加子栏目!");
+                	return false;
+                }else if(data.status==4){
+                	 location.href="${base}/login.jspx";
                 	return false;
                 }
             },
@@ -728,14 +740,18 @@ function sJoinGroup(){
 	           dataType:"html",
 	           async: true,
 	           success : function(datas){
-					$("#zd_u-hilite-cap").remove();
-					$("#zdId").remove();
-					$("#u-hilite-cap").remove();
-				    $(".wrap-right").empty();
-	               $(".wrap-right").append(datas);
-	               if(window._bd_share_main){
-	            	   window._bd_share_main.init();
-	            	}
+	        	   if(datas=="login"){
+	            		 location.href="${base}/login.jspx";
+	            	 }else{
+						$("#zd_u-hilite-cap").remove();
+						$("#zdId").remove();
+						$("#u-hilite-cap").remove();
+					    $(".wrap-right").empty();
+		               $(".wrap-right").append(datas);
+		               if(window._bd_share_main){
+		            	   window._bd_share_main.init();
+		            	}
+	            	 }
 	  	   		 }
 	 		});
 		//location.href="${base}/blog/update_tz.jspx?id="+id;
@@ -808,6 +824,10 @@ function sJoinGroup(){
         		        }
         		    });
                     return true;
+                }else if(data.status==3){
+                	//失去登陆状态
+                	location.href="${base}/login.jspx";
+                    return false;
                 }else{
                     alert("该操作不被允许!\r\n请先删除该栏目下的子栏目!");
                     return false;

@@ -171,14 +171,19 @@ function blogSeting(){
         dataType:"html",
         async: true,
         success : function(datas){
-			$("#zd_u-hilite-cap").remove();
-			$("#zdId").remove();
-			$("#u-hilite-cap").remove();
-			$(".wrap-right").empty();
-            $(".wrap-right").append(datas);
-            if(window._bd_share_main){
-         	   window._bd_share_main.init();
-         	}
+        	if(datas=="login"){
+       		 location.href="${base}/login.jspx";
+       	 	}else{
+				$("#zd_u-hilite-cap").remove();
+				$("#zdId").remove();
+				$("#u-hilite-cap").remove();
+				$(".wrap-right").empty();
+	            $(".wrap-right").append(datas);
+	            if(window._bd_share_main){
+	         	   window._bd_share_main.init();
+	         	}
+       	 		
+       	 	}
 	   	}
 	});
 }
@@ -193,14 +198,18 @@ function addLinks(){
         dataType:"html",
         async: true,
         success : function(datas){
-			$("#zd_u-hilite-cap").remove();
-			$("#zdId").remove();
-			$("#u-hilite-cap").remove();
-			$(".wrap-right").empty();
-            $(".wrap-right").append(datas);
-            if(window._bd_share_main){
-         	   window._bd_share_main.init();
-         	}
+        	if(datas=="login"){
+       		 location.href="${base}/login.jspx";
+       	 	}else{
+				$("#zd_u-hilite-cap").remove();
+				$("#zdId").remove();
+				$("#u-hilite-cap").remove();
+				$(".wrap-right").empty();
+	            $(".wrap-right").append(datas);
+	            if(window._bd_share_main){
+	         	   window._bd_share_main.init();
+	         	}
+        	}
 	   	}
 	});
 }
@@ -214,14 +223,18 @@ function addFriends(){
         dataType:"html",
         async: true,
         success : function(datas){
-			$("#zd_u-hilite-cap").remove();
-			$("#zdId").remove();
-			$("#u-hilite-cap").remove();
-			$(".wrap-right").empty();
-            $(".wrap-right").append(datas);
-            if(window._bd_share_main){
-         	   window._bd_share_main.init();
-         	}
+        	if(datas=="login"){
+          		 location.href="${base}/login.jspx";
+          	 }else{
+				$("#zd_u-hilite-cap").remove();
+				$("#zdId").remove();
+				$("#u-hilite-cap").remove();
+				$(".wrap-right").empty();
+	            $(".wrap-right").append(datas);
+	            if(window._bd_share_main){
+	         	   window._bd_share_main.init();
+	         	}
+          	 }
 	   	}
 	});
 	

@@ -1211,8 +1211,9 @@ public class ContributeAct extends AbstractContentMemberAct {
 	public String linkList(HttpServletRequest request,HttpServletResponse response, ModelMap model) {
 		CmsSite site = CmsUtils.getSite(request);
 		CmsUser user = CmsUtils.getUser(request);
+		FrontUtils.frontData(request, model, site);
 		if (user == null) {
-			return FrontUtils.showLogin(request, model, site);
+			return "/WEB-INF/t/cms/www/default/blog/login.html";
 		}
 		String linkUrl=user.getHyperlink();
 		if(StringUtils.isNotEmpty(linkUrl)){
@@ -1220,7 +1221,6 @@ public class ContributeAct extends AbstractContentMemberAct {
 		}else{
 			model.addAttribute("linkUrls", "");
 		}
-		FrontUtils.frontData(request, model, site);
 		return "/WEB-INF/t/cms/www/default/blog/link_list_refresh.html";
 		//return FrontUtils.getTplPath(request, site.getSolutionPath(),TPLDIR_BLOG, "tpl.linkList");
 	}
@@ -1253,8 +1253,9 @@ public class ContributeAct extends AbstractContentMemberAct {
 	public String friends(HttpServletRequest request,HttpServletResponse response, ModelMap model) {
 		CmsSite site = CmsUtils.getSite(request);
 		CmsUser user = CmsUtils.getUser(request);
+		FrontUtils.frontData(request, model, site);
 		if (user == null) {
-			return FrontUtils.showLogin(request, model, site);
+			return "/WEB-INF/t/cms/www/default/blog/login.html";
 		}
 		String friends = user.getFriends();
 		if(StringUtils.isNotEmpty(friends)){
@@ -1262,7 +1263,6 @@ public class ContributeAct extends AbstractContentMemberAct {
 		}else{
 			model.addAttribute("friends", "");
 		}
-		FrontUtils.frontData(request, model, site);
 		return "/WEB-INF/t/cms/www/default/blog/friends_refresh.html";
 		//return FrontUtils.getTplPath(request, site.getSolutionPath(),TPLDIR_BLOG, "tpl.friends");
 	}
@@ -1954,14 +1954,7 @@ public class ContributeAct extends AbstractContentMemberAct {
 				json.put("status","3");
 			}
 		}else{
-			try {
-				request.getRequestDispatcher("/login.jspx").forward(request, response);
-				return;
-			} catch (ServletException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			json.put("status","4");
 		}
 		ResponseUtils.renderJson(response, json.toString());
 	}
@@ -1982,14 +1975,7 @@ public class ContributeAct extends AbstractContentMemberAct {
 				json.put("status","2");
 			}
 		}else{
-			try {
-				request.getRequestDispatcher("/login.jspx").forward(request, response);
-				return;
-			} catch (ServletException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			json.put("status","3");
 		}
 		ResponseUtils.renderJson(response, json.toString());
 	}
@@ -2268,11 +2254,11 @@ public class ContributeAct extends AbstractContentMemberAct {
 		JSONObject json = new JSONObject();
 		if(user==null){
 			json.put("status","3");
-			return;
+		}else{
+			Columns cc=columnsMng.findById(Integer.valueOf(groupId));
+			int joinStatus=columnsMng.signOutGroups(cc,user);
+			json.put("status",joinStatus);
 		}
-		Columns cc=columnsMng.findById(Integer.valueOf(groupId));
-		int joinStatus=columnsMng.signOutGroups(cc,user);
-		json.put("status",joinStatus);
 		ResponseUtils.renderJson(response, json.toString());
 	}
 	
