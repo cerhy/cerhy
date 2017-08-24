@@ -20,7 +20,7 @@ a			{ color: #074387; }
 }
 .header-top {background: #efefef;border-bottom:0px;}
 .footer_styles {
-	background: #E0912F; 
+	background: #E0912F !important; 
 }
 .footer_style {
 	background: #E0912F !important; 
