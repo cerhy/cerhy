@@ -477,8 +477,8 @@ $(function(){
                 <td colspan="2" style="text-align:center; padding:20px 0;">
                 <input type="hidden" name="nextUrl" value="${base}" />
                     <input type="hidden" name="id" value="${content.id}"/>
-                <input type="button" class="member-submit" value="提交" onclick="ajaxconmit('jvForm');" />
-                <input type="button" class="member-reset" value="取消" onclick="javascript:history.go(-1);"/>
+                <input type="button" class="member-submit" id="tj" value="提交" onclick="ajaxconmit('jvForm');" />
+                <input type="button" class="member-reset" value="取消" onclick="backCancel();"/>
                 </td>
               </tr>
             </tbody>
@@ -546,6 +546,21 @@ function validateFo(){
 function ajaxconmit(formId){
 	  if(validateFo()){
 			var contentTxt=CKEDITOR.instances.txt.getData();
+			if(contentTxt==""||contentTxt==null){
+				alert("请输入内容，内容不能为空！");
+				return;
+			}
+			var password = $('#password').val();
+			if(password!=null && password!=""){
+				var reg = new RegExp("^[0-9]*$");
+				 if(!reg.test(password)){
+						alert("密码的类型为数字!");
+						return ;
+				    }
+			}
+			
+			var os = document.getElementById("tj");
+			os.disabled = true; 
 	    	$.ajax({
 	            dataType : 'json',
 	            type: "GET",
@@ -555,6 +570,7 @@ function ajaxconmit(formId){
 	                alert("Connection error");
 	            },
 	            success: function(data) {
+	            	os.disabled = false; 
 	            	var code=data.code;
 	            	if(code=="success"){
 	            		alert("修改成功！");
@@ -590,5 +606,19 @@ function addPd(obj){
 		$("#password").hide();
 		$("#tick").hide();
 	}
+}
+function backCancel(){
+	 $.ajax({
+	           type: 'POST',
+	           url : '/cerhy/blog/indexs.jspx',
+	           dataType:"html",
+	           async: true,
+	           success : function(datas){
+	        	 var oEditor = CKEDITOR.instances.txt;
+	        	 oEditor.destroy(true);
+	        	   $(".wrap-right").empty();
+	               $(".wrap-right").append(datas);		
+	  	   		 }
+	 	});
 }
 </script>
