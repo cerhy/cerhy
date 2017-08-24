@@ -220,6 +220,123 @@ public class ContributeAct extends AbstractContentMemberAct {
 	}
 
 	/**
+	 * 会员投稿保存
+	 * 
+	 * @param id
+	 *            文章ID
+	 * @param title
+	 *            标题
+	 * @param author
+	 *            作者
+	 * @param description
+	 *            描述
+	 * @param txt
+	 *            内容
+	 * @param tagStr
+	 *            TAG字符串
+	 * @param channelId
+	 *            栏目ID
+	 * @param nextUrl
+	 *            下一个页面地址
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 * @throws TemplateException 
+	 */
+	@RequestMapping(value = "/member/contribute_ajaxsave.jspx")
+	public @ResponseBody String contribute_ajaxsave(String title, String author, String description,
+			String contentTxt, String tagStr, Integer channelId,Integer columnId,Integer modelId, 
+			String captcha,String mediaPath,String mediaType,
+			String[] attachmentPaths, String[] attachmentNames,
+			String[] attachmentFilenames, String[] picPaths, String[] picDescs,
+			Short charge,Double chargeAmount,
+			String nextUrl, HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) throws TemplateException {
+		   String channelIds = request.getParameter("channelIds");
+		   String password = request.getParameter("password");
+		   //String showStyle= request.getParameter("showStyle");
+		   String txt=contentTxt;
+		   int sta=0;
+		   JSONObject json = new JSONObject();
+		   if(channelIds!=null&&channelIds!=""){
+			   String[] str=channelIds.split("&");
+			   if(str[1].equals("chan")){
+				   channelId=Integer.valueOf(str[0]);
+				   //高中、初中、小学美术
+				   if(channelId.toString().equals("316")||channelId.toString().equals("323")){
+					   channelId=305;
+				   }
+				   //高中、初中、小学音乐
+				   if(channelId.toString().equals("315")||channelId.toString().equals("322")){
+					   channelId=304;
+				   }
+				   //高中、初中、小学体育
+				   if(channelId.toString().equals("314")||channelId.toString().equals("321")){
+					   channelId=303;
+				   }
+				   //高中、初中、小学综合实践
+				   if(channelId.toString().equals("417")||channelId.toString().equals("418")){
+					   channelId=416;
+				   }
+				   //高中、初中地理
+				   if(channelId.toString().equals("311")){
+					   channelId=300;
+				   }
+				   //高中、初中历史
+				   if(channelId.toString().equals("310")){
+					   channelId=299;
+				   }
+				   //初中、小学信息技术
+				   if(channelId.toString().equals("319")){
+					   channelId=312;
+				   }
+				   //初中、小学政治
+				   if(channelId.toString().equals("317")){
+					   channelId=309;
+				   }
+				   //高中、初中化学
+				   if(channelId.toString().equals("307")){
+					   channelId=296;
+				   }
+				   //高中、初中物理
+				   if(channelId.toString().equals("306")){
+					   channelId=295;
+				   }
+				   //高中、初中生物
+				   if(channelId.toString().equals("308")){
+					   channelId=297;
+					}
+				   //高中、初中语文
+				   if(channelId.toString().equals("142")){
+					   channelId=140;
+				   }
+					//高中、初中、小学心理健康
+				   if(channelId.toString().equals("421")||channelId.toString().equals("422")){
+					   channelId=420;
+				   }
+
+			   }else if(str[1].equals("colu")){
+				   columnId=Integer.valueOf(str[0]);
+				   sta=1;
+			   }
+		   }
+		  
+		   String result= blogAct.blog_ajaxsave(title, author, description, txt, tagStr, channelId,columnId,modelId,
+					null, captcha,mediaPath,mediaType,attachmentPaths,attachmentNames, attachmentFilenames
+					,picPaths,picDescs,charge,chargeAmount,password,
+					nextUrl, request, response, model,sta);
+		   try {
+			json.put("code", result);
+		} catch (JSONException e) {
+			log.error(e.getMessage(),e);
+		}
+			return json.toString();
+		
+	}
+
+	
+	/**
 	 * 会员投稿修改
 	 * 
 	 * @param id
@@ -401,7 +518,175 @@ public class ContributeAct extends AbstractContentMemberAct {
 		   }
 		
 	}
-
+	/**
+	 * 会有投稿更新
+	 * 
+	 * @param id
+	 *            文章ID
+	 * @param title
+	 *            标题
+	 * @param author
+	 *            作者
+	 * @param description
+	 *            描述
+	 * @param txt
+	 *            内容
+	 * @param tagStr
+	 *            TAG字符串
+	 * @param channelId
+	 *            栏目ID
+	 * @param nextUrl
+	 *            下一个页面地址
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "/member/contribute_ajax_update.jspx")
+	public @ResponseBody String ajaxUpdate(Integer id, String title, String author,
+			String description,String contentTxt, String tagStr, Integer columnId,Integer channelId,
+			String mediaPath,String mediaType,
+			String[] attachmentPaths, String[] attachmentNames,
+			String[] attachmentFilenames, String[] picPaths, String[] picDescs,
+			Short charge,Double chargeAmount,
+			String nextUrl, HttpServletRequest request,
+			HttpServletResponse response, ModelMap model,String password) {
+		JSONObject json = new JSONObject();
+		String txt=contentTxt;
+		//String showStyle= request.getParameter("showStyle");
+		String pw = request.getParameter("password");
+		String channelIds = request.getParameter("channelIds");
+		   if(channelIds!=null&&channelIds!=""){
+			   String[] str=channelIds.split("&");
+			   if(str[1]==null){
+				   channelId=Integer.valueOf(str[0]);
+				 //高中、初中、小学美术
+				   if(channelId.toString().equals("316")||channelId.toString().equals("323")){
+					   channelId=305;
+				   }
+				   //高中、初中、小学音乐
+				   if(channelId.toString().equals("315")||channelId.toString().equals("322")){
+					   channelId=304;
+				   }
+				   //高中、初中、小学体育
+				   if(channelId.toString().equals("314")||channelId.toString().equals("321")){
+					   channelId=303;
+				   }
+				   //高中、初中、小学综合实践
+				   if(channelId.toString().equals("417")||channelId.toString().equals("418")){
+					   channelId=416;
+				   }
+				   //高中、初中地理
+				   if(channelId.toString().equals("311")){
+					   channelId=300;
+				   }
+				   //高中、初中历史
+				   if(channelId.toString().equals("310")){
+					   channelId=299;
+				   }
+				   //初中、小学信息技术
+				   if(channelId.toString().equals("319")){
+					   channelId=312;
+				   }
+				   //初中、小学政治
+				   if(channelId.toString().equals("317")){
+					   channelId=309;
+				   }
+				   //高中、初中化学
+				   if(channelId.toString().equals("307")){
+					   channelId=296;
+				   }
+				   //高中、初中物理
+				   if(channelId.toString().equals("306")){
+					   channelId=295;
+				   }
+				   //高中、初中生物
+				   if(channelId.toString().equals("308")){
+					   channelId=297;
+					}
+				   //高中、初中语文
+					if(channelId.toString().equals("142")){
+						channelId=140;
+					}
+					//高中、初中、小学心理健康
+					if(channelId.toString().equals("421")||channelId.toString().equals("422")){
+						channelId=420;
+					}
+			   }else if(str[1].equals("colu")){
+				   columnId=Integer.valueOf(str[0]);
+			   }else if(str[1].equals("chan")){
+				   channelId=Integer.valueOf(str[0]);
+				   //高中、初中、小学美术
+				   if(channelId.toString().equals("316")||channelId.toString().equals("323")){
+					   channelId=305;
+				   }
+				   //高中、初中、小学音乐
+				   if(channelId.toString().equals("315")||channelId.toString().equals("322")){
+					   channelId=304;
+				   }
+				   //高中、初中、小学体育
+				   if(channelId.toString().equals("314")||channelId.toString().equals("321")){
+					   channelId=303;
+				   }
+				   //高中、初中、小学综合实践
+				   if(channelId.toString().equals("417")||channelId.toString().equals("418")){
+					   channelId=416;
+				   }
+				   //高中、初中地理
+				   if(channelId.toString().equals("311")){
+					   channelId=300;
+				   }
+				   //高中、初中历史
+				   if(channelId.toString().equals("310")){
+					   channelId=299;
+				   }
+				   //初中、小学信息技术
+				   if(channelId.toString().equals("319")){
+					   channelId=312;
+				   }
+				   //初中、小学政治
+				   if(channelId.toString().equals("317")){
+					   channelId=309;
+				   }
+				   //高中、初中化学
+				   if(channelId.toString().equals("307")){
+					   channelId=296;
+				   }
+				   //高中、初中物理
+				   if(channelId.toString().equals("306")){
+					   channelId=295;
+				   }
+				   //高中、初中生物
+				   if(channelId.toString().equals("308")){
+					   channelId=297;
+					}
+				   //高中、初中语文
+					if(channelId.toString().equals("142")){
+						channelId=140;
+					}
+					//高中、初中、小学心理健康
+					if(channelId.toString().equals("421")||channelId.toString().equals("422")){
+						channelId=420;
+					}
+			   }
+		   }
+		  
+			   String result =blogAct.blog_ajax_update(id, title, author, description, txt, tagStr,
+					   columnId,channelId, mediaPath,mediaType,attachmentPaths,
+						attachmentNames, attachmentFilenames
+						,picPaths,picDescs,null,charge, chargeAmount,
+						nextUrl, request, response, model,pw);
+			   try {
+				json.put("code", result);
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		  return json.toString();
+				  
+		
+	}
+	
 	/**
 	 * 会员投稿删除
 	 * 
@@ -647,6 +932,14 @@ public class ContributeAct extends AbstractContentMemberAct {
 		return blogAct.blog_indexs(queryTitle, modelId, queryChannelId, "tpl.blogCenter",
 				pageNo, request, model);
 	} 
+	//局部刷新栏目
+	@RequestMapping(value = "/blog/refreshColumn.jspx")
+	public String refreshColumn(String queryTitle, Integer modelId,
+			Integer queryChannelId, Integer pageNo, HttpServletRequest request,
+			ModelMap model) { 
+		return blogAct.refreshColumn(queryTitle, modelId, queryChannelId,null,
+				pageNo, request, model);
+	} 
 	
 	@RequestMapping(value = "/blog/tzsetting.jspx")
 	public String tzsetting(HttpServletRequest request, HttpServletResponse response,ModelMap model) {
@@ -662,6 +955,17 @@ public class ContributeAct extends AbstractContentMemberAct {
 	@RequestMapping(value = "/blog/updateSetting.jspx")
 	public void updateSetting(HttpServletRequest request, HttpServletResponse response,ModelMap model) {
 		blogAct.updateSetting(request, response, model);
+	}
+	/**
+	 * 博客更新参数保存-局部刷新
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @throws JSONException 
+	 */
+	@RequestMapping(value = "/blog/updateSetting_refresh.jspx")
+	public void updateSetting_refresh(HttpServletRequest request, HttpServletResponse response,ModelMap model) throws JSONException {
+		blogAct.updateSetting_refresh(request, response, model);
 	}
 	
 	/**
@@ -728,6 +1032,18 @@ public class ContributeAct extends AbstractContentMemberAct {
 	}
 	
 	/**
+	 * 新建博客文章
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "/blog/contribute_ajax_add.jspx")
+	public String blog_ajax_add(HttpServletRequest request, HttpServletResponse response,
+			ModelMap model) {
+		return blogAct.blog_ajax_add(true, CONTRIBUTE_ADD, request, response, model);
+	}
+	/**
 	 * 博客栏目列表
 	 * @param queryTitle
 	 * @param modelId
@@ -746,6 +1062,47 @@ public class ContributeAct extends AbstractContentMemberAct {
 	}
 	
 	/**
+	 * 新建博客栏目--局部刷新
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @throws JSONException 
+	 */
+	@RequestMapping(value = "/blog/columns_add_refresh.jspx")
+	public void columns_add_refresh(HttpServletRequest request, HttpServletResponse response,ModelMap model) throws JSONException {
+		blogAct.columns_add_refresh(request, response, model);
+	}
+	
+	
+	
+	/**
+	 * 跳转到博客更新参数页面
+	 * @param id
+	 * @param orderId
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "/blog/update_tz.jspx")
+	public String update_tz(String id, HttpServletRequest request, HttpServletResponse response,ModelMap model) {
+		return blogAct.update_tz(id,request, response, model);
+	}
+	
+	/**
+	 * 博客更新博客栏目
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @throws JSONException 
+	 */
+	@RequestMapping(value = "/blog/columns_updates_refresh.jspx")
+	public void columns_updates_refresh(HttpServletRequest request, HttpServletResponse response,ModelMap model) throws JSONException {
+		blogAct.columns_updates_refresh(request, response, model);
+	}
+	
+	
+	/**
 	 * 新建博客栏目
 	 * @param request
 	 * @param response
@@ -754,6 +1111,19 @@ public class ContributeAct extends AbstractContentMemberAct {
 	@RequestMapping(value = "/blog/newColumn.jspx")
 	public String columns_add(HttpServletRequest request, HttpServletResponse response,ModelMap model) {
 		return blogAct.columns_add(request, response, model);
+	}
+	
+
+	/**
+	 * 删除博客栏目
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @throws JSONException 
+	 */
+	@RequestMapping(value = "/blog/deleteColumnRefresh.jspx")
+	public void columns_delete_refresh(HttpServletRequest request, HttpServletResponse response,ModelMap model) throws JSONException {
+		blogAct.columns_delete_refresh(request, response, model);
 	}
 	
 	/**
@@ -776,19 +1146,8 @@ public class ContributeAct extends AbstractContentMemberAct {
 		  blogAct.columns_query(request, response, model);
 	}
 	
-	/**
-	 * 跳转到博客更新参数页面
-	 * @param id
-	 * @param orderId
-	 * @param request
-	 * @param response
-	 * @param model
-	 * @return
-	 */
-	@RequestMapping(value = "/blog/update_tz.jspx")
-	public String update_tz(String id, HttpServletRequest request, HttpServletResponse response,ModelMap model) {
-		return blogAct.update_tz(id,request, response, model);
-	}
+	
+	
 	
 	/**
 	 * 博客更新博客栏目
@@ -816,11 +1175,33 @@ public class ContributeAct extends AbstractContentMemberAct {
 	}
 
 	/**
+	 * 博客文章编辑
+	 * @param id
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "/blog/contribute_ajax_edit.jspx")
+	public  String blog_ajax_edit(Integer id, HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		return blogAct.blog_ajax_edit(id, CONTRIBUTE_EDIT, request, response, model);
+	}
+	/**
 	 * 博客文章删除
 	 */
 	@RequestMapping(value = "/blog/contribute_delete.jspx")
 	public void blog_delete(Integer ids,Integer columnId,Integer channelId, HttpServletRequest request, HttpServletResponse response, ModelMap model) {
 		blogAct.blog_delete(ids,columnId,channelId, request,  response, model);
+	}
+	
+	/**
+	 * ajax文章删除
+	 */
+	@RequestMapping(value = "/blog/ajax_contribute_delete.jspx")
+	public  @ResponseBody   String ajax_contribute_delete(Integer ids,Integer columnId,Integer channelId, HttpServletRequest request, HttpServletResponse response, ModelMap model) {
+		String result = blogAct.ajax_blog_delete(ids, request,  response, model);
+		return result;
 	}
 	
 	/**
@@ -833,19 +1214,27 @@ public class ContributeAct extends AbstractContentMemberAct {
 		if (user == null) {
 			return FrontUtils.showLogin(request, model, site);
 		}
-		model =blogCommon.getHyperlink(request,model,user);
-		model = blogCommon.getColumn(request,model,user);
-	    model = blogCommon.getChannel(request,model,user,site);
-	    int totalCount = blogCommon.getTotalArticleNum(model,user);
-	    model.addAttribute("articleCount", totalCount);
- 		model = blogCommon.getTotalCommentNum(model, user);
- 		model = blogCommon.getStarBlogger(request, model);
- 		model = blogCommon.getAlreadyJoinGroup(request, model,user);
- 		model = blogCommon.getFriendLeft(user.getId(),model,1);
+		String linkUrl=user.getHyperlink();
+		if(StringUtils.isNotEmpty(linkUrl)){
+			model.addAttribute("linkUrls", linkUrl.replaceAll(" ", "\r\n"));
+		}else{
+			model.addAttribute("linkUrls", "");
+		}
 		FrontUtils.frontData(request, model, site);
-		return FrontUtils.getTplPath(request, site.getSolutionPath(),TPLDIR_BLOG, "tpl.linkList");
+		return "/WEB-INF/t/cms/www/default/blog/link_list_refresh.html";
+		//return FrontUtils.getTplPath(request, site.getSolutionPath(),TPLDIR_BLOG, "tpl.linkList");
 	}
-	
+	//局部刷新
+	@RequestMapping(value = "/blog/add_update_refresh.jspx")
+	public void add_update_refresh(String hyperlink,String nextUrl,HttpServletRequest request,HttpServletResponse response, ModelMap model) throws JSONException {
+		if(StringUtils.isEmpty(hyperlink)){
+			blogAct.add_update_refresh(null,nextUrl,request, response, model);
+		}else{
+			hyperlink=hyperlink.replaceAll(" ", "");//强制去空格
+			blogAct.add_update_refresh(hyperlink.replaceAll("\r\n", " "),nextUrl,request, response, model);
+		}
+		
+	}
 	@RequestMapping(value = "/blog/add_link.jspx")
 	public String custom(String hyperlink,String nextUrl,HttpServletRequest request,HttpServletResponse response, ModelMap model) {
 		if(StringUtils.isEmpty(hyperlink)){
@@ -867,17 +1256,26 @@ public class ContributeAct extends AbstractContentMemberAct {
 		if (user == null) {
 			return FrontUtils.showLogin(request, model, site);
 		}
-		model =blogCommon.getHyperlink(request,model,user);
-		model = blogCommon.getColumn(request,model,user);
-	    model = blogCommon.getChannel(request,model,user,site);
-	    int totalCount = blogCommon.getTotalArticleNum(model,user);
-	    model.addAttribute("articleCount", totalCount);
- 		model = blogCommon.getTotalCommentNum(model, user);
- 		model = blogCommon.getStarBlogger(request, model);
- 		model = blogCommon.getAlreadyJoinGroup(request, model,user);
- 		model = blogCommon.getFriendLeft(user.getId(),model,1);
+		String friends = user.getFriends();
+		if(StringUtils.isNotEmpty(friends)){
+			model.addAttribute("friends", friends.replaceAll(" ", "\r\n"));
+		}else{
+			model.addAttribute("friends", "");
+		}
 		FrontUtils.frontData(request, model, site);
-		return FrontUtils.getTplPath(request, site.getSolutionPath(),TPLDIR_BLOG, "tpl.friends");
+		return "/WEB-INF/t/cms/www/default/blog/friends_refresh.html";
+		//return FrontUtils.getTplPath(request, site.getSolutionPath(),TPLDIR_BLOG, "tpl.friends");
+	}
+	//局部刷新
+	@RequestMapping(value = "/blog/add_friends_refresh.jspx")
+	public void add_friends_refresh(String friends,String nextUrl,HttpServletRequest request,HttpServletResponse response, ModelMap model) throws JSONException {
+		if(StringUtils.isEmpty(friends)){
+			blogAct.add_friends_refresh(null,nextUrl,request, response, model);
+		}else{
+			friends=friends.replaceAll(" ", "");//强制去空格
+			blogAct.add_friends_refresh(friends.replaceAll("\r\n", " "),nextUrl,request, response, model);
+		}
+		
 	}
 
 	@RequestMapping(value = "/blog/add_friends.jspx")
@@ -888,7 +1286,6 @@ public class ContributeAct extends AbstractContentMemberAct {
 			friends=friends.replaceAll(" ", "");//强制去空格
 			blogAct.friends_save(friends.replaceAll("\r\n", " "),nextUrl,request, response, model);
 		}
-		
 	}
 	
 	/**
@@ -1817,8 +2214,15 @@ public class ContributeAct extends AbstractContentMemberAct {
 				cjg.setJoinCode(code);
 				cjg.setJoinTime(new Date());
 				cjg.setColumnsId(cc.get(0));
-				int joinStatus=columnsMng.saveJoinGroup(cjg);
-				json.put("status",joinStatus);
+				try {
+					columnsMng.saveJoinGroup(cjg);
+					json.put("status","1");
+					json.put("sname",cc.get(0).getColumnName());
+					json.put("sid",cc.get(0).getColumnId());
+				} catch (Exception e) {
+					json.put("status","0");
+					e.printStackTrace();
+				}
 			}
 			ResponseUtils.renderJson(response, json.toString());
 		}

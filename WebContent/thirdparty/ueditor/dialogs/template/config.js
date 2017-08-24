@@ -10,24 +10,24 @@ var templates = [
         "pre":"pre1.png",
         'title':lang.blank,
         'preHtml':'琼教研训文件模板',
-        "html":'<div style="padding: 6px 0px; text-align: center; border-bottom-color: #ff0000; border-bottom-width: 3px; border-bottom-style: solid;"><div style="padding: 30px 0px; color: #ff0000; font-family: 宋体; font-size: 38px; font-weight: bold;line-height: 40px;">海南省教育研究培训院文件</div><div style="text-align: center; line-height: 180%; font-family: 仿宋_GB2312, 仿宋; font-size: 18px;">琼教研训〔xxxx〕xx号</div></div><div style="padding: 32px 0px; text-align: center; line-height: 180%; font-family: 黑体; font-size: 26px;">海南省教育研究培训院 <br />关于xxxxx的通知</div><div style="text-align: justify; line-height: 180%; font-family: 仿宋_GB2312, 仿宋; font-size: 18px;"><p style="margin: 0px; text-indent: 0px;">正文</p><div style="background: url(http://www.cerhy.com/r/cms/www/default/images/smp_jp.gif) no-repeat center; padding: 60px; text-align: center; float: right;">海南省教育研究培训院<div>xxxx年xx月xx日</div></div></div><br /><br /><br /><br /><br />'
+        "html":'<div style="padding: 6px 0px; text-align: center; border-bottom-color: #ff0000; border-bottom-width: 3px; border-bottom-style: solid;"><div id="wjmb" style="padding: 30px 0px; color: #ff0000; font-family: 宋体; font-size: 38px; font-weight: bold;line-height: 40px;">海南省教育研究培训院文件</div><div style="text-align: center; line-height: 180%; font-family: 仿宋_GB2312, 仿宋; font-size: 18px;">琼教研训〔xxxx〕xx号</div></div><div style="padding: 32px 0px; text-align: center; line-height: 180%; font-family: 黑体; font-size: 26px;">海南省教育研究培训院 <br />关于xxxxx的通知</div><div style="text-align: justify; line-height: 180%; font-family: 仿宋_GB2312, 仿宋; font-size: 18px;"><p style="margin: 0px; text-indent: 0px;">正文</p><div style="background: url(http://www.cerhy.com/r/cms/www/default/images/smp_jp.gif) no-repeat center; padding: 60px; text-align: center; float: right;">海南省教育研究培训院<div>xxxx年xx月xx日</div></div></div><br /><br /><br /><br /><br />'
 
     },{
     	"pre":"pre1.png",
         'title':lang.blank,
         'preHtml': '琼教学会文件模板',
-		"html" : '<div style="padding: 6px 0px; text-align: center; border-bottom-color: #ff0000; border-bottom-width: 3px; border-bottom-style: solid;"><div style="padding: 30px 0px; color: #ff0000; font-family: 宋体; font-size: 38px; font-weight: bold;">海 南 省 教 育 学 会 文 件</div><div style="text-align: center; line-height: 180%; font-family: 仿宋_GB2312, 仿宋; font-size: 18px;">琼教学会〔xxxx〕xx号</div></div><div style="padding: 32px 0px; text-align: center; line-height: 180%; font-family: 黑体; font-size: 26px;">标题 <br />关于xxx的通知</div><div style="text-align: justify; line-height: 180%; font-family: 仿宋_GB2312, 仿宋; font-size: 18px;"><p style="margin: 0px; text-indent: 0px;">正文</p><div style="background: url(http://www.cerhy.com/r/cms/www/default/images/smp_xh.gif) no-repeat center; padding: 60px; text-align: center; float: right;">海南省教育学会<div>xxxx年xx月xx日</div></div></div>'
+		"html" : '<div style="padding: 6px 0px; text-align: center; border-bottom-color: #ff0000; border-bottom-width: 3px; border-bottom-style: solid;"><div id="wjmb" style="padding: 30px 0px; color: #ff0000; font-family: 宋体; font-size: 38px; font-weight: bold;">海 南 省 教 育 学 会 文 件</div><div style="text-align: center; line-height: 180%; font-family: 仿宋_GB2312, 仿宋; font-size: 18px;">琼教学会〔xxxx〕xx号</div></div><div style="padding: 32px 0px; text-align: center; line-height: 180%; font-family: 黑体; font-size: 26px;">标题 <br />关于xxx的通知</div><div style="text-align: justify; line-height: 180%; font-family: 仿宋_GB2312, 仿宋; font-size: 18px;"><p style="margin: 0px; text-indent: 0px;">正文</p><div style="background: url(http://www.cerhy.com/r/cms/www/default/images/smp_xh.gif) no-repeat center; padding: 60px; text-align: center; float: right;">海南省教育学会<div>xxxx年xx月xx日</div></div></div>'
 	},{
 		"pre":"pre1.png",
         'title':lang.blank,
         'preHtml': '琼教科研文件模板',
-        "html" : '<div style="padding: 6px 0px; text-align: center; border-bottom-color: #ff0000; border-bottom-width: 3px; border-bottom-style: solid;"><div style="padding: 30px 0px; color: #ff0000; font-family: 宋体; font-size: 38px; font-weight: bold;line-height: 40px;">海南省教育科学规划领导小组办公室</div><div style="text-align: center; line-height: 180%; font-family: 仿宋_GB2312, 仿宋; font-size: 18px;">琼教科研〔xxxx〕xx号</div></div><div style="padding: 32px 0px; text-align: center; line-height: 180%; font-family: 黑体; font-size: 26px;">标题 <br />关于xxx的通知</div><div style="text-align: justify; line-height: 180%; font-family: 仿宋_GB2312, 仿宋; font-size: 18px;"><p style="margin: 0px; text-indent: 0px;">正文</p><div style="background: url(http://www.cerhy.com/r/cms/www/default/images/smp_gh.gif) no-repeat center; padding: 60px; text-align: center; float: right;">海南省教育科学规划领导小组办公室<div>xxxx年xx月xx日</div></div></div>'
+        "html" : '<div style="padding: 6px 0px; text-align: center; border-bottom-color: #ff0000; border-bottom-width: 3px; border-bottom-style: solid;"><div id="wjmb" style="padding: 30px 0px; color: #ff0000; font-family: 宋体; font-size: 38px; font-weight: bold;line-height: 40px;">海南省教育科学规划领导小组办公室</div><div style="text-align: center; line-height: 180%; font-family: 仿宋_GB2312, 仿宋; font-size: 18px;">琼教科研〔xxxx〕xx号</div></div><div style="padding: 32px 0px; text-align: center; line-height: 180%; font-family: 黑体; font-size: 26px;">标题 <br />关于xxx的通知</div><div style="text-align: justify; line-height: 180%; font-family: 仿宋_GB2312, 仿宋; font-size: 18px;"><p style="margin: 0px; text-indent: 0px;">正文</p><div style="background: url(http://www.cerhy.com/r/cms/www/default/images/smp_gh.gif) no-repeat center; padding: 60px; text-align: center; float: right;">海南省教育科学规划领导小组办公室<div>xxxx年xx月xx日</div></div></div>'
 	},{
 		"pre":"pre1.png",
         'title':lang.blank,
         'preHtml' : '教育学会、教培院联名文件模板',
         "html" : '<div style="padding: 6px 0; border-bottom: 3px solid #f00; text-align: center;">' +
-		       '<div style="padding: 30px 0; font-family: 宋体; font-size: 38px; font-weight: bold; line-height: 58px; color: #f00;">' +
+		       '<div id="wjmb" style="padding: 30px 0; font-family: 宋体; font-size: 38px; font-weight: bold; line-height: 58px; color: #f00;">' +
 		       '<div style="margin-left: 40px; float: left">海 南 省 教 育 学 会<br />海南省教育研究培训院</div>' +
 		       '<span style="margin: 30px 40px 0 0; float: right;">文件</span>' +
 			   '<div style="clear: both; line-height: 0; height: 0;">&nbsp;</div>' +
@@ -46,7 +46,7 @@ var templates = [
         'title':lang.blank,
         'preHtml': '教培院函件文件模板',
 		"html" : '<div style="padding: 6px 0 2px 0; border-bottom: 1px solid #f00; text-align: center;">' +
-		       '<div style="padding: 30px 0; border-bottom: 4px solid #f00; font-family: 华文中宋,宋体; font-size: 38px; font-weight: bold; color: #f00;">海 南 省 教 育 研 究 培 训 院</div>' +
+		       '<div id="wjmb" style="padding: 30px 0; border-bottom: 4px solid #f00; font-family: 华文中宋,宋体; font-size: 38px; font-weight: bold; color: #f00;">海 南 省 教 育 研 究 培 训 院</div>' +
 			   '</div>' +
 			   '<div style="font-family: 黑体; font-size: 26px; text-align: center; line-height: 180%; padding: 32px 0;">标题 <br />关于xxx的通知</div>' +
 			   '<div style="font-family: 仿宋_GB2312,仿宋; font-size: 18px; text-align: justify; line-height: 180%;">正文' +
@@ -59,7 +59,7 @@ var templates = [
         'title':lang.blank,
         'preHtml': '教育学会函件文件模板',
 		"html" : '<div style="padding: 6px 0 2px 0; border-bottom: 1px solid #f00; text-align: center;">' +
-			   '<div style="padding: 30px 0; border-bottom: 4px solid #f00; font-family: 华文中宋,宋体; font-size: 38px; font-weight: bold; color: #f00;">海　南　省　教　育　学　会</div>' +
+			   '<div id="wjmb" style="padding: 30px 0; border-bottom: 4px solid #f00; font-family: 华文中宋,宋体; font-size: 38px; font-weight: bold; color: #f00;">海　南　省　教　育　学　会</div>' +
 			   '</div>' +
 			   '<div style="font-family: 黑体; font-size: 26px; text-align: center; line-height: 180%; padding: 32px 0;">标题 <br />关于xxx的通知</div>' +
 			   '<div style="font-family: 仿宋_GB2312,仿宋; font-size: 18px; text-align: justify; line-height: 180%;">正文' +

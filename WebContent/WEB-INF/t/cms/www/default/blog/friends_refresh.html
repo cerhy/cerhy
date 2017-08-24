@@ -1,0 +1,134 @@
+<style>
+::-webkit-scrollbar{width:0px}
+.clear{clear:both}
+</style>
+<script type="text/javascript">
+$(function(){
+$('.user-menu-links li').click(function(){
+    $(this).toggleClass('on');
+});
+});
+</script>
+<div id="contextMenus"></div>
+            <div class="personCenter-userInfo blog_right" >
+	          <form id="jvForm" action="add_friends.jspx" method="post">
+	         	<textarea id="friends" name="friends" rows="18" cols="90">${friends }</textarea>
+	         	<br />
+	          	<span class="fl">
+					<p>每行可以输入一个好友，姓名和账号之间用“=”分隔开，最多可设置300个。</p>
+					<p>例如：ZXGHL=8001</p>
+					<p>等号之前名字可以任意填写(ZXGHL)</p>
+					<p>等号之后名字须为好友的用户名(8001)</p>
+					<p>*注:请勿留有空格(添加好友结束 无需按回车健换行,以免导致格式不正确提交不成功)!</p>
+	          		<input style="display: none;" name="nextUrl" value="friends.jspx" />
+	          	    <input type="text" id="che" value="" style="display: none;" />
+	          	    <input type="button" value="提交" class="submit" onclick="addUpdateFriends()"/>
+				</span>
+         	 </form>
+            </div>
+<script type="text/javascript">
+function addUpdateFriends(){
+        	var friends=$("#friends").val();
+    		var friendss = friends.replace(new RegExp( "\\n", "g" ),"~");
+    		var str =friendss.split("~");
+			var num=0;
+    		for(var i=0;i<str.length;i++){
+				if(str[i].indexOf("=")!=-1){
+					num++;
+					var st=str[i].split("=")
+					if(st[1]==''){
+						num--;
+					}
+				}
+			}
+    		if(friends==""){
+    			$.ajax({
+            		url:"${base}/blog/add_friends_refresh.jspx",
+            		type:"POST",
+            		dataType:"json",
+            		 data : {'friends' : friends.replace(new RegExp( "\\n", "g" ),"\r\n")},
+            		success: function (data) {
+            			if(data.status==1){
+            				alert("好友添加失败");
+            				return false;
+            			}else{
+            				$.ajax({
+            			           type: 'GET',
+            			           url : '${base}/blog/refreshColumn.jspx',
+            			           dataType:"html",
+            			           async: true,
+            			           success : function(datas){
+            			        	   $("#appendHtml").empty();
+            			        	   $("#joinGroups").remove();
+            			               $("#appendHtml").append(datas);
+            			               if(window._bd_share_main){
+            			            	   window._bd_share_main.init();
+            			            	}
+            			  	   		 }
+            			 	});
+                             return true;
+            			}
+                    }
+            	});
+    			 //var obj = $(this);
+    			 //obj.parents('form').submit(); //验证码正确提交表单
+                 //return true;
+    		}else{
+				if(num!=str.length){
+					alert("请填写正确的好友格式!");
+					return false;
+				}else{
+		            var obj = $(this);
+		            $.ajax({
+		            	url: "${base}/member/checkAddfinds.jspx?friends="+encodeURI(friendss),
+		            	contentType: "application/x-www-form-urlencoded; charset=utf-8",
+		                type:'POST',
+		                data:"",
+		                dataType:'json',
+		                async:false,
+		                success:function(data) {
+		                    if(data.status=="") {
+		                    	$.ajax({
+		                    		url:"${base}/blog/add_friends_refresh.jspx",
+		                    		type:"POST",
+		                    		dataType:"json",
+		                    		 data : {'friends' : friends.replace(new RegExp( "\\n", "g" ),"\r\n")},
+		                    		success: function (data) {
+		                    			if(data.status==1){
+		                    				alert("好友添加失败");
+		                    				return false;
+		                    			}else{
+		                    				$.ajax({
+		                    			           type: 'GET',
+		                    			           url : '${base}/blog/refreshColumn.jspx',
+		                    			           dataType:"html",
+		                    			           async: true,
+		                    			           success : function(datas){
+		                    			        	   $("#appendHtml").empty();
+		                    			        	   $("#joinGroups").remove();
+		                    			               $("#appendHtml").append(datas);
+		                    			               if(window._bd_share_main){
+		                    			            	   window._bd_share_main.init();
+		                    			            	}
+		                    			  	   		 }
+		                    			 	});
+		                                     return true;
+		                    			}
+		                            }
+		                    	});
+		                        //obj.parents('form').submit(); //验证码正确提交表单
+		                        //return true;
+		                    }else if(data.status==2){
+		                    	 alert("请勿添加自己为好友!");
+			                     return false;
+		                    }else{
+		                        alert("以下用户不存在:\r\n"+data.status+"\r\n请检查账号是否填写正确!");
+		                        return false;
+		                    }
+		                },
+		            })
+		            return false;
+				}
+    		}
+}
+</script>

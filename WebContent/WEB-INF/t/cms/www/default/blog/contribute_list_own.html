@@ -27,22 +27,22 @@
 						   [/#if]
 						   [#if user??]
 						    [#if c.user.id=user.id]
-				            <a href="contribute_edit.jspx?id=${c.id}&nextUrl=contribute_list.jspx" class="f3"><em style="color:#b7b7b7;">修改</em></a>&nbsp;|&nbsp;
+				            <a href="javascript:void(0);" onclick="contributeUpdate(${c.id});" class="f3"><em style="color:#b7b7b7;">修改</em></a>&nbsp;|&nbsp;
 			                [#else]
 				           <!--  <a class="f3"><em style="color:#b7b7b7;">修改&nbsp;|&nbsp;</em></a> -->
 			                [/#if]
 			                [#if c.columnId??]
 	                			[#if c.user.id=user.id]
 	                			 	[#if joinGroupStata??]
-					                  <a href="contribute_delete.jspx?ids=${c.id}&columnId=${columnId}&joinGroupStata=0" onclick="javascript:return del();" class="f3"><em style="color:#b7b7b7;">删除</em></a>
+					                  <a href="javascript:void(0);" onclick="contributeDelete(${c.id});" class="f3"><em style="color:#b7b7b7;">删除</em></a>
 	                			 	[#else]
-					                  <a href="contribute_delete.jspx?ids=${c.id}&columnId=${columnId}" onclick="javascript:return del();" class="f3"><em style="color:#b7b7b7;">删除</em></a>
+					                  <a href="javascript:void(0);" onclick="contributeDelete(${c.id});" class="f3"><em style="color:#b7b7b7;">删除</em></a>
 	                			 	[/#if]
 				                [#else]
 				                  <a class="f3"><em style="color:#b7b7b7;">不可修改删除</em></a>
 				                [/#if]
 			                [#else]
-			                  <a href="contribute_delete.jspx?ids=${c.id}&channelId=${channelId}" onclick="javascript:return del();" class="f3"><em style="color:#b7b7b7;">删除</em></a> 
+			                  <a href="javascript:void(0);" onclick="contributeDelete(${c.id});" class="f3"><em style="color:#b7b7b7;">删除</em></a> 
 			                [/#if]
 				           	<div class="f2"><span style="padding-right:10px;"><em>博主:&nbsp;${c.user.username}&nbsp;&nbsp;&nbsp;${c.releaseDate?string('yyyy-MM-dd')}&nbsp;&nbsp;&nbsp;作者:&nbsp;${c.author!c.user.username}&nbsp;&nbsp;&nbsp;阅读:&nbsp;${c.contentCount.views!}&nbsp;&nbsp;&nbsp;评论:&nbsp;${c.contentCount.comments!}</em></span></div>
 			                [#else]
@@ -61,10 +61,10 @@
          <table style="margin:20px 0 0 40px;border:0px"><tr><td style="border:0px;">
 			                共 ${pagination.totalCount} 条&nbsp;
 			                每页 ${pagination.pageSize} 条&nbsp;
-			                <a href="#" style="cursor: pointer;" onclick="_gotoPage('1');"[#if pagination.firstPage] disabled="disabled"[/#if]>首页</a>
-			                <a href="#" style="cursor: pointer;" onclick="_gotoPage('${pagination.prePage}');"[#if pagination.firstPage] disabled="disabled"[/#if]>上一页</a>
-			                <a href="#" style="cursor: pointer;" onclick="_gotoPage('${pagination.nextPage}');"[#if pagination.lastPage] disabled="disabled"[/#if]>下一页</a>
-			                <a href="#" style="cursor: pointer;" onclick="_gotoPage('${pagination.totalPage}');"[#if pagination.lastPage] disabled="disabled"[/#if]>尾页</a>&nbsp;
+			                <a href="javascript:void(0);" style="cursor: pointer;" onclick="_gotoPage('1');"[#if pagination.firstPage] disabled="disabled"[/#if]>首页</a>
+			                <a href="javascript:void(0);" style="cursor: pointer;" onclick="_gotoPage('${pagination.prePage}');"[#if pagination.firstPage] disabled="disabled"[/#if]>上一页</a>
+			                <a href="javascript:void(0);" style="cursor: pointer;" onclick="_gotoPage('${pagination.nextPage}');"[#if pagination.lastPage] disabled="disabled"[/#if]>下一页</a>
+			                <a href="javascript:void(0);" style="cursor: pointer;" onclick="_gotoPage('${pagination.totalPage}');"[#if pagination.lastPage] disabled="disabled"[/#if]>尾页</a>&nbsp;
 			                当前 ${pagination.pageNo}/${pagination.totalPage} 页 &nbsp;转到第<input type="text" id="_goPs" onfocus="this.select();" onkeypress="if(event.keyCode==13){$('#_goPage').click();return false;}" class="inp1"/>页
 			                <input id="_goPage" style="cursor: pointer;" type="button" value="转" class="jump" onclick="_gotoPage($('#_goPs').val());"[#if pagination.totalPage==1] disabled="disabled"[/#if] />
 			            </td>
@@ -208,5 +208,54 @@ function myblogZdShow(base,path,contentId,currentId,stickUserId){
           	}
 	   		 }
 		 });
+}
+function contributeDelete(ids){
+	
+	var delUrl ="${base}/blog/ajax_contribute_delete.jspx?ids="+ids;
+	if(confirm('确定要删除吗?')) {
+		$.ajax({
+	           type: 'GET',
+	           url : delUrl,
+	           dataType:"text",
+	           async: true,
+	           success : function(datas){
+	        	  var code =datas;
+	        	  if(code=="success"){
+	        		  alert("删除成功！");
+	        		  $.ajax({
+	       	           type: 'POST',
+	       	           url : '${base}/blog/indexs.jspx',
+	       	           dataType:"html",
+	       	           async: true,
+	       	           success : function(datas){
+	       	        	   $(".wrap-right").empty();
+	       	               $(".wrap-right").append(datas);		
+	       	  	   		 }
+	       	 	});
+	        	  }else{
+	        		  alert("删除失败！");
+	        	  }
+	  	   		 }
+	 	});
+	}
+}
+function contributeUpdate(id){
+	var updateUrl ="${base}/blog/contribute_ajax_edit.jspx?id="+id;
+	 $.ajax({
+         type: 'POST',
+         url : updateUrl,
+          dataType:"html",
+         data : {},
+         success : function(datas){
+        	 $("#zd_u-hilite-cap").remove();
+        	 $("#zdId").remove();
+        	 $("#u-hilite-cap").remove();
+        	 
+        	 $(".wrap-right").empty();
+        	 $(".wrap-right").append(datas);
+	   		 }
+		 });
+	 
+		
 }
 </script>

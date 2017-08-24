@@ -206,6 +206,8 @@ public class CommentAct {
 		List<CmsComment> list = cmsCommentMng.getListForTag(siteId,contentId,
 				parentId,greatTo, chk, rec, desc, count);
 		// 将request中所有参数
+		Content contentCm = contentMng.findById(contentId);
+		model.addAttribute("contentCm", contentCm);
 		model.putAll(RequestUtils.getQueryParams(request));
 		model.addAttribute("list", list);
 		model.addAttribute("contentId", contentId);
