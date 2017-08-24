@@ -1460,6 +1460,48 @@ public class ContributeAct extends AbstractContentMemberAct {
 		FrontUtils.frontData(request, model, site);
 		return FrontUtils.getTplPath(request, site.getSolutionPath(),TPLDIR_BLOG, "tpl.dataStatistics");
 	}
+	
+	/**
+	 *跳转登陆人数据统计页面方法--弹框
+	 * @throws JSONException 
+	 */
+	@RequestMapping(value = "/blog/dataStatisticsT.jspx")
+	public void dataStatisticsT(HttpServletRequest request,HttpServletResponse response, ModelMap model) throws JSONException {
+		CmsSite site = CmsUtils.getSite(request);
+		CmsUser user = CmsUtils.getUser(request);
+		JSONObject json = new JSONObject();
+		if(user==null){
+			String uid=request.getParameter("uid");
+			if(StringUtils.isNotEmpty(uid)){
+				user=cmsUserMng.findById(Integer.parseInt(uid));
+				model.addAttribute("usert", user);
+			}else{
+				try {
+					request.getRequestDispatcher("/login.jspx").forward(request, response);
+					return;
+				} catch (ServletException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		int articleCount = blogCommon.getTotalArticleNum(model,user);
+		model = blogCommon.getTotalCommentNum(model, user);
+		model = blogCommon.getTotalCoverCommentNum(model, user);
+		model = blogCommon.getTotalReadNum(model, user);
+		FrontUtils.frontData(request, model, site);
+		if(null!=user){
+			json.put("blogVisitNum", user.getBlogVisitNum());
+			json.put("articleCount", articleCount);
+			json.put("coverCommentCount", model.get("coverCommentCount"));
+			json.put("readCount", model.get("readCount"));
+			json.put("commentCount", model.get("commentCount"));
+		}
+		ResponseUtils.renderJson(response, json.toString());
+	}
+	
+	
 	/**
 	 *跳转好友数据统计页面方法 
 	 */
