@@ -43,7 +43,7 @@ text-decoration: underline;
 				    <li><a href="${base}/blog/gotoDataShow.jspx?dataFlag=3" title="粉丝">粉丝</a></li>
 				    <li><a href="${base}/blog/gotoDataShow.jspx?dataFlag=2" title="关注">关注</a></li>
 				    <li><a href="${base}/blog/visitor.jspx" title="访客">访客</a></li>
-				    <li><a href="${base}/blog/dataStatistics.jspx" title="访问统计">访问统计</a></li>
+				    <li><a href="javascript:;" onclick="dataStatistics()" title="访问统计">访问统计</a></li>
 				    <li><a target="_blank" href="${base}/blog/useManual.jspx" title="使用手册">使用手册</a></li>
 			    </ul>
 			</li> 
@@ -91,10 +91,56 @@ text-decoration: underline;
        			    </form> 
    			    
 </div>
+<div id="statisticsDialogs" style="display:none;margin-top:-5px;">
+			基本信息:
+			<ul style="padding-left: 10px;">
+				<li  style="list-style-type: disc;" id="blogVisitNum"></li>
+				<li  style="list-style-type: disc;" id="articleCount"></li>
+				<li  style="list-style-type: disc;" id="coverCommentCount"></li>
+				<li  style="list-style-type: disc;" id="readCount"></li>
+				<li  style="list-style-type: disc;" id="commentCount"></li>
+			</ul>
+</div>
+<script type="text/javascript">
+//统计
+function dataStatistics(){
+	$("#statisticsDialogs").dialog("open");
+}
+$(document).ready(function(){ 
+	$("#statisticsDialogs").dialog({
+		autoOpen: false,
+		modal: false,
+		resizable :false,
+		stack : false,
+		draggable : true,
+		closeOnEscape : false,
+		open:function(event,ui){
+			$(".ui-dialog-titlebar").css("background","#ffffff");  
+			$(".ui-widget-header").css("border","0");  
+		},
+		width: 300,
+		height: 230,
+		position: ["center"],
+		close: function(event, ui) {
+		}
+	});
+});
+$(document).ready(function(){ 
+	$.ajax({
+		type: 'POST',
+		url : '${base}/blog/dataStatisticsT.jspx',
+		dataType : 'json',
+		success :function(data){
+			$("#blogVisitNum").html("访问人次："+data.blogVisitNum);
+			$("#articleCount").html("发表文章数："+data.articleCount);
+			$("#coverCommentCount").html("发表评论数："+data.coverCommentCount);
+			$("#readCount").html("文章阅读数："+data.readCount);
+			$("#commentCount").html("文章被评数："+data.commentCount);
+		}
+	});
+});
+</script>
 <script>
-
-
-
 function ajaxsearch(formId){
 	if(typeof($("#no3").val())!='undefined'){
 		 delPos();
