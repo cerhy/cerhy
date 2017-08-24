@@ -90,7 +90,7 @@ function addUpdateFriends(){
 		                type:'POST',
 		                data:"",
 		                dataType:'json',
-		                async:false,
+		                async:true,
 		                success:function(data) {
 		                    if(data.status=="") {
 		                    	$("body").mLoading();

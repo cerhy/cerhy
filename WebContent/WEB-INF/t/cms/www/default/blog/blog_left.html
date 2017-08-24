@@ -1,3 +1,6 @@
+<link  type="text/css" rel="stylesheet" href="/${res}/css/jquery.mloading.css" />
+<link  href="/${res}/css/jquery.mloading.less" />
+<script  type="text/javascript" src="/${res}/js/jquery.mloading.js"></script>
 <script type="text/javascript">
 function del(){
 	if(confirm('确定要删除吗?')) 
@@ -230,11 +233,13 @@ outline: none;
 						    		<li><a href="${base}/blog/find_all_url_friend.jspx?userIds=${user.id}" target="_blank" title="[#if user.nicknames??]${user.nicknames}[#else]${user.username}[/#if]"><img [#if user.userImg??]src="${user.userImg}"[#else]src="/${res}/images/userImg-large.png"[/#if] width="20" height="20" alt="" style="float: left;padding: 0 10px 0 0;">[#if user.nicknames??][@text_cut s=user.nicknames len=12 append='...'/][#else]${user.username}[/#if]</a></li>
 						    	[/#if]
 						    [/#list]
+						    [#if paginationLeft.list?size=10]
 							    [#if user??]
 					               <li><a href="javascript:;" onclick="gotoDataShow('${base}/blog/gotoDataShow.jspx?dataFlag=1')">更多 &nbsp;>></a></li>
 			               		[#else]
 					               <li><a href="javascript:;" onclick="gotoDataShow('${base}/blog/gotoDataShow.jspx?dataFlag=1&uid=${usert.id}')">更多 &nbsp;>></a></li>
 			                    [/#if]
+			                 [/#if]
 		                [#else]
 		                    <br />
 						[/#if]
