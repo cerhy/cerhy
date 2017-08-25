@@ -1,3 +1,6 @@
+<link  type="text/css" rel="stylesheet" href="/${res}/css/jquery.mloading.css" />
+<link  href="/${res}/css/jquery.mloading.less" />
+<script  type="text/javascript" src="/${res}/js/jquery.mloading.js"></script>
 <script type="text/javascript">
 function del(){
 	if(confirm('确定要删除吗?')) 
@@ -32,7 +35,6 @@ outline: none;
 .wrap-left{width: 250px;float: left;}
 .wrap-right{width: 730px;float: left;padding-left: 20px;}
 </style>
-<link rel="stylesheet" type="text/css" href="/${res}/css/normalize.css" />
 <link rel="stylesheet" type="text/css" href="/${res}/css/default.css">
 <link rel="stylesheet" type="text/css" href="/${res}/css/styles.css">
 <link rel="stylesheet" type="text/css" href="/${res}/css/class2context.css">
@@ -225,21 +227,22 @@ outline: none;
 					  </li>
 					   <li><a href="#">好友</a>
 					    <ul>
-					   [#if paginationLeft??]
+					    [#if paginationLeft??]
 						    [#list paginationLeft.list as user]
 						    	[#if user_index<11]
 						    		<li><a href="${base}/blog/find_all_url_friend.jspx?userIds=${user.id}" target="_blank" title="[#if user.nicknames??]${user.nicknames}[#else]${user.username}[/#if]"><img [#if user.userImg??]src="${user.userImg}"[#else]src="/${res}/images/userImg-large.png"[/#if] width="20" height="20" alt="" style="float: left;padding: 0 10px 0 0;">[#if user.nicknames??][@text_cut s=user.nicknames len=12 append='...'/][#else]${user.username}[/#if]</a></li>
 						    	[/#if]
 						    [/#list]
-						    [#if user??]
-				               <li><a href="${base}/blog/gotoDataShow.jspx?dataFlag=1">更多 &nbsp;>></a></li>
-		                    [/#if]
-		                    [#if usert??]
-				               <li><a href="${base}/blog/gotoDataShow.jspx?dataFlag=1&uid=${usert.id}">更多 &nbsp;>></a></li>
-		                    [/#if]
-		                    [#else]
+						    [#if paginationLeft.list?size=10]
+							    [#if user??]
+					               <li><a href="javascript:;" onclick="gotoDataShow('${base}/blog/gotoDataShow.jspx?dataFlag=1')">更多 &nbsp;>></a></li>
+			               		[#else]
+					               <li><a href="javascript:;" onclick="gotoDataShow('${base}/blog/gotoDataShow.jspx?dataFlag=1&uid=${usert.id}')">更多 &nbsp;>></a></li>
+			                    [/#if]
+			                 [/#if]
+		                [#else]
 		                    <br />
-						    [/#if]
+						[/#if]
 					    </ul>
 					    </li>
 					  <li><a href="#">链接</a>
@@ -285,14 +288,14 @@ outline: none;
 		                 	[#list starBlogger as c]
 		                      <li><a href="${base}/blog/find_all_url_friend.jspx?userIds=${c.id}" target="_blank" title="[#if c.realname??]${c.realname}[#else]${c.username}[/#if]"><img [#if c.userImg??]src="${c.userImg}"[#else]src="/${res}/images/userImg-large.png"[/#if] width="20" height="20" alt="" style="float: left;padding: 0 10px 0 0;">[#if c.realname??][@text_cut s=c.realname len=5 append='...'/][#else]${c.username}[/#if]</a></li>
 			                [/#list]
-	                        [#if moreStarBloggerExist??]
+			                [#if moreStarBloggerExist??]
 	                        [#if user??]
-			                 <li><a href="${base}/blog/gotoDataShow.jspx?dataFlag=4">更多 &nbsp;>></a></li>
+			                 <li><a href="javascript:;" onclick="gotoDataShow('${base}/blog/gotoDataShow.jspx?dataFlag=4')">更多 &nbsp;>></a></li>
 	                        [/#if]
 	                        [#if usert??]
-			                 <li><a href="${base}/blog/gotoDataShow.jspx?dataFlag=4&uid=${usert.id}">更多 &nbsp;>></a></li>
+			                 <li><a href="javascript:;" onclick="gotoDataShow('${base}/blog/gotoDataShow.jspx?dataFlag=4&uid=${usert.id}')">更多 &nbsp;>></a></li>
 	                        [/#if]
-	                        [/#if]
+			                [/#if]
 			                [/#if]
 					   </ul>
 					  </li>
@@ -577,7 +580,7 @@ function sJoinGroup(){
              data : {'queryTitle' : null,'modelId' : null,'queryChannelId' : null,'pageNo':null,'channelId':channelId,'joinGroupStata':joinGroupStata,'columnId':columnId,'uid':uid},
              success : function(datas){
             	 if(datas=="login"){
-            		 location.href="/cerhy/login.jspx";
+            		 location.href="${base}/login.jspx";
             	 }else{
             		 $(".wrap-right").empty();
                 	 $(".wrap-right").append(datas);
@@ -661,14 +664,19 @@ function sJoinGroup(){
 	           dataType:"html",
 	           async: true,
 	           success : function(datas){
-					$("#zd_u-hilite-cap").remove();
-					$("#zdId").remove();
-					$("#u-hilite-cap").remove();
-				    $(".wrap-right").empty();
-	               $(".wrap-right").append(datas);
-	               if(window._bd_share_main){
-	            	   window._bd_share_main.init();
-	            	}
+	        	   if(datas=="login"){
+	            		 location.href="${base}/login.jspx";
+	            	 }else{
+						$("#zd_u-hilite-cap").remove();
+						$("#zdId").remove();
+						$("#u-hilite-cap").remove();
+					    $(".wrap-right").empty();
+		               $(".wrap-right").append(datas);
+		               if(window._bd_share_main){
+		            	   window._bd_share_main.init();
+		            	}
+	        		   
+	        	   }
 	  	   		 }
 	 		});
 		//location.href = "${base}/blog/columns_list.jspx";
@@ -692,6 +700,9 @@ function sJoinGroup(){
          	           dataType:"html",
          	           async: true,
          	           success : function(datas){
+         	        	  if(datas=="login"){
+     	            		 location.href="${base}/login.jspx";
+     	            	 }else{
          					$("#zd_u-hilite-cap").remove();
          					$("#zdId").remove();
          					$("#u-hilite-cap").remove();
@@ -700,7 +711,8 @@ function sJoinGroup(){
          	               if(window._bd_share_main){
          	            	   window._bd_share_main.init();
          	            	}
-         	  	   		 }
+     	            	 }
+         	  	   		}
          	 		});
 					//location.href = "${base}/blog/columns_list.jspx?ccId="+id;
                     return true;
@@ -709,6 +721,9 @@ function sJoinGroup(){
                     return false;
                 }else if(data.status==3){
                 	alert("该操作不被允许!\r\n该一级栏目已作为群组!您可以将群组栏目修改为普通栏目来添加子栏目!");
+                	return false;
+                }else if(data.status==4){
+                	 location.href="${base}/login.jspx";
                 	return false;
                 }
             },
@@ -725,14 +740,18 @@ function sJoinGroup(){
 	           dataType:"html",
 	           async: true,
 	           success : function(datas){
-					$("#zd_u-hilite-cap").remove();
-					$("#zdId").remove();
-					$("#u-hilite-cap").remove();
-				    $(".wrap-right").empty();
-	               $(".wrap-right").append(datas);
-	               if(window._bd_share_main){
-	            	   window._bd_share_main.init();
-	            	}
+	        	   if(datas=="login"){
+	            		 location.href="${base}/login.jspx";
+	            	 }else{
+						$("#zd_u-hilite-cap").remove();
+						$("#zdId").remove();
+						$("#u-hilite-cap").remove();
+					    $(".wrap-right").empty();
+		               $(".wrap-right").append(datas);
+		               if(window._bd_share_main){
+		            	   window._bd_share_main.init();
+		            	}
+	            	 }
 	  	   		 }
 	 		});
 		//location.href="${base}/blog/update_tz.jspx?id="+id;
@@ -805,6 +824,10 @@ function sJoinGroup(){
         		        }
         		    });
                     return true;
+                }else if(data.status==3){
+                	//失去登陆状态
+                	location.href="${base}/login.jspx";
+                    return false;
                 }else{
                     alert("该操作不被允许!\r\n请先删除该栏目下的子栏目!");
                     return false;
@@ -918,4 +941,31 @@ function sJoinGroup(){
   	   		 }
  		});
 	}
+</script>
+<script type="text/javascript">
+function gotoDataShow(url){
+	if(typeof($("#no3").val())!='undefined'){
+		 delPos();
+	};
+	$.ajax({
+          type: 'GET',
+          url : url,
+          dataType:"html",
+          async: true,
+          success : function(datas){
+        	 if(datas=="login"){
+         		 location.href="${base}/login.jspx";
+         	 }else{
+				$("#zd_u-hilite-cap").remove();
+				$("#zdId").remove();
+				$("#u-hilite-cap").remove();
+				$(".wrap-right").empty();
+	            $(".wrap-right").append(datas);
+	            if(window._bd_share_main){
+	           		window._bd_share_main.init();
+	           	}
+         	 }  
+ 	   	}
+	});
+}
 </script>

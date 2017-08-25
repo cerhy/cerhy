@@ -200,10 +200,10 @@ public class BlogAct {
 	public String tzsetting(HttpServletRequest request,HttpServletResponse response, ModelMap model) {
 		CmsSite site = CmsUtils.getSite(request);
 		CmsUser user = CmsUtils.getUser(request);
-		if (user == null) {
-			return FrontUtils.showLogin(request, model, site);
-		}
 		FrontUtils.frontData(request, model, site);
+		if (user == null) {
+			return "/WEB-INF/t/cms/www/default/blog/login.html";
+		}
 		return "/WEB-INF/t/cms/www/default/blog/blog_setting_refresh.html";
 		//return FrontUtils.getTplPath(request, site.getSolutionPath(),TPLDIR_BLOG,"tpl.blogSetting");
 	}
@@ -1585,15 +1585,15 @@ public class BlogAct {
 			HttpServletRequest request, ModelMap model) {
 		CmsSite site = CmsUtils.getSite(request);
 		CmsUser user = CmsUtils.getUser(request);
+		FrontUtils.frontData(request, model, site);
 		if (user == null) {
-			return FrontUtils.showLogin(request, model, site);
+			return "/WEB-INF/t/cms/www/default/blog/login.html";
 		}
 		String ccid=request.getParameter("ccId");
 		if(StringUtils.isNotEmpty(ccid)){
 			model.addAttribute("ccId", ccid);
 		}
 		model = blogCommon.getColumn(request,model,user);
-		FrontUtils.frontData(request, model, site);
 		if (!StringUtils.isBlank(q)) {
 			model.addAttribute("q", q);
 		}
@@ -1887,8 +1887,9 @@ public class BlogAct {
 	public String update_tz(String id,HttpServletRequest request,HttpServletResponse response, ModelMap model) {
 		CmsSite site = CmsUtils.getSite(request);
 		CmsUser user = CmsUtils.getUser(request);
+		FrontUtils.frontData(request, model, site);
 		if (user == null) {
-			return FrontUtils.showLogin(request, model, site);
+			return "/WEB-INF/t/cms/www/default/blog/login.html";
 		}
 		Columns column = columnsMng.findById(Integer.parseInt(id));
 		List<Columns> twoList=columnsMng.findTwoByParentId(Integer.valueOf(id));
@@ -1900,7 +1901,6 @@ public class BlogAct {
 		int joinStatus = columnsMng.delGroup(id,user);
 		model.addAttribute("joinStatus", joinStatus);
 		model.addAttribute("column", column);
-		FrontUtils.frontData(request, model, site);
 		return "/WEB-INF/t/cms/www/default/blog/columns_update_refresh.html";
 		//return FrontUtils.getTplPath(request, site.getSolutionPath(),TPLDIR_BLOG,"tpl.columnsUpdate");
 	}
@@ -2179,7 +2179,7 @@ public class BlogAct {
 				u=cmsUserMng.findById(Integer.parseInt(uid));
 				model.addAttribute("usert", u);
 			}else{
-				return FrontUtils.showLogin(request, model, site);
+				return "/WEB-INF/t/cms/www/default/blog/login.html";
 			}
 		}
 		//好友
@@ -2201,17 +2201,9 @@ public class BlogAct {
 		}
 		model.addAttribute("checkPageInfo", 0);
 		model.addAttribute("q", "");
-		model =blogCommon.getHyperlink(request,model,u);
-		model = blogCommon.getChannel(request,model,u,site);
-		model = blogCommon.getColumn(request,model,u);
-		int totalCount = blogCommon.getTotalArticleNum(model,u);
-		model.addAttribute("articleCount", totalCount);
- 		model = blogCommon.getTotalCommentNum(model, u);
- 		model = blogCommon.getStarBlogger(request, model);
- 		model = blogCommon.getAlreadyJoinGroup(request, model,u);
- 		model = blogCommon.getFriendLeft(u.getId(),model,1);
 		FrontUtils.frontData(request, model, site);
-		return FrontUtils.getTplPath(request, site.getSolutionPath(),TPLDIR_BLOG,"tpl.dataShow");
+		return "/WEB-INF/t/cms/www/default/blog/data_show_refresh.html";
+		//return FrontUtils.getTplPath(request, site.getSolutionPath(),TPLDIR_BLOG,"tpl.dataShow");
 	}
 	
 	public String gotoDataShowFriend(int dataFlag, HttpServletRequest request,HttpServletResponse response, ModelMap model,Integer pageNo,String userId) {

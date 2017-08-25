@@ -1,3 +1,6 @@
+<link  type="text/css" rel="stylesheet" href="/${res}/css/jquery.mloading.css" />
+<link  href="/${res}/css/jquery.mloading.less" />
+<script  type="text/javascript" src="/${res}/js/jquery.mloading.js"></script>
 <style>
 ::-webkit-scrollbar{width:0px}
 .clear{clear:both}
@@ -52,6 +55,7 @@ function addUpdateFriends(){
             				alert("好友添加失败");
             				return false;
             			}else{
+            				$("body").mLoading();
             				$.ajax({
             			           type: 'GET',
             			           url : '${base}/blog/refreshColumn.jspx',
@@ -64,6 +68,7 @@ function addUpdateFriends(){
             			               if(window._bd_share_main){
             			            	   window._bd_share_main.init();
             			            	}
+            			               $("body").mLoading("hide");
             			  	   		 }
             			 	});
                              return true;
@@ -85,9 +90,10 @@ function addUpdateFriends(){
 		                type:'POST',
 		                data:"",
 		                dataType:'json',
-		                async:false,
+		                async:true,
 		                success:function(data) {
 		                    if(data.status=="") {
+		                    	$("body").mLoading();
 		                    	$.ajax({
 		                    		url:"${base}/blog/add_friends_refresh.jspx",
 		                    		type:"POST",
@@ -110,6 +116,7 @@ function addUpdateFriends(){
 		                    			               if(window._bd_share_main){
 		                    			            	   window._bd_share_main.init();
 		                    			            	}
+		                    			               $("body").mLoading("hide");
 		                    			  	   		 }
 		                    			 	});
 		                                     return true;

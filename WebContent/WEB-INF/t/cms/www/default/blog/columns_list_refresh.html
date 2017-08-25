@@ -1,3 +1,6 @@
+<link  type="text/css" rel="stylesheet" href="/${res}/css/jquery.mloading.css" />
+<link  href="/${res}/css/jquery.mloading.less" />
+<script  type="text/javascript" src="/${res}/js/jquery.mloading.js"></script>
 <script type="text/javascript">
 $(function(){
 $('.user-menu-links li').click(function(){
@@ -227,6 +230,7 @@ function addColumRefresh(){
         		    				alert("验证码已存在!");
         		    				return false;
         		    			}else{
+        		    				$("body").mLoading();
         		    				$.ajax({
         	        		    		url:"${base}/blog/columns_add_refresh.jspx",
         	        		    		type:"POST",
@@ -252,6 +256,7 @@ function addColumRefresh(){
         	        		    			               if(window._bd_share_main){
         	        		    			            	   window._bd_share_main.init();
         	        		    			            	}
+        	        		    			               $("body").mLoading("hide");
         	        		    			  	   		 }
         	        		    			 	});
         	     		                        return true;
@@ -263,6 +268,7 @@ function addColumRefresh(){
         		    	});
         		    	return false;
         		     }else{
+        		    	 $("body").mLoading();
         		    	 $.ajax({
 	        		    		url:"${base}/blog/columns_add_refresh.jspx",
 	        		    		type:"POST",
@@ -288,6 +294,7 @@ function addColumRefresh(){
 	        		    			               if(window._bd_share_main){
 	        		    			            	   window._bd_share_main.init();
 	        		    			            	}
+	        		    			               $("body").mLoading("hide");
 	        		    			  	   		 }
 	        		    			 	});
 	     		                        return true;
