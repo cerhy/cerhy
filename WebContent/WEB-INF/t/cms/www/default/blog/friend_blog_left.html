@@ -1,4 +1,3 @@
-<link rel="stylesheet" type="text/css" href="/${res}/css/normalize.css" />
 <link rel="stylesheet" type="text/css" href="/${res}/css/default.css">
 <link rel="stylesheet" type="text/css" href="/${res}/css/styles.css">
 <style>
@@ -128,7 +127,9 @@
 						    [#list paginationLeft.list as user]
 						    	<li><a href="${base}/blog/find_all_url_friend.jspx?userIds=${user.id}" target="_blank" title="[#if user.nicknames??]${user.nicknames}[#else]${user.username}[/#if]"><img [#if user.userImg??]src="${user.userImg}"[#else]src="/${res}/images/userImg-large.png"[/#if] width="20" height="20" alt="" style="float: left;padding: 0 10px 0 0;">[#if user.nicknames??][@text_cut s=user.nicknames len=12 append='...'/][#else]${user.username}[/#if]</a></li>
 						    [/#list]
-				               <li><a href="${base}/blog/gotoDataShowFriend.jspx?dataFlag=1&userId=${usert.id}">更多 &nbsp;>></a></li>
+							    [#if paginationLeft.list?size>9]
+					               <li><a href="javascript:;" onclick="gotoDataShowFriend('${base}/blog/gotoDataShowFriend.jspx?dataFlag=1&userId=${usert.id}')">更多 &nbsp;>></a></li>
+							    [/#if]
 		                    [#else]
 		                    <br />
 						    [/#if]
@@ -178,7 +179,7 @@
 		                      <li><a href="${base}/blog/find_all_url_friend.jspx?userIds=${c.id}" target="_blank" title="[#if c.realname??]${c.realname}[#else]${c.username}[/#if]"><img [#if c.userImg??]src="${c.userImg}"[#else]src="/${res}/images/userImg-large.png"[/#if] width="20" height="20" alt="" style="float: left;padding: 0 10px 0 0;">[#if c.realname??][@text_cut s=c.realname len=5 append='...'/][#else]${c.username}[/#if]</a></li>
 			                [/#list]
 	                        [#if moreStarBloggerExist??]
-			                 <li><a href="${base}/blog/gotoDataShowFriend.jspx?dataFlag=4&userId=${usert.id}">更多 &nbsp;>></a></li>
+			                 <li><a href="javascript:;" onclick="gotoDataShowFriend('${base}/blog/gotoDataShowFriend.jspx?dataFlag=4&userId=${usert.id}')">更多 &nbsp;>></a></li>
 	                        [/#if]
 			                [/#if]
 					   </ul>
@@ -665,3 +666,27 @@
 	}
 	
 	</script>
+<script type="text/javascript">
+function gotoDataShowFriend(url){
+	if(typeof($("#no3").val())!='undefined'){
+		 delPos();
+	};
+	$.ajax({
+        type: 'GET',
+        url : url,
+        dataType:"html",
+        async: true,
+        success : function(datas){
+		   $("#zd_u-hilite-cap").remove();
+		   $("#zdId").remove();
+		   $("#u-hilite-cap").remove();
+		   $(".wrap-right").empty();
+	       $(".wrap-right").append(datas);
+	       if(window._bd_share_main){
+	         window._bd_share_main.init();
+	       }
+       	  
+	   	}
+	});	
+}
+</script>

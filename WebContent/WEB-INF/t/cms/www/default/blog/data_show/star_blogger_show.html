@@ -82,7 +82,18 @@
 						 	});
 	                    	//tableForm.action="${base}/blog/gotoDataShow.jspx?dataFlag=4";      
 	                    }else{
-	                    	tableForm.action="${base}/blog/gotoDataShowFriend.jspx?dataFlag=4&userId="+$("#ut").val();      
+	                    	$.ajax({
+						           type: 'POST',
+						           url : '${base}/blog/gotoDataShowFriend.jspx?dataFlag=4&userId='+$("#ut").val(),
+						           dataType:"html",
+						           data : {'pageNo':pageNo},
+						           async: true,
+						           success : function(datas){
+						        	   $(".wrap-right").empty();
+						            	$(".wrap-right").append(datas);		
+						  	   		 }
+						 	});
+	                    	//tableForm.action="${base}/blog/gotoDataShowFriend.jspx?dataFlag=4&userId="+$("#ut").val();      
 	                    }
 	                    //tableForm.onsubmit=null;
 	                    //tableForm.submit();

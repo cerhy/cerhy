@@ -233,7 +233,7 @@ outline: none;
 						    		<li><a href="${base}/blog/find_all_url_friend.jspx?userIds=${user.id}" target="_blank" title="[#if user.nicknames??]${user.nicknames}[#else]${user.username}[/#if]"><img [#if user.userImg??]src="${user.userImg}"[#else]src="/${res}/images/userImg-large.png"[/#if] width="20" height="20" alt="" style="float: left;padding: 0 10px 0 0;">[#if user.nicknames??][@text_cut s=user.nicknames len=12 append='...'/][#else]${user.username}[/#if]</a></li>
 						    	[/#if]
 						    [/#list]
-						    [#if paginationLeft.list?size=10]
+						    [#if paginationLeft.list?size>9]
 							    [#if user??]
 					               <li><a href="javascript:;" onclick="gotoDataShow('${base}/blog/gotoDataShow.jspx?dataFlag=1')">更多 &nbsp;>></a></li>
 			               		[#else]
