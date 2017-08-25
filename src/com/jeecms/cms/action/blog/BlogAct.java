@@ -374,15 +374,9 @@ public class BlogAct {
 			//return FrontUtils.showLogin(request, model, site);
 			return "/WEB-INF/t/cms/www/default/blog/login.html";
 		}
-		model =blogCommon.getHyperlink(request,model,user);
 		model = blogCommon.getColumn(request,model,user);
 	    model = blogCommon.getChannel(request,model,user,site);
-	    int totalCount = blogCommon.getTotalArticleNum(model,user);
-	    model.addAttribute("articleCount", totalCount);
- 		model = blogCommon.getTotalCommentNum(model, user);
- 		model = blogCommon.getStarBlogger(request, model);
  		model = blogCommon.getAlreadyJoinGroup(request, model,user);
- 		model = blogCommon.getFriendLeft(user.getId(),model,1);
 		if(hasPermission){
 			model.addAttribute("site", site);
 			model.addAttribute("sessionId",request.getSession().getId());
