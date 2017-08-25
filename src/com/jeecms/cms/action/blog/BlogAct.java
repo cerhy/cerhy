@@ -371,7 +371,8 @@ public class BlogAct {
 		CmsUser user = CmsUtils.getUser(request);
 		FrontUtils.frontData(request, model, site);
 		if (user == null) {
-			return FrontUtils.showLogin(request, model, site);
+			//return FrontUtils.showLogin(request, model, site);
+			return "/WEB-INF/t/cms/www/default/blog/login.html";
 		}
 		model =blogCommon.getHyperlink(request,model,user);
 		model = blogCommon.getColumn(request,model,user);
@@ -414,7 +415,8 @@ public class BlogAct {
 		WebErrors errors = validateSaves(title, author, description, txt,doc,
 				tagStr,site, user, captcha, request, response,mediaPath,attachmentPaths);
 		if (errors.hasErrors()) {
-			return FrontUtils.showError(request, response, model, errors);
+			//return FrontUtils.showError(request, response, model, errors);
+			return "fail";
 		}
 		c.setSite(site);
 		CmsModel defaultModel=cmsModelMng.getDefModel();
@@ -443,7 +445,8 @@ public class BlogAct {
 		t.setTxt(txt);
 		ContentType type = contentTypeMng.getDef();
 		if (type == null) {
-			throw new RuntimeException("Default ContentType not found.");
+			//throw new RuntimeException("Default ContentType not found.");
+			return "fail";
 		}
 		Integer typeId = type.getId();
 		String[] tagArr = StrUtils.splitAndTrim(tagStr, ",", null);
@@ -457,7 +460,7 @@ public class BlogAct {
 					charge,chargeAmount, user, true,password,request);
 		} catch (Exception e) {
 			log.error("**********************blogsave  error", e);
-			e.printStackTrace();
+			return "fail";
 		}
 		if(doc!=null){
 			contentDocMng.save(doc, c);
@@ -875,7 +878,8 @@ public class BlogAct {
 		FrontUtils.frontData(request, model, site);
 		
 		if (user == null) {
-			return FrontUtils.showLogin(request, model, site);
+			return "/WEB-INF/t/cms/www/default/blog/login.html";
+			//return FrontUtils.showLogin(request, model, site);
 		}
 		model = blogCommon.getColumn(request,model,user);
 	    model = blogCommon.getChannel(request,model,user,site);
@@ -1570,6 +1574,10 @@ public class BlogAct {
 	public String ajax_blog_delete(Integer contentId, HttpServletRequest request,
 			  HttpServletResponse response, ModelMap model) {
 		String result ="success";
+		CmsUser user = CmsUtils.getUser(request);
+		if (user == null) {
+			return "login";
+		}
 		try {
 			//删除博客
 			contentMng.deleteByIdBlog(contentId);

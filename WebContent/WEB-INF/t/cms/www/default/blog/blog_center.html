@@ -233,7 +233,10 @@ function zdShowHidden(){
 			      		       	               $(".wrap-right").append(datas);		
 			      		       	  	   		 }
 			      		       	 	});
-			      		        	  }else{
+			      		        	  }else if(code=="login"){
+			      		        		alert("登录状态失效,请先登录！");
+			      		        	  }
+			      		        	  else{
 			      		        		  alert("删除失败！");
 			      		        	  }
 			      		  	   		 }
@@ -267,12 +270,17 @@ function zdShowHidden(){
 			                    dataType:"html",
 			                   data : {},
 			                   success : function(datas){
-			                	 $("#zd_u-hilite-cap").remove();
-			      	        	 $("#zdId").remove();
-			      	        	 $("#u-hilite-cap").remove();
-			      	        	 
-			                  	 $(".wrap-right").empty();
-			                  	 $(".wrap-right").append(datas);
+			                	   if(datas=="login"){
+			  	            		 location.href="${base}/login.jspx";
+			  	            	 }else{
+			  	            		 $("#zd_u-hilite-cap").remove();
+				      	        	 $("#zdId").remove();
+				      	        	 $("#u-hilite-cap").remove();
+				      	        	 
+				                  	 $(".wrap-right").empty();
+				                  	 $(".wrap-right").append(datas);
+			  	            	 }
+			                	
 			          	   		 }
 			         		 });
 			      		 
@@ -292,8 +300,13 @@ function zdShowHidden(){
 									           dataType:"html",
 									           data : {'queryTitle' : queryTitle,'pageNo':pageNo},
 									           success : function(datas){
-									        	   $(".wrap-right").empty();
-									               $(".wrap-right").append(datas);		
+									        	   if(datas=="login"){
+									            		 location.href="${base}/login.jspx";
+									            	 }else{
+									            		 $(".wrap-right").empty();
+											               $(".wrap-right").append(datas);	 
+									            	 }
+									        	   	
 									  	   		 }
 									 	});
 			                    		//tableForm.action="${base}/blog/index.jspx";
@@ -305,8 +318,12 @@ function zdShowHidden(){
 								           dataType:"html",
 								           data : {'queryTitle' : queryTitle,'pageNo':pageNo,'uid':$("#hy").val()},
 								           success : function(datas){
-								        	   $(".wrap-right").empty();
-								               $(".wrap-right").append(datas);		
+								        	   if(datas=="login"){
+								            		 location.href="${base}/login.jspx";
+								            	 }else{
+										        	   $(".wrap-right").empty();
+										               $(".wrap-right").append(datas);	
+								            	 }
 								  	   		 }
 								 	});
 			                    	

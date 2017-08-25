@@ -550,7 +550,11 @@ function addPd(obj){
 		                alert("Connection error");
 		            },
 		            success: function(data) {
+		            	
 		            	os.disabled = false; 
+		            	var code=data.code;
+		            	if(code=="success"){
+		            		alert("发布成功！");
 		            	 $.ajax({
 		      	           type: 'POST',
 		      	           url : '/cerhy/blog/indexs.jspx',
@@ -563,6 +567,11 @@ function addPd(obj){
 		      	               $(".wrap-right").append(datas);		
 		      	  	   		 }
 		      	 	});
+		            	}else if(code=="login"){
+		            		alert("登录状态失效,请先登录！");
+		            	}else{
+		            		alert("发布失败！");
+		            	}
 		            }
 		        });
 		  }
