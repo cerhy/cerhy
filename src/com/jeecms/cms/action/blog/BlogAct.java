@@ -2238,19 +2238,9 @@ public class BlogAct {
 			model.addAttribute("dataFlag", 4);
 		}
 		model.addAttribute("checkPageInfo", 1);
-		model =blogCommon.getHyperlink(request,model,u);
-		model = blogCommon.getChannel(request,model,u,site);
-		model = blogCommon.getColumn(request,model,u);
-		int totalCount = blogCommon.getTotalArticleNum(model,u);
-		model.addAttribute("articleCount", totalCount);
- 		model = blogCommon.getTotalCommentNum(model, u);
- 		model = blogCommon.getStarBlogger(request, model);
- 		model = blogCommon.getAlreadyJoinGroup(request, model,u);
- 		model = blogCommon.getAddFriends(request, model,u,user);
- 		model = blogCommon.getFouces(request, model,u,user);
- 		model = blogCommon.getFriendLeft(u.getId(),model,1);
 		FrontUtils.frontData(request, model, site);
-		return FrontUtils.getTplPath(request, site.getSolutionPath(),TPLDIR_BLOG,"tpl.frienddataShow");
+		return "/WEB-INF/t/cms/www/default/blog/friend_data_show_refresh.html";
+		//return FrontUtils.getTplPath(request, site.getSolutionPath(),TPLDIR_BLOG,"tpl.frienddataShow");
 	}
 	
 	public String blogContentShow(String[] paths,String[] params,
