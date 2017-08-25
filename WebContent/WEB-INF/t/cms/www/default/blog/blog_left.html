@@ -571,8 +571,12 @@ function sJoinGroup(){
 	
 	function myblog(channelId,joinGroupStata,columnId,uid){
 		if (typeof CKEDITOR != "undefined") { 
+			debugger;
 			 var oEditor = CKEDITOR.instances.txt;
-			   oEditor.destroy(true);
+			if(oEditor!="undefined" && oEditor!=undefined ){
+				 oEditor.destroy(true);
+			}
+			  
 		  }
 		if(typeof($("#no3").val())!='undefined'){
 			 delPos();
