@@ -78,8 +78,13 @@
 									           data : {'queryTitle' : queryTitle,'modelId' : null,'queryChannelId' : null,'pageNo':pageNo,'channelId':null,'joinGroupStata':null,'columnId':null,'userIds':null},
 									           async: false,
 									           success : function(datas){
-									        	   $(".wrap-right").empty();
-									               $(".wrap-right").append(datas);		
+									        	   if(datas=="login"){
+									            		 location.href="${base}/login.jspx";
+									            	 }else{
+									            		 $(".wrap-right").empty();
+											               $(".wrap-right").append(datas);	
+									            	 }
+									        	  	
 									  	   		 }
 									 	});
 				                    	// tableForm.action="${base}/blog/index.jspx?queryTitle="+queryTitle;
@@ -90,8 +95,13 @@
 									           dataType:"html",
 									           data : {'queryTitle' : null,'modelId' : null,'queryChannelId' : null,'pageNo':pageNo,'channelId':null,'joinGroupStata':null,'columnId':null,'userIds':null},
 									           success : function(datas){
-									        	   $(".wrap-right").empty();
-									               $(".wrap-right").append(datas);		
+									        	   if(datas=="login"){
+									            		 location.href="${base}/login.jspx";
+									            	 }else{
+									            		  $(".wrap-right").empty();
+											               $(".wrap-right").append(datas);	
+									            	 }
+									        	 	
 									  	   		 }
 									 	});
 			                    		//tableForm.action="${base}/blog/index.jspx";
@@ -131,7 +141,7 @@ var html ="";
 	html  +="[#if stickList??]";
 	html  +="[#if stickList?size gt 0]"; 
 	html  +="[#list stickList as sti]"; 
-	html  +="<li class=\"row\"><a cmd=\"LoadTopic\" _list=\"hilite\"  href=\"${base}/${sti.path}/${sti.contentId}.jhtml?d=1&currentId=${sti.id}&stickUserId=${sti.stickUserId}\" >${sti.contentTitle}</a> <span class=\"lt\">(${sti.contentTime?string('yyyy-MM-dd')})</span></li>				           [/#list]"; 
+	html  +="<li class=\"row\"><a cmd=\"LoadTopic\" _list=\"hilite\"  href=\"javascript:void(0);\" onclick=\"myblogZdShow('${base}','${sti.path}',${sti.contentId},${sti.id},${sti.stickUserId})\">${sti.contentTitle}</a> <span class=\"lt\">(${sti.contentTime?string('yyyy-MM-dd')})</span></li>				           [/#list]"; 
 	html  +=" [#else]"; 
 	html  +="<li class=\"row\" >暂无置顶内容！ </li>"; 
 	html  +=" [/#if]"; 
