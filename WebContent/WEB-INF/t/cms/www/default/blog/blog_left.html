@@ -601,7 +601,9 @@ function sJoinGroup(){
 	function contributeAdd(){
 		if (typeof CKEDITOR != "undefined") { 
 			 var oEditor = CKEDITOR.instances.txt;
-			   oEditor.destroy(true);
+			 if(oEditor!="undefined" && oEditor!=undefined ){
+				 oEditor.destroy(true);
+			}
 		  }
 	 	 $.ajax({
              type: 'POST',
