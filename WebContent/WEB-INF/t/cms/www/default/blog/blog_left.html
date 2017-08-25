@@ -570,6 +570,10 @@ function sJoinGroup(){
 	});
 	
 	function myblog(channelId,joinGroupStata,columnId,uid){
+		if (typeof CKEDITOR != "undefined") { 
+			 var oEditor = CKEDITOR.instances.txt;
+			   oEditor.destroy(true);
+		  }
 		if(typeof($("#no3").val())!='undefined'){
 			 delPos();
 		};
@@ -592,19 +596,27 @@ function sJoinGroup(){
 	}
 	
 	function contributeAdd(){
-		
+		if (typeof CKEDITOR != "undefined") { 
+			 var oEditor = CKEDITOR.instances.txt;
+			   oEditor.destroy(true);
+		  }
 	 	 $.ajax({
              type: 'POST',
              url : ' ${base}/blog/contribute_ajax_add.jspx',
               dataType:"html",
              data : {},
              success : function(datas){
-            	 $("#zd_u-hilite-cap").remove();
-	        	 $("#zdId").remove();
-	        	 $("#u-hilite-cap").remove();
-	        	 
-            	 $(".wrap-right").empty();
-            	 $(".wrap-right").append(datas);
+            	 if(datas=="login"){
+            		 location.href="${base}/login.jspx";
+            	 }else{
+            		 $("#zd_u-hilite-cap").remove();
+    	        	 $("#zdId").remove();
+    	        	 $("#u-hilite-cap").remove();
+    	        	 
+                	 $(".wrap-right").empty();
+                	 $(".wrap-right").append(datas); 
+            	 }
+            
     	   		 }
    		 });
 	}
