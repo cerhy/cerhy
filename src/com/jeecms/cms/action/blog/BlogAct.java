@@ -878,7 +878,8 @@ public class BlogAct {
 		FrontUtils.frontData(request, model, site);
 		
 		if (user == null) {
-			return FrontUtils.showLogin(request, model, site);
+			return "/WEB-INF/t/cms/www/default/blog/login.html";
+			//return FrontUtils.showLogin(request, model, site);
 		}
 		model = blogCommon.getColumn(request,model,user);
 	    model = blogCommon.getChannel(request,model,user,site);
@@ -1573,6 +1574,10 @@ public class BlogAct {
 	public String ajax_blog_delete(Integer contentId, HttpServletRequest request,
 			  HttpServletResponse response, ModelMap model) {
 		String result ="success";
+		CmsUser user = CmsUtils.getUser(request);
+		if (user == null) {
+			return "login";
+		}
 		try {
 			//删除博客
 			contentMng.deleteByIdBlog(contentId);
