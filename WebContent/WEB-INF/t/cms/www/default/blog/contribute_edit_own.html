@@ -147,22 +147,10 @@ $('.user-menu-links li').click(function(){
 });
 });
 </script>
-<link  type="text/css" rel="stylesheet" href="/${res}/css/SimpleTree.css" />
-<script src="/${res}/js/SimpleTree.js"></script>
 <style>
 .clear{clear:both}
 .sel-disabled{background-color:#ccc}
 </style>
-<script type="text/javascript">
-$(function(){
-	$(".st_tree").SimpleTree({
-		click:function(a){
-			if(!$(a).attr("hasChild"))
-				alert($(a).attr("ref"));
-		}
-	});
-});
-</script>
 
 <div id="contextMenus"></div>
 
@@ -571,7 +559,7 @@ function ajaxconmit(formId){
 	            		alert("修改成功！");
 	            		 $.ajax({
 	  	      	           type: 'POST',
-	  	      	           url : '/cerhy/blog/indexs.jspx',
+	  	      	           url : '${base}/blog/indexs.jspx',
 	  	      	           dataType:"html",
 	  	      	           async: true,
 	  	      	           success : function(datas){
@@ -605,7 +593,7 @@ function addPd(obj){
 function backCancel(){
 	 $.ajax({
 	           type: 'POST',
-	           url : '/cerhy/blog/indexs.jspx',
+	           url : '${base}/blog/indexs.jspx',
 	           dataType:"html",
 	           async: true,
 	           success : function(datas){

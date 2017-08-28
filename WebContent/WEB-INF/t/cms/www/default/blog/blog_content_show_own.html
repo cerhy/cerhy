@@ -1380,7 +1380,7 @@ function okps(){
 	           async: true,
 	           success : function(datas){
 	        	   if(datas=="login"){
-	            		 location.href="/cerhy/login.jspx";
+	            		 location.href="${base}/login.jspx";
 	            	 }else{
 	            	   $(".wrap-right").empty();
 	   	               $(".wrap-right").append(datas);	
