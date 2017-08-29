@@ -78,24 +78,12 @@ font-size: 25px!important;
 </html>
 <script type="text/javascript">
 $(".content-txt p img").each(function(){
-	var width =$(this).width();
-	var height = $(this).height();
-	if(width>600){
-		var shang =  (width/height).toFixed(2);
-		var newHeight = parseInt(600/shang);
 		$(this).css("width","90%");
 		$(this).css("height","90%");
-}
 });
 
 $(".content-txt .img-box span img").each(function(){
-	var width =$(this).width();
-	var height = $(this).height();
-	if(width>600){
-		var shang =  (width/height).toFixed(2);
-		var newHeight = parseInt(600/shang);
-		$(this).css("width","600px");
-		$(this).css("height",newHeight+"px");
-}
+	$(this).css("width","90%");
+	$(this).css("height","90%");
 });
 </script>
