@@ -200,6 +200,7 @@ outline: none;
 				        <a href="javascript:void(0);" onclick="contributeDelete(${content.id});">删除</a>&nbsp;
 				        <a href="javascript:void(0);" onclick="contributeUpdate(${content.id});" >修改</a>
 						<span id="cancelSpan"  class="pos"><a href="javascript:void(0);" onclick="send();">发送</a></span>&nbsp;
+						<input type="hidden" name="contentId" id="contentId" value="${content.id}"/>
 						<span id="cancelSpan"  class="pos"><a href="javascript:void(0);" onclick="cancel();">撤销 </a></span>&nbsp;
 						[#if isStick??]
 							<span id="cancelStickSpan"  class="pos"><a href="javascript:void(0);" onclick="canCelstick(${content.id},0);">取消置顶</a></span>&nbsp;
@@ -486,7 +487,7 @@ function delPos(){
       				</tbody>
       			</table>      	
       			<div class="themeButton">	
-      			<input type="hidden" name="contentId" id="contentId" value="${content.id}"/>
+      			
    <!--    			<input type="submit" value="确定" class="submit"  style="margin:30px 40px 0 0px"/>
 	        	<button type="button" onclick="closeSendDialog();" class="submit" style="margin:30px 40px 0 10px">取消</button> -->
 	        	</div>
