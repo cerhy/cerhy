@@ -147,22 +147,10 @@ $('.user-menu-links li').click(function(){
 });
 });
 </script>
-<link  type="text/css" rel="stylesheet" href="/${res}/css/SimpleTree.css" />
-<script src="/${res}/js/SimpleTree.js"></script>
 <style>
 .clear{clear:both}
 .sel-disabled{background-color:#ccc}
 </style>
-<script type="text/javascript">
-$(function(){
-	$(".st_tree").SimpleTree({
-		click:function(a){
-			if(!$(a).attr("hasChild"))
-				alert($(a).attr("ref"));
-		}
-	});
-});
-</script>
 
 <div id="contextMenus"></div>
 
@@ -553,16 +541,17 @@ function ajaxconmit(formId){
 						return ;
 				    }
 			}
-			
+			CKEDITOR.instances.txt.updateElement();
 			var os = document.getElementById("tj");
 			os.disabled = true; 
 	    	$.ajax({
 	            dataType : 'json',
-	            type: "GET",
-	            url: "${base}/member/contribute_ajax_update.jspx?blog=1&contentTxt="+contentTxt,
+	            type: "POST",
+	            url: "${base}/member/contribute_ajax_update.jspx?blog=1",
 	            data:$('#'+formId).serialize(),
 	            error: function(request) {
 	                alert("Connection error");
+	                os.disabled = false; 
 	            },
 	            success: function(data) {
 	            	os.disabled = false; 
@@ -571,7 +560,7 @@ function ajaxconmit(formId){
 	            		alert("修改成功！");
 	            		 $.ajax({
 	  	      	           type: 'POST',
-	  	      	           url : '/cerhy/blog/indexs.jspx',
+	  	      	           url : '${base}/blog/indexs.jspx',
 	  	      	           dataType:"html",
 	  	      	           async: true,
 	  	      	           success : function(datas){
@@ -605,7 +594,7 @@ function addPd(obj){
 function backCancel(){
 	 $.ajax({
 	           type: 'POST',
-	           url : '/cerhy/blog/indexs.jspx',
+	           url : '${base}/blog/indexs.jspx',
 	           dataType:"html",
 	           async: true,
 	           success : function(datas){

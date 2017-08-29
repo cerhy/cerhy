@@ -244,9 +244,9 @@ public class ContributeAct extends AbstractContentMemberAct {
 	 * @return
 	 * @throws TemplateException 
 	 */
-	@RequestMapping(value = "/member/contribute_ajaxsave.jspx")
+	@RequestMapping(value = "/member/contribute_ajaxsave.jspx",method=RequestMethod.POST)
 	public @ResponseBody String contribute_ajaxsave(String title, String author, String description,
-			String contentTxt, String tagStr, Integer channelId,Integer columnId,Integer modelId, 
+			String txt, String tagStr, Integer channelId,Integer columnId,Integer modelId, 
 			String captcha,String mediaPath,String mediaType,
 			String[] attachmentPaths, String[] attachmentNames,
 			String[] attachmentFilenames, String[] picPaths, String[] picDescs,
@@ -256,7 +256,7 @@ public class ContributeAct extends AbstractContentMemberAct {
 		   String channelIds = request.getParameter("channelIds");
 		   String password = request.getParameter("password");
 		   //String showStyle= request.getParameter("showStyle");
-		   String txt=contentTxt;
+		   //String txt=contentTxt;
 		   int sta=0;
 		   JSONObject json = new JSONObject();
 		   if(channelIds!=null&&channelIds!=""){
@@ -542,9 +542,9 @@ public class ContributeAct extends AbstractContentMemberAct {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "/member/contribute_ajax_update.jspx")
+	@RequestMapping(value = "/member/contribute_ajax_update.jspx",method=RequestMethod.POST)
 	public @ResponseBody String ajaxUpdate(Integer id, String title, String author,
-			String description,String contentTxt, String tagStr, Integer columnId,Integer channelId,
+			String description,String txt, String tagStr, Integer columnId,Integer channelId,
 			String mediaPath,String mediaType,
 			String[] attachmentPaths, String[] attachmentNames,
 			String[] attachmentFilenames, String[] picPaths, String[] picDescs,
@@ -552,7 +552,6 @@ public class ContributeAct extends AbstractContentMemberAct {
 			String nextUrl, HttpServletRequest request,
 			HttpServletResponse response, ModelMap model,String password) {
 		JSONObject json = new JSONObject();
-		String txt=contentTxt;
 		//String showStyle= request.getParameter("showStyle");
 		String pw = request.getParameter("password");
 		String channelIds = request.getParameter("channelIds");
