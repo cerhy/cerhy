@@ -23,16 +23,16 @@
       <div class="link-content" style="width: 700px;">
          <form id="tableForm" action="${base}/blog/gotoDataShow.jspx?dataFlag=1" method="post">
 			 [#if paginations??]
-			   <div class="users-a-link-wrap clearfix" style="margin-top:40px;margin-left:25px;">
+			   <div class="users-a-link-wrap clearfix" style="margin-top:40px;">
 				   [#list paginations.list as user]
-	                  <div>
-		                <a target="_blank" href="${base}/blog/find_all_url_friend.jspx?userIds=${user.id}" class="users-a-link" style="margin-bottom: 30px;margin-left: 10px;margin-right: 10px;">
+	                  <div >
+		                <a target="_blank" href="${base}/blog/find_all_url_friend.jspx?userIds=${user.id}" class="users-a-link" style="margin-bottom: 30px;margin-left: 10px;margin-right: 10px;line-height: 25px;">
                         	[#if user.userImg??]
                         	<img src="${user.userImg!}" onerror="javascript:this.src='/${res}/images/userImg-large.png' " width="47" height="47" alt="[#if user.nicknames??]${user.nicknames}[#else]${user.username}[/#if]">
 	                        [#else]
 	                        <img src="/${res}/images/userImg-large.png" width="47" height="47" title="[#if user.nicknames??]${user.nicknames}[#else]${user.username}[/#if]">
 	                        [/#if]
-                            <span title="[#if user.nicknames??]${user.nicknames}[#else]${user.username}[/#if]">[#if user.nicknames??][@text_cut s=user.nicknames len=10 append='...'/][#else]${user.username}[/#if]</span>
+                            <span style="width: 60px;" title="[#if user.nicknames??]${user.nicknames}[#else]${user.username}[/#if]">[#if user.nicknames??][@text_cut s=user.nicknames len=10 append='...'/][#else]${user.username}[/#if]</span>
                             </a>
 	                  </div>
 				   [/#list]
