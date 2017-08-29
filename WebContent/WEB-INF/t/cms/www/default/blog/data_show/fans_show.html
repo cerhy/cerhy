@@ -27,9 +27,9 @@
 	                  <div>
 		                <a target="_blank" href="${base}/blog/find_all_url_friend.jspx?userIds=${user.id}" class="users-a-link" style="margin-bottom: 30px;margin-left: 10px;margin-right: 10px;">
                         	[#if user.userImg??]
-                        	<img src="${user.userImg}" onerror="javascript:this.src='/${res}/images/userImg-large.png' " width="47" height="47">
+                        	<img src="${user.userImg}" onerror="javascript:this.src='/${res}/images/userImg-large.png' " width="47" height="47" title="[#if user.realname??]${user.realname}[#else]${user.username}[/#if]">
 	                        [#else]
-	                        <img src="/${res}/images/userImg-large.png" width="47" height="47">
+	                        <img src="/${res}/images/userImg-large.png" width="47" height="47" title="[#if user.realname??]${user.realname}[#else]${user.username}[/#if]">
 	                        [/#if]
                             <span title="[#if user.realname??]${user.realname}[#else]${user.username}[/#if]">[#if user.realname??][@text_cut s=user.realname len=5 append='...'/][#else]${user.username}[/#if]</span>
                             </a>

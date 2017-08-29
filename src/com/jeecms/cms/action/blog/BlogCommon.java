@@ -333,14 +333,16 @@ public class BlogCommon {
 	    	}
 	    	if(null != l){
 	    		for(Focus f : l){
-	    			if(cmsUserMng.findById(f.getFocusUserId())!=null){
-	    				u.add(cmsUserMng.findById(f.getFocusUserId()));
+	    			CmsUser cc = cmsUserMng.findById(f.getFocusUserId());
+	    			if(null!=cc){
+	    				u.add(cc);
 	    			}
 	    		}
 	    	}else{
 	    		for(Focus f : list){
-	    			if(cmsUserMng.findById(f.getFocusUserId())!=null){
-	    				u.add(cmsUserMng.findById(f.getFocusUserId()));
+	    			CmsUser cc = cmsUserMng.findById(f.getFocusUserId());
+	    			if(null!=cc){
+	    				u.add(cc);
 	    			}
 	    		}
 	    	}
@@ -366,16 +368,16 @@ public class BlogCommon {
 			u = new ArrayList<CmsUser>();
 			if(pageNo*24 <= list.size()){
 				for(int i=(pageNo-1)*24;i<pageNo*24;i++){
-					if(cmsUserMng.findById(list.get(i).getFocusUserId())!=null){
-						
-						u.add(cmsUserMng.findById(list.get(i).getFocusUserId()));
+					CmsUser cc = cmsUserMng.findById(list.get(i).getFocusUserId());
+					if(null!=cc){
+						u.add(cc);
 					}
 				}
 			}else{
 				for(int i=(pageNo-1)*24;i<list.size();i++){
-					if(cmsUserMng.findById(list.get(i).getFocusUserId())!=null){
-						
-						u.add(cmsUserMng.findById(list.get(i).getFocusUserId()));
+					CmsUser cc = cmsUserMng.findById(list.get(i).getFocusUserId());
+					if(null!=cc){
+						u.add(cc);
 					}
 				}
 			}
