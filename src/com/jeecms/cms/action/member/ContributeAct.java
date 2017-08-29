@@ -705,31 +705,22 @@ public class ContributeAct extends AbstractContentMemberAct {
 	}
 	
 	@RequestMapping("/member/o_upload_media.jspx")
-	public @ResponseBody String uploadMedia(
+	public String uploadMedia(
 			@RequestParam(value = "mediaFile", required = false) MultipartFile file,
-			String filename, HttpServletRequest request, ModelMap model,HttpServletResponse response ) {
-		
+			String filename, HttpServletRequest request, ModelMap model) {
 		CmsSite site = CmsUtils.getSite(request);
 		CmsUser user = CmsUtils.getUser(request);
 		String origName = file.getOriginalFilename();
-		
-		JSONObject object = new JSONObject();
-		try {
 		String ext = FilenameUtils.getExtension(origName).toLowerCase(
 				Locale.ENGLISH);
 		WebErrors errors = validateUpload(file, request);
 		if (errors.hasErrors()) {
-			log.error(errors.getErrors().get(0));
-			//model.addAttribute("error", errors.getErrors().get(0));
-			//return FrontUtils.getTplPath(request, site.getSolutionPath(),
-				//	TPLDIR_MEMBER, CONTRIBUTE_Uerrors.getErrors().get(0)PLOADMIDIA);
-			object.put("code", "fail");
-			object.put("msg", errors.getErrors().get(0));
-			String newStr = new String(object.toString().getBytes("UTF-8"), "ISO8859_1");
-			return newStr;
+			model.addAttribute("error", errors.getErrors().get(0));
+			return FrontUtils.getTplPath(request, site.getSolutionPath(),
+					TPLDIR_MEMBER, CONTRIBUTE_UPLOADMIDIA);
 		}
 		// TODO 检查允许上传的后缀
-		
+		try {
 			String fileUrl;
 			if (site.getConfig().getUploadToDb()) {
 				String dbFilePath = site.getConfig().getDbFileUri();
@@ -773,20 +764,15 @@ public class ContributeAct extends AbstractContentMemberAct {
 			}
 			cmsUserMng.updateUploadSize(user.getId(), Integer.parseInt(String.valueOf(file.getSize()/1024)));
 			fileMng.saveFileByPath(fileUrl, fileUrl, false);
-			object.put("code", "success");
-			object.put("mediaPath", fileUrl);
+			model.addAttribute("mediaPath", fileUrl);
+			model.addAttribute("mediaExt", ext);
 		} catch (IllegalStateException e) {
-			//model.addAttribute("error", e.getMessage());
-			log.error(e.getMessage(),e);
+			model.addAttribute("error", e.getMessage());
 		} catch (IOException e) {
-			log.error(e.getMessage(),e);
-			//model.addAttribute("error", e.getMessage());
-		}catch (JSONException e) {
-			// TODO Auto-generated catch block
-			log.error(e.getMessage(),e);
+			model.addAttribute("error", e.getMessage());
 		}
-	
-		return object.toString();
+		return FrontUtils.getTplPath(request, site.getSolutionPath(),
+				TPLDIR_MEMBER, CONTRIBUTE_UPLOADMIDIA);
 	}
 	
 	@RequestMapping("/member/o_upload_attachment.jspx")

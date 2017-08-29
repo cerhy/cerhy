@@ -589,7 +589,7 @@ function sJoinGroup(){
             	 if(datas=="login"){
             		 location.href="${base}/login.jspx";
             	 }else{
-            		 $(".wrap-right").empty();
+            		 document.getElementById('wzId').innerHTML="";
                 	 $(".wrap-right").append(datas);
             	 }
             	
@@ -618,7 +618,7 @@ function sJoinGroup(){
     	        	 $("#zdId").remove();
     	        	 $("#u-hilite-cap").remove();
     	        	 
-                	 $(".wrap-right").empty();
+    	        	  document.getElementById('wzId').innerHTML="";
                 	 $(".wrap-right").append(datas); 
             	 }
             

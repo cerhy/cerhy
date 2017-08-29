@@ -286,11 +286,6 @@ $('.user-menu-links li').click(function(){
 						</span> 
 					</div>
 					<span style="color:#f00; margin-left:10px;" id="tishiType">*上传的视频文件须为MP4格式!</span>
-					<sap id="progressSapn" style="display:none" >
-						<progress value="0" max="100" id="progressId"></progress> 
-						<br/>
-						<span id="tishi"></span>
-					</sap>
                 </td>
               </tr>
               <tr style="display: none;">
@@ -552,7 +547,7 @@ function addPd(obj){
 		      	           success : function(datas){
 		      	        	 var oEditor = CKEDITOR.instances.txt;
 		      	        	 oEditor.destroy(true);
-		      	        	   $(".wrap-right").empty();
+		      	        	  document.getElementById('wzId').innerHTML="";
 		      	               $(".wrap-right").append(datas);		
 		      	  	   		 }
 		      	 	});
@@ -579,7 +574,7 @@ function addPd(obj){
 		      			}
 		      			  
 		      		  }
-		        	   $(".wrap-right").empty();
+		        	   document.getElementById('wzId').innerHTML="";
 		               $(".wrap-right").append(datas);		
 		  	   		 }
 		 	});
