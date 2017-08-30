@@ -204,7 +204,14 @@ function zdShowHidden(){
 			        	        	 $("#zd_u-hilite-cap").remove();
 			        	        	 $("#zdId").remove();
 			        	        	 $("#u-hilite-cap").remove();
-			        	        	 $(".wrap-right").empty();
+			        	        	 var wzid=document.getElementById('wzId');
+			                		 if(wzid!=null){
+			                			 document.getElementById('wzId').innerHTML="";
+			                		 }
+			                		 var maindiv=document.getElementById('maindiv');
+			                		 if(maindiv!=null){
+			                			 document.getElementById('maindiv').innerHTML="";
+			                		 }
 			        	        	 $(".wrap-right").append(datas);
 			        	        	
 			        		   		 }
@@ -229,7 +236,14 @@ function zdShowHidden(){
 			      		       	           dataType:"html",
 			      		       	           async: true,
 			      		       	           success : function(datas){
-			      		       	        	   $(".wrap-right").empty();
+			      		       	        	var wzid=document.getElementById('wzId');
+			      		            		 if(wzid!=null){
+			      		            			 document.getElementById('wzId').innerHTML="";
+			      		            		 }
+			      		            		 var maindiv=document.getElementById('maindiv');
+			      		            		 if(maindiv!=null){
+			      		            			 document.getElementById('maindiv').innerHTML="";
+			      		            		 }
 			      		       	               $(".wrap-right").append(datas);		
 			      		       	  	   		 }
 			      		       	 	});
@@ -256,7 +270,14 @@ function zdShowHidden(){
 			        	        	 $("#zd_u-hilite-cap").remove();
 			        	        	 $("#zdId").remove();
 			        	        	 $("#u-hilite-cap").remove();
-			        	        	 $(".wrap-right").empty();
+			        	        	 var wzid=document.getElementById('wzId');
+			                		 if(wzid!=null){
+			                			 document.getElementById('wzId').innerHTML="";
+			                		 }
+			                		 var maindiv=document.getElementById('maindiv');
+			                		 if(maindiv!=null){
+			                			 document.getElementById('maindiv').innerHTML="";
+			                		 }
 			        	        	 $(".wrap-right").append(datas);
 			        	        	
 			        		   		 }
@@ -277,7 +298,14 @@ function zdShowHidden(){
 				      	        	 $("#zdId").remove();
 				      	        	 $("#u-hilite-cap").remove();
 				      	        	 
-				                  	 $(".wrap-right").empty();
+				      	        	var wzid=document.getElementById('wzId');
+				            		 if(wzid!=null){
+				            			 document.getElementById('wzId').innerHTML="";
+				            		 }
+				            		 var maindiv=document.getElementById('maindiv');
+				            		 if(maindiv!=null){
+				            			 document.getElementById('maindiv').innerHTML="";
+				            		 }
 				                  	 $(".wrap-right").append(datas);
 			  	            	 }
 			                	
@@ -303,7 +331,14 @@ function zdShowHidden(){
 									        	   if(datas=="login"){
 									            		 location.href="${base}/login.jspx";
 									            	 }else{
-									            		 $(".wrap-right").empty();
+									            		 var wzid=document.getElementById('wzId');
+									            		 if(wzid!=null){
+									            			 document.getElementById('wzId').innerHTML="";
+									            		 }
+									            		 var maindiv=document.getElementById('maindiv');
+									            		 if(maindiv!=null){
+									            			 document.getElementById('maindiv').innerHTML="";
+									            		 }
 											               $(".wrap-right").append(datas);	 
 									            	 }
 									        	   	
@@ -321,7 +356,14 @@ function zdShowHidden(){
 								        	   if(datas=="login"){
 								            		 location.href="${base}/login.jspx";
 								            	 }else{
-										        	   $(".wrap-right").empty();
+								            		 var wzid=document.getElementById('wzId');
+								            		 if(wzid!=null){
+								            			 document.getElementById('wzId').innerHTML="";
+								            		 }
+								            		 var maindiv=document.getElementById('maindiv');
+								            		 if(maindiv!=null){
+								            			 document.getElementById('maindiv').innerHTML="";
+								            		 }
 										               $(".wrap-right").append(datas);	
 								            	 }
 								  	   		 }

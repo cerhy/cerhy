@@ -330,8 +330,15 @@
            data : {'queryTitle' : null,'modelId' : null,'queryChannelId' : null,'pageNo':null,'channelId':channelId,'joinGroupStata':joinGroupStata,'columnId':columnId,'user_ids':user_ids},
            async: true,
            success : function(datas){
-        	 $(".wrap-right").empty();
-          	 $(".wrap-right").append(datas);
+        	   var wzid=document.getElementById('wzId');
+      		 if(wzid!=null){
+      			 document.getElementById('wzId').innerHTML="";
+      		 }
+      		 var maindiv=document.getElementById('maindiv');
+      		 if(maindiv!=null){
+      			 document.getElementById('maindiv').innerHTML="";
+      		 }          	
+      		 $(".wrap-right").append(datas);
           	 //初始化百度分享组件,解决ajax局部刷新导致百度分享不了问题
           	if(window._bd_share_main){
          	   window._bd_share_main.init();
@@ -380,7 +387,14 @@
            dataType:"html",
            async: true,
            success : function(datas){
-        	   $(".wrap-right").empty();
+        	   var wzid=document.getElementById('wzId');
+      		 if(wzid!=null){
+      			 document.getElementById('wzId').innerHTML="";
+      		 }
+      		 var maindiv=document.getElementById('maindiv');
+      		 if(maindiv!=null){
+      			 document.getElementById('maindiv').innerHTML="";
+      		 }
                $(".wrap-right").append(datas);
                if(window._bd_share_main){
 
@@ -413,7 +427,14 @@
            dataType:"html",
            async: true,
            success : function(datas){
-        	   $(".wrap-right").empty();
+        	   var wzid=document.getElementById('wzId');
+      		 if(wzid!=null){
+      			 document.getElementById('wzId').innerHTML="";
+      		 }
+      		 var maindiv=document.getElementById('maindiv');
+      		 if(maindiv!=null){
+      			 document.getElementById('maindiv').innerHTML="";
+      		 };
                $(".wrap-right").append(datas);
                if(window._bd_share_main){
             	   window._bd_share_main.init();
@@ -446,7 +467,14 @@
            dataType:"html",
            async: true,
            success : function(datas){
-        	   $(".wrap-right").empty();
+        	   var wzid=document.getElementById('wzId');
+      		 if(wzid!=null){
+      			 document.getElementById('wzId').innerHTML="";
+      		 }
+      		 var maindiv=document.getElementById('maindiv');
+      		 if(maindiv!=null){
+      			 document.getElementById('maindiv').innerHTML="";
+      		 }
                $(".wrap-right").append(datas);
                if(window._bd_share_main){
             	   window._bd_share_main.init();
@@ -478,7 +506,14 @@
 	           dataType:"html",
 	           async: true,
 	           success : function(datas){
-	        	   $(".wrap-right").empty();
+	        	   var wzid=document.getElementById('wzId');
+          		 if(wzid!=null){
+          			 document.getElementById('wzId').innerHTML="";
+          		 }
+          		 var maindiv=document.getElementById('maindiv');
+          		 if(maindiv!=null){
+          			 document.getElementById('maindiv').innerHTML="";
+          		 }
 	               $(".wrap-right").append(datas);
 	               if(window._bd_share_main){
 	            	   window._bd_share_main.init();
@@ -516,7 +551,14 @@
            dataType:"html",
            async: true,
            success : function(datas){
-        	   $(".wrap-right").empty();
+        	   var wzid=document.getElementById('wzId');
+      		 if(wzid!=null){
+      			 document.getElementById('wzId').innerHTML="";
+      		 }
+      		 var maindiv=document.getElementById('maindiv');
+      		 if(maindiv!=null){
+      			 document.getElementById('maindiv').innerHTML="";
+      		 }
                $(".wrap-right").append(datas);
                if(window._bd_share_main){
             	   window._bd_share_main.init();
@@ -553,7 +595,14 @@
            dataType:"html",
            async: true,
            success : function(datas){
-        	   $(".wrap-right").empty();
+        	   var wzid=document.getElementById('wzId');
+      		 if(wzid!=null){
+      			 document.getElementById('wzId').innerHTML="";
+      		 }
+      		 var maindiv=document.getElementById('maindiv');
+      		 if(maindiv!=null){
+      			 document.getElementById('maindiv').innerHTML="";
+      		 }
                $(".wrap-right").append(datas);
                if(window._bd_share_main){
             	   window._bd_share_main.init();
@@ -586,7 +635,14 @@
           dataType:"html",
           async: true,
           success : function(datas){
-       	   $(".wrap-right").empty();
+        	  var wzid=document.getElementById('wzId');
+     		 if(wzid!=null){
+     			 document.getElementById('wzId').innerHTML="";
+     		 }
+     		 var maindiv=document.getElementById('maindiv');
+     		 if(maindiv!=null){
+     			 document.getElementById('maindiv').innerHTML="";
+     		 }
               $(".wrap-right").append(datas);
               if(window._bd_share_main){
 
@@ -620,7 +676,14 @@
          dataType:"html",
          async: true,
          success : function(datas){
-      	   $(".wrap-right").empty();
+        	 var wzid=document.getElementById('wzId');
+    		 if(wzid!=null){
+    			 document.getElementById('wzId').innerHTML="";
+    		 }
+    		 var maindiv=document.getElementById('maindiv');
+    		 if(maindiv!=null){
+    			 document.getElementById('maindiv').innerHTML="";
+    		 }
              $(".wrap-right").append(datas);
              if(window._bd_share_main){
 
@@ -655,7 +718,14 @@
         dataType:"html",
         async: true,
         success : function(datas){
-     	   $(".wrap-right").empty();
+        	var wzid=document.getElementById('wzId');
+   		 if(wzid!=null){
+   			 document.getElementById('wzId').innerHTML="";
+   		 }
+   		 var maindiv=document.getElementById('maindiv');
+   		 if(maindiv!=null){
+   			 document.getElementById('maindiv').innerHTML="";
+   		 }
             $(".wrap-right").append(datas);
             if(window._bd_share_main){
 
@@ -680,7 +750,14 @@ function gotoDataShowFriend(url){
 		   $("#zd_u-hilite-cap").remove();
 		   $("#zdId").remove();
 		   $("#u-hilite-cap").remove();
-		   $(".wrap-right").empty();
+		   var wzid=document.getElementById('wzId');
+  		 if(wzid!=null){
+  			 document.getElementById('wzId').innerHTML="";
+  		 }
+  		 var maindiv=document.getElementById('maindiv');
+  		 if(maindiv!=null){
+  			 document.getElementById('maindiv').innerHTML="";
+  		 }
 	       $(".wrap-right").append(datas);
 	       if(window._bd_share_main){
 	         window._bd_share_main.init();

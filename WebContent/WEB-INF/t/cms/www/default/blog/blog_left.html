@@ -589,7 +589,15 @@ function sJoinGroup(){
             	 if(datas=="login"){
             		 location.href="${base}/login.jspx";
             	 }else{
-            		 document.getElementById('wzId').innerHTML="";
+            		 var wzid=document.getElementById('wzId');
+            		 if(wzid!=null){
+            			 document.getElementById('wzId').innerHTML="";
+            		 }
+            		 var maindiv=document.getElementById('maindiv');
+            		 if(maindiv!=null){
+            			 document.getElementById('maindiv').innerHTML="";
+            		 }
+            		 
                 	 $(".wrap-right").append(datas);
             	 }
             	
@@ -618,7 +626,14 @@ function sJoinGroup(){
     	        	 $("#zdId").remove();
     	        	 $("#u-hilite-cap").remove();
     	        	 
-    	        	  document.getElementById('wzId').innerHTML="";
+    	        	 var wzid=document.getElementById('wzId');
+            		 if(wzid!=null){
+            			 document.getElementById('wzId').innerHTML="";
+            		 }
+            		 var maindiv=document.getElementById('maindiv');
+            		 if(maindiv!=null){
+            			 document.getElementById('maindiv').innerHTML="";
+            		 }
                 	 $(".wrap-right").append(datas); 
             	 }
             
@@ -651,7 +666,14 @@ function sJoinGroup(){
 	        dataType:"html",
 	        async: true,
 	        success : function(datas){
-	     	   $(".wrap-right").empty();
+	        	var wzid=document.getElementById('wzId');
+       		 if(wzid!=null){
+       			 document.getElementById('wzId').innerHTML="";
+       		 }
+       		 var maindiv=document.getElementById('maindiv');
+       		 if(maindiv!=null){
+       			 document.getElementById('maindiv').innerHTML="";
+       		 }
 	            $(".wrap-right").append(datas);
 	            if(window._bd_share_main){
 
@@ -663,10 +685,10 @@ function sJoinGroup(){
 	}
 	</script>
 <script type="text/javascript">
-	array=[["<img src='/${res}/images/iMac-add.png' width='25px' /> 新建栏目", "createChannel()"],["<img src='/${res}/images/iMac-edit.png' width='25px' /> 修改栏目", "editChannel()"],["<img src='/${res}/images/iMac-del.png' width='25px' /> 删除栏目", "delChannel()"]];
+	array=[["<img src='/${res}/images/iMac-add.png' width='25px' /> 新建栏目22", "createChannel()"],["<img src='/${res}/images/iMac-edit.png' width='25px' /> 修改栏目", "editChannel()"],["<img src='/${res}/images/iMac-del.png' width='25px' /> 删除栏目", "delChannel()"]];
 	class2context('class1', "", array);
 	
-	array=[["<img src='/${res}/images/iMac-add.png' width='25px' /> 新建栏目", "createChannel2()"]];
+	array=[["<img src='/${res}/images/iMac-add.png' width='25px' /> 新建栏目22", "createChannel2()"]];
 	class2context('class2', "", array);
 	
 	array=[["<img src='/${res}/images/quit_ group_2.png' width='25px' /> 退出群组", "quitGroup()"]];
@@ -687,7 +709,14 @@ function sJoinGroup(){
 						$("#zd_u-hilite-cap").remove();
 						$("#zdId").remove();
 						$("#u-hilite-cap").remove();
-					    $(".wrap-right").empty();
+						 var wzid=document.getElementById('wzId');
+	            		 if(wzid!=null){
+	            			 document.getElementById('wzId').innerHTML="";
+	            		 }
+	            		 var maindiv=document.getElementById('maindiv');
+	            		 if(maindiv!=null){
+	            			 document.getElementById('maindiv').innerHTML="";
+	            		 }
 		               $(".wrap-right").append(datas);
 		               if(window._bd_share_main){
 		            	   window._bd_share_main.init();
@@ -723,7 +752,14 @@ function sJoinGroup(){
          					$("#zd_u-hilite-cap").remove();
          					$("#zdId").remove();
          					$("#u-hilite-cap").remove();
-         				    $(".wrap-right").empty();
+         					var wzid=document.getElementById('wzId');
+                   		 if(wzid!=null){
+                   			 document.getElementById('wzId').innerHTML="";
+                   		 }
+                   		 var maindiv=document.getElementById('maindiv');
+                   		 if(maindiv!=null){
+                   			 document.getElementById('maindiv').innerHTML="";
+                   		 }
          	               $(".wrap-right").append(datas);
          	               if(window._bd_share_main){
          	            	   window._bd_share_main.init();
@@ -763,7 +799,14 @@ function sJoinGroup(){
 						$("#zd_u-hilite-cap").remove();
 						$("#zdId").remove();
 						$("#u-hilite-cap").remove();
-					    $(".wrap-right").empty();
+						var wzid=document.getElementById('wzId');
+	            		 if(wzid!=null){
+	            			 document.getElementById('wzId').innerHTML="";
+	            		 }
+	            		 var maindiv=document.getElementById('maindiv');
+	            		 if(maindiv!=null){
+	            			 document.getElementById('maindiv').innerHTML="";
+	            		 }
 		               $(".wrap-right").append(datas);
 		               if(window._bd_share_main){
 		            	   window._bd_share_main.init();
@@ -913,7 +956,14 @@ function sJoinGroup(){
            dataType:"html",
            async: true,
            success : function(datas){
-        	   $(".wrap-right").empty();
+        	   var wzid=document.getElementById('wzId');
+      		 if(wzid!=null){
+      			 document.getElementById('wzId').innerHTML="";
+      		 }
+      		 var maindiv=document.getElementById('maindiv');
+      		 if(maindiv!=null){
+      			 document.getElementById('maindiv').innerHTML="";
+      		 }
                $(".wrap-right").append(datas);
                if(window._bd_share_main){
             	   window._bd_share_main.init();
@@ -950,7 +1000,14 @@ function sJoinGroup(){
            dataType:"html",
            async: true,
            success : function(datas){
-        	   $(".wrap-right").empty();
+        	   var wzid=document.getElementById('wzId');
+      		 if(wzid!=null){
+      			 document.getElementById('wzId').innerHTML="";
+      		 }
+      		 var maindiv=document.getElementById('maindiv');
+      		 if(maindiv!=null){
+      			 document.getElementById('maindiv').innerHTML="";
+      		 }
                $(".wrap-right").append(datas);
                if(window._bd_share_main){
             	   window._bd_share_main.init();
@@ -976,7 +1033,14 @@ function gotoDataShow(url){
 				$("#zd_u-hilite-cap").remove();
 				$("#zdId").remove();
 				$("#u-hilite-cap").remove();
-				$(".wrap-right").empty();
+				var wzid=document.getElementById('wzId');
+       		 if(wzid!=null){
+       			 document.getElementById('wzId').innerHTML="";
+       		 }
+       		 var maindiv=document.getElementById('maindiv');
+       		 if(maindiv!=null){
+       			 document.getElementById('maindiv').innerHTML="";
+       		 };
 	            $(".wrap-right").append(datas);
 	            if(window._bd_share_main){
 	           		window._bd_share_main.init();

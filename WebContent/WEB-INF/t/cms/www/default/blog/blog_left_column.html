@@ -444,7 +444,14 @@ outline: none;
             	 if(datas=="login"){
             		 location.href="${base}/login.jspx";
             	 }else{
-            		 $(".wrap-right").empty();
+            		 var wzid=document.getElementById('wzId');
+            		 if(wzid!=null){
+            			 document.getElementById('wzId').innerHTML="";
+            		 }
+            		 var maindiv=document.getElementById('maindiv');
+            		 if(maindiv!=null){
+            			 document.getElementById('maindiv').innerHTML="";
+            		 }
                 	 $(".wrap-right").append(datas);
             	 }
             	
@@ -465,7 +472,14 @@ outline: none;
 	        	 $("#zdId").remove();
 	        	 $("#u-hilite-cap").remove();
 	        	 
-            	 $(".wrap-right").empty();
+	        	 var wzid=document.getElementById('wzId');
+        		 if(wzid!=null){
+        			 document.getElementById('wzId').innerHTML="";
+        		 }
+        		 var maindiv=document.getElementById('maindiv');
+        		 if(maindiv!=null){
+        			 document.getElementById('maindiv').innerHTML="";
+        		 }
             	 $(".wrap-right").append(datas);
     	   		 }
    		 });
@@ -496,7 +510,14 @@ outline: none;
 	        dataType:"html",
 	        async: true,
 	        success : function(datas){
-	     	   $(".wrap-right").empty();
+	        	var wzid=document.getElementById('wzId');
+       		 if(wzid!=null){
+       			 document.getElementById('wzId').innerHTML="";
+       		 }
+       		 var maindiv=document.getElementById('maindiv');
+       		 if(maindiv!=null){
+       			 document.getElementById('maindiv').innerHTML="";
+       		 }
 	            $(".wrap-right").append(datas);
 	            if(window._bd_share_main){
 
@@ -532,7 +553,15 @@ outline: none;
 						$("#zd_u-hilite-cap").remove();
 						$("#zdId").remove();
 						$("#u-hilite-cap").remove();
-					    $(".wrap-right").empty();
+						
+						 var wzid=document.getElementById('wzId');
+	            		 if(wzid!=null){
+	            			 document.getElementById('wzId').innerHTML="";
+	            		 }
+	            		 var maindiv=document.getElementById('maindiv');
+	            		 if(maindiv!=null){
+	            			 document.getElementById('maindiv').innerHTML="";
+	            		 }
 		               $(".wrap-right").append(datas);
 		               if(window._bd_share_main){
 		            	   window._bd_share_main.init();
@@ -568,7 +597,14 @@ outline: none;
          					$("#zd_u-hilite-cap").remove();
          					$("#zdId").remove();
          					$("#u-hilite-cap").remove();
-         				    $(".wrap-right").empty();
+         					var wzid=document.getElementById('wzId');
+                   		 if(wzid!=null){
+                   			 document.getElementById('wzId').innerHTML="";
+                   		 }
+                   		 var maindiv=document.getElementById('maindiv');
+                   		 if(maindiv!=null){
+                   			 document.getElementById('maindiv').innerHTML="";
+                   		 }
          	               $(".wrap-right").append(datas);
          	               if(window._bd_share_main){
          	            	   window._bd_share_main.init();
@@ -607,7 +643,14 @@ outline: none;
 						$("#zd_u-hilite-cap").remove();
 						$("#zdId").remove();
 						$("#u-hilite-cap").remove();
-					    $(".wrap-right").empty();
+						var wzid=document.getElementById('wzId');
+	            		 if(wzid!=null){
+	            			 document.getElementById('wzId').innerHTML="";
+	            		 }
+	            		 var maindiv=document.getElementById('maindiv');
+	            		 if(maindiv!=null){
+	            			 document.getElementById('maindiv').innerHTML="";
+	            		 }
 		               $(".wrap-right").append(datas);
 		               if(window._bd_share_main){
 		            	   window._bd_share_main.init();
@@ -755,7 +798,14 @@ outline: none;
            dataType:"html",
            async: true,
            success : function(datas){
-        	   $(".wrap-right").empty();
+        	   var wzid=document.getElementById('wzId');
+      		 if(wzid!=null){
+      			 document.getElementById('wzId').innerHTML="";
+      		 }
+      		 var maindiv=document.getElementById('maindiv');
+      		 if(maindiv!=null){
+      			 document.getElementById('maindiv').innerHTML="";
+      		 }
                $(".wrap-right").append(datas);
                if(window._bd_share_main){
             	   window._bd_share_main.init();
@@ -792,7 +842,14 @@ outline: none;
            dataType:"html",
            async: true,
            success : function(datas){
-        	   $(".wrap-right").empty();
+        	   var wzid=document.getElementById('wzId');
+      		 if(wzid!=null){
+      			 document.getElementById('wzId').innerHTML="";
+      		 }
+      		 var maindiv=document.getElementById('maindiv');
+      		 if(maindiv!=null){
+      			 document.getElementById('maindiv').innerHTML="";
+      		 }
                $(".wrap-right").append(datas);
                if(window._bd_share_main){
             	   window._bd_share_main.init();
@@ -917,7 +974,14 @@ function gotoDataShow(url){
 				$("#zd_u-hilite-cap").remove();
 				$("#zdId").remove();
 				$("#u-hilite-cap").remove();
-				$(".wrap-right").empty();
+				var wzid=document.getElementById('wzId');
+	       		 if(wzid!=null){
+	       			 document.getElementById('wzId').innerHTML="";
+	       		 }
+	       		 var maindiv=document.getElementById('maindiv');
+	       		 if(maindiv!=null){
+	       			 document.getElementById('maindiv').innerHTML="";
+	       		 };
 	            $(".wrap-right").append(datas);
 	            if(window._bd_share_main){
 	           		window._bd_share_main.init();

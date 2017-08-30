@@ -81,7 +81,14 @@
 									        	   if(datas=="login"){
 									            		 location.href="${base}/login.jspx";
 									            	 }else{
-									            		 $(".wrap-right").empty();
+									            		 var wzid=document.getElementById('wzId');
+									            		 if(wzid!=null){
+									            			 document.getElementById('wzId').innerHTML="";
+									            		 }
+									            		 var maindiv=document.getElementById('maindiv');
+									            		 if(maindiv!=null){
+									            			 document.getElementById('maindiv').innerHTML="";
+									            		 }
 											               $(".wrap-right").append(datas);	
 									            	 }
 									        	  	
@@ -98,7 +105,14 @@
 									        	   if(datas=="login"){
 									            		 location.href="${base}/login.jspx";
 									            	 }else{
-									            		  $(".wrap-right").empty();
+									            		 var wzid=document.getElementById('wzId');
+									            		 if(wzid!=null){
+									            			 document.getElementById('wzId').innerHTML="";
+									            		 }
+									            		 var maindiv=document.getElementById('maindiv');
+									            		 if(maindiv!=null){
+									            			 document.getElementById('maindiv').innerHTML="";
+									            		 }
 											               $(".wrap-right").append(datas);	
 									            	 }
 									        	 	
@@ -183,7 +197,14 @@ function myblogShow(url){
        	 $("#zd_u-hilite-cap").remove();
        	 $("#zdId").remove();
        	 $("#u-hilite-cap").remove();
-       	 $(".wrap-right").empty();
+       	var wzid=document.getElementById('wzId');
+		 if(wzid!=null){
+			 document.getElementById('wzId').innerHTML="";
+		 }
+		 var maindiv=document.getElementById('maindiv');
+		 if(maindiv!=null){
+			 document.getElementById('maindiv').innerHTML="";
+		 }
        	 $(".wrap-right").append(datas);
        	 if(window._bd_share_main){
          	   window._bd_share_main.init();
@@ -206,7 +227,14 @@ function contributeUpdate(id){
 	        	 $("#zdId").remove();
 	        	 $("#u-hilite-cap").remove();
 	        	 
-	          	 $(".wrap-right").empty();
+	        	 var wzid=document.getElementById('wzId');
+        		 if(wzid!=null){
+        			 document.getElementById('wzId').innerHTML="";
+        		 }
+        		 var maindiv=document.getElementById('maindiv');
+        		 if(maindiv!=null){
+        			 document.getElementById('maindiv').innerHTML="";
+        		 }
 	          	 $(".wrap-right").append(datas); 
           	 }
         	

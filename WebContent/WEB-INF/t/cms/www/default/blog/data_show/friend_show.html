@@ -77,7 +77,14 @@
 						           data : {'pageNo':pageNo},
 						           async: true,
 						           success : function(datas){
-						        	   $(".wrap-right").empty();
+						        	   var wzid=document.getElementById('wzId');
+					            		 if(wzid!=null){
+					            			 document.getElementById('wzId').innerHTML="";
+					            		 }
+					            		 var maindiv=document.getElementById('maindiv');
+					            		 if(maindiv!=null){
+					            			 document.getElementById('maindiv').innerHTML="";
+					            		 }
 						            	$(".wrap-right").append(datas);		
 						  	   		 }
 						 	});
@@ -90,7 +97,14 @@
 						           data : {'pageNo':pageNo},
 						           async: true,
 						           success : function(datas){
-						        	   $(".wrap-right").empty();
+						        	   var wzid=document.getElementById('wzId');
+					            		 if(wzid!=null){
+					            			 document.getElementById('wzId').innerHTML="";
+					            		 }
+					            		 var maindiv=document.getElementById('maindiv');
+					            		 if(maindiv!=null){
+					            			 document.getElementById('maindiv').innerHTML="";
+					            		 }
 						            	$(".wrap-right").append(datas);		
 						  	   		 }
 						 	});

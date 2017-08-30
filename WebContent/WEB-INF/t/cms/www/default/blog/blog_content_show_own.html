@@ -194,13 +194,12 @@ outline: none;
 				     <span id="comfirmSpan" style="display:none;cursor: pointer;">转载</span>
 				     <span id="cancelSpan" style="display:none; cursor: pointer;">取消转载</span>&nbsp;
 				     [#if user??] 
-				      
+				      <input type="hidden" name="contentId" id="contentId" value="${content.id}"/>
 				      <a href="javascript:;" onclick="cp('${content.channel.path}',${content.id});">复制链接</a>&nbsp;
 				      [#if content.user.id==user.id]
 				        <a href="javascript:void(0);" onclick="contributeDelete(${content.id});">删除</a>&nbsp;
 				        <a href="javascript:void(0);" onclick="contributeUpdate(${content.id});" >修改</a>
-						<span id="cancelSpan"  class="pos"><a href="javascript:void(0);" onclick="send();">发送</a></span>&nbsp;
-						<input type="hidden" name="contentId" id="contentId" value="${content.id}"/>
+						<span id="cancelSpan"  class="pos"><a href="javascript:void(0);" onclick="send();">发送</a></span>&nbsp;						
 						<span id="cancelSpan"  class="pos"><a href="javascript:void(0);" onclick="cancel();">撤销 </a></span>&nbsp;
 						[#if isStick??]
 							<span id="cancelStickSpan"  class="pos"><a href="javascript:void(0);" onclick="canCelstick(${content.id},0);">取消置顶</a></span>&nbsp;
@@ -444,7 +443,14 @@ function findActicals(url){
         dataType:"html",
         async: true,
         success : function(datas){
-     	   $(".wrap-right").empty();
+        	var wzid=document.getElementById('wzId');
+   		 if(wzid!=null){
+   			 document.getElementById('wzId').innerHTML="";
+   		 }
+   		 var maindiv=document.getElementById('maindiv');
+   		 if(maindiv!=null){
+   			 document.getElementById('maindiv').innerHTML="";
+   		 }
             $(".wrap-right").append(datas);
             if(window._bd_share_main){
          	   window._bd_share_main.init();
@@ -1277,7 +1283,14 @@ Drag.prototype = {
 		       	           dataType:"html",
 		       	           async: true,
 		       	           success : function(datas){
-		       	        	   $(".wrap-right").empty();
+		       	        	var wzid=document.getElementById('wzId');
+		            		 if(wzid!=null){
+		            			 document.getElementById('wzId').innerHTML="";
+		            		 }
+		            		 var maindiv=document.getElementById('maindiv');
+		            		 if(maindiv!=null){
+		            			 document.getElementById('maindiv').innerHTML="";
+		            		 }
 		       	               $(".wrap-right").append(datas);		
 		       	  	   		 }
 		       	 	});
@@ -1301,7 +1314,14 @@ Drag.prototype = {
             	 if(datas=="login"){
 	            		 location.href="${base}/login.jspx";
 	            	 }else{
-	            		 $(".wrap-right").empty();
+	            		 var wzid=document.getElementById('wzId');
+	            		 if(wzid!=null){
+	            			 document.getElementById('wzId').innerHTML="";
+	            		 }
+	            		 var maindiv=document.getElementById('maindiv');
+	            		 if(maindiv!=null){
+	            			 document.getElementById('maindiv').innerHTML="";
+	            		 }
 	                	 $(".wrap-right").append(datas);
 	            	 }
             	
@@ -1383,7 +1403,14 @@ function okps(){
 	        	   if(datas=="login"){
 	            		 location.href="${base}/login.jspx";
 	            	 }else{
-	            	   $(".wrap-right").empty();
+	            		 var wzid=document.getElementById('wzId');
+	            		 if(wzid!=null){
+	            			 document.getElementById('wzId').innerHTML="";
+	            		 }
+	            		 var maindiv=document.getElementById('maindiv');
+	            		 if(maindiv!=null){
+	            			 document.getElementById('maindiv').innerHTML="";
+	            		 }
 	   	               $(".wrap-right").append(datas);	
 	            	 }
 	        	 	

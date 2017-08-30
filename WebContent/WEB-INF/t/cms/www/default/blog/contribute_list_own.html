@@ -108,7 +108,14 @@
 				           dataType:"html",
 				           data : {'pageNo':pageNo},
 				           success : function(datas){
-				        	   $(".wrap-right").empty();
+				        	   var wzid=document.getElementById('wzId');
+			            		 if(wzid!=null){
+			            			 document.getElementById('wzId').innerHTML="";
+			            		 }
+			            		 var maindiv=document.getElementById('maindiv');
+			            		 if(maindiv!=null){
+			            			 document.getElementById('maindiv').innerHTML="";
+			            		 }
 				               $(".wrap-right").append(datas);		
 				  	   		 }
 				 	});
@@ -181,7 +188,14 @@ function myblogShow(url,GroupFlag,columnIdZ){
         	 $("#zd_u-hilite-cap").remove();
         	 $("#zdId").remove();
         	 $("#u-hilite-cap").remove();
-        	 $(".wrap-right").empty();
+        	 var wzid=document.getElementById('wzId');
+    		 if(wzid!=null){
+    			 document.getElementById('wzId').innerHTML="";
+    		 }
+    		 var maindiv=document.getElementById('maindiv');
+    		 if(maindiv!=null){
+    			 document.getElementById('maindiv').innerHTML="";
+    		 }
         	 $(".wrap-right").append(datas);
         	 if(window._bd_share_main){
           	   window._bd_share_main.init();
@@ -201,7 +215,14 @@ function myblogZdShow(base,path,contentId,currentId,stickUserId){
         	 $("#zd_u-hilite-cap").remove();
         	 $("#zdId").remove();
         	 $("#u-hilite-cap").remove();
-        	 $(".wrap-right").empty();
+        	 var wzid=document.getElementById('wzId');
+    		 if(wzid!=null){
+    			 document.getElementById('wzId').innerHTML="";
+    		 }
+    		 var maindiv=document.getElementById('maindiv');
+    		 if(maindiv!=null){
+    			 document.getElementById('maindiv').innerHTML="";
+    		 }
         	 $(".wrap-right").append(datas);
         	 if(window._bd_share_main){
           	   window._bd_share_main.init();
@@ -228,7 +249,14 @@ function contributeDelete(ids){
 	       	           dataType:"html",
 	       	           async: true,
 	       	           success : function(datas){
-	       	        	   $(".wrap-right").empty();
+	       	        	var wzid=document.getElementById('wzId');
+	            		 if(wzid!=null){
+	            			 document.getElementById('wzId').innerHTML="";
+	            		 }
+	            		 var maindiv=document.getElementById('maindiv');
+	            		 if(maindiv!=null){
+	            			 document.getElementById('maindiv').innerHTML="";
+	            		 }
 	       	               $(".wrap-right").append(datas);		
 	       	  	   		 }
 	       	 	});
@@ -256,7 +284,14 @@ function contributeUpdate(id){
             	 $("#zdId").remove();
             	 $("#u-hilite-cap").remove();
             	 
-            	 $(".wrap-right").empty();
+            	 var wzid=document.getElementById('wzId');
+        		 if(wzid!=null){
+        			 document.getElementById('wzId').innerHTML="";
+        		 }
+        		 var maindiv=document.getElementById('maindiv');
+        		 if(maindiv!=null){
+        			 document.getElementById('maindiv').innerHTML="";
+        		 }
             	 $(".wrap-right").append(datas);
         	 }
         	
