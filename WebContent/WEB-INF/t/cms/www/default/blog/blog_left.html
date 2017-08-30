@@ -685,10 +685,10 @@ function sJoinGroup(){
 	}
 	</script>
 <script type="text/javascript">
-	array=[["<img src='/${res}/images/iMac-add.png' width='25px' /> 新建栏目22", "createChannel()"],["<img src='/${res}/images/iMac-edit.png' width='25px' /> 修改栏目", "editChannel()"],["<img src='/${res}/images/iMac-del.png' width='25px' /> 删除栏目", "delChannel()"]];
+	array=[["<img src='/${res}/images/iMac-add.png' width='25px' /> 新建栏目", "createChannel()"],["<img src='/${res}/images/iMac-edit.png' width='25px' /> 修改栏目", "editChannel()"],["<img src='/${res}/images/iMac-del.png' width='25px' /> 删除栏目", "delChannel()"]];
 	class2context('class1', "", array);
 	
-	array=[["<img src='/${res}/images/iMac-add.png' width='25px' /> 新建栏目22", "createChannel2()"]];
+	array=[["<img src='/${res}/images/iMac-add.png' width='25px' /> 新建栏目", "createChannel2()"]];
 	class2context('class2', "", array);
 	
 	array=[["<img src='/${res}/images/quit_ group_2.png' width='25px' /> 退出群组", "quitGroup()"]];
@@ -698,7 +698,7 @@ function sJoinGroup(){
 			 delPos();
 		};
 		$.ajax({
-	           type: 'GET',
+	           type: 'POST',
 	           url : '${base}/blog/columns_list.jspx',
 	           dataType:"html",
 	           async: true,
@@ -1022,7 +1022,7 @@ function gotoDataShow(url){
 		 delPos();
 	};
 	$.ajax({
-          type: 'GET',
+          type: 'POST',
           url : url,
           dataType:"html",
           async: true,

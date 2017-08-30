@@ -173,7 +173,7 @@ function blogSeting(){
 		 delPos();
 	};
 	$.ajax({
-        type: 'GET',
+        type: 'POST',
         url : '${base}/blog/tzsetting.jspx',
         dataType:"html",
         async: true,
@@ -207,7 +207,7 @@ function addLinks(){
 		 delPos();
 	};
 	$.ajax({
-        type: 'GET',
+        type: 'POST',
         url : '${base}/blog/link_list.jspx',
         dataType:"html",
         async: true,
@@ -239,7 +239,7 @@ function addFriends(){
 		 delPos();
 	};
 	$.ajax({
-        type: 'GET',
+        type: 'POST',
         url : '${base}/blog/friends.jspx',
         dataType:"html",
         async: true,

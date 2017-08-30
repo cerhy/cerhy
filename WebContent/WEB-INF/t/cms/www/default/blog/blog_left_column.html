@@ -542,7 +542,7 @@ outline: none;
 			 delPos();
 		};
 		$.ajax({
-	           type: 'GET',
+	           type: 'POST',
 	           url : '${base}/blog/columns_list.jspx',
 	           dataType:"html",
 	           async: true,
@@ -963,7 +963,7 @@ function gotoDataShow(url){
 		 delPos();
 	};
 	$.ajax({
-          type: 'GET',
+          type: 'POST',
           url : url,
           dataType:"html",
           async: true,

@@ -926,7 +926,7 @@ public class ContributeAct extends AbstractContentMemberAct {
 				pageNo, request, model);
 	} 
 	
-	@RequestMapping(value = "/blog/tzsetting.jspx")
+	@RequestMapping(value = "/blog/tzsetting.jspx",method=RequestMethod.POST)
 	public String tzsetting(HttpServletRequest request, HttpServletResponse response,ModelMap model) {
 		return blogAct.tzsetting(request, response, model);
 	}
@@ -1038,7 +1038,7 @@ public class ContributeAct extends AbstractContentMemberAct {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "/blog/columns_list.jspx")
+	@RequestMapping(value = "/blog/columns_list.jspx",method=RequestMethod.POST)
 	public String blog_columns_list(String queryTitle, Integer modelId,
 			Integer queryChannelId, Integer pageNo, HttpServletRequest request,
 			ModelMap model) {
@@ -1192,7 +1192,7 @@ public class ContributeAct extends AbstractContentMemberAct {
 	/**
 	 *跳转链接页面方法 
 	  */
-	@RequestMapping(value = "/blog/link_list.jspx")
+	@RequestMapping(value = "/blog/link_list.jspx",method=RequestMethod.POST)
 	public String linkList(HttpServletRequest request,HttpServletResponse response, ModelMap model) {
 		CmsSite site = CmsUtils.getSite(request);
 		CmsUser user = CmsUtils.getUser(request);
@@ -1234,7 +1234,7 @@ public class ContributeAct extends AbstractContentMemberAct {
 	/**
 	 *跳转好友页面方法 
 	 */
-	@RequestMapping(value = "/blog/friends.jspx")
+	@RequestMapping(value = "/blog/friends.jspx",method=RequestMethod.POST)
 	public String friends(HttpServletRequest request,HttpServletResponse response, ModelMap model) {
 		CmsSite site = CmsUtils.getSite(request);
 		CmsUser user = CmsUtils.getUser(request);
@@ -1925,7 +1925,7 @@ public class ContributeAct extends AbstractContentMemberAct {
 	/**
 	 * 检查新建栏目的级别 1为一级栏目可以建二级栏目,2为二级栏目不再允许建栏目
 	 */
-	@RequestMapping(value = "/blog/checkLevel.jspx")
+	@RequestMapping(value = "/blog/checkLevel.jspx",method=RequestMethod.POST)
 	public void checkLevel(String ccId,HttpServletRequest request,HttpServletResponse response, ModelMap model)throws UnsupportedEncodingException, JSONException {
 		CmsUser user = CmsUtils.getUser(request);
 		JSONObject json = new JSONObject();
