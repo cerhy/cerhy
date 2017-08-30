@@ -292,6 +292,10 @@ $('.user-menu-links li').click(function(){
 						<input type="button" value="上传" onclick="uploadMedia();" class="change-Btn"  style="float:left;"/>
 						</span>
 						<span style="color:#f00; margin-left:10px;" id="tishiType">*上传的视频文件须为MP4格式!</span> 
+						<span id="progressSapn" style="display:none" >
+						<progress value="0" max="100" id="progressId"></progress> 
+						<span id="tishi"></span>
+					</span>
 					</div>
                 </td>
               </tr>
@@ -561,7 +565,14 @@ function ajaxconmit(formId){
 	  	      	           success : function(datas){
 	  	      	        	 var oEditor = CKEDITOR.instances.txt;
 	  	      	        	 oEditor.destroy(true);
-	  	      	             document.getElementById('wzId').innerHTML="";
+	  	      	        	var wzid=document.getElementById('wzId');
+	  	      	        	if(wzid!=null){
+	  	            			 document.getElementById('wzId').innerHTML="";
+	  	            		 }
+	  	            		 var maindiv=document.getElementById('maindiv');
+	  	            		 if(maindiv!=null){
+	  	            			 document.getElementById('maindiv').innerHTML="";
+	  	            		 };
 	  	      	               $(".wrap-right").append(datas);		
 	  	      	  	   		 }
 	  	      	 	});
