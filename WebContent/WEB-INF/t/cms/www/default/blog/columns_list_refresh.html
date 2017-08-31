@@ -242,7 +242,7 @@ function addColumRefresh(){
         	        		    				return false;
         	        		    			}else{
         	        		    				$.ajax({
-        	        		    			           type: 'GET',
+        	        		    			           type: 'POST',
         	        		    			           url : '${base}/blog/refreshColumn.jspx',
         	        		    			           dataType:"html",
         	        		    			           async: true,
@@ -257,6 +257,29 @@ function addColumRefresh(){
         	        		    			            	   window._bd_share_main.init();
         	        		    			            	}
         	        		    			               $("body").mLoading("hide");
+        	        		    			  	   		 }
+        	        		    			 	});
+        	        		    				
+        	        		    				$.ajax({
+        	        		    			           type: 'POST',
+        	        		    			           url : '${base}/blog/indexs.jspx',
+        	        		    			           dataType:"html",
+        	        		    			           async: true,
+        	        		    			           success : function(datas){
+        	        		    			        	   if(datas=="login"){
+        	        		    			            		 location.href="${base}/login.jspx";
+        	        		    			            	 }else{
+        	        		    			            		 var wzid=document.getElementById('wzId');
+        	        		    			            		 if(wzid!=null){
+        	        		    			            			 document.getElementById('wzId').innerHTML="";
+        	        		    			            		 }
+        	        		    			            		 var maindiv=document.getElementById('maindiv');
+        	        		    			            		 if(maindiv!=null){
+        	        		    			            			 document.getElementById('maindiv').innerHTML="";
+        	        		    			            		 }
+        	        		    			   	               $(".wrap-right").append(datas);	
+        	        		    			            	 }
+        	        		    			        	 	
         	        		    			  	   		 }
         	        		    			 	});
         	     		                        return true;
@@ -280,7 +303,7 @@ function addColumRefresh(){
 	        		    				return false;
 	        		    			}else{
 	        		    				$.ajax({
-	        		    			           type: 'GET',
+	        		    			           type: 'POST',
 	        		    			           url : '${base}/blog/refreshColumn.jspx',
 	        		    			           dataType:"html",
 	        		    			           async: true,
@@ -295,6 +318,29 @@ function addColumRefresh(){
 	        		    			            	   window._bd_share_main.init();
 	        		    			            	}
 	        		    			               $("body").mLoading("hide");
+	        		    			  	   		 }
+	        		    			 	});
+	        		    				
+	        		    				$.ajax({
+	        		    			           type: 'POST',
+	        		    			           url : '${base}/blog/indexs.jspx',
+	        		    			           dataType:"html",
+	        		    			           async: true,
+	        		    			           success : function(datas){
+	        		    			        	   if(datas=="login"){
+	        		    			            		 location.href="${base}/login.jspx";
+	        		    			            	 }else{
+	        		    			            		 var wzid=document.getElementById('wzId');
+	        		    			            		 if(wzid!=null){
+	        		    			            			 document.getElementById('wzId').innerHTML="";
+	        		    			            		 }
+	        		    			            		 var maindiv=document.getElementById('maindiv');
+	        		    			            		 if(maindiv!=null){
+	        		    			            			 document.getElementById('maindiv').innerHTML="";
+	        		    			            		 }
+	        		    			   	               $(".wrap-right").append(datas);	
+	        		    			            	 }
+	        		    			        	 	
 	        		    			  	   		 }
 	        		    			 	});
 	     		                        return true;

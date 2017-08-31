@@ -67,7 +67,7 @@ function saveUpdateRefresh(){
     			}else{
     				$("body").mLoading();
     				$.ajax({
-    			           type: 'GET',
+    			           type: 'POST',
     			           url : '${base}/blog/refreshColumn.jspx',
     			           dataType:"html",
     			           async: true,
