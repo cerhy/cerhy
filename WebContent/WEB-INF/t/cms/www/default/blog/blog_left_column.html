@@ -586,7 +586,7 @@ outline: none;
             success:function(data) {
                 if(data.status==1) {
                 	$.ajax({
-          	           type: 'GET',
+          	           type: 'POST',
           	           url : '${base}/blog/columns_list.jspx?ccId='+id,
           	           dataType:"html",
           	           async: true,
