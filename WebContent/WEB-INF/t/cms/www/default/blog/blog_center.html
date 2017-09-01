@@ -194,12 +194,13 @@ function zdShowHidden(){
             </table>
 			          <script type="text/javascript">
 			          function myblogShow(url){
+			        	  var getTimestamp=new Date().getTime(); 
 			        	 	 $.ajax({
 			        	         type: 'GET',
 			        	         url : url,
 			        	         /*  dataType : 'json', */
 			        	          dataType:"html",
-			        	         data : {'o' : 1},
+			        	         data : {'o' : 1,'getTimestamp' : getTimestamp},
 			        	         success : function(datas){
 			        	        	 $("#zd_u-hilite-cap").remove();
 			        	        	 $("#zdId").remove();

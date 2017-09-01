@@ -178,12 +178,13 @@ function zdShowHidden(){
 }
 
 function myblogShow(url,GroupFlag,columnIdZ){
+	var getTimestamp=new Date().getTime(); 
  	 $.ajax({
-         type: 'GET',
+         type: 'POST',
          url : url,
          /*  dataType : 'json', */
           dataType:"html",
-         data : {'o' : 1,'GroupFlag' : GroupFlag,'columnIdZ' : columnIdZ},
+         data : {'o' : 1,'GroupFlag' : GroupFlag,'columnIdZ' : columnIdZ,'getTimestamp' : getTimestamp},
          success : function(datas){
         	 $("#zd_u-hilite-cap").remove();
         	 $("#zdId").remove();
