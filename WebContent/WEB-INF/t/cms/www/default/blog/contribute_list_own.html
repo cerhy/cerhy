@@ -180,7 +180,7 @@ function zdShowHidden(){
 function myblogShow(url,GroupFlag,columnIdZ){
 	var getTimestamp=new Date().getTime(); 
  	 $.ajax({
-         type: 'POST',
+         type: 'GET',
          url : url,
          /*  dataType : 'json', */
           dataType:"html",
