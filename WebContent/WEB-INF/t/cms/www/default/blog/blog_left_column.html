@@ -695,8 +695,9 @@ outline: none;
         	         	        		    				alert("栏目删除失败");
         	         	        		    				return false;
         	         	        		    			}else{
+        	         	        		    				$("body").mLoading();
         	         	        		    				$.ajax({
-        	         	        		    			           type: 'GET',
+        	         	        		    			           type: 'POST',
         	         	        		    			           url : '${base}/blog/refreshColumn.jspx',
         	         	        		    			           dataType:"html",
         	         	        		    			           async: true,
@@ -707,9 +708,33 @@ outline: none;
         	         	        		    			               if(window._bd_share_main){
         	         	        		    			            	   window._bd_share_main.init();
         	         	        		    			            	}
+        	         	        		    			              
 						        	            						alert("删除成功!");
+						        	            						$("body").mLoading("hide");
         	         	        		    			  	   		 }
         	         	        		    			 	});
+        	         	        		    				$.ajax({
+        	        	        		    			           type: 'POST',
+        	        	        		    			           url : '${base}/blog/indexs.jspx',
+        	        	        		    			           dataType:"html",
+        	        	        		    			           async: true,
+        	        	        		    			           success : function(datas){
+        	        	        		    			        	   if(datas=="login"){
+        	        	        		    			            		 location.href="${base}/login.jspx";
+        	        	        		    			            	 }else{
+        	        	        		    			            		 var wzid=document.getElementById('wzId');
+        	        	        		    			            		 if(wzid!=null){
+        	        	        		    			            			 document.getElementById('wzId').innerHTML="";
+        	        	        		    			            		 }
+        	        	        		    			            		 var maindiv=document.getElementById('maindiv');
+        	        	        		    			            		 if(maindiv!=null){
+        	        	        		    			            			 document.getElementById('maindiv').innerHTML="";
+        	        	        		    			            		 }
+        	        	        		    			   	               $(".wrap-right").append(datas);	
+        	        	        		    			            	 }
+        	        	        		    			        	 	
+        	        	        		    			  	   		 }
+        	        	        		    			 	});
         	         	     		                        return true;
         	         	        		    			}
         	         	        		            }

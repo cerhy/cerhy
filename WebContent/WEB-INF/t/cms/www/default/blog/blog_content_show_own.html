@@ -374,7 +374,7 @@ outline: none;
 				   [@cms_content id=content.id next='1' channelId=channel.id userId=GroupFlagData columnId=columnIdZ]
                     	[#if tag_bean??]
                     	  [#if columnIdZ??]
-                    		<a onclick="previousArticles('${tag_bean.url}',1,${GroupFlagData},${columnIdZ})"  class="prev-pian">
+                    		<a href="javascript:;" onclick="previousArticles('${tag_bean.url}',1,${GroupFlagData},${columnIdZ})"  class="prev-pian">
                             <span>&lt;上一篇</span>
                             <em>[@text_cut s=tag_bean.title len=15 append='...'/]</em>
                         	</a>
