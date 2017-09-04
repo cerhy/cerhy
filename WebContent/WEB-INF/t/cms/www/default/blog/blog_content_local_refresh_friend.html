@@ -5,20 +5,8 @@
 <script src="${resSys}/ckplayer/ckplayer.js" type="text/javascript"></script>
 <script src="${resSys}/ckplayer/offlights.js" type="text/javascript"></script>
 <script type="text/javascript">
-function adt(){
-	//修改图片过大问题
-	$(".xueke-content-detail p img").each(function(){
-		var width =$(this).width();
-		var height = $(this).height();
-		if(width>600){
-			var shang =  (width/height).toFixed(2);
-			var newHeight = parseInt(600/shang);
-			$(this).css("width","600px");
-			$(this).css("height",newHeight+"px");
-	}
-	})
-	
-	$(".xueke-content-detail .img-box span img").each(function(){
+$(".xueke-content-detail p img").each(function(){
+	$(this).one('load',function(){
 		var width =$(this).width();
 		var height = $(this).height();
 		if(width>600){
@@ -28,8 +16,21 @@ function adt(){
 			$(this).css("height",newHeight+"px");
 		}
 	})
-}
-setTimeout("adt()", 1000);
+	
+})
+
+$(".xueke-content-detail .img-box span img").each(function(){
+	$(this).one('load',function(){
+	var width =$(this).width();
+	var height = $(this).height();
+	if(width>600){
+		var shang =  (width/height).toFixed(2);
+		var newHeight = parseInt(600/shang);
+		$(this).css("width","600px");
+		$(this).css("height",newHeight+"px");
+	}
+	})
+})
 </script>
 <style>
 .wrap-left{width: 250px;float: left;}

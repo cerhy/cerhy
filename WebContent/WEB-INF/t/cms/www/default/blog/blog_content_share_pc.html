@@ -18,6 +18,32 @@
  .bz{color: #999;}
 </style>
 <script type="text/javascript">
+ window.onload=function(){
+	$(".xueke-acticle p img").each(function(){
+		var width =$(this).width();
+		var height = $(this).height();
+		if(width>800){
+			var shang =  (width/height).toFixed(2);
+			var newHeight = parseInt(800/shang);
+			$(this).css("width","800px");
+			$(this).css("height",newHeight+"px");
+	}
+	})
+
+	$(".xueke-acticle .img-box span img").each(function(){
+		var width =$(this).width();
+		var height = $(this).height();
+		if(width>800){
+			var shang =  (width/height).toFixed(2);
+			var newHeight = parseInt(800/shang);
+			$(this).css("width","800px");
+			$(this).css("height",newHeight+"px");
+		}
+	})
+}
+
+</script>
+<script type="text/javascript">
 	$(function() {
 		Cms.checkPerm("${base}", "${content.id}");
 		Cms.collectCsi("${base}", "collectCsiDiv", "collect_csi",
@@ -128,33 +154,3 @@ table th,table td{word-break:break-all;white-space:normal;overflow:hidden;}
 	<script src="/${res}/js/main.js"></script>
 </body>
 </html>
-<script type="text/javascript">
-
-window.onload=function({
-	
-	$(".xueke-content-detail p img").each(function(){
-		var width =$(this).width();
-		var height = $(this).height();
-		if(width>600){
-			var shang =  (width/height).toFixed(2);
-			var newHeight = parseInt(600/shang);
-			$(this).css("width","600px");
-			$(this).css("height",newHeight+"px");
-	}
-	});
-
-	$(".xueke-content-detail .img-box span img").each(function(){
-		var width =$(this).width();
-		var height = $(this).height();
-		if(width>600){
-			var shang =  (width/height).toFixed(2);
-			var newHeight = parseInt(600/shang);
-			$(this).css("width","600px");
-			$(this).css("height",newHeight+"px");
-		}
-	});
-	
-	
-});
-
-</script>
