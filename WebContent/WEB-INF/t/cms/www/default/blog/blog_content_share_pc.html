@@ -129,25 +129,32 @@ table th,table td{word-break:break-all;white-space:normal;overflow:hidden;}
 </body>
 </html>
 <script type="text/javascript">
-$(".xueke-content-detail p img").each(function(){
-	var width =$(this).width();
-	var height = $(this).height();
-	if(width>600){
-		var shang =  (width/height).toFixed(2);
-		var newHeight = parseInt(600/shang);
-		$(this).css("width","600px");
-		$(this).css("height",newHeight+"px");
-}
-})
 
-$(".xueke-content-detail .img-box span img").each(function(){
-	var width =$(this).width();
-	var height = $(this).height();
-	if(width>600){
-		var shang =  (width/height).toFixed(2);
-		var newHeight = parseInt(600/shang);
-		$(this).css("width","600px");
-		$(this).css("height",newHeight+"px");
-}
-})
+window.onload=function({
+	
+	$(".xueke-content-detail p img").each(function(){
+		var width =$(this).width();
+		var height = $(this).height();
+		if(width>600){
+			var shang =  (width/height).toFixed(2);
+			var newHeight = parseInt(600/shang);
+			$(this).css("width","600px");
+			$(this).css("height",newHeight+"px");
+	}
+	});
+
+	$(".xueke-content-detail .img-box span img").each(function(){
+		var width =$(this).width();
+		var height = $(this).height();
+		if(width>600){
+			var shang =  (width/height).toFixed(2);
+			var newHeight = parseInt(600/shang);
+			$(this).css("width","600px");
+			$(this).css("height",newHeight+"px");
+		}
+	});
+	
+	
+});
+
 </script>
