@@ -11,28 +11,34 @@
 <script type="text/javascript">
 $(function() {
 	
+		$(".xueke-content-detail p img").each(function(){
+			$(this).one('load',function(){
+				var width =$(this).width();
+				var height = $(this).height();
+				if(width>600){
+					var shang =  (width/height).toFixed(2);
+					var newHeight = parseInt(600/shang);
+					$(this).css("width","600px");
+					$(this).css("height",newHeight+"px");
+				}
+			})
+			
+		})
 
-	$(".xueke-content-detail p img").each(function(){
-		var width =$(this).width();
-		var height = $(this).height();
-		if(width>600){
-			var shang =  (width/height).toFixed(2);
-			var newHeight = parseInt(600/shang);
-			$(this).css("width","600px");
-			$(this).css("height",newHeight+"px");
-	}
-	})
-	
-	$(".xueke-content-detail .img-box span img").each(function(){
-		var width =$(this).width();
-		var height = $(this).height();
-		if(width>600){
-			var shang =  (width/height).toFixed(2);
-			var newHeight = parseInt(600/shang);
-			$(this).css("width","600px");
-			$(this).css("height",newHeight+"px");
-	}
-	})
+		$(".xueke-content-detail .img-box span img").each(function(){
+			$(this).one('load',function(){
+			var width =$(this).width();
+			var height = $(this).height();
+			if(width>600){
+				var shang =  (width/height).toFixed(2);
+				var newHeight = parseInt(600/shang);
+				$(this).css("width","600px");
+				$(this).css("height",newHeight+"px");
+			}
+			})
+		})
+
+
 	
 	$('.user-menu-links li').click(function(){
 	    $(this).toggleClass('on');
@@ -1419,33 +1425,4 @@ function cp(path,id){
 	}
 	
 </script>
-<script type="text/javascript">
 
-window.onload=function({
-	
-	$(".xueke-content-detail p img").each(function(){
-		var width =$(this).width();
-		var height = $(this).height();
-		if(width>600){
-			var shang =  (width/height).toFixed(2);
-			var newHeight = parseInt(600/shang);
-			$(this).css("width","600px");
-			$(this).css("height",newHeight+"px");
-	}
-	});
-
-	$(".xueke-content-detail .img-box span img").each(function(){
-		var width =$(this).width();
-		var height = $(this).height();
-		if(width>600){
-			var shang =  (width/height).toFixed(2);
-			var newHeight = parseInt(600/shang);
-			$(this).css("width","600px");
-			$(this).css("height",newHeight+"px");
-		}
-	});
-	
-	
-});
-
-</script>
