@@ -606,7 +606,14 @@ function backCancel(){
 	           success : function(datas){
 	        	 var oEditor = CKEDITOR.instances.txt;
 	        	 oEditor.destroy(true);
-	        	  document.getElementById('wzId').innerHTML="";
+	        	 var wzid=document.getElementById('wzId');
+         		 if(wzid!=null){
+         			 document.getElementById('wzId').innerHTML="";
+         		 }
+         		 var maindiv=document.getElementById('maindiv');
+         		 if(maindiv!=null){
+         			 document.getElementById('maindiv').innerHTML="";
+         		 }
 	               $(".wrap-right").append(datas);		
 	  	   		 }
 	 	});
