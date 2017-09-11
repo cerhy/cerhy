@@ -109,7 +109,6 @@ outline: none;
 							</div>
 							<div style="margin: 20px 0"> <input type="button" value="更新" class="submit" id="submit" onclick="updateColumnRefresh()" /> </div>
 						</form>
-						[#if twoList??]
 						<div id="u-catcfg-box" class="box">
         <div id="u-catcfg-cap" class="cap" style="width: 620px;">其他栏目信息
         </div>
@@ -119,16 +118,41 @@ outline: none;
 	        <span style="float: right;margin: -30px 300px;line-height: 30px;">排序号</span>
          </div>
          <hr>
+						[#if twoList??]
 						 [#list twoList as map]
 						        		<div>
 								        <div><span style="line-height: 30px;">${map.columnName}</span></div>
 								         <span style="float: right;margin: -30px 300px;line-height: 30px;">${map.orderId}</span>
 							         	</div>
 						 [/#list]
-
-					         </div>
-					         </div>
 						[/#if]
+						[#if columnsListOrder??]
+					        [#list columnsListOrder as map]
+					        [#list map?keys as k]
+					        [#if k=='']
+					        	[#list map[k] as v]
+						        		<div>
+								        <div><span style="line-height: 30px;">${v?split("=")[0]}</span></div>
+								         <span style="float: right;margin: -30px 300px;line-height: 30px;">${v?split("=")[1]}</span>
+							         	</div>
+					        	[/#list]
+					        [#else]
+						        		<div>
+								        <div><span style="line-height: 30px;">${k?split("=")[0]}</span></div>
+								         <span style="float: right;margin: -30px 300px;line-height: 30px;">${k?split("=")[1]}</span>
+							         	</div>
+					        	[#list map[k] as v]
+							         <div style="padding-left: 30px; color: #255EC7;">
+									        <div><span style="line-height: 30px;">${v?split("=")[0]}</span></div>
+									         <span style="float: right;margin: -30px 300px;line-height: 30px;">${v?split("=")[1]}</span>
+								         </div>
+					        	[/#list]
+					        [/#if]	
+					        [/#list]
+					        [/#list]
+				            [/#if]
+					         </div>
+					         </div>
 					</div>
 				</div>
 <script type="text/javascript">
