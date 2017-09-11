@@ -39,35 +39,51 @@ public class BlogCommon {
 		if(user!=null){
 			List<Columns> columnsList = columnsMng.getOneColumnsByUserId(user.getId());
 			List listc=null;
+			List listOrders=null;
 			if(null!=columnsList&&columnsList.size()>0){
 				listc=new ArrayList();
+				listOrders=new ArrayList();
 				for(int i=0;i<columnsList.size();i++){
 					Map<String,Object> map=new HashMap<String,Object>();
+					Map<String,Object> map0rder=new HashMap<String,Object>();
 					List<Columns> twoList=columnsMng.findTwoByParentId(columnsList.get(i).getColumnId());
 					List lists=new ArrayList();
+					List listOrder=new ArrayList();
 					String keyName="";
+					String keyNameOrder="";
 					if(null!=twoList&&twoList.size()>0){
 						for(int j=0;j<twoList.size();j++){
 							if(null!=twoList.get(j).getUniqueCode()){
 								lists.add(twoList.get(j).getColumnId()+"="+twoList.get(j).getColumnName()+"=(验证码:"+twoList.get(j).getUniqueCode()+")");
+								listOrder.add(twoList.get(j).getColumnName()+"="+twoList.get(j).getOrderId());
 							}else{
 								lists.add(twoList.get(j).getColumnId()+"="+twoList.get(j).getColumnName());
+								listOrder.add(twoList.get(j).getColumnName()+"="+twoList.get(j).getOrderId());
 							}
 						}
 						keyName=columnsList.get(i).getColumnId()+"="+columnsList.get(i).getColumnName();
+						keyNameOrder=columnsList.get(i).getColumnName()+"="+columnsList.get(i).getOrderId();
 					}else{
 						if(null!=columnsList.get(i).getUniqueCode()){
 							lists.add(columnsList.get(i).getColumnId()+"="+columnsList.get(i).getColumnName()+"=(验证码:"+columnsList.get(i).getUniqueCode()+")");
+							listOrder.add(columnsList.get(i).getColumnName()+"="+columnsList.get(i).getOrderId());
 						}else{
 							lists.add(columnsList.get(i).getColumnId()+"="+columnsList.get(i).getColumnName());
+							listOrder.add(columnsList.get(i).getColumnName()+"="+columnsList.get(i).getOrderId());
 						}
 					}
 					map.put(keyName,lists);
 					listc.add(map);
+					//显示序号列表
+					map0rder.put(keyNameOrder,listOrder);
+					listOrders.add(map0rder);
+					
 				}
 			}
 			model.addAttribute("columnsList", listc);
+			model.addAttribute("columnsListOrder", listOrders);
 		}else{
+			model.addAttribute("columnsListOrder", null);
 			return model.addAttribute("columnsList", null);
 		}
 		return model;

@@ -44,6 +44,22 @@ outline: none;
 .sub1:hover {
     box-shadow: 0 3px 4px 0 rgba(0,0,0,0.24),0 8px 30px 0 rgba(0,0,0,0.19);
 }
+
+.box .cap {
+    margin: 0;
+    padding: 4px 20px 4px 20px;
+    cursor: pointer;
+}
+.box .cap {
+    color: #434343;
+    background: #D1DED6;
+}
+.cats .ptr {
+    cursor: pointer;
+}
+.hot1 {
+    color: #006400;
+}
 </style>
 <div id="contextMenus"></div>
 				<div class="personCenter-userInfo blog_right" >
@@ -115,10 +131,49 @@ outline: none;
              <input type="button" value="新建" class="submit" id="submit" onclick="addColumRefresh()"/>
          </div>
         </form>
+        <div id="u-catcfg-box" class="box">
+        <div id="u-catcfg-cap" class="cap" style="width: 620px;">其他栏目信息
+        </div>
+        <div id="u-catcfg" class="cats">
+        <div class="hot1">
+	        <div><span style="line-height: 30px;">栏目名称</span></div>
+	        <span style="float: right;margin: -30px 300px;line-height: 30px;">排序号</span>
+         </div>
+         <hr>
+         [#if columnsListOrder??]
+					        [#list columnsListOrder as map]
+					        [#list map?keys as k]
+					        [#if k=='']
+					        	[#list map[k] as v]
+						        		<div>
+								        <div><span style="line-height: 30px;">${v?split("=")[0]}</span></div>
+								         <span style="float: right;margin: -30px 300px;line-height: 30px;">${v?split("=")[1]}</span>
+							         	</div>
+					        	[/#list]
+					        [#else]
+						        		<div>
+								        <div><span style="line-height: 30px;">${k?split("=")[0]}</span></div>
+								         <span style="float: right;margin: -30px 300px;line-height: 30px;">${k?split("=")[1]}</span>
+							         	</div>
+					        	[#list map[k] as v]
+							         <div style="padding-left: 30px; color: #255EC7;">
+									        <div><span style="line-height: 30px;">${v?split("=")[0]}</span></div>
+									         <span style="float: right;margin: -30px 300px;line-height: 30px;">${v?split("=")[1]}</span>
+								         </div>
+					        	[/#list]
+					        [/#if]	
+					        [/#list]
+					        [/#list]
+				            [/#if]
+         </div>
+         </div>
 		<br />
 		<br />
         </div>
       </div>
+<script type="text/javascript">
+
+</script>     
 <script type="text/javascript">
 function del(columnId){
 		$.ajax({

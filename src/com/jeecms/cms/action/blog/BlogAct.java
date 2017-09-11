@@ -1903,6 +1903,7 @@ public class BlogAct {
 		int joinStatus = columnsMng.delGroup(id,user);
 		model.addAttribute("joinStatus", joinStatus);
 		model.addAttribute("column", column);
+		model.addAttribute("twoList", twoList);
 		return "/WEB-INF/t/cms/www/default/blog/columns_update_refresh.html";
 		//return FrontUtils.getTplPath(request, site.getSolutionPath(),TPLDIR_BLOG,"tpl.columnsUpdate");
 	}
