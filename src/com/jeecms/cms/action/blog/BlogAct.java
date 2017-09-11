@@ -1899,6 +1899,9 @@ public class BlogAct {
 			model.addAttribute("twoState", 1);
 		}else{
 			model.addAttribute("twoState", 0);
+			if(null!=column.getParentId()){
+				twoList=columnsMng.findTwoByParentId(column.getParentId().getColumnId());
+			}
 		}
 		int joinStatus = columnsMng.delGroup(id,user);
 		model.addAttribute("joinStatus", joinStatus);
