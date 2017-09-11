@@ -1897,16 +1897,27 @@ public class BlogAct {
 		List<Columns> twoList=columnsMng.findTwoByParentId(Integer.valueOf(id));
 		if(null!=twoList&&twoList.size()>0){
 			model.addAttribute("twoState", 1);
-		}else{
-			model.addAttribute("twoState", 0);
 			if(null!=column.getParentId()){
+				//该栏目为一级栏目 有二级栏目 展示二级栏目的序号
 				twoList=columnsMng.findTwoByParentId(column.getParentId().getColumnId());
+				model.addAttribute("twoList", twoList);
+			}else{
+				//该栏目只有一级栏目 展示用户下所有栏目 包括二级
+				model = blogCommon.getColumn(request,model,user);
 			}
+		}else{
+			//该栏目只有一级栏目 展示用户下所有栏目 包括二级
+			if(null !=column.getParentId()){
+				twoList=columnsMng.findTwoByParentId(column.getParentId().getColumnId());
+				model.addAttribute("twoList", twoList);
+			}else{
+				model = blogCommon.getColumn(request,model,user);
+			}
+			model.addAttribute("twoState", 0);
 		}
 		int joinStatus = columnsMng.delGroup(id,user);
 		model.addAttribute("joinStatus", joinStatus);
 		model.addAttribute("column", column);
-		model.addAttribute("twoList", twoList);
 		return "/WEB-INF/t/cms/www/default/blog/columns_update_refresh.html";
 		//return FrontUtils.getTplPath(request, site.getSolutionPath(),TPLDIR_BLOG,"tpl.columnsUpdate");
 	}
