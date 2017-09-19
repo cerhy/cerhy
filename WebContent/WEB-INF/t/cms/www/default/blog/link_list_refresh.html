@@ -43,8 +43,12 @@ function saveUpdateRefresh(){
     			alert("请勿填写多余的等号(=)!");
     	        return false;
     		}
-    		if(str[i].indexOf("=")==-1&&str[i].indexOf("http")!=-1){
-    			alert("请填写正确的链接格式!");
+    		if(str[i]!=""&&str[i].indexOf("=")==-1){
+    			alert("请填写正确的链接格式,链接中缺少=号!");
+   	            return false;
+    		}
+    		if(str[i]!=""&&str[i].indexOf("http")==-1){
+    			alert("请填写正确的链接格式,链接格式为http://www.....");
    	            return false;
     		}
 			if(str[i].indexOf("=")!=-1){
