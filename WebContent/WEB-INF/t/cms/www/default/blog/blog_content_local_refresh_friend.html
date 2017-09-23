@@ -240,6 +240,7 @@ function btnPrints(){
 			[#else]	
 				<input style="display: none;" id="slActicle" value="">
 			[/#if]
+		   	<input style="display: none;" id="psword" value="${content.user.id}">
 		   	<input style="display: none;" id="no3" value="${content.id}">
 			<input style="display: none;" id="alt" value="0">	
 			<div class="personCenter-userInfo blog_right xueke-acticle">
@@ -511,8 +512,17 @@ function btnPrints(){
 		bool = true
 	}
 	if(bool){
-		$('#maindiv').hide();
-		$('#mainpwdiv').show();
+		if($("#slActicle")!=""){
+			if($("#no4").val()==$("#psword").val()){
+				$('#mainpwdiv').css('display','none');
+			}else{
+				$('#maindiv').hide();
+				$('#mainpwdiv').show();
+			}
+		}else{
+			$('#maindiv').hide();
+			$('#mainpwdiv').show();
+		}
 	}
 	
 	if(val == ""){

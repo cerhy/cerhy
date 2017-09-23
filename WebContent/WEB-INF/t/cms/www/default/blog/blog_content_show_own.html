@@ -171,10 +171,12 @@ outline: none;
 		html  +="</div>";
 		html  +="[/#if]";
 		html  +="[/#if]";
-		$(".wrap-right").before(html);
+			
+			$(".wrap-right").before(html);
 </script>
 			<input style="display: none;" id="no" value="">
 			<input style="display: none;" id="no1" value="">
+		   	<input style="display: none;" id="psword" value="${content.user.id}">
 			[#if user??]
 			<input style="display: none;" id="no2" value="${user.username}">
 			<input style="display: none;" id="no4" value="${user.id}">
@@ -521,8 +523,17 @@ function delPos(){
 	if(val == ""){
 		$('#mainpwdiv').css('display','none');
 	}else{
-		$('#maindiv').css('display','none');
-		$('#mainpwdiv').css('display','block');
+		if($("#slActicle").val()!=""){
+			if($("#no4").val()==$("#psword").val()){
+				$('#mainpwdiv').css('display','none');
+			}else{
+				$('#maindiv').css('display','none');
+				$('#mainpwdiv').css('display','block');
+			}
+		}else{
+				$('#maindiv').css('display','none');
+				$('#mainpwdiv').css('display','block');
+		}
 	}
 	function jiaoyan(){
 		var userPw = $('#mima').val();
