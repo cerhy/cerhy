@@ -1,3 +1,7 @@
+<style type="text/css">
+	.input_out{background-color:#ffffff;}
+	.input_move{background-color:#ef3838;color:#ffffff;}
+</style>
 <div class="page-large">
     [#assign p=tag_pagination/]  
       <div style="display:inline-block;">
@@ -39,5 +43,15 @@
       [#else]
       <a class="next-page" href="#" onclick="location.href=encodeURI('${hrefFormer}_${p.nextPage}${hrefLatter}');"></a>
       [/#if]
+      &nbsp;<span style="font-size: 13px;font-family: Arial, Helvetica, sans-serif;position: relative;top: 2px;color:#666666;">共${p.totalPage}页
+      &nbsp;到第</span><input style="width:30px; height:30px;border: 1px solid #d5d5d5;text-align: center;position: relative;top: 2px;" id="reach" name="reach" value="${p.pageNo}" onkeyup="value=value.replace(/[^\d]/g,'') " ng-pattern="/[^a-zA-Z]/"/><span style="font-size: 13px;font-family: Arial, Helvetica, sans-serif;position: relative;top: 2px;color:#666666;">页</span>
+      &nbsp;<input readonly style="width:30px; height:30px;border: 1px solid #d5d5d5;text-align: center;position: relative;top: 2px;cursor:pointer;" id="jump" name="" value="确定" onClick="jump();" onmousemove="this.className='input_move'" onmouseout="this.className='input_out'"/>
       </div>
+      <script>
+      
+      	function jump(){
+      		var reach = $('#reach').val();
+      		location.href=encodeURI('${hrefFormer}_'+reach+'${hrefLatter}');
+      	}
+      </script>
 </div>
