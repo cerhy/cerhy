@@ -21,7 +21,7 @@ CKEDITOR.editorConfig = function( config ) {
 	        ['Image','Flash','Table','HorizontalRule','Smiley','SpecialChar'],  
 	        ['Link','Unlink','Anchor','Iframe'],
 	        ['Maximize','autoformat','-'],
-	        ['Styles','Format','Font','FontSize','lineheight']
+	        ['Styles','Format','Font','FontSize','lineheight','Templates']
 	    ];  
 	    config.extraPlugins += (config.extraPlugins ? ',lineheight' : 'lineheight');
 		config.font_names = '隶书/隶书;宋体/SimSun;新宋体/NSimSun;黑体/SimHei;楷体/KaiTi;微软雅黑/Microsoft YaHei;'+  
