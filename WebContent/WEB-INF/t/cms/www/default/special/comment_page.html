@@ -104,7 +104,7 @@ $(function() {
 			      <div class="comments-item comments-child">
 				    <div class="tx"><img src="[#if c.replayUser??]${(c.replayUser.userImg)!'${site.defImg!}'}[#else]'${site.defImg!}'[/#if]"></div>
 				    <div class="rig">
-				      <div class="rig-top"><a class="username">[#if c.replayUser??]${c.replayUser.username}&nbsp;${(c.replayUser.realname)!""}[#else]管理员[/#if]</a>
+				      <div class="rig-top"><a class="username">[#if c.replayUser??]${c.replayUser.username}&nbsp;${(c.replayUser.realname)!""}[#else]匿名网友[/#if]</a>
 					  <em>[#if c.replayTime??]${c.replayTime?string("yyyy-MM-dd HH:mm:ss")}[/#if]</em></div>
 				      <div class="rig-txt">${c.replayHtml!}</div>
 				      <div class="rig-bottom">
