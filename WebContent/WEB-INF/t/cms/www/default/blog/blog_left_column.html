@@ -453,6 +453,8 @@ outline: none;
             			 document.getElementById('maindiv').innerHTML="";
             		 }
                 	 $(".wrap-right").append(datas);
+                	 $("#mainpwdiv").remove();
+                	 $("#maindiv").css("display","block");
             	 }
             	
             	
@@ -966,12 +968,25 @@ function sJoinGroup(){
         			data: "",
         			success: function (data) {
         				if(data.status==1){
-				        	$("#joinGroups").dialog("close");
-				        	window.location.reload()
+				        	$.ajax({
+		    			           type: 'GET',
+		    			           url : '${base}/blog/refreshColumn.jspx',
+		    			           dataType:"html",
+		    			           async: true,
+		    			           success : function(datas){
+							        	$("#joinGroups").dialog("close");
+		    			        	   $("#appendHtml").empty();
+		    			        	   $("#joinGroups").remove();
+		    			               $("#appendHtml").append(datas);
+		    			               if(window._bd_share_main){
+		    			            	   window._bd_share_main.init();
+		    			            	}
+		    			  	   		 }
+		    			 	});
         				}else if(data.status==2){
 							$("#errorTip").html("请勿重复加入群组!");
 							return false;
-        				}else{
+        				}else if(data.status==1){
 							$("#errorTip").html("加入失败!");
 							return false;
         				}

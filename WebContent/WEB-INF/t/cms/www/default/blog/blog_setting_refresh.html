@@ -63,6 +63,8 @@ function blogsets(){
 	var reg = new RegExp("[~'!#$%^&*-+_=:]");  
     var blogTitle = $('#blogTitle').val();
     var blogTitle2 = $('#blogTitle2').val();
+    alert(blogTitle);
+    alert(blogTitle2);
     if(reg.test(blogTitle)){
 		alert("标题名可能包含%/等特殊字符，请修改重试。");
 		return false;
@@ -70,6 +72,29 @@ function blogsets(){
     if(reg.test(blogTitle2)){
 		alert("副标题名可能包含%/等特殊字符，请修改重试。");
 		return false;
+    }
+    var pattern = /iframe/;
+    var pattern2 = /IFRAME/;
+    //pattern.test(str);
+    if(pattern.test(blogTitle)){
+		alert("标题名处不支持<iframe>。");
+		return false;
+    	
+    }
+    if(pattern2.test(blogTitle)){
+		alert("标题名处不支持<iframe>。");
+		return false;
+    	
+    }
+    if(pattern.test(blogTitle2)){
+		alert("副标题名处不支持<iframe>。");
+		return false;
+    	
+    }
+    if(pattern2.test(blogTitle2)){
+		alert("副标题名处不支持<iframe>。");
+		return false;
+    	
     }
     $.ajax({
 		url:"${base}/blog/updateSetting_refresh.jspx",

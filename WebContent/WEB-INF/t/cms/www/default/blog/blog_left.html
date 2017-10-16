@@ -410,13 +410,13 @@ function sJoinGroup(){
         			data: "",
         			success: function (data) {
         				if(data.status==1){
-				        	$("#joinGroups").dialog("close");
 				        	$.ajax({
 		    			           type: 'GET',
 		    			           url : '${base}/blog/refreshColumn.jspx',
 		    			           dataType:"html",
 		    			           async: true,
 		    			           success : function(datas){
+							        	$("#joinGroups").dialog("close");
 		    			        	   $("#appendHtml").empty();
 		    			        	   $("#joinGroups").remove();
 		    			               $("#appendHtml").append(datas);
@@ -599,6 +599,8 @@ function sJoinGroup(){
             		 }
             		 
                 	 $(".wrap-right").append(datas);
+                	 $("#mainpwdiv").remove();
+                	 $("#maindiv").css("display","block");
             	 }
             	
             	

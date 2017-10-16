@@ -13,6 +13,8 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -389,6 +391,45 @@ public class BlogAct {
 	}
 	
 	
+	
+	 public static boolean containsEmoji(String source) {
+	        int len = source.length();
+	        for (int i = 0; i < len; i++) {
+	            char codePoint = source.charAt(i);
+	            if (!notisEmojiCharacter(codePoint)) {
+	            //判断确认有表情字符
+	            	return true;
+	            }
+	        }
+	        return false;
+	    }
+
+	 
+	   private static boolean notisEmojiCharacter(char codePoint) {
+	        return (codePoint == 0x0) || 
+	                (codePoint == 0x9) ||                            
+	                (codePoint == 0xA) ||
+	                (codePoint == 0xD) ||
+	                ((codePoint >= 0x20) && (codePoint <= 0xD7FF)) ||
+	                ((codePoint >= 0xE000) && (codePoint <= 0xFFFD)) ||
+	                ((codePoint >= 0x10000) && (codePoint <= 0x10FFFF));
+	    }
+	 
+	public static String filterEmoji(String source) { 
+     if(source != null)
+     {
+         Pattern emoji = Pattern.compile ("[\ud83c\udc00-\ud83c\udfff]|[\ud83d\udc00-\ud83d\udfff]|[\u2600-\u27ff]",Pattern.UNICODE_CASE | Pattern . CASE_INSENSITIVE ) ;
+         Matcher emojiMatcher = emoji.matcher(source);
+         if ( emojiMatcher.find())
+         {
+             source = emojiMatcher.replaceAll("");
+             return source ;
+         }
+     return source;
+    }
+    return source; 
+ }
+	
 	public String blog_ajaxsave(String title, String author, String description,
 			String txt, String tagStr, Integer channelId,Integer columnId,Integer modelId,ContentDoc doc,
 			String captcha,String mediaPath,String mediaType,
@@ -404,7 +445,10 @@ public class BlogAct {
 				return "login";
 				//return FrontUtils.showLogin(request, model, site);
 			}
-
+			txt=filterEmoji(txt);
+			   if(containsEmoji(txt)){
+				   return "emoji";
+			   }
 		Content c = new Content();
 		WebErrors errors = validateSaves(title, author, description, txt,doc,
 				tagStr,site, user, captcha, request, response,mediaPath,attachmentPaths);
@@ -1191,6 +1235,11 @@ public class BlogAct {
 				//request.getRequestDispatcher("/login.jspx").forward(request, response);
 				return "login";
 		}
+		   txt=filterEmoji(txt);
+		   if(containsEmoji(txt)){
+			   return "emoji";
+		   }
+
 		FrontUtils.frontData(request, model, site);
 		if(null != columnId){
 			channelId = 280;
@@ -2540,7 +2589,7 @@ public class BlogAct {
 			CmsSite site, CmsUser user, String captcha,
 			HttpServletRequest request, HttpServletResponse response,String mediaPath,String[] attachmentPaths) {
 		WebErrors errors = WebErrors.create(request);
-		if (errors.ifBlank(title, "title", 50)) {
+		if (errors.ifBlank(title, "title", 150)) {
 			return errors;
 		}
 		if (errors.ifMaxLength(author, "author", 60)) {

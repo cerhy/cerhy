@@ -339,6 +339,8 @@
       			 document.getElementById('maindiv').innerHTML="";
       		 }          	
       		 $(".wrap-right").append(datas);
+      		 $("#mainpwdiv").remove();
+        	 $("#wzId").css("display","block");
           	 //初始化百度分享组件,解决ajax局部刷新导致百度分享不了问题
           	if(window._bd_share_main){
          	   window._bd_share_main.init();

@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -321,7 +323,6 @@ public class ContributeAct extends AbstractContentMemberAct {
 				   sta=1;
 			   }
 		   }
-		  
 		   String result= blogAct.blog_ajaxsave(title, author, description, txt, tagStr, channelId,columnId,modelId,
 					null, captcha,mediaPath,mediaType,attachmentPaths,attachmentNames, attachmentFilenames
 					,picPaths,picDescs,charge,chargeAmount,password,
@@ -335,6 +336,7 @@ public class ContributeAct extends AbstractContentMemberAct {
 		
 	}
 
+	
 	
 	/**
 	 * 会员投稿修改
@@ -669,7 +671,6 @@ public class ContributeAct extends AbstractContentMemberAct {
 					}
 			   }
 		   }
-		  
 			   String result =blogAct.blog_ajax_update(id, title, author, description, txt, tagStr,
 					   columnId,channelId, mediaPath,mediaType,attachmentPaths,
 						attachmentNames, attachmentFilenames
@@ -1491,7 +1492,7 @@ public class ContributeAct extends AbstractContentMemberAct {
 		model = blogCommon.getTotalReadNum(model, user);
 		FrontUtils.frontData(request, model, site);
 		if(null!=user){
-			json.put("blogVisitNum", user.getBlogVisitNum());
+			json.put("blogVisitNum", user.getBlogVisitNum()==null?"0":user.getBlogVisitNum());
 			json.put("articleCount", articleCount);
 			json.put("coverCommentCount", model.get("coverCommentCount"));
 			json.put("readCount", model.get("readCount"));
@@ -1521,7 +1522,7 @@ public class ContributeAct extends AbstractContentMemberAct {
  		model = blogCommon.getAlreadyJoinGroup(request, model,userT);
  		model = blogCommon.getAddFriends(request, model,userT,user);
  		model = blogCommon.getFouces(request, model,userT,user);
- 		model = blogCommon.getFriendLeft(user.getId(),model,1);
+ 		model = blogCommon.getFriendLeft(userT.getId(),model,1);
 		String path = request.getSession().getServletContext().getRealPath("/");
 		List<Focus> list = (new BlogDao()).findMaxFocusCount( path);
 	    List<Focus> l = null;
