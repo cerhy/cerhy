@@ -90,7 +90,7 @@ public class CmsCommentMngImpl implements CmsCommentMng {
 		if (userId != null) {
 			comment.setCommentUser(cmsUserMng.findById(userId));
 		}
-		comment.setChecked(checked);
+		comment.setChecked(true);
 		comment.setRecommend(recommend);
 		comment.setScore(score);
 		comment.init();

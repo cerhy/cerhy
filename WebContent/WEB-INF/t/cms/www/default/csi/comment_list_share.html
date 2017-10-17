@@ -14,7 +14,7 @@
 	   <div class="reply" id="commentInputDiv_${c.id}"></div>
       [#if c??&&c.replyCount>0]
       <div class="comments-item comments-child">
-	    <div class="tx"><img src="[#if c.replayUser??]${(c.replayUser.userImg)!'${site.defImg!}'}[#else]'${site.defImg!}'[/#if]"></div>
+	    <div class="tx"><img src="[#if c.replayUser??]${(c.replayUser.userImg)!'${site.defImg!}'}[#else]${site.defImg!}[/#if]"></div>
 	    <div class="rig">
 	      <div class="rig-top"><a class="username">[#if c.replayUser??]${(c.replayUser.username)!"管理员"}[#else]匿名[/#if]</a>
 		  <em>[#if c.replayTime??]${c.replayTime?string("yyyy-MM-dd HH:mm:ss")}[/#if]</em></div>
