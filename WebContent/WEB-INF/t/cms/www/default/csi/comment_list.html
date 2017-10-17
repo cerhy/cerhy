@@ -30,7 +30,7 @@
       <div class="comments-item comments-child">
 	    <div class="tx"><img src="[#if c.replayUser??]${(c.replayUser.userImg)!'${site.defImg!}'}[#else]${site.defImg!}[/#if]"></div>
 	    <div class="rig">
-	      <div class="rig-top"><a class="username">[#if c.replayUser??]${(c.replayUser.username)!"管理员"}[#else]匿名[/#if]</a>
+	      <div class="rig-top"><a class="username">[#if c.replayUser??]${(c.replayUser.username)!"匿名"}[#else]匿名[/#if]</a>
 		  <em>[#if c.replayTime??]${c.replayTime?string("yyyy-MM-dd HH:mm:ss")}[/#if]</em></div>
 	      <div class="rig-txt">${c.replayHtml!}</div>
 	      <div class="rig-bottom">
@@ -91,6 +91,6 @@ $(function() {
 </script>
 <script type="text/javascript">
 $("#comments-text").val("");
-$("#addCm").html("&nbsp;已有"+${contentCm.commentsCheckedNum!}+"&nbsp;条");
-$("#addCcm").html("评论："+${contentCm.commentsCheckedNum!});
+$("#addCm").html("&nbsp;已有"+${contentCm}+"&nbsp;条");
+$("#addCcm").html("评论："+${contentCm});
 </script>
