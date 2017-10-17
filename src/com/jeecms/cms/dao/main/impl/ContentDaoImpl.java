@@ -19,6 +19,7 @@ import static com.jeecms.cms.entity.main.Content.ContentStatus.prepared;
 import static com.jeecms.cms.entity.main.Content.ContentStatus.recycle;
 import static com.jeecms.cms.entity.main.Content.ContentStatus.rejected;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -49,22 +50,24 @@ import com.jeecms.core.entity.CmsUser;
 @Repository
 public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 		implements ContentDao {
-	public Pagination getPage(String title, Integer typeId,Integer currUserId,
+	public Pagination getPage(String title, Integer typeId, Integer currUserId,
 			Integer inputUserId, boolean topLevel, boolean recommend,
-			ContentStatus status, Byte checkStep, Integer siteId,Integer modelId,
-			Integer channelId,int orderBy, int pageNo, int pageSize,String removeBlog) {
-		Finder f = Finder.create("select  bean from Content bean left join bean.contentShareCheckSet shareCheck left join shareCheck.channel tarChannel ");
+			ContentStatus status, Byte checkStep, Integer siteId,
+			Integer modelId, Integer channelId, int orderBy, int pageNo,
+			int pageSize, String removeBlog) {
+		Finder f = Finder
+				.create("select  bean from Content bean left join bean.contentShareCheckSet shareCheck left join shareCheck.channel tarChannel ");
 		if (rejected == status) {
 			f.append("  join bean.contentCheckSet check ");
 		}
-		if (prepared == status|| passed == status) {
+		if (prepared == status || passed == status) {
 			f.append("  join bean.eventSet event  ");
 		}
 		if (channelId != null) {
 			f.append(" join bean.channel channel,Channel parent");
 			f.append(" where ((channel.lft between parent.lft and parent.rgt");
 			f.append(" and channel.site.id=parent.site.id");
-			//f.append(" and parent.id=:parentId) or (shareCheck.checkStatus<>0 and shareCheck.shareValid=true and  tarChannel.lft between parent.lft and parent.rgt and tarChannel.site.id=parent.site.id and parent.id=:parentId))");
+			// f.append(" and parent.id=:parentId) or (shareCheck.checkStatus<>0 and shareCheck.shareValid=true and  tarChannel.lft between parent.lft and parent.rgt and tarChannel.site.id=parent.site.id and parent.id=:parentId))");
 			f.append(" and parent.id=:parentId))");
 			f.setParam("parentId", channelId);
 		} else if (siteId != null) {
@@ -73,121 +76,136 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 		} else {
 			f.append(" where 1=1");
 		}
-		//跳级审核人不应该看到？
+		// 跳级审核人不应该看到？
 		if (passed == status) {
-			//操作人不在待审人列表中且非终审 或非发起人
-			f.append("  and ((:operateId not in(select eventUser.user.id from CmsWorkflowEventUser eventUser where eventUser.event.id=event.id) and event.initiator.id!=:operateId) or event.initiator.id=:operateId) and event.nextStep!=-1").setParam("operateId", currUserId);
+			// 操作人不在待审人列表中且非终审 或非发起人
+			f.append(
+					"  and ((:operateId not in(select eventUser.user.id from CmsWorkflowEventUser eventUser where eventUser.event.id=event.id) and event.initiator.id!=:operateId) or event.initiator.id=:operateId) and event.nextStep!=-1")
+					.setParam("operateId", currUserId);
 		}
 		if (prepared == status) {
-			//操作人在待审人列表中
-			f.append("  and :operateId in(select eventUser.user.id from CmsWorkflowEventUser eventUser where eventUser.event.id=event.id)").setParam("operateId", currUserId);
+			// 操作人在待审人列表中
+			f.append(
+					"  and :operateId in(select eventUser.user.id from CmsWorkflowEventUser eventUser where eventUser.event.id=event.id)")
+					.setParam("operateId", currUserId);
 		}
 		if (rejected == status) {
 			f.append(" and check.rejected=true");
 		}
-		if(modelId!=null){
-			f.append(" and bean.model.id=:modelId").setParam("modelId", modelId);
+		if (modelId != null) {
+			f.append(" and bean.model.id=:modelId")
+					.setParam("modelId", modelId);
 		}
-		if(removeBlog!=null){
+		if (removeBlog != null) {
 			f.append(" and bean.channel.id!=280");
 		}
 		appendQuery(f, title, typeId, inputUserId, status, topLevel, recommend);
 		appendOrder(f, orderBy);
 		return find(f, pageNo, pageSize);
 	}
-	
-	public Pagination getPage_blog(String title, Integer typeId,Integer userId,
-		   boolean topLevel, boolean recommend,
-			ContentStatus status, Byte checkStep, Integer siteId,Integer modelId,
-			Integer channelId,int orderBy, int pageNo, int pageSize,Integer columnId,Integer channelId2,Integer recieveUserId) {
+
+	public Pagination getPage_blog(String title, Integer typeId,
+			Integer userId, boolean topLevel, boolean recommend,
+			ContentStatus status, Byte checkStep, Integer siteId,
+			Integer modelId, Integer channelId, int orderBy, int pageNo,
+			int pageSize, Integer columnId, Integer channelId2,
+			Integer recieveUserId) {
 		channelId = channelId2;
-		Finder f = Finder.create("select  bean from Content bean left join bean.contentShareCheckSet shareCheck left join shareCheck.channel tarChannel ");
+		Finder f = Finder
+				.create("select  bean from Content bean left join bean.contentShareCheckSet shareCheck left join shareCheck.channel tarChannel ");
 		if (rejected == status) {
 			f.append("  join bean.contentCheckSet check ");
 		}
-		if (prepared == status|| passed == status) {
+		if (prepared == status || passed == status) {
 			f.append("  join bean.eventSet event  ");
 		}
 		if (channelId != null) {
-			if(channelId.toString().equals("316")||channelId.toString().equals("323")){
-				   channelId=305;
-			   }
-			   //高中、初中、小学音乐
-			   if(channelId.toString().equals("315")||channelId.toString().equals("322")){
-				   channelId=304;
-			   }
-			   //高中、初中、小学体育
-			   if(channelId.toString().equals("314")||channelId.toString().equals("321")){
-				   channelId=303;
-			   }
-			   //高中、初中、小学综合实践
-			   if(channelId.toString().equals("417")||channelId.toString().equals("418")){
-				   channelId=416;
-			   }
-			   //高中、初中地理
-			   if(channelId.toString().equals("311")){
-				   channelId=300;
-			   }
-			   //高中、初中历史
-			   if(channelId.toString().equals("310")){
-				   channelId=299;
-			   }
-			   //初中、小学信息技术
-			   if(channelId.toString().equals("319")){
-				   channelId=312;
-			   }
-			   //初中、小学政治
-			   if(channelId.toString().equals("317")){
-				   channelId=309;
-			   }
-			   //高中、初中化学
-			   if(channelId.toString().equals("307")){
-				   channelId=296;
-			   }
-			   //高中、初中物理
-			   if(channelId.toString().equals("306")){
-				   channelId=295;
-			   }
-			   //高中、初中生物
-			   if(channelId.toString().equals("308")){
-				   channelId=297;
-				}
-			   //高中、初中语文
-				if(channelId.toString().equals("142")){
-					channelId=140;
-				}
-				//高中、初中、小学心理健康
-				if(channelId.toString().equals("421")||channelId.toString().equals("422")){
-					channelId=420;
-				}
+			if (channelId.toString().equals("316")
+					|| channelId.toString().equals("323")) {
+				channelId = 305;
+			}
+			// 高中、初中、小学音乐
+			if (channelId.toString().equals("315")
+					|| channelId.toString().equals("322")) {
+				channelId = 304;
+			}
+			// 高中、初中、小学体育
+			if (channelId.toString().equals("314")
+					|| channelId.toString().equals("321")) {
+				channelId = 303;
+			}
+			// 高中、初中、小学综合实践
+			if (channelId.toString().equals("417")
+					|| channelId.toString().equals("418")) {
+				channelId = 416;
+			}
+			// 高中、初中地理
+			if (channelId.toString().equals("311")) {
+				channelId = 300;
+			}
+			// 高中、初中历史
+			if (channelId.toString().equals("310")) {
+				channelId = 299;
+			}
+			// 初中、小学信息技术
+			if (channelId.toString().equals("319")) {
+				channelId = 312;
+			}
+			// 初中、小学政治
+			if (channelId.toString().equals("317")) {
+				channelId = 309;
+			}
+			// 高中、初中化学
+			if (channelId.toString().equals("307")) {
+				channelId = 296;
+			}
+			// 高中、初中物理
+			if (channelId.toString().equals("306")) {
+				channelId = 295;
+			}
+			// 高中、初中生物
+			if (channelId.toString().equals("308")) {
+				channelId = 297;
+			}
+			// 高中、初中语文
+			if (channelId.toString().equals("142")) {
+				channelId = 140;
+			}
+			// 高中、初中、小学心理健康
+			if (channelId.toString().equals("421")
+					|| channelId.toString().equals("422")) {
+				channelId = 420;
+			}
 			f.append(" join bean.channel channel,Channel parent");
 			f.append(" where ((channel.lft between parent.lft and parent.rgt");
-			//f.append(" and channel.site.id=parent.site.id");
+			// f.append(" and channel.site.id=parent.site.id");
 			f.append(" and parent.id=:parentId  )   or ( shareCheck.checkStatus<>0 and shareCheck.shareValid=true and  tarChannel.lft between parent.lft and parent.rgt and parent.id=:parentId))");
 			f.setParam("parentId", channelId);
-		} /*else if (siteId != null) {
-			f.append(" where (bean.site.id=:siteId  or (shareCheck.checkStatus<>0 and shareCheck.shareValid=true and tarChannel.site.id=:siteId))");
-			f.setParam("siteId", siteId);
-		} */else {
+		} /*
+		 * else if (siteId != null) { f.append(
+		 * " where (bean.site.id=:siteId  or (shareCheck.checkStatus<>0 and shareCheck.shareValid=true and tarChannel.site.id=:siteId))"
+		 * ); f.setParam("siteId", siteId); }
+		 */else {
 			f.append(" where 1=1");
 		}
-		
+
 		if (rejected == status) {
 			f.append(" and check.rejected=true");
 		}
-		if(modelId!=null){
-			f.append(" and bean.model.id=:modelId").setParam("modelId", modelId);
-			//f.append(" and bean.model.id in (11,21,24)");
-		}/*else{
-			f.append(" and bean.model.id in (11,21,24)");
-		}*/
-		appendQuery_blog(f, title, typeId, userId,status, topLevel, recommend,columnId,recieveUserId,channelId);
+		if (modelId != null) {
+			f.append(" and bean.model.id=:modelId")
+					.setParam("modelId", modelId);
+			// f.append(" and bean.model.id in (11,21,24)");
+		}/*
+		 * else{ f.append(" and bean.model.id in (11,21,24)"); }
+		 */
+		appendQuery_blog(f, title, typeId, userId, status, topLevel, recommend,
+				columnId, recieveUserId, channelId);
 		appendOrder(f, orderBy);
 		return find(f, pageNo, pageSize);
 	}
 
-
-	//只能管理自己的数据不能审核他人信息，工作流相关表无需查询
+	// 只能管理自己的数据不能审核他人信息，工作流相关表无需查询
 	public Pagination getPageBySelf(String title, Integer typeId,
 			Integer inputUserId, boolean topLevel, boolean recommend,
 			ContentStatus status, Byte checkStep, Integer siteId,
@@ -203,7 +221,7 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 			f.append(" and channel.site.id=parent.site.id");
 			f.append(" and parent.id=:parentId");
 			f.setParam("parentId", channelId);
-		}else if (siteId != null) {
+		} else if (siteId != null) {
 			f.append(" where bean.site.id=:siteId");
 			f.setParam("siteId", siteId);
 		} else {
@@ -233,50 +251,55 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 		return find(f, pageNo, pageSize);
 	}
 
-	public Pagination getPageByRight(String title, Integer typeId,Integer currUserId,
-			Integer inputUserId, boolean topLevel, boolean recommend,
-			ContentStatus status, Byte checkStep, Integer siteId,
-			Integer channelId, Integer departId, Integer userId, boolean selfData, int orderBy,
-			int pageNo, int pageSize) {
-		Finder f = Finder.create("select  bean from Content bean  left join bean.contentShareCheckSet shareCheck left join  shareCheck.channel tarChannel ");
+	public Pagination getPageByRight(String title, Integer typeId,
+			Integer currUserId, Integer inputUserId, boolean topLevel,
+			boolean recommend, ContentStatus status, Byte checkStep,
+			Integer siteId, Integer channelId, Integer departId,
+			Integer userId, boolean selfData, int orderBy, int pageNo,
+			int pageSize) {
+		Finder f = Finder
+				.create("select  bean from Content bean  left join bean.contentShareCheckSet shareCheck left join  shareCheck.channel tarChannel ");
 		if (rejected == status) {
 			f.append("  join bean.contentCheckSet check ");
 		}
-		if (prepared == status|| passed == status) {
+		if (prepared == status || passed == status) {
 			f.append("  join bean.eventSet event  ");
 		}
 		if (channelId != null) {
 			f.append(" join bean.channel channel ");
-			if(departId!=null){
+			if (departId != null) {
 				f.append("left join channel.departments depart");
 			}
 			f.append(",Channel parent");
 			f.append(" where ((channel.lft between parent.lft and parent.rgt");
 			f.append(" and channel.site.id=parent.site.id");
 			f.append(" and parent.id=:parentId");
-			if(departId!=null){
-				f.append(" and depart.id =:departId").setParam("departId", departId);
+			if (departId != null) {
+				f.append(" and depart.id =:departId").setParam("departId",
+						departId);
 			}
-			f.append(" or (shareCheck.checkStatus<>0 and shareCheck.shareValid=true and  tarChannel.lft between parent.lft and parent.rgt and tarChannel.site.id=parent.site.id and parent.id=:parentId)))" );
+			f.append(" or (shareCheck.checkStatus<>0 and shareCheck.shareValid=true and  tarChannel.lft between parent.lft and parent.rgt and tarChannel.site.id=parent.site.id and parent.id=:parentId)))");
 			f.setParam("parentId", channelId);
-			
+
 		} else if (siteId != null) {
-			if(departId!=null){
+			if (departId != null) {
 				f.append(" join bean.channel channel left join channel.departments depart");
 			}
 			f.append(" where  (1=1 ");
-			if(departId!=null){
-				f.append(" and depart.id  =:departId").setParam("departId", departId);
+			if (departId != null) {
+				f.append(" and depart.id  =:departId").setParam("departId",
+						departId);
 			}
 			f.append(" and bean.site.id=:siteId or (shareCheck.checkStatus<>0 and shareCheck.shareValid=true and tarChannel.site.id=:siteId and bean.site.id<>:siteId))");
 			f.setParam("siteId", siteId);
 		} else {
-			if(departId!=null){
+			if (departId != null) {
 				f.append(" join bean.channel channel left join channel.departments depart");
 			}
 			f.append(" where  (1=1 ");
-			if(departId!=null){
-				f.append(" and depart.id  =:departId").setParam("departId", departId);
+			if (departId != null) {
+				f.append(" and depart.id  =:departId").setParam("departId",
+						departId);
 			}
 		}
 		if (selfData) {
@@ -284,14 +307,18 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 			f.append(" and bean.user.id=:userId");
 			f.setParam("userId", userId);
 		}
-		//跳级审核人不应该看到？
+		// 跳级审核人不应该看到？
 		if (passed == status) {
-			//操作人不在待审人列表中且非终审 或非发起人
-			f.append("  and ((:operateId not in(select eventUser.user.id from CmsWorkflowEventUser eventUser where eventUser.event.id=event.id) and event.initiator.id!=:operateId) or event.initiator.id=:operateId) and event.nextStep!=-1").setParam("operateId", currUserId);
+			// 操作人不在待审人列表中且非终审 或非发起人
+			f.append(
+					"  and ((:operateId not in(select eventUser.user.id from CmsWorkflowEventUser eventUser where eventUser.event.id=event.id) and event.initiator.id!=:operateId) or event.initiator.id=:operateId) and event.nextStep!=-1")
+					.setParam("operateId", currUserId);
 		}
 		if (prepared == status) {
-			//操作人在待审人列表中
-			f.append("  and :operateId in(select eventUser.user.id from CmsWorkflowEventUser eventUser where eventUser.event.id=event.id)").setParam("operateId", currUserId);
+			// 操作人在待审人列表中
+			f.append(
+					"  and :operateId in(select eventUser.user.id from CmsWorkflowEventUser eventUser where eventUser.event.id=event.id)")
+					.setParam("operateId", currUserId);
 		}
 		if (rejected == status) {
 			f.append(" and check.rejected=true");
@@ -300,10 +327,12 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 		appendOrder(f, orderBy);
 		return find(f, pageNo, pageSize);
 	}
-	
 
-	public Pagination getPageForCollection(Integer siteId, Integer memberId, int pageNo, int pageSize){
-		Finder f = Finder.create("select bean from Content bean join bean.collectUsers user where user.id=:userId").setParam("userId", memberId);
+	public Pagination getPageForCollection(Integer siteId, Integer memberId,
+			int pageNo, int pageSize) {
+		Finder f = Finder
+				.create("select bean from Content bean join bean.collectUsers user where user.id=:userId")
+				.setParam("userId", memberId);
 		if (siteId != null) {
 			f.append(" and bean.site.id=:siteId");
 			f.setParam("siteId", siteId);
@@ -312,105 +341,119 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 		f.setParam("status", ContentCheck.RECYCLE);
 		return find(f, pageNo, pageSize);
 	}
-	
+
 	@SuppressWarnings("unchecked")
-	public  List<Content> getExpiredTopLevelContents(byte topLevel,Date expiredDay){
+	public List<Content> getExpiredTopLevelContents(byte topLevel,
+			Date expiredDay) {
 		String hql = "from  Content bean where bean.status=:status and bean.topLevel>:topLevel and bean.contentExt.topLevelDate<:topLevelDate";
-		Finder f=Finder.create(hql).setParam("status", ContentCheck.CHECKED).setParam("topLevel", topLevel).setParam("topLevelDate", expiredDay);
+		Finder f = Finder.create(hql).setParam("status", ContentCheck.CHECKED)
+				.setParam("topLevel", topLevel)
+				.setParam("topLevelDate", expiredDay);
 		return find(f);
 	}
-	
+
 	@SuppressWarnings("unchecked")
-	public  List<Content> getPigeonholeContents(Date pigeonholeDay){
+	public List<Content> getPigeonholeContents(Date pigeonholeDay) {
 		String hql = "from  Content bean where bean.status=:status and bean.contentExt.pigeonholeDate<:pigeonholeDate";
-		Finder f=Finder.create(hql).setParam("status", ContentCheck.CHECKED).setParam("pigeonholeDate", pigeonholeDay);
+		Finder f = Finder.create(hql).setParam("status", ContentCheck.CHECKED)
+				.setParam("pigeonholeDate", pigeonholeDay);
 		return find(f);
 	}
 
 	private void appendQuery_blog(Finder f, String title, Integer typeId,
 			Integer inputUserId, ContentStatus status, boolean topLevel,
-			boolean recommend ,Integer columnId,Integer recieveUserId,Integer channelId) {
-		if (inputUserId != null&&inputUserId!=0) {
+			boolean recommend, Integer columnId, Integer recieveUserId,
+			Integer channelId) {
+		if (inputUserId != null && inputUserId != 0) {
 			f.append(" and bean.user.id=:inputUserId");
 			f.setParam("inputUserId", inputUserId);
-		}else{
-		
+		} else {
+
 		}
-		/*if(null != userGroupId){
-			f.append(" and bean.user.group.id=:group");
-			f.setParam("group", userGroupId);
-		}*/
-		String sendWhere= "";
+		/*
+		 * if(null != userGroupId){ f.append(" and bean.user.group.id=:group");
+		 * f.setParam("group", userGroupId); }
+		 */
+		String sendWhere = "";
 		if (!StringUtils.isBlank(title)) {
 			f.append(" and bean.contentExt.title like :title");
 			f.setParam("title", "%" + title + "%");
-			
-		    sendWhere = " and title like '%"+title+"%'";//发送中间表模糊查询
+
+			sendWhere = " and title like '%" + title + "%'";// 发送中间表模糊查询
 		}
 		if (typeId != null) {
 			f.append(" and bean.type.id=:typeId");
 			f.setParam("typeId", typeId);
 		}
-		
+
 		if (topLevel) {
 			f.append(" and bean.topLevel>0");
 		}
 		if (recommend) {
 			f.append(" and bean.recommend=true");
 		}
-		if(null != columnId ){
+		if (null != columnId) {
 			f.append(" and bean.columnId=:columnId");
 			f.setParam("columnId", columnId);
-			String sql ="";
-			
-			if((inputUserId==0 && recieveUserId!=null)||(inputUserId==0 && recieveUserId==null)){//0代表群组
-				sql = "select contentId from ContentSend where  columnId="+columnId+"" +sendWhere;
-			}else if(recieveUserId==null){//等于null说明没有登录访问的
-				 sql = "select contentId from ContentSend where recieveUserId="+inputUserId+" and columnId="+columnId+"" +sendWhere;
-			}else{
-				 sql = "select contentId from ContentSend where recieveUserId="+recieveUserId+" and columnId="+columnId+"" +sendWhere;
+			String sql = "";
+
+			if ((inputUserId == 0 && recieveUserId != null)
+					|| (inputUserId == 0 && recieveUserId == null)) {// 0代表群组
+				sql = "select contentId from ContentSend where  columnId="
+						+ columnId + "" + sendWhere;
+			} else if (recieveUserId == null) {// 等于null说明没有登录访问的
+				sql = "select contentId from ContentSend where recieveUserId="
+						+ inputUserId + " and columnId=" + columnId + ""
+						+ sendWhere;
+			} else {
+				sql = "select contentId from ContentSend where recieveUserId="
+						+ recieveUserId + " and columnId=" + columnId + ""
+						+ sendWhere;
 			}
-			
-			List contentIdList =find(sql);
-			if(contentIdList!=null && contentIdList.size()>0){
-				/*Integer[] contentIds = new Integer[]{60001672,60001673};*/
+
+			List contentIdList = find(sql);
+			if (contentIdList != null && contentIdList.size() > 0) {
+				/* Integer[] contentIds = new Integer[]{60001672,60001673}; */
 				f.append(" or bean.id in (:contentIds)");
 				f.setParamList("contentIds", contentIdList);
 			}
-		}else{
-			if(channelId==null){
-				String sql ="";
-				
-				if(recieveUserId==null){
-					sql = "select contentId from ContentSend where recieveUserId="+inputUserId+"" +sendWhere;
-				}else{
-					sql = "select contentId from ContentSend where recieveUserId="+recieveUserId+"" +sendWhere;
+		} else {
+			if (channelId == null) {
+				String sql = "";
+
+				if (recieveUserId == null) {
+					sql = "select contentId from ContentSend where recieveUserId="
+							+ inputUserId + "" + sendWhere;
+				} else {
+					sql = "select contentId from ContentSend where recieveUserId="
+							+ recieveUserId + "" + sendWhere;
 				}
-				 
-				 List contentIdList =find(sql);
-					if(contentIdList!=null && contentIdList.size()>0){
-						f.append(" or bean.id in (:contentIds)");
-						f.setParamList("contentIds", contentIdList);
-					}
+
+				List contentIdList = find(sql);
+				if (contentIdList != null && contentIdList.size() > 0) {
+					f.append(" or bean.id in (:contentIds)");
+					f.setParamList("contentIds", contentIdList);
+				}
 			}
-			
+
 		}
 		if (draft == status) {
 			f.append(" and bean.status=:status");
 			f.setParam("status", ContentCheck.DRAFT);
-		}if (contribute == status) {
+		}
+		if (contribute == status) {
 			f.append(" and bean.status=:status");
 			f.setParam("status", ContentCheck.CONTRIBUTE);
 		} else if (checked == status) {
 			f.append(" and bean.status=:status");
 			f.setParam("status", ContentCheck.CHECKED);
-		} else if (prepared == status ) {
+		} else if (prepared == status) {
 			f.append(" and bean.status=:status");
 			f.setParam("status", ContentCheck.CHECKING);
-		} else if (rejected == status ) {
+		} else if (rejected == status) {
 			f.append(" and bean.status=:status");
 			f.setParam("status", ContentCheck.REJECT);
-		}else if (passed == status) {
+		} else if (passed == status) {
 			f.append(" and (bean.status=:checking or bean.status=:checked)");
 			f.setParam("checking", ContentCheck.CHECKING);
 			f.setParam("checked", ContentCheck.CHECKED);
@@ -427,7 +470,7 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 			// never
 		}
 	}
-	
+
 	private void appendQuery(Finder f, String title, Integer typeId,
 			Integer inputUserId, ContentStatus status, boolean topLevel,
 			boolean recommend) {
@@ -439,12 +482,12 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 			f.append(" and bean.type.id=:typeId");
 			f.setParam("typeId", typeId);
 		}
-		if (inputUserId != null&&inputUserId!=0) {
+		if (inputUserId != null && inputUserId != 0) {
 			f.append(" and bean.user.id=:inputUserId");
 			f.setParam("inputUserId", inputUserId);
-		}else{
-			//输入了没有的用户名的情况
-			if(inputUserId==null){
+		} else {
+			// 输入了没有的用户名的情况
+			if (inputUserId == null) {
 				f.append(" and 1!=1");
 			}
 		}
@@ -457,19 +500,20 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 		if (draft == status) {
 			f.append(" and bean.status=:status");
 			f.setParam("status", ContentCheck.DRAFT);
-		}if (contribute == status) {
+		}
+		if (contribute == status) {
 			f.append(" and bean.status=:status");
 			f.setParam("status", ContentCheck.CONTRIBUTE);
 		} else if (checked == status) {
 			f.append(" and bean.status=:status");
 			f.setParam("status", ContentCheck.CHECKED);
-		} else if (prepared == status ) {
+		} else if (prepared == status) {
 			f.append(" and bean.status=:status");
 			f.setParam("status", ContentCheck.CHECKING);
-		} else if (rejected == status ) {
+		} else if (rejected == status) {
 			f.append(" and bean.status=:status");
 			f.setParam("status", ContentCheck.REJECT);
-		}else if (passed == status) {
+		} else if (passed == status) {
 			f.append(" and (bean.status=:checking or bean.status=:checked)");
 			f.setParam("checking", ContentCheck.CHECKING);
 			f.setParam("checked", ContentCheck.CHECKED);
@@ -487,8 +531,11 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 		}
 	}
 
-	public Content getContentCollection(Integer id, Integer siteId, boolean next, boolean cacheable,Integer userId){
-		Finder f = Finder.create("select bean from Content bean join bean.collectUsers user where user.id=:userId").setParam("userId", userId);
+	public Content getContentCollection(Integer id, Integer siteId,
+			boolean next, boolean cacheable, Integer userId) {
+		Finder f = Finder
+				.create("select bean from Content bean join bean.collectUsers user where user.id=:userId")
+				.setParam("userId", userId);
 		if (siteId != null) {
 			f.append(" and bean.site.id=:siteId");
 			f.setParam("siteId", siteId);
@@ -506,30 +553,32 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 		query.setCacheable(cacheable).setMaxResults(1);
 		return (Content) query.uniqueResult();
 	}
-	
+
 	public Content getSide(Integer id, Integer siteId, Integer channelId,
-			boolean next, boolean cacheable,Integer userId,Integer columnId,Integer topicId,Integer typeIds) {
+			boolean next, boolean cacheable, Integer userId, Integer columnId,
+			Integer topicId, Integer typeIds) {
 		Finder f;
-		if(null != topicId){
-			channelId =null;
-			f = Finder.create("select bean from Content bean join bean.topics topic where topic.id=:topicId").setParam("topicId", topicId);
-		}else{
+		if (null != topicId) {
+			channelId = null;
+			f = Finder
+					.create("select bean from Content bean join bean.topics topic where topic.id=:topicId")
+					.setParam("topicId", topicId);
+		} else {
 			f = Finder.create("from Content bean where 1=1");
 		}
-		
-		if(null!=typeIds){
+
+		if (null != typeIds) {
 			f.append(" and bean.type.id=:typeIds");
 			f.setParam("typeIds", typeIds);
 		}
-		
-		
-		if(null != userId){
-			if(userId != -1){
+
+		if (null != userId) {
+			if (userId != -1) {
 				f.append(" and bean.user.id=:userId");
 				f.setParam("userId", userId);
 			}
 		}
-		if(null != columnId){
+		if (null != columnId) {
 			f.append(" and bean.columnId=:columnId");
 			f.setParam("columnId", columnId);
 		}
@@ -567,9 +616,10 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 
 	public Pagination getPageBySiteIdsForTag(Integer[] siteIds,
 			Integer[] typeIds, Boolean titleImg, Boolean recommend,
-			String title, int open,Map<String,String[]>attr,int orderBy, int pageNo, int pageSize) {
+			String title, int open, Map<String, String[]> attr, int orderBy,
+			int pageNo, int pageSize) {
 		Finder f = bySiteIds(siteIds, typeIds, titleImg, recommend, title,
-				open,attr,orderBy);
+				open, attr, orderBy);
 		f.setCacheable(true);
 		return find(f, pageNo, pageSize);
 	}
@@ -577,9 +627,10 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 	@SuppressWarnings("unchecked")
 	public List<Content> getListBySiteIdsForTag(Integer[] siteIds,
 			Integer[] typeIds, Boolean titleImg, Boolean recommend,
-			String title,int open,Map<String,String[]>attr, int orderBy, Integer first, Integer count) {
-		Finder f = bySiteIds(siteIds, typeIds, titleImg, recommend, title,open,attr,
-				orderBy);
+			String title, int open, Map<String, String[]> attr, int orderBy,
+			Integer first, Integer count) {
+		Finder f = bySiteIds(siteIds, typeIds, titleImg, recommend, title,
+				open, attr, orderBy);
 		if (first != null) {
 			f.setFirstResult(first);
 		}
@@ -592,9 +643,10 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 
 	public Pagination getPageByChannelIdsForTag(Integer[] channelIds,
 			Integer[] typeIds, Boolean titleImg, Boolean recommend,
-			String title,int open, Map<String,String[]>attr, int orderBy, int option,int pageNo, int pageSize) {
+			String title, int open, Map<String, String[]> attr, int orderBy,
+			int option, int pageNo, int pageSize) {
 		Finder f = byChannelIds(channelIds, typeIds, titleImg, recommend,
-				title, open,attr,orderBy, option);
+				title, open, attr, orderBy, option);
 		f.setCacheable(true);
 		return find(f, pageNo, pageSize);
 	}
@@ -602,9 +654,10 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 	@SuppressWarnings("unchecked")
 	public List<Content> getListByChannelIdsForTag(Integer[] channelIds,
 			Integer[] typeIds, Boolean titleImg, Boolean recommend,
-			String title,int open,Map<String,String[]>attr, int orderBy, int option, Integer first, Integer count) {
+			String title, int open, Map<String, String[]> attr, int orderBy,
+			int option, Integer first, Integer count) {
 		Finder f = byChannelIds(channelIds, typeIds, titleImg, recommend,
-				title, open,attr,orderBy, option);
+				title, open, attr, orderBy, option);
 		if (first != null) {
 			f.setFirstResult(first);
 		}
@@ -617,10 +670,10 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 
 	public Pagination getPageByChannelPathsForTag(String[] paths,
 			Integer[] siteIds, Integer[] typeIds, Boolean titleImg,
-			Boolean recommend, String title, int open,Map<String,String[]>attr,int orderBy, int pageNo,
-			int pageSize) {
+			Boolean recommend, String title, int open,
+			Map<String, String[]> attr, int orderBy, int pageNo, int pageSize) {
 		Finder f = byChannelPaths(paths, siteIds, typeIds, titleImg, recommend,
-				title,open,attr,orderBy);
+				title, open, attr, orderBy);
 		f.setCacheable(true);
 		return find(f, pageNo, pageSize);
 	}
@@ -628,10 +681,11 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 	@SuppressWarnings("unchecked")
 	public List<Content> getListByChannelPathsForTag(String[] paths,
 			Integer[] siteIds, Integer[] typeIds, Boolean titleImg,
-			Boolean recommend, String title,int open,Map<String,String[]>attr, int orderBy, Integer first,
+			Boolean recommend, String title, int open,
+			Map<String, String[]> attr, int orderBy, Integer first,
 			Integer count) {
 		Finder f = byChannelPaths(paths, siteIds, typeIds, titleImg, recommend,
-				title, open,attr,orderBy);
+				title, open, attr, orderBy);
 		if (first != null) {
 			f.setFirstResult(first);
 		}
@@ -644,10 +698,10 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 
 	public Pagination getPageByTopicIdForTag(Integer topicId,
 			Integer[] siteIds, Integer[] channelIds, Integer[] typeIds,
-			Boolean titleImg, Boolean recommend, String title, int open,Map<String,String[]>attr,int orderBy,
-			int pageNo, int pageSize) {
+			Boolean titleImg, Boolean recommend, String title, int open,
+			Map<String, String[]> attr, int orderBy, int pageNo, int pageSize) {
 		Finder f = byTopicId(topicId, siteIds, channelIds, typeIds, titleImg,
-				recommend, title, open,attr,orderBy);
+				recommend, title, open, attr, orderBy);
 		f.setCacheable(true);
 		return find(f, pageNo, pageSize);
 	}
@@ -655,10 +709,11 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 	@SuppressWarnings("unchecked")
 	public List<Content> getListByTopicIdForTag(Integer topicId,
 			Integer[] siteIds, Integer[] channelIds, Integer[] typeIds,
-			Boolean titleImg, Boolean recommend, String title,int open,Map<String,String[]>attr, int orderBy,
-			Integer first, Integer count) {
+			Boolean titleImg, Boolean recommend, String title, int open,
+			Map<String, String[]> attr, int orderBy, Integer first,
+			Integer count) {
 		Finder f = byTopicId(topicId, siteIds, channelIds, typeIds, titleImg,
-				recommend, title,open, attr,orderBy);
+				recommend, title, open, attr, orderBy);
 		if (first != null) {
 			f.setFirstResult(first);
 		}
@@ -672,9 +727,10 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 	public Pagination getPageByTagIdsForTag(Integer[] tagIds,
 			Integer[] siteIds, Integer[] channelIds, Integer[] typeIds,
 			Integer excludeId, Boolean titleImg, Boolean recommend,
-			String title,int open, Map<String,String[]>attr,int orderBy, int pageNo, int pageSize) {
+			String title, int open, Map<String, String[]> attr, int orderBy,
+			int pageNo, int pageSize) {
 		Finder f = byTagIds(tagIds, siteIds, channelIds, typeIds, excludeId,
-				titleImg, recommend, title,open,attr, orderBy);
+				titleImg, recommend, title, open, attr, orderBy);
 		f.setCacheable(true);
 		return find(f, pageNo, pageSize);
 	}
@@ -683,9 +739,10 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 	public List<Content> getListByTagIdsForTag(Integer[] tagIds,
 			Integer[] siteIds, Integer[] channelIds, Integer[] typeIds,
 			Integer excludeId, Boolean titleImg, Boolean recommend,
-			String title,int open,Map<String,String[]>attr, int orderBy, Integer first, Integer count) {
+			String title, int open, Map<String, String[]> attr, int orderBy,
+			Integer first, Integer count) {
 		Finder f = byTagIds(tagIds, siteIds, channelIds, typeIds, excludeId,
-				titleImg, recommend, title, open,attr,orderBy);
+				titleImg, recommend, title, open, attr, orderBy);
 		if (first != null) {
 			f.setFirstResult(first);
 		}
@@ -697,7 +754,8 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 	}
 
 	private Finder bySiteIds(Integer[] siteIds, Integer[] typeIds,
-			Boolean titleImg, Boolean recommend, String title, int open,Map<String,String[]>attr,int orderBy) {
+			Boolean titleImg, Boolean recommend, String title, int open,
+			Map<String, String[]> attr, int orderBy) {
 		Finder f = Finder.create("select  bean from Content bean");
 		f.append(" left join bean.contentShareCheckSet shareCheck left join shareCheck.channel tarChannel ");
 		appendJoinConentDoc(f, open);
@@ -725,8 +783,8 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 	}
 
 	private Finder byChannelIds(Integer[] channelIds, Integer[] typeIds,
-			Boolean titleImg, Boolean recommend, String title, int open,Map<String,String[]>attr,int orderBy,
-			int option) {
+			Boolean titleImg, Boolean recommend, String title, int open,
+			Map<String, String[]> attr, int orderBy, int option) {
 		Finder f = Finder.create();
 		int len = channelIds.length;
 		// 如果多个栏目
@@ -743,79 +801,183 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 				f.setParamList("channelIds", channelIds);
 			}
 		} else if (option == 1) {
-			if(channelIds[0]!=null){
-				//高中、初中、小学美术
-				if(channelIds[0].toString().equals("316")||channelIds[0].toString().equals("323")){
-					channelIds[0]=305;
+			Integer[] ccid = null;
+			if (channelIds[0] != null) {
+				// 高中、初中、小学美术
+				if (channelIds[0].toString().equals("316")
+						|| channelIds[0].toString().equals("323")) {
+					channelIds[0] = 305;
 				}
-				//高中、初中、小学音乐
-				if(channelIds[0].toString().equals("315")||channelIds[0].toString().equals("322")){
-					channelIds[0]=304;
+				// 高中、初中、小学音乐
+				if (channelIds[0].toString().equals("315")
+						|| channelIds[0].toString().equals("322")) {
+					channelIds[0] = 304;
 				}
-				//高中、初中、小学体育
-				if(channelIds[0].toString().equals("314")||channelIds[0].toString().equals("321")){
-					channelIds[0]=303;
+				// 高中、初中、小学体育
+				if (channelIds[0].toString().equals("314")
+						|| channelIds[0].toString().equals("321")) {
+					channelIds[0] = 303;
 				}
-				//高中、初中、小学综合实践
-				if(channelIds[0].toString().equals("417")||channelIds[0].toString().equals("418")){
-					channelIds[0]=416;
+				// 高中、初中、小学综合实践
+				if (channelIds[0].toString().equals("417")
+						|| channelIds[0].toString().equals("418")) {
+					channelIds[0] = 416;
 				}
-				//高中、初中地理
-				if(channelIds[0].toString().equals("311")){
-					channelIds[0]=300;
+				// 高中、初中地理
+				if (channelIds[0].toString().equals("311")) {
+					channelIds[0] = 300;
 				}
-				//高中、初中历史
-				if(channelIds[0].toString().equals("310")){
-					channelIds[0]=299;
+				// 高中、初中历史
+				if (channelIds[0].toString().equals("310")) {
+					channelIds[0] = 299;
 				}
-				//初中、小学信息技术
-				if(channelIds[0].toString().equals("319")){
-					channelIds[0]=312;
+				// 初中、小学信息技术
+				if (channelIds[0].toString().equals("319")) {
+					channelIds[0] = 312;
 				}
-				//初中、小学政治
-				if(channelIds[0].toString().equals("317")){
-					channelIds[0]=309;
+				// 初中、小学政治
+				if (channelIds[0].toString().equals("317")) {
+					channelIds[0] = 309;
 				}
-				//高中、初中化学
-				if(channelIds[0].toString().equals("307")){
-					channelIds[0]=296;
+				// 高中、初中化学
+				if (channelIds[0].toString().equals("307")) {
+					channelIds[0] = 296;
 				}
-				//高中、初中物理
-				if(channelIds[0].toString().equals("306")){
-					channelIds[0]=295;
+				// 高中、初中物理
+				if (channelIds[0].toString().equals("306")) {
+					channelIds[0] = 295;
 				}
-				//高中、初中生物
-				if(channelIds[0].toString().equals("308")){
-					channelIds[0]=297;
+				// 高中、初中生物
+				if (channelIds[0].toString().equals("308")) {
+					channelIds[0] = 297;
 				}
-				//高中、初中语文
-				if(channelIds[0].toString().equals("142")){
-					channelIds[0]=140;
+				// 高中、初中语文
+				if (channelIds[0].toString().equals("142")) {
+					channelIds[0] = 140;
 				}
-				//高中、初中、小学心理健康
-				if(channelIds[0].toString().equals("421")||channelIds[0].toString().equals("422")){
-					channelIds[0]=420;
+				// 高中、初中、小学心理健康
+				if (channelIds[0].toString().equals("421")
+						|| channelIds[0].toString().equals("422")) {
+					channelIds[0] = 420;
 				}
-				
+
 			}
 			// 包含子栏目
-//			f.append("select  bean from Content bean");
-//			f.append(" left join bean.contentShareCheckSet shareCheck left join shareCheck.channel tarChannel ");
-//			appendJoinConentDoc(f, open);
-//			f.append(" join bean.contentExt as ext");
-//			f.append(" join bean.channel node,Channel parent");
-//			f.append(" where ((node.lft between parent.lft and parent.rgt");
-//			f.append(" and bean.site.id=parent.site.id");
-//			f.append(" and parent.id=:channelId ) or (shareCheck.checkStatus<>0 and shareCheck.shareValid=true and  tarChannel.lft between parent.lft and parent.rgt and tarChannel.site.id=parent.site.id and parent.id=:channelId))");
-//			f.setParam("channelId", channelIds[0]);
+			// f.append("select  bean from Content bean");
+			// f.append(" left join bean.contentShareCheckSet shareCheck left join shareCheck.channel tarChannel ");
+			// appendJoinConentDoc(f, open);
+			// f.append(" join bean.contentExt as ext");
+			// f.append(" join bean.channel node,Channel parent");
+			// f.append(" where ((node.lft between parent.lft and parent.rgt");
+			// f.append(" and bean.site.id=parent.site.id");
+			// f.append(" and parent.id=:channelId ) or (shareCheck.checkStatus<>0 and shareCheck.shareValid=true and  tarChannel.lft between parent.lft and parent.rgt and tarChannel.site.id=parent.site.id and parent.id=:channelId))");
+			// f.setParam("channelId", channelIds[0]);
 			f.append("select  bean from Content bean");
 			f.append(" join bean.channel node,Channel parent");
 			f.append(" where node.lft between parent.lft and parent.rgt");
 			f.append(" and bean.site.id=parent.site.id");
-			f.append(" and parent.id=:channelId");
 			f.append(" and bean.status<>:status");
+			// 处理教育科研文章从博客读取 423/427为首页内容
+			/*List coulmnIdList = null;
+			if (channelIds[0].toString().equals("423")
+					|| channelIds[0].toString().equals("427")) {
+				// 博客栏目的父栏目
+				int pcid = 0;
+				if (channelIds[0].toString().equals("423")) {
+					pcid = 522259;
+				} else if (channelIds[0].toString().equals("427")) {
+					pcid = 522480;
+				}
+				String sql = "select column_id from columns where parentId="
+						+ pcid;
+				coulmnIdList = find(sql);
+				if (coulmnIdList != null && coulmnIdList.size() > 0) {
+					f.append(" or bean.columnId in (:coulmnIds)");
+					f.setParamList("coulmnIdIds", coulmnIdList);
+				} else {
+					coulmnIdList.add(pcid);
+				}
+			}*/
+			//if (coulmnIdList == null && coulmnIdList.size() == 0) {
+				f.append(" and parent.id=:channelId");
+			//}
 			f.setParam("status", ContentCheck.RECYCLE);
-			f.setParam("channelId", channelIds[0]);
+			//文件通知程序处理按年分类---通知通报
+			String publishDate="";
+			String publishDates="";
+			if(channelIds[0].toString().equals("206")){
+				publishDate="2017";
+				publishDates="2018";
+			}
+			if(channelIds[0].toString().equals("208")){
+				publishDate="2016";
+				publishDates="2017";
+			}
+			if(channelIds[0].toString().equals("210")){
+				publishDate="2015";
+				publishDates="2016";
+			}
+			if(channelIds[0].toString().equals("378")){
+				publishDate="2014";
+				publishDates="2015";
+			}
+			if(channelIds[0].toString().equals("379")){
+				publishDate="2013";
+				publishDates="2014";
+			}
+			if(channelIds[0].toString().equals("380")){
+				publishDate="2012";
+				publishDates="2013";
+			}
+			if(channelIds[0].toString().equals("381")){
+				publishDate="2011";
+				publishDates="2012";
+			}
+			if(channelIds[0].toString().equals("382")){
+				publishDate="2010";
+				publishDates="2011";
+			}
+			if(channelIds[0].toString().equals("383")){
+				publishDate="2009";
+				publishDates="2010";
+			}
+			//院外信息
+			if(channelIds[0].toString().equals("180")){
+				publishDate="2017";
+				publishDates="2018";
+			}
+			if(channelIds[0].toString().equals("196")){
+				publishDate="2016";
+				publishDates="2017";
+			}
+			if(channelIds[0].toString().equals("197")){
+				publishDate="2015";
+				publishDates="2016";
+			}
+			if(channelIds[0].toString().equals("384")){
+				publishDate="2014";
+				publishDates="2015";
+			}
+			if(channelIds[0].toString().equals("385")){
+				publishDate="2013";
+				publishDates="2014";
+			}
+			if(channelIds[0].toString().equals("386")){
+				publishDate="2012";
+				publishDates="2013";
+			}
+			if(channelIds[0].toString().equals("387")){
+				publishDate="2011";
+				publishDates="2012";
+			}
+			if(StringUtils.isNotEmpty(publishDate)){
+				f.setParam("channelId", 206);
+				f.append(" and bean.sortDate between :start1 and :start2");
+				f.setParam("start1",strToDate(publishDate));
+				f.setParam("start2",strToDate(publishDates));
+			}else{
+				f.setParam("channelId", channelIds[0]);
+			}
 		} else if (option == 2) {
 			// 包含副栏目
 			f.append("select  bean from Content bean");
@@ -832,18 +994,19 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 			f.append(" and bean.hasTitleImg=:titleImg");
 			f.setParam("titleImg", titleImg);
 		}
-//		if (recommend != null) {
-//			f.append(" and bean.recommend=:recommend");
-//			f.setParam("recommend", recommend);
-//		}
-//		appendOpen(f, open);
-//		appendReleaseDate(f);
-		if(null!=channelIds&&null!=typeIds){
-			if(channelIds[0].toString().equals("280")&&typeIds[0].toString().equals("5")){	
+		// if (recommend != null) {
+		// f.append(" and bean.recommend=:recommend");
+		// f.setParam("recommend", recommend);
+		// }
+		// appendOpen(f, open);
+		// appendReleaseDate(f);
+		if (null != channelIds && null != typeIds) {
+			if (channelIds[0].toString().equals("280")
+					&& typeIds[0].toString().equals("5")) {
 				appendTypeIds(f, typeIds);
 			}
 		}
-//		f.append(" and bean.status=" + ContentCheck.CHECKED);
+		// f.append(" and bean.status=" + ContentCheck.CHECKED);
 		if (!StringUtils.isBlank(title)) {
 			f.append(" and bean.contentExt.title like :title");
 			f.setParam("title", "%" + title + "%");
@@ -852,10 +1015,21 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 		appendOrder(f, orderBy);
 		return f;
 	}
-
+	public java.sql.Date strToDate(String strDate) { 
+		String str = strDate; 
+		SimpleDateFormat format = new SimpleDateFormat("yyyy"); 
+		java.util.Date d = null; 
+		try { 
+			d = format.parse(str); 
+		} catch (Exception e) { 
+			e.printStackTrace(); 
+		} 
+		java.sql.Date date = new java.sql.Date(d.getTime()); 
+		return date; 
+	}
 	private Finder byChannelPaths(String[] paths, Integer[] siteIds,
 			Integer[] typeIds, Boolean titleImg, Boolean recommend,
-			String title, int open,Map<String,String[]>attr,int orderBy) {
+			String title, int open, Map<String, String[]> attr, int orderBy) {
 		Finder f = Finder.create();
 		f.append("select  bean from Content bean join bean.channel channel ");
 		f.append(" left join bean.contentShareCheckSet shareCheck left join shareCheck.channel tarChannel ");
@@ -863,7 +1037,9 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 		f.append(" join bean.contentExt as ext");
 		int len = paths.length;
 		if (len == 1) {
-			f.append(" where (channel.path=:path  or (shareCheck.checkStatus<>0 and shareCheck.shareValid=true and  tarChannel.path=:path))").setParam("path", paths[0]);
+			f.append(
+					" where (channel.path=:path  or (shareCheck.checkStatus<>0 and shareCheck.shareValid=true and  tarChannel.path=:path))")
+					.setParam("path", paths[0]);
 		} else {
 			f.append(" where (channel.path in (:paths) or (shareCheck.checkStatus<>0 and shareCheck.shareValid=true and  tarChannel.path in (:paths)))");
 			f.setParamList("paths", paths);
@@ -901,7 +1077,8 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 
 	private Finder byTopicId(Integer topicId, Integer[] siteIds,
 			Integer[] channelIds, Integer[] typeIds, Boolean titleImg,
-			Boolean recommend, String title, int open,Map<String,String[]>attr,int orderBy) {
+			Boolean recommend, String title, int open,
+			Map<String, String[]> attr, int orderBy) {
 		Finder f = Finder.create();
 		f.append("select bean from Content bean join bean.topics topic");
 		appendJoinConentDoc(f, open);
@@ -932,7 +1109,8 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 
 	private Finder byTagIds(Integer[] tagIds, Integer[] siteIds,
 			Integer[] channelIds, Integer[] typeIds, Integer excludeId,
-			Boolean titleImg, Boolean recommend, String title, int open,Map<String,String[]>attr,int orderBy) {
+			Boolean titleImg, Boolean recommend, String title, int open,
+			Map<String, String[]> attr, int orderBy) {
 		Finder f = Finder.create();
 		int len = tagIds.length;
 		if (len == 1) {
@@ -976,7 +1154,7 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 
 	private void appendReleaseDate(Finder f) {
 		f.append(" and ext.releaseDate<:currentDate");
-		//f.setParam("currentDate", new Date());
+		// f.setParam("currentDate", new Date());
 		f.setParam("currentDate", contentQueryFreshTimeCache.getTime());
 	}
 
@@ -1021,74 +1199,137 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 			}
 		}
 	}
-	
-	
-	private void appendJoinConentDoc(Finder f,int open){
-		//默认不设置open参数 不连接查询ContentDoc
-		if(open!=ContentDoc.ALL){
+
+	private void appendJoinConentDoc(Finder f, int open) {
+		// 默认不设置open参数 不连接查询ContentDoc
+		if (open != ContentDoc.ALL) {
 			f.append(" join bean.contentDocSet as doc ");
 		}
 	}
-	
-	private void appendOpen(Finder f,int open){
-		if(open!=ContentDoc.ALL){
-			if(open==ContentDoc.OPEN){
+
+	private void appendOpen(Finder f, int open) {
+		if (open != ContentDoc.ALL) {
+			if (open == ContentDoc.OPEN) {
 				f.append(" and doc.isOpen=true");
-			}else{
+			} else {
 				f.append(" and doc.isOpen=false");
 			}
 		}
 	}
 
-	private void appendAttr(Finder f, Map<String,String[]>attr){
-		if(attr!=null&&!attr.isEmpty()){
-			Set<String>keys=attr.keySet();
-			Iterator<String>keyIterator=keys.iterator();
-			while(keyIterator.hasNext()){
-				String key=keyIterator.next();
-				String[] mapValue=attr.get(key);
-				String value=mapValue[0],operate=mapValue[1];
-				if(StringUtils.isNotBlank(key)&&StringUtils.isNotBlank(value)){
-					if(operate.equals(PARAM_ATTR_EQ)){
-						f.append(" and bean.attr[:k"+key+"]=:v"+key).setParam("k"+key, key).setParam("v"+key, value);
-					}else if(operate.equals(PARAM_ATTR_START)){
-						f.append(" and bean.attr[:k"+key+"] like :v"+key).setParam("k"+key, key).setParam("v"+key, value+"%");
-					}else if(operate.equals(PARAM_ATTR_END)){
-						f.append(" and bean.attr[:k"+key+"] like :v"+key).setParam("k"+key, key).setParam("v"+key, "%"+value);
-					}else if(operate.equals(PARAM_ATTR_LIKE)){
-						f.append(" and bean.attr[:k"+key+"] like :v"+key).setParam("k"+key, key).setParam("v"+key, "%"+value+"%");
-					}else if(operate.equals(PARAM_ATTR_IN)){
-						if(StringUtils.isNotBlank(value)){
-							f.append(" and bean.attr[:k"+key+"] in (:v"+key+")").setParam("k"+key, key);
-							f.setParamList("v"+key, value.split(","));
+	private void appendAttr(Finder f, Map<String, String[]> attr) {
+		if (attr != null && !attr.isEmpty()) {
+			Set<String> keys = attr.keySet();
+			Iterator<String> keyIterator = keys.iterator();
+			while (keyIterator.hasNext()) {
+				String key = keyIterator.next();
+				String[] mapValue = attr.get(key);
+				String value = mapValue[0], operate = mapValue[1];
+				if (StringUtils.isNotBlank(key)
+						&& StringUtils.isNotBlank(value)) {
+					if (operate.equals(PARAM_ATTR_EQ)) {
+						f.append(" and bean.attr[:k" + key + "]=:v" + key)
+								.setParam("k" + key, key)
+								.setParam("v" + key, value);
+					} else if (operate.equals(PARAM_ATTR_START)) {
+						f.append(" and bean.attr[:k" + key + "] like :v" + key)
+								.setParam("k" + key, key)
+								.setParam("v" + key, value + "%");
+					} else if (operate.equals(PARAM_ATTR_END)) {
+						f.append(" and bean.attr[:k" + key + "] like :v" + key)
+								.setParam("k" + key, key)
+								.setParam("v" + key, "%" + value);
+					} else if (operate.equals(PARAM_ATTR_LIKE)) {
+						f.append(" and bean.attr[:k" + key + "] like :v" + key)
+								.setParam("k" + key, key)
+								.setParam("v" + key, "%" + value + "%");
+					} else if (operate.equals(PARAM_ATTR_IN)) {
+						if (StringUtils.isNotBlank(value)) {
+							f.append(
+									" and bean.attr[:k" + key + "] in (:v"
+											+ key + ")").setParam("k" + key,
+									key);
+							f.setParamList("v" + key, value.split(","));
 						}
-					}
-					else {
-						//取绝对值比较大小
-						Float floatValue=Float.valueOf(value);
-						if(operate.equals(PARAM_ATTR_GT)){
-							if(floatValue>=0){
-								f.append(" and (bean.attr[:k"+key+"]>=0 and abs(bean.attr[:k"+key+"])>:v"+key+")").setParam("k"+key, key).setParam("v"+key, floatValue);
-							}else{
-								f.append(" and ((bean.attr[:k"+key+"]<0 and abs(bean.attr[:k"+key+"])<:v"+key+") or bean.attr[:k"+key+"]>=0)").setParam("k"+key, key).setParam("v"+key, -floatValue);
+					} else {
+						// 取绝对值比较大小
+						Float floatValue = Float.valueOf(value);
+						if (operate.equals(PARAM_ATTR_GT)) {
+							if (floatValue >= 0) {
+								f.append(
+										" and (bean.attr[:k" + key
+												+ "]>=0 and abs(bean.attr[:k"
+												+ key + "])>:v" + key + ")")
+										.setParam("k" + key, key)
+										.setParam("v" + key, floatValue);
+							} else {
+								f.append(
+										" and ((bean.attr[:k" + key
+												+ "]<0 and abs(bean.attr[:k"
+												+ key + "])<:v" + key
+												+ ") or bean.attr[:k" + key
+												+ "]>=0)")
+										.setParam("k" + key, key)
+										.setParam("v" + key, -floatValue);
 							}
-					 	}else if(operate.equals(PARAM_ATTR_GTE)){
-					 		if(floatValue>=0){
-								f.append(" and (abs(bean.attr[:k"+key+"])>=:v"+key+" and bean.attr[:k"+key+"]>=0)").setParam("k"+key, key).setParam("v"+key, floatValue);
-							}else{
-								f.append(" and ((abs(bean.attr[:k"+key+"])<=:v"+key+" and bean.attr[:k"+key+"]<0) or bean.attr[:k"+key+"]>=0)").setParam("k"+key, key).setParam("v"+key, -floatValue);
+						} else if (operate.equals(PARAM_ATTR_GTE)) {
+							if (floatValue >= 0) {
+								f.append(
+										" and (abs(bean.attr[:k" + key
+												+ "])>=:v" + key
+												+ " and bean.attr[:k" + key
+												+ "]>=0)")
+										.setParam("k" + key, key)
+										.setParam("v" + key, floatValue);
+							} else {
+								f.append(
+										" and ((abs(bean.attr[:k" + key
+												+ "])<=:v" + key
+												+ " and bean.attr[:k" + key
+												+ "]<0) or bean.attr[:k" + key
+												+ "]>=0)")
+										.setParam("k" + key, key)
+										.setParam("v" + key, -floatValue);
 							}
-						}else if(operate.equals(PARAM_ATTR_LT)){
-							if(floatValue>=0){
-								f.append(" and ((abs(bean.attr[:k"+key+"])<:v"+key+" and bean.attr[:k"+key+"]>=0) or bean.attr[:k"+key+"]<=0)").setParam("k"+key, key).setParam("v"+key, floatValue);
-							}else{
-								f.append(" and ((abs(bean.attr[:k"+key+"])>:v"+key+" and bean.attr[:k"+key+"]<0) or bean.attr[:k"+key+"]>=0)").setParam("k"+key, key).setParam("v"+key, -floatValue);
+						} else if (operate.equals(PARAM_ATTR_LT)) {
+							if (floatValue >= 0) {
+								f.append(
+										" and ((abs(bean.attr[:k" + key
+												+ "])<:v" + key
+												+ " and bean.attr[:k" + key
+												+ "]>=0) or bean.attr[:k" + key
+												+ "]<=0)")
+										.setParam("k" + key, key)
+										.setParam("v" + key, floatValue);
+							} else {
+								f.append(
+										" and ((abs(bean.attr[:k" + key
+												+ "])>:v" + key
+												+ " and bean.attr[:k" + key
+												+ "]<0) or bean.attr[:k" + key
+												+ "]>=0)")
+										.setParam("k" + key, key)
+										.setParam("v" + key, -floatValue);
 							}
-						}else if(operate.equals(PARAM_ATTR_LTE)){
-							if(floatValue>=0){
-								f.append(" and ((abs(bean.attr[:k"+key+"])<=:v"+key+" and bean.attr[:k"+key+"]>=0) or bean.attr[:k"+key+"]<=0)").setParam("k"+key, key).setParam("v"+key, floatValue);
-							}else{
-								f.append(" and ((abs(bean.attr[:k"+key+"])>=:v"+key+" and bean.attr[:k"+key+"]<0) or bean.attr[:k"+key+"]>=0)").setParam("k"+key, key).setParam("v"+key, -floatValue);
+						} else if (operate.equals(PARAM_ATTR_LTE)) {
+							if (floatValue >= 0) {
+								f.append(
+										" and ((abs(bean.attr[:k" + key
+												+ "])<=:v" + key
+												+ " and bean.attr[:k" + key
+												+ "]>=0) or bean.attr[:k" + key
+												+ "]<=0)")
+										.setParam("k" + key, key)
+										.setParam("v" + key, floatValue);
+							} else {
+								f.append(
+										" and ((abs(bean.attr[:k" + key
+												+ "])>=:v" + key
+												+ " and bean.attr[:k" + key
+												+ "]<0) or bean.attr[:k" + key
+												+ "]>=0)")
+										.setParam("k" + key, key)
+										.setParam("v" + key, -floatValue);
 							}
 						}
 					}
@@ -1096,8 +1337,7 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 			}
 		}
 	}
-	
-	
+
 	private void appendOrder(Finder f, int orderBy) {
 		switch (orderBy) {
 		case 1:
@@ -1114,7 +1354,7 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 			break;
 		case 4:
 			// 固顶级别降序、发布时间降序
-//			f.append(" order by bean.topLevel desc, bean.sortDate desc");
+			// f.append(" order by bean.topLevel desc, bean.sortDate desc");
 			f.append(" order by bean.sortDate desc");
 			break;
 		case 5:
@@ -1220,14 +1460,14 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 		query.setParameter("parentId", channelId);
 		return ((Number) (query.iterate().next())).intValue();
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	public List<Content> countByColumnId(Integer columnId) {
 		Finder f = Finder.create("select bean from Content bean");
 		if (columnId != null) {
 			f.append(" where bean.columnId=:columnId  ");
 			f.setParam("columnId", columnId);
-		} 
+		}
 		return find(f);
 	}
 
@@ -1248,88 +1488,84 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 		}
 		return entity;
 	}
-	/**不知为何要重写，此处先注释
-	protected Pagination find(Finder finder, int pageNo, int pageSize) {
-		int totalCount = countQueryResult(finder);
-		Pagination p = new Pagination(pageNo, pageSize, totalCount);
-		if (totalCount < 1) {
-			p.setList(new ArrayList());
-			return p;
-		}
-		Query query = getSession().createQuery(finder.getOrigHql());
-		finder.setParamsToQuery(query);
-		query.setFirstResult(p.getFirstResult());
-		query.setMaxResults(p.getPageSize());
-		if (finder.isCacheable()) {
-			query.setCacheable(true);
-		}
-		List list = query.list();
-		p.setList(list);
-		return p;
-	}
-	protected int countQueryResult(Finder finder) {
-		Query query = getSession().createQuery(finder.getRowCountHql());
-		finder.setParamsToQuery(query);
-		if (finder.isCacheable()) {
-			query.setCacheable(true);
-		}
-		return ((Number) query.iterate().next()).intValue();
-	} 
-	*/
+
+	/**
+	 * 不知为何要重写，此处先注释 protected Pagination find(Finder finder, int pageNo, int
+	 * pageSize) { int totalCount = countQueryResult(finder); Pagination p = new
+	 * Pagination(pageNo, pageSize, totalCount); if (totalCount < 1) {
+	 * p.setList(new ArrayList()); return p; } Query query =
+	 * getSession().createQuery(finder.getOrigHql());
+	 * finder.setParamsToQuery(query); query.setFirstResult(p.getFirstResult());
+	 * query.setMaxResults(p.getPageSize()); if (finder.isCacheable()) {
+	 * query.setCacheable(true); } List list = query.list(); p.setList(list);
+	 * return p; } protected int countQueryResult(Finder finder) { Query query =
+	 * getSession().createQuery(finder.getRowCountHql());
+	 * finder.setParamsToQuery(query); if (finder.isCacheable()) {
+	 * query.setCacheable(true); } return ((Number)
+	 * query.iterate().next()).intValue(); }
+	 */
 
 	@Override
 	protected Class<Content> getEntityClass() {
 		return Content.class;
 	}
+
 	@Autowired
 	private ContentQueryFreshTimeCache contentQueryFreshTimeCache;
-	
-	
+
 	@Override
-	public Pagination getPage_friendsBlog(int ids,String title, Integer typeId,
-			Integer currUserId, Integer inputUserId, boolean topLevel,
-			boolean recommend, ContentStatus status, Byte checkStep,
-			Integer siteId, Integer modelId, Integer channelId, int orderBy,
-			int pageNo, int pageSize, String columnId,Integer recieveUserId) {
-		Finder f = Finder.create("select  bean from Content bean left join bean.contentShareCheckSet shareCheck left join shareCheck.channel tarChannel ");
+	public Pagination getPage_friendsBlog(int ids, String title,
+			Integer typeId, Integer currUserId, Integer inputUserId,
+			boolean topLevel, boolean recommend, ContentStatus status,
+			Byte checkStep, Integer siteId, Integer modelId, Integer channelId,
+			int orderBy, int pageNo, int pageSize, String columnId,
+			Integer recieveUserId) {
+		Finder f = Finder
+				.create("select  bean from Content bean left join bean.contentShareCheckSet shareCheck left join shareCheck.channel tarChannel ");
 		if (rejected == status) {
 			f.append("  join bean.contentCheckSet check ");
 		}
-		if (prepared == status|| passed == status) {
+		if (prepared == status || passed == status) {
 			f.append("  join bean.eventSet event  ");
 		}
 		if (channelId != null) {
 			f.append(" join bean.channel channel,Channel parent");
 			f.append(" where ((channel.lft between parent.lft and parent.rgt");
-			//f.append(" and channel.site.id=parent.site.id");
+			// f.append(" and channel.site.id=parent.site.id");
 			f.append(" and parent.id=:parentId)   or (shareCheck.checkStatus<>0 and shareCheck.shareValid=true and  tarChannel.lft between parent.lft and parent.rgt and parent.id=:parentId))");
 			f.setParam("parentId", channelId);
-		} /*else if (siteId != null) {
-			f.append(" where (bean.site.id=:siteId  or (shareCheck.checkStatus<>0 and shareCheck.shareValid=true and tarChannel.site.id=:siteId))");
-			f.setParam("siteId", siteId);
-		}*/ else {
+		} /*
+		 * else if (siteId != null) { f.append(
+		 * " where (bean.site.id=:siteId  or (shareCheck.checkStatus<>0 and shareCheck.shareValid=true and tarChannel.site.id=:siteId))"
+		 * ); f.setParam("siteId", siteId); }
+		 */else {
 			f.append(" where 1=1");
 		}
-		//跳级审核人不应该看到？
+		// 跳级审核人不应该看到？
 		if (passed == status) {
-			//操作人不在待审人列表中且非终审 或非发起人
-			f.append("  and ((:operateId not in(select eventUser.user.id from CmsWorkflowEventUser eventUser where eventUser.event.id=event.id) and event.initiator.id!=:operateId) or event.initiator.id=:operateId) and event.nextStep!=-1").setParam("operateId", currUserId);
+			// 操作人不在待审人列表中且非终审 或非发起人
+			f.append(
+					"  and ((:operateId not in(select eventUser.user.id from CmsWorkflowEventUser eventUser where eventUser.event.id=event.id) and event.initiator.id!=:operateId) or event.initiator.id=:operateId) and event.nextStep!=-1")
+					.setParam("operateId", currUserId);
 		}
-		/*if (prepared == status) {
-			//操作人在待审人列表中
-			f.append("  and :operateId in(select eventUser.user.id from CmsWorkflowEventUser eventUser where eventUser.event.id=event.id)").setParam("operateId", currUserId);
-		}*/
+		/*
+		 * if (prepared == status) { //操作人在待审人列表中 f.append(
+		 * "  and :operateId in(select eventUser.user.id from CmsWorkflowEventUser eventUser where eventUser.event.id=event.id)"
+		 * ).setParam("operateId", currUserId); }
+		 */
 		if (rejected == status) {
 			f.append(" and check.rejected=true");
 		}
-		if(modelId!=null){
-			f.append(" and bean.model.id=:modelId").setParam("modelId", modelId);
-			/*f.append(" and bean.model.id in (11,21,24)");*/
-		}/*else{
-			f.append(" and bean.model.id in (11,21,24)");
-		}*/
-		inputUserId=ids;
-		appendQuery_blog(f, title, typeId, inputUserId, status, topLevel, recommend,null,recieveUserId,channelId);
+		if (modelId != null) {
+			f.append(" and bean.model.id=:modelId")
+					.setParam("modelId", modelId);
+			/* f.append(" and bean.model.id in (11,21,24)"); */
+		}/*
+		 * else{ f.append(" and bean.model.id in (11,21,24)"); }
+		 */
+		inputUserId = ids;
+		appendQuery_blog(f, title, typeId, inputUserId, status, topLevel,
+				recommend, null, recieveUserId, channelId);
 		appendOrder(f, orderBy);
 		return find(f, pageNo, pageSize);
 	}
@@ -1346,7 +1582,7 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<CmsComment> getListComment(int userId,Date lastDate) {
+	public List<CmsComment> getListComment(int userId, Date lastDate) {
 		Finder f = Finder.create("select bean from CmsComment bean");
 		f.append(" where 1=1");
 		f.append(" and (bean.content.user.id=:userId and bean.content.id is not null)");
@@ -1359,64 +1595,60 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 
 	@Override
 	public int getTotalArticleNum(CmsUser user) {
-		String hql = "select count(1) from Content bean"
-				+ " where 1=1"
-				+ " and bean.user.id="+user.getId()
-		        + " and bean.status<>"+ContentCheck.RECYCLE;
+		String hql = "select count(1) from Content bean" + " where 1=1"
+				+ " and bean.user.id=" + user.getId() + " and bean.status<>"
+				+ ContentCheck.RECYCLE;
 		Query query = getSession().createQuery(hql);
-		if(null != query.iterate() && null != query.iterate().next()){
+		if (null != query.iterate() && null != query.iterate().next()) {
 			return ((Number) (query.iterate().next())).intValue();
-		}else{
-			return 0 ;
+		} else {
+			return 0;
 		}
-		//+ " and bean.model.id in (11,21,24)"
+		// + " and bean.model.id in (11,21,24)"
 	}
 
 	@Override
 	public int getTotalCommentNum(CmsUser user) {
-		String hql = "select count(1) from CmsComment bean"
-				+ " where 1=1"
+		String hql = "select count(1) from CmsComment bean" + " where 1=1"
 				+ " and bean.content.id is not null "
-				+ " and bean.content.user.id="+user.getId()
-		        + " and bean.content.status<>"+ContentCheck.RECYCLE;
+				+ " and bean.content.user.id=" + user.getId()
+				+ " and bean.content.status<>" + ContentCheck.RECYCLE;
 		Query query = getSession().createQuery(hql);
-		if(null != query.iterate() && null != query.iterate().next()){
+		if (null != query.iterate() && null != query.iterate().next()) {
 			return ((Number) (query.iterate().next())).intValue();
-		}else{
-			return 0 ;
+		} else {
+			return 0;
 		}
-		//+ " and bean.content.model.id in (11,21,24)"
+		// + " and bean.content.model.id in (11,21,24)"
 	}
 
 	@Override
 	public int getTotalCoverCommentNum(CmsUser user) {
-		String hql = "select count(1) from CmsComment bean"
-				+ " where 1=1"
+		String hql = "select count(1) from CmsComment bean" + " where 1=1"
 				+ " and bean.content.id is not null "
-				+ " and bean.commentUser.id="+user.getId()
-				+ " and bean.content.status<>"+ContentCheck.RECYCLE;
+				+ " and bean.commentUser.id=" + user.getId()
+				+ " and bean.content.status<>" + ContentCheck.RECYCLE;
 		Query query = getSession().createQuery(hql);
-		if(null != query.iterate() && null != query.iterate().next()){
+		if (null != query.iterate() && null != query.iterate().next()) {
 			return ((Number) (query.iterate().next())).intValue();
-		}else{
-			return 0 ;
+		} else {
+			return 0;
 		}
-		//+ " and bean.content.model.id in (11,21,24)"
+		// + " and bean.content.model.id in (11,21,24)"
 	}
 
 	@Override
 	public int getTotalReadNum(CmsUser user) {
 		String hql = "select sum(bean.contentCount.views) from Content bean"
-				+ " where 1=1"
-				+ " and bean.user.id="+user.getId()
-				+ " and bean.status<>"+ContentCheck.RECYCLE;
+				+ " where 1=1" + " and bean.user.id=" + user.getId()
+				+ " and bean.status<>" + ContentCheck.RECYCLE;
 		Query query = getSession().createQuery(hql);
-		if(null != query.iterate() && null != query.iterate().next()){
+		if (null != query.iterate() && null != query.iterate().next()) {
 			return ((Number) (query.iterate().next())).intValue();
-		}else{
-			return 0 ;
+		} else {
+			return 0;
 		}
-		//+ " and bean.model.id in (11,21,24)"
+		// + " and bean.model.id in (11,21,24)"
 	}
 
 	@SuppressWarnings("unchecked")
@@ -1430,7 +1662,8 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 	}
 
 	@Override
-	public Pagination getPage_visitor(int orderBy, int pageNo, int pageSize, CmsUser user) {
+	public Pagination getPage_visitor(int orderBy, int pageNo, int pageSize,
+			CmsUser user) {
 		Finder f = Finder.create("select bean from CmsBlogVisitor bean");
 		f.append(" where 1=1");
 		f.append(" and bean.byVisitorId.id=:userId");
@@ -1448,122 +1681,144 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 		f.setParam("userId", user.getId());
 		return find(f);
 	}
-	
+
 	@Override
 	public ContentSend saveContentSend(ContentSend bean) {
 		getSession().save(bean);
 		return bean;
 	}
-	
+
 	/**
 	 * 根据用户帐号查询用户id
-	 * @param userName 用户帐号
+	 * 
+	 * @param userName
+	 *            用户帐号
 	 * @return Integer
 	 */
 	@Override
-	public Integer getUserId(String userName){
-		String hql = "select  id from CmsUser bean where bean.username='"+userName+"'";
+	public Integer getUserId(String userName) {
+		String hql = "select  id from CmsUser bean where bean.username='"
+				+ userName + "'";
 		return (Integer) findUnique(hql);
 	}
-	
+
 	/**
 	 * 根据用id查询栏目的验证码
-	 * @param userId 用户帐号
-	 * @param validaCode 验证码
+	 * 
+	 * @param userId
+	 *            用户帐号
+	 * @param validaCode
+	 *            验证码
 	 * @return String
 	 */
 	@Override
-	public Integer getUniqueCode(int userId,int validaCode){
-		String hql = "select  columnId from Columns bean where bean.userId="+userId+" and bean.uniqueCode="+validaCode+"";
+	public Integer getUniqueCode(int userId, int validaCode) {
+		String hql = "select  columnId from Columns bean where bean.userId="
+				+ userId + " and bean.uniqueCode=" + validaCode + "";
 		return (Integer) findUnique(hql);
 	}
-	
+
 	/**
 	 * 根据内容id查询栏目id
-	 * @param contentId contentId
+	 * 
+	 * @param contentId
+	 *            contentId
 	 * @return Integer
 	 */
 	@Override
-	public Integer getColumnId(int contentId){
-		String hql = "select  columnId from Content bean where bean.id="+contentId+"";
+	public Integer getColumnId(int contentId) {
+		String hql = "select  columnId from Content bean where bean.id="
+				+ contentId + "";
 		return (Integer) findUnique(hql);
 	}
-	
+
 	/**
 	 * 撤销用户发送的文章
+	 * 
 	 * @param contentId
 	 * @param userId
 	 * @return int
 	 */
-	public Integer deleteContentSend(int contentId,int userId){
-		
-		
-		String hql = "delete   from ContentSend  where contentId="+contentId+" and sendUserId="+userId+" and type=1";
+	public Integer deleteContentSend(int contentId, int userId) {
+
+		String hql = "delete   from ContentSend  where contentId=" + contentId
+				+ " and sendUserId=" + userId + " and type=1";
 		return (Integer) deleteObject(hql);
 	}
-	
+
 	/**
 	 * 移除用户收录的文章
+	 * 
 	 * @param contentId
 	 * @param userId
 	 * @return int
 	 */
-	public Integer removeContentSend(int contentId,int userId){
-		String hql = "delete   from ContentSend  where contentId="+contentId+" and recieveUserId="+userId+" and type=2";
+	public Integer removeContentSend(int contentId, int userId) {
+		String hql = "delete   from ContentSend  where contentId=" + contentId
+				+ " and recieveUserId=" + userId + " and type=2";
 		return (Integer) deleteObject(hql);
 	}
-	
+
 	/**
 	 * 查询文章类型是发送的还是收录的
+	 * 
 	 * @param contentId
 	 * @param userId
 	 * @return int
 	 */
-	public Integer getContentSendType(Integer contentId, Integer userId){
-		String hql = "select type   from ContentSend  where contentId="+contentId+" and recieveUserId="+userId+"";
+	public Integer getContentSendType(Integer contentId, Integer userId) {
+		String hql = "select type   from ContentSend  where contentId="
+				+ contentId + " and recieveUserId=" + userId + "";
 		return (Integer) findUnique(hql);
 	}
-	
+
 	/**
 	 * 验证文章是否重复收录
+	 * 
 	 * @param contentId
 	 * @param userId
 	 * @return int
 	 */
-	public Integer getContentSend(int contentId,int userId){
-		String hql = "select   id from ContentSend  where contentId="+contentId+" and recieveUserId="+userId+" ";
+	public Integer getContentSend(int contentId, int userId) {
+		String hql = "select   id from ContentSend  where contentId="
+				+ contentId + " and recieveUserId=" + userId + " ";
 		return (Integer) findUnique(hql);
 	}
-	
+
 	/**
 	 * 修改发送表的标题
+	 * 
 	 * @param contentId
 	 * @param userId
 	 * @return Integer
 	 */
-	public Integer updateContentSend(String title,int contentId){
-		String hql = "update  ContentSend  set title ='"+title+"' where contentId="+contentId+"";
+	public Integer updateContentSend(String title, int contentId) {
+		String hql = "update  ContentSend  set title ='" + title
+				+ "' where contentId=" + contentId + "";
 		return (Integer) updateObject(hql);
 	}
-	
+
 	/**
 	 * 修改置顶表的标题
+	 * 
 	 * @param contentId
 	 * @param userId
 	 * @return Integer
 	 */
-	public Integer updateContentStick(String title,int contentId){
-		String hql = "update  ContentStick  set contentTitle ='"+title+"' where contentId="+contentId+"";
+	public Integer updateContentStick(String title, int contentId) {
+		String hql = "update  ContentStick  set contentTitle ='" + title
+				+ "' where contentId=" + contentId + "";
 		return (Integer) updateObject(hql);
 	}
-	
+
 	/**
 	 * 根据用户id查询用户置顶文章
+	 * 
 	 * @param userId
 	 * @return
 	 */
 	@Override
-	public List<ContentStick> getStickList(Integer userId){
+	public List<ContentStick> getStickList(Integer userId) {
 		Finder f = Finder.create("select bean from ContentStick bean");
 		f.append(" where 1=1");
 		f.append(" and bean.stickUserId=:userId");
@@ -1571,90 +1826,105 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 		f.append(" order by  stickTime desc");
 		return find(f);
 	}
-	
+
 	/**
 	 * 文章置顶
+	 * 
 	 * @param contentStick
 	 * @return int
 	 */
-	public ContentStick contentStick(ContentStick contentStick){
+	public ContentStick contentStick(ContentStick contentStick) {
 		getSession().save(contentStick);
 		return contentStick;
 	}
-	
+
 	/**
 	 * 根据文章id查询路径
+	 * 
 	 * @param contentId
 	 * @return int
 	 */
-	public String getChannelPath(Integer contentId){
-		String hql = "select   channel.path from Content bean join bean.channel channel where bean.id="+contentId+"";
+	public String getChannelPath(Integer contentId) {
+		String hql = "select   channel.path from Content bean join bean.channel channel where bean.id="
+				+ contentId + "";
 		return (String) findUnique(hql);
 	}
-	
+
 	/**
 	 * 查询该文章是否置顶
+	 * 
 	 * @param contentId
 	 * @param userId
 	 * @return int
 	 */
-	public Integer getStickId(Integer contentId,Integer userId){
-		String hql = "select   id from ContentStick  where contentId="+contentId+" and stickUserId="+userId+" ";
+	public Integer getStickId(Integer contentId, Integer userId) {
+		String hql = "select   id from ContentStick  where contentId="
+				+ contentId + " and stickUserId=" + userId + " ";
 		return (Integer) findUnique(hql);
 	}
-	
+
 	/**
 	 * 取消文章置顶
+	 * 
 	 * @param contentId
 	 * @return int
 	 */
-	public Integer cancelContentStick(Integer contentId,Integer userId){
-		String hql = "delete   from ContentStick  where contentId="+contentId+" ";
+	public Integer cancelContentStick(Integer contentId, Integer userId) {
+		String hql = "delete   from ContentStick  where contentId=" + contentId
+				+ " ";
 		return (Integer) deleteObject(hql);
 	}
-	
+
 	/**
 	 * 查询用户置顶的文章数
+	 * 
 	 * @param userId
 	 * @return int
 	 */
-	public Long getStickCount(Integer userId){
-		String hql = "select   count(1) from ContentStick  where stickUserId="+userId+" ";
+	public Long getStickCount(Integer userId) {
+		String hql = "select   count(1) from ContentStick  where stickUserId="
+				+ userId + " ";
 		return (Long) findUnique(hql);
 	}
-	
+
 	/**
 	 * 获取置顶的上一篇
+	 * 
 	 * @param id
 	 */
-	public List<ContentStick> getPreStick(Integer id,Integer userId){
-		Finder f = Finder.create("select   id,contentTitle,path,contentId,stickUserId from ContentStick bean");
+	public List<ContentStick> getPreStick(Integer id, Integer userId) {
+		Finder f = Finder
+				.create("select   id,contentTitle,path,contentId,stickUserId from ContentStick bean");
 		f.append(" where 1=1");
 		f.append(" and bean.stickUserId=:userId");
 		f.setParam("userId", userId);
-		
+
 		f.append(" and bean.id>:id");
 		f.setParam("id", id);
 		f.append(" order by  id ");
-		
-		//String hql = "select   id,contentTitle from ContentStick   where stickUserId="+userId+" and id =41 order by id  ";
+
+		// String hql =
+		// "select   id,contentTitle from ContentStick   where stickUserId="+userId+" and id =41 order by id  ";
 		return find(f);
 	}
-	
+
 	/**
-	 *获取置顶的下一篇
+	 * 获取置顶的下一篇
+	 * 
 	 * @param id
 	 */
-	public List<ContentStick> getNextStick(Integer id,Integer userId){
-		Finder f = Finder.create("select   id,contentTitle,path,contentId,stickUserId from ContentStick bean");
+	public List<ContentStick> getNextStick(Integer id, Integer userId) {
+		Finder f = Finder
+				.create("select   id,contentTitle,path,contentId,stickUserId from ContentStick bean");
 		f.append(" where 1=1");
 		f.append(" and bean.stickUserId=:userId");
 		f.setParam("userId", userId);
-		
+
 		f.append(" and bean.id<:id");
 		f.setParam("id", id);
 		f.append(" order by  id desc");
-		//String hql = "select   id,contentTitle from ContentStick    where stickUserId="+userId+" and id =41 order by id desc";
-		return  find(f);
+		// String hql =
+		// "select   id,contentTitle from ContentStick    where stickUserId="+userId+" and id =41 order by id desc";
+		return find(f);
 	}
 }
