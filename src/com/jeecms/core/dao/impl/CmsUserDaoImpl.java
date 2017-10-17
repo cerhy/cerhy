@@ -39,7 +39,7 @@ public class CmsUserDaoImpl extends HibernateBaseDao<CmsUser, Integer>implements
 		}
 		if (!StringUtils.isBlank(username)) {
 			f.append(" and bean.username like :username");
-			f.setParam("username", "%" + username + "%");
+			f.setParam("username",username);
 		}
 		if (!StringUtils.isBlank(email)) {
 			f.append(" and bean.email like :email");
