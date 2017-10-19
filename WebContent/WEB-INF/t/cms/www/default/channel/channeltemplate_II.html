@@ -105,7 +105,9 @@ body{
 										          		<div class="fl"><span class="ch">语文<em>${a.date?string("yyyy-MM-dd")}&nbsp;&nbsp;&nbsp;作者:&nbsp;${a.author!a.user.username}&nbsp;&nbsp;&nbsp;阅读:&nbsp;${a.contentCount.views!}&nbsp;&nbsp;&nbsp;评论:&nbsp;${a.contentCount.comments!}</em></span></div>
 										         	[#elseif channel.id=420||channel.id=421||channel.id=422]
 										          		<div class="fl"><span class="ch">心理健康<em>${a.date?string("yyyy-MM-dd")}&nbsp;&nbsp;&nbsp;作者:&nbsp;${a.author!a.user.username}&nbsp;&nbsp;&nbsp;阅读:&nbsp;${a.contentCount.views!}&nbsp;&nbsp;&nbsp;评论:&nbsp;${a.contentCount.comments!}</em></span></div>
-										         	[#else]
+										         	[#elseif channel.id=208||channel.id=210||channel.id=378||channel.id=379||channel.id=380||channel.id=381||channel.id=382||channel.id=383||channel.id=180||channel.id=196||channel.id=197||channel.id=384||channel.id=385||channel.id=386||channel.id=387]
+													    <div class="fl"><span class="ch">${a.date?string("yyyy")}年<em>${a.date?string("yyyy-MM-dd")}&nbsp;&nbsp;&nbsp;作者:&nbsp;${a.author!a.user.username}&nbsp;&nbsp;&nbsp;阅读:&nbsp;${a.contentCount.views!}&nbsp;&nbsp;&nbsp;评论:&nbsp;${a.contentCount.comments!}</em></span></div>
+												     [#else]
 											          	<div class="fl"><span class="ch">${a.ctgName}<em>${a.date?string("yyyy-MM-dd")}&nbsp;&nbsp;&nbsp;作者:&nbsp;${a.author!a.user.username}&nbsp;&nbsp;&nbsp;阅读:&nbsp;${a.contentCount.views!}&nbsp;&nbsp;&nbsp;评论:&nbsp;${a.contentCount.comments!}</em></span></div>
 										         	[/#if]
 										         	 [#if a_index<1]
