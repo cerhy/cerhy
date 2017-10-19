@@ -265,6 +265,46 @@ $('.user-menu-links li').click(function(){
                     [/#if]
 	                </select>
 	                <span style="color:#f00; margin-left:10px;">*</span>
+	                 [#if channelList??]
+	                 [#elseif columnsList??]
+	                 [#elseif joinGroupList?size gt 0]
+					 [#else]
+					 	<span style="color:red;">您还没有创建栏目或加入群组，请先点击<a href="javascript:;" onclick="createChannels2();">创建栏目</a>,否则博客将不能发布！</span>
+					 [/#if]	 
+					 <script>
+					 function createChannels2(){
+						$.ajax({
+					           type: 'POST',
+					           url : '${base}/blog/columns_list.jspx',
+					           dataType:"html",
+					           async: true,
+					           success : function(datas){
+					        	   if(datas=="login"){
+					            		 location.href="${base}/login.jspx";
+					            	 }else{
+										$("#zd_u-hilite-cap").remove();
+										$("#zdId").remove();
+										$("#u-hilite-cap").remove();
+										 var wzid=document.getElementById('wzId');
+					            		 if(wzid!=null){
+					            			 document.getElementById('wzId').innerHTML="";
+					            		 }
+					            		 var maindiv=document.getElementById('maindiv');
+					            		 if(maindiv!=null){
+					            			 document.getElementById('maindiv').innerHTML="";
+					            		 }
+						               $(".wrap-right").append(datas);
+						               if(window._bd_share_main){
+						            	   window._bd_share_main.init();
+						            	}
+					        		   
+					        	   }
+					  	   		 }
+					 		});
+						//location.href = "${base}/blog/columns_list.jspx";
+						
+					}
+					 </script>               
                 </td>
               </tr>
               <tr>
