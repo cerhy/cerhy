@@ -269,7 +269,7 @@ $('.user-menu-links li').click(function(){
 	                 [#elseif columnsList??]
 	                 [#elseif joinGroupList?size gt 0]
 					 [#else]
-					 	<span style="color:red;">您还没有创建栏目或加入群组，请先点击<a href="javascript:;" onclick="createChannels2();">创建栏目</a>,否则博客将不能发布！</span>
+					 	<span style="color:red;">您还没有创建栏目，请点击这里<a href="javascript:;" onclick="createChannels2();" style="background-color:white;border: 1px solid #dedede;">创建栏目</a>,否则博客将不能发布！</span>
 					 [/#if]	 
 					 <script>
 					 function createChannels2(){
@@ -301,8 +301,6 @@ $('.user-menu-links li').click(function(){
 					        	   }
 					  	   		 }
 					 		});
-						//location.href = "${base}/blog/columns_list.jspx";
-						
 					}
 					 </script>               
                 </td>
