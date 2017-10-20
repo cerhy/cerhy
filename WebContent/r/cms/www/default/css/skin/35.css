@@ -81,7 +81,7 @@ body, button, input, select, textarea { background: transparent;}
 }
 #queryTitle{
 	  border:1px solid #c0d2e3 !important;
-	  color: #000 !important;
+	  color: #fff !important;
 }
 .submit{
 	background:#c0d2e3 !important;
