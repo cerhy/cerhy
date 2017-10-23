@@ -6,7 +6,18 @@
     <img src="${(c.commentUser.userImg)!'${site.defImg!}'}">
     </div>
     <div class="rig">
-      <div class="rig-top"><a class="username">[#if c.commentUser??]${(c.commentUser.username)!"匿名网友"}[#else]匿名网友[/#if]</a><em> ${c.createTime} </em></div>
+      <div class="rig-top">
+      <a class="username">
+      	[#if c.commentUser??]
+      	[#if c.commentUser.realname??]
+      		${(c.commentUser.realname)!"匿名网友"}
+      	[#else]
+      		${(c.commentUser.username)!"匿名网友"}
+      	[/#if]
+      [#else]
+      		匿名网友
+      [/#if]
+      </a><em> ${c.createTime} </em></div>
       <div class="rig-txt">${c.textHtml!}</div>
       <div class="rig-bottom">
 	     <a class="comments-zan" onclick="Cms.commentUp('${base}',${c.id},${c.ups},'commentups_${c.id}')">赞<span id="commentups_${c.id}">${c.ups!}</span></a>
