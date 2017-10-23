@@ -1,0 +1,133 @@
+<div>
+ <select name="channelIds" class="member-change" id="channelIds" required>
+	                <option value="" class="sel-disabled">--请选择--</option>
+	                [#if channelList??]
+				             [#list channelList as c]
+					             [#if c_index==0]
+						             [#if c.channelType==1]
+						             <option value="" class="sel-disabled">学科教研</option>
+						             [#else]
+						             <option value="" class="sel-disabled">市县教研</option>
+						             [/#if]
+					             [/#if]
+					         [#if user.username=='9027']
+						          [#if c_index==0]
+					             	<option value="${c.channelId}&chan">&nbsp;&nbsp;>高中、初中语文</option>
+					              [/#if]
+					         [#elseif user.username=='9011']
+					         	  [#if c_index==0]
+					             	<option value="${c.channelId}&chan">&nbsp;&nbsp;>高中、初中、小学美术</option>
+					              [/#if]
+					         [#elseif user.username=='9019']
+					         	  [#if c_index==0]
+					             	<option value="${c.channelId}&chan">&nbsp;&nbsp;>高中、初中、小学音乐</option>
+					              [/#if]
+					         [#elseif user.username=='9005']
+					         	  [#if c_index==0]
+					             	<option value="${c.channelId}&chan">&nbsp;&nbsp;>高中、初中、小学体育</option>
+					              [/#if]
+					         [#elseif user.username=='9031']
+					         	  [#if c_index==0]
+					             	<option value="${c.channelId}&chan">&nbsp;&nbsp;>综合实践</option>
+					              [/#if]
+					         [#elseif user.username=='9006']
+					         	  [#if c_index==0]
+					             	<option value="${c.channelId}&chan">&nbsp;&nbsp;>高中、初中地理</option>
+					              [/#if]
+					         [#elseif user.username=='9009']
+					         	  [#if c_index==0]
+					             	<option value="${c.channelId}&chan">&nbsp;&nbsp;>高中、初中历史</option>
+					              [/#if]
+					         [#elseif user.username=='9092']
+					         	  [#if c_index==0]
+					             	<option value="${c.channelId}&chan">&nbsp;&nbsp;>初中、小学信息技术</option>
+					              [/#if]
+					         [#elseif user.username=='9033']
+					         	  [#if c_index==0]
+					             	<option value="${c.channelId}&chan">&nbsp;&nbsp;>初中、小学品德</option>
+					              [/#if]
+					         [#elseif user.username=='9089']
+					         	  [#if c_index==0]
+					             	<option value="${c.channelId}&chan">&nbsp;&nbsp;>高中、初中化学</option>
+					              [/#if]
+					         [#elseif user.username=='9006']
+					         	  [#if c_index==0]
+					             	<option value="${c.channelId}&chan">&nbsp;&nbsp;>高中、初中物理</option>
+					              [/#if]
+					         [#elseif user.username=='9017']
+					         	  [#if c_index==0]
+					             	<option value="${c.channelId}&chan">&nbsp;&nbsp;>高中、初中生物</option>
+					              [/#if]
+					         [#elseif user.username=='9035']
+					         	  [#if c_index==0]
+					             	<option value="${c.channelId}&chan">&nbsp;&nbsp;>心理健康</option>
+					              [/#if]
+					         [#else]
+					              <option value="${c.channelId}&chan">&nbsp;&nbsp;>${c.channelName}</option>
+				             [/#if]
+				             
+				     [/#list]
+				    [/#if]
+				    [#if columnsList??]
+			        [#list columnsList as map]
+			        [#list map?keys as k]
+			        [#if k=='']
+			        	[#list map[k] as v]
+				        	<option value="${v?split("=")[0]}&colu">${v?split("=")[1]}</option>
+			        	[/#list]
+			        [#else]
+			        	<option value="" class="sel-disabled">${k?split("=")[1]}</option>
+			        	[#list map[k] as v]
+				        	<option value="${v?split("=")[0]}&colu">&nbsp;&nbsp;>${v?split("=")[1]}</option>
+			        	[/#list]
+			        [/#if]	
+			        [/#list]
+			        [/#list]
+		            [/#if]
+	                [#if joinGroupList?size gt 0]
+		                <option value="" class="sel-disabled">群组</option>
+                        [#list joinGroupList as j]
+                         <option value="${j.columnsId.columnId}&colu">&nbsp;&nbsp;>${j.columnsId.columnName}</option>
+		                [/#list]
+                    [/#if]
+	                </select>
+	                <span style="color:#f00; margin-left:10px;">*</span>
+	                 [#if channelList??]
+	                 [#elseif columnsList??]
+	                 [#elseif joinGroupList?size gt 0]
+					 [#else]
+					 	<span style="color:red;">您还没有创建栏目，请点击这里<a href="javascript:;" onclick="createChannels2();" style="background-color:white;border: 1px solid #dedede;">创建栏目</a>,否则博客将不能发布！</span>
+					 [/#if]	 
+					 <script>
+					 function createChannels2(){
+						$.ajax({
+					           type: 'POST',
+					           url : '${base}/blog/columns_list.jspx',
+					           dataType:"html",
+					           async: true,
+					           success : function(datas){
+					        	   if(datas=="login"){
+					            		 location.href="${base}/login.jspx";
+					            	 }else{
+										$("#zd_u-hilite-cap").remove();
+										$("#zdId").remove();
+										$("#u-hilite-cap").remove();
+										 var wzid=document.getElementById('wzId');
+					            		 if(wzid!=null){
+					            			 document.getElementById('wzId').innerHTML="";
+					            		 }
+					            		 var maindiv=document.getElementById('maindiv');
+					            		 if(maindiv!=null){
+					            			 document.getElementById('maindiv').innerHTML="";
+					            		 }
+						               $(".wrap-right").append(datas);
+						               if(window._bd_share_main){
+						            	   window._bd_share_main.init();
+						            	}
+					        		   
+					        	   }
+					  	   		 }
+					 		});
+					}
+					 </script> 
+</div>

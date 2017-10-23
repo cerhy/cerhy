@@ -376,9 +376,9 @@ public class BlogAct {
 			//return FrontUtils.showLogin(request, model, site);
 			return "/WEB-INF/t/cms/www/default/blog/login.html";
 		}
-		model = blogCommon.getColumn(request,model,user);
-	    model = blogCommon.getChannel(request,model,user,site);
- 		model = blogCommon.getAlreadyJoinGroup(request, model,user);
+//		model = blogCommon.getColumn(request,model,user);
+//	    model = blogCommon.getChannel(request,model,user,site);
+// 		model = blogCommon.getAlreadyJoinGroup(request, model,user);
 		if(hasPermission){
 			model.addAttribute("site", site);
 			model.addAttribute("sessionId",request.getSession().getId());
