@@ -304,10 +304,6 @@ outline: none;
 			</div> 
         	</div>
      </div>
-     <div id="getChannlHtml" style="display:none;">
-     [#include 'blog_content_channl.html'/]
-     </div>
-     
      <div id="joinGroups" style="display:none;margin-top:-5px;">
 		<ul style="padding-left: 10px;">
 			<li>请询问群组创建人获取群组账号与验证码。</li>
@@ -328,6 +324,9 @@ outline: none;
 	     	<button type="button" onclick="closeJoinGroup();" class="submit" style="margin:30px 40px 0 -5px;">取消</button>
 		</div>
 	  </div>
+	 <div id="getChannlHtml" style="display:none;">
+     [#include 'blog_content_channl.html'/]
+     </div>
 <script src='/${res}/js/stopExecutionOnTimeout.js?t=1'></script>
 <script src='/${res}/js/jquery.velocity.min.js'></script>
 <script src='/${res}/js/class2context.js'></script>
@@ -873,7 +872,6 @@ function sJoinGroup(){
         	         	        		    			               if(window._bd_share_main){
         	         	        		    			            	   window._bd_share_main.init();
         	         	        		    			            	}
-						        	            						alert("删除成功!");
 						        	            						$("body").mLoading("hide");
         	         	        		    			  	   		 }
         	         	        		    			 	});
@@ -1080,5 +1078,39 @@ function gotoDataShow(url){
          	 }  
  	   	}
 	});
+}
+
+
+</script>
+<script type="text/javascript">
+function createChannels2(){
+	$.ajax({
+           type: 'POST',
+           url : '${base}/blog/columns_list.jspx',
+           dataType:"html",
+           async: true,
+           success : function(datas){
+        	   if(datas=="login"){
+            		 location.href="${base}/login.jspx";
+            	 }else{
+					$("#zd_u-hilite-cap").remove();
+					$("#zdId").remove();
+					$("#u-hilite-cap").remove();
+					 var wzid=document.getElementById('wzId');
+            		 if(wzid!=null){
+            			 document.getElementById('wzId').innerHTML="";
+            		 }
+            		 var maindiv=document.getElementById('maindiv');
+            		 if(maindiv!=null){
+            			 document.getElementById('maindiv').innerHTML="";
+            		 }
+	               $(".wrap-right").append(datas);
+	               if(window._bd_share_main){
+	            	   window._bd_share_main.init();
+	            	}
+        		   
+        	   }
+  	   		 }
+ 		});
 }
 </script>
