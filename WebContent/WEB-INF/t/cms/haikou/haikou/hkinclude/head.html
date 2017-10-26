@@ -1,0 +1,50 @@
+<div id="header">
+	<div id="header-w">
+		<div id="navi">
+			<a href="http://www.cerhy.com/">CERHY首页</a> <a
+				href="http://res.hersp.com/">教育资源</a> <a
+				href="http://tea.hersp.com/">教师发展</a> <a
+				href="http://stu.hersp.com/">学生成长</a>
+		</div>
+		<div class="header-right"
+			style="float: left; margin-left: 12px; cursor: pointer;">
+			<!-- [#if user??] [#if user.userImg??] <img src="${user.userImg}"
+				style="margin-top: 6px; width: 20px; height: 20px"></img> [#else]
+			<img alt="用户头像" src="/${res}/images/userImg.png"
+				style="margin-top: 6px; width: 20px; height: 20px"></img> [/#if]
+			 <a style="color: white;margin-top: 10px;">${user.username}</a> 
+			[#else]  
+			[/#if]-->
+			<a style="color: #fff;" href="http://localhost:8080/cerhy/blog/index.jspx">注册/登录</a>
+		</div>
+<!-- 		[#if user??]
+		<div class="header-right" style="float: left; cursor: pointer;">
+			<span style="color: white;margin-top: 10px;">${user.username}</span> 
+			<ul id="menu" class="menu1">
+				<li><span style="color: white;">${user.username}</span>
+					<div class="pad col1 ">
+						<dl
+							style="margin: 0; padding: 0; width: 62px; line-height: 150%; float: left;">
+							<dd>
+								<a href="http://www.cerhy.com/blog/user/${user.username}">我的博客</a>
+							</dd>
+							<dd>
+								<a href="${base}/logout.jspx" target="_self">退出账号</a>
+							</dd>
+						</dl>
+					</div></li>
+			</ul>
+		</div>
+		[/#if] -->
+		<div class="header-right">
+			<div class="search-bar">
+				<form action="http://www.cerhy.com/search.jspx" target="_blank" id="searchForm">
+					<input type="text" name="q" value="${oldq!}" maxlength="50"
+						autocomplete="off" class="searchCon" placeholder="搜索博客账号">
+					<input type="submit" value="" id="search-btn1" class="search-btn1"
+						style="border: 0px;">
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
