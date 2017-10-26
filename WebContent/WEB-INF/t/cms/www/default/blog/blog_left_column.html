@@ -1033,35 +1033,3 @@ function gotoDataShow(url){
 	});
 }
 </script>
-<script type="text/javascript">
-function createChannels2(){
-	$.ajax({
-           type: 'POST',
-           url : '${base}/blog/columns_list.jspx',
-           dataType:"html",
-           async: true,
-           success : function(datas){
-        	   if(datas=="login"){
-            		 location.href="${base}/login.jspx";
-            	 }else{
-					$("#zd_u-hilite-cap").remove();
-					$("#zdId").remove();
-					$("#u-hilite-cap").remove();
-					 var wzid=document.getElementById('wzId');
-            		 if(wzid!=null){
-            			 document.getElementById('wzId').innerHTML="";
-            		 }
-            		 var maindiv=document.getElementById('maindiv');
-            		 if(maindiv!=null){
-            			 document.getElementById('maindiv').innerHTML="";
-            		 }
-	               $(".wrap-right").append(datas);
-	               if(window._bd_share_main){
-	            	   window._bd_share_main.init();
-	            	}
-        		   
-        	   }
-  	   		 }
- 		});
-}
-</script>

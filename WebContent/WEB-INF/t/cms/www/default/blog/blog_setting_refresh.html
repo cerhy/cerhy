@@ -60,11 +60,9 @@ $(function(){
          </div>
 <script type="text/javascript">
 function blogsets(){
-	var reg = new RegExp("[~'!#$%^&*-+_=:]");  
+	var reg = new RegExp("[~'!#$%^&_:]");  
     var blogTitle = $('#blogTitle').val();
     var blogTitle2 = $('#blogTitle2').val();
-    alert(blogTitle);
-    alert(blogTitle2);
     if(reg.test(blogTitle)){
 		alert("标题名可能包含%/等特殊字符，请修改重试。");
 		return false;
