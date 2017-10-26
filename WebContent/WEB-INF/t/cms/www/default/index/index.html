@@ -64,7 +64,7 @@ $(document).ready(function(){
                          [@cms_content_list typeId='2' count='20' recommend='2' channelId='75' orderBy='4' titLen='22' channelOption='1' dateFormat='yyyy-MM-dd']      
          				  <ul class="big-img-ul" >
            				 [#list tag_list as a]
-           				 <li [#if a_index<1] style="display: block;" [/#if]><a href="${a.url}" target="_blank"><img src="${a.typeImg!}" width="950" height="280"><span>[@text_cut s=a.title len=titLen /]</span></a></li>
+           				 <li [#if a_index<1] style="display: block;" [/#if]><a href="${a.url}" target="_blank"><img src="${a.typeImg!}" width="950" height="330"><span>[@text_cut s=a.title len=titLen /]</span></a></li>
           				  [/#list]
          				</ul>
         				 [/@cms_content_list]   
