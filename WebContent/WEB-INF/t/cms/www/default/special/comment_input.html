@@ -70,7 +70,54 @@
         },"commentFormCsi");
     });
     
-  
+    function ajaxconmit(formId){
+    	$.ajax({
+            dataType : 'json',
+            type: "POST",
+            url: "${base}/ajaxsubmit.jspx",
+            data:$('#'+formId).serialize(),// 你的formid
+            error: function(request) {
+                alert("Connection error");
+            },
+            success: function(data) {
+            	
+            	   if(data.status==0) {
+                       alert("评论成功");
+                       
+                      var html="";
+                      	  html+="<div id=\"commentListContainer\"></div>";
+                      	html+="<script type=\"text/javascript\">";
+                      	html+="$(function(){";
+                      	html+="Cms.commentBlogList(\"${base}\",\"commentListContainer\",{contentId:${content.id},orderBy:0,count:100,checked:1});";
+                      	html+="});";
+                      	html+="<\/script>";
+                      	 $(".comments-item").empty();
+                        $(".comments-item").append(html)
+                   } else if(data.status==2) {	
+                       alert("内容不存在");
+                      
+                   } else if(data.status==3) {	
+                       alert("评论关闭");
+                      
+                   } else if(data.status==4) {	
+                       alert("需要登录评论");
+                      
+                   }else if(data.status==5) {	
+                       alert("已经评论过，不能重复评论");
+                      
+                   } else if(data.status==100) {	
+                       alert("内容不存在");
+                      
+                   } else if(data.status==101) {	
+                       alert("评论不能为空");
+                      
+                   } else {
+                       alert("评论失败");
+                      
+                   }
+            }
+        });
+    }
     </script>
   [#elseif content.channel.commentControl==1 && !user??]
     [#--登录评论，且未登录--]
