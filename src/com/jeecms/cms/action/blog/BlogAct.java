@@ -2623,7 +2623,12 @@ public class BlogAct {
 		CmsUser u = CmsUtils.getUser(request);
 		Integer recieveUserId = null;
 		if(u!=null){
-			recieveUserId = u.getId();
+			if(site.getId() == u.getId()){
+				recieveUserId = u.getId();
+			}else{
+				recieveUserId = null;
+			}
+
 		}
 		String user_ids = request.getParameter("user_ids");
 		CmsUser user=cmsUserMng.findById(Integer.valueOf(user_ids.toString()));
