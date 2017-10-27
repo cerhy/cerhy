@@ -612,12 +612,6 @@ function sJoinGroup(){
 	}
 	
 	function contributeAdd(){
-		if (typeof CKEDITOR != "undefined") { 
-			 var oEditor = CKEDITOR.instances.txt;
-			 if(oEditor!="undefined" && oEditor!=undefined ){
-				 oEditor.destroy(true);
-			}
-		  }
 	 	 $.ajax({
              type: 'POST',
              url : ' ${base}/blog/contribute_ajax_add.jspx',
