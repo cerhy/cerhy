@@ -1416,7 +1416,8 @@ function cp(path,id){
 		if(typeof($("#no3").val())!='undefined'){
 			 delPos();
 		};
-		var newurl=url
+		var templatePageNos = $("#templatePageNos").val();
+		var newurl=url + "?pageNo="+templatePageNos;
 		$.ajax({
 	           type: 'POST',
 	           url : newurl,
