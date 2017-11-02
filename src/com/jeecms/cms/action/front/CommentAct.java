@@ -465,6 +465,12 @@ public class CommentAct {
 		CmsSite site = CmsUtils.getSite(request);
 		CmsUser user = CmsUtils.getUser(request);
 		JSONObject json = new JSONObject();
+		if(text.contains("&＃40;")){
+			text=text.replace("&＃40;", "(");
+		}
+		if(text.contains("&＃41;")){
+			text=text.replace("&＃41;", ")");
+		}
 		if (contentId == null) {
 			json.put("success", false);
 			json.put("status", 100);
