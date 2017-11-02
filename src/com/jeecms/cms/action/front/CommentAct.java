@@ -207,7 +207,11 @@ public class CommentAct {
 				parentId,greatTo, chk, rec, desc, count);
 		// 将request中所有参数
 		Content contentCm = contentMng.findById(contentId);
-		model.addAttribute("contentCm", contentCm);
+		if(null !=contentCm){
+			model.addAttribute("contentCm", contentCm.getCommentsCheckedNum());
+		}else{
+			model.addAttribute("contentCm", 0);
+		}
 		model.putAll(RequestUtils.getQueryParams(request));
 		model.addAttribute("list", list);
 		model.addAttribute("contentId", contentId);
