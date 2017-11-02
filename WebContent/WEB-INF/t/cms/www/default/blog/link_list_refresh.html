@@ -18,19 +18,19 @@ $('.user-menu-links li').click(function(){
 	         	<textarea id="hyperlink" name="hyperlink" rows="18" cols="100">${linkUrls }</textarea>
 	         	<br />
 	          	<span class="fl">
-					<p>每行可以输入一个链接，标题和网址之间用“=”分隔开，不可以将网址单独作为一行，最多可设置350个。</p>
-					<p>链接可以分组，不包含“=”号的行就是分组标题。</p>
-					<p>例如：</p>
-					<p style="color: red;font-size: 15px;">网址需以http开头 如http://www.baidu.com</p>
+					<p>每行可以输入一个链接，网址备注名和网址之间用“=”分隔开，网址中不可存在等号（=），同时不可将网址单独作为一行，且最多可设置350个</p>
+					<p>链接可以分组，不包含“=”号的行就是分组标题。下例中，“教育行政部门”即为分组标题</p>
+					<p style="color: red;font-size: 15px;">例如：</p>
 					<p style="color: red;font-size: 15px;">海南教育研究新浪微博=http://t.sina.com.cn/hainanvae</p>
 					<p style="color: red;font-size: 15px;">教育行政部门</p>
 					<p style="color: red;font-size: 15px;">中国教育部=http://www.moe.edu.cn</p>
 					<p style="color: red;font-size: 15px;">海南教育厅=http://edu.hainan.gov.cn</p>
 					<p style="color: red;font-size: 15px;">*注:</p>
-					<p style="color: red;font-size: 15px;">1、请勿留有空格!避免在分组名(如:教育行=政部门)/备注名(如:海南=教育厅)中填写等号(=)</p>
-					<p style="color: red;font-size: 15px;">添加好友链接结束,无需按回车健换行,以免导致格式不正确提交不成功!</p>
-					<p style="color: red;font-size: 15px;">2、正确的博客地址格式：www.cerhy.com/blog/user/账号</p>
-		          	<input style="display: none;" name="nextUrl" value="link_list.jspx" /><br />
+					<p style="color: red;font-size: 15px;">1、网址需以http开头， 如http://www.baidu.com</p>
+					<p style="color: red;font-size: 15px;">2、请勿在分组标题(如:教育行=政部门)和网址备注名(如:海南=教育厅)中填写等号(=)</p>
+					<p style="color: red;font-size: 15px;">添加好友链接结束,无需按回车键换行,以免导致格式不正确提交不成功!</p>
+					<p style="color: red;font-size: 15px;">3、正确的博客地址格式：www.cerhy.com/blog/user/账号</p>
+		          	<input style="display: none;" name="nextUrl" value="link_list.jspx" /><br/>
 		          	 <input type="button" value="提交" class="submit" id="addlink"  onclick="saveUpdateRefresh()">
 				</span>
 	          </form> 
@@ -43,7 +43,7 @@ function saveUpdateRefresh(){
 		var num=0;
     	for(var i=0;i<str.length;i++){
     		if(str[i].split("=").length>2){
-    			alert("请勿填写多余的等号(=)!");
+    			alert("网址中请勿填写等号(=)!");
     	        return false;
     		}
     		//有等号没有http

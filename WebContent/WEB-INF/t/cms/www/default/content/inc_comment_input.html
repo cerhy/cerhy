@@ -19,7 +19,9 @@
 }
 </style>
 <section class="comments">
-      <h3>评论<span id="addCm">&nbsp;已有${content.commentsCheckedNum!}&nbsp;条</span></h3>
+      <h3>评论<span id="addCm">&nbsp;已有
+      <input id="adcms" name="adcms" value="${content.commentsCheckedNum!}" style="width:50px;border:none;text-align:center;background-color:Transparent;" readonly/>
+                  条</span></h3>
       [#if content.channel.commentControl==0 || ((content.channel.commentControl==1||content.channel.commentControl==3) && user??)]
       <form id="commentForm" action="${base}/ajaxsubmit.jspx" method="post">
       <textarea name="text" placeholder="发表你此时的观点和想法 ……" class="comments-text" id="comments-text"></textarea>
@@ -108,10 +110,10 @@
                 alert("Connection error");
             },
             success: function(data) {
-            	
+            	var commentTemplate = $("#adcms").val();
             	   if(data.status==0) {
                        alert("评论成功");
-                       
+                       commentTemplate++;
                       var html="";
                       	  html+="<div id=\"commentListContainer\"></div>";
                       	html+="<script type=\"text/javascript\">";
@@ -119,6 +121,8 @@
                       	html+="Cms.commentBlogList(\"${base}\",\"commentListContainer\",{contentId:${content.id},orderBy:0,count:10,checked:1});";
                       	html+="});";
                       	html+="<\/script>";
+                      	$("#comments-text").val("");
+                      	$("#adcms").val(commentTemplate);
                       	 $("#commentListContainer").remove();
                         $(".news-comments").append(html)
                    } else if(data.status==2) {	
