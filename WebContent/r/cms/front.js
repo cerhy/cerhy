@@ -185,7 +185,7 @@ Cms.commentList = function(base, c, options) {
  */
 Cms.commentBlogList = function(base, c, options) {
 	c = c || "commentListDiv";
-	$("#" + c).load(base + "/comment_list.jspx?blogDate=0", options);
+	$("#" + c).load(base + "/comment_list_page.jspx?blogDate=0", options);
 }
 
 Cms.commentShareList = function(base, c, options) {
@@ -202,12 +202,12 @@ Cms.commentChannelList = function(base, c, options) {
 
 Cms.commentListMore = function(base, c, options) {
 	c = c || "commentListDiv";
-	$("#" + c).load(base + "/comment_list.jspx", options);
+	$("#" + c).load(base + "/comment_list_second.jspx", options);
 	$('#commentDialog').dialog('open');
 }
 Cms.commentListMoreBlog = function(base, c, options) {
 	c = c || "commentListDiv";
-	$("#" + c).load(base + "/comment_list.jspx?blogDate=0", options);
+	$("#" + c).load(base + "/comment_list_second.jspx?blogDate=0", options);
 	$('#commentDialog').dialog('open');
 }
 

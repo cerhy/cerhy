@@ -8,12 +8,9 @@
     <div class="rig">
       <div class="rig-top">
       <a class="username">
-      	[#if c.commentUser??]
-      	[#if c.commentUser.realname??]
+      [#if c.commentUser??]
+      	${(c.commentUser.username)!"匿名网友"}&nbsp;
       		${(c.commentUser.realname)!"匿名网友"}
-      	[#else]
-      		${(c.commentUser.username)!"匿名网友"}
-      	[/#if]
       [#else]
       		匿名网友
       [/#if]
@@ -44,11 +41,8 @@
 	      <div class="rig-top">
 	      <a class="username">
 		      [#if c.replayUser??]
-		      	[#if c.replayUser.realname??]
+		      		${(c.replayUser.username)!"匿名"}&nbsp;
 		      		${(c.replayUser.realname)!"匿名"}
-		      	[#else]
-		      		${(c.replayUser.username)!"匿名"}
-		      	[/#if]
 		      [#else]
 		      	匿名
 		      [/#if]
@@ -70,15 +64,7 @@
     </div>
   </div>
   [/#list]
-  [#list list as c]
-  	[#if c??&&c_index<1]
-  		[#if blogDate??]
-	  		<div class="open-more"><a href="${base}/comment.jspx?contentId=${contentId!}&blogDate=0" target="_blank">更多评论</a></div>
-  		[#else]
-  		<div class="open-more"><a href="${base}/comment.jspx?contentId=${contentId!}" target="_blank">更多评论</a></div>
-  		[/#if]
-  	[/#if]
-  [/#list]
+  
 </section>
 <div id="commentDialog" style="display:none;"></div>
 <script type="text/javascript">

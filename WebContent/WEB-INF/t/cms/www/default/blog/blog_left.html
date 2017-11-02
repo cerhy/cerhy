@@ -326,6 +326,9 @@ outline: none;
 	  </div>
 	 <div id="getChannlHtml" style="display:none;">
      [#include 'blog_content_channl.html'/]
+     </div >
+     <div style="display:none;">
+     	<input id="templatePageNos" name="templatePageNos" />
      </div>
 <script src='/${res}/js/stopExecutionOnTimeout.js?t=1'></script>
 <script src='/${res}/js/jquery.velocity.min.js'></script>
@@ -612,12 +615,6 @@ function sJoinGroup(){
 	}
 	
 	function contributeAdd(){
-		if (typeof CKEDITOR != "undefined") { 
-			 var oEditor = CKEDITOR.instances.txt;
-			 if(oEditor!="undefined" && oEditor!=undefined ){
-				 oEditor.destroy(true);
-			}
-		  }
 	 	 $.ajax({
              type: 'POST',
              url : ' ${base}/blog/contribute_ajax_add.jspx',
@@ -1081,36 +1078,4 @@ function gotoDataShow(url){
 }
 
 
-</script>
-<script type="text/javascript">
-function createChannels2(){
-	$.ajax({
-           type: 'POST',
-           url : '${base}/blog/columns_list.jspx',
-           dataType:"html",
-           async: true,
-           success : function(datas){
-        	   if(datas=="login"){
-            		 location.href="${base}/login.jspx";
-            	 }else{
-					$("#zd_u-hilite-cap").remove();
-					$("#zdId").remove();
-					$("#u-hilite-cap").remove();
-					 var wzid=document.getElementById('wzId');
-            		 if(wzid!=null){
-            			 document.getElementById('wzId').innerHTML="";
-            		 }
-            		 var maindiv=document.getElementById('maindiv');
-            		 if(maindiv!=null){
-            			 document.getElementById('maindiv').innerHTML="";
-            		 }
-	               $(".wrap-right").append(datas);
-	               if(window._bd_share_main){
-	            	   window._bd_share_main.init();
-	            	}
-        		   
-        	   }
-  	   		 }
- 		});
-}
 </script>

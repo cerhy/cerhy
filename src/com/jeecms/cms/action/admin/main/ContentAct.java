@@ -694,14 +694,26 @@ public class ContentAct{
 			//判断parentIds是否为null.如果为null则说明传进来的栏目ID 只有两级栏目.如果不为null则说明传进来的栏目ID存在上三级栏目
 			if(null!=parentIdst){
 				//只有三级栏目就把该栏目的上一级栏目ID 作为key 也就是parentId
-				RedisUtil.lrem(parentIdt.toString(), 0, bean.getId().toString(),listt);
+				try {
+					RedisUtil.lrem(parentIdt.toString(), 0, bean.getId().toString(),listt);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 			}else{
 				//只有二级栏目就把该栏目的上一级栏目ID 作为key也就是传进来的栏目id
-				RedisUtil.lrem(bean.getChannel().getId().toString(), 0, bean.getId().toString(),listt);
+				try {
+					RedisUtil.lrem(beans.getChannel().getId().toString(), 0, bean.getId().toString(),listt);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 			}
 		}else{
 			//只有1级栏目就把该栏目的ID 作为key
-			RedisUtil.lrem(bean.getChannel().getId().toString(), 0, bean.getId().toString(),listt);
+			try {
+				RedisUtil.lrem(beans.getChannel().getId().toString(), 0, bean.getId().toString(),listt);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 		// 加上模板前缀
 		CmsSite site = CmsUtils.getSite(request);

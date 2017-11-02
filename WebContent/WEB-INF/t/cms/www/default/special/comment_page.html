@@ -62,7 +62,8 @@ $(function() {
         <span class="position">评论</span>
         [#if blogDate??]
         <em> &gt; </em>
-        	<a href="javascript:;" onclick="f1()">返回到博客内容</a>
+        	<!-- <a href="javascript:;" onclick="f1()">返回到博客内容</a> -->
+        	<span>博客评论</sapn>
         [#else]
         <em> &gt; </em>
         	<a href="${content.url}">返回到文章内容</a>
@@ -78,7 +79,7 @@ $(function() {
 			  </div>
 			 <div class="yhpl"><h1><span>用户评论:</span></h1></div>
 			 
-			 [@cms_comment_page contentId=contentId count='10' checked='1']
+			 [@cms_comment_page contentId=contentId count='30' checked='1']
 			  [#if tag_pagination.list?size = 0]
 			  <span>暂无相关评论！</span>
 			  [#else]

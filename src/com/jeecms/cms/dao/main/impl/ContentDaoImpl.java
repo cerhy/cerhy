@@ -425,15 +425,15 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 					sql = "select contentId from ContentSend where recieveUserId="
 							+ inputUserId + "" + sendWhere;
 				} else {
-					sql = "select contentId from ContentSend where recieveUserId="
-							+ recieveUserId + "" + sendWhere;
+//					sql = "select contentId from ContentSend where recieveUserId="
+//							+ recieveUserId + "" + sendWhere;
 				}
 
-				List contentIdList = find(sql);
-				if (contentIdList != null && contentIdList.size() > 0) {
-					f.append(" or bean.id in (:contentIds)");
-					f.setParamList("contentIds", contentIdList);
-				}
+//				List contentIdList = find(sql);
+//				if (contentIdList != null && contentIdList.size() > 0) {
+//					f.append(" or bean.id in (:contentIds)");
+//					f.setParamList("contentIds", contentIdList);
+//				}
 			}
 
 		}

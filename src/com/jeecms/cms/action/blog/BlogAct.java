@@ -2622,9 +2622,13 @@ public class BlogAct {
 		CmsSite site = CmsUtils.getSite(request);
 		CmsUser u = CmsUtils.getUser(request);
 		Integer recieveUserId = null;
-		if(u!=null){
-			recieveUserId = u.getId();
-		}
+//		if(u!=null){
+//			if((site.getId()).equals(u.getId())){
+//				recieveUserId = u.getId();
+//			}else{
+//				recieveUserId = null;
+//			}
+//		}
 		String user_ids = request.getParameter("user_ids");
 		CmsUser user=cmsUserMng.findById(Integer.valueOf(user_ids.toString()));
 		String joinGroupStata = request.getParameter("joinGroupStata");

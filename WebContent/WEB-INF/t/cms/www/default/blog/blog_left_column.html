@@ -66,7 +66,6 @@ outline: none;
 	    html +="</div>"
 		$(".wrap-left").after(html);
 </script>
-<link rel="stylesheet" type="text/css" href="/${res}/css/normalize.css" />
 <link rel="stylesheet" type="text/css" href="/${res}/css/default.css">
 <link rel="stylesheet" type="text/css" href="/${res}/css/styles.css">
 <link rel="stylesheet" type="text/css" href="/${res}/css/class2context.css">
@@ -1031,37 +1030,5 @@ function gotoDataShow(url){
          	 }  
  	   	}
 	});
-}
-</script>
-<script type="text/javascript">
-function createChannels2(){
-	$.ajax({
-           type: 'POST',
-           url : '${base}/blog/columns_list.jspx',
-           dataType:"html",
-           async: true,
-           success : function(datas){
-        	   if(datas=="login"){
-            		 location.href="${base}/login.jspx";
-            	 }else{
-					$("#zd_u-hilite-cap").remove();
-					$("#zdId").remove();
-					$("#u-hilite-cap").remove();
-					 var wzid=document.getElementById('wzId');
-            		 if(wzid!=null){
-            			 document.getElementById('wzId').innerHTML="";
-            		 }
-            		 var maindiv=document.getElementById('maindiv');
-            		 if(maindiv!=null){
-            			 document.getElementById('maindiv').innerHTML="";
-            		 }
-	               $(".wrap-right").append(datas);
-	               if(window._bd_share_main){
-	            	   window._bd_share_main.init();
-	            	}
-        		   
-        	   }
-  	   		 }
- 		});
 }
 </script>

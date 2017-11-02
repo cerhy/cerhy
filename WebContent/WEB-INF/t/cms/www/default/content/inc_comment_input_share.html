@@ -19,26 +19,17 @@
 }
 </style>
 <section class="comments">
-      <h3>评论<span id="addCm">&nbsp;已有<input id="adcms" name="adcms" value="${content.commentsCheckedNum!}" style="width:30px;border:none;text-align:center;background-color:transparent;" readonly/>条</span></h3>
-      [#if content.channel.commentControl==0 || ((content.channel.commentControl==1||content.channel.commentControl==3) && user??)]
+      <h3>评论<span id="addCm">&nbsp;已有<input id="adcms" name="adcms" value="${content.commentsCheckedNum!}" style="width:30px;border:none;text-align:center;" readonly/>条</span></h3>
+      [#if content.channel.commentControl==0 || ((content.channel.commentControl==1||content.channel.commentControl==3))]
       <form id="commentForm" action="${base}/ajaxsubmit.jspx" method="post">
       <textarea name="text" placeholder="发表你此时的观点和想法 ……" class="comments-text" id="comments-text"></textarea>
-       [#if user??&&user.group.needCaptcha||!user??]
 	    <div class="plfr1 clearfix">
-	    <!-- <div style="float:left;">
-	    <input name="captcha" type="text" placeholder="验证码dd" id="captcha" vld="{required:true}" class="plcode"/>
-	    </div>
-	    <div style="float:left;">
-	    <img id="commentCaptcha" src="${base}/captcha.svl" onclick="this.src='${base}/captcha.svl?d='+new Date()"/>
-	    </div>
-		    <div class="down clearfix"> -->
 		    <div>
 	       <input type="hidden" name="contentId" value="${content.id}"/>
 	       <input type="hidden" name="sessionId" id="sessionId" />
 	      <input type="button"  onclick="ajaxconmit('commentForm')" value="提交评论" class="submit-on">
 	      </div>
        </div>
-	    [/#if]
        </form>
        <script type="text/javascript">
     $(function() {
@@ -109,6 +100,7 @@
             },
             success: function(data) {
             	var commentTemplate = $("#adcms").val();
+            	//console.log(data);
             	   if(data.status==0) {
                        alert("评论成功");
                        commentTemplate++;
@@ -116,13 +108,13 @@
                       	  html+="<div id=\"commentListContainer\"></div>";
                       	html+="<script type=\"text/javascript\">";
                       	html+="$(function(){";
-                      	html+="Cms.commentBlogList(\"${base}\",\"commentListContainer\",{contentId:${content.id},orderBy:0,count:10,checked:1});";
+                      	html+="Cms.commentShareList(\"${base}\",\"commentListContainer\",{contentId:${content.id},orderBy:0,count:100,checked:1});";
                       	html+="});";
                       	html+="<\/script>";
                       	$("#comments-text").val("");
                       	$("#adcms").val(commentTemplate);
-                      	 $("#commentListContainer").remove();
-                        $(".news-comments").append(html)
+                      	$("#commentListContainer").remove();
+                        $(".news-comments").append(html);
                    } else if(data.status==2) {	
                        alert("内容不存在");
                       
@@ -159,5 +151,4 @@
     [#--不允许评论--]
     [/#if]
 </section> 
-
 
