@@ -64,15 +64,7 @@
     </div>
   </div>
   [/#list]
-  [#list list as c]
-  	[#if c??&&c_index<1]
-  		[#if blogDate??]
-	  		<div class="open-more"><a href="${base}/comment.jspx?contentId=${contentId!}&blogDate=0" target="_blank">更多评论</a></div>
-  		[#else]
-  		<div class="open-more"><a href="${base}/comment.jspx?contentId=${contentId!}" target="_blank">更多评论</a></div>
-  		[/#if]
-  	[/#if]
-  [/#list]
+  
 </section>
 <div id="commentDialog" style="display:none;"></div>
 <script type="text/javascript">
