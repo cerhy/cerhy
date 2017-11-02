@@ -25,7 +25,7 @@
           <!--
 		 <span class="commentdown" onclick="Cms.commentDown('${base}',${c.id},${c.downs},'commentdowns_${c.id}')">踩</span>
 		 <span id="commentdowns_${c.id}">${c.downs!}</span>   -->
-      	 <a class="comments-hf" id="commentreply_${c.id}" onclick="Cms.commentInputLoad('${base}','commentInputDiv_','commentInputDiv_${c.id}','${contentId!}','${c.id}')">回复</a>
+      	 <!-- <a class="comments-hf" id="commentreply_${c.id}" onclick="Cms.commentInputLoad('${base}','commentInputDiv_','commentInputDiv_${c.id}','${contentId!}','${c.id}')">回复</a> -->
       [#if c??&&c.replyCount>0]
 				  [#if c.replyCount>0]
 				 	[#if blogDate??]
@@ -63,7 +63,7 @@
 				  [/#if] -->
 				  <div id="commentInputDiv_${c.id}"></div>
 	      </div>
-	      <div class="reply"><textarea class="reply-text"></textarea><div><input type="submit" value="回复" class="reply-btn"></div></div>
+	    <!--   <div class="reply"><textarea class="reply-text"></textarea><div><input type="submit" value="回复" class="reply-btn"></div></div> -->
 	    </div>
 	  </div>
 	  [/#if]
@@ -75,7 +75,7 @@
   		[#if blogDate??]
 	  		<div class="open-more"><a href="${base}/comment.jspx?contentId=${contentId!}&blogDate=0" target="_blank">更多评论</a></div>
   		[#else]
-  		<div class="open-more"><a href="${base}/comment.jspx?contentId=${contentId!}" target="_blank">更多评论</a></div>
+  			<div class="open-more"><a href="${base}/comment.jspx?contentId=${contentId!}" target="_blank">更多评论</a></div>
   		[/#if]
   	[/#if]
   [/#list]
@@ -111,8 +111,3 @@ $(function() {
     [/#if]
 });
 </script>
-<!-- <script type="text/javascript">
-$("#comments-text").val("");
-$("#addCm").html("&nbsp;已有"+${contentCm}+"&nbsp;条");
-$("#addCcm").html("评论："+${contentCm});
-</script> -->
