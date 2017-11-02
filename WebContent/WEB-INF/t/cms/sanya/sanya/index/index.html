@@ -20,7 +20,7 @@
 			<div id="main">
 				<div id="feature-mask">
 					<div id="feature" class="block" style="height: 1250px; top: 0px;">
-						[@cms_content_list  channelId='491' count='5'  orderBy='2' channelOption='1']
+						[@cms_content_list  channelId='510' count='10'  orderBy='2' channelOption='1']
 						[#list tag_list as a]
 							<div>
 								&nbsp;
@@ -47,7 +47,7 @@
 
 				<div id="subject1" class="widget block">
 					<h3>教研简报</h3>
-					[@cms_content_list  channelId='461' count='9' titLen='14' orderBy='2' channelOption='1']
+					[@cms_content_list  channelId='481' count='9' titLen='14' orderBy='2' channelOption='1']
 					[#list tag_list as a]
 					[#if a_index<1]
 							<div class="box"
@@ -109,7 +109,7 @@
 				<div id="subject2" class="widget block">
 					<h3>学科动态</h3>
 
-				[@cms_content_list  channelId='428' count='30' titLen='14' orderBy='2' channelOption='1']
+				[@cms_content_list  channelId='450' count='30' titLen='14' orderBy='2' channelOption='1']
 					[#list tag_list as a]
 						[#if tag_list?size>1]
 							[#if tag_list?size<15]
@@ -152,7 +152,7 @@
 					<div class="clr"></div>
 
 					<h3>教育时政</h3>
-					[@cms_content_list  channelId='463' count='12'  orderBy='2' channelOption='1' ]
+					[@cms_content_list  channelId='483' count='12'  orderBy='2' channelOption='1' ]
 					[#list tag_list as a]
 						[#if tag_list?size>1]
 							[#if tag_list?size<6]
@@ -521,7 +521,7 @@
 					</h3>
 					<div id="notice" class="box">
 						<ul>
-						[@cms_content_list  channelId='465' count='10'  orderBy='2' channelOption='1' ]
+						[@cms_content_list  channelId='485' count='10'  orderBy='2' channelOption='1' ]
 						[#list tag_list as a]
 							<li><a href="${a.url}">${a.title}</a><span class="dt">(${a.releaseDate?string('MM-dd')})</span></li>
 						[/#list]
