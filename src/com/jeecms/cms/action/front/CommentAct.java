@@ -50,6 +50,7 @@ public class CommentAct {
 	public static final String COMMENT_LIST = "tpl.commentList";
 	public static final String COMMENT_LIST_SHARE = "tpl.commentListShare";
 	public static final String COMMENT_LIST_SECOND = "tpl.commentListSecond";
+	public static final String COMMENT_LIST_PAGE= "tpl.commentListPage";
 	public static final String COMMENT_INPUT = "tpl.commentInput";
 	public static final String COMMENT_CHANNEL_INPUT = "tpl.commentChannelInput";
 	public static final String COMMENT_CHANNEL_PAGE = "tpl.commentChannelPage";
@@ -222,6 +223,53 @@ public class CommentAct {
 		
 		return FrontUtils.getTplPath(request, site.getSolutionPath(),
 				TPLDIR_CSI, COMMENT_LIST);
+	}
+	
+	@RequestMapping(value = "/comment_list_page.jspx")
+	public String listPages(Integer siteId,Integer contentId, Integer parentId,
+			Integer greatTo,Integer recommend, Integer checked, 
+			Integer orderBy, Integer count,
+			HttpServletRequest request, HttpServletResponse response,
+			ModelMap model) {
+		if (count == null || count <= 0 || count > 200) {
+			count = 200;
+		}
+		boolean desc;
+		if (orderBy == null || orderBy == 0) {
+			desc = true;
+		} else {
+			desc = false;
+		}
+		Boolean rec;
+		if (recommend != null) {
+			rec = recommend != 0;
+		} else {
+			rec = null;
+		}
+		Boolean chk;
+		if (checked != null) {
+			chk = checked != 0;
+		} else {
+			chk = null;
+		}
+		List<CmsComment> list = cmsCommentMng.getListForTag(siteId,contentId,
+				parentId,greatTo, chk, rec, desc, count);
+		// 将request中所有参数
+		Content contentCm = contentMng.findById(contentId);
+		if(null !=contentCm){
+			model.addAttribute("contentCm", contentCm.getCommentsCheckedNum());
+		}else{
+			model.addAttribute("contentCm", 0);
+		}
+		model.putAll(RequestUtils.getQueryParams(request));
+		model.addAttribute("list", list);
+		model.addAttribute("contentId", contentId);
+		model.addAttribute("blogDate", request.getParameter("blogDate"));
+		CmsSite site = CmsUtils.getSite(request);
+		FrontUtils.frontData(request, model, site);
+		
+		return FrontUtils.getTplPath(request, site.getSolutionPath(),
+				TPLDIR_CSI, COMMENT_LIST_PAGE);
 	}
 	
 	@RequestMapping(value = "/comment_list_second.jspx")
