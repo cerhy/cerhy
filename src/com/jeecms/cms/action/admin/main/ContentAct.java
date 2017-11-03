@@ -518,6 +518,7 @@ public class ContentAct{
 				parentIds=String.valueOf(idss.getParentId().toString());
 			}
 		}
+		int count =8;
 		//判断parentId是否为null.如果为null则说明传进来的栏目ID 只有一级栏目 且为本身.如果不为null则说明传进来的栏目ID存在上一级栏目
 		if(null!=parentId){
 			//判断parentIds是否为null.如果为null则说明传进来的栏目ID 只有两级栏目.如果不为null则说明传进来的栏目ID存在上三级栏目
@@ -548,8 +549,8 @@ public class ContentAct{
 						}); 
 					} 
 					for(int i=0;i<list.size();i++){
-						if(list.size()>8){
-							if((i+1)<=8){
+						if(list.size()>count){
+							if((i+1)<=count){
 								listRedis.add(list.get(i));
 							}else{
 								break;
@@ -560,14 +561,45 @@ public class ContentAct{
 					}
 					RedisUtil.setList(String.valueOf(parentId), listRedis);
 				} catch (Exception e) {
-					log.error("redis存储异常....", e);
+					log.error("添加时redis存储异常....", e);
 				}
 			}else{
-				//只有二级栏目就把该栏目的ID 作为key也就是传进来的栏目id
+				//只有二级栏目就把该栏目的ID的上一级栏目作为KEY
 				try {
-					list=RedisUtil.getList(String.valueOf(channelId));
+					if(site.getId()==1){
+						//主网站
+						count=8;
+					}else if(site.getId()==2||site.getId()==3){
+						//2为海口,3为三亚
+						if(parentId==575||parentId==510){
+							//新闻
+							count=10;
+						}else if((parentId==480&&channelId==481)||(parentId==545&&channelId==546)){
+							//教研动态-教育简报
+							count=9;
+						}else if(parentId==450||parentId==517){
+							//学科动态
+							count=30;
+						}else if((parentId==480&&channelId==483)||(parentId==545&&channelId==548)){
+							//教研动态-教育时政
+							count=12;
+						}else if(parentId==484||parentId==549){
+							//文件通知
+							count=10;
+						}
+					}
+					if(site.getId()==2||site.getId()==3){
+						if(channelId==481||channelId==483||channelId==546||channelId==548){
+							list=RedisUtil.getList(String.valueOf(channelId));
+						}else{
+							list=RedisUtil.getList(String.valueOf(parentId));
+						}
+					}else{
+						list=RedisUtil.getList(String.valueOf(parentId));
+					}
+					
 					if(list!=null&&list.size()>0){
-						 list.add(bean);
+						list.add(bean);
 					}else{
 						List<Content> listCopy=new ArrayList<Content>();
 						listCopy.add(bean);
@@ -584,13 +616,12 @@ public class ContentAct{
 									return 0;  
 								}  
 								return -1;  
-								
 							}  
 						}); 
-					} 
+					}
 					for(int i=0;i<list.size();i++){
-						if(list.size()>8){
-							if((i+1)<=8){
+						if(list.size()>count){
+							if((i+1)<=count){
 								listRedis.add(list.get(i));
 							}else{
 								break;
@@ -599,9 +630,19 @@ public class ContentAct{
 							listRedis.add(list.get(i));
 						}
 					}
-					RedisUtil.setList(String.valueOf(channelId), listRedis);
+					
+					if(site.getId()==2||site.getId()==3){
+						if(channelId==481||channelId==483||channelId==546||channelId==548){
+							RedisUtil.setList(String.valueOf(channelId), listRedis);
+						}else{
+							RedisUtil.setList(String.valueOf(parentId), listRedis);
+						}
+					}else{
+						RedisUtil.setList(String.valueOf(parentId), listRedis);
+					}
+					
 				} catch (Exception e) {
-					log.error("redis存储异常....", e);
+					log.error("添加时redis存储异常....", e);
 				}
 			}
 		}else{
@@ -609,7 +650,7 @@ public class ContentAct{
 			try {
 				list=RedisUtil.getList(String.valueOf(channelId));
 				if(list!=null&&list.size()>0){
-					 list.add(bean);
+					list.add(bean);
 				}else{
 					List<Content> listCopy=new ArrayList<Content>();
 					listCopy.add(bean);
@@ -626,7 +667,6 @@ public class ContentAct{
 								return 0;  
 							}  
 							return -1;  
-							
 						}  
 					}); 
 				}
@@ -634,8 +674,8 @@ public class ContentAct{
 					if(channelId.toString().equals("75")&&typeId.toString().equals("2")){
 						listRedis.add(list.get(i));
 					}else{
-						if(list.size()>8){
-							if((i+1)<=8){
+						if(list.size()>count){
+							if((i+1)<=count){
 								listRedis.add(list.get(i));
 							}else{
 								break;
@@ -647,7 +687,7 @@ public class ContentAct{
 				}
 				RedisUtil.setList(String.valueOf(channelId), listRedis);
 			} catch (Exception e) {
-				log.error("redis存储异常....", e);
+				log.error("添加时redis存储异常....", e);
 			}
 		}
 		return add(cid,modelId, request, model);
@@ -671,7 +711,7 @@ public class ContentAct{
 		if (errors.hasErrors()) {
 			return errors.showErrorPage(model);
 		}
-		
+		CmsSite site = CmsUtils.getSite(request);
 		//先移除redis
 		List<Content> listt=new ArrayList<Content>();
 		Integer parentIdt=null;
@@ -689,7 +729,7 @@ public class ContentAct{
 				parentIdst=String.valueOf(idsst.getParentId().toString());
 			}
 		}
-		//判断parentId是否为null.如果为null则说明传进来的栏目ID 只有一级栏目 切为本身.如果不为null则说明传进来的栏目ID存在上一级栏目
+		//判断parentId是否为null.如果为null则说明传进来的栏目ID 只有一级栏目 且为本身.如果不为null则说明传进来的栏目ID存在上一级栏目
 		if(null!=parentIdt){
 			//判断parentIds是否为null.如果为null则说明传进来的栏目ID 只有两级栏目.如果不为null则说明传进来的栏目ID存在上三级栏目
 			if(null!=parentIdst){
@@ -701,10 +741,30 @@ public class ContentAct{
 				}
 			}else{
 				//只有二级栏目就把该栏目的上一级栏目ID 作为key也就是传进来的栏目id
-				try {
-					RedisUtil.lrem(beans.getChannel().getId().toString(), 0, bean.getId().toString(),listt);
-				} catch (Exception e) {
-					e.printStackTrace();
+				
+				if(site.getId()==2||site.getId()==3){
+					if(channelId==481||channelId==483||channelId==546||channelId==548){
+						try {
+							RedisUtil.lrem(beans.getChannel().getId().toString(), 0, bean.getId().toString(),listt);
+						} catch (Exception e) {
+							log.error("更新时redis移除异常....", e);
+							e.printStackTrace();
+						}
+					}else{
+						try {
+							RedisUtil.lrem(parentIdt.toString(), 0, bean.getId().toString(),listt);
+						} catch (Exception e) {
+							log.error("更新时redis移除异常....", e);
+							e.printStackTrace();
+						}
+					}
+				}else{
+					try {
+						RedisUtil.lrem(parentIdt.toString(), 0, bean.getId().toString(),listt);
+					} catch (Exception e) {
+						log.error("更新时redis移除异常....", e);
+						e.printStackTrace();
+					}
 				}
 			}
 		}else{
@@ -716,7 +776,6 @@ public class ContentAct{
 			}
 		}
 		// 加上模板前缀
-		CmsSite site = CmsUtils.getSite(request);
 		CmsUser user = CmsUtils.getUser(request);
 		String tplPath = site.getTplPath();
 		if (!StringUtils.isBlank(ext.getTplContent())) {
@@ -754,12 +813,13 @@ public class ContentAct{
 			parentId=ids.getParentId();//走到这说明该传进来的栏目ID 存在上一级栏目-二级栏目
 			//获取上一级栏目id
 			Channel idss = channelMng.findById(parentId);
-			//再根据上一级栏目ID--parentId 来判读是否存在上上一级栏目--一级栏目(已知只有三级栏目,无序继续往上上上一级判断(4级栏目))
+			//再根据上一级栏目ID--parentId 来判断是否存在上上一级栏目--一级栏目(已知只有三级栏目,无序继续往上上上一级判断(4级栏目))
 			if(null!=idss.getParentId()){
 				//获取上上一级栏目id(一级栏目)
 				parentIds=String.valueOf(idss.getParentId().toString());
 			}
 		}
+		int count =8;
 		//判断parentId是否为null.如果为null则说明传进来的栏目ID 只有一级栏目 且为本身.如果不为null则说明传进来的栏目ID存在上一级栏目
 		if(null!=parentId){
 			//判断parentIds是否为null.如果为null则说明传进来的栏目ID 只有两级栏目.如果不为null则说明传进来的栏目ID存在上三级栏目
@@ -785,8 +845,8 @@ public class ContentAct{
 						listCopy.add(bean);
 					}
 					for(int i=0;i<listCopy.size();i++){
-						if(listCopy.size()>8){
-							if((i+1)<=8){
+						if(listCopy.size()>count){
+							if((i+1)<=count){
 								listRedis.add(listCopy.get(i));
 							}else{
 								break;
@@ -797,12 +857,42 @@ public class ContentAct{
 					}
 					RedisUtil.setList(String.valueOf(parentId), listRedis);
 				} catch (Exception e) {
-					log.error("redis存储异常....", e);
+					log.error("更新时redis存储异常....", e);
 				}
 			}else{
 				//只有二级栏目就把该栏目的ID 作为key也就是传进来的栏目id
 				try {
-					list=RedisUtil.getList(String.valueOf(channelId));
+					if(site.getId()==1){
+						//主网站
+						count=8;
+					}else if(site.getId()==2||site.getId()==3){
+						//2为海口,3为三亚
+						if(parentId==575||parentId==510){
+							//新闻
+							count=10;
+						}else if((parentId==480&&channelId==481)||(parentId==545&&channelId==546)){
+							//教研动态-教育简报
+							count=9;
+						}else if(parentId==450||parentId==517){
+							//学科动态
+							count=30;
+						}else if((parentId==480&&channelId==483)||(parentId==545&&channelId==548)){
+							//教研动态-教育时政
+							count=12;
+						}else if(parentId==484||parentId==549){
+							//文件通知
+							count=10;
+						}
+					}
+					if(site.getId()==2||site.getId()==3){
+						if(channelId==481||channelId==483||channelId==546||channelId==548){
+							list=RedisUtil.getList(String.valueOf(channelId));
+						}else{
+							list=RedisUtil.getList(String.valueOf(parentId));
+						}
+					}else{
+						list=RedisUtil.getList(String.valueOf(parentId));
+					}
 					int ck=0;
 					if(list!=null&&list.size()>0){
 						for(int i=0;i<list.size();i++){
@@ -821,8 +911,8 @@ public class ContentAct{
 						listCopy.add(bean);
 					}
 					for(int i=0;i<listCopy.size();i++){
-						if(listCopy.size()>8){
-							if((i+1)<=8){
+						if(listCopy.size()>count){
+							if((i+1)<=count){
 								listRedis.add(listCopy.get(i));
 							}else{
 								break;
@@ -831,9 +921,17 @@ public class ContentAct{
 							listRedis.add(listCopy.get(i));
 						}
 					}
-					RedisUtil.setList(String.valueOf(channelId), listRedis);
+					if(site.getId()==2||site.getId()==3){
+						if(channelId==481||channelId==483||channelId==546||channelId==548){
+							RedisUtil.setList(String.valueOf(channelId), listRedis);
+						}else{
+							RedisUtil.setList(String.valueOf(parentId), listRedis);
+						}
+					}else{
+						RedisUtil.setList(String.valueOf(parentId), listRedis);
+					}
 				} catch (Exception e) {
-					log.error("redis存储异常....", e);
+					log.error("更新时redis存储异常....", e);
 				}
 			}
 		}else{
@@ -881,8 +979,8 @@ public class ContentAct{
 					if(channelId.toString().equals("75")&&typeId.toString().equals("2")){
 						listRedis.add(listCopy.get(i));
 					}else{
-						if(listCopy.size()>8){
-							if((i+1)<=8){
+						if(listCopy.size()>count){
+							if((i+1)<=count){
 								listRedis.add(listCopy.get(i));
 							}else{
 								break;
@@ -894,7 +992,7 @@ public class ContentAct{
 				}
 				RedisUtil.setList(String.valueOf(channelId), listRedis);
 			} catch (Exception e) {
-				log.error("redis存储异常....", e);
+				log.error("更新时redis存储异常....", e);
 			}
 		}
 		return list(queryStatus, queryTypeId, queryTopLevel, queryRecommend,
@@ -938,14 +1036,48 @@ public class ContentAct{
 					//判断parentIds是否为null.如果为null则说明传进来的栏目ID 只有两级栏目.如果不为null则说明传进来的栏目ID存在上三级栏目
 					if(null!=parentIds){
 						//只有三级栏目就把该栏目的上一级栏目ID 作为key 也就是parentId
-						RedisUtil.lrem(parentId.toString(), 0, bean.getId().toString(),list);
+						try {
+							RedisUtil.lrem(parentId.toString(), 0, bean.getId().toString(),list);
+						} catch (Exception e) {
+							log.error("删除时redis移除异常....", e);
+							e.printStackTrace();
+						}
 					}else{
 						//只有二级栏目就把该栏目的上一级栏目ID 作为key也就是传进来的栏目id
-						RedisUtil.lrem(bean.getChannel().getId().toString(), 0, bean.getId().toString(),list);
+						if(site.getId()==2||site.getId()==3){
+							if(bean.getChannel().getId()==481||bean.getChannel().getId()==483||
+									bean.getChannel().getId()==546||bean.getChannel().getId()==548){
+								try {
+									RedisUtil.lrem(bean.getChannel().getId().toString(), 0, bean.getId().toString(),list);
+								} catch (Exception e) {
+									log.error("删除时redis移除异常....", e);
+									e.printStackTrace();
+								}
+							}else{
+								try {
+									RedisUtil.lrem(parentId.toString(), 0, bean.getId().toString(),list);
+								} catch (Exception e) {
+									log.error("删除时redis移除异常....", e);
+									e.printStackTrace();
+								}
+							}
+						}else{
+							try {
+								RedisUtil.lrem(parentId.toString(), 0, bean.getId().toString(),list);
+							} catch (Exception e) {
+								log.error("删除时redis移除异常....", e);
+								e.printStackTrace();
+							}
+						}
 					}
 				}else{
 					//只有1级栏目就把该栏目的ID 作为key
-					RedisUtil.lrem(bean.getChannel().getId().toString(), 0, bean.getId().toString(),list);
+					try {
+						RedisUtil.lrem(bean.getChannel().getId().toString(), 0, bean.getId().toString(),list);
+					} catch (Exception e) {
+						log.error("删除时redis移除异常....", e);
+						e.printStackTrace();
+					}
 				}
 				log.info("delete to cycle, Content id={}", bean.getId());
 			}
