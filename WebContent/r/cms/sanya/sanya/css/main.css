@@ -948,11 +948,572 @@ a:hover{
 .pt5{padding-top: 5px;}
 .yuedu{
     padding-left: 18px;
+<<<<<<< HEAD
     background: url(images/sub-tit1.png) no-repeat left center;
 }
 .pinglun{
     padding-left: 18px;
     background: url(images/subitit2.png) no-repeat left center;
+}
+/*登录注册【【*/
+.login-section {
+
+  font-family: "MicroSoft Yahei";
+  font-weight: 400; }
+
+.login-section input[type="text"], .login-section input[type="password"] {
+  border: 1px solid #dfe6eb;
+  height: 21px;
+  font-size: 14px;
+  line-height: 21px;
+  padding: 12px 5px;
+  border-radius: 2px;
+  font-family: "Microsoft YaHei"; }
+
+.login-section input:focus {
+  border-color: #8dcbf5; }
+
+.login-section .user-name, .login-section .user-password, .login-section .user-email {
+  width: 358px; }
+
+.login-section .user-yzm {
+  width: 224px; }
+
+.login-section .input-dt {
+  padding-bottom: 10px; }
+
+.input-dt .label {
+  width: 70px;
+  font-size: 12px;
+  color: #999;
+  text-align: right;
+  padding-right: 10px;
+  font-weight: 400; }
+
+  .login-section .login-center-section th,
+  .login-section .login-center-section td {
+    padding-bottom: 20px;
+  }
+
+.err-tips {
+  float: left;
+  color: #666;
+  font-size: 12px;
+  margin-top: -26px;
+  max-width: 300px; }
+
+.login-section .content-zone {
+  padding-bottom: 10px; }
+
+.login-section .input-dt .label {
+  padding-bottom: 5px;
+    font-size: 16px;
+    font-family: "MicroSoft YaHei";
+    font-weight: 400;
+}
+
+.login-section .yzm img {
+  height: 46px;
+  width: 120px;
+  margin-left: 10px;
+  vertical-align: top; }
+.login-section .auto-login{
+    padding-bottom: 10px;
+}
+.login-section .auto-login label {
+  vertical-align: middle; }
+  .login-section .auto-login label input {
+    vertical-align: middle;
+    margin-right: 5px;
+    border-color: #dfe6eb; }
+  .login-section .auto-login label a {
+    color: #00b5f6; }
+    .login-section .auto-login label a:hover {
+      color: #00b5f6; }
+
+
+  .login-section .login-center-section .register-password {
+    font-size: 12px;
+    padding: 10px 0 25px;
+    line-height: 21px; }
+    .login-section .login-center-section .register-password .vertical-line {
+      display: inline-block;
+      height: 14px;
+      border-right: 1px solid #b5b7b8;
+      margin: 0 5px;
+      vertical-align: middle; }
+    .login-section .login-center-section .register-password a:hover {
+      color: #00b5f6; }
+.login-section .login-center-section .use-sns ul{
+    padding: 0 55px;
+}
+  .login-section .login-center-section .use-sns ul li {
+    float: left;
+    margin: 20px 0;
+  }
+    .login-section .login-center-section .use-sns ul li a {
+      display: block;
+      width: 48px;
+      height: 50px;
+      background: url(images/sns.png) no-repeat;
+      margin: 0 10px; }
+.login-section .login-center-section .use-sns ul li a:hover{
+     background: url(images/sns_h.png) no-repeat;
+}
+    .login-section .login-center-section .use-sns ul li .weibo {
+      background-position: -68px 0; }
+      .login-section .login-center-section .use-sns ul li .weibo:hover {
+          background-position: -67px 0; }
+    .login-section .login-center-section .use-sns ul li .qq {
+      background-position: -136px 0; }
+      .login-section .login-center-section .use-sns ul li .qq:hover {
+          background-position: -135px 0; }
+    .login-section .login-center-section .use-sns ul li .weixin {
+      background-position: -204px 0; }
+      .login-section .login-center-section .use-sns ul li .weixin:hover {
+          background-position: -203px 0;  }
+    .login-section .login-center-section .use-sns ul li .douban {
+      background-position: -272px 0; }
+      .login-section .login-center-section .use-sns ul li .douban:hover {
+          background-position: -271px 0;  }
+    .login-section .login-center-section .use-sns ul li .renren {
+      background-position: -340px 0; }
+      .login-section .login-center-section .use-sns ul li .renren:hover {
+          background-position: -339px 0;   }
+  .login-section .login-center-section .use-sns .this-tit {
+    position: relative;
+    text-align: center; }
+    .login-section .login-center-section .use-sns .this-tit .fz-line {
+      position: absolute;
+      top: 10px;
+      left: 0;
+      z-index: 0;
+      border-bottom: 1px solid #dfe6eb;
+      width: 100%; }
+    .login-section .login-center-section .use-sns .this-tit p {
+      position: relative;
+      z-index: 1;
+      color: #999;
+      width: 150px;
+      margin: 0 auto;
+      background: #FFF; }
+
+.login-page{
+    background: #f1f7fc;
+}
+.login-header{
+    background: #eff8ff;
+    border-bottom: 1px solid #5890cb;
+}
+.login-head-wrap{
+    margin: 0 auto;
+    width: 1000px;
+    height: 150px;
+    background: url(images/login-head.png) no-repeat center;
+}
+.login-footer{
+    color: #333;
+}
+.login-footer .footer-content{
+    color: #333;
+    padding-top: 0;
+}
+.login-footer .footer-content .list-wrap{
+    background: #bad0e2;
+    height: 64px;
+}
+.login-footer .footer-content .btm-wrap{
+    background: #a4bfd6;
+    height: 45px;
+}
+.login-footer .footer-content ul{
+    width: 1000px;
+    margin: 0 auto;
+}
+.login-footer .footer-content ul li{
+    float: left;
+}
+.login-footer .footer-content ul li a{
+    display: block;
+    padding: 0 20px;
+    height:64px;
+    line-height: 64px;
+    font-size: 16px;
+    font-family: "MicroSoft YaHei";
+    font-weight: 400;
+    text-align: center;
+}
+.login-footer .footer-content p{
+    padding-top: 0;
+    font-size: 12px;
+    text-align: center;
+    color: #666;
+    line-height: 45px;
+}
+.login-div{
+    padding-top: 50px;
+    padding-bottom: 50px;
+    background: url("images/login-footer-bg2.png") no-repeat center bottom;
+}
+.login-center{
+    border-top: 3px solid #0b91df;
+    width: 600px;
+    margin: 0 auto;
+    background: #FFF;
+}
+.login-center-section{
+    padding: 40px 70px;
+    width: 450px;
+}
+.login-center-section h3{
+    font-size: 28px;
+    font-weight: 700;
+    padding-bottom: 30px;
+}
+.big-blue-btn{
+    display: block;
+    width: 450px;
+    background: #0b91df;
+    font-size: 18px;
+    font-family: "MicroSoft YaHei";
+    font-weight: 400;
+    height: 50px;
+    line-height: 50px;
+    text-align: center;
+    border-radius:2px;
+    color: #FFF;
+}
+.big-blue-btn:hover{
+    color: #FFF;
+    background: #169fee;
+}
+.res-login-ass{
+    float: right;
+    margin-right: 5px;
+    margin-top: -60px;
+    font-size: 16px;
+}
+.res-login-ass a{
+    color: #0b91df;
+}
+.res-login-ass a:hover{
+    color: #ed4800;
+}
+.placeholder{color: #999;}
+.login-input-td .user-name,.login-input-td .user-password{
+    width: 403px;
+    padding-left: 40px!important;
+}
+.login-input-td{position: relative}
+.login-input-td em{
+    position: absolute;
+    left: 10px;
+    top: 13px;
+    width: 18px;
+    height: 44px;
+}
+.login-input-td .user-em{background: url("images/username.png") no-repeat;}
+.login-input-td .password-em{background: url("images/password.png") no-repeat;}
+.login-params{padding-bottom: 10px;}
+.login-params .next-autologin{
+    display: inline-block;
+    width: 130px;
+    padding-left: 45px;
+    font-size: 12px;
+    height: 24px;
+    line-height: 24px;
+    background: url(images/u_12.png) no-repeat left center;
+}
+.login-params .next-autologin.cancel{
+    background: url(images/u_14.png) no-repeat left center;
+}
+.login-params .forgot-password{
+    float: right;
+    width: 60px;
+    display: inline-block;
+    text-align: right;
+    color: #0b91df;
+}
+.login-params .forgot-password:hover,.login-params .forgot-password:hover{color: #ed4800;}
+.error-input{border: 1px solid #ed4800!important;}
+/*个人中心*/
+.user-loginTopInfo{position: relative;width: 138px;}
+.user-loginTopInfo.hover{background: #e7e7e7;}
+.user-loginTopInfo:hover .lv2-sel{
+    display: block;
+}
+.lv2-sel:hover{
+    display: block;
+}
+.user-loginTopInfo .userPic-small{float: left;padding-left: 10px;}
+.user-loginTopInfo .userPic-small img{vertical-align: middle;}
+.user-loginTopInfo .top-user-name{float: left;color: #0b91df;width: 80px;padding:0 5px!important;}
+.user-loginTopInfo .arrow{
+    float: left;
+    width: 10px;
+    height:6px;
+    margin-top: 13px;
+
+    background: url(images/sp.png) no-repeat -1px 0;
+}
+.user-loginTopInfo:hover .arrow{
+    background: url(images/sp.png) no-repeat -26px 0;
+}
+.user-loginTopInfo .lv2-sel{
+    display: none;
+    position: absolute;
+    left:0;
+    top:34px;
+    background: #e7e7e7;
+    width: 138px;
+}
+.user-loginTopInfo .lv2-sel a {
+    display: inline-block;
+    width: 114px;
+}
+.user-loginTopInfo .lv2-sel a:hover{
+    color: #fff;
+    background: #0b91df;
+}
+.user-loginTopInfo .lv2-sel a span{display: inline-block;vertical-align: middle;margin-right: 5px;}
+.lv2-sel .vip-center-l span{
+    width: 14px;
+    height:14px;
+    background: url(images/sp.png) no-repeat 0 -20px;
+}
+.lv2-sel .vip-center-l:hover span{
+    background: url(images/sp.png) no-repeat -27px -20px;
+}
+.lv2-sel .logout-l span{
+    width: 14px;
+    height:14px;
+    background: url(images/sp.png) no-repeat 0 -58px;
+}
+.lv2-sel .logout-l:hover span{
+    background: url(images/sp.png) no-repeat -27px -58px;
+}
+.bgfff{background: #FFF;}
+.user-center-left .user-setting{background: #FFF;margin-bottom: 5px;padding-bottom: 10px;border-radius:3px;}
+.user-center-left .user-setting .pic-dt{
+    padding-top: 15px;
+    margin:0 auto 5px;
+    width: 120px;
+}
+.user-setting .pic-dt img{vertical-align: top;}
+.user-setting .user-name-dt{text-align: center;margin-bottom: 5px;}
+.user-setting .user-oparetion-btn{
+    display: inline-block;
+    width: 56px;
+    height:20px;
+    line-height: 20px;
+    background: #FFF;
+    border:1px solid #0b91df;
+    color: #0b91df;
+    border-radius: 10px;
+    vertical-align: middle;
+    text-align: center;
+    margin-left: 93px;
+}
+.user-setting .user-oparetion-btn:hover{
+    background: #0b91df;
+    border:1px solid #0b91df;
+    color: #fff;
+}
+.user-setting .user-oparetion-btn1{
+    display: inline-block;
+    width: 56px;
+    height:20px;
+    line-height: 20px;
+    background: #FFF;
+    border:1px solid #0b91df;
+    color: #0b91df;
+    border-radius: 10px;
+    vertical-align: middle;
+    text-align: center;
+    margin-left: 40px;
+}
+.user-setting .user-oparetion-btn1:hover{
+    background: #0b91df;
+    border:1px solid #0b91df;
+    color: #fff;
+}
+.user-setting .user-oparetion-btns{
+    display: inline-block;
+    width: 56px;
+    height:20px;
+    line-height: 20px;
+    background: #FFF;
+    border:1px solid #0b91df;
+    color: #0b91df;
+    border-radius: 10px;
+    vertical-align: middle;
+    text-align: center;
+}
+.user-setting .user-oparetion-btns:hover{
+    background: #0b91df;
+    border:1px solid #0b91df;
+    color: #fff;
+}
+.user-center-left .user-menu-links{
+    background: #FFF;
+
+}
+.user-center-left .user-menu-links li{
+
+    border-bottom: 1px solid #eff8ff;
+}
+.user-center-left .user-menu-links a{
+    display: block;
+    height:50px;
+    line-height: 50px;
+    border-left: 3px solid #FFF;
+    padding-left: 20px;
+    font-size: 16px;
+    font-family: "MicroSoft Yahei";
+}
+.user-center-left .user-menu-links a.active{
+    color: #ed4800;
+    border-left-color: #ed4800;
+}
+.user-center-left .user-menu-links li ul{
+    display: none;
+    padding-bottom: 20px;
+}
+.user-center-left .user-menu-links li.on ul{
+    display: block;
+}
+.user-center-left .user-menu-links li li{
+    border-bottom: 0 none;
+}
+.user-center-left .user-menu-links li li a{
+	margin:0 25px;
+    position: relative;
+    font-size: 12px;
+    height:20px;
+    line-height: 20px;
+    border:0 none;
+    color: #666;
+    padding: 5px 0 5px 23px;
+}
+.user-menu-links li a em{
+    float: right;
+    margin-right: 15px;
+    margin-top: 20px;
+    display: inline-block;
+    width: 12px;
+    height:12px;
+    background: url(images/sp.png) no-repeat -52px 0;
+}
+.user-menu-links li.on a em{
+    background: url(images/sp.png) no-repeat -72px 0;
+}
+.user-menu-links li li a em,.user-menu-links li.on li a em{
+    position: absolute;
+    left:10px;
+    top:15px;
+    display: inline-block;
+    background: none;
+    margin: 0;
+}
+.user-menu-links li li a:hover em,.user-menu-links li li a.active em{
+    background: #ef693f;
+    width: 4px;
+    height:4px;
+    border-radius: 100%;
+}
+.user-menu-links li li a:hover{
+    color: #ef693f;
+}
+.personCenter-userInfo{
+    background: #FFF;
+    font-family: "MicroSoft Yahei";
+    border-radius:3px;
+}
+.personCenter-userInfo .tab-head{
+    background: #f9f9f9;
+    border-bottom: 1px solid #e3e3e3;
+}
+.personCenter-userInfo .tab-head a{
+    float: left;
+    height:50px;
+    line-height: 50px;
+    padding: 0 0 0 35px;
+    font-size: 14px;
+}
+.personCenter-userInfo .tab-head a.active{
+    border-bottom: 1px solid #ed4800;
+    color: #ed4800;
+    margin-bottom: -1px;
+}
+.personCenter-userInfo .tab-head a em{
+    width: 1px;
+    height:15px;
+    background: #e3e3e3;
+    overflow: hidden;
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 35px;
+}
+.personCenter-userInfo .tab-content{
+    padding: 35px 35px;
+}
+.personCenter-userInfo .user-info-dtTable{width: 100%;table-layout: fixed;}
+.personCenter-userInfo .user-info-dtTable td,.personCenter-userInfo .user-info-dtTable th{
+    padding-bottom: 25px;
+    font-weight: 400;
+    word-break: break-all;
+    overflow: inherit;
+    white-space: inherit;
+    vertical-align: top;
+}
+.personCenter-userInfo .user-info-dtTable th{text-align: right;color: #808080;}
+
+
+/*个人中心*/
+.user-loginTopInfo{position: relative;width: 138px;}
+.user-loginTopInfo.hover{background: white;}
+.user-loginTopInfo:hover .lv2-sel{
+    display: block;
+}
+.lv2-sel:hover{
+    display: block;
+}
+.user-loginTopInfo .userPic-small{float: left;padding-left: 10px;}
+.user-loginTopInfo .userPic-small img{vertical-align: middle;padding-top: 6px;padding-bottom: 9px;}
+.user-loginTopInfo .top-user-name{float: left;color: #0b91df;width: 80px;padding:0 5px!important;}
+.user-loginTopInfo .arrow{
+    float: left;
+    width: 10px;
+    height:6px;
+    margin-top: 13px;
+    background: url(images/sp.png) no-repeat -1px 0;
+}
+.user-loginTopInfo:hover .arrow{
+    background: url(images/sp.png) no-repeat -26px 0;
+}
+.user-loginTopInfo .lv2-sel{
+    display: none;
+    position: absolute;
+    left:0;
+    top:34px;
+    background: white;
+    width: 138px;
+}
+.user-loginTopInfo .lv2-sel a {
+    display: inline-block;
+    width: 114px;
+}
+.user-loginTopInfo .lv2-sel a:hover{
+    color: #fff;
+    background: #0b91df;
+}
+.user-loginTopInfo .lv2-sel a span{display: inline-block;vertical-align: middle;margin-right: 5px;}
+=======
+    background: url(images/sub-tit2.png) no-repeat left center;
+}
+.pinglun{
+    padding-left: 18px;
+    background: url(images/subitit3.png) no-repeat left center;
 }
 /*登录注册【【*/
 .login-section {

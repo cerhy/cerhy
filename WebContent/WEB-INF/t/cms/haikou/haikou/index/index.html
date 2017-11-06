@@ -20,7 +20,7 @@
 			<div id="main">
 				<div id="feature-mask">
 					<div id="feature" class="block" style="height: 1250px; top: 0px;">
-						[@cms_content_list  channelId='720' count='10'  orderBy='2' channelOption='1']
+						[@cms_content_list  channelId='575' count='10'  orderBy='2' channelOption='1']
 						[#list tag_list as a]
 							<div>
 								&nbsp;
@@ -45,9 +45,9 @@
 					utils.initFeature();
 				</script>
 
-				<div id="subject1" class="widget block" style="min-height: 200px;">
+				<div id="subject1" class="widget block" style="min-height: 300px;">
 					<h3>教研简报</h3>
-					[@cms_content_list  channelId='690' count='9' titLen='14' orderBy='2' channelOption='1']
+					[@cms_content_list  channelId='546' count='9' titLen='14' orderBy='2' channelOption='1']
 					[#list tag_list as a]
 					[#if a_index<1]
 							<div class="box"
@@ -106,10 +106,10 @@
                      
 					<div class="clr"></div>
 				</div>
-				<div id="subject2" class="widget block" style="min-height: 200px;">
+				<div id="subject2" class="widget block" style="min-height: 300px;">
 					<h3>学科动态</h3>
 
-				[@cms_content_list  channelId='659' count='30' titLen='14' orderBy='2' channelOption='1']
+				[@cms_content_list  channelId='517' count='30' titLen='14' orderBy='2' channelOption='1']
 					[#list tag_list as a]
 						[#if tag_list?size>1]
 							[#if tag_list?size<15]
@@ -150,9 +150,9 @@
                [/@cms_content_list]
 					<div class="clr" ></div>
 				</div>
-				<div id="subject3" class="widget block" style="min-height: 200px;">
+				<div id="subject3" class="widget block" style="min-height: 300px;">
 					<h3>教育时政</h3>
-					[@cms_content_list  channelId='692' count='12'  orderBy='2' channelOption='1' ]
+					[@cms_content_list  channelId='548' count='12'  orderBy='2' channelOption='1' ]
 					[#list tag_list as a]
 						[#if tag_list?size>1]
 							[#if tag_list?size<6]
@@ -271,7 +271,7 @@
 					</h3>
 					<div id="notice" class="box">
 						<ul>
-						[@cms_content_list  channelId='693' count='10'  orderBy='2' channelOption='1' ]
+						[@cms_content_list  channelId='550' count='10'  orderBy='2' channelOption='1' ]
 						[#list tag_list as a]
 							<li><a href="${a.url}">${a.title}</a><span class="dt">(${a.releaseDate?string('MM-dd')})</span></li>
 						[/#list]

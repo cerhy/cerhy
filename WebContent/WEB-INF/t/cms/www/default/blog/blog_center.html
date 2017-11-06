@@ -194,6 +194,17 @@ function zdShowHidden(){
             </table>
 			          <script type="text/javascript">
 			          function myblogShow(url){
+			      		if(url.indexOf("baoting") > 0){
+			      			url=url.replace("baoting.","");
+			      		}else if(url.indexOf("haikou") > 0){
+			      			url=url.replace("haikou.","");
+			      		}else if(url.indexOf("sanya") > 0){
+			      			url=url.replace("sanya.","");
+			      		}else if(url.indexOf("tunchang") > 0){
+			      			url=url.replace("tunchang.","");
+			      		}else{
+			      			url=url;
+			      		}
 			        	  var getTimestamp=new Date().getTime(); 
 			        	 	 $.ajax({
 			        	         type: 'GET',
