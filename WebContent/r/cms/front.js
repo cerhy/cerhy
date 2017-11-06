@@ -185,6 +185,10 @@ Cms.commentList = function(base, c, options) {
  */
 Cms.commentBlogList = function(base, c, options) {
 	c = c || "commentListDiv";
+	$("#" + c).load(base + "/comment_list.jspx?blogDate=0", options);
+}
+Cms.commentBlogLists = function(base, c, options) {
+	c = c || "commentListDiv";
 	$("#" + c).load(base + "/comment_list_page.jspx?blogDate=0", options);
 }
 
@@ -260,6 +264,15 @@ Cms.commentInputCsi = function(base,commentInputCsiDiv, contentId,commemtId) {
 Cms.commentInputLoad= function(base,commentInputCsiPrefix,commentInputCsiDiv,contentId,commemtId) {
 	$("div[id^='"+commentInputCsiPrefix+"']").html("");
 	Cms.commentInputCsi(base,commentInputCsiDiv,contentId,commemtId);
+}
+
+Cms.commentInputCsis = function(base,commentInputCsiDiv, contentId,commemtId) {
+	commentInputCsiDiv = commentInputCsiDiv || "commentInputCsiDiv";
+	$("#"+commentInputCsiDiv).load(base+"/comment_input_csis.jspx?contentId="+contentId+"&commemtId="+commemtId);
+}
+Cms.commentInputLoads= function(base,commentInputCsiPrefix,commentInputCsiDiv,contentId,commemtId) {
+	$("div[id^='"+commentInputCsiPrefix+"']").html("");
+	Cms.commentInputCsis(base,commentInputCsiDiv,contentId,commemtId);
 }
 
 /**

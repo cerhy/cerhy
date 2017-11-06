@@ -226,7 +226,7 @@ function zdShowHidden(){
                  <a href="javascript:void(0);" style="cursor: pointer;" onclick="_gotoPage('${pagination.totalPage}');" >尾页</a>&nbsp;
                 [/#if]
                 	 当前 ${pagination.pageNo}/${pagination.totalPage} 页 &nbsp;转到第<input type="text" id="_goPs" maxlength="6" onfocus="this.select();" onkeypress="if(event.keyCode==13){$('#_goPage').click();return false;}" class="inp1"/>页
-                <input style="cursor: pointer;" id="_goPage" type="button" value="转2" class="jump" onclick="_gotoPage($('#_goPs').val());"[#if pagination.totalPage==1] disabled="disabled"[/#if] />
+                <input style="cursor: pointer;" id="_goPage" type="button" value="转" class="jump" onclick="_gotoPage($('#_goPs').val());"[#if pagination.totalPage==1] disabled="disabled"[/#if] />
             </td>
             </tr>
             </table>
