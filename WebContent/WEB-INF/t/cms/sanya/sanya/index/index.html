@@ -116,7 +116,7 @@
 								[#if a_index<1]
 									<ul class="dot" style="float: left; width: 45%">
 								[/#if]
-									<li><a href="${a.url}">${a.title}</a></li>
+									<li><a href="${a.url}">[${a.ctgName}]${a.title}</a></li>
 								[#if (a_index+1)= tag_list?size]	
 								</ul>
 								[/#if]
@@ -125,7 +125,7 @@
 									<ul class="dot" style="float: left; width: 45%">
 								[/#if]
 								[#if a_index<15]	
-									<li><a href="${a.url}">${a.title}</a></li>
+									<li><a href="${a.url}">[${a.ctgName}]${a.title}</a></li>
 									[#if a_index=14]	
 									</ul>
 									[/#if]
@@ -134,7 +134,7 @@
 										[#if a_index=15]
 										<ul class="dot" style="float: right; width: 45%">
 										[/#if]
-										<li><a href="${a.url}">${a.title}</a></li>
+										<li><a href="${a.url}">[${a.ctgName}]${a.title}</a></li>
 										[#if (a_index+1)=tag_list?size]
 											</ul>
 										[/#if]
@@ -143,7 +143,7 @@
 							[/#if]
 						[#else]
 							<ul class="dot" style="float: left; width: 45%">
-								<li><a href="${a.url}">${a.title}</a></li>
+								<li><a href="${a.url}">[${a.ctgName}]${a.title}</a></li>
 							</ul>
 						[/#if]
                      [/#list]
@@ -514,7 +514,7 @@
 						<!--h3>公告区</h3-->
 					</div>
 				</div>
-				<div class="widget">
+				<div class="widget" style="min-height: 300px;">
 					<h3>
 						<a href="http://sanya.localhost:8080/cerhy/tztb/index.jhtml">» 更多</a>文件通知
 					</h3>
