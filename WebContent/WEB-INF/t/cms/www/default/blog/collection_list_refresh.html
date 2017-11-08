@@ -48,6 +48,7 @@
                 try{
                     //var tableForm = document.getElementById("tableForm");
                     $("input[name=pageNo]").val(pageNo);
+                    $("#templatePageNos").val(pageNo);
                     if(typeof($("#hy").val())=='undefined'){
                     	$.ajax({
 					           type: 'POST',

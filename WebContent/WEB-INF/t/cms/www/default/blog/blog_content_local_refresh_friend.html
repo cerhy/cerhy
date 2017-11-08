@@ -1187,6 +1187,21 @@ $(function(){
 			 delPos();
 		};
 		var templatePageNo = $("#templatePageNo").val();
+		var noone = $("#noone").val();
+		var notwo = $("#notwo").val();
+		if(noone == 1){
+			var channelIds = $("#channelIdscp").val();
+			var joinGroupStatas = $("#joinGroupStatascp").val();
+			var columnIds = $("#columnIdscp").val();
+			var uids = $("#uidscp").val();
+			friendBlogs(channelIds,joinGroupStatas,columnIds,uids);
+			return false;
+		}
+		if(notwo == 2){
+			var url = $("#ownCollectionUrl").val();
+			friendCollectionTwo(url,templatePageNo);
+			return false;
+		}
 		var newurl=url+"?userIds="+id +"&pageNo=" + templatePageNo;
 		$.ajax({
 	           type: 'POST',
