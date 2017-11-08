@@ -28,9 +28,37 @@
 		Cms.attachment("${base}", "${content.id}",
 				"${content.attachments?size}", "attach");
 		Cms.viewCount("${base}", "${content.id}");
-		Cms.siteFlow("${base}", location.href, document.referrer,
-				"${site.config.flowSwitch?string}");
 	});
+	
+	
+	
+	$(".xueke-content-detail p img").each(function(){
+		$(this).one('load',function(){
+			var width =$(this).width();
+			var height = $(this).height();
+			if(width>600){
+				var shang =  (width/height).toFixed(2);
+				var newHeight = parseInt(600/shang);
+				$(this).css("width","600px");
+				$(this).css("height",newHeight+"px");
+			}
+		})
+		
+	})
+
+	$(".xueke-content-detail .img-box span img").each(function(){
+		$(this).one('load',function(){
+		var width =$(this).width();
+		var height = $(this).height();
+		if(width>600){
+			var shang =  (width/height).toFixed(2);
+			var newHeight = parseInt(600/shang);
+			$(this).css("width","600px");
+			$(this).css("height",newHeight+"px");
+		}
+		})
+	})
+	
 </script>
 
 <script type="text/javascript">
