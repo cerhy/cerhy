@@ -48,6 +48,7 @@
             function _gotoPage(pageNo) {
                 try{
                     $("input[name=pageNo]").val(pageNo);
+                    $("#templatePageNo").val(pageNo);
                     $.ajax({
 				           type: 'POST',
 				           url : '${base}/blog/friend_collection_list.jspx',

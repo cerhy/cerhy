@@ -1416,7 +1416,22 @@ function cp(path,id){
 		if(typeof($("#no3").val())!='undefined'){
 			 delPos();
 		};
+		var noone = $("#noone").val();
+		var notwo = $("#notwo").val();
 		var templatePageNos = $("#templatePageNos").val();
+		if(noone == 1){
+			var channelIds = $("#channelIdscp").val();
+			var joinGroupStatas = $("#joinGroupStatascp").val();
+			var columnIds = $("#columnIdscp").val();
+			var uids = $("#uidscp").val();
+			myblogTwo(channelIds,joinGroupStatas,columnIds,uids,templatePageNos);
+			return false;
+		}
+		if(notwo == 2){
+			var url = $("#ownCollectionUrl").val();
+			ownCollectionTwo(url,templatePageNos);
+			return false;
+		}
 		var newurl=url + "?pageNo="+templatePageNos;
 		$.ajax({
 	           type: 'POST',

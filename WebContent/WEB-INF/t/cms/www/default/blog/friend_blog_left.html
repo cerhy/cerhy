@@ -188,16 +188,21 @@
 				</div>
 			</div> 
         	</div>
-        	<div>
      <div id="templatePageNot" style="display:none;">
-     <input id="templatePageNo" name="templatePageNo" />
+     	<input id="templatePageNo" name="templatePageNo" />
+    	<input id="channelIdscp" name="channelIdscp" value=""/>
+     	<input id="joinGroupStatascp" name="joinGroupStatascp" value=""/>
+     	<input id="columnIdscp" name="columnIdscp" value="" />
+     	<input id="uidscp" name="uidscp" value=""/>
+     	<input id="noone" name="noone" value=""/>
+     	<input id="notwo" name="notwo" value=""/>
+     	<input id="ownCollectionUrl" name="ownCollectionUrl" value=""/> 
      </div>
-        	</div>
      </div>
 <script src='/${res}/js/stopExecutionOnTimeout.js?t=1'></script>
 <script src='/${res}/js/jquery.velocity.min.js'></script>
 <script>
-	;(function ($, window, document, undefined) {
+	(function ($, window, document, undefined) {
 	    if ($('ul.mtree').length) {
 	        var collapsed = false;
 	        var close_same_level = false;
@@ -328,11 +333,25 @@
 		if(typeof($("#no3").val())!='undefined'){
 			 delPos();
 		};
+	    $("#channelIdscp").val(channelId); 
+		$("#joinGroupStatascp").val(joinGroupStata);
+		$("#columnIdscp").val(columnId);
+		$("#uidscp").val(user_ids);
+		$("#noone").val("1");
+		var notwo = $("#notwo").val();
+		if(notwo == 2 || notwo == 3){
+			$("#templatePageNo").val("1");
+		}
+		$("#notwo").val(""); 
+		var pageNos = $("#templatePageNo").val();
+		if(pageNos==null || pageNos=="" || pageNos== 'undefined'){
+			pageNos=1;
+		}
 	 	 $.ajax({
            type: 'POST',
            url : ' ${base}/blog/contribute_list_friends.jspx',
            dataType:"html",
-           data : {'queryTitle' : null,'modelId' : null,'queryChannelId' : null,'pageNo':null,'channelId':channelId,'joinGroupStata':joinGroupStata,'columnId':columnId,'user_ids':user_ids},
+           data : {'queryTitle' : null,'modelId' : null,'queryChannelId' : null,'pageNo':pageNos,'channelId':channelId,'joinGroupStata':joinGroupStata,'columnId':columnId,'user_ids':user_ids},
            async: true,
            success : function(datas){
         	   var wzid=document.getElementById('wzId');
@@ -353,6 +372,7 @@
   	   		 }
  		 });
 	}
+	
 	//删除批注
 	function delPos(){
 		$.ajax({
@@ -705,6 +725,10 @@
 		if(typeof($("#no3").val())!='undefined'){
 			 delPos();
 		};
+		$("#templatePageNo").val("1");
+		$("#noone").val("");
+		$("#notwo").val("2");
+		$("#ownCollectionUrl").val(url);
 		//解决ajax无法跨站点访问文章问题
 		var nu="";
 		if(url.indexOf("baoting") > 0){
@@ -742,6 +766,47 @@
 		});
 	}
 	
+	function friendCollectionTwo(url,pageNo){
+		if(typeof($("#no3").val())!='undefined'){
+			 delPos();
+		};
+		//解决ajax无法跨站点访问文章问题
+		var nu="";
+		if(url.indexOf("baoting") > 0){
+			nu=url.replace("baoting.","");
+		}else if(url.indexOf("haikou") > 0){
+			nu=url.replace("haikou.","");
+		}else if(url.indexOf("sanya") > 0){
+			nu=url.replace("sanya.","");
+		}else if(url.indexOf("tunchang") > 0){
+			nu=url.replace("tunchang.","");
+		}else{
+			nu=url;
+		}
+		var newUrl=nu;
+	 	$.ajax({
+        type: 'GET',
+        url : newUrl,
+        dataType:"html",
+        data: {'pageNo':pageNo},
+        async: true,
+        success : function(datas){
+        	var wzid=document.getElementById('wzId');
+   		 if(wzid!=null){
+   			 document.getElementById('wzId').innerHTML="";
+   		 }
+   		 var maindiv=document.getElementById('maindiv');
+   		 if(maindiv!=null){
+   			 document.getElementById('maindiv').innerHTML="";
+   		 }
+            $(".wrap-right").append(datas);
+            if(window._bd_share_main){
+
+         	   window._bd_share_main.init();
+         	}
+	   		 }
+		});
+	}
 	</script>
 <script type="text/javascript">
 function gotoDataShowFriend(url){
@@ -773,4 +838,7 @@ function gotoDataShowFriend(url){
 	   	}
 	});	
 }
+</script>
+<script type="text/javascript">
+$("#notwo").val("3");
 </script>
