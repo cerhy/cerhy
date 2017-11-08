@@ -23,10 +23,9 @@
 						[@cms_content_list  channelId='510' count='10'  orderBy='2' channelOption='1']
 						[#list tag_list as a]
 							<div>
-								&nbsp;
-								<h2>${a.title}</h2>
+								<h2><a href="${a.url}">${a.title}</a></h2>
 								<p>
-									[@text_cut s=a.description len='150' append='...'/]
+									[@text_cut s=a.description len='80' append='...'/]
 									<a href="${a.url}">[详细]</a>
 								</p>
 								&nbsp;
