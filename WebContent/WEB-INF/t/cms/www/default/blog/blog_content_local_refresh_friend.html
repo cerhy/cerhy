@@ -414,7 +414,13 @@ function btnPrints(){
                     [/@cms_content_collection]
 				       </div>
 				      [#else] 
-				       
+				     [#if contentSentType??] 
+					  	 [#if contentSentType==2]
+						
+						 [#elseif contentSentType==1]	
+							
+						 [/#if]
+					 [#else]
                     <div class="prev-next-wz clearfix">
                  
 				   [@cms_content id=content.id next='1' channelId=channel.id userId=GroupFlagData columnId=columnIdZ]
@@ -460,6 +466,7 @@ function btnPrints(){
 	                    [/#if]
                     [/@cms_content]
                     </div>
+                    [/#if]
                     [/#if]
                     [/#if]
                <div class="news-comments" style="width:665px;">
@@ -1088,6 +1095,14 @@ Drag.prototype = {
     	if(logUser==""){
     		alert("请登陆!未登录不可以收录文章");
     		return;
+    	}
+    	var psword = $("#psword").val();
+    	var friendId = '${usert.id}';
+    	if(psword!=''){
+    		if(psword == friendId){
+    			alert("登录人与本文章作者相同，不可收录！");
+    			return false;
+    		}
     	}
 		$("#embodyDialog").dialog("open");
 	}

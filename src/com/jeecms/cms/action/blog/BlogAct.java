@@ -2070,7 +2070,7 @@ public class BlogAct {
 		}
 		channelMng.updateBlogVisitNum(userT);
 		if(user!=null){
-			recieveUserId = user.getId();
+			recieveUserId = null;
 			if(!user.getId().equals(userT.getId())){
 				channelMng.updateBlogVisitorTime(user,userT);
 			}
@@ -2695,7 +2695,7 @@ public class BlogAct {
 		}
 		channelMng.updateBlogVisitNum(userT);
 		if(user!=null){
-			recieveUserId = user.getId();
+			recieveUserId = null;
 			if(!user.getId().equals(userT.getId())){
 				channelMng.updateBlogVisitorTime(user,userT);
 			}
@@ -2918,6 +2918,7 @@ public class BlogAct {
 					model.addAttribute("GroupFlagData", content.getUser().getId());
 				}
 			}
+			model = blogCommon.getContentSendType(model,Integer.parseInt(paths[1]),user);
 			FrontUtils.frontData(request, model, site);
 			return "/WEB-INF/t/cms/www/default/blog/blog_content_local_refresh_friend.html";
 		}

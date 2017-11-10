@@ -384,6 +384,16 @@ outline: none;
                     [/@cms_content_collection]
 				       </div>
 				      [#else] 
+				     [#if contentSentType??] 
+					  	 [#if contentSentType==2]
+						
+						
+						
+						
+						 [#elseif contentSentType==1]	
+							
+						 [/#if]
+					 [#else]
                     <div class="prev-next-wz clearfix">
 				   [@cms_content id=content.id next='1' channelId=channel.id userId=GroupFlagData columnId=columnIdZ]
                     	[#if tag_bean??]
@@ -424,6 +434,7 @@ outline: none;
 	                    [/#if]
                     [/@cms_content]
                     </div>
+					 [/#if] 
                     [/#if]
                     [/#if]
                <div class="news-comments" style="width:665px;">
