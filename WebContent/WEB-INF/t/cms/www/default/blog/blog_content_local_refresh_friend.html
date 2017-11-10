@@ -241,7 +241,7 @@ function btnPrints(){
 			[#else]	
 				<input style="display: none;" id="slActicle" value="">
 			[/#if]
-		   	<input style="display: none;" id="psword" value="${content.user.id}">
+			<input style="display: none;" id="psword" value="${content.user.id}">
 		   	<input style="display: none;" id="no3" value="${content.id}">
 			<input style="display: none;" id="alt" value="0">	
 			<div class="personCenter-userInfo blog_right xueke-acticle">
@@ -1097,7 +1097,9 @@ Drag.prototype = {
     		return;
     	}
     	var psword = $("#psword").val();
-    	var friendId = '${usert.id}';
+    	var friendId = $("#slActicle").val();
+    	alert(psword);
+    	alert(friendId);
     	if(psword!=''){
     		if(psword == friendId){
     			alert("登录人与本文章作者相同，不可收录！");
