@@ -1983,7 +1983,7 @@ public class ContributeAct extends AbstractContentMemberAct {
 	 * 发送文章 
 	 */
 	@RequestMapping(value = "/blog/sendArticle.jspx", method = RequestMethod.POST)
-	public @ResponseBody String sendArticle(Integer contentId,String sendee, Integer validateCode,String contTitle,
+	public @ResponseBody String sendArticle(Integer contentId,String sendee, String validateCode,String contTitle,
 			HttpServletRequest request, HttpServletResponse response,
 			ModelMap model){
 		

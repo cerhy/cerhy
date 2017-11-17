@@ -1725,9 +1725,9 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 	 * @return String
 	 */
 	@Override
-	public Integer getUniqueCode(int userId, int validaCode) {
+	public Integer getUniqueCode(int userId, String validaCode) {
 		String hql = "select  columnId from Columns bean where bean.userId="
-				+ userId + " and bean.uniqueCode=" + validaCode + "";
+				+ userId + " and bean.uniqueCode='" + validaCode + "'";
 		return (Integer) findUnique(hql);
 	}
 

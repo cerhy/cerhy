@@ -291,7 +291,7 @@ public interface ContentDao {
 	 * @param validaCode 验证码
 	 * @return String
 	 */
-	public Integer getUniqueCode(int userId,int validaCode);
+	public Integer getUniqueCode(int userId,String validaCode);
 	
 	/**
 	 * 根据内容id查询栏目id

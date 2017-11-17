@@ -100,7 +100,7 @@ public interface CmsUserMng {
 	 * @param validateCode
 	 * @return int
 	 */
-	public int sendArticle(Integer contentId,Integer userId,String sendee,Integer validateCode,String title);
+	public int sendArticle(Integer contentId,Integer userId,String sendee,String validateCode,String title);
 	
 	/**
 	 * 撤销文章

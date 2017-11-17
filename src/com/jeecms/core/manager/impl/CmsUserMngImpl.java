@@ -502,7 +502,7 @@ public class CmsUserMngImpl implements CmsUserMng {
 	}
 
 	@Override
-	public int sendArticle(Integer contentId,Integer userId,String sendee,Integer validateCode,String title) {
+	public int sendArticle(Integer contentId,Integer userId,String sendee,String validateCode,String title) {
 		int result  =0;
 		//接收人id
 		Integer recieveUserId = contentDao.getUserId(sendee);
