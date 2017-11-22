@@ -978,18 +978,19 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 			}else{
 				if(channelIds[0].toString().equals("102")){
 					//课程改革 9038
-					channelIds[0]=280;
+					//channelIds[0]=280;
 					f.append(" and bean.user.id=5997");
 				}else if(channelIds[0].toString().equals("99")){
 					//教育科研 9036
-					channelIds[0]=280;
+					//channelIds[0]=280;
 					f.append(" and bean.user.id=9966");
 				}else if(channelIds[0].toString().equals("100")){
 					//职业教育 9018
-					channelIds[0]=280;
+					//channelIds[0]=280;
 					f.append(" and bean.user.id=4665");
+				}else{
+					f.setParam("channelId", channelIds[0]);
 				}
-				f.setParam("channelId", channelIds[0]);
 			}
 		} else if (option == 2) {
 			// 包含副栏目
