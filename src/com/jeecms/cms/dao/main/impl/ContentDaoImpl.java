@@ -899,7 +899,15 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 				}
 			}*/
 			//if (coulmnIdList == null && coulmnIdList.size() == 0) {
+			if(channelIds[0].toString().equals("102")){
+				//课程改革 9038
+			}else if(channelIds[0].toString().equals("99")){
+				//教育科研 9036
+			}else if(channelIds[0].toString().equals("100")){
+				//职业教育 9018
+			}else{
 				f.append(" and parent.id=:channelId");
+			}
 			//}
 			f.setParam("status", ContentCheck.RECYCLE);
 			//文件通知程序处理按年分类---通知通报
