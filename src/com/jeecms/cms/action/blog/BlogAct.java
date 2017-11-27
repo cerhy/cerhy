@@ -1573,8 +1573,6 @@ public class BlogAct {
 						//return "faile";
 					}
 				}
-			}
-				
 			}else{
 				if(user.getUsername().equals("9038")||user.getUsername().equals("9036")||user.getUsername().equals("9018")){
 					if(user.getUsername().equals("9038")){
@@ -1622,6 +1620,8 @@ public class BlogAct {
 						log.error("redis存储异常....", e);
 					}
 				}
+			}
+				
 			}
 		
 		return "success";
