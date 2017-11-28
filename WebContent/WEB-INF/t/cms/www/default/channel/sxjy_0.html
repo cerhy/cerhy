@@ -41,17 +41,13 @@
                             <ul class="clearfix">
 		                	 [@cms_channel_list parentId=b.id orderBy='4']
 						        [#list tag_list as c]
-						            [#if c.id==395 ]
-		                                <li><a style="font-weight:bold; [#if c_index=0&&b_index=0]color:red;[/#if] " target="_blank" href="http://sanya.localhost:8080/cerhy/">${c.name}</a></li>
-		                             [#elseif c.id==413]
-		                             <li><a style="font-weight:bold; [#if c_index=0&&b_index=0]color:red;[/#if] " target="_blank" href="http://haikou.localhost:8080/cerhy/">${c.name}</a></li>
-		                             [#elseif c.id==170]
-		                             <li><a style="font-weight:bold; [#if c_index=0&&b_index=0]color:red;[/#if] " target="_blank" href="http://tunchang.localhost:8080/cerhy/">${c.name}</a></li>
-		                             [#elseif c.id==171]
-		                             <li><a style="font-weight:bold; [#if c_index=0&&b_index=0]color:red;[/#if] " target="_blank" href="http://baoting.localhost:8080/cerhy/">${c.name}</a></li>
-		                             [#else]
+						            [#if c.id==413 ]
+		                                <li><a [#if c_index=0&&b_index=0]style="color:red;"[/#if] href="http://www.cerhy.com/blog/user/9211" target="_blank">${c.name}</a></li>
+		                            [#elseif c.id==397]
+		                                <li><a [#if parentId??&&channel.id=c.id]style="color:red;"[/#if] href="http://www.cerhy.com/blog/user/9715" target="_blank">${c.name}</a></li>
+		                            [#else]
 		                                <li><a [#if c_index=0&&b_index=0]style="color:red;"[/#if] href="${c.url}">${c.name}</a></li>
-		                           [/#if]
+		                           	[/#if]
 						        [/#list]
 						      [/@cms_channel_list]
                             </ul>

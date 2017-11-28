@@ -1297,17 +1297,19 @@ public class BlogAct {
 			Content bean=contentMng.findById(id);
 			List<Content> list=new ArrayList<Content>();
 			if(user.getUsername().equals("9038")||user.getUsername().equals("9036")||user.getUsername().equals("9018")){
+				channelId = 280;
+				String channelIds=null;
 				if(user.getUsername().equals("9038")){
 					//课程改革
-					channelId=102;
+					channelIds="102";
 				}else if(user.getUsername().equals("9036")){
 					//教育科研
-					channelId=99;
+					channelIds="99";
 				}else if(user.getUsername().equals("9018")){
 					//职业教育
-					channelId=100;
+					channelIds="100";
 				}
-				RedisUtil.lrem(channelId.toString(), 0, bean.getId().toString(),list);				
+				RedisUtil.lrem(channelIds, 0, bean.getId().toString(),list);				
 			}else{
 				channelId = 280;
 				Integer parentId=null;
@@ -1340,7 +1342,7 @@ public class BlogAct {
 				}
 			}
 		}
-		if(null != channelId){
+		if(null != channelId&&channelId!=280){
 			Content bean=contentMng.findById(id);
 			List<Content> list=new ArrayList<Content>();
 			Integer parentId=null;
@@ -1571,8 +1573,6 @@ public class BlogAct {
 						//return "faile";
 					}
 				}
-			}
-				
 			}else{
 				if(user.getUsername().equals("9038")||user.getUsername().equals("9036")||user.getUsername().equals("9018")){
 					if(user.getUsername().equals("9038")){
@@ -1620,6 +1620,8 @@ public class BlogAct {
 						log.error("redis存储异常....", e);
 					}
 				}
+			}
+				
 			}
 		
 		return "success";
