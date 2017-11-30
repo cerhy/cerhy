@@ -8,6 +8,10 @@
 		<li><a href="http://www.cerhy.com/blog/user/9036" target="_blank">${c.name}</a></li>
 		[#elseif c.id==100]
 		<li><a href="http://www.cerhy.com/blog/user/9018" target="_blank">${c.name}</a></li>
+		[#elseif c.id==103]
+		<li><a href="http://www.cerhy.com/blog/user/9059" target="_blank">${c.name}</a></li>
+		[#elseif c.id==282]
+		<li><a href="http://www.cerhy.com/blog/user/9039" target="_blank">${c.name}</a></li>
 		[#else]
 		<li><a href="${c.url}"[#if channel??&&channel.id==c.id]class="active"[/#if]>${c.name}</a></li>
 		[/#if]

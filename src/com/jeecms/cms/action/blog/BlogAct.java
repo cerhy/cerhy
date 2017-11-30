@@ -655,7 +655,8 @@ public class BlogAct {
 			}
 			
 		}else{
-			if(user.getUsername().equals("9038")||user.getUsername().equals("9036")||user.getUsername().equals("9018")){
+			if(user.getUsername().equals("9038")||user.getUsername().equals("9036")||user.getUsername().equals("9018")
+				||user.getUsername().equals("9059")||user.getUsername().equals("9039")){
 				if(user.getUsername().equals("9038")){
 					//课程改革
 					channelId=102;
@@ -665,6 +666,12 @@ public class BlogAct {
 				}else if(user.getUsername().equals("9018")){
 					//职业教育
 					channelId=100;
+				}else if(user.getUsername().equals("9059")){
+					//质量监测
+					channelId=103;
+				}else if(user.getUsername().equals("9039")){
+					//教师培训
+					channelId=282;
 				}
 				try {
 					list=RedisUtil.getList(String.valueOf(channelId));
@@ -1296,7 +1303,8 @@ public class BlogAct {
 		if(null != columnId){
 			Content bean=contentMng.findById(id);
 			List<Content> list=new ArrayList<Content>();
-			if(user.getUsername().equals("9038")||user.getUsername().equals("9036")||user.getUsername().equals("9018")){
+			if(user.getUsername().equals("9038")||user.getUsername().equals("9036")||user.getUsername().equals("9018")
+					||user.getUsername().equals("9059")||user.getUsername().equals("9039")){
 				channelId = 280;
 				String channelIds=null;
 				if(user.getUsername().equals("9038")){
@@ -1308,6 +1316,12 @@ public class BlogAct {
 				}else if(user.getUsername().equals("9018")){
 					//职业教育
 					channelIds="100";
+				}else if(user.getUsername().equals("9059")){
+					//质量监测
+					channelIds="103";
+				}else if(user.getUsername().equals("9039")){
+					//教师培训
+					channelIds="282";
 				}
 				RedisUtil.lrem(channelIds, 0, bean.getId().toString(),list);				
 			}else{
@@ -1574,7 +1588,8 @@ public class BlogAct {
 					}
 				}
 			}else{
-				if(user.getUsername().equals("9038")||user.getUsername().equals("9036")||user.getUsername().equals("9018")){
+				if(user.getUsername().equals("9038")||user.getUsername().equals("9036")||user.getUsername().equals("9018")
+						||user.getUsername().equals("9059")||user.getUsername().equals("9039")){
 					if(user.getUsername().equals("9038")){
 						//课程改革
 						channelId=102;
@@ -1584,6 +1599,12 @@ public class BlogAct {
 					}else if(user.getUsername().equals("9018")){
 						//职业教育
 						channelId=100;
+					}else if(user.getUsername().equals("9059")){
+						//质量监测
+						channelId=103;
+					}else if(user.getUsername().equals("9039")){
+						//教师培训
+						channelId=282;
 					}
 					try {
 						list=RedisUtil.getList(String.valueOf(channelId));
@@ -1740,7 +1761,8 @@ public class BlogAct {
 			//删除博客
 			Content bean=contentMng.findById(contentId);
 			List<Content> list=new ArrayList<Content>();
-			if(user.getUsername().equals("9038")||user.getUsername().equals("9036")||user.getUsername().equals("9018")){
+			if(user.getUsername().equals("9038")||user.getUsername().equals("9036")||user.getUsername().equals("9018")
+					||user.getUsername().equals("9059")||user.getUsername().equals("9039")){
 				String channelId = null;
 				if(user.getUsername().equals("9038")){
 					//课程改革
@@ -1751,6 +1773,12 @@ public class BlogAct {
 				}else if(user.getUsername().equals("9018")){
 					//职业教育
 					channelId="100";
+				}else if(user.getUsername().equals("9059")){
+					//质量监测
+					channelId="103";
+				}else if(user.getUsername().equals("9039")){
+					//教师培训
+					channelId="282";
 				}
 				try {
 					RedisUtil.lrem(channelId, 0, bean.getId().toString(),list);

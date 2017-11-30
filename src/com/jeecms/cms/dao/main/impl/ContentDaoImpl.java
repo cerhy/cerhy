@@ -905,6 +905,10 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 				//教育科研 9036
 			}else if(channelIds[0].toString().equals("100")){
 				//职业教育 9018
+			}else if(channelIds[0].toString().equals("103")){
+				//质量监测 9059
+			}else if(channelIds[0].toString().equals("282")){
+				//教师培训 9039
 			}else{
 				f.append(" and parent.id=:channelId");
 			}
@@ -996,6 +1000,12 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 					//职业教育 9018
 					//channelIds[0]=280;
 					f.append(" and bean.user.id=4665");
+				}else if(channelIds[0].toString().equals("103")){
+					//质量监测 9059
+					f.append(" and bean.user.id=41623");
+				}else if(channelIds[0].toString().equals("282")){
+					//教师培训 9039
+					f.append(" and bean.user.id=10275");
 				}else{
 					f.setParam("channelId", channelIds[0]);
 				}
