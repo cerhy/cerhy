@@ -28,6 +28,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
 
+import com.ibm.db2.jcc.am.l;
 import com.jeecms.cms.dao.main.ContentDao;
 import com.jeecms.cms.entity.main.Channel;
 import com.jeecms.cms.entity.main.CmsModel;
@@ -656,7 +657,8 @@ public class BlogAct {
 			
 		}else{
 			if(user.getUsername().equals("9038")||user.getUsername().equals("9036")||user.getUsername().equals("9018")
-				||user.getUsername().equals("9059")||user.getUsername().equals("9039")){
+				||user.getUsername().equals("9059")||user.getUsername().equals("9039")||user.getUsername().equals("609227")
+				||user.getUsername().equals("674311")){
 				if(user.getUsername().equals("9038")){
 					//课程改革
 					channelId=102;
@@ -672,6 +674,12 @@ public class BlogAct {
 				}else if(user.getUsername().equals("9039")){
 					//教师培训
 					channelId=282;
+				}else if(user.getUsername().equals("609227")){
+					//党群建设
+					channelId=260;
+				}else if(user.getUsername().equals("674311")){
+					//政策研究
+					channelId=177;
 				}
 				try {
 					list=RedisUtil.getList(String.valueOf(channelId));
@@ -1304,7 +1312,8 @@ public class BlogAct {
 			Content bean=contentMng.findById(id);
 			List<Content> list=new ArrayList<Content>();
 			if(user.getUsername().equals("9038")||user.getUsername().equals("9036")||user.getUsername().equals("9018")
-					||user.getUsername().equals("9059")||user.getUsername().equals("9039")){
+					||user.getUsername().equals("9059")||user.getUsername().equals("9039")||user.getUsername().equals("609227")
+					||user.getUsername().equals("674311")){
 				channelId = 280;
 				String channelIds=null;
 				if(user.getUsername().equals("9038")){
@@ -1322,8 +1331,19 @@ public class BlogAct {
 				}else if(user.getUsername().equals("9039")){
 					//教师培训
 					channelIds="282";
+				}else if(user.getUsername().equals("609227")){
+					//党群建设
+					channelIds="260";	
+				}else if(user.getUsername().equals("674311")){
+					//党群建设
+					channelIds="177";	
 				}
-				RedisUtil.lrem(channelIds, 0, bean.getId().toString(),list);				
+				try {
+					RedisUtil.lrem(channelIds, 0, bean.getId().toString(),list);
+				} catch (Exception e) {
+					log.error("redis中栏目"+channelIds+"数据移除异常",e);
+					e.printStackTrace();
+				}				
 			}else{
 				channelId = 280;
 				Integer parentId=null;
@@ -1345,14 +1365,29 @@ public class BlogAct {
 					//判断parentIds是否为null.如果为null则说明传进来的栏目ID 只有两级栏目.如果不为null则说明传进来的栏目ID存在上三级栏目
 					if(null!=parentIds){
 						//只有三级栏目就把该栏目的上一级栏目ID 作为key 也就是parentId
-						RedisUtil.lrem(parentId.toString(), 0, bean.getId().toString(),list);
+						try {
+							RedisUtil.lrem(parentId.toString(), 0, bean.getId().toString(),list);
+						} catch (Exception e) {
+							log.error("redis中栏目"+parentId.toString()+"数据移除异常",e);
+							e.printStackTrace();
+						}
 					}else{
 						//只有二级栏目就把该栏目的上一级栏目ID 作为key也就是传进来的栏目id
-						RedisUtil.lrem(parentId.toString(), 0, bean.getId().toString(),list);
+						try {
+							RedisUtil.lrem(parentId.toString(), 0, bean.getId().toString(),list);
+						} catch (Exception e) {
+							log.error("redis中栏目"+parentId.toString()+"数据移除异常",e);
+							e.printStackTrace();
+						}
 					}
 				}else{
 					//只有1级栏目就把该栏目的ID 作为key
-					RedisUtil.lrem(bean.getChannel().getId().toString(), 0, bean.getId().toString(),list);
+					try {
+						RedisUtil.lrem(bean.getChannel().getId().toString(), 0, bean.getId().toString(),list);
+					} catch (Exception e) {
+						log.error("redis中栏目"+bean.getChannel().getId().toString()+"数据移除异常",e);
+						e.printStackTrace();
+					}
 				}
 			}
 		}
@@ -1378,14 +1413,29 @@ public class BlogAct {
 				//判断parentIds是否为null.如果为null则说明传进来的栏目ID 只有两级栏目.如果不为null则说明传进来的栏目ID存在上三级栏目
 				if(null!=parentIds){
 					//只有三级栏目就把该栏目的上一级栏目ID 作为key 也就是parentId
-					RedisUtil.lrem(parentId.toString(), 0, bean.getId().toString(),list);
+					try {
+						RedisUtil.lrem(parentId.toString(), 0, bean.getId().toString(),list);
+					} catch (Exception e) {
+						log.error("redis中栏目"+parentId.toString()+"数据移除异常",e);
+						e.printStackTrace();
+					}
 				}else{
 					//只有二级栏目就把该栏目的上一级栏目ID 作为key也就是传进来的栏目id
-					RedisUtil.lrem(parentId.toString(), 0, bean.getId().toString(),list);
+					try {
+						RedisUtil.lrem(parentId.toString(), 0, bean.getId().toString(),list);
+					} catch (Exception e) {
+						log.error("redis中栏目"+parentId.toString()+"数据移除异常",e);
+						e.printStackTrace();
+					}
 				}
 			}else{
 				//只有1级栏目就把该栏目的ID 作为key
-				RedisUtil.lrem(bean.getChannel().getId().toString(), 0, bean.getId().toString(),list);
+				try {
+					RedisUtil.lrem(bean.getChannel().getId().toString(), 0, bean.getId().toString(),list);
+				} catch (Exception e) {
+					log.error("redis中栏目"+bean.getChannel().getId().toString()+"数据移除异常",e);
+					e.printStackTrace();
+				}
 			}
 		}
 		
@@ -1589,7 +1639,9 @@ public class BlogAct {
 				}
 			}else{
 				if(user.getUsername().equals("9038")||user.getUsername().equals("9036")||user.getUsername().equals("9018")
-						||user.getUsername().equals("9059")||user.getUsername().equals("9039")){
+						||user.getUsername().equals("9059")||user.getUsername().equals("9039")||user.getUsername().equals("609227")
+						||user.getUsername().equals("674311")){
+					
 					if(user.getUsername().equals("9038")){
 						//课程改革
 						channelId=102;
@@ -1605,6 +1657,12 @@ public class BlogAct {
 					}else if(user.getUsername().equals("9039")){
 						//教师培训
 						channelId=282;
+					}else if(user.getUsername().equals("609227")){
+						//党群建设
+						channelId=260;
+					}else if(user.getUsername().equals("674311")){
+						//政策研究
+						channelId=177;
 					}
 					try {
 						list=RedisUtil.getList(String.valueOf(channelId));
@@ -1762,7 +1820,8 @@ public class BlogAct {
 			Content bean=contentMng.findById(contentId);
 			List<Content> list=new ArrayList<Content>();
 			if(user.getUsername().equals("9038")||user.getUsername().equals("9036")||user.getUsername().equals("9018")
-					||user.getUsername().equals("9059")||user.getUsername().equals("9039")){
+					||user.getUsername().equals("9059")||user.getUsername().equals("9039")||user.getUsername().equals("609227")
+					||user.getUsername().equals("674311")){
 				String channelId = null;
 				if(user.getUsername().equals("9038")){
 					//课程改革
@@ -1779,10 +1838,17 @@ public class BlogAct {
 				}else if(user.getUsername().equals("9039")){
 					//教师培训
 					channelId="282";
+				}else if(user.getUsername().equals("609227")){
+					//党群建设
+					channelId="260";
+				}else if(user.getUsername().equals("674311")){
+					//党群建设
+					channelId="177";
 				}
 				try {
 					RedisUtil.lrem(channelId, 0, bean.getId().toString(),list);
 				} catch (Exception e) {
+					log.error("redis栏目"+channelId+"数据移除异常",e);
 					e.printStackTrace();
 				}
 			}else{
@@ -1809,6 +1875,7 @@ public class BlogAct {
 							try {
 								RedisUtil.lrem(parentId.toString(), 0, bean.getId().toString(),list);
 							} catch (Exception e) {
+								log.error("redis栏目"+parentId.toString()+"数据移除异常",e);
 								e.printStackTrace();
 							}
 						}else{
@@ -1816,6 +1883,7 @@ public class BlogAct {
 							try {
 								RedisUtil.lrem(parentId.toString(), 0, bean.getId().toString(),list);
 							} catch (Exception e) {
+								log.error("redis栏目"+parentId.toString()+"数据移除异常",e);
 								e.printStackTrace();
 							}
 						}
@@ -1824,6 +1892,7 @@ public class BlogAct {
 						try {
 							RedisUtil.lrem(bean.getChannel().getId().toString(), 0, bean.getId().toString(),list);
 						} catch (Exception e) {
+							log.error("redis栏目"+bean.getChannel().getId().toString()+"数据移除异常",e);
 							e.printStackTrace();
 						}
 					}
