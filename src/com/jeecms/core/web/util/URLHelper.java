@@ -3,7 +3,11 @@ package com.jeecms.core.web.util;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.util.UrlPathHelper;
+
+import com.jeecms.cms.action.front.DynamicPageAct;
 
 /**
  * URI帮助类
@@ -19,6 +23,8 @@ public class URLHelper {
 		return getPageNo(getURI(request));
 	}
 
+	
+	private static final Logger log = LoggerFactory.getLogger(URLHelper.class);
 	/**
 	 * 获得路径信息
 	 * 
@@ -192,46 +198,53 @@ public class URLHelper {
 	 * @return
 	 */
 	public static PageInfo getPageInfo(String uri, String queryString) {
-		if (uri == null) {
-			return null;
-		}
-		if (!uri.startsWith("/")) {
-			throw new IllegalArgumentException("URI must start width '/'");
-		}
-	//	int bi = uri.indexOf("_");
-	//	int mi = uri.indexOf("-");
-	//	int pi = uri.indexOf(".");
-		int bi = uri.lastIndexOf("_");
-		int mi = uri.lastIndexOf("-");
-		int pi = uri.lastIndexOf(".");
-		int lastSpt = uri.lastIndexOf("/") + 1;
-		String url;
-		if (!StringUtils.isBlank(queryString)) {
-			url = uri + "?" + queryString;
-		} else {
-			url = uri;
-		}
 		// 翻页前半部
-		String urlFormer;
-		if (bi != -1) {
-			urlFormer = uri.substring(lastSpt, bi);
-		} else if (mi != -1) {
-			urlFormer = uri.substring(lastSpt, mi);
-		} else if (pi != -1) {
-			urlFormer = uri.substring(lastSpt, pi);
-		} else {
-			urlFormer = uri.substring(lastSpt);
-		}
+		String urlFormer=null;
 		// 翻页后半部
-		String urlLater;
-		if (mi != -1) {
-			urlLater = url.substring(mi);
-		} else if (pi != -1) {
-			urlLater = url.substring(pi);
-		} else {
-			urlLater = url.substring(uri.length());
+		String urlLater=null;
+		String href=null;
+		try {
+			if (uri == null) {
+				return null;
+			}
+			if (!uri.startsWith("/")) {
+				throw new IllegalArgumentException("URI must start width '/'");
+			}
+			//	int bi = uri.indexOf("_");
+			//	int mi = uri.indexOf("-");
+			//	int pi = uri.indexOf(".");
+			int bi = uri.lastIndexOf("_");
+			int mi = uri.lastIndexOf("-");
+			int pi = uri.lastIndexOf(".");
+			int lastSpt = uri.lastIndexOf("/") + 1;
+			String url;
+			if (!StringUtils.isBlank(queryString)) {
+				url = uri + "?" + queryString;
+			} else {
+				url = uri;
+			}
+			if (bi != -1) {
+				urlFormer = uri.substring(lastSpt, bi);
+			} else if (mi != -1) {
+				urlFormer = uri.substring(lastSpt, mi);
+			} else if (pi != -1) {
+				urlFormer = uri.substring(lastSpt, pi);
+			} else {
+				urlFormer = uri.substring(lastSpt);
+			}
+			if (mi != -1) {
+				urlLater = url.substring(mi);
+			} else if (pi != -1) {
+				urlLater = url.substring(pi);
+			} else {
+				urlLater = url.substring(uri.length());
+			}
+			href = url.substring(lastSpt);
+		} catch (Exception e) {
+			log.error("================errorssss"+uri,e);
+			System.out.println("uuuuuuuuuuuuuuuuuuuuuuuu="+uri);
+			e.printStackTrace();
 		}
-		String href = url.substring(lastSpt);
 		return new PageInfo(href, urlFormer, urlLater);
 	}
 

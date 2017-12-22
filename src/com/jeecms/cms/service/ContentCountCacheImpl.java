@@ -62,7 +62,7 @@ public class ContentCountCacheImpl implements ContentCountCache, DisposableBean 
 	}
 
 	// 间隔时间
-	private int interval = 10 * 60 * 1000; // 10分钟
+	private int interval = 60 * 60 * 1000; // 10分钟
 	// 最后刷新时间
 	private long refreshTime = System.currentTimeMillis();
 
