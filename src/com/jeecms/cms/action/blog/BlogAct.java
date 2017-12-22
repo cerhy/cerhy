@@ -1817,88 +1817,90 @@ public class BlogAct {
 		}
 		try {
 			//删除博客
-			Content bean=contentMng.findById(contentId);
-			List<Content> list=new ArrayList<Content>();
-			if(user.getUsername().equals("9038")||user.getUsername().equals("9036")||user.getUsername().equals("9018")
-					||user.getUsername().equals("9059")||user.getUsername().equals("9039")||user.getUsername().equals("609227")
-					||user.getUsername().equals("674311")){
-				String channelId = null;
-				if(user.getUsername().equals("9038")){
-					//课程改革
-					channelId="102";
-				}else if(user.getUsername().equals("9036")){
-					//教育科研
-					channelId="99";
-				}else if(user.getUsername().equals("9018")){
-					//职业教育
-					channelId="100";
-				}else if(user.getUsername().equals("9059")){
-					//质量监测
-					channelId="103";
-				}else if(user.getUsername().equals("9039")){
-					//教师培训
-					channelId="282";
-				}else if(user.getUsername().equals("609227")){
-					//党群建设
-					channelId="260";
-				}else if(user.getUsername().equals("674311")){
-					//党群建设
-					channelId="177";
-				}
-				try {
-					RedisUtil.lrem(channelId, 0, bean.getId().toString(),list);
-				} catch (Exception e) {
-					log.error("redis栏目"+channelId+"数据移除异常",e);
-					e.printStackTrace();
-				}
-			}else{
-				if(!bean.getChannel().getId().toString().equals("280")){
-					Integer parentId=null;
-					String parentIds=null;
-					Channel idDel = channelMng.findById(bean.getChannel().getId());//获取该栏目实体
-					//根据ids.getParentId()判断该栏目是否为只有一级栏目
-					if(null!=idDel.getParentId()){
-						parentId=idDel.getParentId();//走到这说明该传进来的栏目ID 存在上一级栏目-二级栏目
-						//获取上一级栏目id
-						Channel idss = channelMng.findById(parentId);
-						//再根据上一级栏目ID--parentId 来判读是否存在上上一级栏目--一级栏目(已知只有三级栏目,无序继续往上上上一级判断(4级栏目))
-						if(null!=idss.getParentId()){
-							//获取上上一级栏目id(一级栏目)
-							parentIds=String.valueOf(idss.getParentId().toString());
-						}
+			if(null!=contentId&&contentId.toString()!=""){
+				Content bean=contentMng.findById(contentId);
+				List<Content> list=new ArrayList<Content>();
+				if(user.getUsername().equals("9038")||user.getUsername().equals("9036")||user.getUsername().equals("9018")
+						||user.getUsername().equals("9059")||user.getUsername().equals("9039")||user.getUsername().equals("609227")
+						||user.getUsername().equals("674311")){
+					String channelId = null;
+					if(user.getUsername().equals("9038")){
+						//课程改革
+						channelId="102";
+					}else if(user.getUsername().equals("9036")){
+						//教育科研
+						channelId="99";
+					}else if(user.getUsername().equals("9018")){
+						//职业教育
+						channelId="100";
+					}else if(user.getUsername().equals("9059")){
+						//质量监测
+						channelId="103";
+					}else if(user.getUsername().equals("9039")){
+						//教师培训
+						channelId="282";
+					}else if(user.getUsername().equals("609227")){
+						//党群建设
+						channelId="260";
+					}else if(user.getUsername().equals("674311")){
+						//党群建设
+						channelId="177";
 					}
-					//判断parentId是否为null.如果为null则说明传进来的栏目ID 只有一级栏目 切为本身.如果不为null则说明传进来的栏目ID存在上一级栏目
-					if(null!=parentId){
-						//判断parentIds是否为null.如果为null则说明传进来的栏目ID 只有两级栏目.如果不为null则说明传进来的栏目ID存在上三级栏目
-						if(null!=parentIds){
-							//只有三级栏目就把该栏目的上一级栏目ID 作为key 也就是parentId
-							try {
-								RedisUtil.lrem(parentId.toString(), 0, bean.getId().toString(),list);
-							} catch (Exception e) {
-								log.error("redis栏目"+parentId.toString()+"数据移除异常",e);
-								e.printStackTrace();
+					try {
+						RedisUtil.lrem(channelId, 0, bean.getId().toString(),list);
+					} catch (Exception e) {
+						log.error("redis栏目"+channelId+"数据移除异常",e);
+						e.printStackTrace();
+					}
+				}else{
+					if(!bean.getChannel().getId().toString().equals("280")){
+						Integer parentId=null;
+						String parentIds=null;
+						Channel idDel = channelMng.findById(bean.getChannel().getId());//获取该栏目实体
+						//根据ids.getParentId()判断该栏目是否为只有一级栏目
+						if(null!=idDel.getParentId()){
+							parentId=idDel.getParentId();//走到这说明该传进来的栏目ID 存在上一级栏目-二级栏目
+							//获取上一级栏目id
+							Channel idss = channelMng.findById(parentId);
+							//再根据上一级栏目ID--parentId 来判读是否存在上上一级栏目--一级栏目(已知只有三级栏目,无序继续往上上上一级判断(4级栏目))
+							if(null!=idss.getParentId()){
+								//获取上上一级栏目id(一级栏目)
+								parentIds=String.valueOf(idss.getParentId().toString());
+							}
+						}
+						//判断parentId是否为null.如果为null则说明传进来的栏目ID 只有一级栏目 切为本身.如果不为null则说明传进来的栏目ID存在上一级栏目
+						if(null!=parentId){
+							//判断parentIds是否为null.如果为null则说明传进来的栏目ID 只有两级栏目.如果不为null则说明传进来的栏目ID存在上三级栏目
+							if(null!=parentIds){
+								//只有三级栏目就把该栏目的上一级栏目ID 作为key 也就是parentId
+								try {
+									RedisUtil.lrem(parentId.toString(), 0, bean.getId().toString(),list);
+								} catch (Exception e) {
+									log.error("redis栏目"+parentId.toString()+"数据移除异常",e);
+									e.printStackTrace();
+								}
+							}else{
+								//只有二级栏目就把该栏目的上一级栏目ID 作为key也就是传进来的栏目id
+								try {
+									RedisUtil.lrem(parentId.toString(), 0, bean.getId().toString(),list);
+								} catch (Exception e) {
+									log.error("redis栏目"+parentId.toString()+"数据移除异常",e);
+									e.printStackTrace();
+								}
 							}
 						}else{
-							//只有二级栏目就把该栏目的上一级栏目ID 作为key也就是传进来的栏目id
+							//只有1级栏目就把该栏目的ID 作为key
 							try {
-								RedisUtil.lrem(parentId.toString(), 0, bean.getId().toString(),list);
+								RedisUtil.lrem(bean.getChannel().getId().toString(), 0, bean.getId().toString(),list);
 							} catch (Exception e) {
-								log.error("redis栏目"+parentId.toString()+"数据移除异常",e);
+								log.error("redis栏目"+bean.getChannel().getId().toString()+"数据移除异常",e);
 								e.printStackTrace();
 							}
 						}
-					}else{
-						//只有1级栏目就把该栏目的ID 作为key
-						try {
-							RedisUtil.lrem(bean.getChannel().getId().toString(), 0, bean.getId().toString(),list);
-						} catch (Exception e) {
-							log.error("redis栏目"+bean.getChannel().getId().toString()+"数据移除异常",e);
-							e.printStackTrace();
-						}
 					}
 				}
+				contentMng.deleteByIdBlog(contentId);
 			}
-			contentMng.deleteByIdBlog(contentId);
 		} catch (Exception e) {
 			log.error(e.getMessage(),e);
 			result="fail";
@@ -2333,7 +2335,7 @@ public class BlogAct {
 		}*/
 		CmsUser userT=null;
 		if(request.getParameter("name")!=null){
-			String username=request.getParameter("name").substring(1, request.getParameter("name").length());
+			String username=request.getParameter("name");
 			CmsUser uname=cmsUserMng.findByUsername(username);
 			if(uname!=null){
 				userT=cmsUserMng.findById(uname.getId());

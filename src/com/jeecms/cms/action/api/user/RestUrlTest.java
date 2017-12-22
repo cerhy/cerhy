@@ -14,6 +14,9 @@ public class RestUrlTest extends HttpServlet {
 	 public void doGet(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
          response.setContentType("text/html");
          String uri = request.getPathInfo();
+         if(null!=uri&&uri!=""){
+        	 uri=uri.substring(1, uri.length());
+         }
          //request.getRequestDispatcher("/blog/index.jspx?name="+uri).forward(request,response);
          response.sendRedirect(request.getContextPath()+"/blog/find_all_url_friend.jspx?name="+uri);
          
