@@ -7,6 +7,7 @@ import net.sf.ehcache.Element;
 
 import org.hibernate.Query;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.jeecms.cms.dao.main.ContentCountDao;
 import com.jeecms.cms.entity.main.ContentCount;
@@ -16,6 +17,7 @@ import com.jeecms.common.hibernate4.HibernateBaseDao;
 public class ContentCountDaoImpl extends
 		HibernateBaseDao<ContentCount, Integer> implements ContentCountDao {
 	@SuppressWarnings("unchecked")
+	@Transactional
 	public int freshCacheToDB(Ehcache cache) {
 		List<Integer> keys = cache.getKeys();
 		if (keys.size() <= 0) {

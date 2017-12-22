@@ -2264,7 +2264,7 @@ public class BlogAct {
 		}*/
 		CmsUser userT=null;
 		if(request.getParameter("name")!=null){
-			String username=request.getParameter("name").substring(1, request.getParameter("name").length());
+			String username=request.getParameter("name");
 			CmsUser uname=cmsUserMng.findByUsername(username);
 			if(uname!=null){
 				userT=cmsUserMng.findById(uname.getId());
@@ -2325,30 +2325,34 @@ public class BlogAct {
 		int userId=user.getId();
 		Integer columnId = null;
 		Integer channelId = null;
-		if(joinGroupStata!=null&&joinGroupStata.equals("0")){
-			userId=0;
-			model.addAttribute("GroupFlag", -1);
-			if(StringUtils.isNotBlank(request.getParameter("columnId"))&&!"null".equals(request.getParameter("columnId"))){
-				model.addAttribute("columnId", request.getParameter("columnId"));
-				model.addAttribute("columnIdZ", request.getParameter("columnId"));
-				model.addAttribute("joinGroupStata", 0);
-				model.addAttribute("submitOn1", 1);
-				columnId = Integer.parseInt(request.getParameter("columnId"));
+		try {
+			if(joinGroupStata!=null&&joinGroupStata.equals("0")){
+				userId=0;
+				model.addAttribute("GroupFlag", -1);
+				if(StringUtils.isNotBlank(request.getParameter("columnId"))&&!"null".equals(request.getParameter("columnId"))){
+					model.addAttribute("columnId", request.getParameter("columnId"));
+					model.addAttribute("columnIdZ", request.getParameter("columnId"));
+					model.addAttribute("joinGroupStata", 0);
+					model.addAttribute("submitOn1", 1);
+					columnId = Integer.parseInt(request.getParameter("columnId"));
+				}
+			}else{
+				model.addAttribute("GroupFlag", 0);
+				//为了删除文章后能跳转回本栏目下
+				if(StringUtils.isNotBlank(request.getParameter("columnId"))&&null!=request.getParameter("columnId")){
+					model.addAttribute("columnId", request.getParameter("columnId"));
+					model.addAttribute("columnIdZ", request.getParameter("columnId"));
+					model.addAttribute("submitOn", 1);
+					columnId = Integer.parseInt(request.getParameter("columnId"));
+				}
+				if(StringUtils.isNotBlank(request.getParameter("channelId"))&&null!=request.getParameter("columnId")){
+					model.addAttribute("channelId", request.getParameter("channelId"));
+					model.addAttribute("submitOn", 1);
+					channelId = Integer.parseInt(request.getParameter("channelId"));
+				}
 			}
-		}else{
-			model.addAttribute("GroupFlag", 0);
-			//为了删除文章后能跳转回本栏目下
-			if(StringUtils.isNotBlank(request.getParameter("columnId"))&&!"null".equals(request.getParameter("columnId"))){
-				model.addAttribute("columnId", request.getParameter("columnId"));
-				model.addAttribute("columnIdZ", request.getParameter("columnId"));
-				model.addAttribute("submitOn", 1);
-				columnId = Integer.parseInt(request.getParameter("columnId"));
-			}
-			if(StringUtils.isNotBlank(request.getParameter("channelId"))&&!"null".equals(request.getParameter("channelId"))){
-				model.addAttribute("channelId", request.getParameter("channelId"));
-				model.addAttribute("submitOn", 1);
-				channelId = Integer.parseInt(request.getParameter("channelId"));
-			}
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
 		}
 		model =blogCommon.getHyperlink(request,model,user);
 		model = blogCommon.getColumn(request,model,user);
@@ -2889,7 +2893,7 @@ public class BlogAct {
 		Integer recieveUserId = null;
 		CmsUser userT=null;
 		if(request.getParameter("name")!=null){
-			String username=request.getParameter("name").substring(1, request.getParameter("name").length());
+			String username=request.getParameter("name");
 			CmsUser uname=cmsUserMng.findByUsername(username);
 			if(uname!=null){
 				userT=cmsUserMng.findById(uname.getId());
