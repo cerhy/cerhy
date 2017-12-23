@@ -1,6 +1,7 @@
 <div>
  <select name="channelIds" class="member-change" id="channelIds" required>
 	                <option value="" class="sel-disabled">--请选择--</option>
+	                [#if user??]
 	                [#if channelList??]
 				             [#list channelList as c]
 					             [#if c_index==0]
@@ -68,6 +69,9 @@
 				             
 				     [/#list]
 				    [/#if]
+				    [#else]
+					 <option value="">失去登陆状态请重新登陆</option>
+					 [/#if]	
 				    [#if columnsList??]
 			        [#list columnsList as map]
 			        [#list map?keys as k]
@@ -97,6 +101,5 @@
 	                 [#elseif joinGroupList?size gt 0]
 					 [#else]
 					 	<span style="color:red;">您还没有创建栏目，请点击这里<a href="javascript:;" onclick="createChannel2();" style="background-color:white;border: 1px solid #dedede;">创建栏目</a>,否则博客将不能发布！</span>
-					 [/#if]	 
-					  
+					 [/#if]	
 </div>
