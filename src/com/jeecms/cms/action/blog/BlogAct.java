@@ -2343,7 +2343,17 @@ public class BlogAct {
 				return FrontUtils.showMessage(request, model, "该账号暂未开通博客,或者请检查输入的账号是否正确!"); 
 			}
 		}else{
-			userT=cmsUserMng.findById(Integer.valueOf(userIds.toString()));
+			try {
+				if(null!=userIds&&userIds!=""){
+					boolean result=userIds.matches("[0-9]+");
+					if (result) { 
+						userT=cmsUserMng.findById(Integer.valueOf(userIds.toString()));
+					}
+				}
+			} catch (NumberFormatException e) {
+				log.error("empty===="+userIds);
+				e.printStackTrace();
+			}
 		}
 		channelMng.updateBlogVisitNum(userT);
 		if(user!=null){
