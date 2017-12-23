@@ -34,9 +34,11 @@ public class ContentCountAct {
 			return;
 		}
 		int[] counts = contentCountCache.viewAndGet(contentId);
-		//栏目访问量计数
-		Channel channel=contentMng.findById(contentId).getChannel();
-		channelCountCache.viewAndGet(channel.getId());
+		//栏目访问量计数contentMng.find
+		if(null!=contentMng.findById(contentId)){
+			Channel channel=contentMng.findById(contentId).getChannel();
+			channelCountCache.viewAndGet(channel.getId());
+		}
 		String json;
 		if (counts != null) {
 			json = new JSONArray(counts).toString();

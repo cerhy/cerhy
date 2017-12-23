@@ -38,7 +38,7 @@ public class SearchAct {
 	public static final String SEARCH_RESULT = "tpl.searchResult";
 	public static final String SEARCH_ERROR = "tpl.searchError";
 	public static final String SEARCH_JOB = "tpl.searchJob";
-	
+
 	@RequestMapping(value = "/search*.jspx", method = RequestMethod.GET)
 	public String index(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
@@ -48,39 +48,45 @@ public class SearchAct {
 		FrontUtils.frontData(request, model, site);
 		FrontUtils.frontPageData(request, model);
 		String q = RequestUtils.getQueryParam(request, "q");
-		Matcher isNum = Pattern.compile("[0-9]*").matcher(q);
-		if(isNum.matches()){
+		boolean flag = false;
+		if (StringUtils.isNotBlank(q)) {
+			Matcher isNum = Pattern.compile("[0-9a-zA-Z]*").matcher(q);
+			if(isNum.matches()){
+				flag = true;
+			}
+		}
+		if (flag) {
 			CmsUser id = channelMng.findUserId(q);
-			
-			if(id == null){
-				String tempP=q;
-				String parseQT=parseKeywords(tempP);
-				model.addAttribute("input",tempP);
-				model.addAttribute("q",parseQT);
+			if (id == null) {
+				String tempP = q;
+				String parseQT = parseKeywords(tempP);
+				model.addAttribute("input", tempP);
+				model.addAttribute("q", parseQT);
 				searchWordsCache.cacheWord(q);
 				return FrontUtils.getTplPath(request, site.getSolutionPath(),
 						TPLDIR_SPECIAL, SEARCH_RESULT);
-			}else{
+			} else {
 				int tempId = id.getId();
-				return "redirect:/blog/find_all_url_friend.jspx?userIds="+tempId;
+				return "redirect:/blog/find_all_url_friend.jspx?userIds="
+						+ tempId;
 			}
-			
+
 		}
-		
+
 		String channelId = RequestUtils.getQueryParam(request, "channelId");
 		if (StringUtils.isBlank(q) && StringUtils.isBlank(channelId)) {
 			return FrontUtils.getTplPath(request, site.getSolutionPath(),
 					TPLDIR_SPECIAL, SEARCH_INPUT);
 		} else {
-			String parseQ=parseKeywords(q);
-			model.addAttribute("input",q);
-			model.addAttribute("q",parseQ);
+			String parseQ = parseKeywords(q);
+			model.addAttribute("input", q);
+			model.addAttribute("q", parseQ);
 			searchWordsCache.cacheWord(q);
 			return FrontUtils.getTplPath(request, site.getSolutionPath(),
 					TPLDIR_SPECIAL, SEARCH_RESULT);
 		}
 	}
-	
+
 	@RequestMapping(value = "/searchJob*.jspx", method = RequestMethod.GET)
 	public String searchJob(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
@@ -88,68 +94,70 @@ public class SearchAct {
 		String q = RequestUtils.getQueryParam(request, "q");
 		String category = RequestUtils.getQueryParam(request, "category");
 		String workplace = RequestUtils.getQueryParam(request, "workplace");
-		String parseQ="";
+		String parseQ = "";
 		model.putAll(RequestUtils.getQueryParams(request));
 		FrontUtils.frontData(request, model, site);
 		FrontUtils.frontPageData(request, model);
 		if (StringUtils.isBlank(q)) {
 			model.remove("q");
-		}else{
-			//处理lucene查询字符串中的关键字
-			parseQ=parseKeywords(q);
-			parseQ=StrUtils.xssEncode(parseQ);
-			if(!q.equals(parseQ)){
+		} else {
+			// 处理lucene查询字符串中的关键字
+			parseQ = parseKeywords(q);
+			parseQ = StrUtils.xssEncode(parseQ);
+			if (!q.equals(parseQ)) {
 				return "redirect:searchJob.jspx";
 			}
-			model.addAttribute("q",parseQ);
+			model.addAttribute("q", parseQ);
 		}
-		model.addAttribute("input",parseQ);
-		model.addAttribute("queryCategory",category);
-		model.addAttribute("queryWorkplace",workplace);
+		model.addAttribute("input", parseQ);
+		model.addAttribute("queryCategory", category);
+		model.addAttribute("queryWorkplace", workplace);
 		return FrontUtils.getTplPath(request, site.getSolutionPath(),
 				TPLDIR_SPECIAL, SEARCH_JOB);
 	}
-	
+
 	@RequestMapping("/search/v_ajax_list.jspx")
-	public void ajaxList(HttpServletRequest request,HttpServletResponse response, ModelMap model) throws JSONException {
+	public void ajaxList(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) throws JSONException {
 		JSONObject object = new JSONObject();
-		Map<String,String>wordsMap=new LinkedHashMap<String, String>();
-		String word=RequestUtils.getQueryParam(request, "term");
-		if(StringUtils.isNotBlank(word)){
-			List<CmsSearchWords>words=manager.getList(CmsUtils.getSiteId(request),
-					word,null,CmsSearchWords.HIT_DESC,20,true);
-			for(CmsSearchWords w:words){
+		Map<String, String> wordsMap = new LinkedHashMap<String, String>();
+		String word = RequestUtils.getQueryParam(request, "term");
+		if (StringUtils.isNotBlank(word)) {
+			List<CmsSearchWords> words = manager.getList(
+					CmsUtils.getSiteId(request), word, null,
+					CmsSearchWords.HIT_DESC, 20, true);
+			for (CmsSearchWords w : words) {
 				wordsMap.put(w.getName(), w.getName());
 			}
 		}
 		object.put("words", wordsMap);
 		ResponseUtils.renderJson(response, object.get("words").toString());
 	}
-	
+
 	@RequestMapping(value = "/searchCustom*.jspx")
 	public String searchCustom(String tpl, HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		CmsSite site = CmsUtils.getSite(request);
-		if(StringUtils.isNotBlank(tpl)){
+		if (StringUtils.isNotBlank(tpl)) {
 			// 将request中所有参数保存至model中。
 			model.putAll(RequestUtils.getQueryParams(request));
 			FrontUtils.frontData(request, model, site);
 			FrontUtils.frontPageData(request, model);
-			return FrontUtils.getTplPath(site.getSolutionPath(), TPLDIR_SPECIAL,
-					tpl);
-		}else{
+			return FrontUtils.getTplPath(site.getSolutionPath(),
+					TPLDIR_SPECIAL, tpl);
+		} else {
 			return FrontUtils.pageNotFound(request, response, model);
 		}
 	}
-	
-	public static String parseKeywords(String q){
-		char c='\\';
-		int cIndex=q.indexOf(c);
-		if(cIndex!=-1&&cIndex==0){
-			q=q.substring(1);
+
+	public static String parseKeywords(String q) {
+		char c = '\\';
+		int cIndex = q.indexOf(c);
+		if (cIndex != -1 && cIndex == 0) {
+			q = q.substring(1);
 		}
-		if(cIndex!=-1&&cIndex==q.length()-1){
-			q=q.substring(0,q.length()-1);
+		if (cIndex != -1 && cIndex == q.length() - 1) {
+			q = q.substring(0, q.length() - 1);
 		}
 		try {
 			String regular = "[\\+\\-\\&\\|\\!\\(\\)\\{\\}\\[\\]\\^\\~\\*\\?\\:\\\\]";
@@ -160,11 +168,12 @@ public class SearchAct {
 				src = m.group();
 				q = q.replaceAll("\\" + src, ("\\\\" + src));
 			}
-			q = q.replaceAll("AND", "and").replaceAll("OR", "or").replace("NOT", "not").replace("[", "［").replace("]", "］");
+			q = q.replaceAll("AND", "and").replaceAll("OR", "or")
+					.replace("NOT", "not").replace("[", "［").replace("]", "］");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return  q;
+		return q;
 	}
 
 	@Autowired
