@@ -921,6 +921,11 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 			//文件通知程序处理按年分类---通知通报
 			String publishDate="";
 			String publishDates="";
+			//446
+			if(channelIds[0].toString().equals("584")){
+				publishDate="2018";
+				publishDates="2019";
+			}
 			if(channelIds[0].toString().equals("206")){
 				publishDate="2017";
 				publishDates="2018";
@@ -958,6 +963,11 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 				publishDates="2010";
 			}
 			//院外信息
+			//447
+			if(channelIds[0].toString().equals("585")){
+				publishDate="2018";
+				publishDates="2019";
+			}
 			if(channelIds[0].toString().equals("180")){
 				publishDate="2017";
 				publishDates="2018";
@@ -987,7 +997,7 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 				publishDates="2012";
 			}
 			if(StringUtils.isNotEmpty(publishDate)){
-				f.setParam("channelId", 206);
+				f.setParam("channelId", Integer.valueOf(channelIds[0].toString()));
 				f.append(" and bean.sortDate between :start1 and :start2");
 				f.setParam("start1",strToDate(publishDate));
 				f.setParam("start2",strToDate(publishDates));
