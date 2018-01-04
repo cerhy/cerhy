@@ -394,7 +394,8 @@ public class BlogAct {
 	
 	
 	 public static boolean containsEmoji(String source) {
-	        int len = source.length();
+		 if(StringUtils.isNotBlank(source)){
+		   int len = source.length();
 	        for (int i = 0; i < len; i++) {
 	            char codePoint = source.charAt(i);
 	            if (!notisEmojiCharacter(codePoint)) {
@@ -402,8 +403,9 @@ public class BlogAct {
 	            	return true;
 	            }
 	        }
+		 }
 	        return false;
-	    }
+	 }
 
 	 
 	   private static boolean notisEmojiCharacter(char codePoint) {
@@ -2343,7 +2345,19 @@ public class BlogAct {
 				return FrontUtils.showMessage(request, model, "该账号暂未开通博客,或者请检查输入的账号是否正确!"); 
 			}
 		}else{
-			userT=cmsUserMng.findById(Integer.valueOf(userIds.toString()));
+			try {
+				if(null!=userIds&&userIds!=""){
+					boolean result=userIds.matches("[0-9]+");
+					if (result) { 
+						userT=cmsUserMng.findById(Integer.valueOf(userIds.toString()));
+					}
+				}else{
+					return FrontUtils.showMessage(request, model, "好友不存在，或地址有误！"); 
+				}
+			} catch (NumberFormatException e) {
+				log.error("empty===="+userIds);
+				e.printStackTrace();
+			}
 		}
 		channelMng.updateBlogVisitNum(userT);
 		if(user!=null){
@@ -2386,12 +2400,27 @@ public class BlogAct {
 	public String blog_list_friend(String q, Integer modelId,Integer queryChannelId,String nextUrl,Integer pageNo,HttpServletRequest request, ModelMap model) {
 		CmsSite site = CmsUtils.getSite(request);
 		CmsUser u = CmsUtils.getUser(request);
+		CmsUser user =null;
 		Integer recieveUserId = null;
 		if(u!=null){
 			recieveUserId = u.getId();
 		}
 		String user_ids = request.getParameter("user_ids");
-		CmsUser user=cmsUserMng.findById(Integer.valueOf(user_ids.toString()));
+		try {
+			if(null!=user_ids&&user_ids!=""){
+				boolean result=user_ids.matches("[0-9]+");
+				if (result) { 
+					user=cmsUserMng.findById(Integer.valueOf(user_ids.toString()));
+				}
+			}else{
+				return FrontUtils.showMessage(request, model, "浏览器出错了，请刷新再试试！"); 
+			}
+		} catch (NumberFormatException e) {
+			log.error("empty===="+user_ids);
+			e.printStackTrace();
+		}
+//		String user_ids = request.getParameter("user_ids");
+//		CmsUser user=cmsUserMng.findById(Integer.valueOf(user_ids.toString()));
 		String joinGroupStata = request.getParameter("joinGroupStata");
 		int userId=user.getId();
 		Integer columnId = null;
