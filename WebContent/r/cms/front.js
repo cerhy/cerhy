@@ -22,10 +22,10 @@ Cms.viewCount = function(base, contentId, viewId, commentId, downloadId, upId,
 	});
 }
 Cms.channelViewCount = function(base, channelId, viewId) {
-	viewId = viewId || "views";
+	/*viewId = viewId || "views";
 	$.getJSON(base + "/channel_view.jspx", {
 		channelId : channelId
-	});
+	});*/
 }
 /**
  * 站点流量统计
@@ -33,7 +33,7 @@ Cms.channelViewCount = function(base, channelId, viewId) {
 Cms.siteFlow = function(base,page, referer,flowSwitch,
 		pvId,visitorId,dayPvId, dayVisitorId,
 		weekPvId,weekVisitorId,monthPvId,monthVisitorId) {
-	pvId = pvId || "pv";
+/*	pvId = pvId || "pv";
 	visitorId = visitorId || "visitor";
 	dayPvId=dayPvId || "dayPv";
 	dayVisitorId=dayVisitorId || "dayVisitor";
@@ -58,7 +58,7 @@ Cms.siteFlow = function(base,page, referer,flowSwitch,
 				$("#" + monthVisitorId).text(data[7]);
 			}
 		});
-	}
+	}*/
 }
 /**
  * 成功返回true，失败返回false。

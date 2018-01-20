@@ -45,6 +45,8 @@ default-lazy-init="true">
 		<property name="acquireIncrement" value="${cpool.acquireIncrement}"/>
 		<property name="maxIdleTimeExcessConnections" value="${cpool.maxIdleTimeExcessConnections}"/>
 		<property name="idleConnectionTestPeriod" value="${cpool.idleConnectionTestPeriod}"/>
+		<property name="maxStatements" value="${cpool.maxStatements}"/>
+		<property name="maxStatementsPerConnection" value="${cpool.maxStatementsPerConnection}"/>
 	</bean>
 	
 	<!--  
@@ -65,7 +67,7 @@ default-lazy-init="true">
 			hibernate.show_sql=false
 			hibernate.format_sql=false
 			hibernate.query.substitutions=true 1, false 0
-			hibernate.jdbc.batch_size=20
+			hibernate.jdbc.batch_size=50
 			hibernate.jdbc.use_streams_for_binary=true
 			hibernate.temp.use_jdbc_metadata_defaults=false
 			<!-- 是否自动提交事务 -->
