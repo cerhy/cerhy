@@ -20,8 +20,6 @@
 		Cms.attachment("${base}", "${content.id}",
 				"${content.attachments?size}", "attach");
 		Cms.viewCount("${base}", "${content.id}");
-		Cms.siteFlow("${base}", location.href, document.referrer,
-				"${site.config.flowSwitch?string}");
 	});
 </script>
 
