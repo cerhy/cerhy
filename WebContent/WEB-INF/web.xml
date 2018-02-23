@@ -248,6 +248,14 @@
     <servlet-name>JeeCmsFront</servlet-name>
     <url-pattern>/api/haoyan/report</url-pattern>
   </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>JeeCmsFront</servlet-name>
+    <url-pattern>/project/*</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>JeeCmsFront</servlet-name>
+    <url-pattern>/ws/*</url-pattern>
+  </servlet-mapping>
   <listener>
     <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
   </listener>
