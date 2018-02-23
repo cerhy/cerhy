@@ -1,0 +1,1322 @@
+<!DOCTYPE html>
+<html slick-uniqueid="5">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport"
+	content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
+<title>工作坊</title>
+<link rel="stylesheet" href="http://x.hnjs.org/ui/wss/base.css">
+<link rel="stylesheet" href="http://my.hnjs.org/ui/dawn/content.css">
+<script src="http://x.hnjs.org/lib/r1/mootools_rv.js"></script>
+<script src="http://x.hnjs.org/lib/r1/mootools_ue.js"></script>
+<script src="http://x.hnjs.org/lib/r1/qrcode.js"></script>
+<script src="http://x.hnjs.org/lib/mce/tinymce.min.js"></script>
+<script>
+App.implement({
+    initialize: function() {
+        RequestX.url = "/admin/forum",
+        new Owa.Preview,
+        Passport.load(),
+        this.initCommand();
+        var t = location.pathname,
+        e = t.substr(t.lastIndexOf("/") + 1),
+        i = function(t) {
+            var e = this.current; ["Passport", "MyOp", "Forum"].each(function(i) {
+                e[i] = t.get(i)
+            }),
+            ["Mate", "MyForum", "Notify", "Excell"].each(function(i) {
+                e[i] = t.gets(i)
+            });
+            var i = t.get("MyRole");
+            Object.append(e, {
+                isForum: "0" != e.Forum.ForumId,
+                isUsr: "0" != e.Passport.Account,
+                isOwn: e.Forum.Account == e.Passport.Account,
+                isAdm: "100" == i.MateRole,
+                isMate: i.MateRole >= 1
+            }),
+            App.portable ? this.initLayoutM(t) : (this.initLayout(), this.updateTopicList(t), this.updateHiliteList(t))
+        }.bind(this);
+        new RequestX({
+            Action: "ftInitio",
+            ForumId: e
+        },
+        i)
+    },
+    initLayoutM: function(t) {
+        var e = '<b class="tbc">' + (this.current.Forum.Title || "工作坊") + "</b>",
+        i = document.body,
+        n = (new Element("div.x-gbr", {
+            html: e
+        }).inject(i), new Element("div.x-page").inject(i));
+        Widget.gotop(n),
+        this._initTopicList(n),
+        this.updateTopicList(t)
+    },
+    initLayout: function() {
+        var t = this.current,
+        e = t.Forum,
+        i = e.Extra;
+        i && (i.indexOf(".css") > 0 ? new Element("link", {
+            rel: "stylesheet",
+            href: i
+        }).inject(document.head) : jo.injectStyle(i));
+        var n = new Element("div#y-wrap").inject(document.body),
+        o = new Element("div#y-banner").inject(n),
+        a = new Element("div#y-pane").inject(n),
+        s = new Element("div#y-sbr").inject(n);
+        new Element("div.clr").inject(n),
+        Widget.gotop(n),
+        this.initBandSheet = function(t, e, i) {
+            var n = new Element("div#" + e + "[style=display:none]", {
+                html: i
+            }).inject(a);
+            return t.widget = [n],
+            n
+        },
+        this.openBand("TopicListBand"),
+        this._initBanner(t, e, s, o),
+        this[t.isForum ? "_initForumbar": "_initPortalbar"](t, e, s)
+    },
+    _initBanner: function(t, e, i, n) { !
+        function() {
+            t.Passport;
+            var e = t.isUsr,
+            i = '<a class="mi5" target="_self" href="' + App.wai + '">注册/登录</a>';
+            e && (i = '<a class="mi5" target="_self" href="/">社区</a><a class="mi5" target="_self" href="/ws">我的工作坊</a><b class="mi5" cmd="Logout">退出</b>'),
+            new Element("div#y-user.mi5bar", {
+                html: i,
+                style: "background-image:url(" + Passport.avatar() + ")"
+            }).inject(n)
+        } ();
+        var o = new Element("div#y-title").inject(n),
+        a = new Element("div#y-cap").inject(o); (this.updateTitle = function() {
+            var t = e.Title,
+            i = '<span class="capx">工作坊</span>网络研修<br/>' + e.Subtitle;
+            t ? (i = '<div class="xmt">' + t.html() + "</div>" + e.Subtitle.html(), e.Logo ? o.setStyle("background-image", "url(" + e.Logo + ")") : o.addClass("x-logo"), document.title = t) : o.setStyle("padding-left", "0px"),
+            a.set("html", i)
+        })(); !
+        function() {
+            var t = '<input class="wi qs-go" type="submit" value="' + Wicon.find + '"><input name="wd" class="qs-i" placeholder="坊号或搜索内容">',
+            e = new Element("form.qs[target=_blank][action=http://www.baidu.com/s]", {
+                html: t
+            }).inject(i);
+            e.addEvent("submit",
+            function(t) {
+                var i = e.wd.value;
+                return 0 == i.length ? (t.stop(), !1) : /^[-+]?\d+$/.test(i) && i.length > 3 && i.length < 10 ? (t.stop(), location.href = "/" + i, !1) : void 0
+            })
+        } ()
+    },
+    _initPortalbar: function(t, e, i) {
+        var n = function(t, e, i, n) {
+            if (0 == t.length) return e;
+            var o = "";
+            return t.each(function(t) {
+                o += n(t)
+            }),
+            "<" + i + ">" + o + "</" + i + ">"
+        };
+        t.isUsr &&
+        function() {
+            var e = "<h2>" + (t.isUsr && t.MyOp.Cnt <= t.MyOp.Limit ? '<span cmd="ForumEditDlg" class="more">创建</span>': "") + "我的</h2>" + n(t.MyForum, "您可以创建或加入一个工作坊。", "div",
+            function(t) {
+                return t.Title = t.Title.html(),
+                '<a class="mi1 mi7" href="/ws/{ForumId}">{Title}</a>'.substitute(t)
+            });
+            new Element("div", {
+                html: e
+            }).inject(i)
+        } ();
+        t.isUsr &&
+        function() {
+            var e = "<h2>提醒</h2>" + n(t.Notify, "暂时没有提醒消息。", "ul",
+            function(t) {
+                return t = jo.html(t, {
+                    PublishDate: t.PublishDate.utc(),
+                    Tag: "1" == t.Tag ? "评论": "回复"
+                }),
+                '<li><a href="/wst/{Id}" class="fg-black lt">[{PublishDate} {Author} {Tag}] {Summary}</a></li>'.substitute(t)
+            });
+            new Element("div.x-box", {
+                html: e
+            }).inject(i)
+        } (); !
+        function() {
+            var e = "<h2>推荐</h2>";
+            t.Excell.each(function(t) {
+                e += '<a href="/ws/{ForumId}" class="mi6" style="background-image:url({Logo});" title="{Title}"></a>'.substitute(t)
+            }),
+            new Element("div.x-box", {
+                html: e
+            }).inject(i)
+        } ()
+    },
+    _initForumbar: function(t, e, i) {
+        var n = t.isOwn,
+        o = new Element("div").inject(i); (this.updateBulletin = function() {
+            var t = n ? '<span cmd="ForumEditDlg" _mode="Edit" class="more">管理</span><span cmd="FourmBullDlg" class="more">设置</span>': "";
+            o.set("html", "<h2>" + t + "公告</h2>" + e.Bulletin.toHtml())
+        })();
+        var a = new Element("div.x-box").inject(i); !
+        function() {
+            var e = "";
+            t.Mate.each(function(t) {
+                t.avatar = Passport.avatar(t.Account),
+                e += '<span cmd="ListTopic" _Mode="Mate" _Q="{Account}" class="avatar ftl" style="background-image:url({avatar})" title="{MateName}"></span>'.substitute(t)
+            }),
+            a.set("html", '<h2><span cmd="MateListBand" class="more">详细</span>成员</h2>' + e + '<div class="clr"></div>')
+        } ();
+        var s = function(t) {
+            if (0 == t.length) return "";
+            var e = "<ul>";
+            return t.each(function(t, i) {
+                if (! (0 == t.length || i >= 300)) {
+                    var n = t.indexOf("=");
+                    if (n > 0) {
+                        var o = t.substr(0, n);
+                        href = t.substr(n + 1).trim(),
+                        /^[-+]?\d+$/.test(href) && (href = "/" + href),
+                        e += '<li><a class="fg-black" href="' + href + '">' + o.html() + "</a></li>"
+                    }
+                }
+            }),
+            e += "</ul>"
+        },
+        d = new Element("div.x-box").inject(i); (this.updateLink = function() {
+            var t = n ? '<span cmd="ForumLinkDlg" class="more">设置</span>': "";
+            d.set("html", "<h2>" + t + "链接</h2>" + s(e.Links.split("\n")))
+        })()
+    },
+    initForumEditDlg: function(t, e) {
+        e.pane = new PopupDlg({
+            width: 560,
+            content: '<div id="fe-upload" style="width:188px; padding-top:24px; font-size:12px; float:right; position:relative;">可以上传一幅图片作为工作坊的Logo。图片尺寸为120x120像素。<br/><img id="fe-logo" style="width:120px;height:120px;display:none;"/></div><form id="fe-form" method="post" action="" style="width:320px;"><div class="f-row">工作坊名称：<br/><input name="Title" d-vc="required" maxlength="50" style="width:300px;"/></div><div class="f-row">副标题：<br/><input name="Subtitle" maxlength="50" style="width:300px;"/></div><div class="f-row">验证码 (若设置，成员加入时需填写此验证码)：<br/><input name="Vcode" maxlength="10" style="width:300px;"/></div><div class="f-row">栏目设置 (每行一个)：<br/><textarea name="Tags" style="width:300px;height:80px;">原创\n转载</textarea></div><div class="f-bow"><button type="submit" class="f-def">确定</button><button type="button" class="done">取消</button></div><input name="Action" value="ftForumPost_A" type="hidden"/><input name="Mode" value="Edit" type="hidden"/><input name="Logo" value="" style="display:none"/><input name="ForumId" value="" style="display:none"/></form>'
+        });
+        var i = this.current,
+        n = $("fe-form"),
+        o = function(t) {
+            var e = $("fe-logo");
+            if (!t || 0 == t.length) return e.display(!1);
+            e.display().src = t,
+            n.Logo.value = t
+        };
+        new UploadForm({
+            parent: "fe-upload",
+            action: App.upload,
+            allow: "image",
+            mordern: !0,
+            onComplete: o
+        });
+        var a = function(t, o) {
+            0 == n.getFieldValue("ForumId").length && o > 0 ? location.href = "/" + o: (n.toData(i.Forum), this.updateTitle(), this.updateForumTagsPad && this.updateForumTagsPad(), this.updateForumTagsOpt && this.updateForumTagsOpt(), e.hide())
+        }.bind(this);
+        new FormX(n, a),
+        e.update = function(t) {
+            o(),
+            n.reset();
+            var e = i.Forum;
+            "0" != e.ForumId && (n.fromData(e), o(e.Logo))
+        }
+    },
+    initFourmBullDlg: function(t, e) {
+        e.pane = new PopupDlg({
+            width: 360,
+            content: '<form id="fb-form" method="post" action=""><div class="f-row">请在下面填写公告内容。<br/><textarea name="Bulletin" style="width:90%; height:200px;"></textarea></div><div class="f-bow"><button type="submit" class="f-def">确定</button><button class="done" type="button">取消</button></div><input name="Action" value="ftForumPost_A" type="hidden"/><input name="Mode" value="Bulletin" type="hidden"/><input name="ForumId" value="" style="display:none"/></form>'
+        });
+        var i = this.current,
+        n = $("fb-form"),
+        o = function(t, o) {
+            n.toData(i.Forum),
+            this.updateBulletin(),
+            e.hide()
+        }.bind(this);
+        new FormX(n, o),
+        e.update = function(t) {
+            n.fromData(i.Forum)
+        }
+    },
+    initForumLinkDlg: function(t, e) {
+        e.pane = new PopupDlg({
+            width: 520,
+            content: '<form id="fl-form" method="post" action=""><div class="f-row">每行输入一个链接，标题和网址之间用“=”分隔开，最多可设置300个。<br/><textarea name="Links" wrap="off" style="width:95%; height:200px;"></textarea></div><div class="f-bow"><button type="submit" class="f-def">确定</button><button class="done" type="button">取消</button></div><input name="Action" value="ftForumPost_A" type="hidden"/><input name="Mode" value="Links" type="hidden"/><input name="ForumId" value="" style="display:none"/></form>'
+        });
+        var i = this.current,
+        n = $("fl-form"),
+        o = function(t, o) {
+            n.toData(i.Forum),
+            this.updateLink(),
+            e.hide()
+        }.bind(this);
+        new FormX(n, o),
+        e.update = function(t) {
+            n.fromData(i.Forum)
+        }
+    },
+    initMateSetupDlg: function(t, e) {
+        var i = '<form id="ms-form" method="post" action=""><div class="f-row">成员账号：<br/><input name="Acc" d-vc="integer" maxlength="10" style="width:220px;"/></div><div class="f-row">' + jo.getFieldText("radio", "Mode", {
+            Admin: "升为管理员",
+            Mate: "降为普通成员",
+            Remove: "删除此成员"
+        }) + '</div><div class="f-row lt">管理员拥有修改会员文章、删除评论等权限。<br/>普通成员可发表文章，非成员仅可发表评论。</div><div class="f-bow"><button type="submit" class="f-def">确定</button><button class="done" type="button">关闭</button></div><input name="Action" value="ftMateSetup_A" type="hidden"/><input name="ForumId" value="" style="display:none"/></form>';
+        e.pane = new PopupDlg({
+            width: 300,
+            content: i
+        });
+        var n = $("ms-form");
+        n.ForumId.value = this.current.Forum.ForumId;
+        new FormX(n,
+        function(t, e) {
+            n.warn(e > 0 ? "设置完毕": "未能设置，可能是账号错误"),
+            e > 0 && (n.Acc.value = "")
+        })
+    },
+    initGuideBand: function(t, e, i) {
+        this.initBandSheet(e, i).load("/ui/dawn/guide.htm")
+    },
+    initMateListBand: function(t, e, i) {
+        var n = this.initBandSheet(e, i),
+        o = this.current,
+        a = '<b class="tb2 tb-spt" cmd="LastBand"><i class="wi">' + Wicon.back + '</i></b><b cmd="QueryMate" class="tb2 tb-spt">查找</b>';
+        o.isOwn && (a += '<b cmd="MateSetupDlg" class="tb2">管理</b>'),
+        new Element("div.x-tbr", {
+            html: a
+        }).inject(n);
+        var s = o.Forum,
+        d = new Element("div.x-pad", {
+            html: "【坊号：" + s.ForumId + "】  创建时间：" + s.PublishDate.utc()
+        }).inject(n),
+        l = {
+            "账号": "width:68px",
+            "姓名": "width:80px",
+            "备注": "width:100px",
+            "角色": "width:38px",
+            "签到日期": "width:100px",
+            "签到次数": "width:68px",
+            "发文章数": "width:68px",
+            "发评论数": "width:68px"
+        },
+        c = new TableList({
+            parent: d,
+            id_name: "MateId",
+            getRowHtml: function(t) {
+                return t.MateName = t.MateName.html(),
+                t.SignDate = t.SignDate.utc(),
+                t.MateRole = "100" == t.MateRole ? "管理": "成员",
+                '<td class="ptr" cmd="ListTopic" _Mode="Mate" _Q="{Account}">{Account}</td><td>{MateName}</td><td>{Remark}</td><td>{MateRole}</td><td>{SignDate}</td><td>{SignCnt}</td><td>{ContentCnt}</td><td>{CommentCnt}</td>'.substitute(t)
+            },
+            header: l,
+            cmd: "MateListBand",
+            singleSelect: !0
+        }),
+        r = function(t) {
+            c.update(t.gets("Mate"), t.get("MatePaged"))
+        };
+        this.queryMate = function(t) {
+            var i = new StickDlg({
+                stickTo: t,
+                html: '请输入成员账号：<br/><input class="stick-i"/>',
+                ok: function() {
+                    var t = i.dlg.getElement("input").value;
+                    return e.update({
+                        Acc: t,
+                        Page: "1"
+                    }),
+                    !0
+                }.bind(this)
+            })
+        },
+        e.update = function(t) {
+            window.scrollTo(0, 0);
+            var e = ParamStack.get("p_mate", t, "Page", {
+                Action: "ftMateList",
+                ForumId: s.ForumId
+            });
+            e.changed && new RequestX(e.data, r)
+        }
+    },
+    initTopicListBand: function(t, e, i) {
+        var n = this.initBandSheet(e, i);
+        this._initTopicBar(n),
+        this._initTopicHilite(n),
+        this._initTopicList(n)
+    },
+    _initTopicBar: function(t) {
+        var e = this.current,
+        i = '<b cmd="ListTopic" _Mode="All" class="tb2 active">文章</b><b cmd="ListTopic" _Mode="Marked" class="tb2 tb-spt">推荐</b>';
+        i = e.isForum ? '<span class="ftr"><b id="tb-join" cmd="JoinMate" class="hipot" style="display:none"><i class="wib">' + Wicon.pin + '</i>加入本坊</b><b id="tb-edit" cmd="TopicEditBand" class="hipot" style="display:none"><i class="wib">' + Wicon.plus + "</i>发表文章</b></span>" + i: '<span class="ftr"><b cmd="GuideBand" class="hipot">快速指南</b></span>' + i;
+        var n = new Element("div.x-tbr", {
+            html: i
+        }).inject(t);
+        if (this.resetTopicTbar = function(t) {
+            if (!t.hasClass("wi")) {
+                var e = n.getElement(".active");
+                e && e.removeClass("active"),
+                t && t.singleSelect()
+            }
+        },
+        e.isForum) {
+            var o = new Element("b.tb2.tb-more", {
+                html: '栏目<i class="wi">' + Wicon.drop + "</i>"
+            }).inject(n),
+            a = new Element("div.pad").inject(n);
+            this.updateForumTagsPad = function() {
+                var t = ""; (e.Forum.Tags || "原创\n转载").split("\n").each(function(e) {
+                    e.length > 0 && (t += '<span cmd="ListTopic" _Mode="Tag" _Q="' + e + '" class="mi1">' + e.html() + "</span>")
+                }),
+                a.set("html", t)
+            },
+            this.updateForumTagsPad(),
+            o.dropReady(a),
+            $("tb-edit").display(e.isMate),
+            $("tb-join").display(!e.isMate && e.isUsr),
+            this.joinMate = function(t) {
+                var i = e.Forum,
+                n = "欢迎您加入!";
+                "0" != i.Vcode && (n += '<br/>请在下方输入验证码：<br/><input class="stick-i"/>');
+                var o = function(t, e) {
+                    if (e < 0) return alert(":( 由于验证码错误，未能加入。");
+                    $("tb-join").display(!1),
+                    $("tb-edit").display()
+                },
+                a = new StickDlg({
+                    stickTo: t,
+                    html: n,
+                    ok: function() {
+                        var t = a.dlg.getElement("input");
+                        return (!t || 0 != t.value.length) && (new RequestX({
+                            Action: "ftMateJoin_A",
+                            ForumId: i.ForumId,
+                            Vcode: t ? t.value: ""
+                        },
+                        o), !0)
+                    }.bind(this)
+                })
+            }
+        }
+    },
+    _initTopicHilite: function(t) {
+        var e = new Element("div.x-hilite").inject(t),
+        i = new TopicView({
+            parent: e,
+            id_name: "ContentId",
+            getRowHtml: function(t) {
+                var t = jo.html(t, {
+                    Tag2: t.Tag ? "[" + t.Tag + "] ": "",
+                    PublishDate: t.PublishDate.utc()
+                });
+                return '{Tag2}<a href="/wst/{ContentId}" cmd="LoadTopic" _ContentId="{ContentId}">{Title}</a> <span class="lt">({PublishDate})</span>'.substitute(t)
+            },
+            wrapClass: "hi"
+        });
+        this.updateHiliteList = function(t) {
+            var n = t.gets("Hilite");
+            e.display(n.length > 0),
+            i.update(n)
+        },
+        this.updateHiliteRow = function(t) {
+            e.display(!0),
+            "1" == t.Hilite ? i.updateRow(t, "top") : i.removeRow(t.ContentId)
+        },
+        this.removeHiliteRow = function(t) {
+            i.removeRow(t)
+        }
+    },
+    _initTopicList: function(t) {
+        var e = function(t) {
+            if (0 == t.length) return "";
+            var e = "";
+            return t.split("\n").each(function(t) {
+                e += '<img class="toc-img" src="' + t + '"/>'
+            }),
+            e
+        },
+        i = App.portable,
+        n = '<h3 class="toc-cap">' + (i ? '<a class="fg-black" href="/wst/{ContentId}">{Tag2}{Title}</a>': '{Tag2}<a href="/wst/{ContentId}" cmd="LoadTopic" _ContentId="{ContentId}">{Title}</a>') + '</h3><div>{Thumb}</div><div>{Summary}</div><div class="lt lo clrfix">{PublishDate} {Author} ({WordCnt}字, 阅读{HitCnt}, 评论{CommentCnt})</div>',
+        o = new TopicList({
+            parent: new Element("div").inject(t),
+            id_name: "ContentId",
+            cmd: "ListTopic",
+            stretch: i,
+            getRowHtml: function(t) {
+                return t.Tag2 = t.Tag ? "[" + t.Tag + "] ": "",
+                t = jo.html(t, {
+                    PublishDate: t.PublishDate.utc(),
+                    Thumb: e(t.Thumb)
+                }),
+                n.substitute(t)
+            }
+        });
+        this.updateTopicRow = function(t) {
+            o.updateRow(t, "top")
+        },
+        this.updateTopicList = function(t) {
+            o.update(t.gets("Topic"), t.get("TopicPaged"), "暂无内容")
+        };
+        var a = this.current;
+        this.listTopic = function(t) {
+            i || this.openBand("TopicListBand");
+            var e = ParamStack.get("p_topic", t, "Mode,Q,Page", {
+                Action: "ftContentList",
+                ForumId: this.current.Forum.ForumId
+            });
+            e.changed && (i || (window.scrollTo(0, 0), this.resetTopicTbar(t)), new RequestX(e.data, this.updateTopicList))
+        },
+        this.loadTopic = function(t) {
+            window.scrollTo(0, 0),
+            this.openBand("TopicViewBand");
+            var e = ParamStack.get("p_view", t, "ContentId", {
+                Action: "ftContentView"
+            });
+            e.changed && new RequestX(e.data, this.updateContent)
+        }.bind(this),
+        this.viewTopic = function(t) {
+            var e = jo.getViewSibling(t, o, a.Content.ContentId);
+            e > 0 && this.loadTopic({
+                ContentId: e
+            })
+        },
+        this.removeTopic = function(t) {
+            var e = a.Content.ContentId;
+            new StickDlg({
+                stickTo: t,
+                html: "确定要删除此文章及其评论吗？<br/>注意：删除后不能再恢复！",
+                ok: function() {
+                    return this.openBand("TopicListBand"),
+                    this.removeHiliteRow(e),
+                    o.removeRow(e),
+                    new RequestX({
+                        Action: "ftContentDel_A",
+                        ContentId: e
+                    }),
+                    !0
+                }.bind(this)
+            })
+        },
+        this.hiliteTopic = function(t) {
+            var e = a.Content;
+            new RequestX({
+                Action: "ftContentSetup_A",
+                ContentId: e.ContentId,
+                ForumId: e.ForumId,
+                Mode: "Hilite"
+            }),
+            e.Hilite = "0" == e.Hilite ? "1": "0";
+            var i = "1" == e.Hilite;
+            this.updateHiliteRow(e),
+            t.set("html", i ? "取消置顶": "置顶").tip(i ? "置顶完毕，最多可置顶10篇文章": "已取消置顶")
+        },
+        this.markTopic = function(t) {
+            var e = a.Content;
+            new RequestX({
+                Action: "ftContentSetup_A",
+                ContentId: e.ContentId,
+                ForumId: e.ForumId,
+                Mode: "Marked"
+            }),
+            e.Marked = "0" == e.Marked ? "1": "0";
+            var i = "1" == e.Marked;
+            t.set("html", i ? "取消推荐": "推荐").tip(i ? "推荐完毕": "已取消推荐")
+        },
+        this.compareTopic = function(t) {
+            var e = a.Content,
+            i = e.Detail;
+            0 == i.length && (i = e.Summary);
+            var n = (i = i.stripHtml()).length,
+            o = Number.random(0, n - 10),
+            s = Number.random(20, 50),
+            d = encodeURIComponent(i.substr(o, s)),
+            l = "http://www.baidu.com/s?wd={Query}".substitute({
+                Query: d
+            });
+            window.open(l)
+        }
+    },
+    initTopicViewBand: function(t, e, i) {
+        var n = this.initBandSheet(e, i),
+        o = '<b cmd="TopicListBand" class="tb2"><i class="wi">' + Wicon.back + '</i></b><b cmd="ViewTopic" _dir="previous" class="tb2"><i class="wi">' + Wicon.prev + '</i></b><b cmd="ViewTopic" _dir="next" class="tb2 tb-spt"><i class="wi">' + Wicon.next + '</i></b><b cmd="CompareTopic" class="tb2">相似</b><b cmd="ToggleNote" class="tb2"><i class="wi">' + Wicon.flag + '</i>批注</b><span _group="1" style="display:none"><b cmd="RemoveTopic" class="tb2">删除</b><b cmd="TopicEditBand" _Mode="Edit" class="tb2">修改</b></span><span _group="2" style="display:none"><b cmd="HiliteTopic" class="tb2">置顶</b><b cmd="MarkTopic" class="tb2">推荐</b></span>',
+        a = new Element("div.x-tbr", {
+            html: o
+        }).inject(n),
+        s = a.getElement("[_group=1]"),
+        d = a.getElement("[_group=2]"),
+        l = a.getElement("[cmd=HiliteTopic]"),
+        c = a.getElement("[cmd=MarkTopic]"),
+        r = new Element("div.w-title").inject(n),
+        u = new Element("div.x-pad").inject(n),
+        m = new Element("div.w-detail").inject(u),
+        p = new Element("div.w-comment").inject(u);
+        this._initNoteView(m),
+        this._initCommentView(p);
+        var h = new Element('div[style="margin-right:108px;"]').inject(r),
+        v = new Element("div[style=top:0px; right:0; width:98px; position:absolute;]").inject(r, "top"),
+        f = new QRCode(v, {
+            width: 98,
+            height: 98,
+            colorLight: "#f1f1f1",
+            colorDark: "#000"
+        });
+        this.updateContent = function(t, e) {
+            var i = this.current;
+            t && (i.Content = t.get("Content"));
+            var n = i.Content,
+            o = !(!n || !n.ContentId);
+            if (s.display(o && "1" != n.Archived && i.isForum && (i.isAdm || n.Account == i.Passport.Account)), d.display(o && "1" != n.Archived && i.isAdm), u.display(o), !o) return r.set("html", "文章不存在或已经被删除。");
+            l.set("html", "1" == n.Hilite ? "取消置顶": "置顶"),
+            c.set("html", "1" == n.Marked ? "取消推荐": "推荐");
+            var a = {
+                Tag: n.Tag ? "[" + n.Tag + "]": "",
+                ContentId: n.ContentId,
+                Title: n.Title.html(),
+                Author: n.Author.html(),
+                PublishDate: n.PublishDate.utc(),
+                WordCnt: n.WordCnt,
+                HitCnt: n.HitCnt,
+                CommentCnt: n.CommentCnt
+            };
+            h.set("html", '{Tag} <a href="/wst/{ContentId}" cmd="LoadTopic" _ContentId="{ContentId}">{Title}</a><br/>{PublishDate} {Author} ({WordCnt}字, 阅读{HitCnt}, 评论{CommentCnt})<br/><br/>'.substitute(a)),
+            f.makeCode("http://" + location.host + "/wst/" + n.ContentId),
+            m.set("html", n.Detail.wipeScript()),
+            p.display("1" != n.Locked),
+            n.isEdit || this.updateComment(t),
+            n.isEdit || this.updateNote(t)
+        }.bind(this)
+    }
+}),
+App.implement({
+    _initNoteView: function(t) {
+        var e = new Annotate({
+            stickTo: t,
+            shown: !1,
+            doUpdate: function(t, e) {
+                return t.set({
+                    _NoteId: e.NoteId,
+                    _Acc: e.Account,
+                    title: e.Author
+                }),
+                e.Summary
+            },
+            doAppend: function(t, e, i) {
+                if (Passport.UID) {
+                    var n = {
+                        Action: "stNotePost_A",
+                        Mode: "Append",
+                        ContentId: this.current.Content.ContentId,
+                        x: e.x.toFixed(0),
+                        y: e.y.toFixed(0),
+                        Summary: i
+                    };
+                    new RequestX(n,
+                    function(e, i) {
+                        t.set("_NoteId", i)
+                    })
+                }
+            }.bind(this),
+            doMove: function(t, e) {
+                t.hasClass("an-new") && new RequestX({
+                    Action: "stNotePost_A",
+                    Mode: "Move",
+                    NoteId: t.get("_NoteId"),
+                    x: e.x.toFixed(0),
+                    y: e.y.toFixed(0)
+                })
+            },
+            doRemove: function(t) {
+                return t.hasClass("an-new") && new RequestX({
+                    Action: "stNotePost_A",
+                    Mode: "Remove",
+                    NoteId: t.get("_NoteId")
+                }),
+                !0
+            }
+        });
+        this.updateNote = function(t) {
+            e.update(t ? t.gets("Note") : [])
+        },
+        this.toggleNote = function(t) {
+            e.show(t.toggleClass("active").hasClass("active"))
+        }
+    },
+    _initCommentView: function(t) {
+        var e = this.current,
+        i = Passport.UID,
+        n = Passport.UN || "-",
+        o = App.portable,
+        a = new Comment({
+            parent: t,
+            stretch: o,
+            caption: "评论",
+            reject: i > 0 ? null: '<a class="lo" href="' + App.wai + '">请登录后发表评论</a>',
+            post: {
+                Action: "ftCommentPost_A",
+                Account: i,
+                Author: n
+            },
+            removeRow: function(t) {
+                new RequestX({
+                    Action: "ftCommentDel_A",
+                    CommentId: t
+                })
+            }
+        });
+        this.updateComment = function(t) {
+            if (!t) return a.clear();
+            var n = e.Content;
+            a.update(t.gets("Comment"), t.get("CommentPaged"), {
+                ContentId: n.ContentId,
+                Archived: n.Archived,
+                Removeable: e.isAdm,
+                Hilite: i == n.Account ? "1": "0"
+            })
+        },
+        this.listComment = function(i) {
+            o || t.scrollIntoView();
+            var n = ParamStack.get("p_comment", i, "Page", {
+                Action: "ftCommentList",
+                ContentId: e.Content.ContentId
+            });
+            new RequestX(n.data, this.updateComment)
+        }.bind(this)
+    },
+    initTopicEditBand: function(t, e, i) {
+        var n = new Element("div.mce").inject(document.body);
+        e.widget = [n];
+        var o = '<div class="tbr" style="padding-left:20px;"><b cmd="SaveTopic" class="tb1 tb-spt"><i class="wib">' + Wicon.save + '</i>保存</b><b cmd="LastBand" class="tb1 tb-spt">取消</b></div><div class="mce-cap"><input id="mce-title" class="mce-title" placeholder="在这里填写文章标题" maxlength="80"/></div><div id="mce-toc"></div>',
+        a = new Element("div.mce-sbr.stoB", {
+            html: '<form id="mce-form" class="mce-prop" method="post" action=""><div>栏目:<br/><select name="Tag" style="width:186px;"></select></div><div>署名:<br/><input name="Author" d-vc="required" maxlength="20" style="width:168px;"/></div><div>摘要:<br/><textarea name="Summary" style="width:168px;height:80px;"></textarea></div><div><label><input name="Locked" type="checkbox" value="1"/> 不允许评论</label></div><input name="Title" value="" style="display:none;"/><input name="Detail" value="" style="display:none;"/><textarea name="Thumb" value="" style="display:none;"></textarea><input name="WordCnt" value="0" style="display:none;"/><input name="Hilite" value="0" style="display:none;"/><input name="Marked" value="0" style="display:none;"/><input name="ContentId" value="0" style="display:none;"/><input name="ForumId" value="0" style="display:none;"/><input name="Action" value="ftContentPost_A" type="hidden"/></form>'
+        }).inject(n);
+        new Element("div.mce-pan.stoRB[style=overflow:hidden]", {
+            html: o
+        }).inject(n);
+        new UploadPane({
+            parent: new Element("div.mce-prop").inject(a),
+            action: App.upload,
+            downIcon: App.downIcon,
+            mordern: !0,
+            onSelect: function(t, e) {
+                tinyMCE.execCommand("mceInsertContent", !1, t)
+            }
+        }),
+        MCE.fullHeight("mce-toc"),
+        MCE.init("mce-toc");
+        var s = this.current,
+        d = $("mce-form"),
+        l = function(t, e) {
+            var i = d.toData({},
+            {
+                isEdit: "0" != d.field("ContentId"),
+                ContentId: e,
+                Account: s.Passport.Account,
+                HitCnt: "0",
+                CommentCnt: "0",
+                PublishDate: "刚才"
+            });
+            this.updateTopicRow(i),
+            "1" == i.Hilite && this.updateHiliteRow(i),
+            s.Content = i,
+            this.openBand("TopicViewBand"),
+            this.updateContent()
+        }.bind(this);
+        new FormX(d, l,
+        function() {
+            var t = $("mce-title");
+            if (0 == t.value.length) return d.warn("请在这里填写文章标题", t);
+            var e = MCE.get("mce-toc"),
+            i = e.stripHtml();
+            d.Detail.value = e,
+            0 == d.Summary.value.length && (d.Summary.value = i.substr(0, 100).replace(/\n/g, "")),
+            d.WordCnt.value = i.length,
+            d.Title.value = t.value;
+            var n = [];
+            return $("mce-toc").getElements("img").each(function(t) {
+                if (! (n.length >= 3)) {
+                    var e = t.src;
+                    t.width > 300 && n.push(e)
+                }
+            }),
+            d.Thumb.value = n.join("\n"),
+            !0
+        }),
+        this.updateForumTagsOpt = function() {
+            var t = ""; (s.Forum.Tags || "原创\n转载").split("\n").each(function(e) {
+                e.length > 0 && (t += '<option value="' + e + '">' + e + "</option>")
+            }),
+            $(d.Tag).empty().set("html", t)
+        },
+        this.updateForumTagsOpt(),
+        this.saveTopic = function(t) {
+            d.locked ? t.tip("正在保存，请稍候...") : d.fireEvent("submit")
+        },
+        e.hide = function() {
+            $("y-wrap").display()
+        },
+        e.update = function(t) {
+            $("y-wrap").display(!1),
+            d.reset(),
+            "Edit" == t.get("_Mode") ? d.fromData(s.Content) : (d.field("ForumId", s.Forum.ForumId), d.field("Author", s.Passport.NickName)),
+            $("mce-title").value = d.Title.value,
+            MCE.set("mce-toc", d.field("Detail"))
+        }
+    }
+}),
+App.start();
+</script>
+<base target="_blank">
+</head>
+<body>
+
+	<div class="loading" style="display: none;"></div>
+	<div id="y-wrap">
+		<div id="y-banner">
+			<div id="y-user" class="mi5bar"
+				style="background-image: url(&quot;http://z.hnjs.org/dat/avatar/622/622079.jpg&quot;);">
+				<a class="mi5" target="_self" href="/">社区</a><a class="mi5"
+					target="_self" href="/ws">我的工作坊</a><b class="mi5" cmd="Logout">退出</b>
+			</div>
+			<div id="y-title" style="padding-left: 0px;">
+				<div id="y-cap">
+					<span class="capx">工作坊</span>网络研修<br>
+				</div>
+			</div>
+		</div>
+		<div id="y-pane">
+			<div id="TopicListBand" style="">
+				<div class="x-tbr">
+					<span class="ftr"><b cmd="GuideBand" class="hipot">快速指南</b></span><b
+						cmd="ListTopic" _mode="All" class="tb2 active">文章</b><b
+						cmd="ListTopic" _mode="Marked" class="tb2 tb-spt">推荐</b>
+				</div>
+				<div class="x-hilite" style="display: none;">
+					<div class="hi-view"></div>
+				</div>
+				<div>
+					<div class="toc-view">
+						<div class="toc-row" _id="2659">
+							<h3 class="toc-cap">
+								[读书笔记] <a href="/wst/2659" cmd="LoadTopic" _contentid="2659">读《做最好的老师》有感</a>
+							</h3>
+							<div></div>
+							<div>读了李镇西老师的《做最好的老师》一书，感触很深。这本书是李老师25年教育教学思想和智慧的精华集粹，全方位地阐述了李老师的教育观、学生观、班级管理、思想工作、心理教育以及语文教学的理念与实践。李老师把他</div>
+							<div class="lt lo clrfix">昨天 20:32 周江山 (1331字, 阅读5, 评论0)</div>
+						</div>
+						<div class="toc-row" _id="2658">
+							<h3 class="toc-cap">
+								[读书笔记] <a href="/wst/2658" cmd="LoadTopic" _contentid="2658">我的小学语文观</a>
+							</h3>
+							<div></div>
+							<div>张庆老师《我的小学语文观》一书，这次我读了大约两个月时间。书中丰富的内容展现了张老多年教学思想的精髓。
+								为了方便我们阅读，本书把文章分为五类：1.教学观点综论篇。2.教材教法研究篇。其中又包括汉语拼音</div>
+							<div class="lt lo clrfix">昨天 20:29 周江山 (1025字, 阅读4, 评论0)</div>
+						</div>
+						<div class="toc-row" _id="2657">
+							<h3 class="toc-cap">
+								[工作日志] <a href="/wst/2657" cmd="LoadTopic" _contentid="2657">小学语文教学研修日志</a>
+							</h3>
+							<div></div>
+							<div>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+								经过十来天的学习与探讨，我们教师对语文课改还在适应阶段，在这就谈谈我对语文新课改给我带来的一些思考。&nbsp; &nbsp;
+								一、课堂要与现实生活相结合&nbsp; &nbsp; &nbsp; 新课程下的课堂教学，是</div>
+							<div class="lt lo clrfix">昨天 20:24 周江山 (1706字, 阅读4, 评论0)</div>
+						</div>
+						<div class="toc-row" _id="2656">
+							<h3 class="toc-cap">
+								[工作日志] <a href="/wst/2656" cmd="LoadTopic" _contentid="2656">培训有感</a>
+							</h3>
+							<div></div>
+							<div>自从参加了远程培训后，作为一位语文教师，我对语文教学有了更深的想法，如下：
+								一、激发学生学习语文的兴趣，提高学生语文素养 语文是一门充满思想、充满人文精神、充满智慧的学科。我在语文课堂教学中，力求</div>
+							<div class="lt lo clrfix">昨天 20:22 周江山 (1000字, 阅读5, 评论0)</div>
+						</div>
+						<div class="toc-row" _id="2655">
+							<h3 class="toc-cap">
+								[教学设计] <a href="/wst/2655" cmd="LoadTopic" _contentid="2655">惊弓之鸟教学设计（第二课时）</a>
+							</h3>
+							<div></div>
+							<div>惊弓之鸟（第二课时）教学目标 1、在理解课文的基础上能有感情地朗读课文。&nbsp; &nbsp;
+								&nbsp; &nbsp; &nbsp; &nbsp; 2、培养学生复述课文的能力和善于观察、勤于动脑的意识教学重难点
+								领会更羸&amp;ldquo;观察&amp;md</div>
+							<div class="lt lo clrfix">昨天 20:20 周江山 (771字, 阅读1, 评论0)</div>
+						</div>
+						<div class="toc-row" _id="2654">
+							<h3 class="toc-cap">
+								[教学设计] <a href="/wst/2654" cmd="LoadTopic" _contentid="2654">惊弓之鸟教学设计（第一课时）</a>
+							</h3>
+							<div></div>
+							<div>惊弓之鸟（第一课）教学目标
+								1、认识5个生字，学会12个生字，理解&amp;ldquo;能手&amp;rdquo;&amp;ldquo;本事&amp;rdquo;等词语的意思。&nbsp;
+								&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 2、在理解课文的基础上能</div>
+							<div class="lt lo clrfix">昨天 20:19 周江山 (724字, 阅读1, 评论0)</div>
+						</div>
+						<div class="toc-row" _id="2653">
+							<h3 class="toc-cap">
+								[教学展示] <a href="/wst/2653" cmd="LoadTopic" _contentid="2653">周江山教学展示和工作图片</a>
+							</h3>
+							<div></div>
+							<div></div>
+							<div class="lt lo clrfix">昨天 20:15 周江山 (0字, 阅读2, 评论0)</div>
+						</div>
+						<div class="toc-row" _id="2652">
+							<h3 class="toc-cap">
+								[教学展示] <a href="/wst/2652" cmd="LoadTopic" _contentid="2652">周江山教学和工作展示</a>
+							</h3>
+							<div></div>
+							<div></div>
+							<div class="lt lo clrfix">昨天 20:13 周江山 (0字, 阅读3, 评论0)</div>
+						</div>
+						<div class="toc-row" _id="2651">
+							<h3 class="toc-cap">
+								[原创] <a href="/wst/2651" cmd="LoadTopic" _contentid="2651">参加《创意美术课程》全员培训心得体会</a>
+							</h3>
+							<div></div>
+							<div>我通过聆听老师的《创意美术课程》，使我对幼儿园美术教育有了新的思考，而且感触颇深。首先要多渠道，让幼儿感受美。伟大的教育家陈鹤琴先生早就提出了&amp;ldquo;大自然大社会&amp;rdquo;是活教材的主张</div>
+							<div class="lt lo clrfix">昨天 10:28 杜小菊 (653字, 阅读2, 评论0)</div>
+						</div>
+						<div class="toc-row" _id="2650">
+							<h3 class="toc-cap">
+								[原创] <a href="/wst/2650" cmd="LoadTopic" _contentid="2650">幼儿园小班语言活动教案《小鸭子找朋友》</a>
+							</h3>
+							<div></div>
+							<div>一、活动目标：1、认真听故事，理解故事内容。2、学习故事中得对话语言。二、活动准备：小鸭、小兔、小鸟、乌龟等动物头饰若干，小青蛙、小鱼、小螃蟹、小狐狸和小猫等图片。三、活动重、难点：重点是</div>
+							<div class="lt lo clrfix">昨天 10:28 杜小菊 (1469字, 阅读2, 评论0)</div>
+						</div>
+						<div class="toc-row" _id="2649">
+							<h3 class="toc-cap">
+								[原创] <a href="/wst/2649" cmd="LoadTopic" _contentid="2649">学习《海南省中小学教师违反职业道德行为处理实施细则》
+									心得体会</a>
+							</h3>
+							<div></div>
+							<div>良好的职业修养是教师职业道德最基本的要求，教师师德素养的高低，直接关系到学生的健康成长。老师是孩子们的榜样，良好的师德师风对孩子们有着潜移默化的影响，因而身为教师就要严格要求自己，在师德修养上不断鞭策</div>
+							<div class="lt lo clrfix">昨天 10:27 杜小菊 (1192字, 阅读2, 评论0)</div>
+						</div>
+						<div class="toc-row" _id="2648">
+							<h3 class="toc-cap">
+								[原创] <a href="/wst/2648" cmd="LoadTopic" _contentid="2648">学习黄大年教师事迹心得体会</a>
+							</h3>
+							<div></div>
+							<div>近日，教育部作出追授黄大年同志&amp;ldquo;全国优秀教师&amp;rdquo;荣誉称号的决定。黄大年同志，男，汉族，1958年8月出生，中共党员，生前系国家&amp;ldquo;千人计划&amp;rdquo;入选专家，国家&amp;</div>
+							<div class="lt lo clrfix">昨天 10:27 杜小菊 (856字, 阅读1, 评论0)</div>
+						</div>
+						<div class="toc-row" _id="2647">
+							<h3 class="toc-cap">
+								[原创] <a href="/wst/2647" cmd="LoadTopic" _contentid="2647">参加《五指山市幼儿园教师优秀教育活动评比》心得体会</a>
+							</h3>
+							<div></div>
+							<div>金秋十月，是收获的季节，也是共享喜悦的时刻。很荣幸参加了这次我市幼儿园社会教育暨幼儿园教育基本功评比活动。本次活动评比分为三项：一、社会领域活动；二、创造性游戏学习故事；三、教师自弹自唱基本功。五</div>
+							<div class="lt lo clrfix">昨天 10:26 杜小菊 (333字, 阅读2, 评论0)</div>
+						</div>
+						<div class="toc-row" _id="2646">
+							<h3 class="toc-cap">
+								[原创] <a href="/wst/2646" cmd="LoadTopic" _contentid="2646">参加《幼儿园一日活动常规和保教工作细则指导建议培训》心得体会</a>
+							</h3>
+							<div></div>
+							<div>通过这次一日常规的学习,让我感受到幼儿园常规是复杂琐碎却具体详细的。慢慢的静下心来仔细阅读，其中的每个环节，都是相关联而紧凑的。从晨间接园到幼儿离园，生活常规在幼儿一日生活中占有重要的地位。在工作上，</div>
+							<div class="lt lo clrfix">昨天 10:25 杜小菊 (802字, 阅读2, 评论0)</div>
+						</div>
+						<div class="toc-row" _id="2645">
+							<h3 class="toc-cap">
+								[原创] <a href="/wst/2645" cmd="LoadTopic" _contentid="2645">参加“国培计划2016”海南省乡镇幼儿园教师培训心得体会</a>
+							</h3>
+							<div></div>
+							<div>非常荣幸能参加2017年的幼儿园教师国培学习，面对面聆听专家讲座，内容丰富，通过国培学习，我受益匪浅。培训纲要的理论知识是平时教育教学活动目标制定、内容选择等的重要点，学习纲要知识，能使自己做到心中</div>
+							<div class="lt lo clrfix">昨天 10:25 杜小菊 (781字, 阅读1, 评论0)</div>
+						</div>
+						<div class="toc-row" _id="2644">
+							<h3 class="toc-cap">
+								[原创] <a href="/wst/2644" cmd="LoadTopic" _contentid="2644">参加《运动包口令、口哨、手势培训》心得体会</a>
+							</h3>
+							<div></div>
+							<div>2017年11月25日上午9:00-11：30，我参加了由五指山市幼儿园组织开展的口令、口哨、手势培训活动。通过培训，让我对组织户外活动时要用到的口令、口哨、手势有了更深的了解，学会了这些会更加方便我</div>
+							<div class="lt lo clrfix">昨天 10:23 杜小菊 (515字, 阅读1, 评论0)</div>
+						</div>
+						<div class="toc-row" _id="2643">
+							<h3 class="toc-cap">
+								[工作日志] <a href="/wst/2643" cmd="LoadTopic" _contentid="2643">浅谈阅读教学</a>
+							</h3>
+							<div></div>
+							<div>浅谈议论文阅读教学
+								阅读与写作是语文教学的两大主题,同时也是制约语文整体水平和影响学生终身发展的两大难题。叶圣陶先生说:&amp;ldquo;阅读是吸收,写作是倾吐,倾吐是否合乎法度,显然与吸收有密切联系</div>
+							<div class="lt lo clrfix">昨天 10:15 易晓丽 (767字, 阅读6, 评论0)</div>
+						</div>
+						<div class="toc-row" _id="2642">
+							<h3 class="toc-cap">
+								[读书笔记] <a href="/wst/2642" cmd="LoadTopic" _contentid="2642">《做卓越的老师》读书笔记</a>
+							</h3>
+							<div></div>
+							<div>《做卓越的教师》读书笔记最近有幸读了《做卓越的教师》，感慨颇多。书中涵盖了教师的生涯规划、心理健康、班级管理、课堂教学、论文写作、研修组织、家庭教育、魅力师训等，话语真挚，说理透彻，使我对教育有了更</div>
+							<div class="lt lo clrfix">昨天 10:07 易晓丽 (2237字, 阅读1, 评论0)</div>
+						</div>
+						<div class="toc-row" _id="2641">
+							<h3 class="toc-cap">
+								[教学设计] <a href="/wst/2641" cmd="LoadTopic" _contentid="2641">《朋友之间》导学案</a>
+							</h3>
+							<div></div>
+							<div>《朋友之间》导学案</div>
+							<div class="lt lo clrfix">昨天 09:51 刘海义 (9字, 阅读1, 评论0)</div>
+						</div>
+						<div class="toc-row" _id="2640">
+							<h3 class="toc-cap">
+								[教学设计] <a href="/wst/2640" cmd="LoadTopic" _contentid="2640">生活在世界各地的华人教学设计</a>
+							</h3>
+							<div></div>
+							<div>生活在世界各地的华人教学设计</div>
+							<div class="lt lo clrfix">昨天 09:47 刘海义 (14字, 阅读2, 评论0)</div>
+						</div>
+						<div class="toc-row" _id="2639">
+							<h3 class="toc-cap">
+								[教学设计] <a href="/wst/2639" cmd="LoadTopic" _contentid="2639">《答谢中书书》教学设计</a>
+							</h3>
+							<div></div>
+							<div>《答谢中书书》教学设计 教学目标： 1 、了解作者的有关情况，背诵课文2
+								、赏析景物描写，感知作者的思想感情3 、体验作者酷爱自然，归隐林泉的志趣。教学重难点 ： 感知景物描写方法，体验</div>
+							<div class="lt lo clrfix">昨天 09:39 易晓丽 (3777字, 阅读2, 评论0)</div>
+						</div>
+						<div class="toc-row" _id="2638">
+							<h3 class="toc-cap">
+								[教学设计] <a href="/wst/2638" cmd="LoadTopic" _contentid="2638">综合性学习
+									人无信不立 </a>
+							</h3>
+							<div></div>
+							<div>综合性学习人无信不立【知识目标】1．引导学生更深刻地探究&amp;ldquo;信&amp;rdquo;的传统内涵和现代意义。2．培养学生讲诚信的美德。3．培养学生口语交际能力，掌握演讲技巧。【课时计划】</div>
+							<div class="lt lo clrfix">昨天 09:31 易晓丽 (3463字, 阅读2, 评论0)</div>
+						</div>
+						<div class="toc-row" _id="2637">
+							<h3 class="toc-cap">
+								[教学展示] <a href="/wst/2637" cmd="LoadTopic" _contentid="2637">《生活在世界各地的华人》教学课件</a>
+							</h3>
+							<div></div>
+							<div>《生活在世界各地的华人》PPT课件</div>
+							<div class="lt lo clrfix">昨天 09:02 刘海义 (17字, 阅读3, 评论0)</div>
+						</div>
+						<div class="toc-row" _id="2636">
+							<h3 class="toc-cap">
+								[教学设计] <a href="/wst/2636" cmd="LoadTopic" _contentid="2636">《生活在世界各地的华人》教学设计</a>
+							</h3>
+							<div></div>
+							<div></div>
+							<div class="lt lo clrfix">昨天 09:00 刘海义 (0字, 阅读3, 评论0)</div>
+						</div>
+						<div class="toc-row" _id="2635">
+							<h3 class="toc-cap">
+								[学习心得] <a href="/wst/2635" cmd="LoadTopic" _contentid="2635">学习心得</a>
+							</h3>
+							<div></div>
+							<div>这次培训收获良多，与众多前辈老师们一起学习了制作思维导图和微课，并将其运用于教学中，非常实用。</div>
+							<div class="lt lo clrfix">前天 13:47 杨芳 兰洋番加小学 (47字, 阅读3,
+								评论0)</div>
+						</div>
+						<div class="toc-row" _id="2634">
+							<h3 class="toc-cap">
+								[教学课件] <a href="/wst/2634" cmd="LoadTopic" _contentid="2634">小蝌蚪找妈妈教学课件</a>
+							</h3>
+							<div></div>
+							<div>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+								&nbsp; &nbsp; 小蝌蚪找妈妈&nbsp;</div>
+							<div class="lt lo clrfix">前天 13:42 杨芳 兰洋番加小学 (30字, 阅读1,
+								评论0)</div>
+						</div>
+						<div class="toc-row" _id="2633">
+							<h3 class="toc-cap">
+								[读书笔记] <a href="/wst/2633" cmd="LoadTopic" _contentid="2633">教师读书心得体会</a>
+							</h3>
+							<div></div>
+							<div>
+								教师读书心得体会<br>
+								<br>
+								<br>少而好学，如日出之阳，壮而好学，如日中之光，老而好学，如夕阳之辉。一个人的一生中之所以能不断提高，与其始终如一的学习是分不开的，所谓活到老学到老，庄子说，吾生也有涯，而知无涯。知
+							</div>
+							<div class="lt lo clrfix">前天 12:27 叶显秀 (1493字, 阅读6, 评论0)</div>
+						</div>
+						<div class="toc-row" _id="2632">
+							<h3 class="toc-cap">
+								[工作日志] <a href="/wst/2632" cmd="LoadTopic" _contentid="2632">教师的手记</a>
+							</h3>
+							<div></div>
+							<div>
+								教师的手记<br>黑板<br> 把知识的太阳交给情去耕耘，把希望的星光交给爱去整理。<br>
+								怀抱文静的品德，默默地为每一抹岁月、每一个梦想、每一个信仰浇铸灵魂和热血的绝唱，伸展开知识的翅膀。<br>
+								寒来暑往，无怨无
+							</div>
+							<div class="lt lo clrfix">前天 12:12 叶显秀 (1062字, 阅读2, 评论0)</div>
+						</div>
+						<div class="toc-row" _id="2630">
+							<h3 class="toc-cap">
+								[读书笔记] <a href="/wst/2630" cmd="LoadTopic" _contentid="2630">《我为谁工作》</a>
+							</h3>
+							<div></div>
+							<div>
+								《我为谁工作》读书笔记<br>
+								<br>
+								别人向我推荐了一本书，书名叫《我为谁工作》。闲暇时细阅，颇有感触。就象书中所言：在这个世界上，最有力量的东西，莫过于书了。一本好书能改变人的一生，让一个人从失败走向成功
+							</div>
+							<div class="lt lo clrfix">前天 11:43 叶显秀 (1458字, 阅读7, 评论0)</div>
+						</div>
+						<div class="toc-row" _id="2629">
+							<h3 class="toc-cap">
+								[读书笔记] <a href="/wst/2629" cmd="LoadTopic" _contentid="2629">《你能成为优秀教师》</a>
+							</h3>
+							<div></div>
+							<div>
+								《你能成为优秀教师》读书笔记<br>
+								人们常说活到老，学到老，每个人对知识的渴望都是无穷的，这个假期有幸读了《你能成为优秀教师》一书，我又一次享受到了阅读带来的乐趣。作为教师只有时刻持续学习的心态，学习先
+							</div>
+							<div class="lt lo clrfix">前天 11:39 叶显秀 (1257字, 阅读4, 评论0)</div>
+						</div>
+						<div class="toc-row" _id="2627">
+							<h3 class="toc-cap">
+								[教学课件] <a href="/wst/2627" cmd="LoadTopic" _contentid="2627">教学课件</a>
+							</h3>
+							<div></div>
+							<div></div>
+							<div class="lt lo clrfix">02-03 22:55 卢会赞 (0字, 阅读8, 评论0)</div>
+						</div>
+						<div class="toc-row" _id="2624">
+							<h3 class="toc-cap">
+								[研修日记] <a href="/wst/2624" cmd="LoadTopic" _contentid="2624">研修日记</a>
+							</h3>
+							<div></div>
+							<div>从9月份到现在，我们的网上在线学力提升学习，不知不觉已经过去了几个月。在此期间，大家积极参加学习，积极讨论交流，都是为了共同的目标。专家清晰而详细的讲解，让我们从中受益匪浅；大家积极地讨论交流，让我们</div>
+							<div class="lt lo clrfix">02-03 21:50 卢会赞 (113字, 阅读3, 评论0)</div>
+						</div>
+						<div class="toc-row" _id="2623">
+							<h3 class="toc-cap">
+								[在线研讨] <a href="/wst/2623" cmd="LoadTopic" _contentid="2623">课堂教学的评价</a>
+							</h3>
+							<div></div>
+							<div>如何在教学课堂实践的活动中，做到教材、学生、课堂气氛三者相结合呢？希望大家能够一起来讨论交流，谢谢。</div>
+							<div class="lt lo clrfix">02-03 21:46 卢会赞 (50字, 阅读1, 评论0)</div>
+						</div>
+						<div class="toc-row" _id="2622">
+							<h3 class="toc-cap">
+								<a href="/wst/2622" cmd="LoadTopic" _contentid="2622">学习心得</a>
+							</h3>
+							<div></div>
+							<div>有幸参加本次的学力提升的培训学习，认识了来自不同地方的同行，大家积极参加网上学习培训，积极参加网上研讨活动。同时，在学习培训的具体内容中，学到了专家系统的知识讲授，生动而有针对性的展开讲解。</div>
+							<div class="lt lo clrfix">02-03 21:34 卢会赞 (95字, 阅读2, 评论0)</div>
+						</div>
+						<div class="toc-row" _id="2621">
+							<h3 class="toc-cap">
+								[教学设计] <a href="/wst/2621" cmd="LoadTopic" _contentid="2621">《本草纲目》教学设计</a>
+							</h3>
+							<div></div>
+							<div>
+								<br>教学目标： <br>1．理解课文内容，学习李时珍一心为病人解除痛苦而学医的崇高思想，学习他在编写《本草纲目》的过程中表现出来的严谨的态度和忘我的工作精神。<br>2．按照提供的段意练习给课文分段。<br>3．学习本课
+							</div>
+							<div class="lt lo clrfix">02-03 20:23 钟有志 (0字, 阅读5, 评论0)</div>
+						</div>
+						<div class="toc-row" _id="2620">
+							<h3 class="toc-cap">
+								[教学课件] <a href="/wst/2620" cmd="LoadTopic" _contentid="2620">课件</a>
+							</h3>
+							<div></div>
+							<div>what's the elephant doing</div>
+							<div class="lt lo clrfix">02-03 15:38 linlanlan (25字, 阅读7,
+								评论0)</div>
+						</div>
+						<div class="toc-row" _id="2618">
+							<h3 class="toc-cap">
+								[研修日记] <a href="/wst/2618" cmd="LoadTopic" _contentid="2618">研修日记</a>
+							</h3>
+							<div></div>
+							<div>我有幸参加为期十天的乡村教师学力提升国培项目并顺利结业。期间，认识诸多同行，交流有收获，学习有进步。</div>
+							<div class="lt lo clrfix">02-03 15:28 邓成仁 (50字, 阅读7, 评论1)</div>
+						</div>
+						<div class="toc-row" _id="2617">
+							<h3 class="toc-cap">
+								[教学课件] <a href="/wst/2617" cmd="LoadTopic" _contentid="2617">教学课件</a>
+							</h3>
+							<div></div>
+							<div>百分数的意义和写法</div>
+							<div class="lt lo clrfix">02-03 15:26 邓成仁 (9字, 阅读3, 评论0)</div>
+						</div>
+						<div class="toc-row" _id="2616">
+							<h3 class="toc-cap">
+								[学习心得] <a href="/wst/2616" cmd="LoadTopic" _contentid="2616">学习心得</a>
+							</h3>
+							<div></div>
+							<div>本次乡村教师学力提升的学习体会颇深。首先，我通过该学习，认识了来自海南省各个地方的同行同仁，在交流中进步，在交流中学习。其次，通过该学习，我对教学有了新的看法，掌握了新的教学理念，学习了新的教学手段，</div>
+							<div class="lt lo clrfix">02-03 15:21 邓成仁 (110字, 阅读2, 评论0)</div>
+						</div>
+						<div class="toc-row" _id="2615">
+							<h3 class="toc-cap">
+								[教学设计] <a href="/wst/2615" cmd="LoadTopic" _contentid="2615">《角的初步认识》</a>
+							</h3>
+							<div></div>
+							<div>
+								《角的初步认识》教学设计<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+								&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <br>学时目标:
+								<br>知识与能力： <br>1．让学生经历从现实生活中发现角、认识角的过程，知道角的各部分名称。<br>
+								2．会用简单的方
+							</div>
+							<div class="lt lo clrfix">02-02 19:45 叶显秀 (2577字, 阅读5, 评论0)</div>
+						</div>
+						<div class="toc-row" _id="2614">
+							<h3 class="toc-cap">
+								[读书笔记] <a href="/wst/2614" cmd="LoadTopic" _contentid="2614">做一名幸福的老师</a>
+							</h3>
+							<div></div>
+							<div>
+								做一名幸福的老师<br>
+								<br>我很欣赏书中这样一句话：“‘人生是一项自己做的工程’，坚持自己的信念，并竭尽全力去做好它，不要彷徨犹豫，相信幸福就在自己手中，积极乐观地面对每天的朝阳，每天都是新鲜的人生。”当我们
+							</div>
+							<div class="lt lo clrfix">02-02 19:30 叶显秀 (0字, 阅读9, 评论0)</div>
+						</div>
+						<div class="toc-row" _id="2613">
+							<h3 class="toc-cap">
+								[读书笔记] <a href="/wst/2613" cmd="LoadTopic" _contentid="2613">《童年》</a>
+							</h3>
+							<div></div>
+							<div>
+								《童年》<br>&nbsp; &nbsp;
+								中学就知道高尔基有三本著名的小说《童年》《在人间》《我的大学》，寒假初读了其中的一部《童年》，另外两部以后再抽出时间阅读了。<br>&nbsp;
+								&nbsp; 主人公阿廖沙的童年有些悲惨。他自幼丧父，跟着母亲
+							</div>
+							<div class="lt lo clrfix">02-02 19:02 叶显秀 (0字, 阅读4, 评论0)</div>
+						</div>
+						<div class="toc-row" _id="2612">
+							<h3 class="toc-cap">
+								[教学设计] <a href="/wst/2612" cmd="LoadTopic" _contentid="2612">《100以内的加法和减法》</a>
+							</h3>
+							<div></div>
+							<div>
+								100以内的加法和减法<br> <br>第一课时 两位数加两位数<br> <br>教学内容：
+								<br>课本P8---P10例1、例2 教学目标： <br>1、
+								在具体情境下，进一步体会加法的意义，理解相同数位上的数才能相加的道理。 <br>2
+							</div>
+							<div class="lt lo clrfix">02-02 18:51 叶显秀 (0字, 阅读6, 评论0)</div>
+						</div>
+						<div class="toc-row" _id="2610">
+							<h3 class="toc-cap">
+								[工作日志] <a href="/wst/2610" cmd="LoadTopic" _contentid="2610">如何培养小学生学习数学的兴趣</a>
+							</h3>
+							<div></div>
+							<div>如何培养小学生学习数学的兴趣
+								一、数学学习兴趣在小学数学教学中的重要性新课程改革强调增强学科之间的联系，数学又是其他自然科学的基础和保证，因此，学好数学对于学生以后其他学科的学习具有非常重要的现</div>
+							<div class="lt lo clrfix">02-02 17:42 972825 (1871字, 阅读8,
+								评论2)</div>
+						</div>
+						<div class="toc-row" _id="2609">
+							<h3 class="toc-cap">
+								[教学展示] <a href="/wst/2609" cmd="LoadTopic" _contentid="2609">公开课教学展示</a>
+							</h3>
+							<div>
+								<img class="toc-img"
+									src="http://static2.ivwen.com/users/1130495/17e92cf9609843699112861705cf30e8.jpg-mobile"><img
+									class="toc-img"
+									src="http://static2.ivwen.com/users/1130495/9c68ebd592c942d287f6ae143959078d.jpg-mobile"><img
+									class="toc-img"
+									src="http://static2.ivwen.com/users/1130495/a43e87bf9c5a4097be3ecdf08e78f3b6.jpg-mobile">
+							</div>
+							<div>小学数学科组活动在多媒体教室展开。海南省教育研究培训院的李秀芝教研员受邀参加此次科组活动。二年级李佳欣老师&amp;mdash;&amp;mdash;《同级运算》你看，孩子们听课听得多仔细</div>
+							<div class="lt lo clrfix">02-02 17:41 972825 (353字, 阅读4,
+								评论0)</div>
+						</div>
+						<div class="toc-row" _id="2608">
+							<h3 class="toc-cap">
+								[工作日志] <a href="/wst/2608" cmd="LoadTopic" _contentid="2608">教师日记</a>
+							</h3>
+							<div></div>
+							<div>
+								教师日记<br>
+								<br>
+								<br>&nbsp; &nbsp;
+								世界上总有那么一个人，会跟你一样的想法，在跟你做同样的事，为了同样的目标奋斗努力，虽然未曾谋面，但已经是许久的老友，因为现实，我们总会给友情，爱情贴很多标签，但却忽略了，我们都是
+							</div>
+							<div class="lt lo clrfix">02-02 17:20 叶显秀 (4字, 阅读4, 评论0)</div>
+						</div>
+						<div class="toc-row" _id="2606">
+							<h3 class="toc-cap">
+								[工作日志] <a href="/wst/2606" cmd="LoadTopic" _contentid="2606">教师日记</a>
+							</h3>
+							<div></div>
+							<div>
+								教师日记<br> 没有一个学生是差生<br>
+								最近一段时间，我的心情一直如阳光般灿烂。家人、朋友说我变得更乐观，同事们说我有个好心态，其实自己最清楚，这一切皆起源于学生的一句鼓励与认可。&nbsp;
+								那是一个难忘的傍晚，
+							</div>
+							<div class="lt lo clrfix">02-02 17:06 叶显秀 (0字, 阅读4, 评论0)</div>
+						</div>
+						<div class="toc-row" _id="2605">
+							<h3 class="toc-cap">
+								[读书笔记] <a href="/wst/2605" cmd="LoadTopic" _contentid="2605">《送给加西亚的信》读后感</a>
+							</h3>
+							<div></div>
+							<div>《送给加西亚的信》读后感 苏运燕&nbsp; &nbsp;
+								读了《送给加西亚的信》一书,给我感触颇深,故事中的罗文,是美国陆军的一名年轻中尉,在美西战争期间,孤身一人,在没有任何护卫的情况下,冒着生命危险,历经艰难险</div>
+							<div class="lt lo clrfix">02-02 17:04 972825 (1515字, 阅读5,
+								评论0)</div>
+						</div>
+						<div class="toc-row" _id="2604">
+							<h3 class="toc-cap">
+								[教学设计] <a href="/wst/2604" cmd="LoadTopic" _contentid="2604">《混合运算》第一课时教学设计</a>
+							</h3>
+							<div></div>
+							<div>《混合运算》第一课时教学设计
+								一、教学目标1、使学生进一步掌握含有同一级运算的运算顺序2、掌握脱式计算的书写要求，并学会正确地进行脱式计算3、使学生在计算的过程中，养成认真审题，独立思考等学</div>
+							<div class="lt lo clrfix">02-02 17:02 972825 (3390字, 阅读7,
+								评论2)</div>
+						</div>
+						<div class="toc-row" _id="2603">
+							<h3 class="toc-cap">
+								[教学设计] <a href="/wst/2603" cmd="LoadTopic" _contentid="2603">笔算乘法第一课时教学设计</a>
+							</h3>
+							<div>
+								<img class="toc-img"
+									src="file:///C:/DOCUME~1/ADMINI~1/LOCALS~1/Temp/ksohtml/wps2B5.tmp.jpg"><img
+									class="toc-img"
+									src="file:///C:/DOCUME~1/ADMINI~1/LOCALS~1/Temp/ksohtml/wps2B7.tmp.jpg"><img
+									class="toc-img"
+									src="file:///C:/DOCUME~1/ADMINI~1/LOCALS~1/Temp/ksohtml/wps2B8.tmp.jpg">
+							</div>
+							<div>笔算乘法第一课时教学设计儋州市那大镇中心学校&nbsp;
+								苏运燕一、教学目标：1、使学生理解多位数乘一位数（不进位）笔算乘法的算理，经历竖式的形成过程，理解竖式中每一步的含义。2、使学生经历自主探索和</div>
+							<div class="lt lo clrfix">02-02 16:51 972825 (1605字, 阅读6,
+								评论3)</div>
+						</div>
+					</div>
+					<div class="paging" style="">
+						<div class="paging-leg">页次: 1/46, 共 2290 条</div>
+						<span cmd="ListTopic" class="paging-btn" _ps="1">上页</span><span
+							cmd="ListTopic" class="paging-btn" _ps="-1"
+							style="display: none;">...</span><span cmd="ListTopic"
+							class="paging-btn paging-cur" _ps="1">1</span><span
+							cmd="ListTopic" class="paging-btn" _ps="2">2</span><span
+							cmd="ListTopic" class="paging-btn" _ps="3">3</span><span
+							cmd="ListTopic" class="paging-btn" _ps="4">4</span><span
+							cmd="ListTopic" class="paging-btn" _ps="5">5</span><span
+							cmd="ListTopic" class="paging-btn" _ps="6">...</span><span
+							cmd="ListTopic" class="paging-btn" _ps="2">下页</span><span
+							cmd="ListTopic" class="paging-btn" style="display: none;">下页</span><input
+							title="输入页码后按回车" class="paging-i">
+						<div class="clr"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="y-sbr">
+			<form target="_blank" action="http://www.baidu.com/s" class="qs">
+				<input class="wi qs-go" type="submit" value=""><input
+					name="wd" class="qs-i" placeholder="坊号或搜索内容">
+			</form>
+			<div>
+				<h2>
+					<span cmd="ForumEditDlg" class="more">创建</span>我的
+				</h2>
+				<div>
+					<a class="mi1 mi7" href="${base}/ws/50066">张昌赋教育工作坊</a>
+				</div>
+			</div>
+			<div class="x-box">
+				<h2>提醒</h2>
+				暂时没有提醒消息。
+			</div>
+			<div class="x-box">
+				<h2>推荐</h2>
+				<a href="${base}/ws/20000" class="mi6"
+					style="background-image: url(http://my.hnjs.org/ui/dawn/ico/svr.png);" title="站务大厅"></a>
+			</div>
+		</div>
+		<div class="clr"></div>
+		<div class="wi gtop" style="opacity: 0.6; display: none;"></div>
+	</div>
+</body>
+</html>
