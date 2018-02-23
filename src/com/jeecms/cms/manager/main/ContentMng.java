@@ -262,5 +262,8 @@ public interface ContentMng {
 	
 	public ModelMap getStickList(CmsUser user, ModelMap model);
 
+
+	public List<Content> getListByChannelIds(Integer count, Integer userid);
+
 	
 }

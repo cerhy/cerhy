@@ -1507,4 +1507,9 @@ public class ContentMngImpl implements ContentMng, ChannelDeleteChecker {
 		}
 		return model;
 	}
+
+	@Override
+	public List<Content> getListByChannelIds(Integer count, Integer userid) {
+		return dao.getListByChannelIds(count,userid);
+	}
 }
