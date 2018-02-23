@@ -1,0 +1,103 @@
+<link  type="text/css" rel="stylesheet" href="/${res}/css/jquery.mloading.css" />
+<link  href="/${res}/css/jquery.mloading.less" />
+<script  type="text/javascript" src="/${res}/js/jquery.mloading.js"></script>
+<style>
+::-webkit-scrollbar{width:0px}
+.clear{clear:both}
+</style>
+<script type="text/javascript">
+$(function(){
+$('.user-menu-links li').click(function(){
+    $(this).toggleClass('on');
+});
+});
+</script>
+<div id="contextMenus"></div>
+            <div class="personCenter-userInfo blog_right" >
+	          <form id="jvForm" action="add_link.jspx" method="post" style="height: 400px;">
+	         	<textarea id="hyperlink" name="hyperlink" rows="18" cols="100">${linkUrls }</textarea>
+	         	<br />
+	          	<span class="fl">
+					<p>每行可以输入一个链接，网址备注名和网址之间用“=”分隔开，网址中不可存在等号（=），同时不可将网址单独作为一行，且最多可设置350个</p>
+					<p>链接可以分组，不包含“=”号的行就是分组标题。下例中，“教育行政部门”即为分组标题</p>
+					<p style="color: red;font-size: 15px;">例如：</p>
+					<p style="color: red;font-size: 15px;">海南教育研究新浪微博=http://t.sina.com.cn/hainanvae</p>
+					<p style="color: red;font-size: 15px;">教育行政部门</p>
+					<p style="color: red;font-size: 15px;">中国教育部=http://www.moe.edu.cn</p>
+					<p style="color: red;font-size: 15px;">海南教育厅=http://edu.hainan.gov.cn</p>
+					<p style="color: red;font-size: 15px;">*注:</p>
+					<p style="color: red;font-size: 15px;">1、网址需以http开头， 如http://www.baidu.com</p>
+					<p style="color: red;font-size: 15px;">2、请勿在分组标题(如:教育行=政部门)和网址备注名(如:海南=教育厅)中填写等号(=)</p>
+					<p style="color: red;font-size: 15px;">添加好友链接结束,无需按回车键换行,以免导致格式不正确提交不成功!</p>
+					<p style="color: red;font-size: 15px;">3、正确的博客地址格式：www.cerhy.com/blog/user/账号</p>
+		          	<input style="display: none;" name="nextUrl" value="link_list.jspx" /><br/>
+		          	 <input type="button" value="提交" class="submit" id="addlink"  onclick="saveUpdateRefresh()">
+				</span>
+	          </form> 
+            </div>
+<script type="text/javascript">
+function saveUpdateRefresh(){
+        var hyperlink=$("#hyperlink").val();
+    	var hyperlinks = hyperlink.replace(new RegExp( "\\n", "g" ),"~");
+    	var str =hyperlinks.split("~");
+		var num=0;
+    	for(var i=0;i<str.length;i++){
+    		if(str[i].split("=").length>2){
+    			alert("网址中请勿填写等号(=)!");
+    	        return false;
+    		}
+    		//有等号没有http
+    		if(str[i]!=""&&str[i].indexOf("=")!=-1&&str[i].indexOf("http")==-1){
+    			alert("请填写正确的链接格式!如链接行缺少=或者=后缺少链接(http:// )");
+   	            return false;
+    		}
+    		//没有等号有http
+    		if(str[i]!=""&&str[i].indexOf("=")==-1&&str[i].indexOf("http")!=-1){
+    			alert("请填写正确的链接格式!如链接行缺少=或者缺少http://");
+   	            return false;
+    		}
+			if(str[i].indexOf("=")!=-1){
+				num++;
+			}
+		}
+		if(num>350){
+			 alert("链接添加超过显示限制个数!");
+             return false;
+		}
+		$.ajax({
+    		url:"${base}/blog/add_update_refresh.jspx",
+    		type:"POST",
+    		dataType:"json",
+    		 data : {'hyperlink' : hyperlink.replace(new RegExp( "\\n", "g" ),"\r\n")},
+    		success: function (data) {
+    			if(data.status==1){
+    				alert("链接添加失败");
+    				return false;
+    			}else{
+    				$("body").mLoading();
+    				$.ajax({
+    			           type: 'POST',
+    			           url : '${base}/blog/refreshColumn.jspx',
+    			           dataType:"html",
+    			           async: true,
+    			           success : function(datas){
+    			        	   $("#appendHtml").empty();
+    			        	   $("#joinGroups").remove();
+    			               $("#appendHtml").append(datas);
+    			               if(window._bd_share_main){
+    			            	   window._bd_share_main.init();
+    			            	}
+    			               $("body").mLoading("hide");
+    			  	   		 }
+    			 	});
+                     return true;
+    			}
+            }
+    	});
+    	//var obj = $(this);
+    	//obj.parents('form').submit(); //验证码正确提交表单
+        //return true;
+}
+
+       
+</script>

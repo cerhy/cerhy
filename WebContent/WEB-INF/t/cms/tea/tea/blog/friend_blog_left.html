@@ -1,0 +1,844 @@
+<link rel="stylesheet" type="text/css" href="/${res}/css/default.css">
+<link rel="stylesheet" type="text/css" href="/${res}/css/styles.css">
+<style>
+.wrap-left{width: 250px;float: left;}
+.wrap-right{width: 730px;float: left;padding-left: 20px;}
+</style>
+<div class="wrap-left" style="width: 250px;float: left;">
+     <div class="user-center-left">
+                 		 [#if usert??]
+				           <div class="user-setting">
+				                 <div class="pic-dt" style="margin-left: 60px;">
+		                      [#if usert.userImg??]<img src="${usert.userImg}" width="140" height="140">
+		                      [#else]<img src="/${res}/images/userImg-large.png" width="140" height="140">
+		                      [/#if]
+		                 </div>
+		                 <div class="user-name-dt"><a href="#" title="[#if usert.realname??]${usert.realname}[#else]${usert.username}[/#if]">[#if usert.realname??][@text_cut s=usert.realname len=5 append=''/][#else]${usert.username}[/#if]</a></div>
+		                 	[#if user??]
+		                     [#if usert??]
+		                     [#if fouceCheck??]
+		                     [#if user.id!=usert.id]
+		                     <a id="focus" style="cursor: pointer;margin-left: 25%;" [#if fouceCheck==0] onclick="focuss()"[#else]onclick="cancelfocus()"[/#if] style="cursor: pointer;" class="user-oparetion-btns">[#if fouceCheck=0]关注[#else]取消关注[/#if]</a>
+		                     [/#if]
+		                     [/#if]
+		                     [#if friendCheck??]
+		                     [#if user.id!=usert.id]
+		                     <a id="addCancelFriend" style="cursor: pointer;margin-left: 5%;" class="user-oparetion-btns" [#if friendCheck==0] onclick="addOrCancelFriends(0,${usert.id})"[#else]onclick="addOrCancelFriends(1,${usert.id})"[/#if]>[#if friendCheck==0]添加好友[#else]解除关系[/#if]</a>
+		                     [/#if]
+		                     [/#if]
+		                    [#else]
+		                     <a href="${base}/logout.jspx" class="user-oparetion-btn">退出</a>
+		                     [/#if]
+		                     [/#if]			                     
+				           </div>
+                      [/#if]
+               <div class="htmleaf-container" >
+				<div class="htmleaf-content bgcolor-3" style="padding-top: 0px;padding-bottom: 0px;">
+					<!-- This is mtree list -->
+					<ul class=mtree>
+					  <li ><a href="#">博客栏目</a>
+					    <ul>
+					      <li>
+					      [#if channelList??]
+				             [#list channelList as c]
+				             [#if c_index==0]
+					             [#if c.channelType==1]
+					             <a href="javascript:;" style="font-size: 16px;">学科教研</a>
+					             [#else]
+					             <a href="javascript:;" style="font-size: 16px;">市县教研</a>
+					             [/#if]
+				             [/#if]
+				             [/#list]
+				             [/#if]
+					        <ul>
+					        [#if channelList??]
+				             [#list channelList as c]
+					          <li><a style="font-size: 14px;color: #255EC7;" href="javascript:;" onclick="friendBlogs(${c.channelId},null,null,${userIds})">${c.channelName}</a></li>
+				             [/#list]
+				             [/#if]
+					         </ul>
+					      </li>
+					      
+					      [#if columnsList??]
+					        [#list columnsList as map]
+					        [#list map?keys as k]
+					        [#if k=='']
+					        	[#list map[k] as v]
+					        	[#if v?split('=')[2]??]
+					        		[#if columnId??]
+					        			<li [#if columnId=v?split('=')[0]]class="mtree-active"[/#if]><a style="font-size: 16px;"  title="${v?split('=')[1]}&nbsp;${v?split('=')[2]}" href="javascript:;" onclick="friendBlogs(null,0,${v?split('=')[0]},${userIds})">${v?split("=")[1]}&nbsp;${v?split('=')[2]}</a></li>
+					        		[#else]
+						        		<li><a style="font-size: 16px;" title="${v?split('=')[1]}&nbsp;${v?split('=')[2]}" href="javascript:;" onclick="friendBlogs(null,0,${v?split('=')[0]},${userIds})">${v?split("=")[1]}&nbsp;${v?split('=')[2]}</a></li>
+					        		[/#if]
+					        	[#else]
+					        		[#if columnId??]
+					        			<li [#if columnId=v?split('=')[0]]class="mtree-active"[/#if]><a style="font-size: 16px;" title="${v?split('=')[1]}" href="javascript:;" onclick="friendBlogs(null,null,${v?split('=')[0]},${userIds})">${v?split("=")[1]}</a></li>
+					        		[#else]
+						        		<li><a style="font-size: 16px;" title="${v?split('=')[1]}" href="javascript:;" onclick="friendBlogs(null,null,${v?split('=')[0]},${userIds})">${v?split("=")[1]}</a></li>
+					        		[/#if]
+					        	[/#if]
+					        	[/#list]
+					        [#else]
+					        	<li><a style="font-size: 16px;" id="${k?split('=')[0]}" title="${k?split('=')[1]}" href="javascript:;">${k?split("=")[1]}</a>
+					        	<ul>
+					        	[#list map[k] as v]
+					        		[#if v?split('=')[2]??]
+					        			[#if columnId??]
+					        				<li [#if columnId=v?split('=')[0]]class="mtree-active"[/#if]><a  style="font-size: 14px;color: #255EC7;" title="${v?split('=')[1]}&nbsp;${v?split('=')[2]}" href="javascript:;" onclick="friendBlogs(null,0,${v?split('=')[0]},${userIds})">${v?split("=")[1]}&nbsp;${v?split('=')[2]}</a></li>
+					        			[#else]
+						        			<li><a style="font-size: 14px;color: #255EC7;" title="${v?split('=')[1]}&nbsp;${v?split('=')[2]}" href="javascript:;" onclick="friendBlogs(null,0,${v?split('=')[0]},${userIds})">${v?split("=")[1]}&nbsp;${v?split('=')[2]}</a></li>
+					        			[/#if]
+					        		[#else]
+					        			[#if columnId??]
+					        				<li [#if columnId=v?split('=')[0]]class="mtree-active"[/#if]><a style="font-size: 14px;color: #255EC7;" title="${v?split('=')[1]}" href="javascript:;" onclick="friendBlogs(null,null,${v?split('=')[0]},${userIds})">${v?split("=")[1]}</a></li>
+					        			[#else]
+						        			<li><a style="font-size: 14px;color: #255EC7;" title="${v?split('=')[1]}" href="javascript:;" onclick="friendBlogs(null,null,${v?split('=')[0]},${userIds})">${v?split("=")[1]}</a></li>
+					        			[/#if]
+					        		[/#if]
+					        	[/#list]
+					        	 </ul>
+					      		</li>
+					        [/#if]	
+					        [/#list]
+					        [/#list]
+				            [/#if]
+				             <li><a href="javascript:;" onclick="friendCollection('${base}/blog/friend_collection_list.jspx?userIds=${usert.id}')">转载</a></li>
+				             <br />
+					      </li>
+					    </ul>
+					  </li>
+					  <li><a href="#">群组</a>
+					    <ul>
+					        [#if joinGroupList?size gt 0]
+                            [#list joinGroupList as j]
+	                            [#if columnId??]
+			                    	<li [#if columnId?number=j.columnsId.columnId]class="mtree-active"[/#if]><a href="javascript:;" onclick="friendBlogs(null,0,${j.columnsId.columnId},${userIds})"><em></em>[@text_cut s=j.columnsId.columnName len=9 append='...'/]</a></li>
+		                    	[#else]
+				                    <li><a href="javascript:;" title="${j.columnsId.columnName}" onclick="friendBlogs(null,0,${j.columnsId.columnId},${userIds})"><em></em>[@text_cut s=j.columnsId.columnName len=9 append='...'/]</a></li>
+		                    	[/#if]
+		                    [/#list]
+	                        [/#if]
+	                        <br />
+					   </ul>
+					  </li>
+					   <li><a href="#">好友</a>
+					    <ul>
+					   [#if paginationLeft??]
+						    [#list paginationLeft.list as user]
+						    	<li><a href="${base}/blog/find_all_url_friend.jspx?userIds=${user.id}" target="_blank" title="[#if user.nicknames??]${user.nicknames}[#else]${user.username}[/#if]"><img [#if user.userImg??]src="${user.userImg}"[#else]src="/${res}/images/userImg-large.png"[/#if] width="20" height="20" alt="" style="float: left;padding: 0 10px 0 0;">[#if user.nicknames??][@text_cut s=user.nicknames len=12 append='...'/][#else]${user.username}[/#if]</a></li>
+						    [/#list]
+							    [#if paginationLeft.list?size>9]
+					               <li><a href="javascript:;" onclick="gotoDataShowFriend('${base}/blog/gotoDataShowFriend.jspx?dataFlag=1&userId=${usert.id}')">更多 &nbsp;>></a></li>
+							    [/#if]
+		                    [#else]
+		                    <br />
+						    [/#if]
+					    </ul>
+					    </li>
+					  <li><a href="#">链接</a>
+					    <ul>
+					    	[#if urlList??]
+						         [#list urlList as map]
+						          	[#list map?keys as k]
+						          		 [#if k=='']
+								            [#list map[k] as v]
+								            	[#if v?index_of("=")!=-1]
+								         			<li  class="change"><a style="font-size: 12px;" target="_blank" href="${v?split("=")[1]}" title="${v?split("=")[0]}">[@text_cut s=v?split("=")[0] len=10 append='...'/]</a></li>
+								         		[/#if]
+								         		[#if v?index_of("|")!=-1]
+								         			<li  class="change"><a style="font-size: 12px;" target="_blank" href="${v?split("|")[1]}" title="${v?split("|")[0]}">[@text_cut s=v?split("|")[0] len=10 append='...'/]</a></li>
+								         		[/#if]
+								            [/#list]
+								         [#else]
+								          <li><a href="javascript:;">${k}</a>
+								          <ul>
+								            [#list map[k] as v]
+								            	[#if v?index_of("http:")!=-1]
+									            	[#if v?index_of("=")!=-1]
+									         			<li><a target="_blank" href="${v?split("=")[1]}" title="${v?split("=")[0]}">[@text_cut s=v?split("=")[0] len=9 append='...'/]</a></li>
+									         		[/#if]
+									         		[#if v?index_of("|")!=-1]
+									         			<li><a target="_blank" href="${v?split("|")[1]}" title="${v?split("|")[0]}">[@text_cut s=v?split("|")[0] len=9 append='...'/]</a></li>
+									         		[/#if]
+								            	[/#if]
+								            [/#list]
+								           </ul>
+								           </li>	
+								          [/#if]
+						          	[/#list]
+						         [/#list]
+						         [#else]
+						         <br />
+						         [/#if]
+					    </ul>
+					  </li>
+					  <li><a href="#">明星博客</a>
+					    <ul>
+					      [#if starBlogger?? ]
+		                 	[#list starBlogger as c]
+		                      <li><a href="${base}/blog/find_all_url_friend.jspx?userIds=${c.id}" target="_blank" title="[#if c.realname??]${c.realname}[#else]${c.username}[/#if]"><img [#if c.userImg??]src="${c.userImg}"[#else]src="/${res}/images/userImg-large.png"[/#if] width="20" height="20" alt="" style="float: left;padding: 0 10px 0 0;">[#if c.realname??][@text_cut s=c.realname len=5 append='...'/][#else]${c.username}[/#if]</a></li>
+			                [/#list]
+	                        [#if moreStarBloggerExist??]
+			                 <li><a href="javascript:;" onclick="gotoDataShowFriend('${base}/blog/gotoDataShowFriend.jspx?dataFlag=4&userId=${usert.id}')">更多 &nbsp;>></a></li>
+	                        [/#if]
+			                [/#if]
+					   </ul>
+					  </li>
+					</ul>
+				</div>
+			</div> 
+        	</div>
+     <div id="templatePageNot" style="display:none;">
+     	<input id="templatePageNo" name="templatePageNo" />
+    	<input id="channelIdscp" name="channelIdscp" value=""/>
+     	<input id="joinGroupStatascp" name="joinGroupStatascp" value=""/>
+     	<input id="columnIdscp" name="columnIdscp" value="" />
+     	<input id="uidscp" name="uidscp" value=""/>
+     	<input id="noone" name="noone" value=""/>
+     	<input id="notwo" name="notwo" value=""/>
+     	<input id="ownCollectionUrl" name="ownCollectionUrl" value=""/> 
+     </div>
+     </div>
+<script src='/${res}/js/stopExecutionOnTimeout.js?t=1'></script>
+<script src='/${res}/js/jquery.velocity.min.js'></script>
+<script>
+	(function ($, window, document, undefined) {
+	    if ($('ul.mtree').length) {
+	        var collapsed = false;
+	        var close_same_level = false;
+	        var duration = 400;
+	        var listAnim = true;
+	        var easing = 'easeOutQuart';
+	        $('.mtree ul').css({
+	            'overflow': 'hidden',
+	            'height': collapsed ? 0 : 'auto',
+	            'display': collapsed ? 'none' : 'block'
+	        });
+	        var node = $('.mtree li:has(ul)');
+	        node.each(function (index, val) {
+	            $(this).children(':first-child').css('cursor', 'pointer');
+	            $(this).addClass('mtree-node mtree-' + (collapsed ? 'closed' : 'open'));
+	            $(this).children('ul').addClass('mtree-level-' + ($(this).parentsUntil($('ul.mtree'), 'ul').length + 1));
+	        });
+	        $('.mtree li > *:first-child').on('click.mtree-active', function (e) {
+	            if ($(this).parent().hasClass('mtree-closed')) {
+	                $('.mtree-active').not($(this).parent()).removeClass('mtree-active');
+	                $(this).parent().addClass('mtree-active');
+	            } else if ($(this).parent().hasClass('mtree-open')) {
+	                $(this).parent().removeClass('mtree-active');
+	            } else {
+	                $('.mtree-active').not($(this).parent()).removeClass('mtree-active');
+	                $(this).parent().toggleClass('mtree-active');
+	            }
+	        });
+	        node.children(':first-child').on('click.mtree', function (e) {
+	            var el = $(this).parent().children('ul').first();
+	            var isOpen = $(this).parent().hasClass('mtree-open');
+	            if ((close_same_level || $('.csl').hasClass('active')) && !isOpen) {
+	                var close_items = $(this).closest('ul').children('.mtree-open').not($(this).parent()).children('ul');
+	                if ($.Velocity) {
+	                    close_items.velocity({ height: 0 }, {
+	                        duration: duration,
+	                        easing: easing,
+	                        display: 'none',
+	                        delay: 100,
+	                        complete: function () {
+	                            setNodeClass($(this).parent(), true);
+	                        }
+	                    });
+	                } else {
+	                    close_items.delay(100).slideToggle(duration, function () {
+	                        setNodeClass($(this).parent(), true);
+	                    });
+	                }
+	            }
+	            el.css({ 'height': 'auto' });
+	            if (!isOpen && $.Velocity && listAnim)
+	                el.find(' > li, li.mtree-open > ul > li').css({ 'opacity': 0 }).velocity('stop').velocity('list');
+	            if ($.Velocity) {
+	                el.velocity('stop').velocity({
+	                    height: isOpen ? [
+	                        0,
+	                        el.outerHeight()
+	                    ] : [
+	                        el.outerHeight(),
+	                        0
+	                    ]
+	                }, {
+	                    queue: false,
+	                    duration: duration,
+	                    easing: easing,
+	                    display: isOpen ? 'none' : 'block',
+	                    begin: setNodeClass($(this).parent(), isOpen),
+	                    complete: function () {
+	                        if (!isOpen)
+	                            $(this).css('height', 'auto');
+	                    }
+	                });
+	            } else {
+	                setNodeClass($(this).parent(), isOpen);
+	                el.slideToggle(duration);
+	            }
+	            e.preventDefault();
+	        });
+	        function setNodeClass(el, isOpen) {
+	            if (isOpen) {
+	                el.removeClass('mtree-open').addClass('mtree-closed');
+	            } else {
+	                el.removeClass('mtree-closed').addClass('mtree-open');
+	            }
+	        }
+	        if ($.Velocity && listAnim) {
+	            $.Velocity.Sequences.list = function (element, options, index, size) {
+	                $.Velocity.animate(element, {
+	                    opacity: [
+	                        1,
+	                        0
+	                    ],
+	                    translateY: [
+	                        0,
+	                        -(index + 1)
+	                    ]
+	                }, {
+	                    delay: index * (duration / size / 2),
+	                    duration: duration,
+	                    easing: easing
+	                });
+	            };
+	        }
+	        if ($('.mtree').css('opacity') == 0) {
+	            if ($.Velocity) {
+	                $('.mtree').css('opacity', 1).children().css('opacity', 0).velocity('list');
+	            } else {
+	                $('.mtree').show(200);
+	            }
+	        }
+	    }
+	}(jQuery, this, this.document));
+	$(document).ready(function () {
+	    var mtree = $('ul.mtree');
+	    mtree.wrap('<div class=mtree-demo></div>');
+	    var skins = [
+	        'bubba',
+	        'skinny',
+	        'transit',
+	        'jet',
+	        'nix'
+	    ];
+	    mtree.addClass(skins[0]);
+	});
+	
+	//点击菜单
+	function friendBlogs(channelId,joinGroupStata,columnId,user_ids){
+		if(typeof($("#no3").val())!='undefined'){
+			 delPos();
+		};
+	    $("#channelIdscp").val(channelId); 
+		$("#joinGroupStatascp").val(joinGroupStata);
+		$("#columnIdscp").val(columnId);
+		$("#uidscp").val(user_ids);
+		$("#noone").val("1");
+		var notwo = $("#notwo").val();
+		if(notwo == 2 || notwo == 3){
+			$("#templatePageNo").val("1");
+		}
+		$("#notwo").val(""); 
+		var pageNos = $("#templatePageNo").val();
+		if(pageNos==null || pageNos=="" || pageNos== 'undefined'){
+			pageNos=1;
+		}
+	 	 $.ajax({
+           type: 'POST',
+           url : ' ${base}/blog/contribute_list_friends.jspx',
+           dataType:"html",
+           data : {'queryTitle' : null,'modelId' : null,'queryChannelId' : null,'pageNo':pageNos,'channelId':channelId,'joinGroupStata':joinGroupStata,'columnId':columnId,'user_ids':user_ids},
+           async: true,
+           success : function(datas){
+        	   var wzid=document.getElementById('wzId');
+      		 if(wzid!=null){
+      			 document.getElementById('wzId').innerHTML="";
+      		 }
+      		 var maindiv=document.getElementById('maindiv');
+      		 if(maindiv!=null){
+      			 document.getElementById('maindiv').innerHTML="";
+      		 }          	
+      		 $(".wrap-right").append(datas);
+      		 $("#mainpwdiv").remove();
+        	 $("#wzId").css("display","block");
+          	 //初始化百度分享组件,解决ajax局部刷新导致百度分享不了问题
+          	if(window._bd_share_main){
+         	   window._bd_share_main.init();
+         	}
+  	   		 }
+ 		 });
+	}
+	
+	//删除批注
+	function delPos(){
+		$.ajax({
+	         url: "${base}/blog/searchPostil.jspx?contentId="+$("#no3").val(),
+	         type: "POST",
+	         dataType:"json",
+	         data: "",
+	         async: false,
+	         success: function (data) {
+	 				for(var i=0;i<data.length;i++){
+						$("div#"+data[i].postilDivId).remove();
+	 				}
+	         }
+	     });
+	}
+	
+	//点击文章
+	function findArtical(url,id,GroupFlag){
+		if(typeof($("#no3").val())!='undefined'){
+			 delPos();
+		};
+		//解决ajax无法跨站点访问文章问题
+		var nu="";
+		if(url.indexOf("baoting") > 0){
+			nu=url.replace("baoting.","");
+		}else if(url.indexOf("haikou") > 0){
+			nu=url.replace("haikou.","");
+		}else if(url.indexOf("sanya") > 0){
+			nu=url.replace("sanya.","");
+		}else if(url.indexOf("tunchang") > 0){
+			nu=url.replace("tunchang.","");
+		}else{
+			nu=url;
+		}
+		var newUrl=nu+"?f="+id+"&GroupFlag="+GroupFlag+"&sx=0";
+	 	$.ajax({
+           type: 'GET',
+           url : newUrl,
+           dataType:"html",
+           async: true,
+           success : function(datas){
+        	   var wzid=document.getElementById('wzId');
+      		 if(wzid!=null){
+      			 document.getElementById('wzId').innerHTML="";
+      		 }
+      		 var maindiv=document.getElementById('maindiv');
+      		 if(maindiv!=null){
+      			 document.getElementById('maindiv').innerHTML="";
+      		 }
+               $(".wrap-right").append(datas);
+               if(window._bd_share_main){
+
+            	   window._bd_share_main.init();
+            	}
+  	   		 }
+ 		});
+	}
+	//点击文章
+	function findArticals(url,id,GroupFlag,cid){
+		if(typeof($("#no3").val())!='undefined'){
+			 delPos();
+		};
+		var nu="";
+		if(url.indexOf("baoting") > 0){
+			nu=url.replace("baoting.","");
+		}else if(url.indexOf("haikou") > 0){
+			nu=url.replace("haikou.","");
+		}else if(url.indexOf("sanya") > 0){
+			nu=url.replace("sanya.","");
+		}else if(url.indexOf("tunchang") > 0){
+			nu=url.replace("tunchang.","");
+		}else{
+			nu=url;
+		}
+		var newUrl=nu+"?f="+id+"&GroupFlag="+GroupFlag+"&columnIdZ="+cid+"&sx=0";
+	 	$.ajax({
+           type: 'GET',
+           url : newUrl,
+           dataType:"html",
+           async: true,
+           success : function(datas){
+        	   var wzid=document.getElementById('wzId');
+      		 if(wzid!=null){
+      			 document.getElementById('wzId').innerHTML="";
+      		 }
+      		 var maindiv=document.getElementById('maindiv');
+      		 if(maindiv!=null){
+      			 document.getElementById('maindiv').innerHTML="";
+      		 };
+               $(".wrap-right").append(datas);
+               if(window._bd_share_main){
+            	   window._bd_share_main.init();
+            	}
+  	   		 }
+ 		});
+	}
+	
+	//转载的文章上下篇
+	function previousArticle(url,f,id){
+		if(typeof($("#no3").val())!='undefined'){
+			 delPos();
+		};
+		var nu="";
+		if(url.indexOf("baoting") > 0){
+			nu=url.replace("baoting.","");
+		}else if(url.indexOf("haikou") > 0){
+			nu=url.replace("haikou.","");
+		}else if(url.indexOf("sanya") > 0){
+			nu=url.replace("sanya.","");
+		}else if(url.indexOf("tunchang") > 0){
+			nu=url.replace("tunchang.","");
+		}else{
+			nu=url;
+		}
+		var newUrl=nu+"?f="+f+"&utId="+id+"&sx=0";
+	 	$.ajax({
+           type: 'GET',
+           url : newUrl,
+           dataType:"html",
+           async: true,
+           success : function(datas){
+        	   var wzid=document.getElementById('wzId');
+      		 if(wzid!=null){
+      			 document.getElementById('wzId').innerHTML="";
+      		 }
+      		 var maindiv=document.getElementById('maindiv');
+      		 if(maindiv!=null){
+      			 document.getElementById('maindiv').innerHTML="";
+      		 }
+               $(".wrap-right").append(datas);
+               if(window._bd_share_main){
+            	   window._bd_share_main.init();
+            	}
+  	   		 }
+ 		});
+	}
+
+	function nextArticle(url,f,id){
+		if(typeof($("#no3").val())!='undefined'){
+			 delPos();
+		};
+		var nu="";
+		if(url.indexOf("baoting") > 0){
+			nu=url.replace("baoting.","");
+		}else if(url.indexOf("haikou") > 0){
+			nu=url.replace("haikou.","");
+		}else if(url.indexOf("sanya") > 0){
+			nu=url.replace("sanya.","");
+		}else if(url.indexOf("tunchang") > 0){
+			nu=url.replace("tunchang.","");
+		}else{
+			nu=url;
+		}
+		var newUrl=nu+"?f="+f+"&utId="+id+"&sx=0";
+		$.ajax({
+	           type: 'GET',
+	           url : newUrl,
+	           dataType:"html",
+	           async: true,
+	           success : function(datas){
+	        	   var wzid=document.getElementById('wzId');
+          		 if(wzid!=null){
+          			 document.getElementById('wzId').innerHTML="";
+          		 }
+          		 var maindiv=document.getElementById('maindiv');
+          		 if(maindiv!=null){
+          			 document.getElementById('maindiv').innerHTML="";
+          		 }
+	               $(".wrap-right").append(datas);
+	               if(window._bd_share_main){
+	            	   window._bd_share_main.init();
+	            	}
+	  	   		 }
+	 	});
+	}
+	
+	//普通文章的上下篇
+	function previousArticles(url,id,group,cid){
+		if(typeof($("#no3").val())!='undefined'){
+			 delPos();
+		};
+		var nu="";
+		if(url.indexOf("baoting") > 0){
+			nu=url.replace("baoting.","");
+		}else if(url.indexOf("haikou") > 0){
+			nu=url.replace("haikou.","");
+		}else if(url.indexOf("sanya") > 0){
+			nu=url.replace("sanya.","");
+		}else if(url.indexOf("tunchang") > 0){
+			nu=url.replace("tunchang.","");
+		}else{
+			nu=url;
+		}
+		var newUrl="";
+		if(null!=cid){
+			newUrl=nu+"?f="+id+"&GroupFlag="+group+"&columnIdZ="+cid+"&sx=0";
+		}else{
+			newUrl=nu+"?f="+id+"&GroupFlag="+group+"&sx=0";
+		}
+	 	$.ajax({
+           type: 'GET',
+           url : newUrl,
+           dataType:"html",
+           async: true,
+           success : function(datas){
+        	   var wzid=document.getElementById('wzId');
+      		 if(wzid!=null){
+      			 document.getElementById('wzId').innerHTML="";
+      		 }
+      		 var maindiv=document.getElementById('maindiv');
+      		 if(maindiv!=null){
+      			 document.getElementById('maindiv').innerHTML="";
+      		 }
+               $(".wrap-right").append(datas);
+               if(window._bd_share_main){
+            	   window._bd_share_main.init();
+            	}
+  	   		 }
+ 		});
+	}
+
+	function nextArticles(url,id,group,cid){
+		if(typeof($("#no3").val())!='undefined'){
+			 delPos();
+		};
+		var nu="";
+		if(url.indexOf("baoting") > 0){
+			nu=url.replace("baoting.","");
+		}else if(url.indexOf("haikou") > 0){
+			nu=url.replace("haikou.","");
+		}else if(url.indexOf("sanya") > 0){
+			nu=url.replace("sanya.","");
+		}else if(url.indexOf("tunchang") > 0){
+			nu=url.replace("tunchang.","");
+		}else{
+			nu=url;
+		}
+		var newUrl="";
+		if(null!=cid){
+			newUrl=nu+"?f="+id+"&GroupFlag="+group+"&columnIdZ="+cid+"&sx=0";
+		}else{
+			newUrl=nu+"?f="+id+"&GroupFlag="+group+"&sx=0";
+		}
+	 	$.ajax({
+           type: 'GET',
+           url : newUrl,
+           dataType:"html",
+           async: true,
+           success : function(datas){
+        	   var wzid=document.getElementById('wzId');
+      		 if(wzid!=null){
+      			 document.getElementById('wzId').innerHTML="";
+      		 }
+      		 var maindiv=document.getElementById('maindiv');
+      		 if(maindiv!=null){
+      			 document.getElementById('maindiv').innerHTML="";
+      		 }
+               $(".wrap-right").append(datas);
+               if(window._bd_share_main){
+            	   window._bd_share_main.init();
+            	}
+  	   		 }
+ 		});
+	}
+	//置顶文章局部刷新
+	function stickyTopic(url){
+		if(typeof($("#no3").val())!='undefined'){
+			 delPos();
+		};
+		//解决ajax无法跨站点访问文章问题
+		var nu="";
+		if(url.indexOf("baoting") > 0){
+			nu=url.replace("baoting.","");
+		}else if(url.indexOf("haikou") > 0){
+			nu=url.replace("haikou.","");
+		}else if(url.indexOf("sanya") > 0){
+			nu=url.replace("sanya.","");
+		}else if(url.indexOf("tunchang") > 0){
+			nu=url.replace("tunchang.","");
+		}else{
+			nu=url;
+		}
+		var newUrl=nu+"&sx=0";
+	 	$.ajax({
+          type: 'GET',
+          url : newUrl,
+          dataType:"html",
+          async: true,
+          success : function(datas){
+        	  var wzid=document.getElementById('wzId');
+     		 if(wzid!=null){
+     			 document.getElementById('wzId').innerHTML="";
+     		 }
+     		 var maindiv=document.getElementById('maindiv');
+     		 if(maindiv!=null){
+     			 document.getElementById('maindiv').innerHTML="";
+     		 }
+              $(".wrap-right").append(datas);
+              if(window._bd_share_main){
+
+           	   window._bd_share_main.init();
+           	}
+ 	   		 }
+		});
+	}
+	
+	function precOrNext(url){
+		if(typeof($("#no3").val())!='undefined'){
+			 delPos();
+		};
+		//解决ajax无法跨站点访问文章问题
+		var nu="";
+		if(url.indexOf("baoting") > 0){
+			nu=url.replace("baoting.","");
+		}else if(url.indexOf("haikou") > 0){
+			nu=url.replace("haikou.","");
+		}else if(url.indexOf("sanya") > 0){
+			nu=url.replace("sanya.","");
+		}else if(url.indexOf("tunchang") > 0){
+			nu=url.replace("tunchang.","");
+		}else{
+			nu=url;
+		}
+		var newUrl=nu+"&sx=0";
+	 	$.ajax({
+         type: 'GET',
+         url : newUrl,
+         dataType:"html",
+         async: true,
+         success : function(datas){
+        	 var wzid=document.getElementById('wzId');
+    		 if(wzid!=null){
+    			 document.getElementById('wzId').innerHTML="";
+    		 }
+    		 var maindiv=document.getElementById('maindiv');
+    		 if(maindiv!=null){
+    			 document.getElementById('maindiv').innerHTML="";
+    		 }
+             $(".wrap-right").append(datas);
+             if(window._bd_share_main){
+
+          	   window._bd_share_main.init();
+          	}
+	   		 }
+		});
+	}
+	
+	//还有转载
+	function friendCollection(url){
+		if(typeof($("#no3").val())!='undefined'){
+			 delPos();
+		};
+		$("#templatePageNo").val("1");
+		$("#noone").val("");
+		$("#notwo").val("2");
+		$("#ownCollectionUrl").val(url);
+		//解决ajax无法跨站点访问文章问题
+		var nu="";
+		if(url.indexOf("baoting") > 0){
+			nu=url.replace("baoting.","");
+		}else if(url.indexOf("haikou") > 0){
+			nu=url.replace("haikou.","");
+		}else if(url.indexOf("sanya") > 0){
+			nu=url.replace("sanya.","");
+		}else if(url.indexOf("tunchang") > 0){
+			nu=url.replace("tunchang.","");
+		}else{
+			nu=url;
+		}
+		var newUrl=nu;
+	 	$.ajax({
+        type: 'GET',
+        url : newUrl,
+        dataType:"html",
+        async: true,
+        success : function(datas){
+        	var wzid=document.getElementById('wzId');
+   		 if(wzid!=null){
+   			 document.getElementById('wzId').innerHTML="";
+   		 }
+   		 var maindiv=document.getElementById('maindiv');
+   		 if(maindiv!=null){
+   			 document.getElementById('maindiv').innerHTML="";
+   		 }
+            $(".wrap-right").append(datas);
+            if(window._bd_share_main){
+
+         	   window._bd_share_main.init();
+         	}
+	   		 }
+		});
+	}
+	
+	function friendCollectionTwo(url,pageNo){
+		if(typeof($("#no3").val())!='undefined'){
+			 delPos();
+		};
+		//解决ajax无法跨站点访问文章问题
+		var nu="";
+		if(url.indexOf("baoting") > 0){
+			nu=url.replace("baoting.","");
+		}else if(url.indexOf("haikou") > 0){
+			nu=url.replace("haikou.","");
+		}else if(url.indexOf("sanya") > 0){
+			nu=url.replace("sanya.","");
+		}else if(url.indexOf("tunchang") > 0){
+			nu=url.replace("tunchang.","");
+		}else{
+			nu=url;
+		}
+		var newUrl=nu;
+	 	$.ajax({
+        type: 'GET',
+        url : newUrl,
+        dataType:"html",
+        data: {'pageNo':pageNo},
+        async: true,
+        success : function(datas){
+        	var wzid=document.getElementById('wzId');
+   		 if(wzid!=null){
+   			 document.getElementById('wzId').innerHTML="";
+   		 }
+   		 var maindiv=document.getElementById('maindiv');
+   		 if(maindiv!=null){
+   			 document.getElementById('maindiv').innerHTML="";
+   		 }
+            $(".wrap-right").append(datas);
+            if(window._bd_share_main){
+
+         	   window._bd_share_main.init();
+         	}
+	   		 }
+		});
+	}
+	</script>
+<script type="text/javascript">
+function gotoDataShowFriend(url){
+	if(typeof($("#no3").val())!='undefined'){
+		 delPos();
+	};
+	$.ajax({
+        type: 'GET',
+        url : url,
+        dataType:"html",
+        async: true,
+        success : function(datas){
+		   $("#zd_u-hilite-cap").remove();
+		   $("#zdId").remove();
+		   $("#u-hilite-cap").remove();
+		   var wzid=document.getElementById('wzId');
+  		 if(wzid!=null){
+  			 document.getElementById('wzId').innerHTML="";
+  		 }
+  		 var maindiv=document.getElementById('maindiv');
+  		 if(maindiv!=null){
+  			 document.getElementById('maindiv').innerHTML="";
+  		 }
+	       $(".wrap-right").append(datas);
+	       if(window._bd_share_main){
+	         window._bd_share_main.init();
+	       }
+       	  
+	   	}
+	});	
+}
+</script>
+<script type="text/javascript">
+$("#notwo").val("3");
+</script>

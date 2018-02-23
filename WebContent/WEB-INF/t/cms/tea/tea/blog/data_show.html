@@ -1,0 +1,83 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<title>好研网</title>
+<link href="${resSys}/front.css" rel="stylesheet" type="text/css"/>
+<script src="${resSys}/jquery.js" type="text/javascript"></script>
+<script src="${resSys}/front.js" type="text/javascript"></script>
+<link id="hello" type="text/css" rel="stylesheet" href="/${res}/css/custom.css" />
+<link  type="text/css" rel="stylesheet" href="/${res}/css/hyindex.css" />
+<link  type="text/css" rel="stylesheet" href="/${res}/css/SimpleTree.css" />
+<script src="/${res}/js/SimpleTree.js"></script>
+<style>
+
+.st_tree ul .change a:hover{color:red;}
+.st_tree ul li a:hover{color:blue;}
+.st_tree ul .change :hover{background-color:#e7e7e7 }
+::-webkit-scrollbar{width:0px}
+.clear{clear:both}
+</style>
+<script type="text/javascript">
+$(function(){
+	$(".st_tree").SimpleTree({
+		click:function(a){
+			if(!$(a).attr("hasChild"))
+				alert($(a).attr("ref"));
+		}
+	});
+});
+</script>
+<script type="text/javascript">
+$(function(){
+$('.user-menu-links li').click(function(){
+    $(this).toggleClass('on');
+});
+});
+</script>
+<div id="contextMenus"></div>
+[#include "head.html"/]
+<div class="blogBody">
+<div class="blog-con">
+  <div class="blogHead">
+   <div class="title1"><a [#if user??]href="${base}/blog/index.jspx"[#else]href="${base}/blog/index.jspx?uid=${usert.id}"[/#if]><span id="ftitle1">[#if user??][#if user.blogTitle??]${user.blogTitle}[#else]标题[/#if][#else][#if usert.blogTitle??]${usert.blogTitle}[#else]标题[/#if][/#if]</span></a></div>
+	  <div style="font-size:15px;margin:5px auto 15px;" id="ftitle2">[#if user??][#if user.blogTitle2??]${user.blogTitle2}[#else]副标题[/#if][#else][#if usert.blogTitle2??]${usert.blogTitle2}[#else]副标题[/#if][/#if]</div>
+  </div>
+      <div>
+      	<div class="tj">
+     	 	  文章数:${articleCount}&nbsp;&nbsp;
+	  评论:${commentCount}&nbsp;&nbsp;
+	  [#if user??]
+	  访问:${user.blogVisitNum!'0'}&nbsp;&nbsp;
+	  最后登录:${user.lastLoginTime?string('yyyy-MM-dd HH:mm:ss')}&nbsp;&nbsp;
+	  [#else]
+	   访问:${usert.blogVisitNum!'0'}&nbsp;&nbsp;
+	  最后登录:${usert.lastLoginTime?string('yyyy-MM-dd HH:mm:ss')}&nbsp;&nbsp;
+	  [/#if]
+	  </div>
+      </div>
+      [#include "blog_operation.html"/]
+        <div class="mb20 clearfix">
+            [#include "blog_left.html"/]
+           <div class="wrap-right">
+            <div class="links-wrap" style="margin-top:0px;">
+            <div class="personCenter-userInfo blog_right" >
+		              [#if dataFlag??]    
+		                [#if dataFlag==1] [#include "./data_show/friend_show.html"/][/#if]
+		                [#if dataFlag==2] [#include "./data_show/focus_show.html"/][/#if]
+		                [#if dataFlag==3] [#include "./data_show/fans_show.html"/][/#if]
+		                [#if dataFlag==4] [#include "./data_show/star_blogger_show.html"/][/#if]
+		              [/#if]  
+				</div>
+				</div>
+           </div>
+     </div> 
+  </div>
+</div>
+[#if user??] 
+[#include "model.html"]
+[#else]
+[#include "model_friend.html"]
+[/#if]
+[#include "../include/footers.html"/]
+[#include "../include/right-fixed.html"/]
+</body>
+</html>

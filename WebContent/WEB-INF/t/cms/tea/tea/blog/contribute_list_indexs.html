@@ -1,0 +1,300 @@
+ <div class="personCenter-userInfo blog_right">
+ <div id="tgglDiv" class="tggl" style="display: block;">
+ <form id="tableForm" action="${base}/blog/index.jspx" method="post">
+			          <ul class="report-list2 sm mb20" style="">
+			          [#if pagination.list?size gt 0]
+				          [#list pagination.list as c]
+				         <li>
+				          <div>
+				          <a class="hasImg clearfix a12"  href="javascript:void(0);" onclick="myblogShow('${c.url}')" >
+							  <div class="item2 clearfix" [#if c_index<1]style="border-top:none;"[/#if]>
+									<div class="report-text">
+										<div><h3>${c.title}</h3></div>
+									</div>
+					           </div>
+						   </a>
+						  </div>
+						  [#if user??]
+							   [#if c.columnId??]
+								   [#if c.user.id=user.id]
+									  <a href="javascript:void(0);" onclick="contributeUpdate(${c.id});" class="f3"><em style="color: #b7b7b7;">修改</em></a>&nbsp;|&nbsp;
+						              <a href="javascript:void(0);" onclick="contributeDelete(${c.id});"  class="f3"><em style="color: #b7b7b7;">删除</em></a>
+						           [#else]
+						            <a class="f3"><em style="color:#b7b7b7;">不可修改删除</em></a>
+						           [/#if]
+						       [#else]   
+						        <a href="javascript:void(0);" onclick="contributeUpdate(${c.id});" class="f3"><em style="color: #b7b7b7;">修改</em></a>&nbsp;|&nbsp;
+						              <a  href="javascript:void(0);" onclick="contributeDelete(${c.id});" class="f3"><em style="color: #b7b7b7;">删除</em></a>
+					           [/#if]
+							<div class="f2"><span style="padding-right:10px;"><em>博主:&nbsp;${c.user.username}&nbsp;&nbsp;&nbsp;${c.releaseDate?string('yyyy-MM-dd')}&nbsp;&nbsp;&nbsp;作者:&nbsp;${c.author!c.user.username}&nbsp;&nbsp;&nbsp;阅读:&nbsp;${c.contentCount.views!}&nbsp;&nbsp;&nbsp;评论:&nbsp;${c.contentCount.comments!}</em></span></div>
+						  [#else]
+						   <a class="f3"><em style="color:#b7b7b7;">博主:&nbsp;${c.user.username}&nbsp;&nbsp;&nbsp;${c.releaseDate?string('yyyy-MM-dd')}&nbsp;&nbsp;&nbsp;作者:&nbsp;${c.author!c.user.username}&nbsp;&nbsp;&nbsp;阅读:&nbsp;${c.contentCount.views!}&nbsp;&nbsp;&nbsp;评论:&nbsp;${c.contentCount.comments!}</em></a>
+						  [/#if]			
+			             </li>
+			              [/#list]
+			          </ul>
+			          
+			          <input type="hidden" name="pageNo"/>
+			           [#if usert??]
+					  <input style="display: none;" id="hy" name="hy" value="${usert.id}"/>
+					  [/#if]
+			           <table  style="margin:20px 0 0 40px;border:0px" ><tbody><tr><td style="border:0px; ">
+                共 ${pagination.totalCount} 条&nbsp;
+                每页 ${pagination.pageSize} 条&nbsp;
+                [#if pagination.firstPage]
+                <a href="javascript:void(0);" style="cursor: default;">首页</a>
+                <a href="javascript:void(0);" style="cursor: default;">上一页</a>
+                [#else]
+                 <a href="javascript:void(0);" style="cursor: pointer;"  onclick="_gotoPage('1');" >首页</a>
+               	 <a href="javascript:void(0);" style="cursor: pointer;" onclick="_gotoPage('${pagination.prePage}');" >上一页</a>
+                [/#if]
+                [#if pagination.lastPage]
+                <a href="javascript:void(0);" style="cursor: default;">下一页</a>
+                <a href="javascript:void(0);" style="cursor: default;">尾页</a>&nbsp;
+                [#else]
+                <a href="javascript:void(0);" style="cursor: pointer;" onclick="_gotoPage('${pagination.nextPage}');" >下一页</a>
+                 <a href="javascript:void(0);" style="cursor: pointer;" onclick="_gotoPage('${pagination.totalPage}');" >尾页</a>&nbsp;
+                [/#if]
+                 
+                当前 ${pagination.pageNo}/${pagination.totalPage} 页 &nbsp;转到第<input type="text" id="_goPs" maxlength="6" onfocus="this.select();" onkeypress="if(event.keyCode==13){$('#_goPage').click();return false;}" class="inp1"/>页
+                <input style="cursor: pointer;" id="_goPage" type="button" value="转" class="jump" onclick="_gotoPage($('#_goPs').val());"[#if pagination.totalPage==1] disabled="disabled"[/#if] />
+            </td>
+            </tr>
+            </tbody>
+            </table>
+			          <script type="text/javascript">
+			          function contributeDelete(ids){
+				      		
+				      		var delUrl ="${base}/blog/ajax_contribute_delete.jspx?ids="+ids;
+				      		if(confirm('确定要删除吗?')) {
+				      			$.ajax({
+				      		           type: 'GET',
+				      		           url : delUrl,
+				      		           dataType:"text",
+				      		           async: true,
+				      		           success : function(datas){
+				      		        	  var code =datas;
+				      		        	  if(code=="success"){
+				      		        		  alert("删除成功！");
+				      		        		  $.ajax({
+				      		       	           type: 'POST',
+				      		       	           url : '${base}/blog/indexs.jspx',
+				      		       	           dataType:"html",
+				      		       	           async: true,
+				      		       	           success : function(datas){
+				      		       	        	var wzid=document.getElementById('wzId');
+				      		            		 if(wzid!=null){
+				      		            			 document.getElementById('wzId').innerHTML="";
+				      		            		 }
+				      		            		 var maindiv=document.getElementById('maindiv');
+				      		            		 if(maindiv!=null){
+				      		            			 document.getElementById('maindiv').innerHTML="";
+				      		            		 }
+				      		       	               $(".wrap-right").append(datas);		
+				      		       	  	   		 }
+				      		       	 	});
+				      		        	  }else if(code=="login"){
+				      		        		alert("登录状态失效,请先登录！");
+				      		        	  }
+				      		        	  else{
+				      		        		  alert("删除失败！");
+				      		        	  }
+				      		  	   		 }
+				      		 	});
+				      		}
+				      	}
+			          
+			            function _gotoPage(pageNo) {
+			                try{
+			                   // var tableForm = document.getElementById("tableForm");
+			                    var queryTitle = parent.document.getElementById("queryTitle").value;
+			                    //var queryTitle = $("queryTitle").val();
+			                    $("input[name=pageNo]").val(pageNo);
+			                    $("#templatePageNos").val(pageNo);
+			                    if(typeof($("#hy").val())=='undefined'){
+				                    if(queryTitle!=null && queryTitle!=""){
+				                    	$.ajax({
+									           type: 'POST',
+									           url : '${base}/blog/indexs.jspx',
+									           dataType:"html",
+									           data : {'queryTitle' : queryTitle,'modelId' : null,'queryChannelId' : null,'pageNo':pageNo,'channelId':null,'joinGroupStata':null,'columnId':null,'userIds':null},
+									           async: false,
+									           success : function(datas){
+									        	   if(datas=="login"){
+									            		 location.href="${base}/login.jspx";
+									            	 }else{
+									            		 var wzid=document.getElementById('wzId');
+									            		 if(wzid!=null){
+									            			 document.getElementById('wzId').innerHTML="";
+									            		 }
+									            		 var maindiv=document.getElementById('maindiv');
+									            		 if(maindiv!=null){
+									            			 document.getElementById('maindiv').innerHTML="";
+									            		 }
+											               $(".wrap-right").append(datas);	
+									            	 }
+									        	  	
+									  	   		 }
+									 	});
+				                    	// tableForm.action="${base}/blog/index.jspx?queryTitle="+queryTitle;
+			                    	}else{
+			                    		$.ajax({
+									           type: 'POST',
+									           url : '${base}/blog/indexs.jspx',
+									           dataType:"html",
+									           data : {'queryTitle' : null,'modelId' : null,'queryChannelId' : null,'pageNo':pageNo,'channelId':null,'joinGroupStata':null,'columnId':null,'userIds':null},
+									           success : function(datas){
+									        	   if(datas=="login"){
+									            		 location.href="${base}/login.jspx";
+									            	 }else{
+									            		 var wzid=document.getElementById('wzId');
+									            		 if(wzid!=null){
+									            			 document.getElementById('wzId').innerHTML="";
+									            		 }
+									            		 var maindiv=document.getElementById('maindiv');
+									            		 if(maindiv!=null){
+									            			 document.getElementById('maindiv').innerHTML="";
+									            		 }
+											               $(".wrap-right").append(datas);	
+									            	 }
+									        	 	
+									  	   		 }
+									 	});
+			                    		//tableForm.action="${base}/blog/index.jspx";
+			                    	}
+			                    }else{
+			                    	//alert("=2222=");
+			                    	if(queryTitle!=null && queryTitle!=""){
+			                    		tableForm.action="${base}/blog/index.jspx?uid="+$("#hy").val()+"&queryTitle="+queryTitle;
+			                    	}else{
+			                    		tableForm.action="${base}/blog/index.jspx?uid="+$("#hy").val();
+			                    	}
+				                    
+			                    }
+			                    //tableForm.onsubmit=null;
+			                    //tableForm.submit();
+			                } catch(e) {
+			                    alert('_gotoPage(pageNo)方法出错');
+			                }
+			            }
+			            </script>
+			             [#else]
+			         <div>暂无博文</div>
+			        [/#if]
+			          </form>
+          </div>
+          </div>
+          
+<script type="text/javascript">
+ $("#zd_u-hilite-cap").remove();
+ $("#zdId").remove();
+ $("#u-hilite-cap").remove();
+var html =""; 
+	html  +="<div id=\"zd_u-hilite-cap\" class=\"cap\" onclick=\"zdShowHidden();\" >置顶</div>"; 
+	html  +=" <div id=\"zdId\" style=\"width: 730px;float: left; padding-left: 20px;\">"; 
+	html  +="<div class=\"personCenter-userInfo blog_right1\">"; 
+	html  +="<ul class=\"topicList\" >"; 
+	html  +="[#if stickList??]";
+	html  +="[#if stickList?size gt 0]"; 
+	html  +="[#list stickList as sti]"; 
+	html  +="<li class=\"row\"><a cmd=\"LoadTopic\" _list=\"hilite\"  href=\"javascript:void(0);\" onclick=\"myblogZdShow('${base}','${sti.path}',${sti.contentId},${sti.id},${sti.stickUserId})\">${sti.contentTitle}</a> <span class=\"lt\">(${sti.contentTime?string('yyyy-MM-dd')})</span></li>				           [/#list]"; 
+	html  +=" [#else]"; 
+	html  +="<li class=\"row\" >暂无置顶内容！ </li>"; 
+	html  +=" [/#if]"; 
+	html  +=" [#else]"; 
+	html  +="<li class=\"row\" >暂无置顶内容！ </li>"; 
+	html  +=" [/#if]"; 
+	html  +=" </ul>"; 
+	html  +=" </div>"; 
+	html  +=" </div> "; 
+	html  +="  <div id=\"u-hilite-cap\" class=\"cap\" onclick=\"showHidden();\" >文章</div>"
+$(".wrap-right").before(html);
+
+
+function showHidden(){
+	var display = $(".wrap-right").css('display');
+	if(display=="block"){
+		$(".wrap-right").css('display','none'); 
+	}else{
+		$(".wrap-right").css('display','block'); 
+	}
+}
+function zdShowHidden(){
+	var display = $("#zdId").css('display');
+	if(display=="block"){
+		$("#zdId").css('display','none'); 
+	}else{
+		$("#zdId").css('display','block'); 
+	}
+}
+
+function myblogShow(url){
+	if(url.indexOf("baoting") > 0){
+			url=url.replace("baoting.","");
+		}else if(url.indexOf("haikou") > 0){
+			url=url.replace("haikou.","");
+		}else if(url.indexOf("sanya") > 0){
+			url=url.replace("sanya.","");
+		}else if(url.indexOf("tunchang") > 0){
+			url=url.replace("tunchang.","");
+		}else{
+			url=url;
+		}
+	var getTimestamp=new Date().getTime(); 
+	 $.ajax({
+        type: 'GET',
+        url : url,
+        /*  dataType : 'json', */
+         dataType:"html",
+        data : {'o' : 1,'getTimestamp' : getTimestamp},
+        success : function(datas){
+       	 $("#zd_u-hilite-cap").remove();
+       	 $("#zdId").remove();
+       	 $("#u-hilite-cap").remove();
+       	var wzid=document.getElementById('wzId');
+		 if(wzid!=null){
+			 document.getElementById('wzId').innerHTML="";
+		 }
+		 var maindiv=document.getElementById('maindiv');
+		 if(maindiv!=null){
+			 document.getElementById('maindiv').innerHTML="";
+		 }
+       	 $(".wrap-right").append(datas);
+       	 if(window._bd_share_main){
+         	   window._bd_share_main.init();
+         	}
+	   		 }
+		 });
+}
+function contributeUpdate(id){
+		var updateUrl ="${base}/blog/contribute_ajax_edit.jspx?id="+id;
+		 $.ajax({
+           type: 'POST',
+           url : updateUrl,
+            dataType:"html",
+           data : {},
+           success : function(datas){
+        	   if(datas=="login"){
+          		 location.href="${base}/login.jspx";
+          	 }else{
+          		 $("#zd_u-hilite-cap").remove();
+	        	 $("#zdId").remove();
+	        	 $("#u-hilite-cap").remove();
+	        	 
+	        	 var wzid=document.getElementById('wzId');
+        		 if(wzid!=null){
+        			 document.getElementById('wzId').innerHTML="";
+        		 }
+        		 var maindiv=document.getElementById('maindiv');
+        		 if(maindiv!=null){
+        			 document.getElementById('maindiv').innerHTML="";
+        		 }
+	          	 $(".wrap-right").append(datas); 
+          	 }
+        	
+  	   		 }
+ 		 });
+		 
+			
+	}
+</script>

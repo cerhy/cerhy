@@ -1,0 +1,21 @@
+<div class="right-fixed">
+  <ul>
+    <li class="back-top"></li>    
+  </ul>
+  <script type="text/javascript">
+	$(function(){
+		var $body = $(document.body);;
+		var $bottomTools = $('.right-fixed');
+			$(window).scroll(function () {
+				var scrollHeight = $(document).height();
+				var scrollTop = $(window).scrollTop();
+				scrollTop > 50 ? $(".back-top").slideDown(300).css("display","block") : $(".back-top").slideUp(300);			
+			});
+			$('.back-top').click(function (e) {
+				e.preventDefault();
+				$('html,body').animate({ scrollTop:0});
+			});
+			
+	});
+  </script>
+</div>
