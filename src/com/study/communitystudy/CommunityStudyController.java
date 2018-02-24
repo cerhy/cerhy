@@ -1,4 +1,4 @@
-package com.study;
+package com.study.communitystudy;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,16 +14,17 @@ import org.springframework.web.servlet.ModelAndView;
 import com.jeecms.cms.action.project.CommunityAct;
 
 /**
- * 工作坊
+ * 社区研修
  */
 @Controller
 public class CommunityStudyController {
 	@SuppressWarnings("unused")
+	
 	private static final Logger log = LoggerFactory.getLogger(CommunityStudyController.class);
 	
     @RequestMapping("/cte")    
     public ModelAndView index(HttpServletRequest request,HttpServletResponse response) {    
     	System.out.println("++++++++++++++++++++++++++++++++++++++");
-        return new ModelAndView("WEB-INF/t/cms/www/default/index/community.html");    
+        return new ModelAndView("WEB-INF/study/community.html");    
     } 
 }
