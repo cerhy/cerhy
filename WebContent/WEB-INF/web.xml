@@ -260,7 +260,7 @@
   
     <servlet-mapping>
     <servlet-name>JeeCmsFront</servlet-name>
-    <url-pattern>/cte/*</url-pattern>
+    <url-pattern>/CommunityStudy/index</url-pattern>
   </servlet-mapping>
   
   

@@ -10,6 +10,7 @@
 	
 	<!-- 备注！备注！备注！ 每个都要-->   
 	<!-- id="(controller类名)"  class="com.jeecms.cms.action.front.DynamicPageAct" -->
-	<bean id="CommunityStudyController" class="com.study.CommunityStudyController"/>
+	<!-- 社区研修 -->
+	<bean id="CommunityStudyController" class="com.study.communitystudy.CommunityStudyController"/>
 	
 </beans>
