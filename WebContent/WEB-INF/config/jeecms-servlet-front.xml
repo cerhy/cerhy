@@ -75,4 +75,6 @@
 	</bean>
 	<context:annotation-config/>
 	<import resource="jeecms/jeecms-servlet-front-action.xml"/>
+	<!-- 继教系统bean -->
+	<import resource="studyConfig/study-spring-mvc.xml"/>
 </beans>

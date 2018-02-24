@@ -1,0 +1,395 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0"/>
+<meta name="msapplication-tap-highlight" content="no"/>
+<title>社区研修</title>
+<link rel="stylesheet" href="http://x.hnjs.org/ui/wss/base.css"/>
+<style>
+.tbr		{ width: 100%; overflow: hidden; position: fixed; }
+.tb1		{ margin: 0 0 0 2px; }
+.mi1		{ margin: 0 0 6px 0; color: #000; background-color: #f1f1f1; cursor: pointer; }
+.mi1:hover, .mi1.active	{ color: #fff; background-color: #0072c6; }
+
+.mi6		{ padding: 4px 12px; background-color: #fa6800; color: #fff; float: right; cursor: pointer; }
+.mi6:hover	{ background-color: #E16000; color: #fff; }
+
+.tb-cap		{ margin-right: 16px; padding-right: 16px; height: 50px; font-size: 18px; line-height: 50px; border-right: 1px solid #fff; float: left; display: inline-block; }
+.tb-txt		{ line-height: 50px; color: #00ffff; }
+.tb-usr		{ margin-left: 16px; border-left: 1px solid #fff; float: right; }
+
+.cct-cap	{ margin-bottom: 10px; padding: 6px 16px; color: #fff; background: #fa6800; }
+.cct		{ color: #ea3e24; font-size: 68px; line-height: normal; float: left; }
+.ccd-cap	{ font-weight: bold; }
+.ccd		{ margin-left: 100px; }
+
+.lv			{ padding: 10px 10px 20px 0; }
+.lv-row		{ padding: 4px 0; border-left: 4px solid #ccc; }
+.lv-row:hover	{ border-color: #fa6800; background: #f1f1f1; }
+.lv-s		{ width: 60px; border-right: 1px solid #ccc; text-align: center; display: inline-block; }
+.lv-a		{ margin-left: 8px; }
+
+.toc-row	{ margin: 0 0 8px 0; padding: 4px 16px; border: 1px solid #e1e1e1; background-color: #f8f8f8; }
+.toc-inn	{ padding-right: 68px; background-repeat: no-repeat; background-position: right 10px; }
+.toc-cap	{ font-weight: bold; }
+
+.x-wrap		{ margin: 0 auto; width: 960px; }
+#y-layout	{ padding: 68px 0 30px 0; }
+#y-sbr		{ width: 210px; float: left; }
+#y-pane		{ width: 720px; float: right; }
+
+@media screen and (max-width: 960px) {
+}
+</style>
+<script src="http://x.hnjs.org/lib/r1/mootools_rv.js"></script>
+<script src="http://x.hnjs.org/lib/r1/mootools_ue.js"></script>
+<script src="http://x.hnjs.org/lib/r1/qrcode.js"></script>
+<script>
+App.implement({
+    initialize: function() {
+        RequestX.url = "/admin/blog",
+        App.title = "社区研修",
+        this.initCommand(),
+        Widget.gotop($("y-layout"));
+        var t = location.pathname.split("/")[2] || "",
+        e = function(e, a) {
+            var n = this.current;
+            n.Project = e.get("Project");
+            var i = n.Project.Banner;
+            return i && "http" == i.substr(0, 4) ? location.replace(i) : ($("y-tbr").display(), n.IsAdmin = e.get("Passport").UserRole >= 190, 0 == t.length ? (this.openBand("ProjectListBand"), this.updateProjectList(e)) : "0" == t ? this.openBand("ConfigBand") : (n.ProjectId = n.Project.ProjectId, n.Project.Tags || (n.Project.Tags = "教育随笔,研修日志,团队磨课,实践反思,,教学设计,课堂实录,问题研讨,教学资源"), this.initSidebar(), void this.openBand("IntroBand")))
+        }.bind(this);
+        new RequestX({
+            Action: "" == t ? "cxProjectList": "cxProjectView",
+            ProjectId: t
+        },
+        e)
+    },
+    initBandSheet: function(t, e) {
+        var a = $("y-pane"),
+        n = new Element("div[style=display:none]", {
+            html: e
+        }).inject(a);
+        return t.widget = [n],
+        n
+    },
+    initBandLayout: function(t, e, a) {
+        Passport.ready || (n = '<a class="tb1 tb1fr" target="_self" href="' + App.wai + '"><i class="wib">&#xe639;</i>登录</a>');
+        var n = new Element("div.tbr").inject(document.body),
+        i = new Element("div.x-card").inject(document.body);
+        new Element("a.tb1.tb-nav", {
+            href: "/",
+            html: '<i class="wi">&#xe626;</i>'
+        }).inject(n),
+        a && new Element("span", {
+            html: a
+        }).inject(n),
+        e && new Element("span.tbc", {
+            html: e
+        }).inject(n),
+        t.widget = [n, i]
+    },
+    updateBand: function(t, e) {
+        window.scrollTo(0, 0)
+    },
+    listTopic: function(t) {
+        this.openBand("TopicListBand");
+        var e = ParamStack.get("p_list", t, "Tag,Page", {
+            Action: "cxProjectListTopic",
+            Id: this.current.CategoryId
+        });
+        e.changed && new RequestX(e.data, this.updateTopicList)
+    },
+    listMate: function(t) {
+        this.openBand("MateBand");
+        var e = this.current;
+        new RequestX({
+            Action: "cxProjectListMate",
+            ProjectId: e.ProjectId,
+            CategoryId: e.CategoryId
+        },
+        this.updateMate)
+    },
+    initProjectListBand: function(t, e) {
+        var a = this.initBandSheet(e);
+        this.current.IsAdmin && new Element("a.mi1[href=/cte/0][html=+ 添加项目]").inject("y-sbr"),
+        $("y-cust").inject("y-sbr").display(),
+        this.updateProjectList = function(t) {
+            var e = '<div class="cct-cap">正在进行的社区研修</div><div class="lv">',
+            n = '<div class="cct-cap">延伸跟踪</div><div class="lv">';
+            t.gets("Project").each(function(t) {
+                var a = '<div class="lv-row"><span class="lv-s">{Section}</span><span class="lv-s">{Grade}</span><a class="lv-a" href="/cte/{ProjectId}">{Title}</a></div>'.substitute(t);
+                "0" == t.Locked ? e += a: n += a
+            }),
+            a.set("html", e + "</div>" + n)
+        }
+    },
+    initSidebar: function(t) {
+        t || (t = $("y-sbr"));
+        var e = this.current,
+        a = e.Category = function(t) {
+            var e = [];
+            return t || (t = ""),
+            t.split("\n").each(function(t, a) {
+                var n = t.indexOf("=");
+                if (! (n < 0)) {
+                    var i = t.substr(0, n),
+                    s = t.substr(n + 1);
+                    e.push({
+                        idx: a,
+                        cid: s,
+                        cap: i
+                    })
+                }
+            }),
+            e
+        } (e.Project.Cats);
+        a.length > 0 && (e.CategoryId = a[0].cid);
+        var n = '<span class="mi6" cmd="GuideBand">指南</span><span class="mi1 active" cmd="IntroBand">概览</span>' + (a.length > 1 ? '<span class="mi6" cmd="KlassBand">选班</span><span class="mi1" cmd="ListTopic" _kls="1" _Tag="">' + a[0].cap + "</span>": '<span class="mi1" cmd="ListTopic" _Tag="">研修群组</span>') + '<span class="mi1" cmd="ListMate">学情统计</span><hr/>';
+        e.Project.Tags.split(",").each(function(t, e) {
+            0 == t.length ? n += "<hr/>": "*" == t.substr(0, 1) ? n += "<h3>" + t.substr(1) + "</h3>": n += '<span class="mi1" cmd="ListTopic" _Tag="' + t + '">' + t + "</span>"
+        });
+        var i = new Element("div", {
+            html: n
+        }).inject(t);
+        i.addEvent("click",
+        function(t) {
+            var e = t.target;
+            "span" != e.tagName.toLowerCase() || e.hasClass("active") || e.singleSelect()
+        });
+        var s = i.getElement("[_kls]");
+        this.changeKlass = function(t) {
+            s && s.set("html", t.get("html")).singleSelect(),
+            e.CategoryId = t.get("_Id"),
+            t.singleSelect(),
+            this.listTopic(t)
+        }
+    },
+    initKlassBand: function(t, e) {
+        var a = this.current.Category,
+        n = "<h3>共有 " + a.length + " 个班</h3>";
+        a.each(function(t) {
+            n += '<b class="tb2" style="width:150px;" cmd="ChangeKlass" _Id="' + t.cid + '" _tag="">' + t.cap + "</b>"
+        }),
+        this.initBandSheet(e, n)
+    },
+    initIntroBand: function(t, e) {
+        var a = this.initBandSheet(e);
+        this.updateIntro = function() {
+            var t = this.current.Project,
+            e = t.Title || App.title,
+            n = t.Banner;
+            document.title = e,
+            $("y-title").set("html", e),
+            n ? a.set("html", n) : $("y-banner").inject(a).display()
+        },
+        this.updateIntro()
+    },
+    initGuideBand: function(t, e) {
+        var a = this.initBandSheet(e);
+        $("y-guide").inject(a).display()
+    },
+    initTopicListBand: function(t, e) {
+        var a = this.initBandSheet(e),
+        n = '<div class="toc-inn" style="background-image:url({Avatar})"><h3 class="toc-cap">{Tag2}<a href="http://hi.hnjs.org/t/{ContentId}">{Title}</a></h3><div class="lt">{PublishDate} <a class="hot2" href="http://hi.hnjs.org/{Owner}">{Author}</a> <span>{WordCount}字, 阅读{HitCount}, 评论{CommentCount}</span></div><div>{Summary}</div></div>',
+        i = function(t, e) {
+            var a = jo.html(t, {
+                PublishDate: t.PublishDate.utc(""),
+                Avatar: Passport.avatar(t.Account),
+                Tag2: t.Tag ? "[" + t.Tag + "] ": ""
+            });
+            return n.substitute(a)
+        }.bind(this),
+        s = new TopicList({
+            parent: a,
+            cmd: "ListTopic",
+            id_name: "ContentId",
+            getRowHtml: i
+        });
+        this.updateTopicList = function(t) {
+            s.update(t.gets("Topic"), t.get("TopicPaged"), "暂时没有文章")
+        }
+    },
+    initMateBand: function(t, e) {
+        var a = this.initBandSheet(e),
+        n = this.current,
+        i = n.IsAdmin ? '<span cmd="ConfigBand" class="tb2">项目设置</span><span cmd="MateQueryDlg" class="tb2">查找成员</span><span cmd="MateEditDlg" class="tb2">添加成员</span>': "";
+        "0" == n.Project.Locked && (i += '<span cmd="StatMate" class="tb2">现在统计</span>'),
+        new Element("div", {
+            html: i
+        }).inject(a);
+        var s = {
+            "账号": "width:68px",
+            "姓名": "width:100px",
+            "文章数": "width:60px"
+        },
+        c = '<td class="{Tag2}">{Account}</td><td><a href="http://my.hnjs.org/{Account}">{RealName}</a></td><td>{T0}</td>',
+        o = 1;
+        n.Project.Tags.split(",").each(function(t) {
+            0 != t.length && "*" != t.substr(0, 1) && (s[t] = "width:48px", c += "<td>{T" + o+++"}</td>")
+        });
+        var d = new TableView({
+            parent: a,
+            id_name: "Account",
+            getRowHtml: function(t, e, a) {
+                for (var n = t.Stat.split(",", 9), i = n.length, s = 0; s < 9; s++) {
+                    var o = n[s];
+                    t["T" + s] = s >= i || "0" == o ? "": o
+                }
+                return c.substitute(t)
+            },
+            header: s,
+            singleSelect: !0
+        });
+        this.updateMate = function(t) {
+            d.update(t.gets("Mate", "RealName", "a"))
+        }
+    }
+}),
+App.implement({
+    statMate: function(t) {
+        var e = this.current,
+        a = function(e, a) {
+            t.tip("当前班级学情统计完毕"),
+            "0" == a && this.listMate()
+        }.bind(this);
+        new RequestX({
+            Action: "cxProjectPost_A",
+            Mode: "Stat",
+            ProjectId: e.ProjectId,
+            CategoryId: e.CategoryId
+        },
+        a)
+    },
+    initMateEditDlg: function(t, e) {
+        e.pane = new PopupDlg({
+            width: 320,
+            content: '<form id="mate-edit-form" method="post" action="#"><div class="f-row"><input name="CategoryId" class="bg-light" readonly="readonly" style="width:260px;"/></div><div class="lt">成员列表 （每行一个，格式为“账号 姓名”，中间用一个空格隔开，姓名设为 REMOVE! 可删除）:</div><div class="f-row"><textarea name="Mates" style="width:260px; height:100px;"></textarea></div><div class="f-bow"><button type="submit" class="f-def">确定</button><button type="button" class="done">关闭</button></div><input name="Action" value="cxProjectPost_A" type="hidden"/><input name="Mode" value="Mates" type="hidden"/><input name="ProjectId" value="0" style="display:none"/></form>'
+        });
+        var a = $("mate-edit-form"),
+        n = function(t, e) {
+            alert(e < 0 ? "群编号错误。": "成功添加 " + e + " 个成员。"),
+            e >= 0 && this.listMate()
+        }.bind(this);
+        new FormX(a, n,
+        function() {
+            var t = a.Mates.value.replace(/\x20/g, "\t");
+            return 0 != t.length && (a.Mates.value = t, !0)
+        }),
+        e.update = function(t) {
+            var e = this.current;
+            a.Mates.value = "",
+            a.ProjectId.value = e.ProjectId,
+            a.CategoryId.value = e.CategoryId
+        }.bind(this)
+    },
+    initMateQueryDlg: function(t, e) {
+        e.pane = new PopupDlg({
+            width: 280,
+            content: '<form id="mate-query-form" method="post" action="#"><div class="f-row">要查找的成员账号:<br/><input name="Acc" d-vc="integer" maxlength="9" style="width:220px"/></div><div class="f-bow"><button type="submit" class="f-def">确定</button><button type="button" class="done">关闭</button></div><div class="lt"></div><input name="ProjectId" value="0" style="display:none"/><input name="Action" value="cxProjectListMate" type="hidden"/></form>'
+        });
+        var a = $("mate-query-form"),
+        n = a.getElement(".lt");
+        new FormX(a,
+        function(t, e) {
+            var a = "";
+            t.gets("PM").each(function(t) {
+                a += "#{CategoryId} | {Account} - {RealName}<br/>".substitute(jo.html(t))
+            }),
+            n.set("html", 0 == a.length ? "本项目中没有此成员。": a)
+        }),
+        e.update = function(t) {
+            a.ProjectId.value = this.current.ProjectId
+        }.bind(this)
+    },
+    initConfigBand: function(t, e) {
+        this.initBandSheet(e, '<form id="prj-set-form" method="post" action="#"><div class="f-row"><input name="Title" maxlength="100" d-vc="required" placeholder="项目名称" style="width:560px;"/></div><div class="f-row"><select name="Section" style="width:120px;"></select><select name="Grade" style="margin:0 16px;width:100px;"></select><label><input name="Locked" value="1" type="checkbox"/> 项目已结束</label></div><div class="f-row"><textarea name="Banner" placeholder="概览页 (HTML)" wrap="off" style="width:560px;height:200px;"></textarea></div><div class="f-row"><input name="Acat" placeholder="新群组栏目名称" style="width:200px"/> <a cmd="AddCategory" href="#">+ 新建群组栏目</a></div><div class="f-row"><textarea name="Cats" d-vc="required" placeholder="班级名称和群组号 (名称=编号，每行1个，至少1个)" style="width:560px;height:80px;"></textarea></div><div class="f-row"><textarea name="Tags" placeholder="定制栏目 (不填写时使用默认栏目)" style="width:560px;height:60px;"></textarea></div><div class="f-bow"><button type="submit" class="f-def">确定</button><button cmd="LastBand" type="button">取消</button><input name="Action" value="cxProjectPost_A" type="hidden"/><input name="Mode" value="Project" type="hidden"/><input name="ProjectId" value="0" style="display:none"/></form>');
+        for (var a = $("prj-set-form"), n = ["国培", "省培", "市县", "校本"], i = [], s = (new Date).getFullYear(); s >= 2014; s--) i.push(s);
+        $(a.Section).fillOptions(i),
+        $(a.Grade).fillOptions(n);
+        var c = this.current.Project,
+        o = function(t, e) {
+            if ("0" == a.ProjectId.value) return location.replace("/cte/" + e);
+            a.toData(c),
+            this.openBand("IntroBand"),
+            this.updateIntro()
+        }.bind(this);
+        new FormX(a, o),
+        e.update = function() {
+            a.reset(),
+            a.fromData(c)
+        },
+        this.addCategory = function(t) {
+            var e = a.Acat.value;
+            if (0 != e.length) {
+                new RequestX({
+                    Action: "cxProjectPost_A",
+                    Mode: "AddCat",
+                    Title: e
+                },
+                function(t, n) {
+                    a.Cats.value = a.Cats.value + "\n" + e + "=" + n
+                })
+            }
+        }
+    }
+}),
+App.start();
+</script>
+
+<base target="_blank"/>
+</head>
+<body>
+<div id="y-tbr" class="tbr" style="display:none;">
+	<div class="x-wrap">
+		<span class="tb-usr"><a class="tb1" target="_self" href="/">社区</a><a class="tb1" target="_self" href="/blog">博友圈</a></span>
+		<span class="tb-cap">社区研修</span>
+		<span id="y-title" class="tb-txt"></span>
+	</div>
+</div>
+<div id="y-layout" class="x-wrap">
+	<div id="y-sbr"></div>
+	<div id="y-pane"></div>
+	<div class="clr"></div>
+</div>
+<div id="y-banner" style="display:none;">
+	<div style="padding-left:360px; height:330px; background:url(http://z.hersp.com/dat/2014/11/23/18/59/14515.png) no-repeat left top;">
+		<div style="width:330px; height:100%; color:#fff; background:#01AEF2; float:left;"><div style="padding: 0 30px;"><h2>开启<br/>互联时代<br/>教育生活</h2>协同互助<br/>得心应手<br/>收获成就<br/><br/>教师网络研修社区</div></div>
+	</div>
+</div>
+<div id="y-guide" style="display:none">
+	<div class="cct-cap">快速上手指南</div>
+	<h2>要做什么？</h2>
+	<ul>
+		<li>熟练掌握社区和博客基本操作，在项目学习群组外，至少创建或加入1个群组，为常态校本研修奠定基础</li>
+		<li>项目一般会要求提交研修日志、实践反思等作业。社区鼓励从实际工作出发，持续提交原创的教学设计、课堂实录等资源，供社区虚拟教研组协作完善和分享</li>
+		<li>通过研修社区，打破传统培训项目的阶段性限制，主动、自发组成形式多样的网络学习共同体，达到以用促学、学以致用的目的，为一线教师专业发展提供成长和展示的舞台</li>
+	</ul>
+	<h2>该怎么做？</h2>
+	<div>
+		<span class="cct">01</span><div class="ccd"><h3>【加入群组】</h3><ul><li>登录个人博客，单击右侧导航栏中的“加入群组”，填写群组账号和验证码，然后单击“确定”</li><li>自建群组的账号和验证码可询问创建人（群组管理员）</li></ul><img style="width:600px" src="http://z.hersp.com/dat/2013/12/30/00/44/24255.png"/></div>
+	</div>
+	<div>
+		<span class="cct">02</span><div class="ccd"><h3>【编辑文章】</h3><ul><li>在个人博客中，单击右侧导航栏顶部的“发表文章”，撰写文章内容</li><li>注意在左上角“类别”处，根据文章类型选择类别（学情统计时需要）</li></ul><img style="width:600px" src="http://z.hersp.com/dat/2014/11/25/02/52/52812.png"/></div>
+	</div>
+	<div>
+		<span class="cct">03</span><div class="ccd"><h3>【发送文章】</h3><ul><li>写好文章后，单击顶部导航区的“发送”按钮</li><li>选择培训项目所在的群组，然后单击“确定”</li></ul><img style="width:600px" src="http://z.hersp.com/dat/2013/12/30/00/44/36849.png"/></div>
+	</div>
+	<h2>常见问题</h2>
+	<div class="ccd">
+		<h3 class="ccd-cap">Q.如何获得个人博客？</h3><div>A.每个继教学分账号都已经预设了博客，只要从“我的博客”登录即可使用。</div>
+		<h3 class="ccd-cap">Q.如何获得群组账号和验证码？</h3><div>A.参加培训时，项目管理员会向学员公布延伸跟踪管理群组账号及验证码。</div>
+		<h3 class="ccd-cap">Q.为什么要选择文章类别，错了可以修改吗？</h3><div>A.文章类别是为了便于统计学习情况，类别可以随时修改。</div>
+		<h3 class="ccd-cap">Q.文章发送错了怎么办？</h3><div>A.可以在查看文章时，点击顶部导航区的“撤回”。</div>
+		<h3 class="ccd-cap">Q.为什么在课程超市选课时提示余额不足？</h3><div>A.一般是因为您参加的培训项目没有安排网络课程，所以无法选课学习。</div>
+	</div>	
+</div>
+<div id="y-cust" style="display:none">
+	<a class="mi1" href="/p/st">省特级教师工作站</a>
+	<a class="mi1" href="/p/et">小学卓越教师工作室</a>
+	<a class="mi1" href="/p/lt"><span class="lt">2017-2021年度</span><br/>小学省级学科带头人</a>
+	<a class="mi1" href="/p/21711"><span class="lt">2018-2022年度</span><br/>小学省骨培养对象</a>
+</div>
+</body>
+</html>
