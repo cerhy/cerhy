@@ -2344,13 +2344,14 @@ public class ContributeAct extends AbstractContentMemberAct {
 	}
 	
 	@RequestMapping(value = "/blog/showContent.jspx")
-	public void showContent(String username,InterfaceParam param,HttpServletRequest request,HttpServletResponse response) throws JSONException {
+	public void showContent(String columnID,String username,InterfaceParam param,HttpServletRequest request,HttpServletResponse response) throws JSONException {
 		JSONObject o;
 		JSONArray arr = new JSONArray();
 		CmsUser uname=cmsUserMng.findByUsername(username);
 		if(null!=uname){
 			param.setUserid(uname.getId().toString());
 			param.setCount("15");
+			param.setColumnID(columnID);
 			try {
 				List<Content> list = getList(param, null);
 				SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
@@ -2386,7 +2387,13 @@ public class ContributeAct extends AbstractContentMemberAct {
 		}else{
 			userid=null;
 		}
-		return contentMng.getListByChannelIds(count,userid);
+		Integer columnID;
+		if(params.getColumnID()!=null){
+			columnID=Integer.valueOf(params.getColumnID());
+		}else{
+			columnID=null;
+		}
+		return contentMng.getListByChannelIds(count,userid,columnID);
 	}
 	
 }

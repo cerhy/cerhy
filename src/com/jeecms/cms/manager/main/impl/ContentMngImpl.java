@@ -1509,7 +1509,7 @@ public class ContentMngImpl implements ContentMng, ChannelDeleteChecker {
 	}
 
 	@Override
-	public List<Content> getListByChannelIds(Integer count, Integer userid) {
-		return dao.getListByChannelIds(count,userid);
+	public List<Content> getListByChannelIds(Integer count, Integer userid,Integer columnID) {
+		return dao.getListByChannelIds(count,userid,columnID);
 	}
 }

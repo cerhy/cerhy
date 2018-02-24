@@ -1987,11 +1987,13 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 	}
 
 	@Override
-	public List<Content> getListByChannelIds(Integer count, Integer userid) {
+	public List<Content> getListByChannelIds(Integer count, Integer userid,Integer columnId) {
 		Finder f = Finder.create("from Content bean");
 		f.append(" where 1=1");
 		f.append(" and bean.user.id=:userId");
+		//f.append(" and bean.columnId=:columnId");
 		f.setParam("userId", userid);
+		//f.setParam("columnId", columnId);
 		f.append(" order by  sortDate desc");
 		if (count != null) {
 			f.setMaxResults(count);

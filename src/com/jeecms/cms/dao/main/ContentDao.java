@@ -407,5 +407,5 @@ public interface ContentDao {
 	 *继续教育网首页文章
 	 * @param count,userid
 	 */
-	public List<Content> getListByChannelIds(Integer count, Integer userid);
+	public List<Content> getListByChannelIds(Integer count, Integer userid,Integer columnID);
 }
