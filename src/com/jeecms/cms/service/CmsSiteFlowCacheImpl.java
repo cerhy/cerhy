@@ -135,7 +135,7 @@ public class CmsSiteFlowCacheImpl implements CmsSiteFlowCache, DisposableBean {
 				Date recent = DateUtils.getStartDate(latestBefore.getAccessDate());
 				//每日总流量统计
 				cmsSiteAccessMng.statisticByProperty(STATISTIC_ALL, recent, this.siteId);
-				//地区统计
+				/*//地区统计
 				cmsSiteAccessMng.statisticByProperty(STATISTIC_AREA, recent, this.siteId);
 				//来源统计
 				cmsSiteAccessMng.statisticByProperty(STATISTIC_SOURCE, recent, this.siteId);
@@ -144,7 +144,7 @@ public class CmsSiteFlowCacheImpl implements CmsSiteFlowCache, DisposableBean {
 				//外部链接统计
 				cmsSiteAccessMng.statisticByProperty(STATISTIC_LINK, recent, this.siteId);
 				//关键词统计
-				cmsSiteAccessMng.statisticByProperty(STATISTIC_KEYWORD, recent, this.siteId);
+				cmsSiteAccessMng.statisticByProperty(STATISTIC_KEYWORD, recent, this.siteId);*/
 				//访问页数情况统计
 				cmsSiteAccessCountMng.statisticCount(recent, this.siteId);
 				//清除以往数据

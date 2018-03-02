@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport"
+	content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
+<meta name="msapplication-tap-highlight" content="no">
+<title>好师社区</title>
+<link rel="stylesheet" href="http://x.hnjs.org/ui/wss/base.css">
+<style>
+.tbr {
+	top: 0;
+	right: 36px;
+	position: absolute;
+	z-index: 9;
+}
+
+.tile-badge {
+	background-color: rgba(0, 0, 0, 0.2);
+}
+
+.tb-usr {
+	margin: 0;
+	padding-right: 62px;
+	background: #0072c6 no-repeat top right;
+}
+
+.slim-view {
+	padding: 20px 0;
+	width: 520px;
+}
+
+.slim-box {
+	margin: 0 0 10px 0;
+}
+
+.slim-row {
+	margin: 0 0 10px 0;
+	padding: 6px 16px;
+	color: #aaa;
+	background-color: #333;
+	background-color: rgba(0, 0, 0, 0.6);
+	display: block;
+	overflow: hidden;
+}
+
+.slim-cap,.slim-cap:hover {
+	color: #fff;
+	font-size: 16px;
+}
+
+.ico {
+	background-image: url('http://my.hnjs.org/ui/portal/mod.png');
+}
+
+.txt-shadow {
+	color: #fff;
+	text-shadow: 1px 1px #333;
+}
+
+.tile-list {
+	margin: 12px 0;
+	line-height: 175%;
+}
+
+html,body {
+	height: 100%;
+	overflow: hidden;
+}
+
+.x-cover {
+	background: #666 no-repeat center top;
+	background-size: cover;
+}
+
+.x-copyr {
+	left: 0;
+	bottom: 0;
+	right: 0;
+	height: 50px;
+	line-height: 50px;
+	font-size: 12px;
+	text-align: center;
+	color: #aaa;
+	background: rgba(17, 17, 17, 0.5);
+	position: absolute;
+	display: none;
+}
+
+.x-logo {
+	padding-top: 7px;
+	color: #fff;
+	font-size: 12px;
+	line-height: 18px;
+}
+
+.x-logo-cap {
+	padding: 0 8px 0 0;
+	font-size: 26px;
+	line-height: 36px;
+	font-weight: 100;
+	float: left;
+}
+
+#y-main {
+	left: 0;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	padding: 20px;
+	overflow: auto;
+	position: absolute;
+	z-index: 1;
+}
+
+#y-tile {
+	left: 560px;
+	top: 0;
+	right: 0;
+	padding: 16px;
+	position: absolute;
+}
+
+@media screen and (max-width: 960px) {
+	* {
+		box-sizing: border-box;
+		max-width: 100%;
+	}
+	html,body {
+		height: 100%;
+		border: 0;
+	}
+	body {
+		border: 0;
+	}
+	.tbr {
+		left: 0;
+		top: 0;
+		right: 0;
+		position: absolute;
+		z-index: 9;
+	}
+	.x-card {
+		left: 0;
+		top: 50px;
+		right: 0;
+		bottom: 0;
+		overflow: auto;
+		position: absolute;
+		z-index: 1;
+		background: #f3f3f3;
+	}
+	.slim-row {
+		border: 1px solid #e7e7e7;
+		border-width: 1px 0;
+		background: #fff;
+		color: #666;
+	}
+	.slim-cap,.slim-cap:hover {
+		color: #000;
+	}
+	#y-tile {
+		background: #333;
+		position: static;
+	}
+}
+</style>
+<script src="http://x.hnjs.org/lib/r1/mootools_rv.js"></script>
+<script src="http://x.hnjs.org/lib/r1/mootools_ue.js"></script>
+<script>
+App.implement({
+    initialize: function() {
+        Passport.load(),
+        this.initCommand(),
+        this[App.portable ? "initCardLayout": "initPageLayout"](),
+        new RequestX(App.Provider, {
+            Action: "dxQuery",
+            Category: App.Category,
+            Focus: App.Focus
+        },
+        this.updateTopicList)
+    },
+    initPageLayout: function() {
+        var t = $(document.body),
+        i = new Element("div.tbr").inject(t),
+        e = new Element("div.x-copyr").inject(t),
+        n = new Element("div#y-main").inject(t); !
+        function(t) {
+            if (!Passport.ready) return new Element('b.tb1[cmd=Login][html=<i class="wib">&#xe639;</i>登录]').inject(t);
+            var i = Passport.UN || "",
+            e = i.html();
+            e.length > 5 && (e = e.substr(0, 5) + "..."),
+            new Element('b.tb1[cmd=UserImage][title=每日一图][html=<i class="wi">&#xe640;</i>]').inject(t),
+            new Element("b.tb1[cmd=UserAdmin][title=" + i + "][html=" + e + "]").inject(t),
+            new Element("b.tb1.tb-usr[cmd=Logout][html=退出]", {
+                style: "background-image:url(" + Passport.avatar() + ")"
+            }).inject(t)
+        } (i),
+        new Element('div.x-logo.txt-shadow[html=<span class="x-logo-cap">' + App.Title + "</span>" + App.Subtitle + "]").inject(n);
+        var s = new Element("div.slim-view").inject(n),
+        a = $("y-tile").inject(n).display();
+        Passport.ready && $("yb-blog").set("href", "/" + Passport.UID),
+        this.initTopicList(s),
+        Widget.gotop(n, n, a),
+        jo.setBingPic(t.addClass("x-cover"),
+        function(i) {
+            t.store("bing", t.getStyle("background-image")),
+            e.set("html", i.copyright)
+        }),
+        this.userAdmin = function(t) {
+            Widget.wopen(App.hostc + "/usr?em=1", 520, 450)
+        },
+        this.userImage = function(t) {
+            n.toggle(),
+            e.toggle()
+        }
+    },
+    initTopicList: function(t) {
+        this.updateTopicList = function(i) {
+            var e = i.get("Focus"),
+            n = i.gets("Category"),
+            s = "";
+            e.Detail && (s += '<div class="slim-box">' + e.Detail + "</div>");
+            n.each(function(t) {
+                t = jo.html(t, {
+                    PublishDate: t.PublishDate.utc()
+                }),
+                s += '<div class="slim-row"><a class="slim-cap" href="/t/{ContentId}">{Title}</a><div class="lt">{PublishDate}, {Author}</div></div>'.substitute(t)
+            }),
+            t.set("html", s)
+        }
+    },
+    initCardLayout: function() {
+        this.initBandCard = function(t, i, e, n) {
+            Passport.ready || (n = '<b class="tb1 tb1fr" cmd="Login"><i class="wib">&#xe639;</i>登录</b>');
+            var s = document.body,
+            a = new Element("div.tbr").inject(s);
+            new Element("b.tb1.tb-nav", {
+                cmd: e || "AppBand",
+                html: '<i class="wi">' + (e ? "&#xe626;": "&#xe601;") + "</i>"
+            }).inject(a),
+            new Element("span", {
+                html: n
+            }).inject(a),
+            i && new Element("span.tbc", {
+                html: i
+            }).inject(a);
+            var o = new Element("div.x-card").inject(s);
+            return t.widget = [a, o],
+            o
+        },
+        this.initTopicBand = function(t, i) {
+            var e = this.initBandCard(i, App.Title);
+            this.initTopicList(e),
+            Widget.gotop(e, e)
+        },
+        this.initAppBand = function(t, i) {
+            this.initBandCard(i, "", "LastBand").adopt($("y-tile").display(!0))
+        },
+        this.openBand("TopicBand")
+    }
+}),
+App.start(),
+Object.append(App, {
+    Title: "好师",
+    Subtitle: "海南教师<br/>网络研修社区",
+    Provider: "http://hi.hnjs.org/admin/blog",
+    Category: "948322|20",
+    Focus: "953156"
+});</script>
+<base target="_blank">
+<script src="http://z.hnjs.org/admin/bingo.aspx?d=201821"
+	type="text/javascript"></script>
+</head>
+<body class="x-cover" style="background-image: url('http://cn.bing.com/az/hprichbg/rb/StubenamAlberg_ZH-CN9268418169_1920x1080.jpg');">
+	<div class="tbr">
+		<b cmd="UserImage" title="每日一图" class="tb1"><i class="wi"></i></b><b
+			cmd="UserAdmin" title="邹瑶琳" class="tb1">邹瑶琳</b><b cmd="Logout"
+			class="tb1 tb-usr"
+			style="background-image: url('http://z.hnjs.org/dat/avatar/519/519649.jpg')">退出</b>
+	</div>
+	<div class="x-copyr">施图本阿尔贝格，奥地利 (© 500px/Aurora Photos)</div>
+		<div id="y-tile" style="">
+			<h2 class="txt-shadow clrfix">研修</h2>
+			<a id="yb-blog" class="tile ico bg-emerald"
+				style="background-position: 0 -10px" href="http://www.cerhy.com/blog/index.jspx"><span
+				class="bg-crimson lt"
+				style="left: 0; right: 0; padding: 4px 6px; position: absolute;">在找好师博客？点这里~</span><span
+				class="tile-label">博友圈</span><span class="tile-badge">个人空间</span></a> <a
+				class="tile ico bg-orange" style="background-position: 0 -160px"
+				href="${base}/ws"><span class="tile-label">工作坊</span><span
+				class="tile-badge">网络研修</span></a>
+			<!--a class="tile ico bg-seablue" style="background-position: 0 -310px" href="http://tt.hnjs.org"><span class="tile-label">备课室</span><span class="tile-badge">教学资源</span></a>
+		<a class="tile ico bg-crimson1" style="background-position: 0 -460px" href="/open"><span class="tile-label">云课堂</span><span class="tile-badge">自主研修</span></a-->
+			<h2 class="txt-shadow clrfix">培训</h2>
+			<a class="tile ico bg-teal" style="background-position: 0 -1210px"
+				href="${base}/CommunityStudy/index"><span class="tile-label">社区研修</span></a> <a
+				class="tile ico bg-voilet" style="background-position: 0 -910px"
+				href="http://m.hnjs.org/s/credit"><span class="tile-label">学分档案</span></a>
+			<!--a class="tile bg-crimson" href="http://m.hnjs.org/s/ee"><span class="tile-label"><span class="tile-text">补修项目报名<br/>进度查询<br/></span><i class="wib">&#xe613;</i>社区补修</span></a>
+		<a class="tile ico bg-cyan1" style="background-position: 0 -610px" href="cert"><span class="tile-label">证书打印</span></a>
+		<a class="tile ico bg-magenta1" style="background-position: 0 -1060px" href="expert"><span class="tile-label">专家库</span></a-->
+			<!--a class="tile ico bg-blue" style="background-position: 0 -1360px" href="http://m.hnjs.org"><span class="tile-label">培训管理</span></a-->
+			<!--h2 class="txt-shadow clrfix">生活</h2-->
+			<h2 class="txt-shadow clrfix">导航</h2>
+			<div class="tile tile-wide bg-dark">
+				<span class="tile-badge bg-red">教师培训</span>
+				<ul class="tile-list">
+					<li><a class="fg-white" href="http://edu.hainan.gov.cn/">海南省教育厅</a></li>
+					<li><a class="fg-white" href="http://tea.hersp.com">海南省中小学幼儿园教师继续教育网</a></li>
+					<!--li><a class="fg-white" href="http://djg.hainan.edu.cn/">海南省电化教育馆</a></li>
+			<li><a class="fg-white" href="http://my.hnjs.org/9729">海南省中学教师继续教育培训中心</a></li>
+			<li><a class="fg-white" href="http://jxjyb.qttc.edu.cn/">琼台师范学院继续教育部</a></li-->
+				</ul>
+			</div>
+			<!--h2 class="fg-white txt-shadow clrfix">实用工具</h2-->
+			<div style="padding: 20px 0; clear: both;">
+				<img src="http://my.hnjs.org/ui/portal/wx-qyyd.png">
+			</div>
+			<div class="clr"></div>
+		</div>
+		<div class="wi gtop" style="opacity: 0.6; display: none;"></div>
+	</div>
+	<div class="loading" style="display: none;"></div>
+</body>
+</html>

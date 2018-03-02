@@ -115,4 +115,5 @@
 	</bean>
 	<!--包含action-->
 	<import resource="jeecms/jeecms-servlet-admin-action.xml"/>
+	
 </beans>

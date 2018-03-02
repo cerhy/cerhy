@@ -7,8 +7,7 @@
 	http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.2.xsd
 	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd"
 default-lazy-init="true">
-
-
+	
 	<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="locations">
 			<list>
@@ -44,7 +43,6 @@ default-lazy-init="true">
 		<property name="maxIdleTime" value="${cpool.maxIdleTime}"/>
 		<property name="acquireIncrement" value="${cpool.acquireIncrement}"/>
 		<property name="maxIdleTimeExcessConnections" value="${cpool.maxIdleTimeExcessConnections}"/>
-		<property name="idleConnectionTestPeriod" value="${cpool.idleConnectionTestPeriod}"/>
 	</bean>
 	
 	<!--  
@@ -65,7 +63,7 @@ default-lazy-init="true">
 			hibernate.show_sql=false
 			hibernate.format_sql=false
 			hibernate.query.substitutions=true 1, false 0
-			hibernate.jdbc.batch_size=20
+			hibernate.jdbc.batch_size=50
 			hibernate.jdbc.use_streams_for_binary=true
 			hibernate.temp.use_jdbc_metadata_defaults=false
 			<!-- 是否自动提交事务 -->

@@ -1,0 +1,94 @@
+/* view 01 */
+
+.blogBody{
+	width:100%;
+	background: #bcd3e5 url(01.jpg) no-repeat center top;
+}
+.header-top {background: #bcd3e5;border-bottom:0px;}
+.footer_styles {
+	background : #bcd3e5 !important; 
+}
+.footer_style {
+	background : #bcd3e5 !important; 
+}
+.blogHead,.tj{color: #fff;}
+
+.cap{
+    color: #497eaa;
+    background: #c1d4e5;
+}
+
+#ftitle1{
+	color: #fff;
+}
+/* .tj{
+	padding-bottom:40px;
+} */
+.blogBody .user-center-left .user-menu-links,.blogBody .personCenter-userInfo, .blogBody .user-center-left .user-setting {
+   background: #fff;
+} 
+
+.blogBody .user-center-left .user-menu-links li{
+	margin-top:-1px;
+	border-bottom: none; 
+}
+.blogBody .user-center-left .user-menu-links a {
+    border : none; 
+    text-decoration:none;
+}
+.blogBody .user-menu-links li a em {
+     background: transparent; 
+}
+.blogBody .user-menu-links li.on a em {
+   background: transparent; 
+}
+.blogBody .user-menu-links li a {
+	color: #666666;
+}
+.blogBody .user-menu-links li a:hover {
+	color:#0070b8;
+}
+#_goPs{
+	background: transparent;
+}
+.tggl .tggl-top {background: transparent;}
+body, button, input, select, textarea {
+	 background: transparent;
+	}
+.st_tree ul li a:hover {color:#0070b8;}
+.htmleaf-container .mtree-demo .mtree {
+  background: #fff;
+  margin: 20px auto;
+  max-width: 320px;
+  border-radius: 3px;
+}
+#queryTitle{
+	    background: #bcd3e5 !important;
+	    border: 1px solid #769ec1 !important;
+    	color: #000 !important;
+}
+.submit{
+	background:#a2c1dc !important;
+	color: #000 !important;
+} 
+.udl ul li:hover ul li a:hover {
+    background: gray !important;
+}
+.udl ul li a, .menu ul li a:visited{
+	    background: #bcd3e5 !important;
+}
+
+.udl ul li:hover a {
+    color: #fff !important;
+    background: #bcd3e5 !important;
+}
+ul.mtree.bubba > li.mtree-open > a {
+  background: #bcd3e5 !important;
+}
+ul.mtree.bubba li.mtree-active > a {
+  background: #c4def3 !important; 
+  color: #000;
+}
+.f2{
+	color:#676262 !important;
+}

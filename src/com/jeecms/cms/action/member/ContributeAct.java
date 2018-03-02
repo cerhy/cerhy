@@ -41,11 +41,14 @@ import com.jeecms.cms.entity.assist.CmsJoinGroup;
 import com.jeecms.cms.entity.assist.CmsPostilInfo;
 import com.jeecms.cms.entity.main.Channel;
 import com.jeecms.cms.entity.main.Columns;
+import com.jeecms.cms.entity.main.Content;
 import com.jeecms.cms.entity.main.ContentStick;
 import com.jeecms.cms.entity.main.Focus;
+import com.jeecms.cms.entity.main.InterfaceParam;
 import com.jeecms.cms.manager.assist.CmsFileMng;
 import com.jeecms.cms.manager.main.ContentMng;
 import com.jeecms.cms.manager.main.impl.ColumnsMng;
+import com.jeecms.common.hibernate4.Finder;
 import com.jeecms.common.web.ResponseUtils;
 import com.jeecms.core.entity.CmsSite;
 import com.jeecms.core.entity.CmsUser;
@@ -56,6 +59,7 @@ import com.jeecms.core.web.WebErrors;
 import com.jeecms.core.web.util.CmsUtils;
 import com.jeecms.core.web.util.FrontUtils;
 
+import freemarker.core.Environment;
 import freemarker.template.TemplateException;
 
 /**
@@ -2337,6 +2341,59 @@ public class ContributeAct extends AbstractContentMemberAct {
 			log.error(e.getMessage(),e);
 		}
 		return object.toString();
+	}
+	
+	@RequestMapping(value = "/blog/showContent.jspx")
+	public void showContent(String columnID,String username,InterfaceParam param,HttpServletRequest request,HttpServletResponse response) throws JSONException {
+		JSONObject o;
+		JSONArray arr = new JSONArray();
+		CmsUser uname=cmsUserMng.findByUsername(username);
+		if(null!=uname){
+			param.setUserid(uname.getId().toString());
+			param.setCount("15");
+			param.setColumnID(columnID);
+			try {
+				List<Content> list = getList(param, null);
+				SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+				for (Content t : list) {
+					o = new JSONObject();
+					o.put("contentDate", sdf.format(t.getReleaseDate()));
+					o.put("contentTitle", t.getContentExt().getTitle());
+					o.put("contentId", t.getId());
+					arr.put(o);
+				}
+			} catch (TemplateException e) {
+				e.printStackTrace();
+			}
+		}
+		ResponseUtils.renderJson(response, arr.toString());
+	}
+	@SuppressWarnings("unchecked")
+	protected List<Content> getList(InterfaceParam params,Environment env) throws TemplateException {
+		List<Content> list=(List<Content>)getData(params, env);
+		return list;
+	}
+
+	protected Object getData(InterfaceParam params, Environment env)throws TemplateException {
+		Integer count; 
+		if(params.getCount()!=null){
+		    count = Integer.valueOf(params.getCount());
+		}else{
+			count=null;
+		}
+		Integer userid;
+		if(params.getUserid()!=null){
+			userid=Integer.valueOf(params.getUserid());
+		}else{
+			userid=null;
+		}
+		Integer columnID;
+		if(params.getColumnID()!=null){
+			columnID=Integer.valueOf(params.getColumnID());
+		}else{
+			columnID=null;
+		}
+		return contentMng.getListByChannelIds(count,userid,columnID);
 	}
 	
 }

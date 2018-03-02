@@ -1,0 +1,104 @@
+/* view 10 */
+.blogBody{
+	width:100%;
+	background:#d6bc6b  url(10.jpg) no-repeat center top;
+}
+.header-top {background: #efefef;border-bottom:0px;}
+.footer_styles {
+	background: #d6bc6b !important; 
+}
+.footer_style {
+	background: #d6bc6b !important; 
+}
+.blogHead,.tj{color: #ffff80;}
+/* .tj{
+	padding-bottom:80px;
+} */
+#ftitle1{
+	color: #ffff80;
+}
+.cap{
+    color: #000;
+    background: #EAD89D;
+}
+
+.blogBody .user-center-left .user-menu-links, .blogBody .personCenter-userInfo, .blogBody .user-center-left .user-setting {
+   background: #f1e6bc;
+} 
+
+.blogBody .user-center-left .user-menu-links li{
+	margin-top:-1px;
+	border-bottom: none; 
+}
+.blogBody .user-center-left .user-menu-links a {
+    border : none; 
+    text-decoration:none;
+}
+.blogBody .user-menu-links li a em {
+     background: transparent; 
+}
+.blogBody .user-menu-links li.on a em {
+   background: transparent; 
+}
+.blogBody .user-menu-links li a {
+	color: #666666;
+}
+.blogBody .user-menu-links li a:hover {
+	color:#0070b8;
+}
+#_goPs{
+	background: transparent;
+}
+.tggl .tggl-top {background: transparent;}
+body, button, input, select, textarea { background: transparent;}
+.tggl a {color:#666666;}
+.a2{color:#666666;}
+.inp2{color:#666666;}
+.tggl td{border-color:#666666;}
+.tggl table{border-color:#666666;}
+.tggl-top{background:transparent;}
+.st_tree ul li a:hover {color:#0070b8;}
+.htmleaf-container .mtree-demo .mtree {
+  background: #f1e6bc;
+  margin: 20px auto;
+  max-width: 320px;
+  border-radius: 3px;
+}	
+.udl ul li:hover ul li a {
+    background: #EAD89D !important;
+    color: #000 !important;
+}
+.udl ul li:hover a {
+    color: #000 !important;
+    background: #EAD89D !important;
+}   
+.udl ul li a, .menu ul li a:visited{
+	color: #000 !important;
+    background: #EAD89D !important;
+}
+.udl ul li:hover ul li a:hover {
+    background: #faf6e7 !important;
+}
+#queryTitle{
+	  border:1px solid #EAD89D !important;
+	  color: #000 !important;
+}
+.submit{
+	background:#EAD89D !important;
+	color: #000 !important;
+} 
+.report-list2 li a .report-text h3{
+	color:#cd460b;
+}
+.f2{
+	color:#676262 !important;
+}
+ul.mtree.bubba > li.mtree-open > a {
+    background: #EAD89D !important;
+}
+ul.mtree.bubba li.mtree-active > a {
+    background: #e4ddc7 !important; 
+}
+.topicList a {
+    color: #cd460b !important;
+}

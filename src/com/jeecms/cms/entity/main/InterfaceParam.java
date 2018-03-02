@@ -33,8 +33,15 @@ public class InterfaceParam implements Serializable{
     private String keyword;//关键字
     private String page;//请求的页数，从1开始
     
+    private String columnID;//栏目id(用户自建的那种)
     
     
+	public String getColumnID() {
+		return columnID;
+	}
+	public void setColumnID(String columnID) {
+		this.columnID = columnID;
+	}
 	public String getAreacode() {
 		return areacode;
 	}
