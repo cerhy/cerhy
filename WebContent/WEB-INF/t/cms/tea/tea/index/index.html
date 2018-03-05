@@ -120,7 +120,7 @@ li {
 
 @media screen {
 	body {
-		background: #fff url(http://tea.hersp.com/ui/bg.jpg) no-repeat center
+		background: #fff url(/${res}/images/bg.jpg) no-repeat center
 			top;
 	}
 	.x-footer {
@@ -142,7 +142,7 @@ li {
 		margin: 38px 0 0px 0;
 		padding: 38px 0;
 		color: #fff;
-		background: url(http://tea.hersp.com/ui/logo.png) no-repeat left top;
+		background: url(/${res}/images/logo.png) no-repeat left top;
 	}
 	.x-pane {
 		width: 660px;
@@ -171,8 +171,8 @@ li {
 	}
 }
 </style>
-<script src="/${res}/js/mootools_rv.js"></script>
-<script src="/${res}/js/mootools_ue.js"></script>
+<script src="${base}/res/common/js/mootools_rv.js"></script>
+<script src="${base}/res/common/js/mootools_ue.js"></script>
 <script>
 var d_region = ["省师训办", "海口", "海口美兰", "海口龙华", "海口秀英", "海口琼山", "三亚", "三亚天涯", "三亚吉阳", "三亚海棠", "三亚崖州", "五指山", "文昌", "琼海", "万宁", "屯昌", "定安", "澄迈", "临高", "儋州", "保亭", "琼中", "白沙", "陵水", "昌江", "乐东", "东方", "洋浦", "三沙*"],
 d_cate = [948322, 61520, 948338, 948340, 948342, 948344, 61933, 948347, 948349, 948351, 948353, 459714, 121656, 189576, 98729, 61834, 431863, 536931, 61806, 543971, 61949, 547365, 62566, 61871, 61813, 61497, 471916, 61840, 948356],
@@ -262,6 +262,7 @@ function() {
     },
     a = {},
     e = null,
+    u = null,
     s = function(t, s) {
 
     },
@@ -269,8 +270,9 @@ function() {
         var r = $("s-toc-nav").display(!i);
         "0" == t && (t = r.getElement(".active").get("_id")),
         e = t;
+        var c = e.split(",");
         var n = a[t];
-        n ? $("s-toc-list").set("html", n) : contentShow(e,8260);
+        n ? $("s-toc-list").set("html", n) : contentShow(c[0],c[1]);
     },
     l = function(t) {
         var a = t.target;
@@ -300,7 +302,7 @@ function() {
     function() {
         for (var t = "",
         a = 0,
-        e = d_region.length; a < e; a++) t += "<span id='send' onclick='contentShow("+d_cate[a]+","+d_cate1[a]+")' " + (0 == a ? ' class="active"': "") + ' _s="toc" _id="' + d_cate[a] + '">' + d_region[a] + "</span>";
+        e = d_region.length; a < e; a++) t += "<span onclick='contentShow("+d_cate[a]+","+d_cate1[a]+")' " + (0 == a ? ' class="active"': "") + ' _s="toc" _id="' + d_cate[a]+","+d_cate1[a]+ '">' + d_region[a] + "</span>";
         $("s-toc-nav").set("html", t)
     } (),
     $("y-navi").addEvent("click", l),
@@ -331,15 +333,14 @@ function contentShow(columnID,username){
 
 <base target="_blank">
 </head>
-<link rel="shortcut icon" href="/${res}/images/cerhyheard.png"
-	type="/${res}/image/x-icon" />
+<link rel="shortcut icon" href="/${res}/images/cerhyheard.png" type="/${res}/image/x-icon" />
 <div class="x-wrap">
 	<h2 class="x-cap">海南省中小学幼儿园教师继续教育网</h2>
 </div>
 <div class="x-wrap">
 	<div id="y-banner"><img style="height:100%" src="http://edu.hainan.gov.cn/upload/2017_11_20/151119040799937.jpg"/></div>
 	<div class="x-pane">
-		<div id="y-navi" class="navi"><span class="active" _s="toc" _id="0">培训通知</span><span _s="toc" _flat="1" _id="89375" onclick="contentShow(89375,8260)">培训简报</span><span _s="toc" _flat="1" _id="89389" onclick="contentShow(89389,8260)">政策解读</span><span _s="contact">交流互动</span><span _s="space">名师空间</span></div>
+		<div id="y-navi" class="navi"><span class="active" _s="toc" _id="0">培训通知</span><span _s="toc" _flat="1" _id="89375,8260" onclick="contentShow(89375,8260)">培训简报</span><span _s="toc" _flat="1" _id="89389,8260" onclick="contentShow(89389,8260)">政策解读</span><span _s="contact">交流互动</span><span _s="space">名师空间</span></div>
 		<div>
 			<div id="s-toc">
 				<div id="s-toc-nav" class="navi2">
@@ -358,7 +359,7 @@ function contentShow(columnID,username){
 		<a href="http://m.hnjs.org/s/credit" class="slip bg-voilet"><span class="slip-xt">教师</span>查询学分档案<br/>打印年审证书</a>
 		<a href="http://m.hnjs.org/s/tce" class="slip bg-orange"><span class="slip-xt">学分</span>海南省中小学（幼儿园）<br/>教师继续教育学分管理平台</a>
 		<a href="http://localhost:8080/cerhy/project" class="slip bg-blue"><span class="slip-xt">好师</span>海南教师网络研修社区<br/>博友圈/工作坊/备课室/修改密码</a>
-		<div style="text-align:center;"><img src="http://tea.hersp.com/ui/qyyd.gif"/><br/>微信扫描上方二维码，订阅“琼崖园丁”。</div>
+		<div style="text-align:center;"><img src="/${res}/images/qyyd.gif"/><br/>微信扫描上方二维码，订阅“琼崖园丁”。</div>
 		<!--hr/><div class="xt">相关链接</div>
 		<ul><li><a href="">海南省教育厅</a></li><li><a href="">海南省电教馆</a></li></ul-->
 	</div>
