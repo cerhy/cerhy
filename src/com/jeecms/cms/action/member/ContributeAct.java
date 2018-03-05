@@ -2350,8 +2350,16 @@ public class ContributeAct extends AbstractContentMemberAct {
 		CmsUser uname=cmsUserMng.findByUsername(username);
 		if(null!=uname){
 			param.setUserid(uname.getId().toString());
-			param.setCount("15");
-			param.setColumnID(columnID);
+			if(null!=request.getParameter("comm")&&request.getParameter("comm").equals("0")){
+				param.setCount("1");
+				param.setColumnID(columnID);
+			}else if(null!=request.getParameter("comm")&&request.getParameter("comm").equals("1")){
+				param.setCount("20");
+				param.setColumnID(columnID);
+			}else{
+				param.setCount("15");
+				param.setColumnID(columnID);
+			}
 			try {
 				List<Content> list = getList(param, null);
 				SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
@@ -2360,6 +2368,12 @@ public class ContributeAct extends AbstractContentMemberAct {
 					o.put("contentDate", sdf.format(t.getReleaseDate()));
 					o.put("contentTitle", t.getContentExt().getTitle());
 					o.put("contentId", t.getId());
+					o.put("contentDetial", t.getContentTxt().getTxt());
+					if(null!=t.getContentExt().getAuthor()){
+						o.put("contentAuthor", t.getContentExt().getAuthor());
+					}else{
+						o.put("contentAuthor", t.getUser().getUsername());
+					}
 					arr.put(o);
 				}
 			} catch (TemplateException e) {
@@ -2396,4 +2410,28 @@ public class ContributeAct extends AbstractContentMemberAct {
 		return contentMng.getListByChannelIds(count,userid,columnID);
 	}
 	
+	@RequestMapping(value = "/blog/checkLogin.jspx")
+	public void checkLogin(HttpServletRequest request,HttpServletResponse response) throws JSONException {
+		JSONObject o;
+		JSONArray arr = new JSONArray();
+		CmsUser user = CmsUtils.getUser(request);
+		o = new JSONObject();
+		if(null!=user){
+			o.put("loginState", 1);
+			if(null!=user.getUserExt().getUserImg()){
+				o.put("userImg",user.getUserExt().getUserImg());
+			}else{
+				o.put("userImg","http://www.cerhy.com/r/cms/www/default/images/userImg-large.png");
+			}
+			if(null!=user.getUserExt().getRealname()){
+				o.put("userName",user.getUserExt().getRealname());
+			}else{
+				o.put("userName",user.getUsername());
+			}
+		}else{
+			o.put("loginState", 0);
+		}
+		arr.put(o);
+		ResponseUtils.renderJson(response, arr.toString());
+	}
 }

@@ -1,4 +1,4 @@
-package com.jeecms.cms.action.project;
+package com.study.communitystudy;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -26,15 +26,11 @@ public class WorkShopAct {
 	
     @RequestMapping("/ws")    
     public ModelAndView index(HttpServletRequest request,HttpServletResponse response, ModelMap model) { 
-    	CmsSite site=CmsUtils.getSite(request);
-    	FrontUtils.frontData(request, model, site);
         return new ModelAndView("WEB-INF/t/cms/www/default/index/workshop.html");    
     } 
     
     @RequestMapping(value="/{id}",method=RequestMethod.GET)    
     public ModelAndView user(@PathVariable("id") Integer id,HttpServletRequest request,HttpServletResponse response, ModelMap model) {    
-    	CmsSite site=CmsUtils.getSite(request);
-    	FrontUtils.frontData(request, model, site);
     	if(id==20000){
     		return new ModelAndView("WEB-INF/t/cms/www/default/index/recomhall.html");    
     	}else{
