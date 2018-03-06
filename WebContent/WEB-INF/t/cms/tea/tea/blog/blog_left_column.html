@@ -1,0 +1,1034 @@
+<link  type="text/css" rel="stylesheet" href="/${res}/css/jquery.mloading.css" />
+<link  href="/${res}/css/jquery.mloading.less" />
+<script  type="text/javascript" src="/${res}/js/jquery.mloading.js"></script>
+<link href="${resSys}/jqueryUI/jquery.ui.css" rel="stylesheet" type="text/css" />
+<script src="${resSys}/jqueryUI/jquery-ui.js" type="text/javascript"></script>
+<script src="${resSys}/front.js" type="text/javascript"></script>
+<script src="${resSys}/ckplayer/ckplayer.js" type="text/javascript"></script>
+<script src="${resSys}/ckplayer/offlights.js" type="text/javascript"></script>
+<script src="/${res}/js/SimpleTree.js" type="text/javascrip" rel="stylesheet"></script>
+<script type="text/javascript">
+function del(){
+	if(confirm('确定要删除吗?')) 
+	  { 
+	    return true; 
+	  } 
+	  return false; 
+}
+</script>
+<style>
+#img{
+display:block;
+height:36px;
+width:36px;
+background:url(/${res}/images/sprite.png) no-repeat 0 -190px;
+} 
+.htmleaf-container .mtree .join a:hover{
+	background-color: #e7e7e7;
+}
+.submit{
+cursor: pointer;
+}
+.sts{
+transition: all 0.30s ease-in-out;
+border: 1px solid gray;
+}
+.sts:focus{
+border: 1px solid #66AACC;
+box-shadow: 0 0 5px #66AACC;
+outline: none;
+}
+.wrap-left{width: 250px;float: left;}
+.wrap-right{width: 730px;float: left;padding-left: 20px;}
+</style>
+<script type="text/javascript">
+	$(".joinGroups").remove();
+	var html  = "";
+	    html +="<div id='joinGroups' style='display:none;margin-top:-5px;'>"
+	    html +="<ul style='padding-left: 10px;'>"
+	    html +="<li>请询问群组创建人获取群组账号与验证码。</li>"
+	    html +="</ul>"
+	    html +="<div style='display: block;line-height: 50px;padding-left: 10px;'>"
+	    html +="<span>群组账号:</span>"
+	    html +="<input type='text' class='sts' style='height: 30px;' id='groupName' name='groupName'>"
+	    html +="<a style='color: #f00;' id='groupNameTip'></a>"
+	    html +="</div>"
+	    html +="<div style='display: block;line-height: 50px;padding-left: 10px;'>"
+	    html +="<span>验证码:&nbsp;&nbsp;&nbsp;</span>"
+	    html +="<input type='text' class='sts' style='height: 30px;' id='groupCode' name='groupCode'>"
+	    html +="<a style='color: #f00;' id='groupCodeTip'></a>"
+	    html +="</div>"
+	    html +="<div><a style='color: #f00;padding-left: 10px;' id='errorTip'></a></div>"
+	    html +="<div class='themeButton' style='margin:5px 0px 0px 30px;'>"
+	    html +="<input type='submit' value='确定' class='submit'  onclick='sJoinGroup();' style='margin:30px 20px 0 40px'/>"
+	    html +="<button type='button' onclick='closeJoinGroup();' class='submit' style='margin:30px 40px 0 -5px;'>取消</button>"
+	    html +="</div>"
+	    html +="</div>"
+		$(".wrap-left").after(html);
+</script>
+<link rel="stylesheet" type="text/css" href="/${res}/css/default.css">
+<link rel="stylesheet" type="text/css" href="/${res}/css/styles.css">
+<link rel="stylesheet" type="text/css" href="/${res}/css/class2context.css">
+<div class="htmleaf-content bgcolor-3" style="padding-top: 0px;padding-bottom: 0px;">
+					<div id="getChannlHtml" style="display:none;">
+    			 		[#include 'blog_content_channl.html'/]
+					</div>
+					<ul class=mtree>
+					  [#if user??]<li>
+					  <a class="ff" href="javascript:;" onclick="contributeAdd();" style="color: #111010;">
+					  <span id="img" style="float: left;margin: -10px 0;margin-left: "></span>
+					  	发表博客
+					  </a>
+					  <br />
+					  </li>[/#if]
+					  <li id="emptyLeft">
+					  <a href="#" class='class2 box1'>博客栏目</a>
+					    <ul>
+					      <li>
+					      [#if channelList??]
+				             [#list channelList as c]
+				             [#if c_index==0]
+					             [#if c.channelType==1]
+					             <a href="javascript:;" style="font-size: 16px;">学科教研</a>
+					             [#else]
+					             <a href="javascript:;" style="font-size: 16px;">市县教研</a>
+					             [/#if]
+				             [/#if]
+				             [/#list]
+				             [/#if]
+					        <ul>
+					        [#if channelList??]
+				             [#list channelList as c]
+				             [#if user??]
+					          <li><a style="font-size: 14px;color: #255EC7;" href="javascript:void(0);" onclick="myblog(${c.channelId},null,null,null)">${c.channelName}</a></li>
+				             [/#if]
+				             [#if usert??]
+					          <li><a style="font-size: 14px;color: #255EC7;" href="javascript:void(0);" onclick="myblog(${c.channelId},null,null,${usert.id})">${c.channelName}</a></li>
+				             [/#if]
+				             [/#list]
+				             [/#if]
+					         </ul>
+					      </li>
+					       [#if columnsList??]
+					        [#list columnsList as map]
+					        [#list map?keys as k]
+					        [#if k=='']
+					        	[#list map[k] as v]
+						        	[#if user??]
+						        		[#if v?split('=')[2]??]
+							        		[#if columnId??]
+			                                	<li [#if columnId=v?split('=')[0]]class="mtree-active"[/#if]><a style="font-size: 16px;" class="class1 box1" title="${v?split('=')[1]}&nbsp;${v?split('=')[2]}" id="${v?split('=')[0]}" href="javascript:void(0);"  onclick="myblog(null,0,${v?split('=')[0]},null)">${v?split("=")[1]}&nbsp;${v?split('=')[2]}</a></li>
+				                   			[#else]
+				                                <li><a style="font-size: 16px;" class="class1 box1" title="${v?split('=')[1]}&nbsp;${v?split('=')[2]}" id="${v?split('=')[0]}" href="javascript:void(0);" onclick="myblog(null,0,${v?split('=')[0]},null)">${v?split("=")[1]}&nbsp;${v?split('=')[2]}</a></li>
+				                   			[/#if]
+				                   		[#else]
+				                   			[#if columnId??]
+		                                		<li [#if columnId=v?split('=')[0]]class="mtree-active"[/#if]><a style="font-size: 16px;" class="class1 box1" title="${v?split('=')[1]}" id="${v?split('=')[0]}" href="javascript:void(0);" onclick="myblog(null,null,${v?split('=')[0]},null)">${v?split("=")[1]}</a></li>
+				                   			[#else]
+		                                		<li><a style="font-size: 16px;" class="class1 box1" title="${v?split('=')[1]}" id="${v?split('=')[0]}" href="javascript:void(0);" onclick="myblog(null,null,${v?split('=')[0]},null)" >${v?split("=")[1]}</a></li>
+				                   			[/#if]
+				                   		[/#if]
+				                    [/#if]
+						            [#if usert??]
+						            	[#if v?split('=')[2]??]
+							            	[#if columnId??]
+					                	 		<li [#if columnId=v?split('=')[0]]class="mtree-active"[/#if]><a style="font-size: 16px;" title="${v?split('=')[1]}&nbsp;${v?split('=')[2]}" href="javascript:void(0);" onclick="myblog(null,0,${v?split('=')[0]},${usert.id})">${v?split("=")[1]}&nbsp;${v?split('=')[2]}</a></li>
+						           		 	[#else]
+					                	 		<li><a style="font-size: 16px;" title="${v?split('=')[1]}&nbsp;${v?split('=')[2]}" href="javascript:void(0);" onclick="myblog(null,0,${v?split('=')[0]},${usert.id})">${v?split("=")[1]}&nbsp;${v?split('=')[2]}</a></li>
+						           		 	[/#if]
+					           		 	[#else]
+						           		 	[#if columnId??]
+					                	 		<li [#if columnId=v?split('=')[0]]class="mtree-active"[/#if]><a style="font-size: 16px;" title="${v?split('=')[1]}" href="javascript:void(0);" onclick="myblog(null,null,${v?split('=')[0]},${usert.id})" >${v?split("=")[1]}</a></li>
+					           		 		[#else]
+					                	 		<li><a style="font-size: 16px;" title="${v?split('=')[1]}" href="javascript:void(0);" onclick="myblog(null,null,${v?split('=')[0]},${usert.id})">${v?split("=")[1]}</a></li>
+					           		 		[/#if]
+					           		 	[/#if]
+					           		 [/#if]
+					        	[/#list]
+					        [#else]
+								[#if user??]						        
+					        		<li><a style="font-size: 16px;" class="class1 box1" title="${k?split('=')[1]}" id="${k?split('=')[0]}" href="javascript:;">${k?split("=")[1]}</a>
+					        	[#else]
+						        	<li><a style="font-size: 16px;" title="${k?split('=')[1]}" id="${k?split('=')[0]}" href="javascript:;">${k?split("=")[1]}</a>
+					        	[/#if]
+					        	<ul>
+					        	[#list map[k] as v]
+						        	[#if user??]
+							        	[#if v?split('=')[2]??]
+							        		[#if columnId??]
+			                                		<li [#if columnId=v?split('=')[0]]class="mtree-active"[/#if]><a style="font-size: 14px;color: #255EC7;" class="class1 box1" title="${v?split('=')[1]}&nbsp;${v?split('=')[2]}" id="${v?split('=')[0]}" href="#" onclick="myblog(null,0,${v?split('=')[0]},null)">${v?split("=")[1]}&nbsp;${v?split('=')[2]}</a></li>
+					                    	[#else]
+				                                <li><a style="font-size: 14px;color: #255EC7;" class="class1 box1" title="${v?split('=')[1]}&nbsp;${v?split('=')[2]}" id="${v?split('=')[0]}" href="javascript:void(0);" onclick="myblog(null,0,${v?split('=')[0]},null)">${v?split("=")[1]}&nbsp;${v?split('=')[2]}</a></li>
+					                    	[/#if]
+				                    	[#else]
+				                    		[#if columnId??]
+			                                	<li [#if columnId=v?split('=')[0]]class="mtree-active"[/#if]><a style="font-size: 14px;color: #255EC7;" class="class1 box1" title="${v?split('=')[1]}" id="${v?split('=')[0]}" href="javascript:void(0);" onclick="myblog(null,null,${v?split('=')[0]},null)">${v?split("=")[1]}</a></li>
+				                    		[#else]
+			                                	<li><a style="font-size: 14px;color: #255EC7;" class="class1 box1" title="${v?split('=')[1]}" id="${v?split('=')[0]}" href="javascript:void(0);" onclick="myblog(null,null,${v?split('=')[0]},null)">${v?split("=")[1]}</a></li>
+				                    		[/#if]
+				                    	[/#if]
+				                    [/#if]
+						            [#if usert??]
+							            [#if v?split('=')[2]??]
+							            	[#if columnId??]
+					                	 		<li [#if columnId=v?split('=')[0]]class="mtree-active"[/#if]><a style="font-size: 14px;color: #255EC7;" title="${v?split('=')[1]}&nbsp;${v?split('=')[2]}" href="javascript:void(0);"  onclick="myblog(null,0,${v?split('=')[0]},${usert.id})">${v?split("=")[1]}&nbsp;${v?split('=')[2]}</a></li>
+						           		 	[#else]
+						                	 	<li><a style="font-size: 14px;color: #255EC7;" title="${v?split('=')[1]}&nbsp;${v?split('=')[2]}" href="javascript:void(0);" onclick="myblog(null,0,${v?split('=')[0]},${usert.id})">${v?split("=")[1]}&nbsp;${v?split('=')[2]}</a></li>
+						           		 	[/#if]
+					           		 	[#else]
+					           		 		[#if columnId??]
+					                	 		<li [#if columnId=v?split('=')[0]]class="mtree-active"[/#if]><a style="font-size: 14px;color: #255EC7;" title="${v?split('=')[1]}" href="javascript:void(0);" onclick="myblog(null,null,${v?split('=')[0]},${usert.id})">${v?split("=")[1]}</a></li>
+					           		 		[#else]
+						                	 	<li><a style="font-size: 14px;color: #255EC7;" title="${v?split('=')[1]}" href="javascript:void(0);"  onclick="myblog(null,null,${v?split('=')[0]},${usert.id})">${v?split("=")[1]}</a></li>
+					           		 		[/#if]
+					           		 	[/#if]
+					           		 [/#if]
+					        	[/#list]
+					        	 </ul>
+					        [/#if]	
+					        [/#list]
+					        [/#list]
+				            [/#if] 
+					      	</li>
+		                    [#if user??]
+				             <li><a href="javascript:;" onclick="ownCollection('${base}/blog/collection_list.jspx')">转载</a></li>
+				             [/#if]
+				            [#if usert??]
+				             <li><a href="javascript:;" onclick="ownCollection('${base}/blog/collection_list.jspx?uid=${usert.id}')">转载</a></li>
+				             [/#if]
+				             <br />
+					    </ul>
+					  </li>
+					  <li><a href="#">群组</a>
+					    <ul>
+					        [#if joinGroupList?size gt 0]
+                            [#list joinGroupList as j]
+		                    [#if user??]
+		                    	[#if columnId??]
+		                    		<li id="cc${j.columnsId.columnId}" [#if columnId?number=j.columnsId.columnId]class="mtree-active"[/#if]><a id="${j.columnsId.columnId}" class="class3 box1" href="javascript:void(0);" onclick="myblog(null,0,${j.columnsId.columnId},null)" title="${j.columnsId.columnName}" >${j.columnsId.columnName}</a></li>
+		                   		[#else]
+			                    	<li id="cc${j.columnsId.columnId}"><a  class="class3 box1" id="${j.columnsId.columnId}" href="javascript:void(0);" onclick="myblog(null,0,${j.columnsId.columnId},null)" title="${j.columnsId.columnName}" >${j.columnsId.columnName}</a></li>
+		                   		[/#if]
+		                    [/#if]
+		                    [#if usert??]
+			                    [#if columnId??]
+			                    	<li id="cc${j.columnsId.columnId}" [#if columnId?number=j.columnsId.columnId]class="mtree-active"[/#if]><a  class="class3 box1" id="${j.columnsId.columnId}" href="javascript:void(0);" title="${j.columnsId.columnName}" onclick="myblog(null,0,${j.columnsId.columnId},null)">${j.columnsId.columnName}</a></li>
+		                    	[#else]
+			                    	<li id="cc${j.columnsId.columnId}"><a  class="class3 box1" id="${j.columnsId.columnId}" href="javascript:void(0);" title="${j.columnsId.columnName}" onclick="myblog(null,0,${j.columnsId.columnId},null)">${j.columnsId.columnName}</a></li>
+		                    	[/#if]
+		                    [/#if]
+		                    [/#list]
+	                        [/#if]
+	                        [#if user??]
+	                        <li class="join"><a  href="javascript:;" style="color: #006400;" onclick="joinGroupByCode()">加入群组</a></li>
+	                        [/#if]
+	                        <br />
+					   </ul>
+					  </li>
+					   <li><a href="#">好友</a>
+					    <ul>
+					   [#if paginationLeft??]
+						    [#list paginationLeft.list as user]
+						    	[#if user_index<11]
+						    		<li><a href="${base}/blog/find_all_url_friend.jspx?userIds=${user.id}" target="_blank" title="[#if user.nicknames??]${user.nicknames}[#else]${user.username}[/#if]"><img [#if user.userImg??]src="${user.userImg}"[#else]src="/${res}/images/userImg-large.png"[/#if] width="20" height="20" alt="" style="float: left;padding: 0 10px 0 0;">[#if user.nicknames??][@text_cut s=user.nicknames len=12 append='...'/][#else]${user.username}[/#if]</a></li>
+						    	[/#if]
+						    [/#list]
+							 [#if paginationLeft.list?size>9]
+							    [#if user??]
+					               <li><a href="javascript:;" onclick="gotoDataShow('${base}/blog/gotoDataShow.jspx?dataFlag=1')">更多 &nbsp;>></a></li>
+			               		[#else]
+					               <li><a href="javascript:;" onclick="gotoDataShow('${base}/blog/gotoDataShow.jspx?dataFlag=1&uid=${usert.id}')">更多 &nbsp;>></a></li>
+			                    [/#if]
+		                     [/#if]
+		                 [#else]
+		                  <br />
+						 [/#if]
+					    </ul>
+					    </li>
+					  <li><a href="#">链接</a>
+					    <ul>
+					    	[#if urlList??]
+						         [#list urlList as map]
+						          	[#list map?keys as k]
+						          		 [#if k=='']
+								            [#list map[k] as v]
+								            	[#if v?index_of("=")!=-1]
+								         			<li  class="change"><a style="font-size: 12px;" target="_blank" href="${v?split("=")[1]}" title="${v?split("=")[0]}">[@text_cut s=v?split("=")[0] len=10 append='...'/]</a></li>
+								         		[/#if]
+								         		[#if v?index_of("|")!=-1]
+								         			<li  class="change"><a style="font-size: 12px;" target="_blank" href="${v?split("|")[1]}" title="${v?split("|")[0]}">[@text_cut s=v?split("|")[0] len=10 append='...'/]</a></li>
+								         		[/#if]
+								            [/#list]
+								         [#else]
+								          <li><a href="javascript:;">${k}</a>
+								          <ul>
+								            [#list map[k] as v]
+								            	[#if v?index_of("http:")!=-1]
+									            	[#if v?index_of("=")!=-1]
+									         			<li><a target="_blank" href="${v?split("=")[1]}" title="${v?split("=")[0]}">[@text_cut s=v?split("=")[0] len=9 append='...'/]</a></li>
+									         		[/#if]
+									         		[#if v?index_of("|")!=-1]
+									         			<li><a target="_blank" href="${v?split("|")[1]}" title="${v?split("|")[0]}">[@text_cut s=v?split("|")[0] len=9 append='...'/]</a></li>
+									         		[/#if]
+								            	[/#if]
+								            [/#list]
+								           </ul>
+								           </li>	
+								          [/#if]
+						          	[/#list]
+						         [/#list]
+						         [#else]
+						         <br />
+						         [/#if]
+					    </ul>
+					  </li>
+					  <li><a href="#">明星博客</a>
+					    <ul>
+					      [#if starBlogger?? ]
+		                 	[#list starBlogger as c]
+		                      <li><a href="${base}/blog/find_all_url_friend.jspx?userIds=${c.id}" target="_blank" title="[#if c.realname??]${c.realname}[#else]${c.username}[/#if]"><img [#if c.userImg??]src="${c.userImg}"[#else]src="/${res}/images/userImg-large.png"[/#if] width="20" height="20" alt="" style="float: left;padding: 0 10px 0 0;">[#if c.realname??][@text_cut s=c.realname len=5 append='...'/][#else]${c.username}[/#if]</a></li>
+			                [/#list]
+	                         [#if moreStarBloggerExist??]
+	                        [#if user??]
+			                 <li><a href="javascript:;" onclick="gotoDataShow('${base}/blog/gotoDataShow.jspx?dataFlag=4')">更多 &nbsp;>></a></li>
+	                        [/#if]
+	                        [#if usert??]
+			                 <li><a href="javascript:;" onclick="gotoDataShow('${base}/blog/gotoDataShow.jspx?dataFlag=4&uid=${usert.id}')">更多 &nbsp;>></a></li>
+	                        [/#if]
+			                [/#if]
+			                [/#if]
+					   </ul>
+					  </li>
+					</ul>
+					<div id="getChannlHtml" style="display:none;">
+				     	[#include 'blog_content_channl.html'/]
+				     </div>
+				</div>	
+<script src='/${res}/js/stopExecutionOnTimeout.js?t=1'></script>
+<script src='/${res}/js/jquery.velocity.min.js'></script>
+<script src='/${res}/js/class2context.js'></script>
+<script>
+	;(function ($, window, document, undefined) {
+	    if ($('ul.mtree').length) {
+	        var collapsed = false;
+	        var close_same_level = false;
+	        var duration = 400;
+	        var listAnim = true;
+	        var easing = 'easeOutQuart';
+	        $('.mtree ul').css({
+	            'overflow': 'hidden',
+	            'height': collapsed ? 0 : 'auto',
+	            'display': collapsed ? 'none' : 'block'
+	        });
+	        var node = $('.mtree li:has(ul)');
+	        node.each(function (index, val) {
+	            $(this).children(':first-child').css('cursor', 'pointer');
+	            $(this).addClass('mtree-node mtree-' + (collapsed ? 'closed' : 'open'));
+	            $(this).children('ul').addClass('mtree-level-' + ($(this).parentsUntil($('ul.mtree'), 'ul').length + 1));
+	        });
+	        $('.mtree li > *:first-child').on('click.mtree-active', function (e) {
+	            if ($(this).parent().hasClass('mtree-closed')) {
+	                $('.mtree-active').not($(this).parent()).removeClass('mtree-active');
+	                $(this).parent().addClass('mtree-active');
+	            } else if ($(this).parent().hasClass('mtree-open')) {
+	                $(this).parent().removeClass('mtree-active');
+	            } else {
+	                $('.mtree-active').not($(this).parent()).removeClass('mtree-active');
+	                $(this).parent().toggleClass('mtree-active');
+	            }
+	        });
+	        node.children(':first-child').on('click.mtree', function (e) {
+	            var el = $(this).parent().children('ul').first();
+	            var isOpen = $(this).parent().hasClass('mtree-open');
+	            if ((close_same_level || $('.csl').hasClass('active')) && !isOpen) {
+	                var close_items = $(this).closest('ul').children('.mtree-open').not($(this).parent()).children('ul');
+	                if ($.Velocity) {
+	                    close_items.velocity({ height: 0 }, {
+	                        duration: duration,
+	                        easing: easing,
+	                        display: 'none',
+	                        delay: 100,
+	                        complete: function () {
+	                            setNodeClass($(this).parent(), true);
+	                        }
+	                    });
+	                } else {
+	                    close_items.delay(100).slideToggle(duration, function () {
+	                        setNodeClass($(this).parent(), true);
+	                    });
+	                }
+	            }
+	            el.css({ 'height': 'auto' });
+	            if (!isOpen && $.Velocity && listAnim)
+	                el.find(' > li, li.mtree-open > ul > li').css({ 'opacity': 0 }).velocity('stop').velocity('list');
+	            if ($.Velocity) {
+	                el.velocity('stop').velocity({
+	                    height: isOpen ? [
+	                        0,
+	                        el.outerHeight()
+	                    ] : [
+	                        el.outerHeight(),
+	                        0
+	                    ]
+	                }, {
+	                    queue: false,
+	                    duration: duration,
+	                    easing: easing,
+	                    display: isOpen ? 'none' : 'block',
+	                    begin: setNodeClass($(this).parent(), isOpen),
+	                    complete: function () {
+	                        if (!isOpen)
+	                            $(this).css('height', 'auto');
+	                    }
+	                });
+	            } else {
+	                setNodeClass($(this).parent(), isOpen);
+	                el.slideToggle(duration);
+	            }
+	            e.preventDefault();
+	        });
+	        function setNodeClass(el, isOpen) {
+	            if (isOpen) {
+	                el.removeClass('mtree-open').addClass('mtree-closed');
+	            } else {
+	                el.removeClass('mtree-closed').addClass('mtree-open');
+	            }
+	        }
+	        if ($.Velocity && listAnim) {
+	            $.Velocity.Sequences.list = function (element, options, index, size) {
+	                $.Velocity.animate(element, {
+	                    opacity: [
+	                        1,
+	                        0
+	                    ],
+	                    translateY: [
+	                        0,
+	                        -(index + 1)
+	                    ]
+	                }, {
+	                    delay: index * (duration / size / 2),
+	                    duration: duration,
+	                    easing: easing
+	                });
+	            };
+	        }
+	        if ($('.mtree').css('opacity') == 0) {
+	            if ($.Velocity) {
+	                $('.mtree').css('opacity', 1).children().css('opacity', 0).velocity('list');
+	            } else {
+	                $('.mtree').show(200);
+	            }
+	        }
+	    }
+	}(jQuery, this, this.document));
+	$(document).ready(function () {
+	    var mtree = $('ul.mtree');
+	    mtree.wrap('<div class=mtree-demo></div>');
+	    var skins = [
+	        'bubba',
+	        'skinny',
+	        'transit',
+	        'jet',
+	        'nix'
+	    ];
+	    mtree.addClass(skins[0]);
+	});
+	
+	function myblog(channelId,joinGroupStata,columnId,uid){
+		if(typeof($("#no3").val())!='undefined'){
+			 delPos();
+		};
+	 	 $.ajax({
+             type: 'POST',
+             url : ' ${base}/blog/contribute_list_own.jspx',
+              dataType:"html",
+             data : {'queryTitle' : null,'modelId' : null,'queryChannelId' : null,'pageNo':null,'channelId':channelId,'joinGroupStata':joinGroupStata,'columnId':columnId,'uid':uid},
+             success : function(datas){
+            	 if(datas=="login"){
+            		 location.href="${base}/login.jspx";
+            	 }else{
+            		 var wzid=document.getElementById('wzId');
+            		 if(wzid!=null){
+            			 document.getElementById('wzId').innerHTML="";
+            		 }
+            		 var maindiv=document.getElementById('maindiv');
+            		 if(maindiv!=null){
+            			 document.getElementById('maindiv').innerHTML="";
+            		 }
+                	 $(".wrap-right").append(datas);
+                	 $("#mainpwdiv").remove();
+                	 $("#maindiv").css("display","block");
+            	 }
+            	
+            	
+    	   		 }
+   		 });
+	}
+	
+	function contributeAdd(){
+		
+	 	 $.ajax({
+             type: 'POST',
+             url : ' ${base}/blog/contribute_ajax_add.jspx',
+              dataType:"html",
+             data : {},
+             success : function(datas){
+            	 $("#zd_u-hilite-cap").remove();
+	        	 $("#zdId").remove();
+	        	 $("#u-hilite-cap").remove();
+	        	 
+	        	 var wzid=document.getElementById('wzId');
+        		 if(wzid!=null){
+        			 document.getElementById('wzId').innerHTML="";
+        		 }
+        		 var maindiv=document.getElementById('maindiv');
+        		 if(maindiv!=null){
+        			 document.getElementById('maindiv').innerHTML="";
+        		 }
+            	 $(".wrap-right").append(datas);
+    	   		 }
+   		 });
+	}
+	
+	function delPos(){
+		$.ajax({
+	         url: "${base}/blog/searchPostil.jspx?contentId="+$("#no3").val(),
+	         type: "POST",
+	         dataType:"json",
+	         data: "",
+	         async: false,
+	         success: function (data) {
+	 				for(var i=0;i<data.length;i++){
+						$("div#"+data[i].postilDivId).remove();
+	 				}
+	         }
+	     });
+	}
+	
+	function ownCollection(url){
+		if(typeof($("#no3").val())!='undefined'){
+			 delPos();
+		};
+		$.ajax({
+	        type: 'GET',
+	        url : url,
+	        dataType:"html",
+	        async: true,
+	        success : function(datas){
+	        	var wzid=document.getElementById('wzId');
+       		 if(wzid!=null){
+       			 document.getElementById('wzId').innerHTML="";
+       		 }
+       		 var maindiv=document.getElementById('maindiv');
+       		 if(maindiv!=null){
+       			 document.getElementById('maindiv').innerHTML="";
+       		 }
+	            $(".wrap-right").append(datas);
+	            if(window._bd_share_main){
+
+	         	   window._bd_share_main.init();
+	         	}
+		   		 }
+			});
+		
+	}
+	</script>
+<script type="text/javascript">
+	array=[["<img src='/${res}/images/iMac-add.png' width='25px' /> 新建栏目", "createChannel()"],["<img src='/${res}/images/iMac-edit.png' width='25px' /> 修改栏目", "editChannel()"],["<img src='/${res}/images/iMac-del.png' width='25px' /> 删除栏目", "delChannel()"]];
+	class2context('class1', "", array);
+	
+	array=[["<img src='/${res}/images/iMac-add.png' width='25px' /> 新建栏目", "createChannel2()"]];
+	class2context('class2', "", array);
+	
+	array=[["<img src='/${res}/images/quit_ group_2.png' width='25px' /> 退出群组", "quitGroup()"]];
+	class2context('class3', "", array);
+	function createChannel2(){
+		if(typeof($("#no3").val())!='undefined'){
+			 delPos();
+		};
+		$.ajax({
+	           type: 'POST',
+	           url : '${base}/blog/columns_list.jspx',
+	           dataType:"html",
+	           async: true,
+	           success : function(datas){
+	        	   if(datas=="login"){
+	            		 location.href="${base}/login.jspx";
+	            	 }else{
+						$("#zd_u-hilite-cap").remove();
+						$("#zdId").remove();
+						$("#u-hilite-cap").remove();
+						
+						 var wzid=document.getElementById('wzId');
+	            		 if(wzid!=null){
+	            			 document.getElementById('wzId').innerHTML="";
+	            		 }
+	            		 var maindiv=document.getElementById('maindiv');
+	            		 if(maindiv!=null){
+	            			 document.getElementById('maindiv').innerHTML="";
+	            		 }
+		               $(".wrap-right").append(datas);
+		               if(window._bd_share_main){
+		            	   window._bd_share_main.init();
+		            	}
+	        		   
+	        	   }
+	  	   		 }
+	 		});
+		//location.href = "${base}/blog/columns_list.jspx";
+		
+	}
+	function createChannel(id){
+		if(typeof($("#no3").val())!='undefined'){
+			 delPos();
+		};
+		$.ajax({
+        	url: "${base}/blog/checkLevel.jspx?ccId="+id,
+            type:'POST',
+            data:"",
+            dataType:'json',
+            async:false,
+            success:function(data) {
+                if(data.status==1) {
+                	$.ajax({
+          	           type: 'POST',
+          	           url : '${base}/blog/columns_list.jspx?ccId='+id,
+          	           dataType:"html",
+          	           async: true,
+          	           success : function(datas){
+          	        	 if(datas=="login"){
+     	            		 location.href="${base}/login.jspx";
+     	            	 }else{
+         					$("#zd_u-hilite-cap").remove();
+         					$("#zdId").remove();
+         					$("#u-hilite-cap").remove();
+         					var wzid=document.getElementById('wzId');
+                   		 if(wzid!=null){
+                   			 document.getElementById('wzId').innerHTML="";
+                   		 }
+                   		 var maindiv=document.getElementById('maindiv');
+                   		 if(maindiv!=null){
+                   			 document.getElementById('maindiv').innerHTML="";
+                   		 }
+         	               $(".wrap-right").append(datas);
+         	               if(window._bd_share_main){
+         	            	   window._bd_share_main.init();
+         	            	}
+     	            	 }
+          	  	   		 }
+          	 		});
+                    return true;
+                }else if(data.status==2){
+                    alert("该操作不被允许!\r\n请勿在二级栏目下新建子栏目!");
+                    return false;
+                }else if(data.status==3){
+                	alert("该操作不被允许!\r\n该一级栏目已作为群组!您可以将群组栏目修改为普通栏目来添加子栏目!");
+                	return false;
+                }else if(data.status==4){
+               	    location.href="${base}/login.jspx";
+             		return false;
+             	}
+            },
+        });
+	}
+	
+	function editChannel(id){
+		if(typeof($("#no3").val())!='undefined'){
+			 delPos();
+		};
+		$.ajax({
+	           type: 'POST',
+	           url : '${base}/blog/update_tz.jspx?id='+id,
+	           dataType:"html",
+	           async: true,
+	           success : function(datas){
+	        	   if(datas=="login"){
+	            		 location.href="${base}/login.jspx";
+	            	 }else{
+						$("#zd_u-hilite-cap").remove();
+						$("#zdId").remove();
+						$("#u-hilite-cap").remove();
+						var wzid=document.getElementById('wzId');
+	            		 if(wzid!=null){
+	            			 document.getElementById('wzId').innerHTML="";
+	            		 }
+	            		 var maindiv=document.getElementById('maindiv');
+	            		 if(maindiv!=null){
+	            			 document.getElementById('maindiv').innerHTML="";
+	            		 }
+		               $(".wrap-right").append(datas);
+		               if(window._bd_share_main){
+		            	   window._bd_share_main.init();
+		            	}
+	            	 }
+	  	   		 }
+	 		});
+	}
+	function delChannel(id){
+		$.ajax({
+        	url: "${base}/blog/checkTwoColumsNum.jspx?ccId="+id,
+            type:'POST',
+            data:"",
+            dataType:'json',
+            async:false,
+            success:function(data) {
+                if(data.status==2) {
+                	$.ajax({
+        		        url: "${base}/blog/delGroup.jspx?groupId="+id,
+        		        type: "POST",
+        		        dataType:"json",
+        		        data: "",
+        		        success: function (data) {
+        		        	if(data.status>0){
+        		        		$.ajax({
+        	            			url:"${base}/blog/queryLanmuColumn.jspx?id="+id,
+        	            			type:"post",
+        	            			datatype:"json",
+        	            			data: "",
+        	            			success: function(result){
+        	            				if(result.status=="false"){
+        	            					alert("删除失败！请先删除本栏目下的文章！");	
+        	            				}else{
+        	            					var isDel="确定删除吗?";
+        	            					if(confirm(isDel)==true){
+        	            						$.ajax({
+        	         	        		    		url:"${base}/blog/deleteColumnRefresh.jspx?columnId="+id,
+        	         	        		    		type:"POST",
+        	         	        		    		dataType:"json",
+        	         	        		    		success: function (data) {
+        	         	        		    			if(data.status==1){
+        	         	        		    				alert("栏目删除失败");
+        	         	        		    				return false;
+        	         	        		    			}else{
+        	         	        		    				$("body").mLoading();
+        	         	        		    				$.ajax({
+        	         	        		    			           type: 'POST',
+        	         	        		    			           url : '${base}/blog/refreshColumn.jspx',
+        	         	        		    			           dataType:"html",
+        	         	        		    			           async: true,
+        	         	        		    			           success : function(datas){
+        	         	        		    			        	   $("#appendHtml").empty();
+        	         	        		    			        	   $("#joinGroups").remove();
+        	         	        		    			               $("#appendHtml").append(datas);
+        	         	        		    			               if(window._bd_share_main){
+        	         	        		    			            	   window._bd_share_main.init();
+        	         	        		    			            	}
+						        	            						$("body").mLoading("hide");
+        	         	        		    			  	   		 }
+        	         	        		    			 	});
+        	         	        		    				$.ajax({
+        	        	        		    			           type: 'POST',
+        	        	        		    			           url : '${base}/blog/indexs.jspx',
+        	        	        		    			           dataType:"html",
+        	        	        		    			           async: true,
+        	        	        		    			           success : function(datas){
+        	        	        		    			        	   if(datas=="login"){
+        	        	        		    			            		 location.href="${base}/login.jspx";
+        	        	        		    			            	 }else{
+        	        	        		    			            		 var wzid=document.getElementById('wzId');
+        	        	        		    			            		 if(wzid!=null){
+        	        	        		    			            			 document.getElementById('wzId').innerHTML="";
+        	        	        		    			            		 }
+        	        	        		    			            		 var maindiv=document.getElementById('maindiv');
+        	        	        		    			            		 if(maindiv!=null){
+        	        	        		    			            			 document.getElementById('maindiv').innerHTML="";
+        	        	        		    			            		 }
+        	        	        		    			   	               $(".wrap-right").append(datas);	
+        	        	        		    			            	 }
+        	        	        		    			        	 	
+        	        	        		    			  	   		 }
+        	        	        		    			 	});
+        	         	     		                        return true;
+        	         	        		    			}
+        	         	        		            }
+        	         	        		    	});
+        	            					}
+        	            				}
+        	            			}
+        	            		});
+			                    return true;
+        		        	}else{
+        		        		alert("删除失败!已有用户加入该群组");
+			                    return false;
+        		        	}
+        		        }
+        		    });
+                    return true;
+                }else if(data.status==3){
+                	//事情登陆状态
+                	location.href="${base}/login.jspx";
+                    return false;
+                }else{
+                    alert("该操作不被允许!\r\n请先删除该栏目下的子栏目!");
+                    return false;
+                }
+            },
+        });
+	}
+
+	function ContextMenus(){
+		console.log("context menu called");
+	}
+	
+	
+	function quitGroup(id){
+		var msg = "您确定要退出该群组吗？"; 
+		 if (confirm(msg)==true){ 
+			 $.ajax({
+			        url: "${base}/blog/signOutGroups.jspx?groupId="+id,
+			        type: "POST",
+			        dataType:"json",
+			        data: "",
+			        success: function (data) {
+			        	if(data.status==3){
+			        		alert("未登录或已失去登陆状态,请登陆后在进行此操作!");
+			        		return false;
+			        	}else if(data.status==1){
+							 $("#cc"+id).fadeOut();
+						     return true; 
+			        	}else{
+			        		alert("群组退出失败!");
+			        		return false;
+			        	}
+			        }
+			    });
+		     return true; 
+		 }else{ 
+		     return false; 
+		 } 
+	}
+	
+	function nextArticles(url,id,group,cid){
+		if(typeof($("#no3").val())!='undefined'){
+			 delPos();
+		};
+		var nu="";
+		if(url.indexOf("baoting") > 0){
+			nu=url.replace("baoting.","");
+		}else if(url.indexOf("haikou") > 0){
+			nu=url.replace("haikou.","");
+		}else if(url.indexOf("sanya") > 0){
+			nu=url.replace("sanya.","");
+		}else if(url.indexOf("tunchang") > 0){
+			nu=url.replace("tunchang.","");
+		}else{
+			nu=url;
+		}
+		var newUrl="";
+		if(null!=cid){
+			newUrl=nu+"?o="+id+"&GroupFlag="+group+"&columnIdZ="+cid+"";
+		}else{
+			newUrl=nu+"?o="+id+"&GroupFlag="+group+"";
+		}
+	 	$.ajax({
+           type: 'GET',
+           url : newUrl,
+           dataType:"html",
+           async: true,
+           success : function(datas){
+        	   var wzid=document.getElementById('wzId');
+      		 if(wzid!=null){
+      			 document.getElementById('wzId').innerHTML="";
+      		 }
+      		 var maindiv=document.getElementById('maindiv');
+      		 if(maindiv!=null){
+      			 document.getElementById('maindiv').innerHTML="";
+      		 }
+               $(".wrap-right").append(datas);
+               if(window._bd_share_main){
+            	   window._bd_share_main.init();
+            	}
+  	   		 }
+ 		});
+	}
+	
+	function previousArticles(url,id,group,cid){
+		if(typeof($("#no3").val())!='undefined'){
+			 delPos();
+		};
+		var nu="";
+		if(url.indexOf("baoting") > 0){
+			nu=url.replace("baoting.","");
+		}else if(url.indexOf("haikou") > 0){
+			nu=url.replace("haikou.","");
+		}else if(url.indexOf("sanya") > 0){
+			nu=url.replace("sanya.","");
+		}else if(url.indexOf("tunchang") > 0){
+			nu=url.replace("tunchang.","");
+		}else{
+			nu=url;
+		}
+		var newUrl="";
+		if(null!=cid){
+			newUrl=nu+"?o="+id+"&GroupFlag="+group+"&columnIdZ="+cid+"";
+		}else{
+			newUrl=nu+"?o="+id+"&GroupFlag="+group+"";
+		}
+	 	$.ajax({
+           type: 'GET',
+           url : newUrl,
+           dataType:"html",
+           async: true,
+           success : function(datas){
+        	   var wzid=document.getElementById('wzId');
+      		 if(wzid!=null){
+      			 document.getElementById('wzId').innerHTML="";
+      		 }
+      		 var maindiv=document.getElementById('maindiv');
+      		 if(maindiv!=null){
+      			 document.getElementById('maindiv').innerHTML="";
+      		 }
+               $(".wrap-right").append(datas);
+               if(window._bd_share_main){
+            	   window._bd_share_main.init();
+            	}
+  	   		 }
+ 		});
+	}
+</script>
+<script type="text/javascript">
+function joinGroupByCode(){
+	 $("#groupName").val("");
+	 $("#groupCode").val("");
+	 $("#groupNameTip").html("*");
+	 $("#groupCodeTip").html("*");
+	 $("#errorTip").html("");
+	 $("#joinGroups").dialog("open");
+}
+$(document).ready(function(){ 
+	$("#joinGroups").dialog({
+		autoOpen: false,
+		modal: false,
+		resizable :false,
+		stack : false,
+		draggable : true,
+		closeOnEscape : false,
+		open:function(event,ui){
+			$(".ui-dialog-titlebar-close").hide();
+			$(".ui-dialog-titlebar").css("background","#ffffff");  
+			$(".ui-widget-header").css("border","0");  
+		},
+		width: 300,
+		height: 260,
+		position: ["center"],
+		close: function(event, ui) {
+			
+		}
+	});
+}); 
+function closeJoinGroup(){
+	$("#joinGroups").dialog("close");
+}
+function sJoinGroup(){
+	var groupName=$("#groupName").val();
+	var groupCode=$("#groupCode").val();
+	if(groupName==""){
+		$("#groupNameTip").html("必填!");
+		return false;
+	}else{
+		$("#groupNameTip").html("*");
+	}
+	if(groupCode==""){
+		$("#groupCodeTip").html("必填!");
+		return false;
+	}else{
+		$("#groupCodeTip").html("*");
+	}
+	
+	
+	var reg = new RegExp("^[0-9]*$");
+	if(!reg.test(groupName)){
+		$("#errorTip").html("群组账号类型不正确!");
+		return false;
+	}
+	if(!reg.test(groupCode)){
+		$("#errorTip").html("验证码类型不正确!");
+		return false;
+	}
+	$("#errorTip").html("");
+	$.ajax({
+    	url: "${base}/blog/checkExist.jspx?groupName="+groupName+"&groupCode="+groupCode,
+        type:'POST',
+        data:"",
+        dataType:'json',
+        async:false,
+        success:function(data) {
+        	var uid=data.status;
+        	if(data.status==1){
+				$("#errorTip").html("账号不存在!");
+				return false;
+        	}else if(data.status==2){
+				$("#errorTip").html("验证码不存在!");
+				return false;
+        	}else{
+				$("#errorTip").html("加入中...加入成功弹框将自动关闭!");
+        		$.ajax({
+        			url:"${base}/blog/joinGroupCode.jspx?code="+groupCode+"&createUserId="+uid,
+        			type:"POST",
+        			dataType:"json",
+        			data: "",
+        			success: function (data) {
+        				if(data.status==1){
+				        	$.ajax({
+		    			           type: 'GET',
+		    			           url : '${base}/blog/refreshColumn.jspx',
+		    			           dataType:"html",
+		    			           async: true,
+		    			           success : function(datas){
+							        	$("#joinGroups").dialog("close");
+		    			        	   $("#appendHtml").empty();
+		    			        	   $("#joinGroups").remove();
+		    			               $("#appendHtml").append(datas);
+		    			               if(window._bd_share_main){
+		    			            	   window._bd_share_main.init();
+		    			            	}
+		    			  	   		 }
+		    			 	});
+        				}else if(data.status==2){
+							$("#errorTip").html("请勿重复加入群组!");
+							return false;
+        				}else if(data.status==1){
+							$("#errorTip").html("加入失败!");
+							return false;
+        				}
+        	        }
+        		});
+        	}
+        },
+    });	
+}
+</script>
+<script type="text/javascript">
+function gotoDataShow(url){
+	if(typeof($("#no3").val())!='undefined'){
+		 delPos();
+	};
+	$.ajax({
+          type: 'POST',
+          url : url,
+          dataType:"html",
+          async: true,
+          success : function(datas){
+        	 if(datas=="login"){
+         		 location.href="${base}/login.jspx";
+         	 }else{
+				$("#zd_u-hilite-cap").remove();
+				$("#zdId").remove();
+				$("#u-hilite-cap").remove();
+				var wzid=document.getElementById('wzId');
+	       		 if(wzid!=null){
+	       			 document.getElementById('wzId').innerHTML="";
+	       		 }
+	       		 var maindiv=document.getElementById('maindiv');
+	       		 if(maindiv!=null){
+	       			 document.getElementById('maindiv').innerHTML="";
+	       		 };
+	            $(".wrap-right").append(datas);
+	            if(window._bd_share_main){
+	           		window._bd_share_main.init();
+	           	}
+         	 }  
+ 	   	}
+	});
+}
+</script>

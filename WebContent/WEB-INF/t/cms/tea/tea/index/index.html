@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport"
+	content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
+<meta name="msapplication-tap-highlight" content="no">
+<title>海南省中小学幼儿园教师继续教育网</title>
+<link rel="stylesheet" href="${base}/res/common/css/base.css">
+<style>
+a {
+	color: #000;
+}
+
+ul {
+	margin: 20px 10px 0 0;
+	font-size: 16px;
+	line-height: 220%;
+}
+
+li {
+	color: #0072c6;
+}
+
+.card {
+	margin: 0 0 20px 0;
+	float: left;
+}
+
+.lt {
+	color: #8b0000;
+}
+
+.slip {
+	margin: 0 0 10px 0;
+	padding: 12px;
+	font-size: 12px;
+	color: #fff;
+	display: block;
+}
+
+.slip-xt {
+	margin: 5px 8px 0px 0px;
+	line-height: 38px;
+	font-size: 38px;
+	float: left;
+}
+
+.slip:hover {
+	color: #fff;
+	outline: 2px solid #aaa;
+}
+
+.navi {
+	border-bottom: 4px solid #0072c6;
+}
+
+.navi span {
+	margin: 0 8px 0 0;
+	padding: 6px 16px;
+	font-size: 16px;
+	display: inline-block;
+	cursor: pointer;
+}
+
+.navi span:hover {
+	background: #0091FB;
+	color: #fff;
+}
+
+.navi span.active {
+	background: #0072c6;
+	color: #fff;
+}
+
+.navi2 {
+	padding: 8px;
+	background1: #f3f3f3;
+	border: 1px solid #0072c6;
+	border-width: 0 2px 2px 2px;
+}
+
+.navi2 span {
+	margin: 0 0px 2px 0;
+	padding: 6px 0;
+	width: 80px;
+	border-bottom: 1px solid #ccc;
+	text-align: center;
+	display: inline-block;
+	cursor: pointer;
+}
+
+.navi2 span:hover {
+	border-bottom-color: #0072c6;
+	color: #0072c6;
+}
+
+.navi2 span.active {
+	background: #fa6800;
+	color: #fff;
+}
+
+.col2 {
+	width: 50%;
+	float: left;
+}
+
+.more {
+	margin: 8px auto;
+	padding: 4px 10px;
+	color: #fff;
+	background: #fa6800;
+	text-align: center;
+	display: block;
+}
+
+.more:hover {
+	color: #fff;
+}
+
+@media screen {
+	body {
+		background: #fff url(/${res}/images/bg.jpg) no-repeat center
+			top;
+	}
+	.x-footer {
+		margin-top: 20px;
+		padding: 20px 0;
+		color: #b5dcfd;
+		background: #0A67B4;
+		clear: both;
+	}
+	.x-footer a {
+		border-bottom: 1px solid #b5dcfd;
+		color: #b5dcfd;
+	}
+	.x-wrap {
+		margin: 0 auto;
+		width: 960px;
+	}
+	.x-cap {
+		margin: 38px 0 0px 0;
+		padding: 38px 0;
+		color: #fff;
+		background: url(/${res}/images/logo.png) no-repeat left top;
+	}
+	.x-pane {
+		width: 660px;
+		float: left;
+	}
+	.x-sbr {
+		width: 280px;
+		float: right;
+	}
+	#y-banner {
+		margin: 0 0 20px 0;
+	}
+}
+
+@media screen and (max-width: 960px) {
+	* {
+		box-sizing: border-box;
+		max-width: 100%;
+	}
+	.x-wrap,.x-pane,.x-sbr,.col2 {
+		width: auto;
+		float: none;
+	}
+	.x-wrap {
+		padding: 0 10px;
+	}
+}
+</style>
+<script src="${base}/res/common/js/mootools_rv.js"></script>
+<script src="${base}/res/common/js/mootools_ue.js"></script>
+<script>
+var d_region = ["省师训办", "海口", "海口美兰", "海口龙华", "海口秀英", "海口琼山", "三亚", "三亚天涯", "三亚吉阳", "三亚海棠", "三亚崖州", "五指山", "文昌", "琼海", "万宁", "屯昌", "定安", "澄迈", "临高", "儋州", "保亭", "琼中", "白沙", "陵水", "昌江", "乐东", "东方", "洋浦", "三沙*"],
+d_cate = [948322, 61520, 948338, 948340, 948342, 948344, 61933, 948347, 948349, 948351, 948353, 459714, 121656, 189576, 98729, 61834, 431863, 536931, 61806, 543971, 61949, 547365, 62566, 61871, 61813, 61497, 471916, 61840, 948356],
+d_cate1 = [8260, 9701, 9731, 9732, 9733, 9734, 9710, 9735, 9736, 9737, 9738, 9711, 9703, 9706, 9704, 9705, 9702, 9709, 9708, 9707, 9712, 9718, 9717, 9713, 9716, 9714, 9715, 9720, 9740],
+d_headline = "948323",
+d_dept2 = {
+    "海口教育研究培训院": 9701,
+    "海口美兰区教研室": 9731,
+    "海口龙华区教研室": 9732,
+    "海口秀英区教研室": 9733,
+    "海口琼山区教研室": 9734,
+    "三亚教育研究培训院": 9710,
+    "三亚市天涯区": 9735,
+    "三亚市吉阳区": 9736,
+    "三亚市海棠区": 9737,
+    "三亚市崖州区": 9738,
+    "五指山继教中心": 9711,
+    "文昌教师进修学校": 9703,
+    "琼海继续教育中心": 9706,
+    "万宁教研培训中心": 9704,
+    "屯昌教研培训中心": 9705,
+    "定安教研培训中心": 9702,
+    "澄迈教师研训中心": 9709,
+    "临高教育局师培办": 9708,
+    "儋州继教培训中心": 9707,
+    "保亭教育研训中心": 9712,
+    "琼中教培管理中心": 9718,
+    "白沙教研培训中心": 9717,
+    "陵水继续教育中心": 9713,
+    "昌江教师培训中心": 9716,
+    "乐东教研培训学校": 9714,
+    "东方研训中心": 9715,
+    "洋浦教管办": 9720,
+    "三沙(暂未开通)": 9740
+},
+d_tea1 = {
+    "黄浪波": 9933,
+    "邢益宝": 616476,
+    "许志坚": 9269,
+    "王国健": 674539,
+    "冉茂娟": 524582,
+    "陈家英": 556949,
+    "林尤雄": 600009,
+    "蔡兴飞": 603515,
+    "谭明": 604309,
+    "关心凤": 634132,
+    "张国红": 651388,
+    "林保培": 689946,
+    "廖夏婉": 520595,
+    "许慧": 600970,
+    "林朝阳": 609694,
+    "利庆海": 613214,
+    "林尤谊": 51433,
+    "李海峰": 51117,
+    "李国良": 9101,
+    "潘华莉": 546669,
+    "唐惠慧": 651390,
+    "王进": 513865,
+    "陈传荣": 529165,
+    "谢立可": 541e3,
+    "李楚英": 668115,
+    "吴欣": 677767,
+    "王秀丽": 609966
+},
+d_tea2 = {
+    "符冠华": 91865,
+    "何书明": 80984,
+    "李红庆": 82591,
+    "李惠君": 90160,
+    "吴家英": 532002,
+    "林珏": 545723,
+    "黄春桃": 81723,
+    "陈素梅": 91398,
+    "邢益育": 85826,
+    "徐道安": 531997
+};
+window.addEvent("domready",
+function() {
+    var t = function(t, a) {
+        var e = "";
+        for (var s in a) {
+            var i = a[s],
+            l = "http://www.cerhy.com/blog/user/" + i;
+            e += '<div class="card"><a class="avatar" style="background-image:url(' + Passport.avatar(i) + ')" href="' + l + '"></a><a class="card-lbl" href="' + l + '">' + s + "</a></div>"
+        }
+        return "<h2>" + t + "</h2>" + e + '<div class="clr"></div>'
+    },
+    a = {},
+    e = null,
+    u = null,
+    s = function(t, s) {
+
+    },
+    i = function(t, i, l) {
+        var r = $("s-toc-nav").display(!i);
+        "0" == t && (t = r.getElement(".active").get("_id")),
+        e = t;
+        var c = e.split(",");
+        var n = a[t];
+        n ? $("s-toc-list").set("html", n) : contentShow(c[0],c[1]);
+    },
+    l = function(t) {
+        var a = t.target;
+        if ("span" == a.tagName.toLowerCase()) {
+            a.singleSelect();
+            var e = a.get("_s");
+            $("s-" + e).display().getSiblings().display(!1),
+            "toc" == e && i(a.get("_id"), "1" == a.get("_flat"))
+        }
+    };
+    Passport.load(),
+    function() {
+        var t = "<h3>若您遇到教师培训相关问题，可直接至各培训管理机构子平台留言。</h3>",
+        a = "",
+        e = "",
+        s = 0;
+        for (var i in d_dept2) {
+            var l = d_dept2[i],
+            r = '<li><a href="http://www.cerhy.com/blog/user/' + l + '">' + l + ": " + i + "</a>";
+            s < 14 ? a += r: e += r,
+            s++
+        }
+        t += '<div class="col2"><ul style="margin-right:2em">' + a + '</ul></div><div class="col2"><ul style="margin-right:2em">' + e + "</ul></div>",
+        $("s-contact").set("html", t)
+    } (),
+    $("s-space").set("html", t("小学特级教师", d_tea1) + t("中学特级教师", d_tea2)),
+    function() {
+        for (var t = "",
+        a = 0,
+        e = d_region.length; a < e; a++) t += "<span onclick='contentShow("+d_cate[a]+","+d_cate1[a]+")' " + (0 == a ? ' class="active"': "") + ' _s="toc" _id="' + d_cate[a]+","+d_cate1[a]+ '">' + d_region[a] + "</span>";
+        $("s-toc-nav").set("html", t)
+    } (),
+    $("y-navi").addEvent("click", l),
+    $("s-toc-nav").addEvent("click", l),
+    i(d_cate[0], !1, d_headline)
+});
+contentShow(948322,8260);
+function contentShow(columnID,username){
+  var url="${base}/blog/showContent.jspx?username="+username+"&columnID="+columnID;
+  new Request.JSON({
+      url: url,
+      data:"",
+      method:'post',
+      contentType:'application/json;charset=UTF-8',
+      onComplete: function(jsonObj) {
+          var i = "";
+          for(var j=0;j<jsonObj.length;j++){
+        	  i += "<li><span class='lt'>"+jsonObj[j].contentDate+" | </span><a href='http://www.cerhy.com/bk/"+jsonObj[j].contentId+".jhtml'>"+jsonObj[j].contentTitle+"</a>",
+              (j + 1) % 5 == 0 && (i += "<hr/>")
+          };
+          i = "<ul>" + i + "</ul>",
+          jsonObj.length > 0 && (i += '<a href="http://www.cerhy.com/blog/user/' + username + '" class="more">查看更多...</a>'),
+          $("s-toc-list").set("html", i);
+      }
+  }).send();
+}
+</script>
+
+<base target="_blank">
+</head>
+<link rel="shortcut icon" href="/${res}/images/cerhyheard.png" type="/${res}/image/x-icon" />
+<div class="x-wrap">
+	<h2 class="x-cap">海南省中小学幼儿园教师继续教育网</h2>
+</div>
+<div class="x-wrap">
+	<div id="y-banner"><img style="height:100%" src="http://edu.hainan.gov.cn/upload/2017_11_20/151119040799937.jpg"/></div>
+	<div class="x-pane">
+		<div id="y-navi" class="navi"><span class="active" _s="toc" _id="0">培训通知</span><span _s="toc" _flat="1" _id="89375,8260" onclick="contentShow(89375,8260)">培训简报</span><span _s="toc" _flat="1" _id="89389,8260" onclick="contentShow(89389,8260)">政策解读</span><span _s="contact">交流互动</span><span _s="space">名师空间</span></div>
+		<div>
+			<div id="s-toc">
+				<div id="s-toc-nav" class="navi2">
+					</div>
+					<div id="s-toc-list">
+				</div>
+			</div>
+			<div id="s-contact" style="display:none"></div>
+			<div id="s-space" style="display:none"></div>
+		</div>
+	</div>
+	<div class="x-sbr">
+		<div id="y-user"></div>
+		<a href="http://localhost:8080/cerhy/project" class="slip bg-teal"><span class="slip-xt">培训</span>我正在参加的培训<br/>研修平台入口</a>
+		<a href="http://jiaoshi.hainan.edu.cn" class="slip bg-seablue"><span class="xt">全国教师管理信息系统（海南）</span></a>
+		<a href="http://m.hnjs.org/s/credit" class="slip bg-voilet"><span class="slip-xt">教师</span>查询学分档案<br/>打印年审证书</a>
+		<a href="http://m.hnjs.org/s/tce" class="slip bg-orange"><span class="slip-xt">学分</span>海南省中小学（幼儿园）<br/>教师继续教育学分管理平台</a>
+		<a href="http://localhost:8080/cerhy/project" class="slip bg-blue"><span class="slip-xt">好师</span>海南教师网络研修社区<br/>博友圈/工作坊/备课室/修改密码</a>
+		<div style="text-align:center;"><img src="/${res}/images/qyyd.gif"/><br/>微信扫描上方二维码，订阅“琼崖园丁”。</div>
+		<!--hr/><div class="xt">相关链接</div>
+		<ul><li><a href="">海南省教育厅</a></li><li><a href="">海南省电教馆</a></li></ul-->
+	</div>
+	<div class="clr"></div>
+</div>
+<div class="x-footer"><div class="x-wrap"><span><a href="http://www.hainan.gov.cn/">海南省人民政府</a> » <a href="http://edu.hainan.gov.cn/">海南省教育厅</a>　指导单位：海南省教育厅师资管理处</span></div></div>
+</body>
+
+</html>

@@ -402,4 +402,10 @@ public interface ContentDao {
 	 * @param id
 	 */
 	public List<ContentStick> getNextStick(Integer id,Integer userId);
+
+	/**
+	 *继续教育网首页文章
+	 * @param count,userid
+	 */
+	public List<Content> getListByChannelIds(Integer count, Integer userid,Integer columnID);
 }

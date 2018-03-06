@@ -1985,4 +1985,20 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 		// "select   id,contentTitle from ContentStick    where stickUserId="+userId+" and id =41 order by id desc";
 		return find(f);
 	}
+
+	@Override
+	public List<Content> getListByChannelIds(Integer count, Integer userid,Integer columnId) {
+		Finder f = Finder.create("from Content bean");
+		f.append(" where 1=1");
+		f.append(" and bean.user.id=:userId");
+		//f.append(" and bean.columnId=:columnId");
+		f.setParam("userId", userid);
+		//f.setParam("columnId", columnId);
+		f.append(" order by  sortDate desc");
+		if (count != null) {
+			f.setMaxResults(count);
+		}
+		f.setCacheable(true);
+		return find(f);
+	}
 }

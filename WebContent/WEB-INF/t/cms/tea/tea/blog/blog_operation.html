@@ -1,0 +1,287 @@
+<style>
+.udl a:HOVER{
+text-decoration: underline;
+}
+.udl a{
+ font-size: 12px;
+}
+</style>
+<style type="text/css">
+.submit:hover {
+    box-shadow: 0 3px 4px 0 rgba(0,0,0,0.24),0 8px 15px 0 rgba(0,0,0,0.19);
+}
+/* common styling */
+.udl {font-family: arial, sans-serif; width:100px; position:relative; margin:0; font-size:11px; margin:10px 0;} 
+.udl ul li a, .menu ul li a:visited {display:block; text-decoration:none; color:#000;width:104px; height:20px; text-align:center; color:#000; border:0px solid #fff; background:#def7ff; line-height:20px; font-size:11px; overflow:hidden;}
+.udl ul {padding:0; margin:0;list-style-type: none; }
+.udl ul li ul {display: none;}
+/* specific to non IE browsers */
+.udl ul li:hover a {color:#128862; background:#def7ff;}
+.udl ul li:hover ul {display:block; position:absolute;left:0; width:105px;}
+.udl ul li:hover ul li a.hide {background:#6a3; color:#fff;}
+.udl ul li:hover ul li:hover a.hide {background:#6fc; color:#000;}
+.udl ul li:hover ul li ul {display: none;}
+.udl ul li:hover ul li a {display:block; background:#def7ff; color:#000;}
+.udl ul li:hover ul li a:hover {background:#999999; color:#000;}
+.udl ul li:hover ul li:hover ul {display:block; position:absolute; left:105px; top:0;}
+.udl ul li:hover ul li:hover ul.left {left:-105px;}
+</style>
+	   [#if user??]
+		<div style="padding-bottom: 30px;" class="udl">
+	    <ul>
+		 <li><a class="hide" href="javascript:;">博客设置</a>
+			 	<ul>
+				    <li><a href="javascript:;" title="新建栏目" onclick="createChannel2()">新建栏目</a></li>
+				    <li><a href="javascript:;" onclick="blogSeting()" title="博客信息">博客信息</a></li>
+				    <li><a style="cursor: pointer;" onclick="set();" title="页面模板">页面模板</a></li>
+				    <li><a href="javascript:;" onclick="addLinks()" title="链接管理">链接管理</a></li>
+				    <li><a href="javascript:;" onclick="addFriends()" title="好友管理">好友管理</a></li>
+				</ul>
+			</li> 
+			<li style="margin: -22px 0;margin-left: 110px;"><a class="hide" href="javascript:;" style="position:relative;top:2px;">更多</a>
+			    <ul style="margin-left: 110px;">
+				    <li><a href="javascript:;" onclick="gotoDataShow('${base}/blog/gotoDataShow.jspx?dataFlag=3')" title="粉丝">粉丝</a></li>
+				    <li><a href="javascript:;" onclick="gotoDataShow('${base}/blog/gotoDataShow.jspx?dataFlag=2')" title="关注">关注</a></li>
+				    <li><a href="javascript:;" onclick="gotoDataShow('${base}/blog/visitor.jspx')" title="访客">访客</a></li>
+				    <li><a href="javascript:;" onclick="dataStatistics()" title="访问统计">访问统计</a></li>
+				    <li><a target="_blank" href="${base}/blog/useManual.jspx" title="使用手册">使用手册</a></li>
+			    </ul>
+			</li> 
+		</ul>  
+		</div>
+	   [#else]
+	<!-- 	<div class="udl">
+	    <ul>
+			<li><a class="hide" href="javascript:;" style="position:relative;top:2px;">更多</a>
+			    <ul>
+				    <li><a href="${base}/blog/gotoDataShow.jspx?dataFlag=3&uid=${usert.id}" title="粉丝">粉丝</a></li>
+				    <li><a href="${base}/blog/gotoDataShow.jspx?dataFlag=2&uid=${usert.id}" title="关注">关注</a></li>
+				    <li><a href="${base}/blog/visitor.jspx?uid=${usert.id}" title="访客">访客</a></li>
+				    <li><a href="${base}/blog/dataStatistics.jspx?uid=${usert.id}" title="访问统计">访问统计</a></li>
+				    <li><a target="_blank" href="${base}/blog/useManual.jspx" title="使用手册">使用手册</a></li>
+			    </ul>
+			</li> 
+		</ul>  
+		</div> -->
+	   [/#if]
+[#if user??]
+<div class="udl" style="float: right;margin: -40px 0;padding-right: 58%;margin-right:10%">
+	  	<ul>
+		 <li><a style="cursor: pointer;" [#if user??]href="${base}/blog/index.jspx"[#else]href="${base}/blog/index.jspx?uid=${usert.id}"[/#if]>博客首页</a></li>
+		</ul>
+</div>
+[#else]
+<!-- <div class="udl" style="float: right;margin: -32px 0;padding-right: 79%;">
+	  	<ul>
+		 <li><a style="cursor: pointer;" [#if user??]href="${base}/blog/index.jspx"[#else]href="${base}/blog/index.jspx?uid=${usert.id}"[/#if]>博客首页</a></li>
+		</ul>
+</div> -->
+[/#if]
+
+<div class="udl" style="float: right;margin: -40px 0;width:290px;">
+
+                   <form action="${base}/blog/indexs.jspx"  id="searchForm" onkeydown="if(event.keyCode==13)return false;">
+                    [#if q??]
+                  	 <input type="text" id="queryTitle" name="queryTitle" maxLength="10"  maxlength="50"  autocomplete="off" value="${q}" style="font-size: 15px;height: 22px;border: 1px solid #def7ff;color: #000;padding: 2px 5px;width: 200px;background-color: transparent;"/>
+                  	[#else]
+                  	<input type="text" id="queryTitle" name="queryTitle" maxLength="10"  maxlength="50" autocomplete="off" style="font-size: 15px;height: 22px;border: 1px solid #def7ff;color: #000;padding: 2px 5px;width: 200px;background-color: transparent;"/>
+				    [/#if]
+        				
+        				<input class="submit" type="button" onclick="ajaxsearch('searchForm');" value="搜  索" style="float: right;background-color: #def7ff; color: #000;padding: 2px 8px;" />
+       			    </form> 
+   			    
+</div>
+<div id="statisticsDialogs" style="display:none;margin-top:-5px;">
+			基本信息:
+			<ul style="padding-left: 10px;">
+				<li  style="list-style-type: disc;" id="blogVisitNum"></li>
+				<li  style="list-style-type: disc;" id="articleCount"></li>
+				<li  style="list-style-type: disc;" id="coverCommentCount"></li>
+				<li  style="list-style-type: disc;" id="readCount"></li>
+				<li  style="list-style-type: disc;" id="commentCount"></li>
+			</ul>
+</div>
+<script type="text/javascript">
+//统计
+function dataStatistics(){
+	$("#statisticsDialogs").dialog("open");
+}
+$(document).ready(function(){ 
+	$("#statisticsDialogs").dialog({
+		autoOpen: false,
+		modal: true,
+		resizable :false,
+		stack : false,
+		draggable : true,
+		closeOnEscape : false,
+		open:function(event,ui){
+			$(".ui-dialog-titlebar-close").show();
+			$(".ui-dialog-titlebar").css("background","#ffffff");  
+			$(".ui-widget-header").css("border","0");  
+		},
+		width: 300,
+		height: 230,
+		position: ["center"],
+		close: function(event, ui) {
+		}
+	});
+});
+$(document).ready(function(){ 
+	$.ajax({
+		type: 'POST',
+		url : '${base}/blog/dataStatisticsT.jspx',
+		dataType : 'json',
+		success :function(data){
+			$("#blogVisitNum").html("访问人次："+data.blogVisitNum);
+			$("#articleCount").html("发表文章数："+data.articleCount);
+			$("#coverCommentCount").html("发表评论数："+data.coverCommentCount);
+			$("#readCount").html("文章阅读数："+data.readCount);
+			$("#commentCount").html("文章被评数："+data.commentCount);
+		}
+	});
+});
+</script>
+<script>
+function ajaxsearch(formId){
+	if(typeof($("#no3").val())!='undefined'){
+		 delPos();
+	};
+	 var queryTitle = parent.document.getElementById("queryTitle").value;
+	 var pageNo=1;
+	 $.ajax({
+		    type: 'POST',
+		    url : '${base}/blog/indexs.jspx',
+		    dataType:"html",
+		    data : {'queryTitle' : queryTitle,'pageNo':pageNo},
+		    async: false,
+		    success : function(datas){
+		    	var wzid=document.getElementById('wzId');
+       		 if(wzid!=null){
+       			 document.getElementById('wzId').innerHTML="";
+       		 }
+       		 var maindiv=document.getElementById('maindiv');
+       		 if(maindiv!=null){
+       			 document.getElementById('maindiv').innerHTML="";
+       		 }
+		        $(".wrap-right").append(datas);		
+		  		 }
+		});
+}
+</script>
+<script type="text/javascript">
+function blogSeting(){
+	if(typeof($("#no3").val())!='undefined'){
+		 delPos();
+	};
+	$.ajax({
+        type: 'POST',
+        url : '${base}/blog/tzsetting.jspx',
+        dataType:"html",
+        async: true,
+        success : function(datas){
+        	if(datas=="login"){
+       		 location.href="${base}/login.jspx";
+       	 	}else{
+				$("#zd_u-hilite-cap").remove();
+				$("#zdId").remove();
+				$("#u-hilite-cap").remove();
+				var wzid=document.getElementById('wzId');
+	       		 if(wzid!=null){
+	       			 document.getElementById('wzId').innerHTML="";
+	       		 }
+	       		 var maindiv=document.getElementById('maindiv');
+	       		 if(maindiv!=null){
+	       			 document.getElementById('maindiv').innerHTML="";
+	       		 }
+	            $(".wrap-right").append(datas);
+	            if(window._bd_share_main){
+	         	   window._bd_share_main.init();
+	         	}
+       	 		
+       	 	}
+	   	}
+	});
+}
+
+function addLinks(){
+	if(typeof($("#no3").val())!='undefined'){
+		 delPos();
+	};
+	$.ajax({
+        type: 'POST',
+        url : '${base}/blog/link_list.jspx',
+        dataType:"html",
+        async: true,
+        success : function(datas){
+        	if(datas=="login"){
+       		 location.href="${base}/login.jspx";
+       	 	}else{
+				$("#zd_u-hilite-cap").remove();
+				$("#zdId").remove();
+				$("#u-hilite-cap").remove();
+				var wzid=document.getElementById('wzId');
+       		 if(wzid!=null){
+       			 document.getElementById('wzId').innerHTML="";
+       		 }
+       		 var maindiv=document.getElementById('maindiv');
+       		 if(maindiv!=null){
+       			 document.getElementById('maindiv').innerHTML="";
+       		 };
+	            $(".wrap-right").append(datas);
+	            if(window._bd_share_main){
+	         	   window._bd_share_main.init();
+	         	}
+        	}
+	   	}
+	});
+}
+function addFriends(){
+	if(typeof($("#no3").val())!='undefined'){
+		 delPos();
+	};
+	$.ajax({
+        type: 'POST',
+        url : '${base}/blog/friends.jspx',
+        dataType:"html",
+        async: true,
+        success : function(datas){
+        	if(datas=="login"){
+          		 location.href="${base}/login.jspx";
+          	 }else{
+				$("#zd_u-hilite-cap").remove();
+				$("#zdId").remove();
+				$("#u-hilite-cap").remove();
+				var wzid=document.getElementById('wzId');
+       		 if(wzid!=null){
+       			 document.getElementById('wzId').innerHTML="";
+       		 }
+       		 var maindiv=document.getElementById('maindiv');
+       		 if(maindiv!=null){
+       			 document.getElementById('maindiv').innerHTML="";
+       		 };
+	            $(".wrap-right").append(datas);
+	            if(window._bd_share_main){
+	         	   window._bd_share_main.init();
+	         	}
+          	 }
+	   	}
+	});
+	
+}
+
+
+function delPos(){
+	$.ajax({
+         url: "${base}/blog/searchPostil.jspx?contentId="+$("#no3").val(),
+         type: "POST",
+         dataType:"json",
+         data: "",
+         async: false,
+         success: function (data) {
+ 				for(var i=0;i<data.length;i++){
+					$("div#"+data[i].postilDivId).remove();
+ 				}
+         }
+     });
+}
+</script>

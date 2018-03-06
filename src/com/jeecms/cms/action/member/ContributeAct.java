@@ -41,11 +41,14 @@ import com.jeecms.cms.entity.assist.CmsJoinGroup;
 import com.jeecms.cms.entity.assist.CmsPostilInfo;
 import com.jeecms.cms.entity.main.Channel;
 import com.jeecms.cms.entity.main.Columns;
+import com.jeecms.cms.entity.main.Content;
 import com.jeecms.cms.entity.main.ContentStick;
 import com.jeecms.cms.entity.main.Focus;
+import com.jeecms.cms.entity.main.InterfaceParam;
 import com.jeecms.cms.manager.assist.CmsFileMng;
 import com.jeecms.cms.manager.main.ContentMng;
 import com.jeecms.cms.manager.main.impl.ColumnsMng;
+import com.jeecms.common.hibernate4.Finder;
 import com.jeecms.common.web.ResponseUtils;
 import com.jeecms.core.entity.CmsSite;
 import com.jeecms.core.entity.CmsUser;
@@ -56,6 +59,7 @@ import com.jeecms.core.web.WebErrors;
 import com.jeecms.core.web.util.CmsUtils;
 import com.jeecms.core.web.util.FrontUtils;
 
+import freemarker.core.Environment;
 import freemarker.template.TemplateException;
 
 /**
@@ -2339,4 +2343,95 @@ public class ContributeAct extends AbstractContentMemberAct {
 		return object.toString();
 	}
 	
+	@RequestMapping(value = "/blog/showContent.jspx")
+	public void showContent(String columnID,String username,InterfaceParam param,HttpServletRequest request,HttpServletResponse response) throws JSONException {
+		JSONObject o;
+		JSONArray arr = new JSONArray();
+		CmsUser uname=cmsUserMng.findByUsername(username);
+		if(null!=uname){
+			param.setUserid(uname.getId().toString());
+			if(null!=request.getParameter("comm")&&request.getParameter("comm").equals("0")){
+				param.setCount("1");
+				param.setColumnID(columnID);
+			}else if(null!=request.getParameter("comm")&&request.getParameter("comm").equals("1")){
+				param.setCount("20");
+				param.setColumnID(columnID);
+			}else{
+				param.setCount("15");
+				param.setColumnID(columnID);
+			}
+			try {
+				List<Content> list = getList(param, null);
+				SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+				for (Content t : list) {
+					o = new JSONObject();
+					o.put("contentDate", sdf.format(t.getReleaseDate()));
+					o.put("contentTitle", t.getContentExt().getTitle());
+					o.put("contentId", t.getId());
+					o.put("contentDetial", t.getContentTxt().getTxt());
+					if(null!=t.getContentExt().getAuthor()){
+						o.put("contentAuthor", t.getContentExt().getAuthor());
+					}else{
+						o.put("contentAuthor", t.getUser().getUsername());
+					}
+					arr.put(o);
+				}
+			} catch (TemplateException e) {
+				e.printStackTrace();
+			}
+		}
+		ResponseUtils.renderJson(response, arr.toString());
+	}
+	@SuppressWarnings("unchecked")
+	protected List<Content> getList(InterfaceParam params,Environment env) throws TemplateException {
+		List<Content> list=(List<Content>)getData(params, env);
+		return list;
+	}
+
+	protected Object getData(InterfaceParam params, Environment env)throws TemplateException {
+		Integer count; 
+		if(params.getCount()!=null){
+		    count = Integer.valueOf(params.getCount());
+		}else{
+			count=null;
+		}
+		Integer userid;
+		if(params.getUserid()!=null){
+			userid=Integer.valueOf(params.getUserid());
+		}else{
+			userid=null;
+		}
+		Integer columnID;
+		if(params.getColumnID()!=null){
+			columnID=Integer.valueOf(params.getColumnID());
+		}else{
+			columnID=null;
+		}
+		return contentMng.getListByChannelIds(count,userid,columnID);
+	}
+	
+	@RequestMapping(value = "/blog/checkLogin.jspx")
+	public void checkLogin(HttpServletRequest request,HttpServletResponse response) throws JSONException {
+		JSONObject o;
+		JSONArray arr = new JSONArray();
+		CmsUser user = CmsUtils.getUser(request);
+		o = new JSONObject();
+		if(null!=user){
+			o.put("loginState", 1);
+			if(null!=user.getUserExt().getUserImg()){
+				o.put("userImg",user.getUserExt().getUserImg());
+			}else{
+				o.put("userImg","http://www.cerhy.com/r/cms/www/default/images/userImg-large.png");
+			}
+			if(null!=user.getUserExt().getRealname()){
+				o.put("userName",user.getUserExt().getRealname());
+			}else{
+				o.put("userName",user.getUsername());
+			}
+		}else{
+			o.put("loginState", 0);
+		}
+		arr.put(o);
+		ResponseUtils.renderJson(response, arr.toString());
+	}
 }

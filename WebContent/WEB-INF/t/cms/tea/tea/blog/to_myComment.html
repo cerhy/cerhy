@@ -1,0 +1,159 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<title>cerhy-好研网</title>
+<link href="${resSys}/front.css" rel="stylesheet" type="text/css"/>
+<script src="${resSys}/jquery.js" type="text/javascript"></script>
+<script src="${resSys}/front.js" type="text/javascript"></script>
+<link id="hello" type="text/css" rel="stylesheet" href="/${res}/css/custom.css" />
+<link  type="text/css" rel="stylesheet" href="/${res}/css/hyindex.css" />
+<link  type="text/css" rel="stylesheet" href="/${res}/css/SimpleTree.css" />
+<script src="/${res}/js/SimpleTree.js"></script>
+<style>
+.st_tree ul .change a:hover{color:red;}
+.st_tree ul li a:hover{color:blue;}
+.st_tree ul .change :hover{background-color:#e7e7e7 }
+::-webkit-scrollbar{width:0px}
+.clear{clear:both}
+</style>
+<script type="text/javascript">
+$(function(){
+	$(".st_tree").SimpleTree({
+		click:function(a){
+			if(!$(a).attr("hasChild"))
+				alert($(a).attr("ref"));
+		}
+	});
+});
+</script>
+<script type="text/javascript">
+$(function(){
+$('.user-menu-links li').click(function(){
+    $(this).toggleClass('on');
+});
+});
+</script>
+[#include "head.html"/]
+
+<div class="blog-con">
+  <div class="blogHead">
+	  <div style="font-size:30px;margin:30px auto 20px;"><a href="${base}/blog/index.jspx">[#if user.blogTitle??]${user.blogTitle}[#else]标题[/#if]</a></div>
+	  <div style="font-size:15px;margin:5px auto 15px;">[#if user.blogTitle2??]${user.blogTitle2}[#else]副标题[/#if]</div>
+  </div>
+      
+        <div class="mb20 clearfix">
+            <div class="wrap-left">
+                <div class="user-center-left">
+                    <div class="user-setting">
+                        <div class="pic-dt">
+                        [#if user.userImg??]<img src="${user.userImg}" width="120" height="120" alt="">
+                        [#else]
+                        <img src="/${res}/images/userImg-large.png" width="120" height="120" alt="">[/#if]
+                        </div>
+                        <div class="user-name-dt"><a href="${base}/blog/index.jspx">${user.username}</a></div>
+                        <a href="${base}/logout.jspx" class="user-oparetion-btn">退出</a>
+                    </div>
+                    <div class="user-menu-links">
+                    <ul>
+				        <li><a href="${base}/blog/contribute_add.jspx">发表博客</a></li>
+				          <li style="cursor: pointer;"><a><em></em>博客栏目</a>
+                             <ul>
+                              [#list columnsList as c]
+		                       <li><a href="${base}/blog/contribute_list.jspx?columnId=${c.columnId}" ><em></em>${c.columnName}</a></li>
+		                      [/#list]
+                             </ul>
+                          </li>
+			              <li><a href="${base}/blog/collection_list.jspx">转载</a></li>
+				          <li style="cursor: pointer;"><a><em></em>设置</a>
+                              <ul>
+                              <li><a  href="${base}/blog/columns_list.jspx" ><em></em>新建栏目</a></li>
+                              <li><a  href="${base}/blog/tzsetting.jspx" ><em></em>博客信息</a></li>
+                              <li><a style="cursor: pointer;" onclick="set();" ><em></em>页面模板</a></li>
+                              <li><a  href="${base}/blog/link_list.jspx" ><em></em>链接管理</a></li>
+                              <li><a  href="${base}/blog/friends.jspx" ><em></em>好友管理</a></li>
+                              </ul>
+                         </li>
+                         
+                         <li>
+                                <a href="javascript:;"><em></em>好友</a>
+	                                <ul>
+	                                [#if friendsList??]
+					         		[#list friendsList as map]
+						         		[#list map?keys as k]
+						         			[#if k!='']
+						         	[#if k?split("~")[2]=='null'] 
+					         			<li style="height: 90px;">
+						         			<div class="users-a-link-wrap clearfix">
+					                            <a target="_blank" href="${base}/blog/find_all_url_friend.jspx?userIds=${k?split("~")[1]}" class="users-a-link" style="padding-right: 40px;">
+					                                <img src="/${res}/images/userImg.png" alt="" width="47" height="47">
+					                                <span>${k?split("~")[0]}</span>
+					                            </a>
+					                        </div>
+					         			</li>
+			         			    [#else]
+			         			    	<li style="height: 90px;">
+						         			<div class="users-a-link-wrap clearfix">
+					                            <a target="_blank" href="${base}/blog/find_all_url_friend.jspx?userIds=${k?split("~")[1]}" class="users-a-link" style="padding-right: 40px;">
+					                                <img src="${k?split("~")[2]}" alt="" width="47" height="47">
+					                                <span>${k?split("~")[0]}</span>
+					                            </a>
+					                        </div>
+					         			</li>
+							         [/#if]
+							         [/#if]
+							         	[/#list]
+						         	[/#list]
+						         	[/#if]
+	                              </ul>
+                         </li>
+				         <div class="st_tree">
+				        	 <ul  show="true">
+				        	 <li><a href="javascript:;" style="text-decoration:none;"><em></em>链接</a></li>
+				        	 <ul>
+				         		[#if urlList??]
+						         [#list urlList as map]
+						          	[#list map?keys as k]
+						          		 [#if k=='']
+								            [#list map[k] as v]
+								            	[#if v?index_of("=")!=-1]
+								         			<li  class="change"><a style="font-size: 13px;" target="_blank" href="${v?split("=")[1]}">${v?split("=")[0]}</a></li>
+								         		[/#if]
+								         		[#if v?index_of("|")!=-1]
+								         			<li  class="change"><a style="font-size: 13px;" target="_blank" href="${v?split("|")[1]}">${v?split("|")[0]}</a></li>
+								         		[/#if]
+								            [/#list]
+								         [#else]
+								          <li><a href="javascript:;" style="text-decoration:none;"><em></em>${k}</a></li>
+								          <ul>
+								            [#list map[k] as v]
+								            	[#if v?index_of("http:")!=-1]
+									            	[#if v?index_of("=")!=-1]
+									         			<li class="change"><a style="font-size: 13px;" target="_blank" href="${v?split("=")[1]}">${v?split("=")[0]}</a></li>
+									         		[/#if]
+									         		[#if v?index_of("|")!=-1]
+									         			<li class="change"><a style="font-size: 13px;" target="_blank" href="${v?split("|")[1]}">${v?split("|")[0]}</a></li>
+									         		[/#if]
+								            	[/#if]
+								            [/#list]
+								           </ul>	
+								          [/#if]
+						          	[/#list]
+						         [/#list]
+						         [/#if]
+						         </ul>
+						         </ul>
+       				</ul>
+                    </div>
+                </div>
+            </div>
+            <div class="wrap-right">
+	         	22222
+            </div>
+        </div>
+
+  </div>
+  </div>
+  
+[#include "model.html"/]
+[#include "../include/footer.html"/]
+</body>
+</html>

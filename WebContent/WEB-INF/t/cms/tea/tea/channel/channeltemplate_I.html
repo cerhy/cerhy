@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+<title>好研网-${channel.title}</title>
+[#include "../hyinclude/header.html"/]
+<script src="${resSys}/jquery.js" type="text/javascript"></script>
+<script src="${resSys}/front.js" type="text/javascript"></script>
+<script type="text/javascript" src="/${res}/js/jquery.SuperSlide.js"></script>
+<link type="text/css" rel="stylesheet" href="/${res}/css/hyindex.css" />
+<link type="text/css" rel="stylesheet" href="/${res}/css/custom.css" />
+<script src="${resSys}/jqueryUI/jquery-ui.js" type="text/javascript"></script>
+<link href="${resSys}/jqueryUI/jquery.ui.css" rel="stylesheet" type="text/css" />
+<style>
+ .actives{color: red;}
+.local-icon {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    line-height: 14px;
+    color: #999999; }
+.local-icon:before {
+    content: "\e618"; }
+.local-icon:hover:before {
+    content: "\f618"; }
+body{
+ overflow-x:hidden;
+}
+</style>
+<div class="local">
+    <div class="wrap">
+        <span class="local-icon icon-font"></span>
+        <a href="${channel.url}">${channel.title}</a>
+    </div>
+</div>
+<div class="container">
+    <div class="wrap">
+        <div class="xueke clearfix bd-padding">
+            <div class="wrap-left">
+                <ul class="fst-lv-ul">
+                	 [@cms_channel_list parentId=channel.id orderBy='4']
+				        [#list tag_list as b]
+				        <li  [#if b_index<1]class="active"[/#if]>
+				        <a href="javascript:;">${b.name}<em class="arrow-down"></em></a>
+				        <div class="sub-div">
+                            <ul class="clearfix">
+		                	 [@cms_channel_list parentId=b.id orderBy='4']
+						        [#list tag_list as c]
+		                                <li><a [#if c_index=0&&b_index=0]style="color:red;"[/#if] href="${c.url}">${c.name}</a></li>
+						        [/#list]
+						      [/@cms_channel_list]
+                            </ul>
+                        </div>
+				        </li>
+				        [/#list]
+				      [/@cms_channel_list]
+                </ul>
+           </div>
+           [#if channel.id=98]
+           <div class="wrap-right" id="shd" style="display: none;">
+           <span><img style="margin-bottom: -5px;" width="20px;" height="20px;" src="/${res}/usemanual/0309.jpg"></span>
+				<a id="unames" href="${base}/blog/find_all_url_friend.jspx?userIds=" target="_blank" style="cursor: pointer;font-size: 1.2em;"></a>
+           </div>
+           [/#if]
+           <div class="wrap-right">
+           		<div class="article-list-wrap">
+					[@cms_channel_list parentId=channel.id orderBy='4']
+					  [#list tag_list as b]
+					  [#if b_index=0]
+						      [@cms_channel_list parentId=b.id orderBy='4']
+						      [#list tag_list as c]
+						      [#if c_index=0]
+										  <ul class="report-list sm mb20">
+									        [@cms_content_page orderBy='4'  recommend='2' channelId=c.id channelOption='1' count='10']
+										          [#list tag_pagination.list as a]
+										          <li>
+					                           		 <a class="hasImg clearfix" href="${a.url}" target="_blank">
+													      <div class="item clearfix" [#if a_index<1]style="border-top:none;"[/#if]>
+													          [#if a.typeImg??]
+													          <img width="85" height="85" src="${a.typeImg!}" alt="">
+													          [/#if]
+													          <div class="report-text">
+													            <h3 title="${a.title}">${a.title}</h3>
+													            <p>[#if a.typeImg??][@text_cut s=a.description len=30 append='...'/][#else][@text_cut s=a.description len=40 append='...'/][/#if]</p>
+													         [#if c.id=305||c.id=316||c.id=323]
+												          		<div class="fl"><span class="ch">美术<em>${a.date?string("yyyy-MM-dd")}&nbsp;&nbsp;&nbsp;作者:&nbsp;${a.author!a.user.username}&nbsp;&nbsp;&nbsp;阅读:&nbsp;${a.contentCount.views!}&nbsp;&nbsp;&nbsp;评论:&nbsp;${a.contentCount.comments!}</em></span></div>
+												         	[#elseif c.id=304||c.id=315||c.id=322]
+												          		<div class="fl"><span class="ch">音乐<em>${a.date?string("yyyy-MM-dd")}&nbsp;&nbsp;&nbsp;作者:&nbsp;${a.author!a.user.username}&nbsp;&nbsp;&nbsp;阅读:&nbsp;${a.contentCount.views!}&nbsp;&nbsp;&nbsp;评论:&nbsp;${a.contentCount.comments!}</em></span></div>
+												         	[#elseif c.id=303||c.id=314||c.id=321]
+												          		<div class="fl"><span class="ch">体育<em>${a.date?string("yyyy-MM-dd")}&nbsp;&nbsp;&nbsp;作者:&nbsp;${a.author!a.user.username}&nbsp;&nbsp;&nbsp;阅读:&nbsp;${a.contentCount.views!}&nbsp;&nbsp;&nbsp;评论:&nbsp;${a.contentCount.comments!}</em></span></div>
+												         	[#elseif c.id=416||c.id=417||c.id=418]
+												          		<div class="fl"><span class="ch">综合实践<em>${a.date?string("yyyy-MM-dd")}&nbsp;&nbsp;&nbsp;作者:&nbsp;${a.author!a.user.username}&nbsp;&nbsp;&nbsp;阅读:&nbsp;${a.contentCount.views!}&nbsp;&nbsp;&nbsp;评论:&nbsp;${a.contentCount.comments!}</em></span></div>
+												         	[#elseif c.id=300||c.id=311]
+												          		<div class="fl"><span class="ch">地理<em>${a.date?string("yyyy-MM-dd")}&nbsp;&nbsp;&nbsp;作者:&nbsp;${a.author!a.user.username}&nbsp;&nbsp;&nbsp;阅读:&nbsp;${a.contentCount.views!}&nbsp;&nbsp;&nbsp;评论:&nbsp;${a.contentCount.comments!}</em></span></div>
+												         	[#elseif c.id=299||c.id=310]
+												          		<div class="fl"><span class="ch">历史<em>${a.date?string("yyyy-MM-dd")}&nbsp;&nbsp;&nbsp;作者:&nbsp;${a.author!a.user.username}&nbsp;&nbsp;&nbsp;阅读:&nbsp;${a.contentCount.views!}&nbsp;&nbsp;&nbsp;评论:&nbsp;${a.contentCount.comments!}</em></span></div>
+												         	[#elseif c.id=312||c.id=319]
+												          		<div class="fl"><span class="ch">信息技术<em>${a.date?string("yyyy-MM-dd")}&nbsp;&nbsp;&nbsp;作者:&nbsp;${a.author!a.user.username}&nbsp;&nbsp;&nbsp;阅读:&nbsp;${a.contentCount.views!}&nbsp;&nbsp;&nbsp;评论:&nbsp;${a.contentCount.comments!}</em></span></div>
+												         	[#elseif c.id=309||c.id=317]
+												          		<div class="fl"><span class="ch">政治<em>${a.date?string("yyyy-MM-dd")}&nbsp;&nbsp;&nbsp;作者:&nbsp;${a.author!a.user.username}&nbsp;&nbsp;&nbsp;阅读:&nbsp;${a.contentCount.views!}&nbsp;&nbsp;&nbsp;评论:&nbsp;${a.contentCount.comments!}</em></span></div>
+												         	[#elseif c.id=296||c.id=307]
+												          		<div class="fl"><span class="ch">化学<em>${a.date?string("yyyy-MM-dd")}&nbsp;&nbsp;&nbsp;作者:&nbsp;${a.author!a.user.username}&nbsp;&nbsp;&nbsp;阅读:&nbsp;${a.contentCount.views!}&nbsp;&nbsp;&nbsp;评论:&nbsp;${a.contentCount.comments!}</em></span></div>
+												         	[#elseif c.id=295||c.id=306]
+												          		<div class="fl"><span class="ch">物理<em>${a.date?string("yyyy-MM-dd")}&nbsp;&nbsp;&nbsp;作者:&nbsp;${a.author!a.user.username}&nbsp;&nbsp;&nbsp;阅读:&nbsp;${a.contentCount.views!}&nbsp;&nbsp;&nbsp;评论:&nbsp;${a.contentCount.comments!}</em></span></div>
+												         	[#elseif c.id=297||c.id=308]
+												          		<div class="fl"><span class="ch">生物<em>${a.date?string("yyyy-MM-dd")}&nbsp;&nbsp;&nbsp;作者:&nbsp;${a.author!a.user.username}&nbsp;&nbsp;&nbsp;阅读:&nbsp;${a.contentCount.views!}&nbsp;&nbsp;&nbsp;评论:&nbsp;${a.contentCount.comments!}</em></span></div>
+												         	[#elseif c.id=140||c.id=142]
+												          		<div class="fl"><span class="ch">语文<em>${a.date?string("yyyy-MM-dd")}&nbsp;&nbsp;&nbsp;作者:&nbsp;${a.author!a.user.username}&nbsp;&nbsp;&nbsp;阅读:&nbsp;${a.contentCount.views!}&nbsp;&nbsp;&nbsp;评论:&nbsp;${a.contentCount.comments!}</em></span></div>
+												         	[#elseif c.id=420||c.id=421||c.id=422]
+												          		<div class="fl"><span class="ch">心理健康<em>${a.date?string("yyyy-MM-dd")}&nbsp;&nbsp;&nbsp;作者:&nbsp;${a.author!a.user.username}&nbsp;&nbsp;&nbsp;阅读:&nbsp;${a.contentCount.views!}&nbsp;&nbsp;&nbsp;评论:&nbsp;${a.contentCount.comments!}</em></span></div>
+												         	[#elseif c.id=208||c.id=210||c.id=378||c.id=379||c.id=380||c.id=381||c.id=382||c.id=383||c.id=180||c.id=196||c.id=197||c.id=384||c.id=385||c.id=386||c.id=387]
+													          	<div class="fl"><span class="ch">${a.date?string("yyyy")}年<em>${a.date?string("yyyy-MM-dd")}&nbsp;&nbsp;&nbsp;作者:&nbsp;${a.author!a.user.username}&nbsp;&nbsp;&nbsp;阅读:&nbsp;${a.contentCount.views!}&nbsp;&nbsp;&nbsp;评论:&nbsp;${a.contentCount.comments!}</em></span></div>
+												         	[#else]
+													          	<div class="fl"><span class="ch">${a.ctgName}<em>${a.date?string("yyyy-MM-dd")}&nbsp;&nbsp;&nbsp;作者:&nbsp;${a.author!a.user.username}&nbsp;&nbsp;&nbsp;阅读:&nbsp;${a.contentCount.views!}&nbsp;&nbsp;&nbsp;评论:&nbsp;${a.contentCount.comments!}</em></span></div>
+												         	[/#if]
+													          [#if a_index<1]
+													          [#if c.id=305||c.id=316||c.id=323]
+												          		<input style="display: none;" id="bkNames" value="高中、初中、小学美术">
+												         	[#elseif c.id=304||c.id=315||c.id=322]
+												          		<input style="display: none;" id="bkNames" value="高中、初中、小学音乐">
+												         	[#elseif c.id=303||c.id=314||c.id=321]
+												          		<input style="display: none;" id="bkNames" value="高中、初中、小学体育">
+												         	[#elseif c.id=416||c.id=417||c.id=418]
+												          		<input style="display: none;" id="bkNames" value="高中、初中、小学综合实践">
+												         	[#elseif c.id=300||c.id=311]
+												          		<input style="display: none;" id="bkNames" value="高中、初中地理">
+												         	[#elseif c.id=299||c.id=310]
+												          		<input style="display: none;" id="bkNames" value="高中、初中历史">
+												         	[#elseif c.id=312||c.id=319]
+												          		<input style="display: none;" id="bkNames" value="初中、小学信息技术">
+												         	[#elseif c.id=309||c.id=317]
+												          		<input style="display: none;" id="bkNames" value="初中、小学政治">
+												         	[#elseif c.id=296||c.id=307]
+												          		<input style="display: none;" id="bkNames" value="高中、初中化学">
+												         	[#elseif c.id=295||c.id=306]
+												          		<input style="display: none;" id="bkNames" value="高中、初中物理">
+												         	[#elseif c.id=297||c.id=308]
+												          		<input style="display: none;" id="bkNames" value="高中、初中生物">
+												         	[#elseif c.id=140||c.id=142]
+												          		<input style="display: none;" id="bkNames" value="高中、初中语文">
+												         	[#elseif c.id=420||c.id=421||c.id=422]
+												          		<input style="display: none;" id="bkNames" value="高中、初中、初中心理健康">
+												         	[#else]
+													          	<input style="display: none;" id="bkNames" value="${a.ctgName}">
+												         	[/#if]
+													          <input style="display: none;" id="bkIds" value="${a.user.id}">
+													          [/#if]
+													          </div>
+													          <em class="arrowBtn"></em>
+													      </div>
+					                           			 </a>
+				                        			</li>
+										          [/#list]
+										          [#if tag_pagination.list?size>0]
+										          	[#include "../include/page.html"/]
+										          [/#if]
+									        [/@cms_content_page]
+									        </ul>
+										 </ul>
+						     [/#if]
+						      [/#list]
+						  [/@cms_channel_list]
+						   [/#if]
+				      [/#list]
+				  [/@cms_channel_list]
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+	$(function() {
+		$("#commentDialog").dialog({
+			autoOpen: false,
+			modal: true,
+			width: 500,
+			height: 600,
+			position: ["center",20],
+			buttons: {
+				"关闭": function() {
+					$(this).dialog("close");
+				}
+			},
+			close: function(event, ui) {
+			}
+		});
+	    [#if !parentId??]
+	     $(".comments-hf").bind("click", function(){
+	                  $(this).toggleClass("reply-on");
+			  $(this).parent().siblings(".reply").animate({height:'toggle'},10);
+	      });
+	    [#else]
+	      $(".comments-hf").unbind();
+	      $(".comments-hf").bind("click", function(){
+	                  $(this).toggleClass("reply-on");
+			  $(this).parent().siblings(".reply").animate({height:'toggle'},10);
+	      });
+	    [/#if]
+	});
+</script>
+<script defer type="text/javascript">
+window.onload=function(){
+	var bkNames=$("#bkNames").val();
+	var ids=$("#bkIds").val();
+	if(typeof(bkNames)!='undefined'){
+		$("#unames").html(bkNames+"博客中心");
+	}
+	if(typeof(ids)!='undefined'){
+		$('#unames').attr('href','${base}/blog/find_all_url_friend.jspx?userIds='+ids);
+		$("#shd").show();
+	}
+
+}
+
+
+</script>
+[#include "../include/footer.html"/]
+<script src="/${res}/js/main.js"></script>
+</body>
+</html>

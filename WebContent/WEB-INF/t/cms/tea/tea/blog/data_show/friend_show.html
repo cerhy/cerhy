@@ -1,0 +1,122 @@
+ <style>
+ .jump {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 3px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+    margin: 4px 2px;
+    cursor: pointer;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+}
+
+.jump:hover {
+    box-shadow: 0 3px 4px 0 rgba(0,0,0,0.24),0 8px 15px 0 rgba(0,0,0,0.19);
+}
+ 
+</style>
+   <span style="font-size:16px;">好友</span><span> [#if paginations??](${paginations.totalCount} )[/#if]</span>
+      <div class="link-content" style="width: 700px;">
+         <form id="tableForm" action="${base}/blog/gotoDataShow.jspx?dataFlag=1" method="post">
+			 [#if paginations??]
+			   <div class="users-a-link-wrap clearfix" style="margin-top:40px;">
+				   [#list paginations.list as user]
+	                  <div >
+		                <a target="_blank" href="${base}/blog/find_all_url_friend.jspx?userIds=${user.id}" class="users-a-link" style="margin-bottom: 30px;margin-left: 10px;margin-right: 10px;line-height: 25px;">
+                        	[#if user.userImg??]
+                        	<img src="${user.userImg!}" onerror="javascript:this.src='/${res}/images/userImg-large.png' " width="47" height="47" alt="[#if user.nicknames??]${user.nicknames}[#else]${user.username}[/#if]">
+	                        [#else]
+	                        <img src="/${res}/images/userImg-large.png" width="47" height="47" title="[#if user.nicknames??]${user.nicknames}[#else]${user.username}[/#if]">
+	                        [/#if]
+                            <span style="width: 60px;" title="[#if user.nicknames??]${user.nicknames}[#else]${user.username}[/#if]">[#if user.nicknames??][@text_cut s=user.nicknames len=5 append='...'/][#else]${user.username}[/#if]</span>
+                            </a>
+	                  </div>
+				   [/#list]
+              </div>
+         <input type="hidden" name="pageNo"/>
+         <input style="display: none;" id="checkPageInfo" name="checkPageInfo" value="${checkPageInfo}"/>
+         [#if usert??]
+	         <input style="display: none;" id="ut" name="ut" value="${usert.id}"/>
+         [/#if]
+		 <table  style="margin:20px 0 0 40px;border:0px" ><tbody><tr><td style="border:0px; ">
+		    共 ${paginations.totalCount} 条&nbsp; 每页 ${paginations.pageSize} 条&nbsp;
+            [#if paginations.firstPage]
+                <a href="javascript:void(0);" style="cursor: default;">首页</a>
+                <a href="javascript:void(0);" style="cursor: default;">上一页</a>
+                [#else]
+                 <a href="javascript:void(0);" style="cursor: pointer;"  onclick="_gotoPage('1');" >首页</a>
+               	 <a href="javascript:void(0);" style="cursor: pointer;" onclick="_gotoPage('${paginations.prePage}');" >上一页</a>
+                [/#if]
+                [#if paginations.lastPage]
+                <a href="javascript:void(0);" style="cursor: default;">下一页</a>
+                <a href="javascript:void(0);" style="cursor: default;">尾页</a>&nbsp;
+                [#else]
+                <a href="javascript:void(0);" style="cursor: pointer;" onclick="_gotoPage('${paginations.nextPage}');" >下一页</a>
+                 <a href="javascript:void(0);" style="cursor: pointer;" onclick="_gotoPage('${paginations.totalPage}');" >尾页</a>&nbsp;
+                [/#if]
+                                    当前 ${paginations.pageNo}/${paginations.totalPage} 页 &nbsp;转到第<input type="text" id="_goPs" onfocus="this.select();" onkeypress="if(event.keyCode==13){$('#_goPage').click();return false;}" class="inp1"/>页
+			 <input style="cursor: pointer;" id="_goPage" type="button" value="转" class="jump" onclick="_gotoPage($('#_goPs').val());"[#if paginations.totalPage==1] disabled="disabled"[/#if] />
+            </td>
+            </tr>
+            </tbody>
+            </table>
+	          <script type="text/javascript">
+	            function _gotoPage(pageNo) {
+	                try{
+	                    //var tableForm = document.getElementById("tableForm");
+	                    $("input[name=pageNo]").val(pageNo);
+	                    if($("#checkPageInfo").val()==0){
+	                    	$.ajax({
+						           type: 'POST',
+						           url : '${base}/blog/gotoDataShow.jspx?dataFlag=1',
+						           dataType:"html",
+						           data : {'pageNo':pageNo},
+						           async: true,
+						           success : function(datas){
+						        	   var wzid=document.getElementById('wzId');
+					            		 if(wzid!=null){
+					            			 document.getElementById('wzId').innerHTML="";
+					            		 }
+					            		 var maindiv=document.getElementById('maindiv');
+					            		 if(maindiv!=null){
+					            			 document.getElementById('maindiv').innerHTML="";
+					            		 }
+						            	$(".wrap-right").append(datas);		
+						  	   		 }
+						 	});
+	                    	//tableForm.action="${base}/blog/gotoDataShow.jspx?dataFlag=1";
+	                    }else{
+	                    	$.ajax({
+						           type: 'POST',
+						           url : '${base}/blog/gotoDataShowFriend.jspx?dataFlag=1&userId='+$("#ut").val(),
+						           dataType:"html",
+						           data : {'pageNo':pageNo},
+						           async: true,
+						           success : function(datas){
+						        	   var wzid=document.getElementById('wzId');
+					            		 if(wzid!=null){
+					            			 document.getElementById('wzId').innerHTML="";
+					            		 }
+					            		 var maindiv=document.getElementById('maindiv');
+					            		 if(maindiv!=null){
+					            			 document.getElementById('maindiv').innerHTML="";
+					            		 }
+						            	$(".wrap-right").append(datas);		
+						  	   		 }
+						 	});
+	                    	//tableForm.action="${base}/blog/gotoDataShowFriend.jspx?dataFlag=1&userId="+$("#ut").val(); 
+	                    }
+	                    //tableForm.onsubmit=null;
+	                    //tableForm.submit();
+	                } catch(e) {
+	                    alert('_gotoPage(pageNo)方法出错');
+	                }
+	            }
+	            </script>
+	           [/#if]
+		   </form>
+    </div>

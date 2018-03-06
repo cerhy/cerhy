@@ -1,0 +1,116 @@
+<style type="text/css">
+.button {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 3px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+}
+
+.button2:hover {
+    box-shadow: 0 3px 4px 0 rgba(0,0,0,0.24),0 8px 30px 0 rgba(0,0,0,0.19);
+}
+
+
+.sub2{
+width:70px;
+height: 30px;background: #00a8eb;color: #FFF;text-align: center;font-size: 14px;border-radius: 3px;
+}
+.sub2:hover {
+    background: #14bdff;
+}
+</style>
+<style>
+.blogTitle{
+transition: all 0.30s ease-in-out;
+border: 1px solid gray;
+}
+.blogTitle:focus{
+border: 1px solid #66AACC;
+box-shadow: 0 0 5px #66AACC;
+outline: none;
+}
+::-webkit-scrollbar{width:0px}
+.clear{clear:both}
+</style>
+<script type="text/javascript">
+$(function(){
+	$('.user-menu-links li').click(function(){
+	    $(this).toggleClass('on');
+	});
+});
+</script>
+<div id="contextMenus"></div>
+	    <div class="personCenter-userInfo blog_right" >
+          <form action="${base}/blog/updateSetting.jspx" method="post">
+	         <div style="font-size:15px">标题名:</div>
+	         <input type="text" id="blogTitle" name="blogTitle" class="blogTitle" style="margin:10px 10px 20px 0;color: #858585;padding:10px;width: 250px;" value="[#if user.blogTitle??]${user.blogTitle}[#else]未设置[/#if]" maxlength="40"/>
+	         <div style="font-size:15px">副标题名:</div>
+	         <input type="text" id="blogTitle2" name="blogTitle2" class="blogTitle" style="margin:10px 10px 20px 0;color: #858585;padding:10px;width: 300px;" value="[#if user.blogTitle2??]${user.blogTitle2}[#else]未设置[/#if]" maxlength="40"/>
+	         <div ><input type="button" value="更新" class="button button2" onclick="blogsets()"/>
+	         </div>
+	        </form>
+         </div>
+<script type="text/javascript">
+function blogsets(){
+	var reg = new RegExp("[~'!#$%^&_:]");  
+    var blogTitle = $('#blogTitle').val();
+    var blogTitle2 = $('#blogTitle2').val();
+    if(reg.test(blogTitle)){
+		alert("标题名可能包含%/等特殊字符，请修改重试。");
+		return false;
+    }
+    if(reg.test(blogTitle2)){
+		alert("副标题名可能包含%/等特殊字符，请修改重试。");
+		return false;
+    }
+    var pattern = /iframe/;
+    var pattern2 = /IFRAME/;
+    //pattern.test(str);
+    if(pattern.test(blogTitle)){
+		alert("标题名处不支持<iframe>。");
+		return false;
+    	
+    }
+    if(pattern2.test(blogTitle)){
+		alert("标题名处不支持<iframe>。");
+		return false;
+    	
+    }
+    if(pattern.test(blogTitle2)){
+		alert("副标题名处不支持<iframe>。");
+		return false;
+    	
+    }
+    if(pattern2.test(blogTitle2)){
+		alert("副标题名处不支持<iframe>。");
+		return false;
+    	
+    }
+    $.ajax({
+		url:"${base}/blog/updateSetting_refresh.jspx",
+		type:"POST",
+		dataType:"json",
+		 data : {'blogTitle' : $("#blogTitle").val(),'blogTitle2':$("#blogTitle2").val()},
+		success: function (data) {
+			if(data.status==1){
+				alert("更新失败");
+				return false;
+			}else{
+				$("#ftitle1").html($("#blogTitle").val());
+				$("#ftitle2").html($("#blogTitle2").val());
+				return true;
+			}
+        }
+	});
+    
+    
+}
+</script>

@@ -1,0 +1,165 @@
+/* view 03 */
+.blogBody{
+	width:100%;
+	background: #250f11 url(03.jpg) no-repeat center top;
+}
+.header-top {background: #efefef;border-bottom:0px;}
+.footer_styles {
+	background : #250f11 !important; 
+}
+.footer_style {
+	background : #250f11 !important; 
+}
+.blogHead,.tj{color: #d6adad;}
+/* .tj{
+	padding-bottom:80px;
+} */
+#ftitle1{
+	color: #d6adad;
+}
+.cap{
+    color: #6fecc6;
+    background: #25110E;
+}
+.blogBody .user-center-left .user-menu-links, .blogBody .personCenter-userInfo, .blogBody .user-center-left .user-setting {
+   background: #311411;
+} 
+
+.blogBody .user-center-left .user-menu-links li{
+	margin-top:-1px;
+	border-bottom: none; 
+}
+.blogBody .user-center-left .user-menu-links a {
+    border : none; 
+    text-decoration:none;
+}
+.blogBody .user-menu-links li a em {
+     background: transparent; 
+}
+.blogBody .user-menu-links li.on a em {
+   background: transparent; 
+}
+.blogBody .user-menu-links li a {
+	color: #666666;
+}
+.blogBody .user-menu-links li a:hover {
+	color:#0070b8;
+}
+#_goPs{
+	background: transparent;
+}
+.tggl .tggl-top {background: transparent;}
+body, button, input, select, textarea { background: transparent;}
+
+.tggl a {color:#666666;}
+.a2{color:#666666;}
+.inp2{color:#666666;}
+.tggl td{border-color:#666666;}
+.tggl table{border-color:#666666;}
+.tggl-top{background:transparent;}
+.st_tree ul li a:hover {color:#0070b8;}
+
+.comments h3 {color:#FFFFFF;}
+
+.xueke-content-detail p  ,.comments-list h1 ,.xueke-acticle h2 {color: #999;}
+
+.comments .comments-text{
+	color: #999;
+	border: 1px solid #666666;
+}
+
+.plcode ,.rig .reply,.rig .reply .reply-text {
+	color: #999;
+border: 1px solid #666666;}
+.htmleaf-container .mtree-demo .mtree {
+  background: #311411;
+  margin: 20px auto;
+  max-width: 320px;
+  border-radius: 3px;
+}
+.htmleaf-container a{
+	color: #6fecc6!important;
+}
+.mtree-level-1 a{
+	color: #d6cf8e !important;
+}
+.ff{
+	color: #6fecc6 !important;
+}
+.report-list2 li a .report-text h3{
+	color:#d6cf8e;
+}
+#queryTitle{
+	  border:1px solid #924242 !important;
+	  color: #fff !important;
+}
+.submit{
+	background:#3a0b06 !important;
+	color: white !important;
+}    
+.topicList a{
+	color: #d6cf8e !important;
+}
+.topicList {
+    color: #aaa !important;
+}
+/* .user-setting .user-oparetion-btn{
+	background: #25110e !important;
+    border: 1px solid #d6cf8e !important;
+    color: #d6cf8e !important;
+}
+.user-name-dt a{
+	color:#d6cf8e !important;
+} */
+.udl ul li:hover ul li a {
+    background: #222222 !important;
+    color: #aaa !important;
+}
+.udl ul li:hover a {
+    color: #fff !important;
+    background: #222222 !important;
+}   
+.udl ul li a, .menu ul li a:visited{
+	color: #55c6a3 !important;
+    background: #25110e !important;
+}
+.udl ul li:hover ul li a:hover {
+    background: #666666 !important;
+}
+ul.mtree.bubba > li.mtree-open > a {
+    background: #25110E !important;
+}
+ul.mtree.bubba li.mtree-active > a {
+    background: #2d2d2d !important; 
+}
+.fbgj .member-change {
+     color: #dc780e !important;
+}
+.fbgj .tggl-top {
+    color: #c7c7c7 !important;
+}
+body, button, input, select, textarea {
+    color: #aa7c3c !important;
+}
+.links-wrap h3 {
+    background: #25110e !important;
+    color: #55c6a3 !important;
+}
+a {
+    color: #7f6c3c !important;
+}
+.pr15 {
+    color: #7f6c3c !important;
+}
+.xueke-content-detail p, .comments-list h1, .xueke-acticle h2 {
+    color: #fff !important;
+}
+.content-share {
+    color: #7f6c3c !important;
+}
+#pos {
+    color: #7f6c3c !important;
+}
+.rig .rig-txt {
+    color: #cccccc !important;
+}

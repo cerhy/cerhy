@@ -1,0 +1,157 @@
+<!DOCTYPE HTML>
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>${content.title}</title>
+<link rel="shortcut icon" href="/${res}/images/cerhyheard.png" type="image/x-icon" />
+<meta content="${content.tagStr!}" http-equiv="keywords" />
+<meta content="${content.description!}" http-equiv="description" />
+<script src="${resSys}/jquery.js" type="text/javascript"></script>
+<script src="${resSys}/jqueryUI/jquery-ui.js" type="text/javascript"></script>
+<script src="${resSys}/front.js" type="text/javascript"></script>
+<script src="${resSys}/ckplayer/ckplayer.js" type="text/javascript"></script>
+<script src="${resSys}/ckplayer/offlights.js" type="text/javascript"></script>
+<link type="text/css" rel="stylesheet" href="/${res}/css/main.css" />
+<link type="text/css" rel="stylesheet" href="/${res}/css/custom.css" />
+<link href="${resSys}/jqueryUI/jquery.ui.css" rel="stylesheet" type="text/css" />
+<style>
+ .bz a:hover{color: #DEB887;}
+ .bz{color: #999;}
+</style>
+<script type="text/javascript">
+ window.onload=function(){
+	$(".xueke-acticle p img").each(function(){
+		var width =$(this).width();
+		var height = $(this).height();
+		if(width>800){
+			var shang =  (width/height).toFixed(2);
+			var newHeight = parseInt(800/shang);
+			$(this).css("width","800px");
+			$(this).css("height",newHeight+"px");
+	}
+	})
+
+	$(".xueke-acticle .img-box span img").each(function(){
+		var width =$(this).width();
+		var height = $(this).height();
+		if(width>800){
+			var shang =  (width/height).toFixed(2);
+			var newHeight = parseInt(800/shang);
+			$(this).css("width","800px");
+			$(this).css("height",newHeight+"px");
+		}
+	})
+}
+
+</script>
+<script type="text/javascript">
+	$(function() {
+		Cms.checkPerm("${base}", "${content.id}");
+		Cms.collectCsi("${base}", "collectCsiDiv", "collect_csi",
+				"${content.id}");
+		Cms.attachment("${base}", "${content.id}",
+				"${content.attachments?size}", "attach");
+		Cms.viewCount("${base}", "${content.id}");
+	});
+</script>
+
+<script type="text/javascript">
+	jQuery(document).ready(function($) {
+		$('.content-comment').click(function() {
+			$('html,body').animate({
+				scrollTop : $('#comments-text').offset().top
+			}, 1000)
+			$('#comments-text').focus();
+		});
+	});
+
+	$(function() {
+		//设置一个定时器，为BUTTON点击事件用
+		var timer = null;
+		var number1 = 0;
+
+		//处理输入的内容是文字还是字母的函数
+		function getLength(str) {
+			return String(str).replace(/[^\x00-\xff]/g, 'aa').length;
+		}
+		;
+	});
+</script>
+<body class="bodybg">
+<style type="text/css">
+table th,table td{word-break:break-all;white-space:normal;overflow:hidden;}
+.xueke-content-detail p{
+	text-indent:2em;
+}
+</style>
+	<div class="container_article" style="background-color: #f9f9f9;">
+		<div class="wrap" style="width: 865px;">
+			<div class="bd-padding">
+				<div class="xueke-acticle">
+					<h2>${content.title}</h2>
+					<div class="gray9 h2dt pt5">
+						<span class="pr15" style="color: #9a9a9a;text-decoration: none;">发布时间：${content.releaseDate}</span>
+						 <span class="pr15">
+						 <a href="${base}/blog/find_all_url_friend.jspx?userIds=${content.user.id}" style="color: #9a9a9a;text-decoration: none;">作者:${content.author!content.user.username}</a>
+						 </span>
+					</div>
+					<div class="xueke-content-detail">
+						${txt!}
+					</div>
+					<div class="content-txt">
+				     [#if content.mediaPath?? && content.mediaType??]
+					        <div class="video-con clearfix">
+						        [#if content.mediaType=='FLV'] 
+						        <object height="500" width="100%" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=7,0,19,0" classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000">
+						        <param name="movie" value="/${res}/img/flvplayer.swf" />
+						        <param name="quality" value="high" />
+						        <param name="allowFullScreen" value="true" />
+						        <param name="FlashVars" value="vcastr_file=${content.mediaPath!}&BufferTime=3" /><embed height="500" width="100%" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" quality="high" flashvars="vcastr_file=${content.mediaPath!}" allowfullscreen="true" src="/${res}/img/flvplayer.swf"></embed>
+						        </object>
+						        [#elseif content.mediaType=='FLASH'] 
+						        <embed height="500" width="100%" type="application/x-shockwave-flash" quality="high" src="${content.mediaPath}" wmode="transparent" align="center"></embed>
+						        [#elseif content.mediaType=='CK']
+					            <!--ckplayer播放视频-->
+					            <div id="video" style="position:relative;z-index: 100;width:100%;height:500px;float: left;"><div id="a1"></div></div>
+						    	<script type="text/javascript">
+						    	//函数名称不允许更改 function ckmarqueeadv(){return '广告内容'};
+								var flashvars={f:'${content.mediaPath!}',c:0,b:1,my_url:'${content.url!}',my_pic:'${content.typeImg!}'};
+								var params={bgcolor:'#FFF',allowFullScreen:true,allowScriptAccess:'always'};
+								CKobject.embedSWF('${resSys}/ckplayer/ckplayer.swf','a1','ckplayer_a1','100%','500',flashvars,params);
+								var box = new LightBox();
+								function closelights(){//关灯
+									box.Show();
+								}
+								function openlights(){//开灯
+									box.Close();
+								}
+								</script>
+						        [#else] 
+						        <embed height="500" width="100%" type="video/x-ms-wmv" src="${content.mediaPath}" console="cons" controls="ImageWindow" autostart="true"></embed>
+						        [/#if]
+				      [/#if]
+				    </div>
+				    [#if content.attachments?size gt 0]           
+						<h4>附件:</h4>           
+						<ul>           
+						[#list content.attachments as attach]           
+						<li><a href="${attach.path}" id="attach${attach_index}">${attach.name}</a></li>           
+						[/#list]           
+						</ul>           
+					[/#if]
+					<br />
+					<br />
+					<br />
+					<br />
+					<br />
+				</div>
+				<div class="news-comments" style="width:665px;">
+                  [#include "../content/inc_comment_input_share.html"/] 
+				  [#include "../content/inc_wx_comment_list.html"/]
+				</div>
+			</div>
+		</div>
+	</div>
+	</div>
+	<script src="/${res}/js/main.js"></script>
+</body>
+</html>

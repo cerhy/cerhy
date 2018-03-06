@@ -1,0 +1,150 @@
+/* view 02 */
+
+a{color: #666666}
+.blogBody .user-center-left .user-menu-links, .blogBody .personCenter-userInfo, .blogBody .user-center-left .user-setting {
+    background: #222222;
+    color: #666666;
+}  
+
+
+.blogHead,.tj{color: #c5c9ce;}
+.tggl a {color:#666666;}
+/* .tj{padding-bottom:40px;} */
+.tggl-top{background:transparent;}
+.a2{color:#666666;}
+.inp2{color:#666666;}
+.tggl td{border-color:#333333;}
+.tggl table{border-color:#333333;}
+
+a:link{color:#666666;}
+.cap{
+    color: #fff;
+    background: #000000;
+}
+.blogBody{
+	width:100%;
+	background: #000  url(02.gif); 
+}
+#ftitle1{color: #c5c9ce;}
+.header-top {background: #efefef;border-bottom:0px;}
+.footer_styles {background-image: url(02.gif); }
+.footer_style {
+	background-image: url(02.gif) !important; 
+}
+.blogBody .user-center-left .user-menu-links li{
+	margin-top:-1px;
+	border-bottom: none; 
+}
+.blogBody .user-center-left .user-menu-links a {
+    border : none; 
+    text-decoration:none;
+}
+.blogBody .user-menu-links li a em {background: transparent; }
+.blogBody .user-menu-links li.on a em {background: transparent; }
+.blogBody .user-menu-links li a {color: #666666;}
+.blogBody .user-menu-links li a:hover {color:#0070b8;}
+
+#_goPs{background: transparent;}
+
+.tggl .tggl-top {background: transparent;}
+
+body, button, input, select, textarea {background: transparent;}
+.st_tree ul li a:hover {color:#0070b8;}
+
+.comments h3 {color:#FFFFFF;}
+
+.xueke-content-detail p  ,.comments-list h1 ,.xueke-acticle h2 {color: #666666;}
+
+.comments .comments-text{
+	color: #666666;
+	border: 1px solid #666666;
+}
+
+.plcode ,.rig .reply,.rig .reply .reply-text {
+	color: #666666;
+border: 1px solid #666666;}
+.htmleaf-container .mtree-demo .mtree {
+  background: #222222;
+  margin: 20px auto;
+  max-width: 320px;
+  border-radius: 3px;
+}
+.htmleaf-container a{
+	color:#b7b7b7 !important;
+}
+.ff{
+	color: #dbdadb !important;
+}
+.report-list2 li a .report-text h3{
+	color:#8197b0;
+}
+#queryTitle{
+	  border:1px solid #666666 !important;
+}
+.submit{
+	background:#666666 !important;
+	color: #000000 !important;
+}
+.topicList a{
+	color: #8197b0 !important;
+}
+.topicList {
+    color: #aaa !important;
+}
+
+/* .user-setting .user-oparetion-btn{
+	background: #222 !important;
+    border: 1px solid #666666 !important;
+    color: #aaaaaa !important;
+} */
+.udl ul li:hover ul li a {
+    background: #222222 !important;
+    color: #aaa !important;
+}
+.udl ul li:hover a {
+    color: #fff !important;
+    background: #222222 !important;
+}   
+.udl ul li a, .menu ul li a:visited{
+	color: #c5c9ce !important;
+    background: #000000 !important;
+}
+.udl ul li:hover ul li a:hover {
+    background: #467ca8 !important;
+}
+ul.mtree.bubba > li.mtree-open > a {
+    background: #000 !important;
+}
+ul.mtree.bubba li.mtree-active > a {
+    background: #2d2d2d !important; 
+}
+.fbgj .member-change {
+     color: #ddd !important;
+}
+.fbgj .tggl-top {
+    color: #c7c7c7 !important;
+}
+body, button, input, select, textarea {
+    color: #999 !important;
+}
+#pos {
+	color: #666666 !important;
+}
+.xueke-content-detail p, .comments-list h1, .xueke-acticle h2  {
+    color: #fff !important;
+}    
+.rig .rig-txt {
+    color: #cccccc !important;}
+.links-wrap h3 {
+    background: #191313 !important;
+    color: #fff !important;
+}
+.wrap-right .gray9 {
+    color: #666666 !important;
+}
+.content-share{
+	color: #666666 !important;
+}
+.pos{
+	color: #666666 !important;
+}

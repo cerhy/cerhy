@@ -164,6 +164,7 @@
     </init-param>
     <load-on-startup>2</load-on-startup>
   </servlet>
+  
   <servlet>
     <servlet-name>Jcaptcha</servlet-name>
     <servlet-class>com.jeecms.common.captcha.JcaptchaServlet</servlet-class>
@@ -248,6 +249,22 @@
     <servlet-name>JeeCmsFront</servlet-name>
     <url-pattern>/api/haoyan/report</url-pattern>
   </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>JeeCmsFront</servlet-name>
+    <url-pattern>/project/*</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>JeeCmsFront</servlet-name>
+    <url-pattern>/ws/*</url-pattern>
+  </servlet-mapping>
+  
+    <servlet-mapping>
+    <servlet-name>JeeCmsFront</servlet-name>
+    <url-pattern>/CommunityStudy/index</url-pattern>
+  </servlet-mapping>
+  
+  
+  
   <listener>
     <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
   </listener>

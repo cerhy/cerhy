@@ -1,0 +1,302 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<title>好研网-${usert.username}的博客</title>
+<link href="${resSys}/front.css" rel="stylesheet" type="text/css"/>
+<script src="${resSys}/jquery.js" type="text/javascript"></script>
+<script src="${resSys}/front.js" type="text/javascript"></script>
+<link id="hello" type="text/css" rel="stylesheet" href="/${res}/css/custom.css" />
+<link  type="text/css" rel="stylesheet" href="/${res}/css/hyindex.css" />
+<link  type="text/css" rel="stylesheet" href="/${res}/css/SimpleTree.css" />
+<script src="/${res}/js/SimpleTree.js"></script>
+<style>
+.jump {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 3px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+    margin: 4px 2px;
+    cursor: pointer;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+}
+
+.jump:hover {
+    box-shadow: 0 3px 4px 0 rgba(0,0,0,0.24),0 8px 15px 0 rgba(0,0,0,0.19);
+}
+.st_tree ul .change a:hover{color:red;}
+.st_tree ul .change :hover{background-color:#e7e7e7 }
+/* .change .butt:hover{color:red;background-color:#e7e7e7} */
+.change .butt{cursor: pointer;}
+::-webkit-scrollbar{width:0px}
+.clear{clear:both}
+.change .disableds{
+    color: white;
+    cursor: text;
+}
+</style>
+<script type="text/javascript">
+
+	/* $.ajax({
+		type:"post",
+		url:"${base}/blog/focuscheck.jspx",
+		dateType:'json',
+		data:{
+			"focusUserId":${usert.id},
+		},
+		success:function(data){
+		if(1 == data){
+			$('#focus').hide();
+			$('#cancelfocus').show();
+		}else{
+			$('#focus').show();
+			$('#cancelfocus').hide();
+		}
+		}
+		
+	}); */	
+	
+	function focuss(){
+		$.ajax({
+			type:"post",
+			url:"${base}/blog/focus.jspx",
+			dateType:'json',
+			data:{
+				"focusUserId":${usert.id},
+				"focusUserName":'${usert.username}',
+			},
+			success:function(data){
+			if(1 == data){
+				$('#focus').attr("onclick","cancelfocus()");
+				//$('#focus').attr("id","cancelfocus");
+				$('#focus').html("取消关注");
+				//$('#cancelfocus').show();
+			}
+			}
+			
+		});	
+	}
+	
+	function cancelfocus(){
+		$.ajax({
+			type:"post",
+			url:"${base}/blog/cancelfocus.jspx",
+			dateType:'json',
+			data:{
+				"focusUserId":${usert.id},
+			},
+			success:function(data){
+			if(1 == data){
+				//$('#focus').show();
+				$('#focus').attr("onclick","focuss()");
+				//$('#cancelfocus').attr("id","focus");
+				$('#focus').html("关注");
+			}
+			}
+			
+		});	
+	}
+$(function(){	
+	$('.user-menu-links li').click(function(){
+	    $(this).toggleClass('on');
+	});
+	$(".st_tree").SimpleTree({
+		click:function(a){
+			if(!$(a).attr("hasChild"))
+				alert($(a).attr("ref"));
+		}
+	});
+});
+</script>
+[#include "head.html"/]
+<div class="blogBody">
+<div class="blog-con">
+  <div class="blogHead">
+   <div class="title1"><a href="${base}/blog/find_all_url_friend.jspx?userIds=${usert.id}"><span id="title1">[#if usert.blogTitle??]${usert.blogTitle}[#else]标题[/#if]</span></a></div>
+	  <div style="font-size:15px;margin:15px auto 10px;">[#if usert.blogTitle2??]${usert.blogTitle2}[#else]副标题[/#if]</div>
+  </div>
+  
+      <div>
+      <div>
+      	<div class="tj">
+     	 	文章数:${articleCount}&nbsp;&nbsp;评论:${commentCount}&nbsp;&nbsp;访问:${usert.blogVisitNum!'0'}&nbsp;&nbsp;最后登录:${usert.lastLoginTime?string('yyyy-MM-dd HH:mm:ss')}
+      	</div>
+      </div>
+        <div class="mb20 clearfix">
+        [#include "friend_blog_left.html"/]
+            <div class="mb20 clearfix">
+            <div class="wrap-right">
+            <div class="links-wrap">
+            <div class="personCenter-userInfo blog_right" >
+            <h3>访客</h3>
+                    <div class="link-content" style="width: 700px;">
+                    <form id="tableForm" action="${base}/blog/friends_visitor.jspx?userIds=${usert.id}" method="post">
+			           [#if pagination.list?size gt 0]
+			           	<div class="users-a-link-wrap clearfix">
+				     	[#list pagination.list as visitor]
+	                        	<div>
+		                        	<a target="_blank" href="${base}/blog/find_all_url_friend.jspx?userIds=${visitor.visitorId.id}" class="users-a-link" style="margin-bottom: 25px;margin-left: 10px;margin-right: 10px;">
+		                        	[#if visitor.visitorId.userImg??]
+		                        	<img src="${visitor.visitorId.userImg}" alt="" width="47" height="47" title="${visitor.visitorTime}&nbsp;[#if visitor.visitorId.realname??]${visitor.visitorId.realname}[#else]${visitor.visitorId.username}[/#if]">
+			                        [#else]
+			                        <img src="/${res}/images/userImg-large.png" alt=" width="47" height="47" title="${visitor.visitorTime}&nbsp;[#if visitor.visitorId.realname??]${visitor.visitorId.realname}[#else]${visitor.visitorId.username}[/#if]">
+			                        [/#if]
+		                            <span title="[#if visitor.visitorId.realname??]${visitor.visitorId.realname}[#else]${visitor.visitorId.username}[/#if]">[#if visitor.visitorId.realname??][@text_cut s=visitor.visitorId.realname len=5 append='...'/][#else]${visitor.visitorId.username}[/#if]</span>
+		                            </a>
+	                            </div>
+				      	[/#list]
+                       </div>
+                       <input type="hidden" name="pageNo"/>
+			           <table  style="margin:20px 0 0 40px;border:0px" ><tbody><tr><td style="border:0px; ">
+			               <!--  共 ${pagination.totalCount} 条&nbsp; -->
+			                每页 ${pagination.pageSize} 条&nbsp;
+			   [#if pagination.firstPage]
+                <a href="javascript:void(0);" style="cursor: default;">首页</a>
+                <a href="javascript:void(0);" style="cursor: default;">上一页</a>
+                [#else]
+                 <a href="javascript:void(0);" style="cursor: pointer;"  onclick="_gotoPage('1');" >首页</a>
+               	 <a href="javascript:void(0);" style="cursor: pointer;" onclick="_gotoPage('${pagination.prePage}');" >上一页</a>
+                [/#if]
+                [#if pagination.lastPage]
+                <a href="javascript:void(0);" style="cursor: default;">下一页</a>
+                <a href="javascript:void(0);" style="cursor: default;">尾页</a>&nbsp;
+                [#else]
+                <a href="javascript:void(0);" style="cursor: pointer;" onclick="_gotoPage('${pagination.nextPage}');" >下一页</a>
+                 <a href="javascript:void(0);" style="cursor: pointer;" onclick="_gotoPage('${pagination.totalPage}');" >尾页</a>&nbsp;
+                [/#if]
+                	当前 ${pagination.pageNo}/${pagination.totalPage} 页 &nbsp;转到第<input type="text" id="_goPs" onfocus="this.select();" onkeypress="if(event.keyCode==13){$('#_goPage').click();return false;}" class="inp1"/>页
+			                <input style="cursor: pointer;" id="_goPage" type="button" value="转" class="jump" onclick="_gotoPage($('#_goPs').val());"[#if pagination.totalPage==1] disabled="disabled"[/#if] />
+            </td>
+            </tr>
+            </tbody>
+            </table>
+			          <script type="text/javascript">
+			            function _gotoPage(pageNo) {
+			                try{
+			                    var tableForm = document.getElementById("tableForm");
+			                    $("input[name=pageNo]").val(pageNo);
+			                    tableForm.action="${base}/blog/friends_visitor.jspx?userIds=${usert.id}";
+			                    tableForm.onsubmit=null;
+			                    tableForm.submit();
+			                } catch(e) {
+			                    alert('_gotoPage(pageNo)方法出错');
+			                }
+			            }
+			            </script>
+			           [#else]
+			           		暂无访客...
+			           [/#if]
+			           </form>
+                    </div>
+            </div>
+            </div>
+            </div>
+            <div class="gonggao" style="display: none;">
+            <p style="color:red;font-size:16px;text-align:center;">公告</p>
+             [#if usert.blogNotice??]${usert.blogNotice}[/#if]
+             </div>
+        </div>
+</div>
+  </div>
+  </div>
+  </div>
+[#include "../include/footers.html"/]
+ <script type="text/javascript">
+		skinChange(${usert.theme!0});
+	function skinChange(n){
+		document.all.MrJin.href="/${res}/css/skin/"+n+".css"; 
+	}
+</script>
+[#include "model_friend.html"/]
+</body>
+</html>
+<script type="text/javascript">
+function join_group(code,id){
+	$.ajax({
+		url:"${base}/blog/joinGroup.jspx?code="+code+"&createUserId="+id,
+		type:"POST",
+		dataType:"json",
+		data: "",
+		success: function (data) {
+			if(data.status==1){
+				$("#"+code).attr("class", "disableds");
+				$("#"+code).removeAttr("onclick");
+				$("#"+code).html("已加入")
+			}else{
+				alert("加入失败!");
+			}
+        }
+	});
+}
+</script>
+<script type="text/javascript">
+$(function(){
+	var els =document.getElementsByName("uniqueCode");
+	for (var i = 0, j = els.length; i < j; i++){
+		var code=els[i].id;
+		$.ajax({
+			url:"${base}/blog/checkJoinState.jspx?joinState="+els[i].id,
+			type:"POST",
+			dataType:"json",
+			data: "",
+			async: false,
+			success: function (data) {
+				if(data.status==1){
+					$("#"+code).attr("class", "disableds");
+					$("#"+code).removeAttr("onclick");
+					$("#"+code).html("已加入");
+				}
+	        }
+		});
+	}
+});
+</script>
+<script type="text/javascript">
+function addOrCancelFriends(obj,uId){
+	if(obj==0){
+		//0为未添加好友
+		$.ajax({
+			     url: "${base}/blog/addOrCancelFriends.jspx?state="+obj+"&uId="+uId,
+			     type: "POST",
+			     dataType:"json",
+			     data: "",
+			     success: function (data) {
+			        if(data.status>0){
+						//改变显示状态
+						$("#addCancelFriend").html("解除关系");
+						$("#addCancelFriend").attr("onclick","addOrCancelFriends(1,${usert.id})"); 
+			        }else{
+			        	alert("添加失败...!");
+			      }
+			    }
+			})
+	}else if(obj==1){
+		//1是已添加好友
+		var msg = "您确定要和该好友解除关系吗?"; 
+		 if (confirm(msg)==true){ 
+			 $.ajax({
+			        url: "${base}/blog/addOrCancelFriends.jspx?state="+obj+"&uId="+uId,
+			        type: "POST",
+			        dataType:"json",
+			        data: "",
+			        success: function (data) {
+			        	if(data.status>0){
+							 //改变显示状态
+							 $("#addCancelFriend").html("添加好友");
+							 $("#addCancelFriend").attr("onclick","addOrCancelFriends(0,${usert.id})"); 
+			        	}else{
+			        		alert("解除失败...!");
+			        	}
+			        }
+			    });
+		     return true; 
+		 }else{ 
+		     return false; 
+		 }
+	}
+}
+
+</script>

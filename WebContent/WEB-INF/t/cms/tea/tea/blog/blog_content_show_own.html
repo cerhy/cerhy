@@ -1,0 +1,1472 @@
+<script src="${resSys}/jqueryUI/jquery-ui.js" type="text/javascript"></script>
+<link type="text/css" rel="stylesheet" href="/${res}/css/main.css" />
+<link type="text/css" rel="stylesheet" href="/${res}/css/custom.css" />
+<link href="${resSys}/jqueryUI/jquery.ui.css" rel="stylesheet" type="text/css" />
+<script src="${resSys}/ckplayer/ckplayer.js" type="text/javascript"></script>
+<script src="${resSys}/ckplayer/offlights.js" type="text/javascript"></script>
+<style>
+.wrap-left{width: 250px;float: left;}
+.wrap-right{width: 730px;float: left;padding-left: 20px;}
+pre {
+white-space: pre-wrap;
+word-wrap: break-word;
+}
+</style>
+<script type="text/javascript">
+$(function() {
+	
+		$(".xueke-content-detail p img").each(function(){
+			$(this).one('load',function(){
+				var width =$(this).width();
+				var height = $(this).height();
+				if(width>600){
+					var shang =  (width/height).toFixed(2);
+					var newHeight = parseInt(600/shang);
+					$(this).css("width","600px");
+					$(this).css("height",newHeight+"px");
+				}
+			})
+			
+		})
+
+		$(".xueke-content-detail .img-box span img").each(function(){
+			$(this).one('load',function(){
+			var width =$(this).width();
+			var height = $(this).height();
+			if(width>600){
+				var shang =  (width/height).toFixed(2);
+				var newHeight = parseInt(600/shang);
+				$(this).css("width","600px");
+				$(this).css("height",newHeight+"px");
+			}
+			})
+		})
+
+
+	
+	$('.user-menu-links li').click(function(){
+	    $(this).toggleClass('on');
+	});
+	$.ajax({
+		type:"post",
+		url:"${base}/blog/checkout.jspx",
+		data:{
+			"CUId":${content.user.id},
+		},
+		success:function(data){
+			if(1 == data){
+				Cms.collectexist("${base}","${content.id!}","cancelSpan","comfirmSpan");
+			}else {
+				$("#cancelSpan").hide();
+				$("#comfirmSpan").hide();
+		    }
+	  }
+	});
+$("#comfirmSpan").click(function(){
+    Cms.collect_blog("${base}","${content.id}",1,"cancelSpan","comfirmSpan");
+});
+$("#cancelSpan").click(function(){
+    Cms.collect_blog("${base}","${content.id!}",0,"cancelSpan","comfirmSpan");
+});
+
+Cms.collectCsi("${base}", "collectCsiDiv", "collect_csi",
+		"${content.id}");
+Cms.attachment("${base}", "${content.id}",
+		"${content.attachments?size}", "attach");
+Cms.viewCount("${base}", "${content.id}");
+		
+});
+</script>
+<script type="text/javascript">
+	
+	jQuery(document).ready(function($) {
+		$('.content-comment').click(function() {
+			$('html,body').animate({
+				scrollTop : $('#comments-text').offset().top
+			}, 1000)
+			$('#comments-text').focus();
+		});
+	});
+
+	$(function() {
+		//设置一个定时器，为BUTTON点击事件用
+		var timer = null;
+		var number1 = 0;
+
+		//处理输入的内容是文字还是字母的函数
+		function getLength(str) {
+			return String(str).replace(/[^\x00-\xff]/g, 'aa').length;
+		}
+		;
+	});
+</script>
+<script type="text/javascript">
+$(function () {  
+    var printAreaCount = 0;  
+    $.fn.printArea = function () {  
+        var ele = $(this); 
+        var idPrefix = "printArea_";  
+        removePrintArea(idPrefix + printAreaCount);  
+        printAreaCount++;  
+        var iframeId = idPrefix + printAreaCount;  
+        var iframeStyle = 'position:absolute;width:0px;height:0px;left:-500px;top:-500px;';  
+        iframe = document.createElement('IFRAME');  
+        $(iframe).attr({  
+            style: iframeStyle,  
+            id: iframeId  
+        });  
+        document.body.appendChild(iframe);  
+        var doc = iframe.contentWindow.document;  
+        doc.write('<div class="' + $(ele).attr("class") + '">' + $(ele).html()+ '</div>');  
+        doc.close();  
+        var frameWindow = iframe.contentWindow;  
+        frameWindow.close();  
+        frameWindow.focus();  
+        frameWindow.print(); 
+    }  
+    var removePrintArea = function (id) {  
+        $("iframe#" + id).remove();  
+    };  
+});
+function btnPrints(){
+      $(".xueke-content-detail").printArea();
+}
+function goback(){
+	window.location.href="http://localhost:8080/cerhy/blog/index.jspx";
+}
+</script> 
+<style type="text/css">
+table th,table td{word-break:break-all;white-space:normal;overflow:hidden;}
+.xueke-content-detail p{
+	text-indent:2em;
+}
+.sts{
+transition: all 0.30s ease-in-out;
+border: 1px solid gray;
+line-height: 20px;
+}
+.sts:focus{
+border: 1px solid #66AACC;
+box-shadow: 0 0 5px #66AACC;
+outline: none;
+}
+</style>
+<script type="text/javascript">
+		
+		$("#zd_u-hilite-cap").remove();
+		$("#zdId").remove();
+		$("#u-hilite-cap").remove();
+		$("#mainpwdiv").remove();
+		$(".wrap-right").attr("id","maindiv");
+		var html="";
+		html  +="[#if content.password??]";
+		html  +="[#if content.password !=""]";
+		html  +="<div style=\"width: 730px;float: left; padding-left: 20px;z-index:999;position:relative;\" id=\"mainpwdiv\">";
+		html  +="<div class=\"personCenter-userInfo blog_right xueke-acticle\">";
+		html  +="<div style=\"margin-top: 200px;text-align: center\">";
+		html  +="<input  type='password' placeholder='请输入阅读密码' id='mima' class='plcode' ></input>";
+		html  +="<input  type=\"button\" onclick=\"jiaoyan()\" value=\"校验密码\" style=\"width: 90px;height: 36px;line-height: 36px; background: #00a8eb;color: #FFF;text-align: center;display: inline-block;\" />";
+		html  +="</div>";
+		html  +="</div>";
+		html  +="</div>";
+		html  +="[/#if]";
+		html  +="[/#if]";
+			
+			$(".wrap-right").before(html);
+</script>
+			<input style="display: none;" id="no" value="">
+			<input style="display: none;" id="no1" value="">
+		   	<input style="display: none;" id="psword" value="${content.user.id}">
+			[#if user??]
+			<input style="display: none;" id="no2" value="${user.username}">
+			<input style="display: none;" id="no4" value="${user.id}">
+			[/#if]
+			[#if user??]
+				<input style="display: none;" id="slActicle" value="${user.id}">
+			[#else]	
+				<input style="display: none;" id="slActicle" value="">
+			[/#if]
+		   	<input style="display: none;" id="no3" value="${content.id}">
+			<input style="display: none;" id="alt" value="0">	
+ <div class="personCenter-userInfo blog_right xueke-acticle">
+                <div ><h2>${content.title}</h2></div>
+                <input type="hidden" id="contTitle" name="conTitle" value="${content.title}"/>
+                <input type="text" style="display:none" id="hipw" value="${content.password!''}" />
+                <div class="gray9 h2dt pt5" style="margin-bottom: 2px;">
+				    <span class="pr15">发布时间：${content.releaseDate}</span>
+				   
+					<span class="pr15">
+					   <a target="_blank" href="${base}/blog/find_all_url_friend.jspx?userIds=${content.user.id}" class="bz">作者：${content.author!content.user.username}</a>
+					 </span>
+					 <span class="pr15 yuedu">浏览次数：<span id="views"></span></span> 
+					 <span class="pr15 pinglun" id="addCcm">评论：${content.commentsCheckedNum!} </span>
+                </div>
+                <div class="gray9 h2dt pt5">
+                	<span class="pr15" id="backto" title="返回"><img style="width: 20px;height: 20px;margin: -6px 0px;cursor: pointer;" src="/${res}/images/back_1.png" onclick="backContentList('${base}/blog/indexs.jspx')" alt="" class="backto" /></span>
+				     <span id="comfirmSpan" style="display:none;cursor: pointer;">转载</span>
+				     <span id="cancelSpan" style="display:none; cursor: pointer;">取消转载</span>&nbsp;
+				     [#if user??] 
+				      <input type="hidden" name="contentId" id="contentId" value="${content.id}"/>
+				      <a href="javascript:;" onclick="cp('${content.channel.path}',${content.id});">复制链接</a>&nbsp;
+				      [#if content.user.id==user.id]
+				        <a href="javascript:void(0);" onclick="contributeDelete(${content.id});">删除</a>&nbsp;
+				        <a href="javascript:void(0);" onclick="contributeUpdate(${content.id});" >修改</a>
+						<span id="cancelSpan"  class="pos"><a href="javascript:void(0);" onclick="send();">发送</a></span>&nbsp;						
+						<span id="cancelSpan"  class="pos"><a href="javascript:void(0);" onclick="cancel();">撤销 </a></span>&nbsp;
+						[#if isStick??]
+							<span id="cancelStickSpan"  class="pos"><a href="javascript:void(0);" onclick="canCelstick(${content.id},0);">取消置顶</a></span>&nbsp;
+							[#else]
+							<span id="stickSpan"  class="pos"><a href="javascript:void(0);" onclick="stick(${content.id},'${content.title}','${content.releaseDate}',1);">置顶</a></span>&nbsp;
+						[/#if]
+						
+					  [/#if]  
+					  [#if contentSentType??] 
+					  	 [#if contentSentType==2]
+						<span id="cancelSpan"  class="pos"><a href="javascript:void(0);" onclick="removeDialog();">移除</a></span>&nbsp;
+						 [/#if] 
+					 [/#if] 
+				     [/#if] 
+					 <span class="content-share">分享
+						 [#include "../content/inc_share.html"/]
+					 </span>&nbsp;
+					 [#if user??]
+					 <span id="pos" name="pos" class="pos" style="width: 40px;height: 20px;" onclick="down(0)">批注
+					 </span>
+					 <div id="setDialogs" style="display:none;margin-top:-5px;">
+					 <ul style="padding-left: 10px;">
+						  <li  style="list-style-type: disc;">单击“批注”进入/退出批注模式 </li>
+						  <li  style="list-style-type: disc;">在正文中单击，即可添加批注</li>
+						  <li  style="list-style-type: disc;">单击批注旗标，可以展开/折叠批注内容</li>
+						  <li  style="list-style-type: disc;">拖动批注旗标，可以改变批注的位置</li>
+						  <li  style="list-style-type: disc;color: red;">右键单击批注旗标，可以删除自己的批注</li>
+					</ul>
+					 <div class="themeButton" style="width: 50px;height: 50px;padding-left: 200px;">	
+					 <button type="button" onclick="closeDialogs();" class="submit" style="margin:30px 0px 0 10px;">确定</button></div>
+	        		 </div>
+	        		 [#else]
+					 <span id="pos" name="pos" class="pos" style="width: 40px;height: 20px;" onclick="downs()">批注
+					 </span>
+					 <div id="setDialogss" style="display:none;margin-top:-5px;">
+					 <ul style="padding-left: 10px;">
+						  <li  style="list-style-type: disc;">还未登陆...请点击<a href="${base}/login.jspx" style="color: red;">登录</a></li>
+					</ul>
+					 <div class="themeButton" style="width: 50px;height: 50px;padding-left: 200px;">	
+					 <button type="button" onclick="closeDialogss();" class="submit" style="margin:30px 0px 0 10px;">确定</button></div>
+	        		 </div>
+	        		 [/#if]
+	        		 <span class="pr15" title="打印" id="btnPrints" onclick="btnPrints()"><img id="btnPrint" style="width: 23px;height: 23px;margin: -4px 0;cursor: pointer;" src="/${res}/images/printer.png" class="backto" /></span>
+				</div>
+				<div class="xueke-content-detail"  style="margin-top:30px;min-height:170px;overflow: auto;"  id="addAttr">
+					[#if preview??] [@text_cut s=txt! len=100 append="..."/]<br />
+					您需要更高的权限浏览全部内容!<br />以下会员组可浏览全部内容: [#list groups as g]
+					${g.name!}[#if g_has_next],[/#if] [/#list] [#else] ${txt!} [/#if]
+				</div>
+				
+			       [#if content.mediaPath?? && content.mediaType??]
+			        <div class="video-con clearfix">
+				        [#if content.mediaType=='FLV'] 
+				        <object height="500" width="100%" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=7,0,19,0" classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000">
+				        <param name="movie" value="/${res}/img/flvplayer.swf" />
+				        <param name="quality" value="high" />
+				        <param name="allowFullScreen" value="true" />
+				        <param name="FlashVars" value="vcastr_file=${content.mediaPath!}&BufferTime=3" /><embed height="500" width="100%" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" quality="high" flashvars="vcastr_file=${content.mediaPath!}" allowfullscreen="true" src="/${res}/img/flvplayer.swf"></embed>
+				        </object>
+				        [#elseif content.mediaType=='FLASH'] 
+				        <embed height="500" width="100%" type="application/x-shockwave-flash" quality="high" src="${content.mediaPath}" wmode="transparent" align="center"></embed>
+				        [#elseif content.mediaType=='CK']
+			            <!--ckplayer播放视频-->
+			            <div id="video" style="position:relative;z-index: 100;width:100%;height:500px;float: left;"><div id="a1"></div></div>
+				    	<script type="text/javascript">
+				    	//函数名称不允许更改 function ckmarqueeadv(){return '广告内容'};
+						var flashvars={f:'${content.mediaPath!}',c:0,b:1,my_url:'${content.url!}',my_pic:'${content.typeImg!}'};
+						var params={bgcolor:'#FFF',allowFullScreen:true,allowScriptAccess:'always'};
+						CKobject.embedSWF('${resSys}/ckplayer/ckplayer.swf','a1','ckplayer_a1','100%','500',flashvars,params);
+						var box = new LightBox();
+						function closelights(){//关灯
+							box.Show();
+						}
+						function openlights(){//开灯
+							box.Close();
+						}
+						</script>
+				        [#else] 
+				        <embed height="500" width="100%" type="video/x-ms-wmv" src="${content.mediaPath}" console="cons" controls="ImageWindow" autostart="true"></embed>
+				        [/#if]
+				     </div>
+				    [/#if]
+				       	[#if content.attachments?size gt 0]           
+						<h4>附件:</h4>           
+						<ul>           
+						[#list content.attachments as attach]           
+						<li><a href="${attach.path}" id="attach${attach_index}">${attach.name}</a></li>
+						<!-- [#if attach.pdf??]
+						<iframe src="${base}/thirdparty/pdfjs/web/viewer.html?file=${attach.pdf}" id="iframepage" width="100%" height="700px" frameborder="0" scrolling="no"></iframe>           
+						[/#if] -->
+						[/#list]           
+						</ul>           
+					[/#if]
+					 
+					<!-- 分页 -->
+					<div class="pagebar">[#include "../style_page/content.html"/]</div>
+					<br />
+					<br />
+					<br />
+					<br />
+					<br />
+					<br />
+					<br />
+					<div class="inter clearfix"> 
+				      [#if channel.allowUpdown]
+				      <div class="downs" title="踩" ><a onclick="Cms.down('${base}',${content.id},${content.downs});"><span id="downs"></span></a></div>
+				      <div class="ups" title="赞"><a onclick="Cms.up('${base}',${content.id},${content.ups});"><span id="upss"></span></a></div>
+				      [/#if]
+				    </div>
+				    [#if currentId??]
+				    	  <div class="prev-next-wz clearfix">
+						        
+						        	[#if preStick??]
+		                    		<a href="javascript:void(0);" onclick="myblogZdShow('${base}','${preStick[2]}',${preStick[3]},${preStick[0]},${preStick[4]})" class="prev-pian">
+		                            <span>&lt;上一篇</span>
+		                            <em>[#if preStick[1]?length gt 20]
+										${preStick[1]?substring(0,20)}...
+										[#else]${preStick[1]}
+										[/#if]
+									</em>
+		                        	</a>
+		                        	[#else]
+			                        	<a href="javascript:;" class="prev-pian">
+			                            <em>没有了</em>
+			                        	</a>
+		                        	[/#if]
+		                        	[#if nextStick??]
+				                     <a href="javascript:void(0);" onclick="myblogZdShow('${base}','${nextStick[2]}',${nextStick[3]},${nextStick[0]},${nextStick[4]})" class="next-pian">
+			                            <em>
+				                            [#if nextStick[1]?length gt 20]
+											${nextStick[1]?substring(0,20)}...
+											[#else]${nextStick[1]}
+											[/#if]
+			                            </em>
+			                            <span>下一篇&gt;</span>
+			                        </a>
+			                        [#else]
+			                          <a href="javascript:;" class="next-pian">
+			                            <em>没有了</em>
+			                       	  </a>
+			                        [/#if]
+						       </div>
+				    [#else]
+				    
+				      [#if collection??]
+				      <div class="prev-next-wz clearfix">
+				         [@cms_content_collection id=content.id next='1' userId=uId]
+				          [#if tag_bean??]
+                    		<a href="javascript:;" class="prev-pian" onclick="findActicals('${tag_bean.url}?d=2&o=1')">
+                            <span>&lt;上一篇</span>
+                            <em>[@text_cut s=tag_bean.title len=20 append='...'/]</em>
+                        	</a>
+	                   	  [#else]
+                    		<a href="javascript:;" class="prev-pian">
+                            <em>没有了</em>
+                        	</a>
+	                      [/#if]
+				         [/@cms_content_collection]
+				         [@cms_content_collection id=content.id next='0' userId=uId]
+	                    [#if tag_bean??]
+		                     <a href="javascript:;" class="next-pian" onclick="findActicals('${tag_bean.url}?d=2&o=1')">
+	                            <em>[@text_cut s=tag_bean.title len=20 append='...'/]</em>
+	                            <span>下一篇&gt;</span>
+	                        </a>
+	                    [#else]
+		                     <a href="javascript:;" class="next-pian">
+	                            <em>没有了</em>
+	                        </a>
+	                    [/#if]
+                    [/@cms_content_collection]
+				       </div>
+				      [#else] 
+				     [#if contentSentType??] 
+					  	 [#if contentSentType==2]
+						
+						
+						
+						
+						 [#elseif contentSentType==1]	
+							
+						 [/#if]
+					 [#else]
+                    <div class="prev-next-wz clearfix">
+				   [@cms_content id=content.id next='1' channelId=channel.id userId=GroupFlagData columnId=columnIdZ]
+                    	[#if tag_bean??]
+                    	  [#if columnIdZ??]
+                    		<a href="javascript:;" onclick="previousArticles('${tag_bean.url}',1,${GroupFlagData},${columnIdZ})"  class="prev-pian">
+                            <span>&lt;上一篇</span>
+                            <em>[@text_cut s=tag_bean.title len=15 append='...'/]</em>
+                        	</a>
+                    	  [#else]
+                    		<a href="javascript:;" onclick="previousArticles('${tag_bean.url}',1,${GroupFlagData},null)"  class="prev-pian">
+                            <span>&lt;上一篇</span>
+                            <em>[@text_cut s=tag_bean.title len=15 append='...'/]</em>
+                        	</a>
+                    	  [/#if]
+                    	[#else]
+                    		<a href="javascript:;" class="prev-pian">
+                            <em>没有了</em>
+                        	</a>
+                    	[/#if]
+                    	  [/@cms_content]
+				   [@cms_content id=content.id next='0' channelId=channel.id userId=GroupFlagData columnId=columnIdZ]
+	                    [#if tag_bean??]
+	                       [#if columnIdZ??]
+		                     <a href="javascript:;" onclick="nextArticles('${tag_bean.url}',1,${GroupFlagData},${columnIdZ})" class="next-pian">
+	                            <em>[@text_cut s=tag_bean.title len=15 append='...'/]</em>
+	                            <span>下一篇&gt;</span>
+	                        </a>
+                           [#else]
+		                     <a href="javascript:;" onclick="nextArticles('${tag_bean.url}',1,${GroupFlagData},null)"  class="next-pian">
+	                            <em>[@text_cut s=tag_bean.title len=15 append='...'/]</em>
+	                            <span>下一篇&gt;</span>
+	                        </a>
+                           [/#if]
+	                    [#else]
+		                     <a href="javascript:;" class="next-pian">
+	                            <em>没有了</em>
+	                        </a>
+	                    [/#if]
+                    [/@cms_content]
+                    </div>
+					 [/#if] 
+                    [/#if]
+                    [/#if]
+               <div class="news-comments" style="width:665px;">
+				    [#if channel.commentControl!=2]
+                    [#include "../content/inc_comment_input.html"/]
+      				[#include "../content/inc_blog_comment_list.html"/]
+    				[/#if]
+				</div>
+           </div>
+      
+<script type="text/javascript">
+function findActicals(url){
+	if(typeof($("#no3").val())!='undefined'){
+		 delPos();
+	};
+	var nu="";
+	if(url.indexOf("baoting") > 0){
+		nu=url.replace("baoting.","");
+	}else if(url.indexOf("haikou") > 0){
+		nu=url.replace("haikou.","");
+	}else if(url.indexOf("sanya") > 0){
+		nu=url.replace("sanya.","");
+	}else if(url.indexOf("tunchang") > 0){
+		nu=url.replace("tunchang.","");
+	}else{
+		nu=url;
+	}
+	$.ajax({
+        type: 'GET',
+        url : nu,
+        dataType:"html",
+        async: true,
+        success : function(datas){
+        	var wzid=document.getElementById('wzId');
+   		 if(wzid!=null){
+   			 document.getElementById('wzId').innerHTML="";
+   		 }
+   		 var maindiv=document.getElementById('maindiv');
+   		 if(maindiv!=null){
+   			 document.getElementById('maindiv').innerHTML="";
+   		 }
+            $(".wrap-right").append(datas);
+            if(window._bd_share_main){
+         	   window._bd_share_main.init();
+         	}
+	   		 }
+		});
+}
+//删除批注
+function delPos(){
+	$.ajax({
+         url: "${base}/blog/searchPostil.jspx?contentId="+$("#no3").val(),
+         type: "POST",
+         dataType:"json",
+         data: "",
+         async: false,
+         success: function (data) {
+ 				for(var i=0;i<data.length;i++){
+					$("div#"+data[i].postilDivId).remove();
+ 				}
+         }
+     });
+}
+</script>
+<div id="sentDialog" style="display:none;">	
+      		<form id="sentFrom" class="sentFrom" action="${base}/blog/sendArticle.jspx" method="post">
+      			<table width="100%" class="pn-ftable" cellpadding="2" cellspacing="1" border="0">
+      				<tbody>
+      					<tr >
+      					<td >
+      						<span >收件人:&nbsp;&nbsp;</span><input type="text" id="sendee" name="sendee" class="sts"></input>
+      						<span style="color:red" id="sendeeSapn"></span>
+      					</td>
+      					</tr>
+      					<tr>
+      					<td>
+      						<span>验证码:&nbsp;&nbsp;</span><input type="text" id="validateCode" name="validateCode" style="margin-top:10px;" class="sts"></input>
+      						<span style="color:red" id="validateCodeSapn"></span>
+      					</td>
+      					</tr>
+      				</tbody>
+      			</table>      	
+      			<div class="themeButton">	
+      			
+   <!--    			<input type="submit" value="确定" class="submit"  style="margin:30px 40px 0 0px"/>
+	        	<button type="button" onclick="closeSendDialog();" class="submit" style="margin:30px 40px 0 10px">取消</button> -->
+	        	</div>
+      		</form>
+      </div>
+      
+      <div id="cancelDialog" style="display:none;">	
+      		<p>要把本文从所有群组中撤回吗？(移除后需重新发送)</p>
+      </div>
+       <div id="removeDialog" style="display:none;">	
+      		<p>让这篇文章从我的博客中消失！(移除后需重新收录)</p>
+      </div>
+<script type="text/javascript">
+	var val = $('#hipw').val();
+	if(val == ""){
+		$('#mainpwdiv').css('display','none');
+	}else{
+		if($("#slActicle").val()!=""){
+			if($("#no4").val()==$("#psword").val()){
+				$('#mainpwdiv').css('display','none');
+			}else{
+				$('#maindiv').css('display','none');
+				$('#mainpwdiv').css('display','block');
+			}
+		}else{
+				$('#maindiv').css('display','none');
+				$('#mainpwdiv').css('display','block');
+		}
+	}
+	function jiaoyan(){
+		var userPw = $('#mima').val();
+		if(userPw == val){
+			$('#maindiv').css('display','block');
+			$('#mainpwdiv').css('display','none');
+		}else{
+			alert("密码错误，请重新输入");
+		}
+	}
+	
+// $('#maindiv').hide();
+     function down(obj){  
+    	 if(obj==0){
+	    	 $("#pos").html("退出");
+	    	 $("#addAttr").attr("onclick","divPos(this)");
+	    	 $("#addAttr").attr("id","addAttrs");
+	    	 $("#pos").attr("onclick","down(1)");
+	    	 divPos(obj);
+    	 }else{
+	    	 $("#addAttrs").unbind("mousedown");
+	    	 $("#pos").html("批注");
+	    	 $("#addAttrs").removeAttr("onclick");
+	    	 $("#addAttrs").attr("id","addAttr");
+	    	 $("#pos").attr("onclick","down(0)"); 
+    	 }
+    	 if($("#alt").val()==0){
+	    	 $("#setDialogs").dialog("open");
+    	 }
+     }
+     
+     function downs(){  
+    	 if($("#alt").val()==0){
+	    	 $("#setDialogss").dialog("open");
+    	 }
+     }
+     function divPos(event){
+    	 $("#addAttrs").mousedown(function(e){
+    		$.kw.confirm("提示内容",e.pageX,e.pageY);
+	    	$("#no").val(e.pageX);
+	    	$("#no1").val(e.pageY);
+    	});
+     }
+     $("#setDialogs").dialog({
+			autoOpen: false,
+			modal: false,
+			resizable :false,
+			stack : false,
+			draggable : true,
+			closeOnEscape : false,
+			open:function(event,ui){
+				$(".ui-dialog-titlebar-close").hide();
+				$(".ui-dialog-titlebar").css("background","#ffffff");  
+				$(".ui-widget-header").css("border","0");  
+			},
+			width: 300,
+			height: 230,
+			position: ["right",$("#pos").offsetTop],
+			close: function(event, ui) {
+				$("#alt").val(1)
+			}
+		});
+     function closeDialogs(){
+    	$("#setDialogs").dialog("close");
+    }
+     
+     $("#setDialogss").dialog({
+			autoOpen: false,
+			modal: false,
+			resizable :false,
+			stack : false,
+			draggable : true,
+			closeOnEscape : false,
+			open:function(event,ui){
+				$(".ui-dialog-titlebar-close").hide();
+				$(".ui-dialog-titlebar").css("background","#ffffff");  
+				$(".ui-widget-header").css("border","0");  
+			},
+			width: 300,
+			height: 130,
+			position: ["right",$("#pos").offsetTop],
+			close: function(event, ui) {
+				$("#alt").val(1)
+			}
+	});
+     
+     function closeDialogss(){
+    	 	$("#setDialogss").dialog("close");
+    	 }
+     
+</script>
+<script type="text/javascript">
+//提示框
+$(function () {    
+    $.kw = {  
+        title      : "发表您的看法", //默认标题 可修改  
+        speed      : 400, //默认速度 可修改  
+        buttonName : "确认", //确定按钮默认名称 可修改  
+        cancel     : "取消", //取消按钮默认名称 可修改  
+        content    : "Content",  
+         //移除遮盖层  
+        del : function () {
+            $("#alert-layer").remove();
+        },  
+        //响应ESC键盘退出  
+        esc : function () {   
+            $(document).keyup(function (event) {  
+                if (event.which == 27) {  
+                    $.kw.del();  
+                }  
+            });  
+        },  
+        //提示  
+        confirm : function (sContent,X,Y,callBack, sTitle) {
+        	$.kw.del();   
+            var title = sTitle || this.title;  
+            var content = sContent || this.content;  
+            var layer = "<div id='alert-layer' name='alert-layer'><div id='alert-container'><div class='alert-top'></div><div class='alert-box'><div id='alert-title'>" + title + "<div id='alert-close' title='关闭'></div></div><textarea id='posInfo' rows='5' cols='39' onkeyup='okp()' onpaste='okps()'></textarea><div align='right' id='words' style='padding-right:13px;'>字数:30</div><div class='alert-button'><button id='alert-button'>" + this.buttonName + "</button><button id='alert-cancel'>" + this.cancel + "</button></div></div><div class='alert-bottom'></div></div></div>";  
+            $(layer).fadeIn(this.speed).appendTo("body");  
+            this.setting(X,Y); 
+            $("#alert-button").focus(); //获得焦点  
+            this.move();//拖动  
+            $("#alert-close").bind("click", this.del); //移除层  
+            $("#alert-cancel").bind("click", this.del); //移除层  
+            $("#alert-button").bind("click", function () {
+                var inputInfo=$("#posInfo").val();
+                if(inputInfo==''){
+                	alert("批注内容不能为空...")
+                	return;
+                }else{
+                	if(inputInfo.length>30){
+                		$("#posInfo").val($("#posInfo").val().substring(0,30));
+                		$("#words").text("可写字数:"+0);
+	                	return;
+                	}
+                }
+	            smallIcons(X,Y,inputInfo);	
+                $.kw.del();
+            });
+            this.esc();  
+        },              
+        //框拖动功能  
+        move : function () {  
+            $("#alert-title").mousedown(function (event) {  
+                var l = parseInt($("#alert-container").css("left"));  
+                t = parseInt($("#alert-container").css("top"));  
+                x = event.pageX - l;  
+                y = event.pageY - t;  
+                $("body").bind("mousemove", function (event) {  
+                    $("#alert-container").css({  
+                        "left" : (event.pageX - x)  
+                    });  
+                    $("#alert-container").css({  
+                        "top" : (event.pageY - y)  
+                    });   
+                });  
+            });  
+            $("body").mouseup(function () {  
+                $("body").unbind("mousemove");    
+            });     
+        },  
+        //设置背景层与内位置  
+        setting : function (X,Y) {
+            bsh = document.documentElement.scrollHeight;  
+            aw  = $("#alert-container").width() / 2;  
+            ah  = $("#alert-container").height() / 2;  
+        	$("#alert-layer").css("height", bsh); 
+            $("#alert-layer").css("background-color", "transparent");  
+        	$("#alert-container").css("position","relative");
+            $("#alert-container").css("background-color", "rgb(248, 153, 30)");
+            $("#alert-container").css({  
+                "top"  : Y,  
+                "left" : X 
+            });  
+        }     
+    };  
+});  
+
+//事件框随滚动条滚动
+window.onscroll=scro;
+function scro(){
+	if(document.getElementById('alert-layer')!=null){
+	 var x=$("#no").val();
+	 var y=$("#no1").val();
+     bsh = document.documentElement.scrollHeight;  
+     aw  = $("#alert-container").width() / 2;  
+     ah  = $("#alert-container").height() / 2;  
+ 	 $("#alert-layer").css("height", bsh); 
+	 $("#alert-container").css("position","relative"); 
+	 $("#alert-layer").css("background-color", "transparent");  
+     $("#alert-container").css("background-color", "rgb(248, 153, 30)"); 
+     document.getElementById('alert-container').style.top = y
+	}
+}
+
+
+function sleep(numberMillis) {    
+	var now = new Date();    
+	var exitTime = now.getTime() + numberMillis;   
+	while (true) { 
+	now = new Date();       
+	if (now.getTime() > exitTime) 
+	return;    
+	} 
+}
+
+
+function smallIcons(X,Y,inputInfo){
+	 var now = new Date();    
+	 var exitTime = now.getTime();
+	 var idss=exitTime
+	 var layer = "<div class='"+idss+"' id='"+idss+"'><h2 class='t"+idss+"'></h2></div>";  
+     $(layer).fadeIn(400).appendTo("body");
+     var oBox = document.getElementById(idss);
+     var oTitle = oBox.getElementsByTagName("h2")[0];
+     var oDrag = new Drag(oBox, {handle:oTitle, limit:false});
+     oDrag.onStop = function ()
+ 	{
+ 		//alert("left:" + this.drag.offsetLeft + ", top:" + this.drag.offsetTop);
+ 		updateDragCoordinate(this.drag.offsetLeft,this.drag.offsetTop,idss);
+ 	};
+     $("#"+idss).css("background","url(/${res}/images/post.png) no-repeat");
+     $("#"+idss).css("border","0px solid #f60");
+     $("#"+idss).css({  
+         "top"  : Y,  
+         "left" : X,
+         "width":25,
+         "height":25,
+         "z-index":99
+     });
+     $(".t"+idss).css({  
+         "width":25,
+         "height":25,
+         "padding-left":25
+     }); 
+     $("#"+idss).bind("click", function () {
+	     $("#"+idss).css("background","url(/${res}/images/post.png) no-repeat rgb(62, 142, 7)");
+	     $("#"+idss).css({  
+	    	 "width":175,
+	         "height":55
+	     });
+	     $(".t"+idss).css({  
+	         "width":150
+	     });
+	     $(".t"+idss).text("["+$("#no2").val()+"]"+inputInfo);
+	     
+     });    
+    $("#"+idss).bind("mouseout", function () {
+	     $(".t"+idss).text("");
+	     $("#"+idss).css("background","url(/${res}/images/post.png) no-repeat");
+	     $("#"+idss).css({  
+	         "width":25,
+	         "height":25
+	     });
+	     $(".t"+idss).css({  
+	         "width":25
+	     });
+     });
+    $("#"+idss).bind("mouseup", function (oEvent) {
+    	document.oncontextmenu = function () {
+			window.event.returnValue = false; 
+		}    
+		document.oncontextmenu=function(e){ 
+			return false;       
+		} 
+    	if (!oEvent) oEvent=window.event;
+        if (oEvent.button==2) {
+        	delAddHtml(idss);
+        	$("#"+idss).remove();
+        }
+     });
+     var tpHtml=document.getElementById(idss).outerHTML;//获取整个批注的HTML代码
+     var contentId=$("#no3").val();//文章ID
+     var userId=$("#no4").val();//添加批注的用户; 
+     $.ajax({
+         url: "${base}/blog/addTpHtml.jspx?X="+X+"&Y="+Y+"&contentId="+contentId+"&userId="+userId+"&inputInfo="+inputInfo+"&idss="+idss,
+         type: "POST",
+         dataType:"json",
+         data: "",
+         success: function (data) {
+         }
+     }); 
+} 
+
+</script>
+<script type="text/javascript">
+function Drag()
+{
+	//初始化
+	this.initialize.apply(this, arguments)
+}
+Drag.prototype = {
+	//初始化
+	initialize : function (drag, options)
+	{
+		this.drag = this.$(drag);
+		this._x = this._y = 0;
+		this._moveDrag = this.bind(this, this.moveDrag);
+		this._stopDrag = this.bind(this, this.stopDrag);
+		
+		this.setOptions(options);
+		
+		this.handle = this.$(this.options.handle);
+		this.maxContainer = this.$(this.options.maxContainer);
+		
+		this.maxTop = Math.max(this.maxContainer.clientHeight, this.maxContainer.scrollHeight) - this.drag.offsetHeight;
+		this.maxLeft = Math.max(this.maxContainer.clientWidth, this.maxContainer.scrollWidth) - this.drag.offsetWidth;
+		
+		this.limit = this.options.limit;
+		this.lockX = this.options.lockX;
+		this.lockY = this.options.lockY;
+		this.lock = this.options.lock;
+		
+		this.onStart = this.options.onStart;
+		this.onMove = this.options.onMove;
+		this.onStop = this.options.onStop;
+		
+		this.handle.style.cursor = "move";
+		
+		this.changeLayout();
+		
+		this.addHandler(this.handle, "mousedown", this.bind(this, this.startDrag))
+	},
+	changeLayout : function ()
+	{
+		this.drag.style.top = this.drag.offsetTop + "px";
+		this.drag.style.left = this.drag.offsetLeft + "px";
+		this.drag.style.position = "absolute";
+		this.drag.style.margin = "0"
+	},
+	startDrag : function (event)
+	{		
+		var event = event || window.event;
+		
+		this._x = event.clientX - this.drag.offsetLeft;
+		this._y = event.clientY - this.drag.offsetTop;
+		
+		this.addHandler(document, "mousemove", this._moveDrag);
+		this.addHandler(document, "mouseup", this._stopDrag);
+		
+		event.preventDefault && event.preventDefault();
+		this.handle.setCapture && this.handle.setCapture();
+		
+		this.onStart()
+	},
+	moveDrag : function (event)
+	{
+		var event = event || window.event;
+		
+		var iTop = event.clientY - this._y;
+		var iLeft = event.clientX - this._x;
+		
+		if (this.lock) return;
+		
+		this.limit && (iTop < 0 && (iTop = 0), iLeft < 0 && (iLeft = 0), iTop > this.maxTop && (iTop = this.maxTop), iLeft > this.maxLeft && (iLeft = this.maxLeft));
+		
+		this.lockY || (this.drag.style.top = iTop + "px");
+		this.lockX || (this.drag.style.left = iLeft + "px");
+		
+		event.preventDefault && event.preventDefault();
+		
+		this.onMove()
+	},
+	stopDrag : function ()
+	{
+		this.removeHandler(document, "mousemove", this._moveDrag);
+		this.removeHandler(document, "mouseup", this._stopDrag);
+		
+		this.handle.releaseCapture && this.handle.releaseCapture();
+		
+		this.onStop()
+	},
+	//参数设置
+	setOptions : function (options)
+	{
+		this.options =
+		{
+			handle:			this.drag, //事件对象
+			limit:			true, //锁定范围
+			lock:			false, //锁定位置
+			lockX:			false, //锁定水平位置
+			lockY:			false, //锁定垂直位置
+			maxContainer:	document.documentElement || document.body, //指定限制容器
+			onStart:		function () {}, //开始时回调函数
+			onMove:			function () {}, //拖拽时回调函数
+			onStop:			function () {
+				
+			}  //停止时回调函数
+		};
+		for (var p in options) this.options[p] = options[p]
+	},
+	//获取id
+	$ : function (id)
+	{
+		return typeof id === "string" ? document.getElementById(id) : id
+	},
+	//添加绑定事件
+	addHandler : function (oElement, sEventType, fnHandler)
+	{
+		return oElement.addEventListener ? oElement.addEventListener(sEventType, fnHandler, false) : oElement.attachEvent("on" + sEventType, fnHandler)
+	},
+	//删除绑定事件
+	removeHandler : function (oElement, sEventType, fnHandler)
+	{
+		return oElement.removeEventListener ? oElement.removeEventListener(sEventType, fnHandler, false) : oElement.detachEvent("on" + sEventType, fnHandler)
+	},
+	//绑定事件到对象
+	bind : function (object, fnHandler)
+	{
+		return function ()
+		{
+			return fnHandler.apply(object, arguments)	
+		}
+	}
+};
+//应用
+ window.onload = function ()
+{
+	var oBox = document.getElementById("fudong");
+	var padLe=$(".bd-padding").offset().left+865;
+	$(oBox).css({
+		
+	});
+	var oTitle = oBox.getElementsByTagName("h2")[0];
+	var oDrag = new Drag(oBox, {handle:oTitle, limit:false});
+	oDrag.lock = !oDrag.lock;
+};
+
+
+ window.onresize=function(){  
+	 var cc =$(".xueke-acticle");
+	 var xuekeOffset =  $(".xueke-acticle").offset();
+	 if(xuekeOffset!=undefined && xuekeOffset!='undefined'){
+		 var padLe=xuekeOffset.left+735;
+		 $("#fudong").css({
+				"left":padLe
+			});
+	 }
+	
+}
+</script>
+<script type="text/javascript">
+	$(function() {
+		$.ajax({
+	         url: "${base}/blog/searchPostil.jspx?contentId="+$("#no3").val(),
+	         type: "POST",
+	         dataType:"json",
+	         data: "",
+	         async: false,
+	         success: function (data) {
+	 				for(var i=0;i<data.length;i++){
+						var layer = data[i].postilDiv;
+					    $(layer).fadeIn(400).appendTo("body");
+						$("#"+data[i].postilDivId).css("background","url(/${res}/images/post.png) no-repeat");
+					    var oBox = document.getElementById(data[i].postilDivId);
+					    var oTitle = oBox.getElementsByTagName("h2")[0];
+					    var oDrag = new Drag(oBox, {handle:oTitle, limit:false});
+					    (function(){
+					    var ids=data[i].postilDivId;
+					    var nam=data[i].postilName;
+					    var inp=data[i].postilInput;
+					    oDrag.onStop = function ()
+						{
+							 updateDragCoordinate(this.drag.offsetLeft,this.drag.offsetTop,ids);
+						};
+						    $("#"+data[i].postilDivId).bind("click", function () {
+							      $("#"+ids).css("background","url(/${res}/images/post.png) no-repeat rgb(62, 142, 7)");
+							      $("#"+ids).css({  
+							         "width":175,
+							         "height":55
+							     });
+							      $(".t"+ids).css({  
+								         "width":150
+								     });
+							     $(".t"+ids).text("["+nam+"]"+inp);
+						     });    
+						  $("#"+data[i].postilDivId).bind("mouseout", function () {
+							     $("#"+ids).css("background","url(/${res}/images/post.png) no-repeat");
+							     $(".t"+ids).text("");
+							      $("#"+ids).css({  
+							         "width":25,
+							         "height":25
+							     });
+							     $(".t"+ids).css({  
+							         "width":25
+							     });
+						     });
+						    
+						    $("#"+ids).bind("mouseup", function (oEvent) {
+						    	document.oncontextmenu = function () {
+									window.event.returnValue = false; 
+								}    
+								document.oncontextmenu=function(e){ 
+									return false;       
+								} 
+						    	if (!oEvent) oEvent=window.event;
+						        if (oEvent.button==2) {
+						            delAddHtml(ids);
+						        	$("#"+ids).unbind("mouseup");
+						        	$("#"+ids).remove();
+						        }
+						     });
+							
+					    })();    
+	 				}
+	         }
+	     }); 
+	});
+	
+
+	$("#sentDialog").dialog({
+		autoOpen: false,
+		modal: false,
+		resizable :false,
+		stack : false,
+		draggable : true,
+		closeOnEscape : false,
+		width: 300,
+		height: 220,
+		open:function(event,ui){
+			$(".ui-dialog-titlebar-close").hide();
+		},
+		position: ["center",80],
+		
+		close: function(event, ui) {
+		},
+	    buttons: {
+            "确定": function () {
+            	$("#sendeeSapn").html("");
+            	$("#validateCodeSapn").html("");
+            	var sendee=$("#sendee").val();
+            	var validateCode=$("#validateCode").val();
+            	if(sendee==null || sendee==""){
+            		$("#sendeeSapn").html("必填！");
+            		return;
+            	}
+            	if(validateCode==null || validateCode==""){
+            		$("#validateCodeSapn").html("必填！");
+            		return;
+            	}
+            	if(isNaN(validateCode)){
+            		$("#validateCodeSapn").html("输数字！");
+            		return;
+            	}
+            	 $.ajax({
+ 	                type: 'POST',
+ 	                url : ' ${base}/blog/sendArticle.jspx',
+ 	                dataType : 'json',
+ 	                data : {'contentId' : $("#contentId").val(),'sendee':sendee,'validateCode':validateCode,'contTitle' : $("#contTitle").val()},
+ 	                success : function(datas){
+ 	                	 var code =datas.code;
+ 	                	 if(code=="fail"){
+ 	                		 msg = datas.msg;
+ 	                		 if(msg==1){
+ 	                			alert("您输入的发件人有误！");
+ 	                		 }else if(msg==2){
+ 	                			alert("您输入的验证码有误！");
+ 	                		 }else if(msg==3){
+ 	                			alert("此栏目不允许发送！");
+ 	                			$("#sentDialog").dialog("close");
+ 	                		 }else if(msg==4){
+ 	                			alert("该文章已经存在！");
+ 	                			$("#sentDialog").dialog("close");
+ 	                		 }else if(msg==5){
+ 	                			alert("请先登录！");
+ 	                			$("#sentDialog").dialog("close");
+ 	                		 }else if(msg==6){
+ 	                			alert("该文章已经存在！");
+ 	                			$("#sentDialog").dialog("close");
+ 	                		 }else{
+ 	                			alert("发送失败！");
+ 	                			$("#sentDialog").dialog("close");
+ 	                		 }
+ 	                		
+ 	                	 }else{
+ 	                		alert("发送成功！");
+ 	                		$("#sentDialog").dialog("close");
+ 	                	 }
+            	   	 }
+           			 });
+            	 
+            	 
+            	 
+            	 
+            	 
+            	 
+            	 
+            	 
+            },
+            "取消": function () {
+                $(this).dialog("close");
+            }
+        },
+	});	  
+	
+	function send(){
+		$("#sentDialog").dialog("open");
+	}
+	function cancel(){
+		 $("#cancelDialog").dialog({  
+             resizable: false,  
+             width: 300,
+     		 height: 200, 
+             modal: true, 
+             position: ["center",80],
+             buttons: {  
+                 "确定": function () {  
+                	 
+                	 $.ajax({
+      	                type: 'POST',
+      	                url : ' ${base}/blog/cancelArticle.jspx',
+      	                dataType : 'json',
+      	                data : {'contentId' : $("#contentId").val()},
+      	                success : function(datas){
+      	                	var code =datas.code;
+     	                	 if(code=="fail"){
+     	                		 msg = datas.msg;
+     	                		 if(msg=="2"){
+     	                			alert("请先登录！");
+     	                		 }else{
+     	                			alert("撤销失败！");
+     	                		 }
+     	                		$("#sentDialog").dialog("close");
+     	                	 }else{
+     	                		alert("撤销成功！");
+     	                		$("#sentDialog").dialog("close");
+     	                	 }
+
+                 	   	 }
+                			 });
+                     $(this).dialog("close");  
+                 },  
+                 "取消": function () {  
+                     $(this).dialog("close");  
+                 }  
+             }  
+         });  
+	}
+	
+	function removeDialog(){
+		 $("#removeDialog").dialog({  
+            resizable: false,  
+            width: 300,
+    		 height: 200, 
+            modal: true, 
+            position: ["center",80],
+            buttons: {  
+                "确定": function () {  
+               	 
+               	 $.ajax({
+     	                type: 'POST',
+     	                url : ' ${base}/blog/removeArticle.jspx',
+     	                dataType : 'json',
+     	                data : {'contentId' : $("#contentId").val()},
+     	                success : function(datas){
+     	                	var code =datas.code;
+    	                	 if(code=="fail"){
+    	                		 msg = datas.msg;
+     	                		 if(msg=="2"){
+     	                			alert("请先登录！");
+     	                		 }else{
+     	                			alert("移除失败！");
+     	                		 }
+    	                		$("#removeDialog").dialog("close");
+    	                		
+    	                	 }else{
+    	                		alert("移除成功！");
+    	                		$("#removeDialog").dialog("close");
+    	                	 }
+
+                	   	 }
+               			 });
+                    $(this).dialog("close");  
+                },  
+                "取消": function () {  
+                    $(this).dialog("close");  
+                }  
+            }  
+        });  
+	}
+	
+	function closeSendDialog(){
+		$("#sentDialog").dialog("close");
+	}
+	function stick(contentId,contentTitle,releaseDate,flag){
+	 	 $.ajax({
+              type: 'POST',
+              url : ' ${base}/blog/contentStick.jspx',
+              dataType : 'json',
+              data : {'contentId' : contentId,'contentTitle' : contentTitle,'releaseDate' : releaseDate},
+              success : function(datas){
+              	var code =datas.code;
+             	 if(code=="fail"){
+             		msg = datas.msg;
+            		 if(msg=="2"){
+            			alert("请先登录！");
+            		 }else if(msg=="3"){
+            			alert("最多置顶10篇文章！");
+            		 }else{
+            			alert("置顶失败！");
+            		 }
+             		
+             	 }else{
+             		alert("置顶成功！");
+             		if(flag==1){
+             			$("#stickSpan").html("");
+                		var stickHtml = "<a href=\"javascript:void(0);\" onclick=\"canCelstick(${content.id},1);\">取消置顶</a>";
+                		$("#stickSpan").html(stickHtml);	
+             		}else{
+             			$("#cancelStickSpan").html("");
+             			var stickHtml = "<a href=\"javascript:void(0);\" onclick=\"canCelstick(${content.id},0);\">取消置顶</a>";
+             			$("#cancelStickSpan").html(stickHtml);	
+             		}
+             	
+             	 }
+
+     	   		 }
+    		 });
+	}
+	
+	function canCelstick(contentId,flag){
+	 	 $.ajax({
+             type: 'POST',
+             url : ' ${base}/blog/cancelStick.jspx',
+             dataType : 'json',
+             data : {'contentId' : contentId},
+             success : function(datas){
+             	var code =datas.code;
+            	 if(code=="fail"){
+            		msg = datas.msg;
+           		 if(msg=="2"){
+           			alert("请先登录！");
+           		 }else{
+           			alert("取消置顶失败！");
+           		 }
+            		
+            	 }else{
+            		alert("取消置顶成功！");
+            		if(flag==1){
+             			$("#stickSpan").html("");
+             			var stickHtml = "<a href=\"javascript:void(0);\" onclick=\"stick(${content.id},'${content.title}','${content.releaseDate}',1);\">置顶</a>";
+                		$("#stickSpan").html(stickHtml);	
+             		}else{
+             			$("#cancelStickSpan").html("");
+             			var stickHtml = "<a href=\"javascript:void(0);\" onclick=\"stick(${content.id},'${content.title}','${content.releaseDate}',0);\">置顶</a>";
+             			$("#cancelStickSpan").html(stickHtml);	
+             		}
+            	 }
+
+    	   		 }
+   		 });
+	}
+	function contributeDelete(ids){
+		var delUrl ="${base}/blog/ajax_contribute_delete.jspx?ids="+ids;
+		if(confirm('确定要删除吗?')) {
+			$.ajax({
+		           type: 'GET',
+		           url : delUrl,
+		           dataType:"text",
+		           async: true,
+		           success : function(datas){
+		        	  var code =datas;
+		        	  if(code=="success"){
+		        		  alert("删除成功！");
+		        		  $.ajax({
+		       	           type: 'POST',
+		       	           url : '${base}/blog/indexs.jspx',
+		       	           dataType:"html",
+		       	           async: true,
+		       	           success : function(datas){
+		       	        	var wzid=document.getElementById('wzId');
+		            		 if(wzid!=null){
+		            			 document.getElementById('wzId').innerHTML="";
+		            		 }
+		            		 var maindiv=document.getElementById('maindiv');
+		            		 if(maindiv!=null){
+		            			 document.getElementById('maindiv').innerHTML="";
+		            		 }
+		       	               $(".wrap-right").append(datas);		
+		       	  	   		 }
+		       	 	});
+		        	  }else if(code=="login"){
+		        		  alert("登录状态失效,请先登录！");
+  		        	  }else{
+		        		  alert("删除失败！");
+		        	  }
+		  	   		 }
+		 	});
+		}
+	}
+	function contributeUpdate(id){
+		var updateUrl ="${base}/blog/contribute_ajax_edit.jspx?id="+id;
+		 $.ajax({
+             type: 'POST',
+             url : updateUrl,
+              dataType:"html",
+             data : {},
+             success : function(datas){
+            	 if(datas=="login"){
+	            		 location.href="${base}/login.jspx";
+	            	 }else{
+	            		 var wzid=document.getElementById('wzId');
+	            		 if(wzid!=null){
+	            			 document.getElementById('wzId').innerHTML="";
+	            		 }
+	            		 var maindiv=document.getElementById('maindiv');
+	            		 if(maindiv!=null){
+	            			 document.getElementById('maindiv').innerHTML="";
+	            		 }
+	                	 $(".wrap-right").append(datas);
+	            	 }
+            	
+    	   		 }
+   		 });
+		 
+			
+	}
+</script>
+<script type="text/javascript">
+
+function updateDragCoordinate(leftX,topY,postilId){
+	 $.ajax({
+         url: "${base}/blog/updateDragCoordinate.jspx?leftX="+leftX+"&topY="+topY+"&postilId="+postilId,
+         type: "POST",
+         dataType:"json",
+         data: "",
+         success: function (data) {
+         }
+     }); 
+}
+
+function delAddHtml(obj){
+	 $.ajax({
+         url: "${base}/blog/delAddHtml.jspx?postilId="+obj,
+         type: "POST",
+         dataType:"json",
+         data: "",
+         success: function (data) {
+         }
+     });
+}
+
+
+</script>
+<script type="text/javascript">
+function okp(){
+	var i=$("#posInfo").val();
+	if(i.length<=30){
+	  $("#words").text("可写字数:"+(30-i.length));
+	}else{
+		$("#posInfo").val($("#posInfo").val().substring(0,30));
+		$("#words").text("可写字数:"+0);
+	}
+}
+
+function okps(){
+	 setTimeout(function() {  
+		 var i=$("#posInfo").val();
+			if(i.length<=30){
+			  $("#words").text("可写字数:"+(30-i.length));
+			}else{
+				$("#posInfo").val($("#posInfo").val().substring(0,30));
+				$("#words").text("可写字数:"+0);
+			} 
+	    },1);
+}
+
+
+</script>
+<script type="text/javascript">
+	
+function cp(path,id){
+	var urlcp = 'http://www.cerhy.com/'+path+'/'+id+'.jhtml?wx=wx';
+	prompt("请使用Ctrl+c或鼠标右击复制下框中的博客链接地址：",urlcp);
+}
+	
+	function backContentList(url){
+		if(typeof($("#no3").val())!='undefined'){
+			 delPos();
+		};
+		var noone = $("#noone").val();
+		var notwo = $("#notwo").val();
+		var templatePageNos = $("#templatePageNos").val();
+		if(noone == 1){
+			var channelIds = $("#channelIdscp").val();
+			var joinGroupStatas = $("#joinGroupStatascp").val();
+			var columnIds = $("#columnIdscp").val();
+			var uids = $("#uidscp").val();
+			myblogTwo(channelIds,joinGroupStatas,columnIds,uids,templatePageNos);
+			return false;
+		}
+		if(notwo == 2){
+			var url = $("#ownCollectionUrl").val();
+			ownCollectionTwo(url,templatePageNos);
+			return false;
+		}
+		var newurl=url + "?pageNo="+templatePageNos;
+		$.ajax({
+	           type: 'POST',
+	           url : newurl,
+	           dataType:"html",
+	           async: true,
+	           success : function(datas){
+	        	   if(datas=="login"){
+	            		 location.href="${base}/login.jspx";
+	            	 }else{
+	            		 var wzid=document.getElementById('wzId');
+	            		 if(wzid!=null){
+	            			 document.getElementById('wzId').innerHTML="";
+	            		 }
+	            		 var maindiv=document.getElementById('maindiv');
+	            		 if(maindiv!=null){
+	            			 document.getElementById('maindiv').innerHTML="";
+	            		 }
+	   	               $(".wrap-right").append(datas);	
+	            	 }
+	        	 	
+	  	   		 }
+	 	});
+	}
+	
+</script>
+

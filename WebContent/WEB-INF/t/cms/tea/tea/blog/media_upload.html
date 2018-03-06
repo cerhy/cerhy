@@ -1,0 +1,113 @@
+<script type="text/javascript">
+//上传附件
+function uploadMedia() {
+	
+	
+ 	//var mf = $("#mediaFile");
+ 	
+	/* //检查是否选择了文件
+	if(mf.val()=="") {
+		$.alert("[@s.m 'global.prompt'/]","没有选择文件！");
+		return;
+	} */
+	//将file移动至上传表单
+	/* $("#mediaContent").empty();
+	$("#mediaContent").append(mf);
+	//复制一个file放至原处
+	$("#mfc").append(mf.clone().attr('value',''));
+	//修改属性
+	mf.attr("id","");
+	$("#mediaFileText").attr('value','');
+	//其他表单
+	$("#mediaFilename").val($("#origFilename").val());  */
+	var isSuccess =  fileSelected();
+	if(isSuccess){
+		uploadFi();
+	}
+	
+//$("#mediaForm").submit();
+}
+
+function fileSelected() {
+	$("#tishi").html("");
+	 var mf = $("#mediaFile");
+	 
+	 var filef = mf[0].files[0];
+ 	 if(filef==null){
+ 		$("#tishiType").html("*没有选择文件");
+ 		return;
+ 	 }
+ 	 
+	 var fileName = mf[0].files[0].name;
+	 var fileExtension = fileName.substring(fileName.lastIndexOf('.') + 1);
+	 if(fileExtension!='mp4'){
+	    	$("#tishiType").html("*文件格式不对，必须是MP4格式!");
+	    	return false;
+	    }
+	 var fileSize = mf[0].files[0].size;
+	 var proressLenth=0;
+	 var maxSize = Math.round(fileSize * 100 / (1024 * 1024)) / 100;
+	 if(maxSize>200){
+		 $("#tishiType").html("*上传视频过大，不能大于200M!");
+		 return false;
+	 }
+	 $("#progressId").attr("max",100);
+   
+   return true;
+  }
+   
+function uploadFi() {
+	$("#progressSapn").css("display","block");
+    var fd = new FormData();
+    fd.append("mediaFile", document.getElementById('mediaFile').files[0]);
+    var xhr = new XMLHttpRequest();
+  
+    xhr.upload.addEventListener("progress", uploadPro, false);
+    xhr.addEventListener("load", uploadComp, false);
+    xhr.addEventListener("error", uploadFai, false);
+    xhr.addEventListener("abort", uploadCanc, false);
+    
+    xhr.open("POST", "${base}/member/o_upload_media.jspx",true);//修改成自己的接口
+    xhr.overrideMimeType("text/html;charset=utf-8");
+    xhr.onreadystatechange = function(){
+        if(this.readyState == 4){
+            var map = eval('('+ this.responseText +')');
+            var code = map.code;
+            if(code=="fail"){
+            	  $("#tishi").html(map.msg);
+            }else{
+            	 $("#mediaPath").val(map.mediaPath);
+            	 $("#tishi").html("&nbsp;&nbsp;&nbsp;上传成功！"); 
+            } 
+        }
+    };
+    xhr.send(fd);
+  }
+  
+function uploadPro(evt) {
+    if (evt.lengthComputable) {
+      var percentComplete = Math.round(evt.loaded * 100 / evt.total);
+      $("#progressId").attr("value",percentComplete.toString());
+    }
+    else {
+    	 $("#progressId").attr("value","10");
+    }
+  }
+  
+function uploadComp(evt) {
+	//debugger;
+    /* 服务器端返回响应时候触发event事件*/
+    /*  $("#tishi").html("&nbsp;&nbsp;&nbsp;上传成功！"); */
+  }
+function uploadFai(evt) {
+	 $("#tishi").html("上载文件时出错！");
+  }
+  function uploadCanc(evt) {
+	  $("#tishi").html("用户取消上传！");
+  }
+</script>
+<form id="mediaForm" action="${base}/member/o_upload_media.jspx" method="post" enctype="multipart/form-data" target="media_iframe" style="display:none;width:0px;height:0px;">
+<span id="mediaContent"></span>
+<input type="hidden" id="mediaFilename" name="filename"/>
+</form>
+<!-- <iframe name="media_iframe" frameborder="0" border="0" style="display:none;width:0px;height:0px;"></iframe> -->

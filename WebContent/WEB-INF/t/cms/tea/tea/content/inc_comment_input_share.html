@@ -1,0 +1,154 @@
+<style type="text/css">
+.submit-on {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 3px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+}
+
+.submit-on:hover {
+    box-shadow: 0 3px 4px 0 rgba(0,0,0,0.24),0 8px 30px 0 rgba(0,0,0,0.19);
+}
+</style>
+<section class="comments">
+      <h3>评论<span id="addCm">&nbsp;已有<input id="adcms" name="adcms" value="${content.commentsCheckedNum!}" style="width:30px;border:none;text-align:center;" readonly/>条</span></h3>
+      [#if content.channel.commentControl==0 || ((content.channel.commentControl==1||content.channel.commentControl==3))]
+      <form id="commentForm" action="${base}/ajaxsubmit.jspx" method="post">
+      <textarea name="text" placeholder="发表你此时的观点和想法 ……" class="comments-text" id="comments-text"></textarea>
+	    <div class="plfr1 clearfix">
+		    <div>
+	       <input type="hidden" name="contentId" value="${content.id}"/>
+	       <input type="hidden" name="sessionId" id="sessionId" />
+	      <input type="button"  onclick="ajaxconmit('commentForm')" value="提交评论" class="submit-on">
+	      </div>
+       </div>
+       </form>
+       <script type="text/javascript">
+    $(function() {
+    	
+    	$(".xueke-content-detail p img").each(function(){
+    		var width =$(this).width();
+    		var height = $(this).height();
+    		if(width>600){
+    			var shang =  (width/height).toFixed(2);
+    			var newHeight = parseInt(600/shang);
+    			$(this).css("width","600px");
+    			$(this).css("height",newHeight+"px");
+    	}
+    	})
+    	
+    	$(".xueke-content-detail .img-box span img").each(function(){
+		var width =$(this).width();
+		var height = $(this).height();
+		if(width>600){
+			var shang =  (width/height).toFixed(2);
+			var newHeight = parseInt(600/shang);
+			$(this).css("width","600px");
+			$(this).css("height",newHeight+"px");
+	}
+	})
+	
+	
+       $("#sessionId").val($.cookie("JSESSIONID"));
+        Cms.comment(function(data) {
+            if(data.status==0) {
+                alert("评论成功");
+                location.href=location.href;
+            } /* else if(data.status==1) {	
+                alert("验证码错误");
+                $("#commentCaptcha").click();
+            }  */else if(data.status==2) {	
+                alert("内容不存在");
+                $("#commentCaptcha").click();
+            } else if(data.status==3) {	
+                alert("评论关闭");
+                $("#commentCaptcha").click();
+            } else if(data.status==4) {	
+                alert("需要登录评论");
+                $("#commentCaptcha").click();
+            }else if(data.status==5) {	
+                alert("已经评论过，不能重复评论");
+                $("#commentCaptcha").click();
+            } else if(data.status==100) {	
+                alert("内容不存在");
+                $("#commentCaptcha").click();
+            } else if(data.status==101) {	
+                alert("评论不能为空");
+                $("#commentCaptcha").click();
+            } else {
+                alert("评论失败");
+                $("#commentCaptcha").click();
+            }
+        });
+    });
+    function ajaxconmit(formId){
+    	$.ajax({
+            dataType : 'json',
+            type: "POST",
+            url: "${base}/ajaxsubmit.jspx",
+            data:$('#'+formId).serialize(),// 你的formid
+            error: function(request) {
+                alert("Connection error");
+            },
+            success: function(data) {
+            	var commentTemplate = $("#adcms").val();
+            	//console.log(data);
+            	   if(data.status==0) {
+                       alert("评论成功");
+                       commentTemplate++;
+                      var html="";
+                      	  html+="<div id=\"commentListContainer\"></div>";
+                      	html+="<script type=\"text/javascript\">";
+                      	html+="$(function(){";
+                      	html+="Cms.commentShareList(\"${base}\",\"commentListContainer\",{contentId:${content.id},orderBy:0,count:100,checked:1});";
+                      	html+="});";
+                      	html+="<\/script>";
+                      	$("#comments-text").val("");
+                      	$("#adcms").val(commentTemplate);
+                      	$("#commentListContainer").remove();
+                        $(".news-comments").append(html);
+                   } else if(data.status==2) {	
+                       alert("内容不存在");
+                      
+                   } else if(data.status==3) {	
+                       alert("评论关闭");
+                      
+                   } else if(data.status==4) {	
+                       alert("需要登录评论");
+                      
+                   }else if(data.status==5) {	
+                       alert("已经评论过，不能重复评论");
+                      
+                   } else if(data.status==100) {	
+                       alert("内容不存在");
+                      
+                   } else if(data.status==101) {	
+                       alert("评论不能为空");
+                      
+                   } else {
+                       alert("评论失败");
+                      
+                   }
+            }
+        });
+    }
+    </script>
+    [#elseif content.channel.commentControl!=2 && !user??]
+    [#--登录评论，且未登录--]
+    <div class="clearfix" style="padding-left: 500px;">
+    <img style="margin-bottom: -10px;" src="/${res}/images/userImg.png" class="userImg"><span>
+    <a href="${base}/login.jspx?returnUrl=/" style="color: red;">登录</a>之后才能发表评论</span>
+    </div>
+    [#else]
+    [#--不允许评论--]
+    [/#if]
+</section> 
+
