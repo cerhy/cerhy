@@ -257,7 +257,10 @@
     <servlet-name>JeeCmsFront</servlet-name>
     <url-pattern>/ws/*</url-pattern>
   </servlet-mapping>
-  
+  <servlet-mapping>
+    <servlet-name>JeeCmsFront</servlet-name>
+    <url-pattern>/tea/*</url-pattern>
+  </servlet-mapping>
     <servlet-mapping>
     <servlet-name>JeeCmsFront</servlet-name>
     <url-pattern>/CommunityStudy/index</url-pattern>
