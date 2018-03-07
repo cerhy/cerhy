@@ -14,8 +14,6 @@ body
 
 	/* Remove the background color to make it transparent */
 	background-color: #fff;
-
-	margin: 20px;
 }
 
 .cke_editable
@@ -94,10 +92,7 @@ img.left
 
 pre
 {
-	white-space: pre-wrap; /* CSS 2.1 */
-	word-wrap: break-word; /* IE7 */
-	-moz-tab-size: 4;
-	tab-size: 4;
+	text-indent:0em; padding:0px; margin:0px;
 }
 
 .marker
@@ -205,4 +200,9 @@ a > img {
 	max-width: 1920px;
 	max-height: 1080px;
 	margin:0 auto;
+}
+
+
+p{
+	text-indent:2em;
 }
