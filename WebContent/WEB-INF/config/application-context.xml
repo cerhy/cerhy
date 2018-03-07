@@ -43,7 +43,7 @@ default-lazy-init="true">
 		<property name="maxIdleTime" value="${cpool.maxIdleTime}"/>
 		<property name="acquireIncrement" value="${cpool.acquireIncrement}"/>
 		<property name="maxIdleTimeExcessConnections" value="${cpool.maxIdleTimeExcessConnections}"/>
-		<property name="idleConnectionTestPeriod" value="${cpool.idleConnectionTestPeriod}"/>   
+		<property name="idleConnectionTestPeriod" value="${cpool.idleConnectionTestPeriod}"/>
 	</bean>
 	
 	<!--  
