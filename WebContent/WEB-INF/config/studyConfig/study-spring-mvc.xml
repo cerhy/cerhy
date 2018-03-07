@@ -12,7 +12,11 @@
 	<!-- id="(controller类名)"  class="com.jeecms.cms.action.front.DynamicPageAct" -->
 	<!-- 社区研修 -->
 	<bean id="CommunityStudyController" class="com.study.communitystudy.CommunityStudyController"/>
+	<!-- 好师社区 -->
 	<bean id="CommunityAct" class="com.study.communitystudy.CommunityAct"/>
+	<!-- 工作坊 -->
 	<bean id="WorkShopAct" class="com.study.communitystudy.WorkShopAct"/>
+	<!-- 继续教育(测试用) -->
+	<bean id="ContinuingEducationAct" class="com.study.communitystudy.ContinuingEducationAct"/>
 	
 </beans>
