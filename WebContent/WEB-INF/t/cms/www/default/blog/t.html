@@ -1,0 +1,230 @@
+<!DOCTYPE HTML>
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>${content.title}</title>
+<link rel="shortcut icon" href="/${res}/images/cerhyheard.png" type="image/x-icon" />
+<meta content="${content.tagStr!}" http-equiv="keywords" />
+<meta content="${content.description!}" http-equiv="description" />
+<script src="${resSys}/jquery.js" type="text/javascript"></script>
+<script src="${resSys}/jqueryUI/jquery-ui.js" type="text/javascript"></script>
+<script src="${resSys}/front.js" type="text/javascript"></script>
+<script src="${resSys}/ckplayer/ckplayer.js" type="text/javascript"></script>
+<script src="${resSys}/ckplayer/offlights.js" type="text/javascript"></script>
+<link type="text/css" rel="stylesheet" href="/${res}/css/main.css" />
+<link type="text/css" rel="stylesheet" href="/${res}/css/custom.css" />
+<link href="${resSys}/jqueryUI/jquery.ui.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="${resSys}/postil.js"></script>
+<script type="text/javascript" src="${resSys}/artDialog.min.js"></script>
+<script type="text/javascript" src="${base}/res/common/js/jquery.qrcode.min.js"></script>
+<link rel="stylesheet" href="${base}/res/common/css/base.css">
+<style>
+/* overide */
+a {
+	color: #000;
+}
+
+.qs-i {
+	width: 190px;
+}
+
+.mi5:hover,.tb1:hover {
+	color: #fff;
+	background: #006F00;
+}
+
+.mi5bar {
+	background-color: #008A00;
+	border-color: #008A00;
+}
+
+/* extend */
+.toc-row {
+	margin: 0 0 10px 0;
+	padding: 6px 16px 6px 86px;
+	background: #fff no-repeat 20px 20px;
+	border: 1px solid #ddd;
+}
+
+.toc-row.active {
+	border-color: #999;
+}
+
+.toc-img {
+	margin: 8px 10px 0 0;
+	max-width: 120px;
+	max-height: 120px; /*_width: 120px; _height: 120px;*/
+	float: left;
+}
+
+.toc-cap {
+	font-size: 18px;
+}
+
+.w-detail {
+	padding: 30px;
+	background: #fff;
+	border: 1px solid #ddd;
+	font-size: 16px;
+	line-height: 200%;
+	overflow: hidden;
+}
+
+p {
+	margin: 0;
+	text-indent: 2em;
+}
+
+td p {
+	text-indent: 0;
+}
+
+p img {
+	max-width: 90%;
+}
+
+.capx {
+	margin: 3px 10px 0 0;
+	font-size: 38px;
+	line-height: 38px;
+	float: left;
+}
+
+/* layout */
+@media screen {
+	body {
+		background: #f1f1f1;
+		border-top: 6px solid #008A00;
+	}
+	.x-wrap {
+		margin: 0 auto;
+		width: 960px;
+		padding-bottom: 20px;
+	}
+	.x-banner {
+		margin-bottom: 10px;
+		height: 120px;
+		position: relative;
+	}
+	.x-cap {
+		padding: 30px 10px 0 0;
+		color: #008A00;
+	}
+	.x-pane {
+		width: 680px;
+		float: left;
+	}
+	.x-sbr {
+		width: 260px;
+		float: right;
+	}
+}
+
+@media print {
+	.x-banner,.x-cap,.x-sbr,.w-comment {
+		display: none;
+	}
+	.w-detail {
+		margin: 0 auto;
+		padding: 0;
+		width: 620px;
+		border: 0;
+	}
+}
+
+@media screen and (max-width: 960px) {
+	* {
+		box-sizing: border-box;
+		max-width: 100%;
+	}
+	html,body {
+		height: 100%;
+		border: 0;
+	}
+	.x-tbr {
+		left: 0;
+		top: 0;
+		right: 0;
+		height: 50px;
+		background: #008a00;
+		color: #fff;
+		overflow: hidden;
+		position: fixed;
+	}
+	.x-page {
+		padding: 60px 0 0 0;
+	}
+	.w-detail {
+		border: 0;
+		padding: 10px;
+	}
+	.w-comment {
+		padding: 10px;
+	}
+}
+</style>
+<script type="text/javascript">
+jQuery(function(){
+	jQuery('#qrcode').qrcode({
+	    render: "canvas", //也可以替换为table
+	    width: 100,
+	    height: 100,
+	    foreground: "#008a00",
+	    background: "#f1f1f1",
+	    text: "http://www.cerhy.com/${content.channel.path}/${content.id}.jhtml?wx=wx"
+	});
+})
+
+$(window).load(function() {
+	$.ajax({
+        url: "${base}/blog/showContent.jspx?username=${content.user.username}&comm=2",
+        type: "POST",
+        dataType:"json",
+        data: "",
+        success: function (data) {
+        	var html="";
+        	for(var j=0;j<data.length;j++){
+        		html +="<li><a href='http://www.cerhy.com/bk/"+data[j].contentId+".jhtml'>"+data[j].contentTitle+"</a> <span class='lt'>"+data[j].contentDate+"</span></li>";
+	        };
+	        $("#appendXg").html(html);
+        }
+    });
+});
+</script>
+<base target="_blank">
+</head>
+<body>
+	<div class="loading" style="display: none;"></div>
+	<div class="x-wrap">
+		<div class="x-banner">
+			<div class="ftl" id="qrcode" style="margin: 10px 20px 0px 0px; width: 100px;" title="http://www.cerhy.com/${content.channel.path}/${content.id}.jhtml?wx=wx">
+			</div>
+			<div class="mi5bar" style="background-image: url(${content.user.userExt.userImg!});background-size:50px 50px;">
+				<a class="mi5" target="_blank" href="http://www.cerhy.com/blog/user/${content.user.username}">博客</a>
+			</div>
+			<div class="x-cap">
+				<span class="capx">[@text_cut s=content.title! len=1 append=""/]</span>${content.title}<br>${content.author!content.user.username}
+				@ ${content.releaseDate}
+			</div>
+		</div>
+		<div class="x-pane">
+			<div class="w-detail">
+				[#if preview??] [@text_cut s=txt! len=100 append="..."/]<br />
+						您需要更高的权限浏览全部内容!<br />以下会员组可浏览全部内容: [#list groups as g]
+				${g.name!}[#if g_has_next],[/#if] [/#list] [#else] <div>${txt!}</div> [/#if]
+			</div>
+			<div class="news-comments">
+                    [#include "../content/inc_comment_input.html"/]
+      				[#include "../content/inc_comment_list.html"/]
+				</div>
+		</div>
+		<div class="x-sbr">
+			<h2 style="border-top: 1px solid #ddd;">相关</h2>
+			<ul id="appendXg">
+			</ul>
+		</div>
+		<div class="clr"></div>
+		<div class="wi gtop"
+			style="opacity: 0.6; left: 1155px; display: none;"></div>
+	</div>
+</body>
+</html>

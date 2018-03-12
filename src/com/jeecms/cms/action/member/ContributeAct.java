@@ -2351,12 +2351,19 @@ public class ContributeAct extends AbstractContentMemberAct {
 		if(null!=uname){
 			param.setUserid(uname.getId().toString());
 			if(null!=request.getParameter("comm")&&request.getParameter("comm").equals("0")){
+				//好师社区置顶的文章8260
 				param.setCount("1");
 				param.setColumnID(columnID);
 			}else if(null!=request.getParameter("comm")&&request.getParameter("comm").equals("1")){
+				//好师社区文章列表8260
 				param.setCount("20");
 				param.setColumnID(columnID);
+			}else if(null!=request.getParameter("comm")&&request.getParameter("comm").equals("2")){
+				//文章页相关展示的文章
+				param.setCount("10");
+				param.setColumnID(null);
 			}else{
+				//继续教育首页文章列表
 				param.setCount("15");
 				param.setColumnID(columnID);
 			}

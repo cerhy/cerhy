@@ -3061,6 +3061,39 @@ public class BlogAct {
 		return FrontUtils.getTplPath(request, site.getSolutionPath(),TPLDIR_BLOG,"tpl.blogContentShare");
 	}
 	
+	public String blogContentEdu(String[] paths, String[] params,
+			PageInfo info, int pageNo, HttpServletRequest request,
+			HttpServletResponse response, ModelMap model, String f,
+			String columnId) {
+		Content content = contentMng.findById(Integer.parseInt(paths[1]));
+		if (content == null) {
+			log.debug("Content id not found: {}", paths[1]);
+			return FrontUtils.pageNotFound(request, response, model);
+		}
+		Integer pageCount=content.getPageCount();
+		if(pageNo>pageCount||pageNo<0){
+			return FrontUtils.pageNotFound(request, response, model);
+		}
+		//非终审文章
+		CmsConfig config=CmsUtils.getSite(request).getConfig();
+		config.getConfigAttr().getPreview();
+		CmsSite site = content.getSite();
+		if(site.getId()!=1){
+			site=siteMng.findById(1);
+		}
+		Set<CmsGroup> groups = content.getViewGroupsExt();
+		groups.size();
+		String txt = content.getTxtByNo(pageNo);
+		// 内容加上关键字
+		txt = cmsKeywordMng.attachKeyword(site.getId(), txt);
+		FrontUtils.frontPageData(request, model);
+		model.addAttribute("content", content);
+		model.addAttribute("title", content.getTitleByNo(pageNo));
+		model.addAttribute("txt", txt);
+		FrontUtils.frontData(request, model, site);
+		return FrontUtils.getTplPath(request, site.getSolutionPath(),TPLDIR_BLOG,"tpl.t");
+	}
+	
 	public String blogContentSharePc(String[] paths, String[] params,
 			PageInfo info, int pageNo, HttpServletRequest request,
 			HttpServletResponse response, ModelMap model, String f,
@@ -3260,4 +3293,5 @@ public class BlogAct {
 	protected ContentDao contentDao;
 	@Autowired
 	private CmsSiteMng siteMng;
+	
 }

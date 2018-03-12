@@ -320,7 +320,7 @@ function contentShow(columnID,username){
       onComplete: function(jsonObj) {
           var i = "";
           for(var j=0;j<jsonObj.length;j++){
-        	  i += "<li><span class='lt'>"+jsonObj[j].contentDate+" | </span><a href='http://www.cerhy.com/bk/"+jsonObj[j].contentId+".jhtml'>"+jsonObj[j].contentTitle+"</a>",
+        	  i += "<li><span class='lt'>"+jsonObj[j].contentDate+" | </span><a href='http://www.cerhy.com/t/"+jsonObj[j].contentId+".jhtml'>"+jsonObj[j].contentTitle+"</a>",
               (j + 1) % 5 == 0 && (i += "<hr/>")
           };
           i = "<ul>" + i + "</ul>",

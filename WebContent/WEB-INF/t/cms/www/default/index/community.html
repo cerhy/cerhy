@@ -246,7 +246,7 @@ App.implement({
 		      contentType:'application/json;charset=UTF-8',
 		      onComplete: function(jsonObj) {
 		          for(var j=0;j<jsonObj.length;j++){
-		        	  s +="<div class='slim-row'><a class='slim-cap' href='http://www.cerhy.com/bk/"+jsonObj[j].contentId+".jhtml'>"+jsonObj[j].contentTitle+"</a><div class='lt'>"+jsonObj[j].contentDate+","+jsonObj[j].contentAuthor+"</div></div>";
+		        	  s +="<div class='slim-row'><a class='slim-cap' href='http://www.cerhy.com/t/"+jsonObj[j].contentId+".jhtml'>"+jsonObj[j].contentTitle+"</a><div class='lt'>"+jsonObj[j].contentDate+","+jsonObj[j].contentAuthor+"</div></div>";
 		          };
 				  t.set("html", s);
 		      }
