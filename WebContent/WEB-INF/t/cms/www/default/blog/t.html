@@ -202,7 +202,7 @@ $(window).load(function() {
 				<a class="mi5" target="_blank" href="http://www.cerhy.com/blog/user/${content.user.username}">博客</a>
 			</div>
 			<div class="x-cap">
-				<span class="capx">[@text_cut s=content.title! len=1 append=""/]</span>${content.title}<br>${content.author!content.user.username}
+				<span class="capx">[@text_cut s=content.title! len=1 append=""/]</span>${content.title[1..]}<br>${content.author!content.user.username}
 				@ ${content.releaseDate}
 			</div>
 		</div>
