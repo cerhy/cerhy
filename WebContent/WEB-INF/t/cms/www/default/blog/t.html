@@ -183,7 +183,7 @@ $(window).load(function() {
         success: function (data) {
         	var html="";
         	for(var j=0;j<data.length;j++){
-        		html +="<li><a href='http://www.cerhy.com/bk/"+data[j].contentId+".jhtml'>"+data[j].contentTitle+"</a> <span class='lt'>"+data[j].contentDate+"</span></li>";
+        		html +="<li><a href='http://www.cerhy.com/t/"+data[j].contentId+".jhtml'>"+data[j].contentTitle+"</a> <span class='lt'>"+data[j].contentDate+"</span></li>";
 	        };
 	        $("#appendXg").html(html);
         }
