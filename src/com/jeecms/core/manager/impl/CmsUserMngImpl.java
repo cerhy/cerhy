@@ -676,4 +676,20 @@ public class CmsUserMngImpl implements CmsUserMng {
 	public List<ContentStick> getNextStick(Integer id,Integer userId){
 		return contentDao.getNextStick(id, userId);
 	}
+	@Override
+	public String getNoticeContent(Integer userId) {
+		return contentDao.getNoticeContent(userId);
+	}
+	@Override
+	public String getSynopsisContent(Integer userId) {
+		return contentDao.getSynopsis(userId);
+	}
+	@Override
+	public String saveUpdateNotice(Integer userId, String notice) {
+		return contentDao.saveUpdateNotice(userId, notice);
+	}
+	@Override
+	public String saveUpdateSynopsis(Integer userId, String synopsis) {
+		return contentDao.saveUpdateSynopsis(userId, synopsis);
+	}
 }

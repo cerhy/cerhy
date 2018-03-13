@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.jeecms.core.entity">
+	<class name="BlogNoticeSyn" table="jc_blog_notice">
+		<meta attribute="sync-DAO">false</meta>
+		<id name="id" type="java.lang.Integer" column="id"><generator class="assigned"/></id>
+		<property name="userId" column="user_id" type="java.lang.Integer" not-null="true" length="11"/>
+		<property name="notice" column="notice" type="string" not-null="false" length="10000"/>
+		<property name="synopsis" column="synopsis" type="string" not-null="false" length="8000"/>
+	</class>
+</hibernate-mapping>

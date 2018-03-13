@@ -36,6 +36,8 @@ text-decoration: underline;
 				    <li><a style="cursor: pointer;" onclick="set();" title="页面模板">页面模板</a></li>
 				    <li><a href="javascript:;" onclick="addLinks()" title="链接管理">链接管理</a></li>
 				    <li><a href="javascript:;" onclick="addFriends()" title="好友管理">好友管理</a></li>
+					<li><a href="javascript:;" onclick="addNotice()" title="博客公告">博客公告</a></li>
+					<li><a href="javascript:;" onclick="addSynopsis()" title="博客简介">博客简介</a></li>
 				</ul>
 			</li> 
 			<li style="margin: -22px 0;margin-left: 110px;"><a class="hide" href="javascript:;" style="position:relative;top:2px;">更多</a>
@@ -283,5 +285,71 @@ function delPos(){
  				}
          }
      });
+}
+
+function addNotice(){
+	if(typeof($("#no3").val())!='undefined'){
+		 delPos();
+	};
+	$.ajax({
+       type: 'POST',
+       url : '${base}/blog/add_notice.jspx',
+       dataType:"html",
+       async: true,
+       success : function(datas){
+       	if(datas=="login"){
+      		 location.href="${base}/login.jspx";
+      	 	}else{
+				$("#zd_u-hilite-cap").remove();
+				$("#zdId").remove();
+				$("#u-hilite-cap").remove();
+				var wzid=document.getElementById('wzId');
+      		 if(wzid!=null){
+      			 document.getElementById('wzId').innerHTML="";
+      		 }
+      		 var maindiv=document.getElementById('maindiv');
+      		 if(maindiv!=null){
+      			 document.getElementById('maindiv').innerHTML="";
+      		 };
+	            $(".wrap-right").append(datas);
+	            if(window._bd_share_main){
+	         	   window._bd_share_main.init();
+	         	}
+       	}
+	   	}
+	});
+}
+
+function addSynopsis(){
+	if(typeof($("#no3").val())!='undefined'){
+		 delPos();
+	};
+	$.ajax({
+       type: 'POST',
+       url : '${base}/blog/add_synopsis.jspx',
+       dataType:"html",
+       async: true,
+       success : function(datas){
+       	if(datas=="login"){
+      		 location.href="${base}/login.jspx";
+      	 	}else{
+				$("#zd_u-hilite-cap").remove();
+				$("#zdId").remove();
+				$("#u-hilite-cap").remove();
+				var wzid=document.getElementById('wzId');
+      		 if(wzid!=null){
+      			 document.getElementById('wzId').innerHTML="";
+      		 }
+      		 var maindiv=document.getElementById('maindiv');
+      		 if(maindiv!=null){
+      			 document.getElementById('maindiv').innerHTML="";
+      		 };
+	            $(".wrap-right").append(datas);
+	            if(window._bd_share_main){
+	         	   window._bd_share_main.init();
+	         	}
+       	}
+	   	}
+	});
 }
 </script>

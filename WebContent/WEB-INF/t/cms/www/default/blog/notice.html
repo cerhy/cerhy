@@ -1,0 +1,63 @@
+<link  type="text/css" rel="stylesheet" href="/${res}/css/jquery.mloading.css" />
+<link  href="/${res}/css/jquery.mloading.less" />
+<script  type="text/javascript" src="/${res}/js/jquery.mloading.js"></script>
+<style>
+::-webkit-scrollbar{width:0px}
+.clear{clear:both}
+</style>
+<script type="text/javascript">
+$(function(){
+$('.user-menu-links li').click(function(){
+    $(this).toggleClass('on');
+});
+});
+</script>
+
+<div id="contextMenus"></div>
+<div class="personCenter-userInfo blog_right" >
+	<form id="jvForm" action="add_notice.jspx" method="post">
+		<textarea id="notice" name="notice" rows="18" cols="90">${notice}</textarea>
+		<input type="button" value="提交" class="submit" onclick="addUpdateNotice()"/>
+	</form>
+</div>
+<script type="text/javascript">
+function addUpdateNotice(){
+	var notice = $('#notice').val();
+	$.ajax({
+		url:"${base}/blog/add_update_notice.jspx",
+		type:"POST",
+		dataType:"json",
+		 data : {'notice' : notice},
+		success: function (data) {
+			if(data=="login"){
+	       		 location.href="${base}/login.jspx";
+	       	}else if(data=="0"){
+	       		alert("公告保存失败！请刷新网页后重试！");
+				return false;
+	       	}else{
+				$("body").mLoading();
+				$.ajax({
+			           type: 'POST',
+			           url : '${base}/blog/indexstwo.jspx',
+			           dataType:"html",
+			           async: true,
+			           success : function(datas){
+			               $("body").mLoading("hide");
+			                var wzid=document.getElementById('wzId');
+		            		 if(wzid!=null){
+		            			 document.getElementById('wzId').innerHTML="";
+		            		 }
+		            		 var maindiv=document.getElementById('maindiv');
+		            		 if(maindiv!=null){
+		            			 document.getElementById('maindiv').innerHTML="";
+		            		 }
+		   	               $(".wrap-right").append(datas);
+			  	   		 }
+			 	});
+	             return true;
+	       	}
+		}
+	});
+}
+</script>
+	         	

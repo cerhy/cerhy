@@ -45,7 +45,10 @@ import com.jeecms.cms.service.ContentQueryFreshTimeCache;
 import com.jeecms.common.hibernate4.Finder;
 import com.jeecms.common.hibernate4.HibernateBaseDao;
 import com.jeecms.common.page.Pagination;
+import com.jeecms.core.entity.BlogNoticeSyn;
 import com.jeecms.core.entity.CmsUser;
+
+import freemarker.template.utility.StringUtil;
 
 @Repository
 public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
@@ -2000,5 +2003,73 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 		}
 		f.setCacheable(true);
 		return find(f);
+	}
+
+	@Override
+	public String getNoticeContent(Integer userId) {
+		Finder f = Finder.create("select notice from BlogNoticeSyn bean ");
+		f.append(" where 1=1");
+		f.append(" and bean.userId=:userId");
+		f.setParam("userId", userId);
+		List list = find(f);
+		String notice = "";
+		if(list.size()>0 && list.get(0) != null){
+			notice = list.get(0).toString();
+		}
+		return notice;
+	}
+
+	@Override
+	public String getSynopsis(Integer userId) {
+		Finder f = Finder.create("select synopsis from BlogNoticeSyn bean ");
+		f.append(" where 1=1");
+		f.append(" and bean.userId=:userId");
+		f.setParam("userId", userId);
+		List list = find(f);
+		String synopsis = "";
+		if(list.size()>0 && list.get(0) != null){
+			synopsis = list.get(0).toString();
+		}
+		return synopsis;
+	}
+
+	@Override
+	public String saveUpdateNotice(Integer userId, String notice) {
+		Finder f = Finder.create("select id from BlogNoticeSyn bean where bean.userId=:userId ");
+		f.setParam("userId", userId);
+		String resultCode = "0";
+		if(find(f).size()>0 && find(f).get(0) != null){
+			//更新
+			String hql = "update BlogNoticeSyn set notice='"+notice+"' where userId='"+userId+"'" ;
+			resultCode = String.valueOf(updateObject(hql));
+		}else{
+			//保存
+			BlogNoticeSyn bns = new BlogNoticeSyn();
+			bns.setNotice(notice);
+			bns.setUserId(userId);
+			getSession().save(bns);
+			resultCode = "1";
+		}
+		return resultCode;
+	}
+
+	@Override
+	public String saveUpdateSynopsis(Integer userId, String synopsis) {
+		Finder f = Finder.create("select id from BlogNoticeSyn bean where bean.userId=:userId ");
+		f.setParam("userId", userId);
+		String resultCode = "0";
+		if(find(f).size()>0 && find(f).get(0) != null){
+			//更新
+			String hql = "update BlogNoticeSyn set synopsis='"+synopsis+"' where userId='"+userId+"'" ;
+			resultCode = String.valueOf(updateObject(hql));
+		}else{
+			//保存
+			BlogNoticeSyn bns = new BlogNoticeSyn();
+			bns.setSynopsis(synopsis);
+			bns.setUserId(userId);
+			getSession().save(bns);
+			resultCode = "1";
+		}
+		return resultCode;
 	}
 }

@@ -936,6 +936,14 @@ public class ContributeAct extends AbstractContentMemberAct {
 		return blogAct.blog_indexs(queryTitle, modelId, queryChannelId, "tpl.blogCenter",
 				pageNo, request, model);
 	} 
+	//博客主页刷新公告
+	@RequestMapping(value = "/blog/indexstwo.jspx")
+	public String blog_indexstwo(String queryTitle, Integer modelId,
+			Integer queryChannelId, Integer pageNo, HttpServletRequest request,
+			ModelMap model) { 
+		return blogAct.blog_indexstwo(queryTitle, modelId, queryChannelId, "tpl.blogCenter",
+				pageNo, request, model);
+	} 
 	//局部刷新栏目
 	@RequestMapping(value = "/blog/refreshColumn.jspx")
 	public String refreshColumn(String queryTitle, Integer modelId,
@@ -1207,6 +1215,154 @@ public class ContributeAct extends AbstractContentMemberAct {
 		String result = blogAct.ajax_blog_delete(ids, request,  response, model);
 		return result;
 	}
+	
+	/**
+	 * 博客公告添加页面跳转
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "/blog/add_notice.jspx")
+	public String noticeContent(HttpServletRequest request,HttpServletResponse response, ModelMap model){
+		CmsSite site = CmsUtils.getSite(request);
+		CmsUser user = CmsUtils.getUser(request);
+		FrontUtils.frontData(request, model, site);
+		if (user == null) {
+			return "/WEB-INF/t/cms/www/default/blog/login.html";
+		}
+		Integer id = user.getId();
+		String noticeContent = cmsUserMng.getNoticeContent(id);
+		model.addAttribute("notice", noticeContent);
+		return "/WEB-INF/t/cms/www/default/blog/notice.html";
+	}
+	/**
+	 * 保存更新博客公告
+	 * @param notice
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("/blog/add_update_notice.jspx")
+	public @ResponseBody String addUpdateNotice(String notice , HttpServletRequest request,HttpServletResponse response, ModelMap model) throws JSONException {
+		CmsSite site = CmsUtils.getSite(request);
+		CmsUser user = CmsUtils.getUser(request);
+		FrontUtils.frontData(request, model, site);
+		if (user == null) {
+			return "login";
+		}
+		Integer userId = user.getId();
+		String returnCode = cmsUserMng.saveUpdateNotice(userId, notice);
+		return returnCode;
+	}
+	
+	/**
+	 * 保存更新博客简介
+	 * @param notice
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("/blog/add_update_synopsis.jspx")
+	public @ResponseBody String addUpdateSynopsis(String synopsis , HttpServletRequest request,HttpServletResponse response, ModelMap model){
+		CmsSite site = CmsUtils.getSite(request);
+		CmsUser user = CmsUtils.getUser(request);
+		FrontUtils.frontData(request, model, site);
+		if (user == null) {
+			return "login";
+		}
+		Integer userId = user.getId();
+		String returnCode = cmsUserMng.saveUpdateSynopsis(userId, synopsis);
+		return returnCode;
+	}
+	/**
+	 * 博客简介添加页面跳转
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "/blog/add_synopsis.jspx")
+	public String synopsisContent(HttpServletRequest request,HttpServletResponse response, ModelMap model){
+		CmsSite site = CmsUtils.getSite(request);
+		CmsUser user = CmsUtils.getUser(request);
+		FrontUtils.frontData(request, model, site);
+		if (user == null) {
+			return "/WEB-INF/t/cms/www/default/blog/login.html";
+		}
+		Integer id = user.getId();
+		String synopsisContent = cmsUserMng.getSynopsisContent(id);
+		model.addAttribute("synopsis", synopsisContent);
+		return "/WEB-INF/t/cms/www/default/blog/synopsis.html";
+	}
+	
+	/**
+	 * 博客首页刷新（加载）简介内容
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("/blog/refresh_synopsis.jspx")
+	public void refreshSynopsis(HttpServletRequest request,HttpServletResponse response, ModelMap model){
+		CmsUser user = CmsUtils.getUser(request);
+		CmsSite site=CmsUtils.getSite(request);
+		String usertId = request.getParameter("usertId");
+		Integer id = null;
+		if(StringUtils.isNotEmpty(usertId)){
+			id = Integer.valueOf(usertId);
+		}else{
+			id = user.getId();
+		}
+		JSONObject json = new JSONObject();
+		FrontUtils.frontData(request, model, site);
+		String synopsisContent = cmsUserMng.getSynopsisContent(id);
+		try {
+			if(StringUtils.isNotEmpty(synopsisContent)){
+				json.put("synopsisContent", synopsisContent);
+			}else{
+				json.put("state", 0);
+			}
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		ResponseUtils.renderJson(response, json.toString());
+	}
+	/**
+	 * 博客首页刷新（加载）公告内容
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("/blog/refresh_notice.jspx")
+	public void refreshNotice(HttpServletRequest request,HttpServletResponse response, ModelMap model){
+		CmsUser user = CmsUtils.getUser(request);
+		CmsSite site=CmsUtils.getSite(request);
+		String usertId = request.getParameter("usertId");
+		Integer id = null;
+		if(StringUtils.isNotEmpty(usertId)){
+			id = Integer.valueOf(usertId);
+		}else{
+			id = user.getId();
+		}
+		JSONObject json = new JSONObject();
+		FrontUtils.frontData(request, model, site);
+		String noticeContent = cmsUserMng.getNoticeContent(id);
+			try {
+				if(StringUtils.isNotEmpty(noticeContent)){
+					json.put("notic", noticeContent);
+				}else{
+					json.put("state", 0);
+				}
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+		ResponseUtils.renderJson(response, json.toString());
+	}
+	
 	
 	/**
 	 *跳转链接页面方法 

@@ -128,6 +128,29 @@ function zdShowHidden(){
 		$("#zdId").css('display','block'); 
 	}
 }
+
+$(function(){
+	$.ajax({
+		type:'POST',
+		url:'${base}/blog/refresh_notice.jspx',
+		dateType:'json',
+		data:{
+			"usertId":${usert.id},
+		},
+		success:function(data){
+			if(data.state!="0"){
+				var dataNotice = data.notic;
+				if(dataNotice!=null) {
+					dataNotice = dataNotice.replace(/&lt;/g,"<");
+					dataNotice = dataNotice.replace(/&gt;/g,">");
+				} 
+				$(".notice").css('display','block');
+				$(".notice-content").css('display','block');
+				document.getElementById("noticeContent").innerHTML=dataNotice; 
+			}
+		}
+	});	
+});
 </script>
 [#include "head.html"/]
 <div class="blogBody">
@@ -152,6 +175,11 @@ function zdShowHidden(){
       	</div>
         <div class="mb20 clearfix">
         [#include "friend_blog_left.html"/]
+        <div class="notice" style="display:none;background:#fff;width: 730px;float: left; margin-left: 20px;margin-bottom:6px">
+           		<div id="noticeContent" class="notice-content" style="display:none;padding:12px 20px;word-wrap:break-word; overflow:hidden;">
+           			
+           		</div>
+         </div>
          <div id="zd_u-hilite-cap" class="cap" onclick="zdShowHidden();" >置顶</div>
           <div id="zdId" style="width: 730px;float: left; padding-left: 20px;">
                 <div class="personCenter-userInfo blog_right1">

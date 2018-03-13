@@ -9,6 +9,26 @@ function del(){
 	  } 
 	  return false; 
 }
+
+$(function(){
+	$.ajax({
+		type:'POST',
+		url:'${base}/blog/refresh_synopsis.jspx',
+		success:function(data){
+			if(data.state!="0"){
+				var dataSynopsis = data.synopsisContent;
+				if(dataSynopsis!=null) {
+					dataSynopsis = dataSynopsis.replace(/&lt;/g,"<");
+					dataSynopsis = dataSynopsis.replace(/&gt;/g,">");
+				} 
+				$(".synopsis").css('display','block');
+				$(".synopsis-content").css('display','block');
+				document.getElementById("synopsisContent").innerHTML=dataSynopsis; 
+				/* $(".synopsis-content").html(dataSynopsis); */ 
+			}
+		}
+	});	
+});
 </script>
 <style>
 #img{
@@ -70,6 +90,10 @@ outline: none;
 				                 [/#if]				                     
 				           </div>
                       [/#if]
+               <div class="synopsis" style="display:none;width:250px;background:#fff;" >
+               		<div id="synopsisContent" class="synopsis-content" style="display:none;margin-top:20px;padding:8px 12px;word-wrap:break-word; overflow:hidden;">
+               		</div>
+               </div>
                <div class="htmleaf-container"  id="appendHtml">
 				<div class="htmleaf-content bgcolor-3" style="padding-top: 0px;padding-bottom: 0px;">
 					<!-- This is mtree list -->

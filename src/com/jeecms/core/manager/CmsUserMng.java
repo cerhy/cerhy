@@ -166,4 +166,35 @@ public interface CmsUserMng {
 	 * @param id
 	 */
 	public List<ContentStick> getNextStick(Integer id,Integer userId);
+	
+	/**
+	 * 获取博客公告
+	 * @param userId 用户id
+	 * @return
+	 */
+	public String getNoticeContent(Integer userId);
+	
+	/**
+	 * 保存或更新博客公告
+	 * @param userId
+	 * @param notice
+	 * @return
+	 */
+	public String saveUpdateNotice(Integer userId , String notice);
+	
+	/**
+	 * 获取博客简介
+	 * @param userId 用户id
+	 * @return
+	 */
+	public String getSynopsisContent(Integer userId);
+	
+	
+	/**
+	 *保存或更新博客简介 
+	 * @param userId
+	 * @param Synopsis
+	 * @return
+	 */
+	public String saveUpdateSynopsis(Integer userId , String synopsis);
 }

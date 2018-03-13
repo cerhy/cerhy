@@ -1,16 +1,29 @@
 <!DOCTYPE HTML>
 <html>
+<title>好研网-动态</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta http-equiv="keywords" content=""/>
-<meta http-equiv="description" content="动态新闻"/>
-<title>动态 - cerhy </title>
+<meta http-equiv="keywords" content="动态"/>
+<meta http-equiv="description" content="动态"/>
 <script src="/cerhy/r/cms/jquery.js" type="text/javascript"></script>
 <script src="/cerhy/r/cms/front.js" type="text/javascript"></script>
 <script type="text/javascript" src="/cerhy/r/cms/www/default/js/jquery.SuperSlide.js"></script>
 <link type="text/css" rel="stylesheet" href="/cerhy/r/cms/www/default/css/hyindex.css" />
+<link type="text/css" rel="stylesheet" href="/cerhy/r/cms/www/default/css/custom.css" />
 
+<script src="/cerhy/r/cms/jqueryUI/jquery-ui.js" type="text/javascript"></script>
+<link href="/cerhy/r/cms/jqueryUI/jquery.ui.css" rel="stylesheet" type="text/css" />
+
+<script type="text/javascript">
+$(function() {
+	Cms.channelViewCount("/cerhy","115");
+	Cms.siteFlow("/cerhy", location.href, 
+
+document.referrer,"true");
+});
+</script>
 <link rel="stylesheet" type="text/css" href="/cerhy/r/cms/www/default/css/login.css" />
+<link type="text/css" rel="stylesheet" href="/cerhy/r/cms/www/default/css/search.css" />
 <script>
 function qkeypress(){
 	var q=$("input[name=q]");
@@ -22,12 +35,14 @@ function qkeypress(){
 }
 </script>
 <head>
+	<meta name="baidu-site-verification" content="pXRyW2TxFY" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="keywords" content="" />
     <meta name="description" content="" />
-    <link rel="shortcut icon" href="/${res}/images/cerhyheard.png" type="image/x-icon" />
-    <title>好研</title>
+    <title>好研网</title>
+    <link rel="shortcut icon" href="/cerhy/r/cms/www/default/images/cerhyheard.png" type="image/x-icon" />
     <link rel="stylesheet" href="/cerhy/r/cms/www/default/css/main.css"/>
+    <link id="MrJin" rel="stylesheet"/>
     <style type="text/css">
 	.page-large{margin:40px 0 20px; text-align:center;}
 	.page-large a{width:34px; height:34px; display:inline-block; border:1px solid #d5d5d5; box-sizing:border-box; -moz-box-sizing:border-box; -o-box-sizing:border-box; -webkit-box-sizing:border-box; line-height:34px; text-align:center; float:left; text-indent:0; color:#666666; font-size:12px; font-family:Arial, Helvetica, sans-serif; margin:0 3px;}
@@ -42,65 +57,136 @@ function qkeypress(){
 	.login-user{float:left; line-height:30px; margin-left:20px; padding-right:14px; color:#979797; font-size:12px; position:relative; cursor:pointer;}
     .login-user a{z-index:4; position:relative; display:inline-block;}
     .login-user img{width:30px; height:30px; float:left; margin-right:5px; border-radius:100%; -moz-border-radius:100%; -o-border-radius:100%; -webkit-border-radius:100%;}
-    .login-user:before{z-index:4; content:''; position:absolute; display:inline-block; width:6px; height:5px; right:0; top:14px; background:url(../images/login-user.png) no-repeat;}
+    .login-user:before{z-index:4; content:''; position:absolute; display:inline-block; width:6px; height:5px; right:0; top:14px; }
     .user-child{display:none; top:15px; width:100%; background-color:rgba(255,255,255,0.9); position:absolute; padding:16px 0 8px; z-index:3; box-shadow:0 2px 5px rgba(34,25,25,.4); -moz-box-shadow:0 2px 5px rgba(34,25,25,.4); -webkit-box-shadow:0 2px 5px rgba(34,25,25,.4);}
     .login-user:hover .user-child{display:block;}
     .user-child a{width:100%; display:block; line-height:24px; text-align:center; font-size:14px;}
+    .showComment{
+	  display:block;
+	  background:#f00;
+	  border-radius:50%;
+	  width:6px;
+	  height:6px;
+	  top:2px;
+	  right:0px;
+	  position:absolute;
+	}
 	</style>
+	<style>
+	.dropdown {
+	  position: relative;
+	  display: inline-block;
+	}
+	.dropdown-content {
+	  display: none;
+	  position: absolute;
+	  background-color: #f9f9f9;
+	  padding: 12px 16px;
+	}
+	.dropdown:hover .dropdown-content {
+	  display: block;
+	}
+
+</style>
 </head>
 <body class="bodybg">
 <div class="header">
     <div class="header-top">
         <div class="wrap clearfix">
+        <input type="reset" style="margin-top: 8px;border: 0px;width: 300px;background-color: #f6fbff;color: red;display: none;" id="maintain">
             <div class="header-right">
                 <div class="search-bar">
-                    <form action="/cerhy/search.jspx" target="_blank" id="searchForm">
+                    <form action="/cerhy/search.jspx" target="_blank" id="searchForm" onkeydown="if(event.keyCode==13)return false;">
         				<input type="text" name="q" value="" maxlength="50" autocomplete="off" class="searchCon">
-        				<input type="submit" value="" class="search-btn" style="height=24px;">
+        				<input type="submit" value="" id="search-btn1" style="border: 0px;">
        			    </form>
                 </div>
                 <ul class="header-right-list">
-                    <li><a href="http://edu.cerhy.com/" target="_blank">素质测评</a><em></em></li>
+                    <li><a href="/cerhy/">首页</a><em></em></li> 
+                    <li><a href="http://edu.cerhy.com/" target="_blank">综合素质测评</a><em></em></li> 
                     <li><a href="#">官方客服</a><em></em></li>
-                    <li><a href="#">官方微信</a><em></em></li>
-         			
-      				<li><a href="/cerhy/login.jspx">登录</a><em></em></li>
-      				<li><a href="/cerhy/register.jspx">注册</a></li>
+                    <li>
+                    <div class="dropdown">
+					  <a href="#"><span>官方微信</span></a>
+					  <div class="dropdown-content">
+					    <p><img alt="" src="/cerhy/r/cms/www/default/images/cerhywechat.png" width="150px"></p>
+					  </div>
+					</div>
+                    <em></em>
+                    </li>
+                    
+         				<li><a href="/cerhy/blog/index.jspx">我的博客</a><em></em></li>
+      					<li><a href="/cerhy/login.jspx">登录</a></li>
                 </ul>
 			</div>
             </div>
         </div>
     </div>
-    <div class="banner">
+    <div class="banner" style="background-color: #eff8ff;">
         <div class="wrap">
-            <img src="/cerhy/r/cms/www/default/images/head.png" width="1000" height="192" alt="">
+            <a href="/cerhy/"><img src="/cerhy/r/cms/www/default/images/head.png" width="100%" height="192" alt=""></a>
         </div>
     </div>
-
+<input style="display: none;" value="0" id="ups">
 </div>
 <div class="nav">
     <div class="wrap">
         <div class="nav-list">
             <ul class="clearfix">
-<nav class="nav_header">
-           <ul class="menu">
-       <li><a href="http://localhost:8080/cerhy/" target="_self" ><span>首 页</span></a></li>
-        <li><a href="http://localhost:8080/cerhy/xkjy/index.jhtml">学科教研</a></li>
-        <li><a href="http://localhost:8080/cerhy/jyky/index.jhtml">教育科研</a></li>
-        <li><a href="http://localhost:8080/cerhy/bk/index.jhtml">博客</a></li>
-        <li><a href="http://localhost:8080/cerhy/wlyx/index.jhtml">网络研修</a></li>
-        <li><a href="http://localhost:8080/cerhy/jyzy/index.jhtml">教育资源</a></li>
-        <li><a href="http://localhost:8080/cerhy/zljc/index.jhtml">质量监测</a></li>
-        <li><a href="http://localhost:8080/cerhy/zzjg/index.jhtml">组织机构</a></li>
-      </ul>
-</nav>            </ul>
+	<ul class="menu" style="width: 1200px;">
+	<li><a href="http://localhost:8080/cerhy/" target="_self" ><span>首 页</span></a></li>
+		<li><a href="http://localhost:8080/cerhy/xkjy/index.jhtml">学科教研</a></li>
+		<li><a href="http://www.cerhy.com/blog/user/9038" target="_blank">课程改革</a></li>
+		<li><a href="http://www.cerhy.com/blog/user/9036" target="_blank">教育科研</a></li>
+		<li><a href="http://www.cerhy.com/blog/user/9018" target="_blank">职业教育</a></li>
+		<li><a href="http://www.cerhy.com/blog/user/9059" target="_blank">质量监测</a></li>
+		<li><a href="http://www.cerhy.com/blog/user/9039" target="_blank">教师培训</a></li>
+		<li><a href="http://www.cerhy.com/blog/user/674311" target="_blank">政策研究</a></li>
+		<li><a href="http://localhost:8080/cerhy/sxjy/index.jhtml">市县教研</a></li>
+		<li><a href="http://localhost:8080/cerhy/zzjg/index.jhtml">组织机构</a></li>
+	</ul>
+            </ul>
         </div>
     </div>
 </div>
-<div class="local">
+<script type="text/javascript">
+/* $(window).load(function() {
+	if($("#ups").val()==1){
+	$.ajax({
+        url: "/cerhy/member/findCommentNu.jspx",
+        type: "POST",
+        dataType:"json",
+        data: "",
+        success: function (data) {
+        	if(data.status>0){
+				$("#showComment").show();
+				$("#showInfo").show();
+				$("#showInfo").html("消息:("+data.status+")")
+        	}
+        }
+    });
+	}
+}); */
+</script>
+<script type="text/javascript">
+$(function() {
+	/* var date=new Date();
+	var hour=date.getHours();
+	var minute=date.getMinutes();
+	var s=date.getSeconds();
+	var i=hour*60*60+minute*60+s;
+	var k=79200;
+	if(i>k){
+		$("#maintain").show();
+		$("#maintain").val("数据维护中...给您造成的不便还请谅解,谢谢您的支持.");
+	}else{
+		$("#maintain").hide();
+	} */
+});
+</script><div class="local">
     <div class="wrap">
         <span class="local-icon icon-font"></span>
-        <span class="position">新闻动态</span>
+        <span class="position">动态</span>
     </div>
 </div>
 <div class="container">
@@ -109,12 +195,12 @@ function qkeypress(){
             	<div class="article-list-wrap">
       <ul class="report-list1 sm mb20">
       		<li>
-      			 <a class="hasImg clearfix" href="http://localhost:8080/cerhy/gndt/250.jhtml">                          
+      			 <a class="hasImg clearfix" href="http://localhost:8080/cerhy/bydt/60045596.jhtml">                          
                                 <div class="report-text">
                                  
-                                    <h3>海南教育开出“七朵金花” 海口龙华区等七县（市、区）获教育工作督导评估优秀等次</h3>
-                                     <div class="des">海南教育开出“七朵金花” 海口龙华区等七县（市、区）获教育工作督导评估优秀等次海南教育开出“七朵金花” 海口龙华区等七县（市、区）获教育工作督导评估优秀等次</div>
-            						 <div class="fl"><span class="ch">国内动态<em>2016-12-06 15-22</em></span></div>
+                                    <h3>555555555555555</h3>
+                                     <div class="des">555555555</div>
+            						 <div class="fl"><span class="ch">本院动态<em>2018-01-15 17-42</em></span></div>
                                 </div>
                                 <em class="arrowBtn"></em>
                  </a>
@@ -122,57 +208,82 @@ function qkeypress(){
       </ul>
       <ul class="report-list1 sm mb20">
       		<li>
-      			 <a class="hasImg clearfix" href="http://localhost:8080/cerhy/gndt/247.jhtml">                          
+      			 <a class="hasImg clearfix" href="http://localhost:8080/cerhy/gndt/60045595.jhtml">                          
                                 <div class="report-text">
                                  
-                                    <h3>省教育厅开展2016年海南省特级教师专题研修活动</h3>
-                                     <div class="des">为进一步提升我省特级教师的教育教学思想和教科研能力，拓展教育理论视野，充分发挥其在推进基础教育课程改革、实施素质教育以及教师专业发展中的示范、辐射与引领作用，2016年9月12日下午至9月13日上午，省教育厅组织开展了2016年海南省特级教师专题研修活动。</div>
-            						 <div class="fl"><span class="ch">国内动态<em>2016-12-06 15-19</em></span></div>
+                                    <h3>123123</h3>
+                                     <div class="des">123123</div>
+            						 <div class="fl"><span class="ch">国内动态<em>2018-01-15 17-30</em></span></div>
                                 </div>
                                 <em class="arrowBtn"></em>
                  </a>
       		</li>
       </ul>
-      <ul class="report-list1 sm mb20">
-      		<li>
-      			 <a class="hasImg clearfix" href="http://localhost:8080/cerhy/xxdt/245.jhtml">                          
-                                <div class="report-text">
-                                 
-                                    <h3>2016年白沙县小学第二片区第19届普通话推广周 美文诵读比赛活动简讯</h3>
-                                     <div class="des">2016年白沙县小学第二片区第19届普通话推广周
-美文诵读比赛活动简讯2016年白沙县小学第二片区第19届普通话推广周
-美文诵读比赛活动简讯</div>
-            						 <div class="fl"><span class="ch">学校动态<em>2016-12-06 15-17</em></span></div>
-                                </div>
-                                <em class="arrowBtn"></em>
-                 </a>
-      		</li>
-      </ul>
-      <ul class="report-list1 sm mb20">
-      		<li>
-      			 <a class="hasImg clearfix" href="http://localhost:8080/cerhy/sxdt/244.jhtml">                          
-                                <div class="report-text">
-                                 
-                                    <h3>白沙县2016年小学教师暑期培训 学习活动简讯</h3>
-                                     <div class="des">白沙县2016年小学教师暑期培训
-学习活动简讯白沙县2016年小学教师暑期培训
-学习活动简讯</div>
-            						 <div class="fl"><span class="ch">市县动态<em>2016-12-06 15-16</em></span></div>
-                                </div>
-                                <em class="arrowBtn"></em>
-                 </a>
-      		</li>
-      </ul>
+<style type="text/css">
+	.input_out{background-color:#ffffff;}
+	.input_move{background-color:#ef3838;color:#ffffff;}
+</style>
 <div class="page-large">
           <div style="display:inline-block;">
    	 			<a class="Num on" href="#" onclick="location.href=encodeURI('index.html');">1</a>
-			<a class="Num" href="#" onclick="location.href=encodeURI('index_2.html');">2</a>
-      <a class="next-page" href="#" onclick="location.href=encodeURI('index_2.html');"></a>
+      &nbsp;<span style="font-size: 13px;font-family: Arial, Helvetica, sans-serif;position: relative;top: 2px;color:#666666;">共1页
+      &nbsp;到第</span><input style="width:30px; height:30px;border: 1px solid #d5d5d5;text-align: center;position: relative;top: 2px;" id="reach" name="reach" value="1" onkeyup="value=value.replace(/[^\d]/g,'') " ng-pattern="/[^a-zA-Z]/"/><span style="font-size: 13px;font-family: Arial, Helvetica, sans-serif;position: relative;top: 2px;color:#666666;">页</span>
+      &nbsp;<input readonly style="width:30px; height:30px;border: 1px solid #d5d5d5;text-align: center;position: relative;top: 2px;cursor:pointer;" id="jump" name="" value="确定" onClick="jump();" onmousemove="this.className='input_move'" onmouseout="this.className='input_out'"/>
       </div>
-</div>    
+      <script>
+      
+      	function jump(){
+      		var reach = $('#reach').val();
+      		location.href=encodeURI('index_'+reach+'.html');
+      	}
+      </script>
+</div>    </div>
+           		<div class="news-comments">		
+<section class="comments">
+          <div class="down clearfix">
+    <img src="/cerhy/r/cms/www/default/images/userImg.png" class="userImg"><span>
+    <a href="/cerhy/login.jspx?returnUrl=/">登录</a>之后才能发表评论</span>
     </div>
+</section> 
+
+
+			  <span>暂无相关评论！</span>
+				<div id="commentDialog" style="display:none;"></div>
+				</div>
+
+	</div>
+	
+		 <!--链接-->
+                <div class="links-wrap">
+                    <h3>链接</h3>
+                    
+
+					     
+                   
+                </div>
 	</div>
 	</div>
-	</div>
+	<script type="text/javascript">
+	$(function() {
+		$("#commentDialog").dialog({
+			autoOpen: false,
+			modal: true,
+			width: 500,
+			height: 600,
+			position: ["center",20],
+			buttons: {
+				"关闭": function() {
+					$(this).dialog("close");
+				}
+			},
+			close: function(event, ui) {
+			}
+		});
+	     $(".comments-hf").bind("click", function(){
+	                  $(this).toggleClass("reply-on");
+			  $(this).parent().siblings(".reply").animate({height:'toggle'},10);
+	      });
+	});
+</script>
 </body>
 </html>

@@ -408,4 +408,33 @@ public interface ContentDao {
 	 * @param count,userid
 	 */
 	public List<Content> getListByChannelIds(Integer count, Integer userid,Integer columnID);
+	
+	/**
+	 * 获取博客公告
+	 * @param id
+	 * @return
+	 */
+	public String getNoticeContent(Integer userId);
+	
+	/**
+	 * 保存或更新博客公告
+	 * @param userId
+	 * @param notice
+	 * @return
+	 */
+	public String saveUpdateNotice(Integer userId ,String notice);
+	
+	/**
+	 * 获取博客简介 
+	 */
+	public String getSynopsis(Integer userId);
+	
+	/**
+	 * 保存或更新博客简介
+	 * @param userId
+	 * @param synopsis
+	 * @return
+	 */
+	public String saveUpdateSynopsis(Integer userId , String synopsis);
+	
 }
