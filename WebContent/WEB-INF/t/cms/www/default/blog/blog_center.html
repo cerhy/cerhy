@@ -60,18 +60,18 @@ $(function(){
 				if(dataNotice!=null) {
 					dataNotice = dataNotice.replace(/&lt;/g,"<");
 					dataNotice = dataNotice.replace(/&gt;/g,">");
+					dataNotice = dataNotice.replace(/&amp;/g,"&");
 				} 
-				/* dataNotice   =   dataNotice.replaceAll("&amp;","&");   
-				dataNotice   =   dataNotice.replaceAll("&lt;","<");   
-				dataNotice   =   dataNotice.replaceAll("&gt;",">");   
+				/* 
 				dataNotice   =   dataNotice.replaceAll("&nbsp;","   ");  */  
-		          //s   =   s.replaceAll("<br/>","\n");   
-		          //s   =   s.replaceAll("&#39","'"); 
-				//dataNotice = dataNotice.replace("\"","");
+		        //s   =   s.replaceAll("<br/>","\n");   
 				$(".notice").css('display','block');
 				$(".notice-content").css('display','block');
 				document.getElementById("noticeContent").innerHTML=dataNotice; 
 				//$(".notice-content").html(data.notic); 
+			}else{
+				$(".notice").css('display','none');
+				$(".notice-content").css('display','none');
 			}
 		}
 	});	

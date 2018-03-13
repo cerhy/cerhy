@@ -25,6 +25,7 @@ function addUpdateSynopsis(){
 	var synopsis = $('#synopsis').val();
 	if(synopsis != null){
 		synopsis = synopsis.replace(/%/g,"%25");
+		synopsis = synopsis.replace(/\+/g,"%2B");
 	}
 	$.ajax({
 		url:"${base}/blog/add_update_synopsis.jspx",
