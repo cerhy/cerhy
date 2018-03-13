@@ -61,10 +61,15 @@ function addUpdateSynopsis(){
 			   	         		url:'${base}/blog/refresh_synopsis.jspx',
 			   	         		success:function(data){
 			   	         			if(data.state!="0"){
-			   	         				$(".synopsis").css('display','block');
+			   	         				dataSynopsis = data.synopsisContent;
+				   	         			if(dataSynopsis!=null) {
+				   	 					dataSynopsis = dataSynopsis.replace(/&lt;/g,"<");
+				   	 					dataSynopsis = dataSynopsis.replace(/&gt;/g,">");
+				   	 					} 
+ 			   	         				$(".synopsis").css('display','block');
 			   	         				$(".notice-synopsis").css('display','block');
 			   	         				/* document.getElementById("noticeContent").innerHTML=data; */
-			   	         				$(".synopsis-content").html(data.synopsisContent); 
+			   	         			document.getElementById("synopsisContent").innerHTML=dataSynopsis; 
 			   	         			}else{
 				   	         			$(".synopsis").css('display','none');
 			   	         				$(".notice-synopsis").css('display','none');
