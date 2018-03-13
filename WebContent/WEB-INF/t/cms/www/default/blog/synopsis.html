@@ -23,6 +23,9 @@ $('.user-menu-links li').click(function(){
 <script type="text/javascript">
 function addUpdateSynopsis(){
 	var synopsis = $('#synopsis').val();
+	if(synopsis != null){
+		synopsis = synopsis.replace(/%/g,"%25");
+	}
 	$.ajax({
 		url:"${base}/blog/add_update_synopsis.jspx",
 		type:"POST",

@@ -211,7 +211,7 @@ var html ="";
 	html  +=" </div>"; 
 	html  +=" </div> "; 
 	html  +="  <div id=\"u-hilite-cap\" class=\"cap\" onclick=\"showHidden();\" >文章</div>"
-    html  +="<script>$(function(){$.ajax({type:'POST',url:'${base}/blog/refresh_notice.jspx',success:function(data){if(data.state!=\"0\"){var dataNotice = data.notic;if(dataNotice!=null){dataNotice = dataNotice.replace(\/&lt;\/g,\"<\");dataNotice = dataNotice.replace(\/&gt;\/g,\">\"); }$(\".notice\").css('display','block');$(\".notice-content\").css('display','block');$(\".notice-content\").html(dataNotice);}else{$(\".notice\").css('display','none');$(\".notice-content\").css('display','none');$(\".notice-content\").html(\"\");}}});});";
+    html  +="<script>$(function(){$.ajax({type:'POST',url:'${base}/blog/refresh_notice.jspx',success:function(data){if(data.state!=\"0\"){var dataNotice = data.notic;if(dataNotice!=null){dataNotice = dataNotice.replace(\/&lt;\/g,\"<\");dataNotice = dataNotice.replace(\/&gt;\/g,\">\"); }$(\".notice\").css('display','block');$(\".notice-content\").css('display','block');document.getElementById(\"noticeContent\").innerHTML=dataNotice;}else{$(\".notice\").css('display','none');$(\".notice-content\").css('display','none');$(\".notice-content\").html(\"\");}}});});";
     html  +="<\/script>";
 $(".wrap-right").before(html);
 

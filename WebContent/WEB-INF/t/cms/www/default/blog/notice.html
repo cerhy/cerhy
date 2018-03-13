@@ -23,6 +23,9 @@ $('.user-menu-links li').click(function(){
 <script type="text/javascript">
 function addUpdateNotice(){
 	var notice = $('#notice').val();
+	if(notice != null){
+		notice = notice.replace(/%/g,"%25");
+	}
 	$.ajax({
 		url:"${base}/blog/add_update_notice.jspx",
 		type:"POST",
