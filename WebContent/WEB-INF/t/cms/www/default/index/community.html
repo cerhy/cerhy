@@ -6,7 +6,7 @@
 	content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
 <meta name="msapplication-tap-highlight" content="no">
 <title>好师社区</title>
-<link rel="stylesheet" href="http://x.hnjs.org/ui/wss/base.css">
+<link rel="stylesheet" href="${base}/res/common/css/base.css">
 <style>
 .tbr {
 	top: 0;
@@ -50,7 +50,7 @@
 }
 
 .ico {
-	background-image: url('http://my.hnjs.org/ui/portal/mod.png');
+	background-image: url('${base}/res/jeecms/images/mod.png');
 }
 
 .txt-shadow {
@@ -165,20 +165,15 @@ html,body {
 	}
 }
 </style>
-<script src="http://x.hnjs.org/lib/r1/mootools_rv.js"></script>
-<script src="http://x.hnjs.org/lib/r1/mootools_ue.js"></script>
+<script src="${base}/res/common/js/mootools_rv.js"></script>
+<script src="${base}/res/common/js/mootools_ue.js"></script>
+
 <script>
 App.implement({
     initialize: function() {
         Passport.load(),
         this.initCommand(),
-        this[App.portable ? "initCardLayout": "initPageLayout"](),
-        new RequestX(App.Provider, {
-            Action: "dxQuery",
-            Category: App.Category,
-            Focus: App.Focus
-        },
-        this.updateTopicList)
+        this[App.portable ? "initCardLayout": "initPageLayout"]();
     },
     initPageLayout: function() {
         var t = $(document.body),
@@ -186,15 +181,27 @@ App.implement({
         e = new Element("div.x-copyr").inject(t),
         n = new Element("div#y-main").inject(t); !
         function(t) {
-            if (!Passport.ready) return new Element('b.tb1[cmd=Login][html=<i class="wib">&#xe639;</i>登录]').inject(t);
-            var i = Passport.UN || "",
-            e = i.html();
-            e.length > 5 && (e = e.substr(0, 5) + "..."),
-            new Element('b.tb1[cmd=UserImage][title=每日一图][html=<i class="wi">&#xe640;</i>]').inject(t),
-            new Element("b.tb1[cmd=UserAdmin][title=" + i + "][html=" + e + "]").inject(t),
-            new Element("b.tb1.tb-usr[cmd=Logout][html=退出]", {
-                style: "background-image:url(" + Passport.avatar() + ")"
-            }).inject(t)
+        	var url="${base}/blog/checkLogin.jspx";
+  		  	new Request.JSON({
+  		      url: url,
+  		      data:"",
+  		      method:'post',
+  		      contentType:'application/json;charset=UTF-8',
+  		      onComplete: function(jsonObj) {
+	            if (jsonObj[0].loginState==0){
+	            	return new Element('b.tb1[cmd=Login][html=<i class="wib">&#xe639;</i>登录]').inject(t);
+	            }else{
+		            var i = "",
+		            e = i.html();
+		           	var href=location.href;
+		            e.length > 5 && (e = e.substr(0, 5) + "..."),
+		            new Element('b.tb1[cmd=UserImage][title=每日一图][html=<i class="wi">&#xe640;</i>]').inject(t),
+		            new Element("a.tb1[href=${base}/member/index.jspx][title=" + jsonObj[0].userName + "][html=个人中心]").inject(t),
+		            new Element("a.tb1.tb-usr[href=${base}/logout.jspx?returnUrl="+href+"][html=退出]", {style: "background-image:url(" + jsonObj[0].userImg + ");background-size:50px 50px;"
+		            }).inject(t)
+	            }
+  		      }
+  		  	}).send();
         } (i),
         new Element('div.x-logo.txt-shadow[html=<span class="x-logo-cap">' + App.Title + "</span>" + App.Subtitle + "]").inject(n);
         var s = new Element("div.slim-view").inject(n),
@@ -207,28 +214,43 @@ App.implement({
             t.store("bing", t.getStyle("background-image")),
             e.set("html", i.copyright)
         }),
-        this.userAdmin = function(t) {
+        /* this.userAdmin = function(t) {
             Widget.wopen(App.hostc + "/usr?em=1", 520, 450)
-        },
+        }, */
         this.userImage = function(t) {
             n.toggle(),
             e.toggle()
         }
     },
     initTopicList: function(t) {
-        this.updateTopicList = function(i) {
-            var e = i.get("Focus"),
-            n = i.gets("Category"),
-            s = "";
-            e.Detail && (s += '<div class="slim-box">' + e.Detail + "</div>");
-            n.each(function(t) {
-                t = jo.html(t, {
-                    PublishDate: t.PublishDate.utc()
-                }),
-                s += '<div class="slim-row"><a class="slim-cap" href="/t/{ContentId}">{Title}</a><div class="lt">{PublishDate}, {Author}</div></div>'.substitute(t)
-            }),
-            t.set("html", s)
-        }
+    	var s="";
+    	var url="${base}/blog/showContent.jspx?username="+8260+"&columnID="+1+"&comm=0";
+		  new Request.JSON({
+		      url: url,
+		      data:"",
+		      method:'post',
+		      contentType:'application/json;charset=UTF-8',
+		      onComplete: function(jsonObj) {
+		          for(var j=0;j<jsonObj.length;j++){
+		        	
+		        	  s ="<div class='slim-box'>" + jsonObj[j].contentDetial + "</div>";
+		          };
+				  t.set("html", s);
+		      }
+		  }).send();
+		  var url="${base}/blog/showContent.jspx?username="+8260+"&columnID="+1+"&comm=1";
+		  new Request.JSON({
+		      url: url,
+		      data:"",
+		      method:'post',
+		      contentType:'application/json;charset=UTF-8',
+		      onComplete: function(jsonObj) {
+		          for(var j=0;j<jsonObj.length;j++){
+		        	  s +="<div class='slim-row'><a class='slim-cap' href='http://www.cerhy.com/t/"+jsonObj[j].contentId+".jhtml'>"+jsonObj[j].contentTitle+"</a><div class='lt'>"+jsonObj[j].contentDate+","+jsonObj[j].contentAuthor+"</div></div>";
+		          };
+				  t.set("html", s);
+		      }
+		  }).send();
     },
     initCardLayout: function() {
         this.initBandCard = function(t, i, e, n) {
@@ -263,29 +285,19 @@ App.implement({
 App.start(),
 Object.append(App, {
     Title: "好师",
-    Subtitle: "海南教师<br/>网络研修社区",
-    Provider: "http://hi.hnjs.org/admin/blog",
-    Category: "948322|20",
-    Focus: "953156"
-});</script>
+    Subtitle: "海南教师<br/>网络研修社区"
+});
+
+</script>
 <base target="_blank">
-<script src="http://z.hnjs.org/admin/bingo.aspx?d=201821"
-	type="text/javascript"></script>
 </head>
 <body class="x-cover" style="background-image: url('http://cn.bing.com/az/hprichbg/rb/StubenamAlberg_ZH-CN9268418169_1920x1080.jpg');">
-	<div class="tbr">
-		<b cmd="UserImage" title="每日一图" class="tb1"><i class="wi"></i></b><b
-			cmd="UserAdmin" title="邹瑶琳" class="tb1">邹瑶琳</b><b cmd="Logout"
-			class="tb1 tb-usr"
-			style="background-image: url('http://z.hnjs.org/dat/avatar/519/519649.jpg')">退出</b>
-	</div>
-	<div class="x-copyr">施图本阿尔贝格，奥地利 (© 500px/Aurora Photos)</div>
 		<div id="y-tile" style="">
 			<h2 class="txt-shadow clrfix">研修</h2>
 			<a id="yb-blog" class="tile ico bg-emerald"
 				style="background-position: 0 -10px" href="http://www.cerhy.com/blog/index.jspx"><span
 				class="bg-crimson lt"
-				style="left: 0; right: 0; padding: 4px 6px; position: absolute;">在找好师博客？点这里~</span><span
+				style="left: 0; right: 0; padding: 4px 6px; position: absolute;">在找博客？点这里~</span><span
 				class="tile-label">博友圈</span><span class="tile-badge">个人空间</span></a> <a
 				class="tile ico bg-orange" style="background-position: 0 -160px"
 				href="${base}/ws"><span class="tile-label">工作坊</span><span
@@ -315,7 +327,7 @@ Object.append(App, {
 			</div>
 			<!--h2 class="fg-white txt-shadow clrfix">实用工具</h2-->
 			<div style="padding: 20px 0; clear: both;">
-				<img src="http://my.hnjs.org/ui/portal/wx-qyyd.png">
+				<img src="${base}/res/jeecms/images/wx-qyyd.png">
 			</div>
 			<div class="clr"></div>
 		</div>

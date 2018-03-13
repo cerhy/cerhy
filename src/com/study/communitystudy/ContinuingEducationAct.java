@@ -1,4 +1,4 @@
-package com.jeecms.cms.action.project;
+package com.study.communitystudy;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -9,23 +9,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
-
-import com.jeecms.core.entity.CmsSite;
-import com.jeecms.core.web.util.CmsUtils;
-import com.jeecms.core.web.util.FrontUtils;
-
-/**
- * 好师社区
- */
 @Controller
-public class CommunityAct {
+public class ContinuingEducationAct {
 	@SuppressWarnings("unused")
-	private static final Logger log = LoggerFactory.getLogger(CommunityAct.class);
+	private static final Logger log = LoggerFactory.getLogger(WorkShopAct.class);
 	
-    @RequestMapping("/project")    
+    @RequestMapping("/tea")    
     public ModelAndView index(HttpServletRequest request,HttpServletResponse response, ModelMap model) { 
-    	CmsSite site=CmsUtils.getSite(request);
-    	FrontUtils.frontData(request, model, site);
-        return new ModelAndView("WEB-INF/t/cms/www/default/index/community.html");    
+        return new ModelAndView("WEB-INF/t/cms/www/default/index/tea.html");    
     } 
 }

@@ -120,7 +120,7 @@ li {
 
 @media screen {
 	body {
-		background: #fff url(/${res}/images/bg.jpg) no-repeat center
+		background: #fff url(${base}/res/jeecms/images/bg.jpg) no-repeat center
 			top;
 	}
 	.x-footer {
@@ -142,7 +142,7 @@ li {
 		margin: 38px 0 0px 0;
 		padding: 38px 0;
 		color: #fff;
-		background: url(/${res}/images/logo.png) no-repeat left top;
+		background: url(${base}/res/jeecms/images/logo.png) no-repeat left top;
 	}
 	.x-pane {
 		width: 660px;
@@ -320,7 +320,7 @@ function contentShow(columnID,username){
       onComplete: function(jsonObj) {
           var i = "";
           for(var j=0;j<jsonObj.length;j++){
-        	  i += "<li><span class='lt'>"+jsonObj[j].contentDate+" | </span><a href='http://www.cerhy.com/bk/"+jsonObj[j].contentId+".jhtml'>"+jsonObj[j].contentTitle+"</a>",
+        	  i += "<li><span class='lt'>"+jsonObj[j].contentDate+" | </span><a href='http://www.cerhy.com/t/"+jsonObj[j].contentId+".jhtml'>"+jsonObj[j].contentTitle+"</a>",
               (j + 1) % 5 == 0 && (i += "<hr/>")
           };
           i = "<ul>" + i + "</ul>",
@@ -333,7 +333,7 @@ function contentShow(columnID,username){
 
 <base target="_blank">
 </head>
-<link rel="shortcut icon" href="/${res}/images/cerhyheard.png" type="image/x-icon" />
+<link rel="shortcut icon" href="${base}/res/jeecms/images/cerhyheard.png" type="image/x-icon" />
 <div class="x-wrap">
 	<h2 class="x-cap">海南省中小学幼儿园教师继续教育网</h2>
 </div>
@@ -359,7 +359,7 @@ function contentShow(columnID,username){
 		<a href="http://m.hnjs.org/s/credit" class="slip bg-voilet"><span class="slip-xt">教师</span>查询学分档案<br/>打印年审证书</a>
 		<a href="http://m.hnjs.org/s/tce" class="slip bg-orange"><span class="slip-xt">学分</span>海南省中小学（幼儿园）<br/>教师继续教育学分管理平台</a>
 		<a href="http://localhost:8080/cerhy/project" class="slip bg-blue"><span class="slip-xt">好师</span>海南教师网络研修社区<br/>博友圈/工作坊/备课室/修改密码</a>
-		<div style="text-align:center;"><img src="/${res}/images/qyyd.gif"/><br/>微信扫描上方二维码，订阅“琼崖园丁”。</div>
+		<div style="text-align:center;"><img src="${base}/res/jeecms/images/qyyd.gif"/><br/>微信扫描上方二维码，订阅“琼崖园丁”。</div>
 		<!--hr/><div class="xt">相关链接</div>
 		<ul><li><a href="">海南省教育厅</a></li><li><a href="">海南省电教馆</a></li></ul-->
 	</div>

@@ -117,6 +117,12 @@ public class DynamicPageAct {
 		String sx = request.getParameter("sx");//局部刷新(好友)
 		String o = request.getParameter("o");//进入博客文章内容显示
 		String columnId = request.getParameter("columnIdZ");//好友  0
+		
+		if(paths[0].equals("t")){
+			//继续教育、社区文章展示
+			return blogAct.blogContentEdu(paths, params, info, pageNo,request, response, model,f,columnId);
+		}
+		
 		if(null != d){
 			if(null != o){
 				return blogAct.blogContentShowOwn(paths, params, info, pageNo,request, response, model,columnId);

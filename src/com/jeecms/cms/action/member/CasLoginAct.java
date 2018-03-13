@@ -37,6 +37,8 @@ public class CasLoginAct {
 		model.addAttribute("site",site);
 		if(StringUtils.isBlank(returnUrl)){
 			session.setAttribute(request, response, "loginSource", null);
+		}else{
+			model.addAttribute("returnUrl",returnUrl);
 		}
 		Object source=session.getAttribute(request, "loginSource");
 		if(source!=null){
