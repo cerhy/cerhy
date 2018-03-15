@@ -692,4 +692,8 @@ public class CmsUserMngImpl implements CmsUserMng {
 	public String saveUpdateSynopsis(Integer userId, String synopsis) {
 		return contentDao.saveUpdateSynopsis(userId, synopsis);
 	}
+	@Override
+	public String clearNoticeSynopsis(String mark, Integer id) {
+		return contentDao.clearNoticeSynopsis(mark, id);
+	}
 }

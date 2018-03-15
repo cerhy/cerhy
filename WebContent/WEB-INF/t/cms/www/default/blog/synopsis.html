@@ -17,6 +17,8 @@ $('.user-menu-links li').click(function(){
 <div class="personCenter-userInfo blog_right" >
 	<form id="jvForm" action="add_notice.jspx" method="post">
 		<textarea id="synopsis" name="synopsis" rows="18" cols="90">${synopsis }</textarea>
+		<p style="color: red;font-size: 15px;">博客简介注意事项:</p>
+		<p style="color: red;font-size: 15px;">因为代码原因导致博客出现问题，请到“首页-个人中心-博客管理”清除即可！</p>
 		<input type="button" value="提交" class="submit" onclick="addUpdateSynopsis()"/>
 	</form>
 </div>
@@ -26,6 +28,10 @@ function addUpdateSynopsis(){
 	if(synopsis != null){
 		synopsis = synopsis.replace(/%/g,"%25");
 		synopsis = synopsis.replace(/\+/g,"%2B");
+	}
+	if(synopsis.length>8000){
+		alert("您输入的内容过多！请减少内容在提交");
+		return;
 	}
 	$.ajax({
 		url:"${base}/blog/add_update_synopsis.jspx",
@@ -63,13 +69,12 @@ function addUpdateSynopsis(){
 			   	         			if(data.state!="0"){
 			   	         				dataSynopsis = data.synopsisContent;
 				   	         			if(dataSynopsis!=null) {
-				   	 					dataSynopsis = dataSynopsis.replace(/&lt;/g,"<");
-				   	 					dataSynopsis = dataSynopsis.replace(/&gt;/g,">");
+					   	 					dataSynopsis = dataSynopsis.replace(/&lt;/g,"<");
+					   	 					dataSynopsis = dataSynopsis.replace(/&gt;/g,">");
 				   	 					} 
  			   	         				$(".synopsis").css('display','block');
-			   	         				$(".notice-synopsis").css('display','block');
-			   	         				/* document.getElementById("noticeContent").innerHTML=data; */
-			   	         			document.getElementById("synopsisContent").innerHTML=dataSynopsis; 
+			   	         				$(".synopsis-content").css('display','block');
+			   	         				document.getElementById("synopsisContent").innerHTML=dataSynopsis; 
 			   	         			}else{
 				   	         			$(".synopsis").css('display','none');
 			   	         				$(".notice-synopsis").css('display','none');

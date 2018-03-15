@@ -17,6 +17,8 @@ $('.user-menu-links li').click(function(){
 <div class="personCenter-userInfo blog_right" >
 	<form id="jvForm" action="add_notice.jspx" method="post">
 		<textarea id="notice" name="notice" rows="18" cols="90">${notice}</textarea>
+		<p style="color: red;font-size: 15px;">博客公告注意事项:</p>
+		<p style="color: red;font-size: 15px;">因为代码原因导致博客出现问题，请到“首页-个人中心-博客管理”清除即可！</p>
 		<input type="button" value="提交" class="submit" onclick="addUpdateNotice()"/>
 	</form>
 </div>
@@ -26,6 +28,10 @@ function addUpdateNotice(){
 	if(notice != null){
 		notice = notice.replace(/%/g,"%25");
 		notice = notice.replace(/\+/g,"%2B");
+	}
+	if(notice.length>10000){
+		alert("您输入的内容过多！请减少内容在提交");
+		return;
 	}
 	$.ajax({
 		url:"${base}/blog/add_update_notice.jspx",

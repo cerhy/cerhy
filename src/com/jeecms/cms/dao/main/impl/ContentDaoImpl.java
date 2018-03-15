@@ -2072,4 +2072,22 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 		}
 		return resultCode;
 	}
+
+	@Override
+	public String clearNoticeSynopsis(String mark, Integer id) {
+		Finder f = Finder.create("select id from BlogNoticeSyn bean where bean.userId=:userId ");
+		f.setParam("userId", id);
+		String resultCode = "0";
+		if(find(f).size()>0 && find(f).get(0) != null){
+			//更新1:清除公告 2：清除简介
+			if("1".equals(mark)){
+				String hql = "update BlogNoticeSyn set notice='' where userId='"+id+"'" ;
+				resultCode = String.valueOf(updateObject(hql));
+			}else if("2".equals(mark)){
+				String hql = "update BlogNoticeSyn set synopsis='' where userId='"+id+"'" ;
+				resultCode = String.valueOf(updateObject(hql));
+			}
+		}
+		return resultCode;
+	}
 }

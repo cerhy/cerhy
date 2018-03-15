@@ -437,4 +437,11 @@ public interface ContentDao {
 	 */
 	public String saveUpdateSynopsis(Integer userId , String synopsis);
 	
+	/**
+	 * 清除博客公告或简介
+	 * @param mark
+	 * @param id
+	 * @return
+	 */
+	public String clearNoticeSynopsis(String mark, Integer id);
 }

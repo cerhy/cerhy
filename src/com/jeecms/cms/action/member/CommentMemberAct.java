@@ -1,6 +1,7 @@
 package com.jeecms.cms.action.member;
 
 import static com.jeecms.cms.Constants.TPLDIR_COMMENT;
+import static com.jeecms.cms.Constants.TPLDIR_MEMBER;
 import static com.jeecms.common.page.SimplePage.cpn;
 
 import java.util.List;
@@ -14,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.jeecms.cms.entity.assist.CmsComment;
 import com.jeecms.cms.manager.assist.CmsCommentMng;
@@ -22,6 +24,7 @@ import com.jeecms.common.web.CookieUtils;
 import com.jeecms.core.entity.CmsSite;
 import com.jeecms.core.entity.CmsUser;
 import com.jeecms.core.entity.MemberConfig;
+import com.jeecms.core.manager.CmsUserMng;
 import com.jeecms.core.web.WebErrors;
 import com.jeecms.core.web.util.CmsUtils;
 import com.jeecms.core.web.util.FrontUtils;
@@ -40,7 +43,53 @@ public class CommentMemberAct {
 	public static final String COMMENT_LIST = "tpl.commentLists";
 	public static final String COMMENT_MNG = "tpl.commentMng";
 	public static final String COMMENT_REPLY = "tpl.commentReply";
+	public static final String BLOG_MANAGE = "tpl.blogManage";
 
+	/**
+	 * 个人中心-博客管理
+	 * @param pageNo
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "/member/blogmanage.jspx")
+	public String blogmanage(Integer pageNo, HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		CmsSite site = CmsUtils.getSite(request);
+		CmsUser user = CmsUtils.getUser(request);
+		FrontUtils.frontData(request, model, site);
+		MemberConfig mcfg = site.getConfig().getMemberConfig();
+		// 没有开启会员功能
+		if (!mcfg.isMemberOn()) {
+			return FrontUtils.showMessage(request, model, "member.memberClose");
+		}
+		if (user == null) {
+			return FrontUtils.showLogin(request, model, site);
+		}
+		return FrontUtils.getTplPath(request, site.getSolutionPath(),
+				TPLDIR_MEMBER, BLOG_MANAGE);
+	}
+	
+	
+	@RequestMapping(value = "/member/clearNoticeSynopsis.jspx")
+	public @ResponseBody String clearNoticeSynopsis(String mark, HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		CmsSite site = CmsUtils.getSite(request);
+		CmsUser user = CmsUtils.getUser(request);
+		FrontUtils.frontData(request, model, site);
+		MemberConfig mcfg = site.getConfig().getMemberConfig();
+		// 没有开启会员功能
+		if (!mcfg.isMemberOn()) {
+			return FrontUtils.showMessage(request, model, "member.memberClose");
+		}
+		if (user == null) {
+			return FrontUtils.showLogin(request, model, site);
+		}
+		String code = cmsUserMng.clearNoticeSynopsis(mark, user.getId());
+		return code;
+	}
+	
 	/**
 	 * 我的评论
 	 * 
@@ -218,4 +267,6 @@ public class CommentMemberAct {
 
 	@Autowired
 	private CmsCommentMng commentMng;
+	@Autowired
+	private CmsUserMng cmsUserMng;
 }
