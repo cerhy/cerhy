@@ -3,6 +3,10 @@
 	width:100%;
 	background:#8A7C55  url(12.jpg) no-repeat center top;
 }
+
+.notice .notice-content{ background: #E8E5DD ; color: #717066;}
+.synopsis .synopsis-content{background: #E8E5DD ; color: #717066;}
+ 
 .header-top {background: #efefef;border-bottom:0px;}
 .footer_styles {
 	background: #8A7C55 !important; 

@@ -28,6 +28,8 @@ function addUpdateSynopsis(){
 	if(synopsis != null){
 		synopsis = synopsis.replace(/%/g,"%25");
 		synopsis = synopsis.replace(/\+/g,"%2B");
+		synopsis = synopsis.replace(/\(/g,"（");
+		synopsis = synopsis.replace(/\)/g,"）");
 	}
 	if(synopsis.length>8000){
 		alert("您输入的内容过多！请减少内容在提交");

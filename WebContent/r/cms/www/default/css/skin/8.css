@@ -2,6 +2,11 @@
 	width:100%;
 	background: #000 url(08.jpg) no-repeat center top;
 }
+
+.notice .notice-content{ background: #333333 ; color: #ece8ae;}
+.synopsis .synopsis-content{background: #333333 ; color: #ece8ae;}
+ 
+
 .header-top {background: #efefef;border-bottom:0px;}
 a:link {
     color: #000 !important;

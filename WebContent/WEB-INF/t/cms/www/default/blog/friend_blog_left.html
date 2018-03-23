@@ -418,6 +418,9 @@
            dataType:"html",
            async: true,
            success : function(datas){
+        	 //文章打开时关闭公告
+         		$(".notice").css("display","none");
+         		$(".notice-content").css("display","none");
         	   var wzid=document.getElementById('wzId');
       		 if(wzid!=null){
       			 document.getElementById('wzId').innerHTML="";
@@ -458,6 +461,9 @@
            dataType:"html",
            async: true,
            success : function(datas){
+        	 //文章打开时关闭公告
+         		$(".notice").css("display","none");
+         		$(".notice-content").css("display","none");
         	   var wzid=document.getElementById('wzId');
       		 if(wzid!=null){
       			 document.getElementById('wzId').innerHTML="";
@@ -666,6 +672,9 @@
           dataType:"html",
           async: true,
           success : function(datas){
+        	//文章打开时关闭公告
+      		$(".notice").css("display","none");
+      		$(".notice-content").css("display","none");
         	  var wzid=document.getElementById('wzId');
      		 if(wzid!=null){
      			 document.getElementById('wzId').innerHTML="";

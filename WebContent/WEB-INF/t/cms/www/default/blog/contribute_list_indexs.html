@@ -248,6 +248,10 @@ function myblogShow(url){
          dataType:"html",
         data : {'o' : 1,'getTimestamp' : getTimestamp},
         success : function(datas){
+        	//打开文章时关闭公告
+        	alert("df");
+     		$(".notice").css("display","none");
+     		$(".notice-content").css("display","none");
        	 $("#zd_u-hilite-cap").remove();
        	 $("#zdId").remove();
        	 $("#u-hilite-cap").remove();

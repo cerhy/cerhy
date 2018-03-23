@@ -1237,6 +1237,9 @@ $(function(){
 	           dataType:"html",
 	           async: true,
 	           success : function(datas){
+	        	 //文章返回时打开公告
+	        		$(".notice").css("display","block");
+	        		$(".notice-content").css("display","block");
 	        	   var wzid=document.getElementById('wzId');
           		 if(wzid!=null){
           			 document.getElementById('wzId').innerHTML="";

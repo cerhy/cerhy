@@ -3,6 +3,10 @@
 	width:100%;
 	background:#81c62f  url(23.jpg) no-repeat center top;
 }
+
+.notice .notice-content{ background: #d0f1aa ; color: black;}
+.synopsis .synopsis-content{background: #d0f1aa ; color: black;}
+ 
 .header-top {background:#efefef;border-bottom:0px;}
 .footer_styles {
 	background: #81c62f !important; 

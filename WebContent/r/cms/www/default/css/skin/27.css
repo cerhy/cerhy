@@ -4,6 +4,10 @@
 	background:#04456f  url(27.jpg) no-repeat center top;
 }
 
+.notice .notice-content{ background: #d4e2ed ; color: #1676b3;}
+.synopsis .synopsis-content{background: #d4e2ed ; color: #1676b3;}
+ 
+
 .header-top {background:#efefef;border-bottom:0px;}
 .footer_styles {
 	background: #04456f !important; 
