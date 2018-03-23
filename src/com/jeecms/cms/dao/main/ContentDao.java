@@ -444,4 +444,19 @@ public interface ContentDao {
 	 * @return
 	 */
 	public String clearNoticeSynopsis(String mark, Integer id);
+	
+	/**
+	 * 查询当前群组创建人
+	 * @param groupsId
+	 * @return
+	 */
+	public Integer getGroupUser(Integer groupsId);
+
+	/**
+	 * 验证发送人的群组是否存在
+	 * @param usersId
+	 * @param groupsId
+	 * @return
+	 */
+	public Integer getExistGroup(Integer usersId, Integer groupsId);
 }

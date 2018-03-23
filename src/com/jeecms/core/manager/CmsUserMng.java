@@ -205,4 +205,15 @@ public interface CmsUserMng {
 	 * @return
 	 */
 	public String clearNoticeSynopsis(String mark , Integer id);
+
+	/**
+	 * 通过选择群组发送文章
+	 * @param groupsId
+	 * @param contentId
+	 * @param contTitle
+	 * @param id
+	 * @return
+	 */
+	public Integer sendArticleGroup(Integer groupsId, Integer contentId,
+			String contTitle, Integer id);
 }

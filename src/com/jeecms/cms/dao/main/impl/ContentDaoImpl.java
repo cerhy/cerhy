@@ -2090,4 +2090,17 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 		}
 		return resultCode;
 	}
+
+	@Override
+	public Integer getGroupUser(Integer groupsId) {
+		String hql = "select  userId from Columns bean where bean.columnId="+ groupsId + "";
+		return (Integer) findUnique(hql);
+	}
+
+	@Override
+	public Integer getExistGroup(Integer usersId, Integer groupsId) {
+		String hql = "select  columnId from Columns bean where bean.userId="
+				+ usersId + " and bean.columnId='" + groupsId + "'";
+		return (Integer) findUnique(hql);
+	}
 }

@@ -1,0 +1,10 @@
+<div>
+ <select name="channelIds" class="member-change" id="channelIdser" style="width: 160px;float: left;    margin-top: 3px;" required>
+	      <option value="">--请选择--</option>
+	      [#if joinGroupList?size gt 0]
+               [#list joinGroupList as j]
+                <option value="${j.columnsId.columnId}">&nbsp;&nbsp;${j.columnsId.columnName}</option>
+		       [/#list]
+          [/#if]
+ </select>
+</div>

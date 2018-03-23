@@ -518,6 +518,17 @@ function delPos(){
       				<tbody>
       					<tr >
       					<td >
+      						<span style="float:  left;">请选择群组:&nbsp;&nbsp;</span>
+      						<span>
+      						<div id="setChannlHtmls"></div>
+      						</span>
+      					</td>
+      					</tr>
+      					<tr>
+      						<td><p style="float:left">或在下方填写收件人和验证码:</p></td>
+      					</tr>
+      					<tr >
+      					<td >
       						<span >收件人:&nbsp;&nbsp;</span><input type="text" id="sendee" name="sendee" class="sts"></input>
       						<span style="color:red" id="sendeeSapn"></span>
       					</td>
@@ -1088,6 +1099,35 @@ Drag.prototype = {
 		},
 	    buttons: {
             "确定": function () {
+            	var groupsId=$("#channelIdser  option:selected").val();
+            	if(!(groupsId == "" || groupsId == null || groupsId == undefined) ){
+            		 $.ajax({
+      	                type: 'POST',
+      	                url : ' ${base}/blog/sendArticleGroup.jspx',
+      	                dataType : 'json',
+      	                data : {'contentId' : $("#contentId").val(),'contTitle' : $("#contTitle").val(),'groupsId' : groupsId},
+      	                success : function(datas){
+      	                	 var code =datas.code;
+      	                	if(code=="fail"){
+    	                		 msg = datas.msg;
+    	                		 if(msg==1){
+    	                			alert("当前群组是自己创建，请使用修改选项！");
+    	                		 }else if(msg==2){
+    	                			alert("群组不存在！");
+    	                		 }else if(msg==3){
+    	                			alert("群组已存在该文章！");
+    	                			$("#sentDialog").dialog("close");
+    	                		 }else{
+    	                			alert("发送失败！");
+    	                			$("#sentDialog").dialog("close");
+    	                		 }
+    	                	 }else{
+    	                		alert("发送成功！");
+    	                		$("#sentDialog").dialog("close");
+    	                	 }
+      	                }
+            		 });
+            	}else{
             	$("#sendeeSapn").html("");
             	$("#validateCodeSapn").html("");
             	var sendee=$("#sendee").val();
@@ -1133,21 +1173,13 @@ Drag.prototype = {
  	                			alert("发送失败！");
  	                			$("#sentDialog").dialog("close");
  	                		 }
- 	                		
  	                	 }else{
  	                		alert("发送成功！");
  	                		$("#sentDialog").dialog("close");
  	                	 }
             	   	 }
-           			 });
-            	 
-            	 
-            	 
-            	 
-            	 
-            	 
-            	 
-            	 
+           		});
+            	}
             },
             "取消": function () {
                 $(this).dialog("close");
@@ -1156,7 +1188,15 @@ Drag.prototype = {
 	});	  
 	
 	function send(){
+		//判断div是否存在，存在清空，否则每次都添加一个div
+		if(document.getElementById("channelIds")){
+			$("#setChannlHtmls").html("");
+		}
 		$("#sentDialog").dialog("open");
+		var html=$("#getGroupContent").html();
+		$("#setChannlHtmls").append(html);
+		$("#getGroupContent").html("");
+		$("#sentDialog").css("height","160px");
 	}
 	function cancel(){
 		 $("#cancelDialog").dialog({  
