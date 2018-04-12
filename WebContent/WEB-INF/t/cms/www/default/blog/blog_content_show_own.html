@@ -1506,9 +1506,12 @@ function cp(path,id){
 	        	   if(datas=="login"){
 	            		 location.href="${base}/login.jspx";
 	            	 }else{
-	            		//文章返回时打开公告
+	            		//文章返回时打开公告 
+	            		var contentNotice = $("#noticeContent").html().trim();
+	            		 if(!(contentNotice == null || contentNotice.length == 0)){ 
 			        		$(".notice").css("display","block");
 			        		$(".notice-content").css("display","block");
+	            	 	} 
 	            		 var wzid=document.getElementById('wzId');
 	            		 if(wzid!=null){
 	            			 document.getElementById('wzId').innerHTML="";

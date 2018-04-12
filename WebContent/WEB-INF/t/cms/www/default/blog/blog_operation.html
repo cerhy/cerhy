@@ -184,6 +184,11 @@ function blogSeting(){
         	if(datas=="login"){
        		 location.href="${base}/login.jspx";
        	 	}else{
+	       	 	var contentNotice = $("#noticeContent").html().trim();
+	   			if(!(contentNotice == null || contentNotice.length == 0)){ 
+	        		$(".notice").css("display","block");
+	        		$(".notice-content").css("display","block");
+	   	 		} 
 				$("#zd_u-hilite-cap").remove();
 				$("#zdId").remove();
 				$("#u-hilite-cap").remove();
@@ -218,6 +223,11 @@ function addLinks(){
         	if(datas=="login"){
        		 location.href="${base}/login.jspx";
        	 	}else{
+       	 		var contentNotice = $("#noticeContent").html().trim();
+   				if(!(contentNotice == null || contentNotice.length == 0)){ 
+	        		$(".notice").css("display","block");
+	        		$(".notice-content").css("display","block");
+   	 			} 
 				$("#zd_u-hilite-cap").remove();
 				$("#zdId").remove();
 				$("#u-hilite-cap").remove();
@@ -250,6 +260,11 @@ function addFriends(){
         	if(datas=="login"){
           		 location.href="${base}/login.jspx";
           	 }else{
+          		var contentNotice = $("#noticeContent").html().trim();
+       			if(!(contentNotice == null || contentNotice.length == 0)){ 
+	        		$(".notice").css("display","block");
+	        		$(".notice-content").css("display","block");
+       	 		} 
 				$("#zd_u-hilite-cap").remove();
 				$("#zdId").remove();
 				$("#u-hilite-cap").remove();
@@ -300,6 +315,11 @@ function addNotice(){
        	if(datas=="login"){
       		 location.href="${base}/login.jspx";
       	 	}else{
+      	 		var contentNotice = $("#noticeContent").html().trim();
+       			if(!(contentNotice == null || contentNotice.length == 0)){ 
+	        		$(".notice").css("display","block");
+	        		$(".notice-content").css("display","block");
+       	 		} 
 				$("#zd_u-hilite-cap").remove();
 				$("#zdId").remove();
 				$("#u-hilite-cap").remove();
@@ -333,6 +353,11 @@ function addSynopsis(){
        	if(datas=="login"){
       		 location.href="${base}/login.jspx";
       	 	}else{
+      	 		var contentNotice = $("#noticeContent").html().trim();
+       			if(!(contentNotice == null || contentNotice.length == 0)){ 
+	        		$(".notice").css("display","block");
+	        		$(".notice-content").css("display","block");
+       	 		} 
 				$("#zd_u-hilite-cap").remove();
 				$("#zdId").remove();
 				$("#u-hilite-cap").remove();
