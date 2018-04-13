@@ -505,7 +505,7 @@ public class CmsUserMngImpl implements CmsUserMng {
 	public Integer sendArticleGroup(Integer groupsId, Integer contentId,
 			String contTitle, Integer id) {
 		Integer resultCode = 0;
-		//查询当前群组创建人
+		//查询当前群组创建人(即接收人)
 		Integer usersId = contentDao.getGroupUser(groupsId);
 		//当该群组为自己创建的时候，则不发送
 		if(usersId == id){
@@ -517,7 +517,7 @@ public class CmsUserMngImpl implements CmsUserMng {
 				resultCode = 2;
 			}else{
 				//当该群组下已有该文章时，则不发送
-				Integer existConTent = contentDao.getContentSend(contentId,groupsId);
+				Integer existConTent = contentDao.getContentSend(contentId,usersId);
 				if(existConTent != null){
 					resultCode = 3;
 				}else{
