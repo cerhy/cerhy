@@ -518,7 +518,7 @@ public class CmsUserMngImpl implements CmsUserMng {
 			}else{
 				//当该群组下已有该文章时，则不发送
 				Integer existConTent = contentDao.getContentSend(contentId,groupsId);
-				if(existConTent == null){
+				if(existConTent != null){
 					resultCode = 3;
 				}else{
 					ContentSend send = new ContentSend();

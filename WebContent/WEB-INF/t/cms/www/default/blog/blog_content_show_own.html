@@ -1083,7 +1083,7 @@ Drag.prototype = {
 
 	$("#sentDialog").dialog({
 		autoOpen: false,
-		modal: false,
+		modal: true,
 		resizable :false,
 		stack : false,
 		draggable : true,
@@ -1116,7 +1116,6 @@ Drag.prototype = {
     	                			alert("群组不存在！");
     	                		 }else if(msg==3){
     	                			alert("群组已存在该文章！");
-    	                			$("#sentDialog").dialog("close");
     	                		 }else{
     	                			alert("发送失败！");
     	                			$("#sentDialog").dialog("close");
@@ -1189,9 +1188,9 @@ Drag.prototype = {
 	
 	function send(){
 		//判断div是否存在，存在清空，否则每次都添加一个div
-		if(document.getElementById("channelIds")){
+		/* if(document.getElementById("channelIds")){
 			$("#setChannlHtmls").html("");
-		}
+		} */
 		$("#sentDialog").dialog("open");
 		var html=$("#getGroupContent").html();
 		$("#setChannlHtmls").append(html);
