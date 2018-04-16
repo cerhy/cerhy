@@ -70,7 +70,8 @@
       </div>
       
 <script type="text/javascript">
-skinChange(${user.theme!0});
+var modelThemes = ${user.theme!0};
+skinChange(modelThemes);
 function skinChange(n){
 	document.all.MrJin.href="/${res}/css/skin/"+n+".css"; 
 }
@@ -91,14 +92,14 @@ $(function() {
 			$(".ui-widget-header").css("border","0");  
 		},
 		close: function(event, ui) {
-			skinChange(${user.theme!0});
+			skinChange(modelThemes);
 		}
 	});	   
 });
 
 function closeDialog(){
 	$("#setDialog").dialog("close");
-	skinChange(${user.theme!0});
+	skinChange(modelThemes);
 }
 
 function set(){
@@ -107,12 +108,12 @@ function set(){
 	if($("#ck").val()!=''){
 		theme.value=$("#ck").val();
 	}else{
-		theme.value="${user.theme!0}";
+		theme.value=modelThemes;
 	}
 }
 </script>
  <script type="text/javascript">
-		skinChange(${user.theme!0});
+		skinChange(modelThemes);
 	function skinChange(n){
 		document.all.MrJin.href="/${res}/css/skin/"+n+".css"; 
 	}
@@ -129,6 +130,7 @@ function set(){
             success:function(data) {
             	$("#ck").val(themeId);
             	$("#setDialog").dialog("close");
+            	modelThemes = themeId;
             	document.all.MrJin.href="/${res}/css/skin/"+themeId+".css";
             },
         });
