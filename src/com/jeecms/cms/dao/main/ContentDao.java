@@ -459,4 +459,12 @@ public interface ContentDao {
 	 * @return
 	 */
 	public Integer getExistGroup(Integer usersId, Integer groupsId);
+
+	/**
+	 * 判断发送时，一个栏目下，只能存在一篇文章
+	 * @param contentId
+	 * @param groupsId
+	 * @return
+	 */
+	public Integer getContentGroupsId(Integer contentId, Integer groupsId);
 }

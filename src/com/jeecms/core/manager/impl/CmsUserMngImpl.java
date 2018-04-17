@@ -517,7 +517,7 @@ public class CmsUserMngImpl implements CmsUserMng {
 				resultCode = 2;
 			}else{
 				//当该群组下已有该文章时，则不发送
-				Integer existConTent = contentDao.getContentSend(contentId,usersId);
+				Integer existConTent = contentDao.getContentGroupsId(contentId,groupsId);
 				if(existConTent != null){
 					resultCode = 3;
 				}else{
@@ -561,8 +561,7 @@ public class CmsUserMngImpl implements CmsUserMng {
 					if(colId==null){
 						result=3;
 					}else{
-						
-						Integer contId = contentDao.getContentSend(contentId, recieveUserId);//判断接收人是否已经存在此文章
+						Integer contId = contentDao.getContentGroupsId(contentId, columnId);//判断接收人是否已经存在此文章
 						if(contId!=null){
 							result=4;//已经存在此文章
 						}else{

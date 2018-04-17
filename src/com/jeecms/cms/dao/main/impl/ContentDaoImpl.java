@@ -2103,4 +2103,11 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 				+ usersId + " and bean.columnId='" + groupsId + "'";
 		return (Integer) findUnique(hql);
 	}
+
+	@Override
+	public Integer getContentGroupsId(Integer contentId, Integer groupsId) {
+		String hql = "select   id from ContentSend  where contentId="
+				+ contentId + " and columnId='" + groupsId + "'";
+		return (Integer) findUnique(hql);
+	}
 }
