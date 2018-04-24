@@ -1,6 +1,7 @@
 package com.jeecms.cms.action.member;
 import static com.jeecms.cms.Constants.TPLDIR_BLOG;
 import static com.jeecms.cms.Constants.TPLDIR_MEMBER;
+import static com.jeecms.common.page.SimplePage.cpn;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -9,8 +10,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -39,6 +38,7 @@ import com.jeecms.cms.dao.main.impl.BlogDao;
 import com.jeecms.cms.entity.assist.CmsComment;
 import com.jeecms.cms.entity.assist.CmsJoinGroup;
 import com.jeecms.cms.entity.assist.CmsPostilInfo;
+import com.jeecms.cms.entity.assist.CmsWorkInfo;
 import com.jeecms.cms.entity.main.Channel;
 import com.jeecms.cms.entity.main.Columns;
 import com.jeecms.cms.entity.main.Content;
@@ -48,7 +48,9 @@ import com.jeecms.cms.entity.main.InterfaceParam;
 import com.jeecms.cms.manager.assist.CmsFileMng;
 import com.jeecms.cms.manager.main.ContentMng;
 import com.jeecms.cms.manager.main.impl.ColumnsMng;
-import com.jeecms.common.hibernate4.Finder;
+import com.jeecms.cms.manager.main.impl.WorkShopMngImpl;
+import com.jeecms.common.page.Pagination;
+import com.jeecms.common.upload.FileRepository;
 import com.jeecms.common.web.ResponseUtils;
 import com.jeecms.core.entity.CmsSite;
 import com.jeecms.core.entity.CmsUser;
@@ -76,6 +78,8 @@ public class ContributeAct extends AbstractContentMemberAct {
 	public static final String CONTRIBUTE_UPLOADMIDIA = "tpl.uploadMedia";
 	public static final String CONTRIBUTE_UPLOADATTACHMENT = "tpl.uploadAttachment";
 
+	private static final String IMG_PATH = "/u/cms/www";
+	
 	/**
 	 * 会员投稿列表
 	 * 
@@ -905,6 +909,8 @@ public class ContributeAct extends AbstractContentMemberAct {
 	@Autowired
 	private DbFileMng dbFileMng;
 	@Autowired
+	private FileRepository fileRepository;
+	@Autowired
 	private CmsUserMng cmsUserMng;
 	@Autowired
 	private CmsFileMng fileMng;
@@ -916,6 +922,8 @@ public class ContributeAct extends AbstractContentMemberAct {
 	protected BlogCommon blogCommon;
 	@Autowired
 	protected ColumnsMng columnsMng;
+	@Autowired
+	protected WorkShopMngImpl workShopMng;
 	
 	
 	//博客主页
@@ -2499,6 +2507,10 @@ public class ContributeAct extends AbstractContentMemberAct {
 		return object.toString();
 	}
 	
+	/**
+     * 继续教育,好师社区处文章读取
+	 * @throws Exception 
+     * */
 	@RequestMapping(value = "/blog/showContent.jspx")
 	public void showContent(String columnID,String username,InterfaceParam param,HttpServletRequest request,HttpServletResponse response) throws JSONException {
 		JSONObject o;
@@ -2531,7 +2543,12 @@ public class ContributeAct extends AbstractContentMemberAct {
 					o.put("contentDate", sdf.format(t.getReleaseDate()));
 					o.put("contentTitle", t.getContentExt().getTitle());
 					o.put("contentId", t.getId());
-					o.put("contentDetial", t.getContentTxt().getTxt());
+					if(t.getContentTxt()!=null&&t.getContentTxt().getTxt()!=null){
+						o.put("contentDetial", t.getContentTxt().getTxt());
+					}else{
+						o.put("contentDetial", "");
+					}
+					
 					if(null!=t.getContentExt().getAuthor()){
 						o.put("contentAuthor", t.getContentExt().getAuthor());
 					}else{
@@ -2573,6 +2590,10 @@ public class ContributeAct extends AbstractContentMemberAct {
 		return contentMng.getListByChannelIds(count,userid,columnID);
 	}
 	
+	/**
+     *判断是否登陆
+	 * @throws Exception 
+     * */
 	@RequestMapping(value = "/blog/checkLogin.jspx")
 	public void checkLogin(HttpServletRequest request,HttpServletResponse response) throws JSONException {
 		JSONObject o;
@@ -2597,4 +2618,117 @@ public class ContributeAct extends AbstractContentMemberAct {
 		arr.put(o);
 		ResponseUtils.renderJson(response, arr.toString());
 	}
+	
+	
+	
+	/**
+     * 实现文件上传
+	 * @throws Exception 
+     * */
+    @RequestMapping(value = "/blog/uploadImage.jspx", method = RequestMethod.POST)
+    @ResponseBody
+    public void ramanage(@RequestParam(value = "file") MultipartFile file,HttpServletRequest request,HttpServletResponse response) throws Exception{
+    	JSONObject o;
+		JSONArray arr = new JSONArray();
+		o = new JSONObject();
+        try {
+            String origName = file.getOriginalFilename();
+        	String ctx = request.getContextPath();
+            String ext = FilenameUtils.getExtension(origName).toLowerCase(Locale.ENGLISH);
+            String fileUrl = fileRepository.storeByExt(IMG_PATH, ext, file);
+            // 加上部署路径
+			fileUrl = ctx + fileUrl;
+			o.put("url", fileUrl);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        arr.put(o);
+        ResponseUtils.renderJson(response, arr.toString());
+    }
+    
+    /**
+     * 保存工作坊名称/标题等信息
+	 * @throws Exception 
+     * */
+    @RequestMapping(value = "/blog/saveWorkInfo.jspx")
+	public void saveWorkInfo(String workTitle,String workSubtitle,String workVcode,String workTags,
+			String logoUrl,HttpServletRequest request,HttpServletResponse response) throws JSONException {
+    	CmsUser user = CmsUtils.getUser(request);
+		JSONObject o;
+		JSONArray arr = new JSONArray();
+		o = new JSONObject();
+		CmsWorkInfo workInfo = new CmsWorkInfo();
+		if(null!=user){
+			workInfo.setWorkCount(Integer.valueOf(CreateSerialNo.generateNumber()));
+			workInfo.setWorkName(workTitle);
+			workInfo.setWorkSutitle(workSubtitle);
+			workInfo.setWorkCode(Integer.valueOf(workVcode));
+			workInfo.setWorkColumn(workTags);
+			workInfo.setWorkImage(logoUrl);
+			workInfo.setWorkAddTime(new Date());
+			workInfo.setWorkUser(user);
+			int wrokId=workShopMng.saveWorkInfo(workInfo);
+			o.put("success", 1);
+		}else{
+			o.put("success", 0);
+		}
+		arr.put(o);
+		ResponseUtils.renderJson(response, arr.toString());
+	}
+    
+    /**
+     * 读取工作坊文章
+	 * @throws Exception 
+     * */
+    @SuppressWarnings("unchecked")
+	@RequestMapping(value = "/blog/showWorkArticle.jspx")
+    public void showWorkArticle(String articleType,String pageNo,String pageSize,String coulmnId,InterfaceParam param,HttpServletRequest request,HttpServletResponse response) throws JSONException {
+    	CmsSite site = CmsUtils.getSite(request);
+    	//CmsUser user = CmsUtils.getUser(request);
+    	//articleType 1代表全部文章 0代表推荐文章
+    	//事例 最后根据文章类型来确定
+    	if(articleType.equals("1")){
+    		param.setUserid("1");
+    	}else{
+    		param.setUserid("6922");
+    	}
+    	JSONObject o;
+    	JSONArray arr = new JSONArray();
+    	//此方法不适合redis存储
+    	Pagination p = contentMng.getPageForWorkArticle(articleType,site.getId(),Integer.valueOf(param.getUserid()), cpn(Integer.valueOf(pageNo)), cpn(Integer.valueOf(pageSize)),Integer.valueOf(1));
+		List<Content> list = (List<Content>)p.getList();
+		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+		for (Content t : list) {
+			o = new JSONObject();
+			o.put("count", p.getTotalCount());
+			o.put("contentDate", sdf.format(t.getReleaseDate()));
+			o.put("contentTitle", t.getContentExt().getTitle());
+			o.put("contentId", t.getId());
+			o.put("contentChannel", t.getColumnId());
+			if(t.getContentExt()!=null&&t.getContentExt().getDescription()!=null){
+				if(t.getContentExt().getDescription().length()>100){
+					o.put("contentDescription", t.getContentExt().getDescription().substring(0, 100));
+				}else{
+					o.put("contentDescription", t.getContentExt().getDescription());
+				}
+			}else{
+				o.put("contentDescription", "");
+			}
+			if(t.getContentTxt()!=null&&t.getContentTxt().getTxt()!=null){
+				o.put("contentLength", t.getContentTxt().getTxt().length());
+			}else{
+				o.put("contentLength", 0);
+			}
+			o.put("view", t.getContentCount().getViews());
+			o.put("comment", t.getContentCount().getComments());
+			if(null!=t.getContentExt().getAuthor()){
+				o.put("contentAuthor", t.getContentExt().getAuthor());
+			}else{
+				o.put("contentAuthor", t.getUser().getUsername());
+			}
+			arr.put(o);
+		}
+    	ResponseUtils.renderJson(response, arr.toString());
+    }
+    
 }

@@ -265,5 +265,8 @@ public interface ContentMng {
 
 	public List<Content> getListByChannelIds(Integer count, Integer userid,Integer columnID);
 
+
+	public Pagination getPageForWorkArticle(String articleType, Integer sitId, Integer userId, int pageNo, int pageSize, int coulmnId);
+
 	
 }

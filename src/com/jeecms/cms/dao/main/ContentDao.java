@@ -444,4 +444,6 @@ public interface ContentDao {
 	 * @return
 	 */
 	public String clearNoticeSynopsis(String mark, Integer id);
+
+	public Pagination getPageForWorkArticle(String articleType, Integer sitId,Integer userId, int pageNo, int pageSize, int coulmnId);
 }

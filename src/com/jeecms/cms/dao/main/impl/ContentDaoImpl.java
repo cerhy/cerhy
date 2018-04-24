@@ -58,8 +58,7 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 			ContentStatus status, Byte checkStep, Integer siteId,
 			Integer modelId, Integer channelId, int orderBy, int pageNo,
 			int pageSize, String removeBlog) {
-		Finder f = Finder
-				.create("select  bean from Content bean left join bean.contentShareCheckSet shareCheck left join shareCheck.channel tarChannel ");
+		Finder f = Finder.create("select  bean from Content bean left join bean.contentShareCheckSet shareCheck left join shareCheck.channel tarChannel ");
 		if (rejected == status) {
 			f.append("  join bean.contentCheckSet check ");
 		}
@@ -2089,5 +2088,18 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 			}
 		}
 		return resultCode;
+	}
+
+	@Override
+	public Pagination getPageForWorkArticle(String articleType, Integer sitId,Integer userId, int pageNo, int pageSize, int coulmnId) {
+		Finder f = Finder.create("from Content bean");
+		f.append(" where 1=1");
+		f.append(" and bean.user.id=:userId");
+		//f.append(" and bean.columnId=:columnId");
+		f.setParam("userId", userId);
+		//f.setParam("columnId", columnId);
+		f.append(" order by  sortDate desc");
+		f.setCacheable(true);
+		return find(f, pageNo, pageSize);
 	}
 }
