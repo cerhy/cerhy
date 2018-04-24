@@ -94,7 +94,7 @@ outline: none;
 				           </div>
                       [/#if]
                <div class="synopsis" style="display:none;width:250px;background:#fff;" >
-               		<div id="synopsisContent" class="synopsis-content" style="display:none;margin-top:20px;padding:8px 12px;word-wrap:break-word; overflow:hidden;">
+               		<div id="synopsisContent" class="synopsis-content" style="display:none;margin-top:20px;padding:8px 12px;word-wrap:break-word; overflow:hidden;font-size: 14px;">
                		</div>
                </div>
                <div class="htmleaf-container"  id="appendHtml">
@@ -353,6 +353,9 @@ outline: none;
 	  </div>
 	 <div id="getChannlHtml" style="display:none;">
      [#include 'blog_content_channl.html'/]
+     </div>
+     <div id="getGroupContent" style="display:none;">
+     [#include 'blog_content_group.html'/]
      </div>
      <div style="display:none;">
      	<input id="templatePageNos" name="templatePageNos" value=""/>
@@ -635,6 +638,11 @@ function sJoinGroup(){
             	 if(datas=="login"){
             		 location.href="${base}/login.jspx";
             	 }else{
+            		 var contentNotice = $("#noticeContent").html().trim();
+            			if(!(contentNotice == null || contentNotice.length == 0)){ 
+     	        		$(".notice").css("display","block");
+     	        		$(".notice-content").css("display","block");
+            	 		} 
             		 var wzid=document.getElementById('wzId');
             		 if(wzid!=null){
             			 document.getElementById('wzId').innerHTML="";
@@ -674,6 +682,9 @@ function sJoinGroup(){
             	 if(datas=="login"){
             		 location.href="${base}/login.jspx";
             	 }else{
+            		//文章返回时打开公告
+		        		$(".notice").css("display","block");
+		        		$(".notice-content").css("display","block");
             		 var wzid=document.getElementById('wzId');
             		 if(wzid!=null){
             			 document.getElementById('wzId').innerHTML="";
@@ -818,6 +829,11 @@ function sJoinGroup(){
 	        	   if(datas=="login"){
 	            		 location.href="${base}/login.jspx";
 	            	 }else{
+	            		 	var contentNotice = $("#noticeContent").html().trim();
+	            			if(!(contentNotice == null || contentNotice.length == 0)){ 
+		     	        		$(".notice").css("display","block");
+		     	        		$(".notice-content").css("display","block");
+	            	 		} 
 						$("#zd_u-hilite-cap").remove();
 						$("#zdId").remove();
 						$("#u-hilite-cap").remove();
@@ -1167,6 +1183,11 @@ function gotoDataShow(url){
         	 if(datas=="login"){
          		 location.href="${base}/login.jspx";
          	 }else{
+         		var contentNotice = $("#noticeContent").html().trim();
+       			if(!(contentNotice == null || contentNotice.length == 0)){ 
+	        		$(".notice").css("display","block");
+	        		$(".notice-content").css("display","block");
+       	 		} 
 				$("#zd_u-hilite-cap").remove();
 				$("#zdId").remove();
 				$("#u-hilite-cap").remove();

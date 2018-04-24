@@ -303,6 +303,9 @@ outline: none;
 					<div id="getChannlHtml" style="display:none;">
 				     	[#include 'blog_content_channl.html'/]
 				     </div>
+				     <div id="getGroupContent" style="display:none;">
+    					 [#include 'blog_content_group.html'/]
+     				</div>
 				</div>	
 <script src='/${res}/js/stopExecutionOnTimeout.js?t=1'></script>
 <script src='/${res}/js/jquery.velocity.min.js'></script>
@@ -447,6 +450,11 @@ outline: none;
             	 if(datas=="login"){
             		 location.href="${base}/login.jspx";
             	 }else{
+            		 var contentNotice = $("#noticeContent").html().trim();
+            			if(!(contentNotice == null || contentNotice.length == 0)){ 
+     	        		$(".notice").css("display","block");
+     	        		$(".notice-content").css("display","block");
+            	 		} 
             		 var wzid=document.getElementById('wzId');
             		 if(wzid!=null){
             			 document.getElementById('wzId').innerHTML="";
@@ -555,6 +563,11 @@ outline: none;
 	        	   if(datas=="login"){
 	            		 location.href="${base}/login.jspx";
 	            	 }else{
+	            		 var contentNotice = $("#noticeContent").html().trim();
+	            			if(!(contentNotice == null || contentNotice.length == 0)){ 
+	     	        		$(".notice").css("display","block");
+	     	        		$(".notice-content").css("display","block");
+	            	 		} 
 						$("#zd_u-hilite-cap").remove();
 						$("#zdId").remove();
 						$("#u-hilite-cap").remove();
@@ -1012,6 +1025,11 @@ function gotoDataShow(url){
         	 if(datas=="login"){
          		 location.href="${base}/login.jspx";
          	 }else{
+         		var contentNotice = $("#noticeContent").html().trim();
+       			if(!(contentNotice == null || contentNotice.length == 0)){ 
+	        		$(".notice").css("display","block");
+	        		$(".notice-content").css("display","block");
+       	 		} 
 				$("#zd_u-hilite-cap").remove();
 				$("#zdId").remove();
 				$("#u-hilite-cap").remove();

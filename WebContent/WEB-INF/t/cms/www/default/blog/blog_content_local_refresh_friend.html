@@ -257,7 +257,7 @@ function btnPrints(){
 		   	<input style="display: none;" id="no3" value="${content.id}">
 			<input style="display: none;" id="alt" value="0">	
 			<div class="personCenter-userInfo blog_right xueke-acticle">
-			<div id="two-bar-codes" style="float:right;"><div class="ftl" id="qrcode" style="margin: 10px 20px 0px 0px; width: 100px;float:right;"></div>
+			<div id="two-bar-codes" style="float:right;"><div class="ftl" id="qrcode" style="margin: 10px 20px 0px 0px; width: 100px;float:right;"></div></div>
                 <div ><h2>${content.title}</h2></div>
                 <input type="hidden" id="contTitle" name="conTitle" value="${content.title}"/>
 				<input type="text" style="display:none" id="hipw" value="${content.password!}" />
@@ -1237,6 +1237,12 @@ $(function(){
 	           dataType:"html",
 	           async: true,
 	           success : function(datas){
+	        	 //文章返回时打开公告
+	        	   var contentNotice = $("#noticeContent").html().trim();
+          		 if(!(contentNotice == null || contentNotice.length == 0)){ 
+		        		$(".notice").css("display","block");
+		        		$(".notice-content").css("display","block");
+          	 	} 
 	        	   var wzid=document.getElementById('wzId');
           		 if(wzid!=null){
           			 document.getElementById('wzId').innerHTML="";

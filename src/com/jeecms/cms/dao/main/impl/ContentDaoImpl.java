@@ -2102,4 +2102,22 @@ public class ContentDaoImpl extends HibernateBaseDao<Content, Integer>
 		f.setCacheable(true);
 		return find(f, pageNo, pageSize);
 	}
+	public Integer getGroupUser(Integer groupsId) {
+		String hql = "select  userId from Columns bean where bean.columnId="+ groupsId + "";
+		return (Integer) findUnique(hql);
+	}
+
+	@Override
+	public Integer getExistGroup(Integer usersId, Integer groupsId) {
+		String hql = "select  columnId from Columns bean where bean.userId="
+				+ usersId + " and bean.columnId='" + groupsId + "'";
+		return (Integer) findUnique(hql);
+	}
+
+	@Override
+	public Integer getContentGroupsId(Integer contentId, Integer groupsId) {
+		String hql = "select   id from ContentSend  where contentId="
+				+ contentId + " and columnId='" + groupsId + "'";
+		return (Integer) findUnique(hql);
+	}
 }

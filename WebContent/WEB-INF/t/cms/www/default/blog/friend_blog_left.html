@@ -33,7 +33,7 @@
 				           </div>
                       [/#if]
                <div class="synopsis" style="display:none;width:250px;background:#fff;" >
-               		<div id="synopsisContent" class="synopsis-content" style="display:none;margin-top:20px;padding:8px 12px;word-wrap:break-word; overflow:hidden;">
+               		<div id="synopsisContent" class="synopsis-content" style="display:none;margin-top:20px;padding:8px 12px;word-wrap:break-word; overflow:hidden;font-size: 14px;">
                		</div>
                </div>
                <div class="htmleaf-container" >
@@ -358,6 +358,11 @@
            data : {'queryTitle' : null,'modelId' : null,'queryChannelId' : null,'pageNo':pageNos,'channelId':channelId,'joinGroupStata':joinGroupStata,'columnId':columnId,'user_ids':user_ids},
            async: true,
            success : function(datas){
+        	   var contentNotice = $("#noticeContent").html().trim();
+      			if(!(contentNotice == null || contentNotice.length == 0)){ 
+	        		$(".notice").css("display","block");
+	        		$(".notice-content").css("display","block");
+      	 		} 
         	   var wzid=document.getElementById('wzId');
       		 if(wzid!=null){
       			 document.getElementById('wzId').innerHTML="";
@@ -418,6 +423,9 @@
            dataType:"html",
            async: true,
            success : function(datas){
+        	 //文章打开时关闭公告
+         		$(".notice").css("display","none");
+         		$(".notice-content").css("display","none");
         	   var wzid=document.getElementById('wzId');
       		 if(wzid!=null){
       			 document.getElementById('wzId').innerHTML="";
@@ -458,6 +466,9 @@
            dataType:"html",
            async: true,
            success : function(datas){
+        	 //文章打开时关闭公告
+         		$(".notice").css("display","none");
+         		$(".notice-content").css("display","none");
         	   var wzid=document.getElementById('wzId');
       		 if(wzid!=null){
       			 document.getElementById('wzId').innerHTML="";
@@ -666,6 +677,9 @@
           dataType:"html",
           async: true,
           success : function(datas){
+        	//文章打开时关闭公告
+      		$(".notice").css("display","none");
+      		$(".notice-content").css("display","none");
         	  var wzid=document.getElementById('wzId');
      		 if(wzid!=null){
      			 document.getElementById('wzId').innerHTML="";

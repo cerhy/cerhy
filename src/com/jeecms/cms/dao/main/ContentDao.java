@@ -446,4 +446,27 @@ public interface ContentDao {
 	public String clearNoticeSynopsis(String mark, Integer id);
 
 	public Pagination getPageForWorkArticle(String articleType, Integer sitId,Integer userId, int pageNo, int pageSize, int coulmnId);
+	
+	/**
+	 * 查询当前群组创建人
+	 * @param groupsId
+	 * @return
+	 */
+	public Integer getGroupUser(Integer groupsId);
+
+	/**
+	 * 验证发送人的群组是否存在
+	 * @param usersId
+	 * @param groupsId
+	 * @return
+	 */
+	public Integer getExistGroup(Integer usersId, Integer groupsId);
+
+	/**
+	 * 判断发送时，一个栏目下，只能存在一篇文章
+	 * @param contentId
+	 * @param groupsId
+	 * @return
+	 */
+	public Integer getContentGroupsId(Integer contentId, Integer groupsId);
 }

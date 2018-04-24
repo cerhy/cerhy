@@ -2147,6 +2147,50 @@ public class ContributeAct extends AbstractContentMemberAct {
 		}
 		ResponseUtils.renderJson(response, json.toString());
 	}
+	
+	/**
+	 * 通过选择群组发送文章
+	 */
+	@RequestMapping(value = "/blog/sendArticleGroup.jspx" , method= RequestMethod.POST)
+	public @ResponseBody String sendArticleGroup(Integer groupsId,Integer contentId,String contTitle, HttpServletRequest request, HttpServletResponse response,
+			ModelMap model){
+		//找到该群组是否为当前用户创建
+		//确认当前文章是否已发送到该群组下
+		//返回相应的code
+		JSONObject object = new JSONObject();
+		CmsUser user = CmsUtils.getUser(request);
+		try{
+			if(user==null){
+				object.put("code", "fail");
+				object.put("msg", "5");//请先登录
+				return object.toString();
+			}
+			Integer resultCode = cmsUserMng.sendArticleGroup(groupsId,contentId,contTitle,user.getId());
+			if(resultCode == 1){
+				object.put("code", "fail");
+				object.put("msg", "1");//发件人不能为自己
+			}else if(resultCode ==2){
+				object.put("code", "fail");
+				object.put("msg", "2");//群组不存在
+			}else if(resultCode ==3 ){
+				object.put("code", "fail");
+				object.put("msg", "3");//群组下有当前文章
+			}else{
+				object.put("code", "success");
+				object.put("msg", "发送成功！");
+			}
+		}catch(Exception e){
+			try {
+				object.put("code", "fail");
+				log.error(e.getMessage(),e);
+			} catch (JSONException e1) {
+				log.error(e.getMessage(),e);
+			}
+			log.error(e.getMessage(),e);
+		}
+		return object.toString();
+	}
+	
 	/**
 	 * 发送文章 
 	 */

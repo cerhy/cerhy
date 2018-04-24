@@ -500,6 +500,45 @@ public class CmsUserMngImpl implements CmsUserMng {
 		return user;
 		
 	}
+	
+	@Override
+	public Integer sendArticleGroup(Integer groupsId, Integer contentId,
+			String contTitle, Integer id) {
+		Integer resultCode = 0;
+		//查询当前群组创建人(即接收人)
+		Integer usersId = contentDao.getGroupUser(groupsId);
+		//当该群组为自己创建的时候，则不发送
+		if(usersId == id){
+			resultCode = 1;
+		}else{
+			//验证发送人的群组是否存在
+			Integer existGroup = contentDao.getExistGroup(usersId , groupsId);
+			if(existGroup == null){
+				resultCode = 2;
+			}else{
+				//当该群组下已有该文章时，则不发送
+				Integer existConTent = contentDao.getContentGroupsId(contentId,groupsId);
+				if(existConTent != null){
+					resultCode = 3;
+				}else{
+					ContentSend send = new ContentSend();
+					//内容id
+					send.setContentId(contentId);
+					//发送人id
+					send.setSendUserId(id);
+					//接收人
+					send.setRecieveUserId(usersId);
+					send.setSendTime(new Date());
+					//群组id
+					send.setColumnId(groupsId);
+					send.setType(1);
+					send.setTitle(contTitle);
+					contentDao.saveContentSend(send);
+				}
+			}
+		}
+		return resultCode;
+	}
 
 	@Override
 	public int sendArticle(Integer contentId,Integer userId,String sendee,String validateCode,String title) {
@@ -522,8 +561,7 @@ public class CmsUserMngImpl implements CmsUserMng {
 					if(colId==null){
 						result=3;
 					}else{
-						
-						Integer contId = contentDao.getContentSend(contentId, recieveUserId);//判断接收人是否已经存在此文章
+						Integer contId = contentDao.getContentGroupsId(contentId, columnId);//判断接收人是否已经存在此文章
 						if(contId!=null){
 							result=4;//已经存在此文章
 						}else{

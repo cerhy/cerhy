@@ -28,6 +28,8 @@ function addUpdateNotice(){
 	if(notice != null){
 		notice = notice.replace(/%/g,"%25");
 		notice = notice.replace(/\+/g,"%2B");
+		notice = notice.replace(/\(/g,"（");
+		notice = notice.replace(/\)/g,"）");
 	}
 	if(notice.length>10000){
 		alert("您输入的内容过多！请减少内容在提交");

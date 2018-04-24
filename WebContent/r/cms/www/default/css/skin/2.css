@@ -5,7 +5,8 @@ a{color: #666666}
     background: #222222;
     color: #666666;
 }  
-
+.notice .notice-content{ background: #222222; color: #c5c9ce;}
+.synopsis .synopsis-content{background: #222222; color: #c5c9ce;}
 
 .blogHead,.tj{color: #c5c9ce;}
 .tggl a {color:#666666;}

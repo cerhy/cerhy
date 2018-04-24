@@ -18,6 +18,11 @@ a			{ color: #074387; }
 	width:100%;
 	background: #E0912F  url(04.jpg) no-repeat center top;
 }
+
+ .notice .notice-content{ background: #fde09f ; color: #bf700c;}
+.synopsis .synopsis-content{background: #fde09f ; color: #bf700c;}
+ 
+ 
 .header-top {background: #efefef;border-bottom:0px;}
 .footer_styles {
 	background: #E0912F !important; 
