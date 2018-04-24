@@ -844,6 +844,11 @@ public class ContentAct{
 					}else{
 						listCopy.add(bean);
 					}
+					Collections.sort(listCopy,new Comparator<Content>(){  
+						public int compare(Content arg0, Content arg1) {  
+							return arg1.getId().compareTo(arg0.getId());  
+						}  
+					});  
 					for(int i=0;i<listCopy.size();i++){
 						if(listCopy.size()>count){
 							if((i+1)<=count){

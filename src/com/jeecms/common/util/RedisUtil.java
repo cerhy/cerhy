@@ -164,10 +164,11 @@ public final class RedisUtil {
     	Long length=null;
 		try {
 			if(jedis!=null){
-				if(getList(key)!=null&&getList(key).size()>0){
-					for(int i=0;i<getList(key).size();i++){
-						if(!cid.equals(getList(key).get(i).getId().toString())){
-							list.add(getList(key).get(i));
+				List<Content> getList=getList(key);
+				if(getList!=null&&getList.size()>0){
+					for(int i=0;i<getList.size();i++){
+						if(!cid.equals(getList.get(i).getId().toString())){
+							list.add(getList.get(i));
 						}
 					}
 					setList(key, list);

@@ -37,16 +37,16 @@
     <div class="searchNav" style="border:none;">您搜索的“<span>${input!}</span>”， 共有<span>${tag_pagination.totalCount!}</span>个结果</div>
     <div class="searchList">
       [#list tag_list as s]
+        [#if s.txt??]
       <div class="item">
         <div class="search-title"><a href="${s.url}" title="${s.title}" target="_blank">${s.title?replace('${q!}', "<span>${q!}</span>")}</a></div>
-        [#if s.txt??]
         <div class="search-txt">
           [#assign bb=s.txt?replace("<(S*?)[^>]*>.*?|<.*? />","","ri")?replace("&nbsp;","","ri")/]
           [@text_cut s=bb len=descLen append=append/]
         </div>
-        [/#if]
         <div class="search-date">[#if s.ctgName??]<a href="${s.ctgUrl}" target="_blank">${s.ctgName}</a>[/#if]<em>${s.releaseDate}</em>浏览 <span>${s.views}</span></div>
       </div>
+        [/#if]
       [/#list]
     </div>
     [#include "../include/page.html"/]
