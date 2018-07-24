@@ -1,489 +1,606 @@
 <!DOCTYPE html>
 <html>
-<link rel="stylesheet" href="/${res}/css/main.css"/>
+<link rel="stylesheet" href="/${res}/css/main.css" />
 <meta name="baidu-site-verification" content="cBNu0UNDKq" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<link rel="shortcut icon" href="/${res}/images/cerhyheard.png" type="/${res}/image/x-icon" />
+<link rel="shortcut icon" href="/${res}/images/cerhyheard.png"
+	type="/${res}/image/x-icon" />
 <script src="${resSys}/jquery.js" type="text/javascript"></script>
 <script src="${resSys}/front.js" type="text/javascript"></script>
 <script src="${resSys}/jqueryUI/jquery-ui.js" type="text/javascript"></script>
+<script src="${resSys}/network/js/doPost.js" type="text/javascript"></script>
+<script src="${resSys}/network/js/floatZone.js" type="text/javascript"></script>
+
 <title>好研网</title>
 <link rel="stylesheet" type="text/css" href="/${res}/css/login.css" />
 <link rel="stylesheet" type="text/css" href="/${res}/css/hyindex.css" />
 <link rel="stylesheet" type="text/css" href="/${res}/css/custom.css" />
 <script type="text/javascript">
-window.onload = function (){ 
-	Cms.siteFlow("${base}", location.href, document.referrer,"${site.config.flowSwitch?string}");
-};
-function g(o){
-	return document.getElementById(o);
-}
-function HoverLi(x,y,m,n,counter){
-	for(var i=1;i<=counter;i++){
-		g(x+m+i).className='normaltab';
-		g(y+m+i).className='undis';
+	window.onload = function() {
+		Cms.siteFlow("${base}", location.href, document.referrer,
+				"${site.config.flowSwitch?string}");
+	};
+	function g(o) {
+		return document.getElementById(o);
 	}
-	g(y+m+n).className='dis';
-	g(x+m+n).className='curr';
-}
+	function HoverLi(x, y, m, n, counter) {
+		for (var i = 1; i <= counter; i++) {
+			g(x + m + i).className = 'normaltab';
+			g(y + m + i).className = 'undis';
+		}
+		g(y + m + n).className = 'dis';
+		g(x + m + n).className = 'curr';
+	}
 </script>
 <script type="text/javascript">
-var ind=0;
-$(document).ready(function(){
-	$(".info-tab-br1").each(function(index){
-		 var str = $(this).text();
-		 var len=str.length;
-		 ind=ind+Math.round(len/17);
-		 var state=0;
-		 if(ind>10){
-			 $("#bt_"+(index+1)).css("display","none");
-		 }
-		 
+	var ind = 0;
+	$(document).ready(function() {
+		$(".info-tab-br1").each(function(index) {
+			var str = $(this).text();
+			var len = str.length;
+			ind = ind + Math.round(len / 17);
+			var state = 0;
+			if (ind > 10) {
+				$("#bt_" + (index + 1)).css("display", "none");
+			}
+
+		});
 	});
-});
-var indx=0;
-$(document).ready(function(){
-	$(".info-tab-br2").each(function(index){
-		 var str = $(this).text();
-		 var lens=str.length;
-		 indx=indx+Math.round(lens/17);
-		 var state=0;
-		 if(indx>10){
-			 $("#br_"+(index+1)).css("display","none");
-		 }
-		 
+	var indx = 0;
+	$(document).ready(function() {
+		$(".info-tab-br2").each(function(index) {
+			var str = $(this).text();
+			var lens = str.length;
+			indx = indx + Math.round(lens / 17);
+			var state = 0;
+			if (indx > 10) {
+				$("#br_" + (index + 1)).css("display", "none");
+			}
+
+		});
 	});
-});
+	
 </script>
+
+
 [#include "../hyinclude/header.html"/]
 
 <div class="container">
-    <div class="wrap">
-        <div class="bd-padding">
-            <div class="zj-news clearfix">
-             <div class="news-slide">
-             	   <div class="big-img">
-                         [@cms_content_list typeId='2' count='20' recommend='2' channelId='75' orderBy='4' titLen='22' channelOption='1' dateFormat='yyyy-MM-dd']      
-         				  <ul class="big-img-ul" >
-           				 [#list tag_list as a]
-           				 <li [#if a_index<1] style="display: block;" [/#if]><a href="${a.url}" target="_blank"><img src="${a.typeImg!}" width="950" height="330"><span>[@text_cut s=a.title len=titLen /]</span></a></li>
-          				  [/#list]
-         				</ul>
-        				 [/@cms_content_list]   
-                    </div>
-                       <div class="now-steps-wrap">
-                        <div class="now-steps">
-                           <a href="javascript:;" class="next"></a>
-                            <div class="small-img-wrap">
-                                <ul class="small-img-ul" data-scro="controler">
-                                	[@cms_content_list typeId='2'  count='20' recommend='2' channelId='75' orderBy='4' titLen='22' channelOption='1' dateFormat='yyyy-MM-dd']
-              						 [#list tag_list as a]
-              						 <li><a [#if a_index<1] class='active'[/#if] href="javascript:;"><span>${a_index+1}</span><em></em></a></li>
-              						 [/#list]
-            						[/@cms_content_list]	                                    
-                                </ul>
-                            </div>
-                           <a href="javascript:;" class="prev disabled"></a> 
-                        </div>
-                    </div>
-                      <script type="text/javascript" src="/${res}/js/script.js"></script>
-                </div>
-            <!--分类资讯-->
-            <div class="type-info">
-                <div class="info-wrap clearfix">
-                	<div class="info-div">                    
-                         <div class="info-div-head clearfix">
-                            <h3><span>文件通知</span></h3>
-                            <div class="info-tab-head">
-							       		 <a href="javascript:;" class="active">通知通报<em></em></a>
-						                             <a href="javascript:;">院外信息</a>
-                            </div>
-                            	<a href="http://www.cerhy.com:80/wjtz/index.jhtml" class="more" title="更多" target="_blank"></a>
+	<div class="wrap">
+		<div class="bd-padding">
+			<div class="zj-news clearfix">
+				<div class="news-slide">
+					<div class="big-img">
+						[@cms_content_list typeId='2' count='20' recommend='2'
+						channelId='75' orderBy='4' titLen='22' channelOption='1'
+						dateFormat='yyyy-MM-dd']
+						<ul class="big-img-ul">
+							[#list tag_list as a]
+							<li [#if a_index<1] style="display: block;" [/#if]><a
+								href="${a.url}" target="_blank"><img src="${a.typeImg!}"
+									width="950" height="330"><span>[@text_cut
+										s=a.title len=titLen /]</span></a></li> [/#list]
+						</ul>
+						[/@cms_content_list]
+					</div>
+					<div class="now-steps-wrap">
+						<div class="now-steps">
+							<a href="javascript:;" class="next"></a>
+							<div class="small-img-wrap">
+								<ul class="small-img-ul" data-scro="controler">
+									[@cms_content_list typeId='2' count='20' recommend='2'
+									channelId='75' orderBy='4' titLen='22' channelOption='1'
+									dateFormat='yyyy-MM-dd'] [#list tag_list as a]
+									<li><a [#if a_index<1] class='active'[/#if]
+											href="javascript:;"><span>${a_index+1}</span><em></em>
+									</a></li> [/#list] [/@cms_content_list]
+								</ul>
+							</div>
+							<a href="javascript:;" class="prev disabled"></a>
+						</div>
+					</div>
+					<script type="text/javascript" src="/${res}/js/script.js"></script>
+				</div>
+				<!--分类资讯-->
+				<div class="type-info">
+					<div class="info-wrap clearfix">
+						<div class="info-div">
+							<div class="info-div-head clearfix">
+								<h3>
+									<span>文件通知</span>
+								</h3>
+								<div class="info-tab-head">
+									<a href="javascript:;" class="active">通知通报<em></em></a> <a
+										href="javascript:;">院外信息</a>
+								</div>
+								<a href="http://www.cerhy.com:80/wjtz/index.jhtml" class="more"
+									title="更多" target="_blank"></a>
 
-                        </div>
-                        <div class="info-div-content">
-                            <div class="info-tab-content" style="display:block;height: 280px;overflow: hidden;">
-                                <ul class="has-dot-list" style="height: 280px;">
-                                 [@cms_content_list  channelId='199' count='8' titLen='14' orderBy='2' channelOption='1'][#list tag_list as a]
-                                 <li id="bt_${a_index+1}">
-	                                 <a class="info-tab-br1" href="${a.url}" target="_blank" title="${a.title}">${a.title}<span class="gray9">(${a.releaseDate?string('MM-dd')})</span></a>
-                                 </li>
-                                 [/#list][/@cms_content_list]
-                                </ul>
-                            </div>
-                            <div class="info-tab-content" style="height: 280px;overflow: hidden;">
-                                <ul class="has-dot-list">
-                                  [@cms_content_list  channelId='179' count='8' titLen='14' orderBy='2' channelOption='1'][#list tag_list as a]
-                                  <li id="br_${a_index+1}">
-                                  <a class="info-tab-br2" href="${a.url}" target="_blank" title="${a.title}">${a.title}<span class="gray9">(${a.releaseDate?string('MM-dd')})</span></a>
-                                  </li>
-                                  [/#list][/@cms_content_list]
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="info-div">
-             			<div class="info-div-head clearfix clearfix">
-                            <h3><span>学科教研</span></h3>
-                            <div class="info-tab-head">
-							       		 <a href="javascript:;" class="active">高中<em></em></a>
-								       		 <a href="javascript:;">初中<em></em></a>
-					                                	<a href="javascript:;">小学<em></em></a>
-						                                <a href="javascript:;">幼教</a>
-                            </div>
-                            				<a href="http://www.cerhy.com/xkjy/index.jhtml" class="more" title="更多" target="_blank"></a>
+							</div>
+							<div class="info-div-content">
+								<div class="info-tab-content"
+									style="display: block; height: 280px; overflow: hidden;">
+									<ul class="has-dot-list" style="height: 280px;">
+										[@cms_content_list channelId='199' count='8' titLen='14'
+										orderBy='2' channelOption='1'][#list tag_list as a]
+										<li id="bt_${a_index+1}"><a class="info-tab-br1"
+											href="${a.url}" target="_blank" title="${a.title}">${a.title}<span
+												class="gray9">(${a.releaseDate?string('MM-dd')})</span></a></li>
+										[/#list][/@cms_content_list]
+									</ul>
+								</div>
+								<div class="info-tab-content"
+									style="height: 280px; overflow: hidden;">
+									<ul class="has-dot-list">
+										[@cms_content_list channelId='179' count='8' titLen='14'
+										orderBy='2' channelOption='1'][#list tag_list as a]
+										<li id="br_${a_index+1}"><a class="info-tab-br2"
+											href="${a.url}" target="_blank" title="${a.title}">${a.title}<span
+												class="gray9">(${a.releaseDate?string('MM-dd')})</span></a></li>
+										[/#list][/@cms_content_list]
+									</ul>
+								</div>
+							</div>
+						</div>
+						<div class="info-div">
+							<div class="info-div-head clearfix clearfix">
+								<h3>
+									<span>学科教研</span>
+								</h3>
+								<div class="info-tab-head">
+									<a href="javascript:;" class="active">高中<em></em></a> <a
+										href="javascript:;">初中<em></em></a> <a href="javascript:;">小学<em></em></a>
+									<a href="javascript:;">幼教</a>
+								</div>
+								<a href="http://www.cerhy.com/xkjy/index.jhtml" class="more"
+									title="更多" target="_blank"></a>
 
-                        </div>
-                        <div class="info-div-content">
-                            <div class="info-tab-content"  style="display: block;">
-                                <ul class="has-dot-list">
-                                   [@cms_content_list channelId='135' count='8' titLen='14' orderBy='2' channelOption='1'][#list tag_list as a]<li><a href="${a.url}" class="of" target="_blank" title="${a.title}">[@text_cut s=a.title len=titLen append='...'/]<span class="gray9">(${a.releaseDate?string('MM-dd')})</span></a></li>[/#list][/@cms_content_list]
-                                </ul>
-                            </div>
-                            <div class="info-tab-content">
-                                <ul class="has-dot-list">
-                                   [@cms_content_list channelId='136' count='8' titLen='14' orderBy='2' channelOption='1'][#list tag_list as a]<li><a href="${a.url}" class="of" target="_blank" title="${a.title}">[@text_cut s=a.title len=titLen append='...'/]<span class="gray9">(${a.releaseDate?string('MM-dd')})</span></a></li>[/#list][/@cms_content_list]
-                                </ul>
-                            </div>
-                            <div class="info-tab-content">
-                                <ul class="has-dot-list">
-                                   [@cms_content_list  channelId='137' count='8' titLen='14' orderBy='2' channelOption='1'][#list tag_list as a]<li><a href="${a.url}" class="of" target="_blank" title="${a.title}">[@text_cut s=a.title len=titLen append='...'/]<span class="gray9">(${a.releaseDate?string('MM-dd')})</span></a></li>[/#list][/@cms_content_list]
-                                </ul>
-                            </div>
-                            <div class="info-tab-content">
-                                <ul class="has-dot-list"> 
-	                               [@cms_content_list  channelId='138' count='8' titLen='14' orderBy='2' channelOption='1'][#list tag_list as a]<li><a href="${a.url}" class="of" target="_blank" title="${a.title}">[@text_cut s=a.title len=titLen append='...'/]<span class="gray9">(${a.releaseDate?string('MM-dd')})</span></a></li>[/#list][/@cms_content_list]
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="info-div">
-                     	<div class="info-div-head clearfix">
-                            <h3>
-                                <span>教育科研</span>
-                            </h3>
-                            <div class="info-tab-head">
-                            </div>
-                            				<a href="http://www.cerhy.com/blog/user/9036" class="more" title="更多" target="_blank"></a>
+							</div>
+							<div class="info-div-content">
+								<div class="info-tab-content" style="display: block;">
+									<ul class="has-dot-list">
+										[@cms_content_list channelId='135' count='8' titLen='14'
+										orderBy='2' channelOption='1'][#list tag_list as a]
+										<li><a href="${a.url}" class="of" target="_blank"
+											title="${a.title}">[@text_cut s=a.title len=titLen
+												append='...'/]<span class="gray9">(${a.releaseDate?string('MM-dd')})</span>
+										</a></li>[/#list][/@cms_content_list]
+									</ul>
+								</div>
+								<div class="info-tab-content">
+									<ul class="has-dot-list">
+										[@cms_content_list channelId='136' count='8' titLen='14'
+										orderBy='2' channelOption='1'][#list tag_list as a]
+										<li><a href="${a.url}" class="of" target="_blank"
+											title="${a.title}">[@text_cut s=a.title len=titLen
+												append='...'/]<span class="gray9">(${a.releaseDate?string('MM-dd')})</span>
+										</a></li>[/#list][/@cms_content_list]
+									</ul>
+								</div>
+								<div class="info-tab-content">
+									<ul class="has-dot-list">
+										[@cms_content_list channelId='137' count='8' titLen='14'
+										orderBy='2' channelOption='1'][#list tag_list as a]
+										<li><a href="${a.url}" class="of" target="_blank"
+											title="${a.title}">[@text_cut s=a.title len=titLen
+												append='...'/]<span class="gray9">(${a.releaseDate?string('MM-dd')})</span>
+										</a></li>[/#list][/@cms_content_list]
+									</ul>
+								</div>
+								<div class="info-tab-content">
+									<ul class="has-dot-list">
+										[@cms_content_list channelId='138' count='8' titLen='14'
+										orderBy='2' channelOption='1'][#list tag_list as a]
+										<li><a href="${a.url}" class="of" target="_blank"
+											title="${a.title}">[@text_cut s=a.title len=titLen
+												append='...'/]<span class="gray9">(${a.releaseDate?string('MM-dd')})</span>
+										</a></li>[/#list][/@cms_content_list]
+									</ul>
+								</div>
+							</div>
+						</div>
+						<div class="info-div">
+							<div class="info-div-head clearfix">
+								<h3>
+									<span>教育科研</span>
+								</h3>
+								<div class="info-tab-head"></div>
+								<a href="http://www.cerhy.com/blog/user/9036" class="more"
+									title="更多" target="_blank"></a>
 
-                        </div>
-                         <div class="info-div-content">
-                            <div class="info-tab-content" style="display: block;">
-                                <ul class="has-dot-list">
-                                   [@cms_content_list channelId='99' count='8' titLen='14' orderBy='2' channelOption='1'][#list tag_list as a]<li><a href="${a.url}" class="of" target="_blank" title="${a.title}">[@text_cut s=a.title len=titLen append='...'/]<span class="gray9">(${a.releaseDate?string('MM-dd')})</span></a></li>[/#list][/@cms_content_list]
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="info-wrap clearfix">
-                    <div class="info-div">                    
-                         <div class="info-div-head clearfix">
-                            <h3>
-                                <span>教师培训</span>
-                            </h3>
-                            <div class="info-tab-head">
-                            </div>
-                            	<a href="http://www.cerhy.com/blog/user/9039" class="more" title="更多" target="_blank"></a>
-                        </div>
-                        <div class="info-div-content">
-                            <div class="info-tab-content" style="display: block;">
-                                <ul class="has-dot-list">
-                                 [@cms_content_list  channelId='282' count='8' titLen='14' orderBy='2' channelOption='1'][#list tag_list as a]<li><a href="${a.url}" class="of" target="_blank" title="${a.title}">[@text_cut s=a.title len=titLen append='...'/]<span class="gray9">(${a.releaseDate?string('MM-dd')})</span></a></li>[/#list][/@cms_content_list]
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="info-div">                    
-                         <div class="info-div-head clearfix">
-                            <h3>
-                                <span>市县教研</span>
-                            </h3>
-                            <div class="info-tab-head">
-							       		 <a href="javascript:;" class="active">市县教研<em></em></a>
-                            </div>
-                            	<a href="http://www.cerhy.com/sxjy/index.jhtml" class="more" title="更多" target="_blank"></a>
-                        </div>
-                        <div class="info-div-content">
-                            <div class="info-tab-content" style="display: block;">
-                                <ul class="has-dot-list">
-                                 [@cms_content_list  channelId='169' count='8' titLen='14' orderBy='2' channelOption='1'][#list tag_list as a]<li><a href="${a.url}" class="of" target="_blank" title="${a.title}">[@text_cut s=a.title len=titLen append='...'/]<span class="gray9">(${a.releaseDate?string('MM-dd')})</span></a></li>[/#list][/@cms_content_list]
-                                </ul>
-                            </div>
-                            <div class="info-tab-content">
-                                <ul class="has-dot-list">
-                                  [@cms_content_list  channelId='170' count='8' titLen='14' orderBy='2' channelOption='1'][#list tag_list as a]<li><a href="${a.url}" class="of" target="_blank" title="${a.title}">[@text_cut s=a.title len=titLen append='...'/]<span class="gray9">(${a.releaseDate?string('MM-dd')})</span></a></li>[/#list][/@cms_content_list]
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="info-div">                        
-                           <div class="info-div-head clearfix">
-                            <h3>
-                                <span>课程改革</span>
-                            </h3>
-                             <div class="info-tab-head">
-                            </div>
-                            <a href="http://www.cerhy.com/blog/user/9038" class="more" title="更多" target="_blank"></a>
-                        </div>
-                         <div class="info-div-content">
-                            <div class="info-tab-content" style="display: block;">
-                                <ul class="has-dot-list">
-                                   [@cms_content_list channelId='102' count='8' titLen='14' orderBy='2' channelOption='1'][#list tag_list as a]<li><a href="${a.url}" class="of" target="_blank" title="${a.title}">[@text_cut s=a.title len=titLen append='...'/]<span class="gray9">(${a.releaseDate?string('MM-dd')})</span></a></li>[/#list][/@cms_content_list]
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="small-banner">
-                    <a  href="${base}/topic/4.jspx" target="_blank">
-                        <img src="/${res}/images/19da.jpg" width="956" height="200" alt="">
-                    </a>
-                </div>
-                <div class="info-wrap clearfix">
-                <div class="info-div">
-                  		<div class="info-div-head clearfix">
-                            <h3>
-                                <span>政策研究</span>
-                            </h3>
-                             <a href="http://www.cerhy.com/blog/user/674311" class="more" title="更多" target="_blank"></a>
-                        </div>
-                        <div class="info-div-content">
-         				<ul class="has-dot-list">
-                         [@cms_content_list  channelId='177' orderBy='4' titLen='14' channelOption='1' count='8'][#list tag_list as a]<li><a href="${a.url}" class="of" target="_blank" title="${a.title}"><span>[@text_cut s=a.title len=titLen  append='...'/]</span><span class="gray9">(${a.releaseDate?string('MM-dd')})</span></a></li>[/#list][/@cms_content_list]  
-         				</ul>
-                        </div>
-                    </div>
-                    <div class="info-div">
-                        <div class="info-div-head clearfix">
-                            <h3>
-                                <span>质量监测</span>
-                            </h3>
-                             <div class="info-tab-head">
-                            </div>
-                            <a href="http://www.cerhy.com/blog/user/9059" class="more" title="更多" target="_blank"></a>
-                        </div>
-                        <div class="info-div-content">
-                            <div class="info-tab-content"  style="display: block;">
-                                <ul class="has-dot-list">
-                                   [@cms_content_list channelId='103' count='8' titLen='14' orderBy='2' channelOption='1'][#list tag_list as a]<li><a href="${a.url}" class="of" target="_blank" title="${a.title}">[@text_cut s=a.title len=titLen append='...'/]<span class="gray9">(${a.releaseDate?string('MM-dd')})</span></a></li>[/#list][/@cms_content_list]
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="info-div">                    
-                         <div class="info-div-head clearfix">
-                            <h3>
-                                <span>职业教育</span>
-                            </h3>
-                            <div class="info-tab-head">
-                            </div>
-                           <a href="http://www.cerhy.com/blog/user/9018" class="more" title="更多" target="_blank"></a>
-                        </div>
-                        <div class="info-div-content">
-                            <div class="info-tab-content" style="display: block;">
-                                <ul class="has-dot-list">
-                                  [@cms_content_list  channelId='100' count='8' titLen='14' orderBy='2' channelOption='1'][#list tag_list as a]<li><a href="${a.url}" class="of" target="_blank" title="${a.title}">[@text_cut s=a.title len=titLen append='...'/]<span class="gray9">(${a.releaseDate?string('MM-dd')})</span></a></li>[/#list][/@cms_content_list]
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="info-wrap clearfix">
-                  <div class="info-div">
-                       <div class="info-div-head clearfix">
-                             <h3>
-                                <span>党群建设</span>
-                            </h3>
-                            <a href="http://www.cerhy.com/blog/user/609227" class="more" title="更多" target="_blank"></a>
-                        </div>
-                        <div class="info-div-content">
-                            <ul class="has-dot-list">
-                                [@cms_content_list  channelId='260' count='8' titLen='14' orderBy='2' channelOption='1'][#list tag_list as a]<li><a href="${a.url}" class="of" target="_blank" title="${a.title}">[@text_cut s=a.title len=titLen append='...'/]<span class="gray9">(${a.releaseDate?string('MM-dd')})</span></a></li>[/#list][/@cms_content_list]
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="info-div">
-                         <div class="info-div-head clearfix">
-                            <h3>
-                                <span>教育学会</span>
-                            </h3>
-                           <a href="http://www.cerhy.com/jyxh/index.jhtml" class="more" title="更多" target="_blank"></a>
-                        </div>
-                        <div class="info-div-content">
-                            <ul class="has-dot-list">
-                                [@cms_content_list  channelId='266' count='8' titLen='14' orderBy='2' channelOption='1'][#list tag_list as a]<li><a href="${a.url}" class="of" target="_blank" title="${a.title}">[@text_cut s=a.title len=titLen append='...'/]<span class="gray9">(${a.releaseDate?string('MM-dd')})</span></a></li>[/#list][/@cms_content_list]
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="info-div">
-                        <div class="info-div-head clearfix">
-                            <h3>
-                                <span>明星博客</span>
-                            </h3>
-                            <a href="http://www.cerhy.com/bk/index.jhtml" target="_blank" class="more" title="更多"></a>
-                        </div>
-                        <div class="info-div-content">
-                            <ul class="blog-content-list">
-                            	 [@cms_content_list channelId='280' count='3' typeId='5' titLen='14' orderBy='2' channelOption='1']
-                            	[#list tag_list as a]
-                                <li>
-                                    <a href="${a.url}?typeIds=5" target="_blank" title="${a.title}">
-                                        <span class="trend"></span>
-                                        <div class="con clearfix">
-                                        	[#if a.typeImg??]<img src="${a.typeImg!}" width="40" height="40" alt="" class="blog-left-img">[#else]<img src="/${res}/images/blog1.png" width="70" height="70" alt="" class="blog-left-img">[/#if]                                                                    
-                                            <div class="con-right" style="width: 50px;">
-                                                <h4 class="of">【[@text_cut s=a.title len=8 append='...'/]】</h4>
-                                                <p class="small-con of"> [@text_cut s=a.description! len=titLen append='...' /]</p>
-                                                <div class="time-num clearfix" style="width: 190px;">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </li>   
-                                [/#list]
-                                [/@cms_content_list]                                                           
-                            </ul>
-                        </div>
-                    </div>
+							</div>
+							<div class="info-div-content">
+								<div class="info-tab-content" style="display: block;">
+									<ul class="has-dot-list">
+										[@cms_content_list channelId='99' count='8' titLen='14'
+										orderBy='2' channelOption='1'][#list tag_list as a]
+										<li><a href="${a.url}" class="of" target="_blank"
+											title="${a.title}">[@text_cut s=a.title len=titLen
+												append='...'/]<span class="gray9">(${a.releaseDate?string('MM-dd')})</span>
+										</a></li>[/#list][/@cms_content_list]
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="info-wrap clearfix">
+						<div class="info-div">
+							<div class="info-div-head clearfix">
+								<h3>
+									<span>教师培训</span>
+								</h3>
+								<div class="info-tab-head"></div>
+								<a href="http://www.cerhy.com/blog/user/9039" class="more"
+									title="更多" target="_blank"></a>
+							</div>
+							<div class="info-div-content">
+								<div class="info-tab-content" style="display: block;">
+									<ul class="has-dot-list">
+										[@cms_content_list channelId='282' count='8' titLen='14'
+										orderBy='2' channelOption='1'][#list tag_list as a]
+										<li><a href="${a.url}" class="of" target="_blank"
+											title="${a.title}">[@text_cut s=a.title len=titLen
+												append='...'/]<span class="gray9">(${a.releaseDate?string('MM-dd')})</span>
+										</a></li>[/#list][/@cms_content_list]
+									</ul>
+								</div>
+							</div>
+						</div>
+						<div class="info-div">
+							<div class="info-div-head clearfix">
+								<h3>
+									<span>市县教研</span>
+								</h3>
+								<div class="info-tab-head">
+									<a href="javascript:;" class="active">市县教研<em></em></a>
+								</div>
+								<a href="http://www.cerhy.com/sxjy/index.jhtml" class="more"
+									title="更多" target="_blank"></a>
+							</div>
+							<div class="info-div-content">
+								<div class="info-tab-content" style="display: block;">
+									<ul class="has-dot-list">
+										[@cms_content_list channelId='169' count='8' titLen='14'
+										orderBy='2' channelOption='1'][#list tag_list as a]
+										<li><a href="${a.url}" class="of" target="_blank"
+											title="${a.title}">[@text_cut s=a.title len=titLen
+												append='...'/]<span class="gray9">(${a.releaseDate?string('MM-dd')})</span>
+										</a></li>[/#list][/@cms_content_list]
+									</ul>
+								</div>
+								<div class="info-tab-content">
+									<ul class="has-dot-list">
+										[@cms_content_list channelId='170' count='8' titLen='14'
+										orderBy='2' channelOption='1'][#list tag_list as a]
+										<li><a href="${a.url}" class="of" target="_blank"
+											title="${a.title}">[@text_cut s=a.title len=titLen
+												append='...'/]<span class="gray9">(${a.releaseDate?string('MM-dd')})</span>
+										</a></li>[/#list][/@cms_content_list]
+									</ul>
+								</div>
+							</div>
+						</div>
+						<div class="info-div">
+							<div class="info-div-head clearfix">
+								<h3>
+									<span>课程改革</span>
+								</h3>
+								<div class="info-tab-head"></div>
+								<a href="http://www.cerhy.com/blog/user/9038" class="more"
+									title="更多" target="_blank"></a>
+							</div>
+							<div class="info-div-content">
+								<div class="info-tab-content" style="display: block;">
+									<ul class="has-dot-list">
+										[@cms_content_list channelId='102' count='8' titLen='14'
+										orderBy='2' channelOption='1'][#list tag_list as a]
+										<li><a href="${a.url}" class="of" target="_blank"
+											title="${a.title}">[@text_cut s=a.title len=titLen
+												append='...'/]<span class="gray9">(${a.releaseDate?string('MM-dd')})</span>
+										</a></li>[/#list][/@cms_content_list]
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="small-banner">
+						<a href="${base}/topic/4.jspx" target="_blank"> <img
+							src="/${res}/images/19da.jpg" width="956" height="200" alt="">
+						</a>
+					</div>
+					<div class="info-wrap clearfix">
+						<div class="info-div">
+							<div class="info-div-head clearfix">
+								<h3>
+									<span>政策研究</span>
+								</h3>
+								<a href="http://www.cerhy.com/blog/user/674311" class="more"
+									title="更多" target="_blank"></a>
+							</div>
+							<div class="info-div-content">
+								<ul class="has-dot-list">
+									[@cms_content_list channelId='177' orderBy='4' titLen='14'
+									channelOption='1' count='8'][#list tag_list as a]
+									<li><a href="${a.url}" class="of" target="_blank"
+										title="${a.title}"><span>[@text_cut s=a.title
+												len=titLen append='...'/]</span><span class="gray9">(${a.releaseDate?string('MM-dd')})</span></a></li>[/#list][/@cms_content_list]
+								</ul>
+							</div>
+						</div>
+						<div class="info-div">
+							<div class="info-div-head clearfix">
+								<h3>
+									<span>质量监测</span>
+								</h3>
+								<div class="info-tab-head"></div>
+								<a href="http://www.cerhy.com/blog/user/9059" class="more"
+									title="更多" target="_blank"></a>
+							</div>
+							<div class="info-div-content">
+								<div class="info-tab-content" style="display: block;">
+									<ul class="has-dot-list">
+										[@cms_content_list channelId='103' count='8' titLen='14'
+										orderBy='2' channelOption='1'][#list tag_list as a]
+										<li><a href="${a.url}" class="of" target="_blank"
+											title="${a.title}">[@text_cut s=a.title len=titLen
+												append='...'/]<span class="gray9">(${a.releaseDate?string('MM-dd')})</span>
+										</a></li>[/#list][/@cms_content_list]
+									</ul>
+								</div>
+							</div>
+						</div>
+						<div class="info-div">
+							<div class="info-div-head clearfix">
+								<h3>
+									<span>职业教育</span>
+								</h3>
+								<div class="info-tab-head"></div>
+								<a href="http://www.cerhy.com/blog/user/9018" class="more"
+									title="更多" target="_blank"></a>
+							</div>
+							<div class="info-div-content">
+								<div class="info-tab-content" style="display: block;">
+									<ul class="has-dot-list">
+										[@cms_content_list channelId='100' count='8' titLen='14'
+										orderBy='2' channelOption='1'][#list tag_list as a]
+										<li><a href="${a.url}" class="of" target="_blank"
+											title="${a.title}">[@text_cut s=a.title len=titLen
+												append='...'/]<span class="gray9">(${a.releaseDate?string('MM-dd')})</span>
+										</a></li>[/#list][/@cms_content_list]
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="info-wrap clearfix">
+						<div class="info-div">
+							<div class="info-div-head clearfix">
+								<h3>
+									<span>党群建设</span>
+								</h3>
+								<a href="http://www.cerhy.com/blog/user/609227" class="more"
+									title="更多" target="_blank"></a>
+							</div>
+							<div class="info-div-content">
+								<ul class="has-dot-list">
+									[@cms_content_list channelId='260' count='8' titLen='14'
+									orderBy='2' channelOption='1'][#list tag_list as a]
+									<li><a href="${a.url}" class="of" target="_blank"
+										title="${a.title}">[@text_cut s=a.title len=titLen
+											append='...'/]<span class="gray9">(${a.releaseDate?string('MM-dd')})</span>
+									</a></li>[/#list][/@cms_content_list]
+								</ul>
+							</div>
+						</div>
+						<div class="info-div">
+							<div class="info-div-head clearfix">
+								<h3>
+									<span>教育学会</span>
+								</h3>
+								<a href="http://www.cerhy.com/jyxh/index.jhtml" class="more"
+									title="更多" target="_blank"></a>
+							</div>
+							<div class="info-div-content">
+								<ul class="has-dot-list">
+									[@cms_content_list channelId='266' count='8' titLen='14'
+									orderBy='2' channelOption='1'][#list tag_list as a]
+									<li><a href="${a.url}" class="of" target="_blank"
+										title="${a.title}">[@text_cut s=a.title len=titLen
+											append='...'/]<span class="gray9">(${a.releaseDate?string('MM-dd')})</span>
+									</a></li>[/#list][/@cms_content_list]
+								</ul>
+							</div>
+						</div>
+						<div class="info-div">
+							<div class="info-div-head clearfix">
+								<h3>
+									<span>明星博客</span>
+								</h3>
+								<a href="http://www.cerhy.com/bk/index.jhtml" target="_blank"
+									class="more" title="更多"></a>
+							</div>
+							<div class="info-div-content">
+								<ul class="blog-content-list">
+									[@cms_content_list channelId='280' count='3' typeId='5'
+									titLen='14' orderBy='2' channelOption='1'] [#list tag_list as
+									a]
+									<li><a href="${a.url}?typeIds=5" target="_blank"
+										title="${a.title}"> <span class="trend"></span>
+											<div class="con clearfix">
+												[#if a.typeImg??]<img src="${a.typeImg!}" width="40"
+													height="40" alt="" class="blog-left-img">[#else]<img
+													src="/${res}/images/blog1.png" width="70" height="70"
+													alt="" class="blog-left-img">[/#if]
+												<div class="con-right" style="width: 50px;">
+													<h4 class="of">【[@text_cut s=a.title len=8
+														append='...'/]】</h4>
+													<p class="small-con of">[@text_cut s=a.description!
+														len=titLen append='...' /]</p>
+													<div class="time-num clearfix" style="width: 190px;">
+													</div>
+												</div>
+											</div>
+									</a></li> [/#list] [/@cms_content_list]
+								</ul>
+							</div>
+						</div>
 
-                </div>
-            </div>
-            <!--链接-->
-            <div class="friendly-links">
-                <div class="tab-wrap tab-btm-wrap">
-                    <div class="tab-head">
-                        <!-- <a href="javascript:;" class="active">市县教研</a>
+					</div>
+				</div>
+				<!--链接-->
+				<div class="friendly-links">
+					<div class="tab-wrap tab-btm-wrap">
+						<div class="tab-head">
+							<!-- <a href="javascript:;" class="active">市县教研</a>
                         <a href="javascript:;">学校教研</a> -->
-                        <a href="javascript:;" class="active">友情链接</a>
-                        <a href="javascript:;">招聘专题</a>
-                    </div>
-                <div class="tab-content" style="display: block">
-                    <!--友情链接  ctgId='1' 为文字链接,ctgId='2' 图片链接-->
-							  <div style="margin-left:1.5%; float:left;">
-							   	 <a href="http://www.moe.edu.cn/"  target="_blank">中华人民共和国教育部</a>
-							   </div>
-							   							   <div style="margin-left:1.5%; float:left;">
-							   	 <a href="http://edu.hainan.gov.cn/"  target="_blank">海南省教育厅</a>
-							   </div>
-							   	<div style="margin-left:1.5%; float:left;">
-							   	 <a href="http://www.hainan.gov.cn/"  target="_blank">海南省人民政府</a>
-							   </div>
-							   	<div style="margin-left:1.5%; float:left;">
-							   	 <a href="http://onsgep.moe.edu.cn/"  target="_blank">全国教育科学规划领导小组办公室</a>
-							   </div>
-							   	<div style="margin-left:1.5%; float:left;">
-							   	 <a href="http://www.neea.edu.cn/"  target="_blank">教育部考试中心</a>
-							   </div>
-							   	<div style="margin-left:1.5%; float:left;">
-							   	 <a href="http://www.cse.edu.cn/"  target="_blank">中国教育学会秘书处</a>
-							   </div>
-							   	<div style="margin-left:1.5%; float:left;">
-							   	 <a href="http://www.hainanast.org/"  target="_blank">海南省科学技术协会</a>
-							   </div>
-							   	<div style="margin-left:1.5%; float:left;">
-							   	 <a href="http://www.cvae.com.cn/yjs/"  target="_blank">教育部职业技术教育研究所</a>
-							   </div>
-							   	<div style="margin-left:1.5%; float:left;">
-							   	 <a href="http://ncct.moe.edu.cn/"  target="_blank">教育部基础教育课程教材发展中心</a>
-							   </div>
-							   	
-
-                    </div>
-                    <div class="tab-content" style="display: none">
-                    	<div style="margin-left:1.5%; float:left;">
-                    		<a href="http://www.cerhy.com/topic/5.jspx" target="_blank">招聘专题</a>
-                    	</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+							<a href="javascript:;" class="active">友情链接</a> <a
+								href="javascript:;">招聘专题</a>
+						</div>
+						<div class="tab-content" style="display: block">
+							<!--友情链接  ctgId='1' 为文字链接,ctgId='2' 图片链接-->
+							 
+							<div style="margin-left: 1.5%; float: left;">
+								<a href="http://www.moe.edu.cn/" target="_blank">中华人民共和国教育部</a>
+							</div>
+							<div style="margin-left: 1.5%; float: left;">
+								<a href="http://edu.hainan.gov.cn/" target="_blank">海南省教育厅</a>
+							</div>
+							<div style="margin-left: 1.5%; float: left;">
+								<a href="http://www.hainan.gov.cn/" target="_blank">海南省人民政府</a>
+							</div>
+							<div style="margin-left: 1.5%; float: left;">
+								<a href="http://onsgep.moe.edu.cn/" target="_blank">全国教育科学规划领导小组办公室</a>
+							</div>
+							<div style="margin-left: 1.5%; float: left;">
+								<a href="http://www.neea.edu.cn/" target="_blank">教育部考试中心</a>
+							</div>
+							<div style="margin-left: 1.5%; float: left;">
+								<a href="http://www.cse.edu.cn/" target="_blank">中国教育学会秘书处</a>
+							</div>
+							<div style="margin-left: 1.5%; float: left;">
+								<a href="http://www.hainanast.org/" target="_blank">海南省科学技术协会</a>
+							</div>
+							<div style="margin-left: 1.5%; float: left;">
+								<a href="http://www.cvae.com.cn/yjs/" target="_blank">教育部职业技术教育研究所</a>
+							</div>
+							<div style="margin-left: 1.5%; float: left;">
+								<a href="http://ncct.moe.edu.cn/" target="_blank">教育部基础教育课程教材发展中心</a>
+							</div>
+							<div style="margin-left: 1.5%; float: left;">
+								<a href="http://www.cerhy.com:3000" target="_blank">云盘链接</a>
+							</div>
+							[#if user?? && !status??]							
+							<div style="margin-left: 1.5%; float: left;">
+								<a href='javascript:doPost("http://xgk2.hainan.gov.cn/microlecture/web/member/wechat/wachatLoginPage",
+							   	      {"regionID":"460000","login":"haoyan","token":"25CE9DD40EB11C6F2DF01D5F0FE22E1D"})'>
+							   	      新高考政策网络课程
+							   	</a>
+							</div>
+							[#else]
+							[/#if]															
+						</div>
+						
+						<div class="tab-content" style="display: none">
+							<div style="margin-left: 1.5%; float: left;">
+								<a href="http://www.cerhy.com/topic/5.jspx" target="_blank">招聘专题</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
+<div id="setDialogs"
+	style="display: none; margin-top: -5px; max-height: 75px;">
+	<ul style="padding-left: 10px;">
+		<li style="list-style-type: disc;">您的密码为初始密码,点击<a
+			style="cursor: pointer; color: red;" href="${base}/member/pwd.jspx">修改密码</a></li>
+	</ul>
+	<br> <input type="checkbox" id="cpwd" value="1"
+		style="cursor: pointer;">不再提示... [#if user??] <input
+		id="checkHint" name="checkHint" value="${user.linkUrl!0}"
+		style="display: none;"> [/#if]
 </div>
-<div id="setDialogs" style="display:none;margin-top:-5px;max-height: 75px;">
-		<ul style="padding-left: 10px;">
-			 <li  style="list-style-type: disc;">您的密码为初始密码,点击<a style="cursor: pointer;color: red;" href="${base}/member/pwd.jspx">修改密码</a></li>
-		</ul><br>
-		<input type="checkbox"  id="cpwd" value="1" style="cursor: pointer;">不再提示...
-		[#if user??]
-		<input id="checkHint" name="checkHint" value="${user.linkUrl!0}" style="display: none;">
-		[/#if]
-</div>
-[#if user??]<input style="display: none;" value="1" id="ups">[#else]<input style="display: none;" value="0" id="ups">[/#if]
-<link href="${base}/res/common/css/jquery.ui.css" rel="stylesheet" type="text/css"/>
+[#if user??]
+<input style="display: none;" value="1" id="ups">[#else]
+<input style="display: none;" value="0" id="ups">[/#if]
+<link href="${base}/res/common/css/jquery.ui.css" rel="stylesheet"
+	type="text/css" />
 <script src="/${res}/js/main.js"></script>
 [#include "../include/footer.html"/]
+
+
 </body>
 </html>
 <script type="text/javascript">
-window.onload = function (){ 
-	if($("#ups").val()==1){
-		$.ajax({
-	        url: "${base}/member/checkPwdss.jspx",
-	        type: "POST",
-	        dataType:"json",
-	        data: "",
-	        success: function (data) {
-	        	if(data.status>0){
-	        		if($("#checkHint").val()==1){
-	        			
-	        		}else{
-	        		   $("#setDialogs").dialog("open");
-	        		}
-	        	}
-	        }
-	    });
-	}
-}
-     $("#setDialogs").dialog({
-			autoOpen: false,
-			modal: false,
-			resizable :false,
-			stack : false,
-			draggable : true,
-			closeOnEscape : false,
-			open:function(event,ui){
-				$(".ui-dialog-titlebar").css("background","#ffffff");  
-				$(".ui-widget-header").css("border","0");  
-			},
-			width: 300,
-			height: 180,
-			position: ["right",35],
-			close: function(event, ui) {
-				//不在提示
-				if ($('#cpwd').is(':checked')) {
-					$.ajax({
-				        url: "${base}/member/updateHint.jspx",
-				        type: "POST",
-				        dataType:"json",
-				        data: "",
-				        success: function (data) {
-				        	if(data.status>0){
-				        		
-				        	}
-				        }
-				    });
+	window.onload = function() {
+		if ($("#ups").val() == 1) {
+			$.ajax({
+				url : "${base}/member/checkPwdss.jspx",
+				type : "POST",
+				dataType : "json",
+				data : "",
+				success : function(data) {
+					if (data.status > 0) {
+						if ($("#checkHint").val() == 1) {
+
+						} else {
+							$("#setDialogs").dialog("open");
+						}
+					}
 				}
+			});
+		}
+	}
+	$("#setDialogs").dialog({
+		autoOpen : false,
+		modal : false,
+		resizable : false,
+		stack : false,
+		draggable : true,
+		closeOnEscape : false,
+		open : function(event, ui) {
+			$(".ui-dialog-titlebar").css("background", "#ffffff");
+			$(".ui-widget-header").css("border", "0");
+		},
+		width : 300,
+		height : 180,
+		position : [ "right", 35 ],
+		close : function(event, ui) {
+			//不在提示
+			if ($('#cpwd').is(':checked')) {
+				$.ajax({
+					url : "${base}/member/updateHint.jspx",
+					type : "POST",
+					dataType : "json",
+					data : "",
+					success : function(data) {
+						if (data.status > 0) {
+
+						}
+					}
+				});
 			}
-		});
-     function closeDialogs(){
-    	$("#setDialogs").dialog("close");
-    }
+		}
+	});
+	function closeDialogs() {
+		$("#setDialogs").dialog("close");
+	}
 </script>
 <script type="text/javascript">
-$(function() {
-	/* var date=new Date();
-	var hour=date.getHours();
-	var minute=date.getMinutes();
-	var s=date.getSeconds();
-	var i=hour*60*60+minute*60+s;
-	var k=79200;
-	if(i>k){
-		$("body").click(function(event){  
-			alert("数据维护中...网站暂停使用\r\n给您造成的不便还请谅解,谢谢您的支持.\r\n维护时间:(晚10点-早八点).");
-			event.preventDefault();
-		}); 
-	} */
-});
+	$(function() {
+		/* var date=new Date();
+		var hour=date.getHours();
+		var minute=date.getMinutes();
+		var s=date.getSeconds();
+		var i=hour*60*60+minute*60+s;
+		var k=79200;
+		if(i>k){
+			$("body").click(function(event){  
+				alert("数据维护中...网站暂停使用\r\n给您造成的不便还请谅解,谢谢您的支持.\r\n维护时间:(晚10点-早八点).");
+				event.preventDefault();
+			}); 
+		} */
+	});
 </script>
