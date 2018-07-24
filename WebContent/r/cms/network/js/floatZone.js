@@ -236,6 +236,7 @@ ZoneAD_1.Left        = 100;
 ZoneAD_1.Top         = 100;
 
 
+
 var objAD = new ObjectAD();
 objAD.ADID           = 1;
 objAD.ADType         = 1;
